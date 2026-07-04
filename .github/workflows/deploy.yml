@@ -3,7 +3,7 @@ name: Deploy to DigitalOcean
 on:
   push:
     branches:
-      - main  # જો તમારી મેઈન બ્રાન્ચનું નામ master હોય, તો અહી master લખવું.
+      - main
 
 jobs:
   deploy:
