@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: number;
   }> = [
     { path: "",                            changeFrequency: "daily",   priority: 1.0 },
+    { path: "/blog",                       changeFrequency: "daily",   priority: 0.9 },
     { path: "/brutto-netto-rechner-2027",  changeFrequency: "monthly", priority: 0.9 },
     { path: "/rechner/brutto-zu-netto",    changeFrequency: "monthly", priority: 0.85 },
     { path: "/rechner/netto-zu-brutto",    changeFrequency: "monthly", priority: 0.85 },

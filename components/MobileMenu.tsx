@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X, ArrowRight, Calculator, Calendar, BookOpen, HelpCircle } from "lucide-react";
+import { Menu, X, ArrowRight, Calculator, Calendar, BookOpen, HelpCircle, Newspaper } from "lucide-react";
 
 const nav = [
   { href: "/",                          label: "Rechner",       icon: Calculator },
   { href: "/brutto-netto-rechner-2027", label: "Vorschau 2027", icon: Calendar },
+  { href: "/blog",                      label: "Blog",          icon: Newspaper },
   { href: "/lexikon",                   label: "Lexikon",       icon: BookOpen },
   { href: "/faq",                       label: "FAQ",           icon: HelpCircle },
 ];
@@ -37,16 +38,16 @@ export default function MobileMenu() {
         aria-label={open ? "Menü schließen" : "Menü öffnen"}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="w-12 h-12 flex items-center justify-center rounded-2xl hover:bg-white/10 transition-colors text-white/80 hover:text-white"
+        className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-white shadow-sm hover:bg-white/20 active:scale-95 transition-all"
       >
-        {open ? <X size={26} /> : <Menu size={26} />}
+        {open ? <X size={18} /> : <Menu size={18} />}
       </button>
 
       {/* Dropdown panel */}
       <div
         id="mobile-menu-panel"
         role="menu"
-        className={`mobile-menu absolute right-0 top-20 w-72 rounded-3xl shadow-2xl bg-[#111111] border border-white/15 overflow-hidden ${
+        className={`mobile-menu absolute right-0 top-12 sm:top-14 w-64 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.95)] bg-[#121212]/95 backdrop-blur-2xl border border-white/20 overflow-hidden z-50 ${
           open ? "open" : "closed"
         }`}
       >
