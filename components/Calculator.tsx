@@ -181,16 +181,13 @@ export default function Calculator() {
   const bm = result.bruttoMonat;
 
   return (
-    <div
-      id="rechner"
-      className="rounded-3xl overflow-hidden border border-white/20 bg-[#101010] shadow-[0_0_60px_rgba(0,0,0,0.95)]"
-    >
-      <div className="grid md:grid-cols-[1fr_1.15fr]">
+    <div className="rounded-3xl overflow-hidden border border-white/20 bg-[#101010] shadow-[0_0_60px_rgba(0,0,0,0.95)] w-full max-w-full">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.15fr] w-full max-w-full min-w-0">
 
         {/* ═══ LEFT — Inputs ════════════════════════════════════════ */}
-        <div className="p-4 sm:p-10 bg-[#101010] border-b md:border-b-0 md:border-r border-white/15 flex flex-col justify-between">
+        <div className="p-4 sm:p-10 bg-[#101010] border-b md:border-b-0 md:border-r border-white/15 flex flex-col justify-between w-full max-w-full min-w-0">
 
-          <div>
+          <div className="w-full max-w-full min-w-0">
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
               <div>
@@ -198,13 +195,13 @@ export default function Calculator() {
                 <h2 className="font-display text-xl sm:text-2xl font-extrabold text-white">Ihr Bruttogehalt</h2>
               </div>
               {/* Monthly / Annual toggle */}
-              <div className="flex items-center self-start sm:self-auto gap-1 bg-black/80 border border-white/15 rounded-2xl p-1.5 text-sm font-semibold">
+              <div className="flex items-center self-start sm:self-auto gap-1 bg-black/80 border border-white/15 rounded-2xl p-1.5 text-sm font-semibold flex-shrink-0">
                 {[{ label: "/Monat", val: false }, { label: "/Jahr", val: true }].map(({ label, val }) => (
                   <button
                     key={label}
                     id={`ansicht-${val ? "jahr" : "monat"}`}
                     onClick={() => setIsJahresansicht(val)}
-                    className={`px-4 py-2 rounded-xl transition-all ${
+                    className={`px-3.5 sm:px-4 py-2 rounded-xl transition-all ${
                       isJahresansicht === val ? "bg-[#E60A1C] text-white shadow-[0_0_15px_rgba(230,10,28,0.6)] font-bold" : "text-white/60 hover:text-white"
                     }`}
                   >
@@ -215,11 +212,11 @@ export default function Calculator() {
             </div>
 
             {/* ── Brutto input ────────────────────────────────────── */}
-            <div className="mb-6 sm:mb-8">
+            <div className="mb-6 sm:mb-8 w-full max-w-full">
               <label htmlFor="brutto-input" className="text-base font-bold text-white block mb-3">
                 Bruttogehalt pro Monat
               </label>
-              <div className="relative">
+              <div className="relative w-full max-w-full">
                 <input
                   id="brutto-input"
                   type="number"
@@ -227,7 +224,7 @@ export default function Calculator() {
                   value={inputStr}
                   onChange={(e) => handleBruttoChange(e.target.value)}
                   onFocus={(e) => e.target.select()}
-                  className={`w-full font-mono text-xl sm:text-2xl font-bold rounded-2xl border px-4 sm:px-6 py-3.5 sm:py-4.5 pr-16 sm:pr-20 transition-all outline-none ${
+                  className={`w-full max-w-full font-mono text-xl sm:text-2xl font-bold rounded-2xl border px-4 sm:px-6 py-3.5 sm:py-4.5 pr-14 sm:pr-20 transition-all outline-none ${
                     inputError
                       ? "border-red-500 bg-red-950/40 text-red-200 focus:border-red-500"
                       : "border-white/20 bg-[#161616] text-white focus:border-[#E60A1C] focus:bg-[#1C1C1C]"
@@ -246,7 +243,7 @@ export default function Calculator() {
               )}
 
               {/* Salary slider */}
-              <div className="mt-4">
+              <div className="mt-4 w-full max-w-full">
                 <input
                   type="range"
                   id="brutto-slider"
@@ -260,7 +257,7 @@ export default function Calculator() {
                     setInputError("");
                   }}
                   style={{ "--range-pct": `${sliderPct}%` } as React.CSSProperties}
-                  className="w-full"
+                  className="w-full max-w-full block"
                 />
                 <div className="flex justify-between text-xs text-white/50 font-mono font-medium mt-1">
                   <span>500 €</span><span>20.000 €</span>
@@ -269,15 +266,15 @@ export default function Calculator() {
             </div>
 
             {/* ── Steuerjahr ────────────────────────────────────── */}
-            <div className="mb-6 sm:mb-8">
+            <div className="mb-6 sm:mb-8 w-full max-w-full">
               <span className="text-base font-bold text-white block mb-3">Steuerjahr</span>
-              <div className="flex gap-2.5 sm:gap-4">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-4 w-full">
                 {([2026, 2027] as Steuerjahr[]).map((j) => (
                   <button
                     key={j}
                     id={`jahr-${j}`}
                     onClick={() => setJahr(j)}
-                    className={`flex-1 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base font-bold border transition-all ${
+                    className={`w-full py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base font-bold border transition-all ${
                       jahr === j
                         ? "text-white border-transparent shadow-[0_0_20px_rgba(230,10,28,0.4)]"
                         : "border-white/20 text-white/60 hover:border-white/40 hover:bg-white/5 hover:text-white"
@@ -297,9 +294,9 @@ export default function Calculator() {
             </div>
 
             {/* ── Steuerklasse ──────────────────────────────────── */}
-            <div className="mb-6 sm:mb-8">
+            <div className="mb-6 sm:mb-8 w-full max-w-full min-w-0">
               <span className="text-base font-bold text-white block mb-3">Steuerklasse</span>
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-2.5">
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-2.5 w-full max-w-full min-w-0">
                 {([1, 2, 3, 4, 5, 6] as Steuerklasse[]).map((sk) => (
                   <button
                     key={sk}
@@ -307,7 +304,7 @@ export default function Calculator() {
                     onClick={() => setSteuerklasse(sk)}
                     title={STEUERKLASSE_INFO[sk]}
                     aria-pressed={steuerklasse === sk}
-                    className={`sk-tab py-3 sm:py-3.5 rounded-2xl text-base sm:text-lg font-extrabold border transition-all ${
+                    className={`sk-tab py-3 sm:py-3.5 rounded-2xl text-base sm:text-lg font-extrabold border transition-all w-full min-w-0 ${
                       steuerklasse === sk
                         ? "text-white border-transparent shadow-[0_0_20px_rgba(230,10,28,0.4)]"
                         : "border-white/20 text-white/60 hover:border-white/40 hover:bg-white/5 hover:text-white"
@@ -320,7 +317,7 @@ export default function Calculator() {
               </div>
               <p className="text-xs sm:text-sm text-white/70 mt-2.5 flex items-center gap-2 font-medium">
                 <ChevronRight size={16} className="text-[#E60A1C] flex-shrink-0" />
-                <span>{STEUERKLASSE_INFO[steuerklasse]}</span>
+                <span className="truncate">{STEUERKLASSE_INFO[steuerklasse]}</span>
               </p>
             </div>
 
@@ -352,9 +349,9 @@ export default function Calculator() {
         </div>
 
         {/* ═══ RIGHT — Results (LUXURY FINTECH DASHBOARD) ════════════ */}
-        <div className="p-4 sm:p-10 bg-[#0B0B0B] text-white flex flex-col justify-between">
+        <div className="p-4 sm:p-10 bg-[#0B0B0B] text-white flex flex-col justify-between w-full max-w-full min-w-0">
 
-          <div>
+          <div className="w-full max-w-full min-w-0">
             {/* Header row */}
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
               <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-widest px-3 sm:px-4 py-1.5 sm:py-2 bg-[#E60A1C]/15 border border-[#E60A1C]/30 text-[#E60A1C] rounded-full">

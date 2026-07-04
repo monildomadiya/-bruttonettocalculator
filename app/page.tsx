@@ -192,7 +192,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Calculator Section ───────────────────────────────────────── */}
-      <section id="rechner" className="max-w-6xl mx-auto px-5 -mt-16 pb-20 relative z-20">
+      <section id="rechner" className="max-w-6xl mx-auto px-2.5 sm:px-5 mt-4 sm:-mt-16 pb-20 relative z-20 scroll-mt-24">
         <Calculator />
       </section>
 

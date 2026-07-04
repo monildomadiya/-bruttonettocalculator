@@ -24,7 +24,7 @@ export default function AccordionFaq({ faqs }: { faqs: FaqItem[] }) {
               aria-expanded={isOpen}
               aria-controls={`faq-panel-${i}`}
               onClick={() => setOpen(isOpen ? null : i)}
-              className="w-full flex items-center justify-between px-7 py-6 text-left group"
+              className="w-full flex items-center justify-between px-5 sm:px-7 py-5 sm:py-6 text-left group"
             >
               <h3 className={`font-display font-bold text-lg sm:text-xl pr-4 transition-colors ${
                 isOpen ? "text-[#E60A1C]" : "text-white group-hover:text-white/90"
