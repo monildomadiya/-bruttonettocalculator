@@ -37,16 +37,16 @@ export default function MobileMenu() {
         aria-label={open ? "Menü schließen" : "Menü öffnen"}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="w-11 h-11 flex items-center justify-center rounded-xl hover:bg-white/10 transition-colors text-white/80 hover:text-white"
+        className="w-12 h-12 flex items-center justify-center rounded-2xl hover:bg-white/10 transition-colors text-white/80 hover:text-white"
       >
-        {open ? <X size={24} /> : <Menu size={24} />}
+        {open ? <X size={26} /> : <Menu size={26} />}
       </button>
 
       {/* Dropdown panel */}
       <div
         id="mobile-menu-panel"
         role="menu"
-        className={`mobile-menu absolute right-0 top-12 w-64 rounded-3xl shadow-2xl bg-[#111111] border border-white/15 overflow-hidden ${
+        className={`mobile-menu absolute right-0 top-16 w-72 rounded-3xl shadow-2xl bg-[#111111] border border-white/15 overflow-hidden ${
           open ? "open" : "closed"
         }`}
       >
