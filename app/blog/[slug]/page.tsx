@@ -293,7 +293,7 @@ export default async function ArticleReaderPage({ params }: { params: { slug: st
         )}
 
         {/* CTA Calculator Banner */}
-        <section className="mt-16 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#0e0e0e] border border-white/20 shadow-[0_15px_60px_rgba(0,0,0,0.8)] relative overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-8">
+        <section className="my-16 sm:my-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#0e0e0e] border border-white/20 shadow-[0_15px_60px_rgba(0,0,0,0.8)] relative overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-8">
           <div className="space-y-3 max-w-xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E60A1C]/20 border border-[#E60A1C]/40 text-[#FF2E44] text-xs font-bold uppercase tracking-wider">
               <Calculator size={13} />

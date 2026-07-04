@@ -40,7 +40,7 @@ export default function SiteFooter() {
   }
 
   return (
-    <footer className="mt-20 no-print pb-12 px-3 sm:px-6">
+    <footer className="no-print pb-12 px-3 sm:px-6">
       <div className="max-w-6xl mx-auto bg-[#090909] border border-white/10 rounded-3xl p-8 sm:p-12 md:p-16 relative overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.95)]">
         
         {/* Subtle red accent glow line at the top */}

@@ -254,7 +254,7 @@ export default function HomePage() {
       </section>
 
       {/* ── FAQ Section ──────────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-5 py-24">
+      <section className="max-w-6xl mx-auto px-5 pt-24 pb-12 sm:pb-16">
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             Häufige Fragen
@@ -265,7 +265,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Ready CTA Banner (Like PromptKing Screenshot) ─────────────── */}
-      <section className="max-w-6xl mx-auto px-5 pb-24">
+      <section className="max-w-6xl mx-auto px-5 pb-8 sm:pb-10">
         <div className="relative rounded-3xl bg-gradient-to-r from-[#121212] via-[#1A1A1A] to-[#121212] p-8 sm:p-14 border border-white/20 overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-8 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#E60A1C]/15 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10 text-center sm:text-left max-w-xl">
@@ -289,7 +289,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Disclaimer ───────────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-5 pb-20">
+      <section className="max-w-6xl mx-auto px-5 pb-8 sm:pb-10">
         <div className="flex items-start gap-4 bg-[#0A0A0A] rounded-3xl p-6 sm:p-8 border border-white/15 text-sm sm:text-base text-white/80 leading-relaxed shadow-lg">
           <AlertTriangle size={22} className="flex-shrink-0 mt-0.5 text-[#E60A1C]" />
           <p>

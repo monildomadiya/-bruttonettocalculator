@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function BruttoZuNettoPage() {
   return (
-    <section className="w-full max-w-6xl mx-auto px-5 py-20 min-h-[80vh]">
+    <section className="w-full max-w-6xl mx-auto px-5 pt-20 pb-10 min-h-[80vh]">
       <div className="mb-14">
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
           <CalcIcon size={14} /> Amtliche Berechnung
