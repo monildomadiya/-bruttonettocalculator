@@ -1,0 +1,206 @@
+/**
+ * Brutto-Netto-Rechner — Berechnungslogik
+ *
+ * Grundlage 2026: § 32a EStG i.d.F. ab Veranlagungszeitraum 2026
+ * (BMF, Amtliches Lohnsteuer-Handbuch LStH 2026, § 32a).
+ * Sozialversicherungs-Rechengrößen 2026: Sozialversicherungsrechengrößen-Verordnung 2026.
+ *
+ * WICHTIG: Dies ist eine vereinfachte Berechnung für einen ersten Überblick
+ * (Steuerklasse I/IV, keine Kinderfreibeträge, keine individuellen
+ * Freibeträge). Sie ersetzt keine Steuerberatung und keine verbindliche
+ * Lohnabrechnung. Für 2027 liegen noch keine final beschlossenen Tarifwerte
+ * vor (Stand: Juli 2026) — die Reform der Bundesregierung tritt frühestens
+ * zum 1.1.2027 in Kraft und wird erst nach dem Existenzminimumbericht
+ * (Herbst 2026) konkretisiert. Die 2027-Ansicht dieses Rechners verwendet
+ * daher die 2026-Parameter als vorläufigen Platzhalter und weist dies aus.
+ */
+
+export type Steuerjahr = 2026 | 2027;
+
+export type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
+
+export interface CalculatorInput {
+  bruttoMonat: number;    // Monatliches Bruttogehalt in EUR
+  jahr: Steuerjahr;
+  verheiratet: boolean;   // Splittingverfahren (abgeleitet aus SK)
+  kinderlosUeber23: boolean; // Pflegeversicherungszuschlag
+  kirche: boolean;
+  kirchensteuerSatz: number; // 0.08 oder 0.09
+  steuerklasse?: Steuerklasse; // 1–6, default 1
+}
+
+export interface CalculatorResult {
+  bruttoJahr: number;
+  bruttoMonat: number;
+  sv: {
+    rente: number;
+    arbeitslosen: number;
+    kranken: number;
+    pflege: number;
+    summeMonat: number;
+    summeJahr: number;
+  };
+  steuer: {
+    zvE: number;
+    einkommensteuerJahr: number;
+    soliJahr: number;
+    kirchensteuerJahr: number;
+    summeJahr: number;
+    summeMonat: number;
+  };
+  nettoJahr: number;
+  nettoMonat: number;
+  grenzsteuersatzPct: number;
+  durchschnittssteuersatzPct: number;
+}
+
+// --- 2026 Rechengrößen (amtlich) ---
+const RECHENGROESSEN_2026 = {
+  kvPvBbgJahr: 69750, // Beitragsbemessungsgrenze KV/PV
+  rvAlvBbgJahr: 101400, // Beitragsbemessungsgrenze RV/ALV
+  kvSatz: 0.146,
+  kvZusatzbeitragDurchschnitt: 0.029,
+  pvSatzBasis: 0.036,
+  pvZuschlagKinderlos: 0.006, // ab 23 Jahre ohne Kinder: 3.6% -> 4.2%
+  rvSatz: 0.186,
+  alvSatz: 0.026,
+  werbungskostenPauschale: 1230,
+  sonderausgabenPauschale: 36,
+};
+
+function estFormel2026(zvE: number): number {
+  const x = Math.floor(zvE);
+  if (x <= 12348) return 0;
+  if (x <= 17799) {
+    const y = (x - 12348) / 10000;
+    return (914.51 * y + 1400) * y;
+  }
+  if (x <= 69878) {
+    const z = (x - 17799) / 10000;
+    return (173.1 * z + 2397) * z + 1034.87;
+  }
+  if (x <= 277825) {
+    return 0.42 * x - 11135.63;
+  }
+  return 0.45 * x - 19470.38;
+}
+
+function grenzsteuersatz2026(zvE: number): number {
+  const x = Math.floor(zvE);
+  if (x <= 12348) return 0;
+  if (x <= 17799) {
+    const y = (x - 12348) / 10000;
+    // Ableitung von (914.51*y + 1400)*y nach x (dy/dx = 1/10000)
+    return (2 * 914.51 * y + 1400) / 10000;
+  }
+  if (x <= 69878) {
+    const z = (x - 17799) / 10000;
+    return (2 * 173.1 * z + 2397) / 10000;
+  }
+  if (x <= 277825) return 0.42;
+  return 0.45;
+}
+
+// Solidaritätszuschlag mit Milderungszone (20%-Abschmelzung)
+// Freigrenze 2026: 18.130 € ESt (Einzelveranlagung) / 36.260 € (Splitting)
+function soliBerechnen(estJahr: number, verheiratet: boolean): number {
+  const freigrenze = verheiratet ? 36260 : 18130;
+  if (estJahr <= freigrenze) return 0;
+  const voll = estJahr * 0.055;
+  const abschmelzung = (estJahr - freigrenze) * 0.2;
+  return Math.min(voll, abschmelzung);
+}
+
+export function calculateNetto(input: CalculatorInput): CalculatorResult {
+  const bruttoJahr = input.bruttoMonat * 12;
+  const r = RECHENGROESSEN_2026; // 2026-Parameter (auch als 2027-Platzhalter verwendet)
+
+  // Sozialversicherung (Arbeitnehmeranteil)
+  const kvPvBemessung = Math.min(bruttoJahr, r.kvPvBbgJahr);
+  const rvAlvBemessung = Math.min(bruttoJahr, r.rvAlvBbgJahr);
+
+  const kvSatzAn = (r.kvSatz + r.kvZusatzbeitragDurchschnitt) / 2;
+  const pvSatzGesamt = r.pvSatzBasis + (input.kinderlosUeber23 ? r.pvZuschlagKinderlos : 0);
+  // Arbeitgeberanteil PV ist immer 1,7 % fix; AN trägt den Rest
+  const pvSatzAn = pvSatzGesamt - 0.017;
+
+  const kranken = kvPvBemessung * kvSatzAn;
+  const pflege = kvPvBemessung * pvSatzAn;
+  const rente = rvAlvBemessung * (r.rvSatz / 2);
+  const arbeitslosen = rvAlvBemessung * (r.alvSatz / 2);
+
+  const svSummeJahr = kranken + pflege + rente + arbeitslosen;
+
+  // Vereinfachtes zu versteuerndes Einkommen für den Lohnsteuerabzug
+  const zvE = Math.max(
+    0,
+    bruttoJahr - svSummeJahr - r.werbungskostenPauschale - r.sonderausgabenPauschale
+  );
+
+  const sk = input.steuerklasse ?? 1;
+
+  let estJahr: number;
+  if (sk === 3) {
+    // Steuerklasse III: Splittingverfahren
+    estJahr = 2 * estFormel2026(zvE / 2);
+  } else if (sk === 5) {
+    // Steuerklasse V: Erhöhter Tarif — Näherung: 35 % Grenzbelastung auf gesamtes zvE
+    // (Vereinfachung für Überblick; korrekte Berechnung erfolgt im Lohnsteuerjahresausgleich)
+    const baseEst = estFormel2026(zvE);
+    estJahr = Math.min(baseEst * 1.45, zvE * 0.40);
+  } else if (sk === 6) {
+    // Steuerklasse VI: Keine Freibeträge, ab erstem Euro Steuer
+    // Näherung: Standardformel ohne Grundfreibetrag
+    const zvE6 = Math.max(0, bruttoJahr - svSummeJahr); // keine Pauschalen
+    estJahr = estFormel2026(zvE6) * 1.1;
+  } else if (sk === 2) {
+    // Steuerklasse II: Alleinerziehendenentlastungsbetrag 4.260 € (2026)
+    const zvE2 = Math.max(0, zvE - 4260);
+    estJahr = estFormel2026(zvE2);
+  } else {
+    // Steuerklasse I, IV: Grundtarif
+    estJahr = estFormel2026(zvE);
+  }
+
+  const soliJahr = soliBerechnen(estJahr, sk === 3);
+  const kirchensteuerJahr = input.kirche ? estJahr * input.kirchensteuerSatz : 0;
+
+  const steuerSummeJahr = estJahr + soliJahr + kirchensteuerJahr;
+  const nettoJahr = bruttoJahr - svSummeJahr - steuerSummeJahr;
+
+  const grenzsteuersatzPct = grenzsteuersatz2026(sk === 3 ? zvE / 2 : zvE) * 100;
+  const durchschnittssteuersatzPct = zvE > 0 ? (estJahr / zvE) * 100 : 0;
+
+  return {
+    bruttoJahr,
+    bruttoMonat: input.bruttoMonat,
+    sv: {
+      rente,
+      arbeitslosen,
+      kranken,
+      pflege,
+      summeMonat: svSummeJahr / 12,
+      summeJahr: svSummeJahr,
+    },
+    steuer: {
+      zvE,
+      einkommensteuerJahr: estJahr,
+      soliJahr,
+      kirchensteuerJahr,
+      summeJahr: steuerSummeJahr,
+      summeMonat: steuerSummeJahr / 12,
+    },
+    nettoJahr,
+    nettoMonat: nettoJahr / 12,
+    grenzsteuersatzPct,
+    durchschnittssteuersatzPct,
+  };
+}
+
+export function formatEUR(value: number): string {
+  return new Intl.NumberFormat("de-DE", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 2,
+  }).format(value);
+}
