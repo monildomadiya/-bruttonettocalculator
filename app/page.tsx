@@ -76,7 +76,7 @@ const trustBadges = [
   { label: "Amtliche Formel § 32a EStG",     icon: Shield },
   { label: "SV-Rechengrößen 2026 (amtlich)", icon: CheckCircle2 },
   { label: "Alle 6 Steuerklassen",           icon: BadgePercent },
-  { label: "Keine Cookies",                  icon: Lock },
+  { label: "Keine Registrierung",            icon: Lock },
   { label: "DSGVO-konform",                  icon: Shield },
 ];
 
@@ -176,17 +176,32 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Trust badges */}
+          {/* Luxury Fintech Trust Bar */}
           <div
-            className="flex flex-wrap justify-center gap-x-4 sm:gap-x-8 gap-y-2.5 text-xs sm:text-sm font-mono text-white/70 animate-fade-up border-t border-white/15 pt-6 sm:pt-8 w-full max-w-6xl px-2"
+            className="w-full max-w-5xl mx-auto mt-4 sm:mt-8 animate-fade-up px-2 sm:px-0"
             style={{ animationDelay: "320ms" }}
           >
-            {trustBadges.map(({ label, icon: Icon }) => (
-              <span key={label} className="flex items-center gap-2 bg-white/5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/10">
-                <Icon size={14} className="text-[#E60A1C] flex-shrink-0" />
-                <span className="text-white/90 font-medium whitespace-nowrap">{label}</span>
-              </span>
-            ))}
+            <div className="relative group rounded-2xl p-[1px] bg-gradient-to-r from-white/10 via-[#E60A1C]/40 to-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.8)]">
+              <div className="bg-[#0D0D0D]/95 backdrop-blur-2xl rounded-2xl p-4 sm:p-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+                  {trustBadges.map(({ label, icon: Icon }, idx) => (
+                    <div
+                      key={label}
+                      className={`flex items-center gap-3 text-left ${
+                        idx > 0 ? "pt-3 sm:pt-0 sm:pl-4 lg:pl-6" : ""
+                      }`}
+                    >
+                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#E60A1C]/20 to-black border border-[#E60A1C]/40 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(230,10,28,0.2)]">
+                        <Icon size={16} className="text-[#E60A1C]" />
+                      </div>
+                      <span className="font-mono text-xs sm:text-[13px] font-bold text-white/90 leading-tight tracking-tight">
+                        {label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
