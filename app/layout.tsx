@@ -114,13 +114,6 @@ const nav = [
   { href: "/faq",                       label: "FAQ",           icon: HelpCircle },
 ];
 
-const trustItems = [
-  { label: "Amtliche Formel § 32a EStG",      icon: Shield },
-  { label: "SV-Rechengrößen 2026 (amtlich)",  icon: CheckCircle2 },
-  { label: "Alle 6 Steuerklassen",            icon: CheckCircle2 },
-  { label: "Keine Registrierung",             icon: Lock },
-  { label: "DSGVO-konform",                   icon: Shield },
-];
 
 /* ── Logo mark ────────────────────────────────────────────────────── */
 function LogoMark({ size = 32 }: { size?: number }) {
@@ -199,70 +192,126 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <main>{children}</main>
 
-        {/* ── Footer ─────────────────────────────────────────────────── */}
-        <footer className="mt-24 no-print bg-black text-white">
+        {/* ── Ultra-Luxury Fintech Footer ────────────────────────────── */}
+        <footer className="mt-20 no-print pb-12 px-3 sm:px-6">
+          <div className="max-w-6xl mx-auto bg-[#090909] border border-white/10 rounded-3xl p-8 sm:p-12 md:p-16 relative overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.95)]">
+            
+            {/* Subtle red accent glow line at the top */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 sm:w-1/2 h-[1px] bg-gradient-to-r from-transparent via-[#E60A1C]/70 to-transparent" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-24 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
 
-          {/* Trust bar */}
-          <div className="border-b border-white/10">
-            <div className="max-w-6xl mx-auto px-5 py-5 flex flex-wrap gap-x-8 gap-y-3 justify-center text-sm text-white/70 font-mono font-medium">
-              {trustItems.map(({ label, icon: Icon }) => (
-                <span key={label} className="flex items-center gap-2">
-                  <Icon size={15} className="text-accent flex-shrink-0" style={{ color: "#E60A1C" }} />
-                  {label}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Footer grid */}
-          <div className="max-w-6xl mx-auto px-4 sm:px-5 py-10 sm:py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 text-base text-white/75">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <LogoMark size={32} />
-                <p className="font-display text-white font-bold text-lg">BruttoNettoCalculator.com</p>
+            {/* Footer grid */}
+            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 sm:gap-12 pb-12 border-b border-white/10">
+              
+              {/* Col 1: Brand Info (Spans 4 cols on lg) */}
+              <div className="lg:col-span-4 space-y-5">
+                <div className="flex items-center gap-3">
+                  <LogoMark size={36} />
+                  <span className="font-display font-black text-xl text-white tracking-tight">
+                    Brutto<span className="text-gradient-accent">Netto</span>Calculator<span className="text-[#E60A1C]">.</span>
+                  </span>
+                </div>
+                <p className="leading-relaxed text-white/60 text-sm font-normal pr-4">
+                  Der präzise Gehaltsrechner für Deutschland nach § 32a EStG. Berechnen Sie Ihr Nettogehalt in Sekundenschnelle — kostenlos, ohne Registrierung und DSGVO-konform.
+                </p>
+                <div className="pt-1 flex items-center gap-3 text-xs font-mono text-white/40">
+                  <span className="inline-block w-2 h-2 rounded-full bg-[#E60A1C]" />
+                  <span>Stand: Juli 2026 · § 32a EStG</span>
+                </div>
               </div>
-              <p className="leading-relaxed text-white/60 text-sm font-normal">
-                Kostenloser Gehaltsrechner für Deutschland nach § 32a EStG. Alle Angaben ohne Gewähr — keine Steuerberatung.
-              </p>
-              <p className="mt-4 text-sm text-white/40 font-mono">Stand: Juli 2026</p>
-            </div>
 
-            <div>
-              <p className="font-bold text-white mb-4 text-lg">Rechner</p>
-              <ul className="space-y-3 text-base text-white/70">
-                <li><Link href="/"                          className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />Brutto Netto Rechner 2026</Link></li>
-                <li><Link href="/brutto-netto-rechner-2027" className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />Rechner 2027 (Vorschau)</Link></li>
-                <li><Link href="/rechner/brutto-zu-netto"   className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />Brutto zu Netto</Link></li>
-                <li><Link href="/rechner/netto-zu-brutto"   className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />Netto zu Brutto</Link></li>
-                <li><Link href="/lexikon"                   className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />Steuer-Lexikon</Link></li>
-                <li><Link href="/faq"                       className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />FAQ</Link></li>
-              </ul>
-            </div>
+              {/* Col 2: Rechner (Spans 3 cols on lg) */}
+              <div className="lg:col-span-3">
+                <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-6">
+                  RECHNER
+                </p>
+                <ul className="space-y-3.5 text-sm sm:text-base text-white/60 font-medium">
+                  <li><Link href="/"                          className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner 2026</Link></li>
+                  <li><Link href="/brutto-netto-rechner-2027" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Rechner 2027 (Vorschau)</Link></li>
+                  <li><Link href="/rechner/brutto-zu-netto"   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Brutto zu Netto</Link></li>
+                  <li><Link href="/rechner/netto-zu-brutto"   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Netto zu Brutto</Link></li>
+                  <li><Link href="/lexikon"                   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Steuer-Lexikon</Link></li>
+                  <li><Link href="/faq"                       className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">FAQ & Hilfe</Link></li>
+                </ul>
+              </div>
 
-            <div>
-              <p className="font-bold text-white mb-4 text-lg">Rechtliches</p>
-              <ul className="space-y-3 text-base text-white/70">
-                <li><Link href="/impressum"   className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />Impressum</Link></li>
-                <li><Link href="/datenschutz" className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />Datenschutz</Link></li>
-                <li><Link href="/kontakt"     className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />Kontakt</Link></li>
-                <li><Link href="/ueber-uns"   className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight size={14} className="text-[#E60A1C]" />Über uns</Link></li>
-              </ul>
-            </div>
+              {/* Col 3: Rechtliches (Spans 2 cols on lg) */}
+              <div className="lg:col-span-2">
+                <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-6">
+                  RECHTLICHES
+                </p>
+                <ul className="space-y-3.5 text-sm sm:text-base text-white/60 font-medium">
+                  <li><Link href="/impressum"   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Impressum</Link></li>
+                  <li><Link href="/datenschutz" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Datenschutz</Link></li>
+                  <li><Link href="/kontakt"     className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Kontakt</Link></li>
+                  <li><Link href="/ueber-uns"   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Über uns</Link></li>
+                </ul>
+              </div>
 
-            <div>
-              <p className="font-bold text-white mb-4 text-lg">Partner & KI-Tools</p>
-              <ul className="space-y-3 text-base text-white/70">
-                <li>
-                  <a href="https://promptking.in" target="_blank" rel="noopener" className="hover:text-white transition-colors flex items-center gap-2">
-                    <ArrowRight size={14} className="text-[#E60A1C]" />PromptKing (KI Prompts)
+              {/* Col 4: Partner & Newsletter (Spans 3 cols on lg) */}
+              <div className="lg:col-span-3 space-y-6">
+                <div>
+                  <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-4">
+                    PARTNER & KI-TOOLS
+                  </p>
+                  <a
+                    href="https://promptking.in"
+                    target="_blank"
+                    rel="noopener"
+                    className="group block p-4 rounded-2xl bg-gradient-to-br from-[#161616] to-[#0C0C0C] border border-white/15 hover:border-[#E60A1C]/60 transition-all shadow-md hover:shadow-[0_0_25px_rgba(230,10,28,0.25)]"
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-display font-bold text-white group-hover:text-[#E60A1C] transition-colors flex items-center gap-2">
+                        PromptKing.in <span className="w-1.5 h-1.5 rounded-full bg-[#E60A1C] animate-pulse" />
+                      </span>
+                      <span className="w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 group-hover:bg-[#E60A1C] group-hover:text-white group-hover:border-transparent transition-all font-mono">
+                        ↗
+                      </span>
+                    </div>
+                    <p className="text-xs text-white/50 font-medium">Die Nr. 1 Plattform für KI-Prompts & Workflows</p>
                   </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+                </div>
 
-          <div className="border-t border-white/10 py-6 text-center text-sm text-white/50 font-medium">
-            © {new Date().getFullYear()} BruttoNettoCalculator.com · Alle Angaben ohne Gewähr
+                {/* Newsletter Box (Exact match to PromptKing style!) */}
+                <div>
+                  <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-3">
+                    NEWSLETTER
+                  </p>
+                  <p className="text-xs text-white/60 mb-3 font-medium">
+                    Amtliche Steuer-Updates direkt ins Postfach.
+                  </p>
+                  <div className="flex items-center bg-[#141414] border border-white/15 rounded-full p-1 pl-4 focus-within:border-[#E60A1C] transition-all shadow-inner">
+                    <input
+                      type="email"
+                      placeholder="E-Mail eingeben..."
+                      className="bg-transparent text-xs sm:text-sm text-white placeholder:text-white/40 outline-none w-full pr-2 font-medium"
+                      readOnly
+                    />
+                    <button
+                      type="button"
+                      title="Anmelden"
+                      aria-label="Für Newsletter anmelden"
+                      className="w-9 h-9 rounded-full bg-[#E60A1C] hover:bg-[#FF2436] flex items-center justify-center text-white flex-shrink-0 shadow-[0_0_15px_rgba(230,10,28,0.5)] transition-all"
+                    >
+                      <ArrowRight size={16} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bottom Bar */}
+            <div className="relative z-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-white/50 font-medium">
+              <div>
+                © {new Date().getFullYear()} BruttoNettoCalculator.com. Alle Rechte vorbehalten. · Keine Steuerberatung.
+              </div>
+              <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+                <span>Amtliche Steuerwerte 2026 aktiv</span>
+              </div>
+            </div>
+
           </div>
         </footer>
 
