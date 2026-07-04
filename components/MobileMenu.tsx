@@ -46,7 +46,7 @@ export default function MobileMenu() {
       <div
         id="mobile-menu-panel"
         role="menu"
-        className={`mobile-menu absolute right-0 top-16 w-72 rounded-3xl shadow-2xl bg-[#111111] border border-white/15 overflow-hidden ${
+        className={`mobile-menu absolute right-0 top-20 w-72 rounded-3xl shadow-2xl bg-[#111111] border border-white/15 overflow-hidden ${
           open ? "open" : "closed"
         }`}
       >

@@ -149,39 +149,39 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-body bg-black text-white antialiased">
 
         {/* ── Sticky glass header ─────────────────────────────────────── */}
-        <header className="sticky top-0 z-40 bg-black/80 backdrop-blur-xl border-b border-white/10 shadow-[0_6px_35px_rgba(0,0,0,0.85)]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-8 h-24 sm:h-28 flex items-center justify-between">
+        <header className="sticky top-0 z-40 bg-black/85 backdrop-blur-2xl border-b border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.9)]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8 h-28 sm:h-32 flex items-center justify-between">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 sm:gap-4 group" aria-label="BruttoNettoCalculator Startseite">
-              <LogoMark size={44} />
-              <span className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
+            <Link href="/" className="flex items-center gap-3.5 sm:gap-4 group" aria-label="BruttoNettoCalculator Startseite">
+              <LogoMark size={48} />
+              <span className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
                 Brutto<span className="text-gradient-accent">Netto</span>
                 <span className="hidden sm:inline">Calculator</span>
               </span>
             </Link>
 
             {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-2.5" aria-label="Hauptnavigation">
+            <nav className="hidden md:flex items-center gap-3" aria-label="Hauptnavigation">
               {nav.map((n) => {
                 const Icon = n.icon;
                 return (
                   <Link
                     key={n.href}
                     href={n.href}
-                    className="nav-link flex items-center gap-2.5 px-5 py-3.5 rounded-xl text-lg font-bold text-white/90 hover:text-white hover:bg-white/10 transition-all"
+                    className="nav-link flex items-center gap-3 px-6 py-4 rounded-2xl text-xl font-bold text-white/90 hover:text-white hover:bg-white/10 transition-all"
                   >
-                    <Icon size={20} className="text-[#E60A1C]" />
+                    <Icon size={22} className="text-[#E60A1C]" />
                     {n.label}
                   </Link>
                 );
               })}
               <Link
                 href="/rechner/brutto-zu-netto"
-                className="ml-6 flex items-center gap-3 text-lg sm:text-xl font-extrabold px-8 py-3.5 rounded-full text-white no-print transition-all hover:opacity-90 hover:scale-105 shadow-xl"
-                style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)", boxShadow: "0 8px 25px rgba(230,10,28,0.50)" }}
+                className="ml-6 flex items-center gap-3 text-xl font-black px-9 py-4 rounded-full text-white no-print transition-all hover:opacity-90 hover:scale-105 shadow-2xl"
+                style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)", boxShadow: "0 10px 30px rgba(230,10,28,0.55)" }}
               >
-                Berechnen <ArrowRight size={20} />
+                Berechnen <ArrowRight size={22} />
               </Link>
             </nav>
 
