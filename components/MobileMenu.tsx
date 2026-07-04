@@ -37,9 +37,9 @@ export default function MobileMenu() {
         aria-label={open ? "Menü schließen" : "Menü öffnen"}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/10 transition-colors text-white/80 hover:text-white"
+        className="w-11 h-11 flex items-center justify-center rounded-xl hover:bg-white/10 transition-colors text-white/80 hover:text-white"
       >
-        {open ? <X size={20} /> : <Menu size={20} />}
+        {open ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       {/* Dropdown panel */}
