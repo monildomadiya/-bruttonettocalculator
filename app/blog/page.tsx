@@ -6,9 +6,25 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Fintech & Steuer-Ratgeber | BruttoNettoCalculator",
   description: "Amtliche Berechnungen, Tipps zur Lohnsteuer und detaillierte Erklärungen nach § 32a EStG für Arbeitnehmer in Deutschland.",
+  alternates: {
+    canonical: "https://bruttonettocalculator.com/blog",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     title: "Fintech & Steuer-Ratgeber | BruttoNettoCalculator",
     description: "Amtliche Berechnungen und Tipps zum Nettogehalt für 2026 und 2027.",
+    url: "https://bruttonettocalculator.com/blog",
+    type: "website",
   },
 };
 

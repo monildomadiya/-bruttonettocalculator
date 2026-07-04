@@ -44,6 +44,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     alternates: {
       canonical: art.canonical_url || `https://bruttonettocalculator.com/blog/${art.slug}`,
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     openGraph: {
       title: art.og_title || art.meta_title || art.headline,
       description: art.og_description || art.meta_description || art.excerpt || "",

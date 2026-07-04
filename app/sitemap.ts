@@ -1,10 +1,13 @@
 import type { MetadataRoute } from "next";
+import { dbQuery, Article } from "@/lib/db";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 0; // Dynamic sitemap generation
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://bruttonettocalculator.com";
   const now  = new Date();
 
-  const routes: Array<{
+  const staticRoutes: Array<{
     path: string;
     changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
     priority: number;
@@ -22,10 +25,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/datenschutz",               changeFrequency: "yearly",  priority: 0.2 },
   ];
 
-  return routes.map(({ path, changeFrequency, priority }) => ({
+  const sitemapEntries: MetadataRoute.Sitemap = staticRoutes.map(({ path, changeFrequency, priority }) => ({
     url:             `${base}${path}`,
     lastModified:    now,
     changeFrequency,
     priority,
   }));
+
+  // Dynamically fetch all published blog articles for Google indexing
+  try {
+    const articles = await dbQuery<Article[]>("SELECT slug, updated_at, created_at FROM articles WHERE status = 'Published'");
+    if (articles && articles.length > 0) {
+      for (const art of articles) {
+        sitemapEntries.push({
+          url: `${base}/blog/${art.slug}`,
+          lastModified: art.updated_at ? new Date(art.updated_at) : (art.created_at ? new Date(art.created_at) : now),
+          changeFrequency: "weekly",
+          priority: 0.85,
+        });
+      }
+    }
+  } catch (err) {
+    console.error("❌ Sitemap article fetch error:", err);
+  }
+
+  return sitemapEntries;
 }
