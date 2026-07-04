@@ -127,20 +127,20 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero (Inspired by Dark Tech Reference) ──────────────────── */}
-      <section className="hero-bg pt-20 pb-32 px-5 relative">
+      <section className="hero-bg pt-14 sm:pt-20 pb-24 sm:pb-32 px-4 sm:px-5 relative">
         <div className="w-full max-w-6xl mx-auto relative z-10 text-center flex flex-col items-center">
 
           {/* Glowing Pill Badge */}
-          <div className="inline-flex items-center gap-2.5 bg-[#121212] border border-white/20 rounded-full px-6 py-2.5 mb-8 shadow-[0_0_25px_rgba(230,10,28,0.25)] animate-fade-up">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#E60A1C] shadow-[0_0_8px_#E60A1C] animate-pulse" />
-            <span className="font-mono text-xs sm:text-sm uppercase tracking-widest text-white/90 font-bold">
+          <div className="inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-[#121212] border border-white/20 rounded-full px-4 sm:px-6 py-2 sm:py-2.5 mb-6 sm:mb-8 shadow-[0_0_25px_rgba(230,10,28,0.25)] animate-fade-up max-w-[95vw]">
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#E60A1C] shadow-[0_0_8px_#E60A1C] animate-pulse flex-shrink-0" />
+            <span className="font-mono text-[11px] sm:text-sm uppercase tracking-wider sm:tracking-widest text-white/90 font-bold leading-tight">
               OFFIZIELL · § 32A ESTG · STEUERJAHR 2026/2027
             </span>
           </div>
 
           {/* Headline */}
           <h1
-            className="font-display font-extrabold text-display-xl mb-6 w-full max-w-6xl tracking-tight animate-fade-up leading-tight"
+            className="font-display font-extrabold text-display-xl mb-4 sm:mb-6 w-full max-w-6xl tracking-tight animate-fade-up leading-tight px-2"
             style={{ animationDelay: "80ms" }}
           >
             <span className="text-white">Der präzise </span>
@@ -150,7 +150,7 @@ export default function HomePage() {
 
           {/* Sub-headline */}
           <p
-            className="text-xl sm:text-2xl text-white/85 w-full max-w-5xl leading-relaxed mb-10 animate-fade-up font-normal"
+            className="text-base sm:text-xl md:text-2xl text-white/85 w-full max-w-5xl leading-relaxed mb-8 sm:mb-10 animate-fade-up font-normal px-2"
             style={{ animationDelay: "160ms" }}
           >
             Ermitteln Sie in Sekundenschnelle Ihr exaktes Nettogehalt — inklusive Lohnsteuer, 
@@ -159,32 +159,32 @@ export default function HomePage() {
 
           {/* CTA buttons */}
           <div
-            className="flex flex-wrap justify-center gap-4 mb-16 animate-fade-up"
+            className="flex flex-col sm:flex-row justify-center gap-3.5 sm:gap-4 mb-12 sm:mb-16 animate-fade-up w-full sm:w-auto px-4 sm:px-0"
             style={{ animationDelay: "240ms" }}
           >
             <a
               href="#rechner"
-              className="btn-primary text-base sm:text-lg font-bold px-9 py-4 rounded-full shadow-[0_0_25px_rgba(230,10,28,0.5)] hover:shadow-[0_0_35px_rgba(230,10,28,0.8)] transition-all flex items-center gap-3"
+              className="btn-primary text-base sm:text-lg font-bold px-7 sm:px-9 py-4 rounded-full shadow-[0_0_25px_rgba(230,10,28,0.5)] hover:shadow-[0_0_35px_rgba(230,10,28,0.8)] transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
             >
-              <Sparkles size={20} /> Jetzt Gehalt berechnen
+              <Sparkles size={20} className="flex-shrink-0" /> Jetzt Gehalt berechnen
             </a>
             <Link
               href="/lexikon"
-              className="btn-outline text-base sm:text-lg font-semibold px-9 py-4 rounded-full border-white/20 hover:border-white hover:bg-white/10 transition-all flex items-center gap-3"
+              className="btn-outline text-base sm:text-lg font-semibold px-7 sm:px-9 py-4 rounded-full border-white/20 hover:border-white hover:bg-white/10 transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
             >
-              Steuer-Lexikon <ArrowRight size={20} />
+              Steuer-Lexikon <ArrowRight size={20} className="flex-shrink-0" />
             </Link>
           </div>
 
           {/* Trust badges */}
           <div
-            className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm font-mono text-white/70 animate-fade-up border-t border-white/15 pt-8 w-full max-w-6xl"
+            className="flex flex-wrap justify-center gap-x-4 sm:gap-x-8 gap-y-2.5 text-xs sm:text-sm font-mono text-white/70 animate-fade-up border-t border-white/15 pt-6 sm:pt-8 w-full max-w-6xl px-2"
             style={{ animationDelay: "320ms" }}
           >
             {trustBadges.map(({ label, icon: Icon }) => (
-              <span key={label} className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10">
-                <Icon size={15} className="text-[#E60A1C]" />
-                <span className="text-white/90 font-medium">{label}</span>
+              <span key={label} className="flex items-center gap-2 bg-white/5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/10">
+                <Icon size={14} className="text-[#E60A1C] flex-shrink-0" />
+                <span className="text-white/90 font-medium whitespace-nowrap">{label}</span>
               </span>
             ))}
           </div>
@@ -266,9 +266,9 @@ export default function HomePage() {
           </div>
           <a
             href="#rechner"
-            className="relative z-10 btn-primary flex-shrink-0 text-base sm:text-lg font-bold px-9 py-4 rounded-full shadow-[0_0_25px_rgba(230,10,28,0.5)] hover:shadow-[0_0_35px_rgba(230,10,28,0.8)] transition-all flex items-center gap-3"
+            className="relative z-10 btn-primary flex-shrink-0 text-base sm:text-lg font-bold px-8 sm:px-9 py-4 rounded-full shadow-[0_0_25px_rgba(230,10,28,0.5)] hover:shadow-[0_0_35px_rgba(230,10,28,0.8)] transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
           >
-            Jetzt berechnen <ArrowRight size={20} />
+            Jetzt berechnen <ArrowRight size={20} className="flex-shrink-0" />
           </a>
         </div>
       </section>

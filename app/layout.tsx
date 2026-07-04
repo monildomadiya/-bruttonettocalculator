@@ -215,7 +215,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           {/* Footer grid */}
-          <div className="max-w-6xl mx-auto px-5 py-14 grid sm:grid-cols-4 gap-10 text-base text-white/75">
+          <div className="max-w-6xl mx-auto px-4 sm:px-5 py-10 sm:py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 text-base text-white/75">
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <LogoMark size={32} />

@@ -188,17 +188,17 @@ export default function Calculator() {
       <div className="grid md:grid-cols-[1fr_1.15fr]">
 
         {/* ═══ LEFT — Inputs ════════════════════════════════════════ */}
-        <div className="p-6 sm:p-10 bg-[#101010] border-b md:border-b-0 md:border-r border-white/15 flex flex-col justify-between">
+        <div className="p-4 sm:p-10 bg-[#101010] border-b md:border-b-0 md:border-r border-white/15 flex flex-col justify-between">
 
           <div>
             {/* Header */}
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
               <div>
                 <p className="font-mono text-xs uppercase tracking-widest text-white/50 mb-1 font-bold">Eingabe · Parameter</p>
-                <h2 className="font-display text-2xl font-extrabold text-white">Ihr Bruttogehalt</h2>
+                <h2 className="font-display text-xl sm:text-2xl font-extrabold text-white">Ihr Bruttogehalt</h2>
               </div>
               {/* Monthly / Annual toggle */}
-              <div className="flex items-center gap-1 bg-black/80 border border-white/15 rounded-2xl p-1.5 text-sm font-semibold">
+              <div className="flex items-center self-start sm:self-auto gap-1 bg-black/80 border border-white/15 rounded-2xl p-1.5 text-sm font-semibold">
                 {[{ label: "/Monat", val: false }, { label: "/Jahr", val: true }].map(({ label, val }) => (
                   <button
                     key={label}
@@ -215,7 +215,7 @@ export default function Calculator() {
             </div>
 
             {/* ── Brutto input ────────────────────────────────────── */}
-            <div className="mb-8">
+            <div className="mb-6 sm:mb-8">
               <label htmlFor="brutto-input" className="text-base font-bold text-white block mb-3">
                 Bruttogehalt pro Monat
               </label>
@@ -227,7 +227,7 @@ export default function Calculator() {
                   value={inputStr}
                   onChange={(e) => handleBruttoChange(e.target.value)}
                   onFocus={(e) => e.target.select()}
-                  className={`w-full font-mono text-2xl font-bold rounded-2xl border px-6 py-4.5 pr-20 transition-all outline-none ${
+                  className={`w-full font-mono text-xl sm:text-2xl font-bold rounded-2xl border px-4 sm:px-6 py-3.5 sm:py-4.5 pr-16 sm:pr-20 transition-all outline-none ${
                     inputError
                       ? "border-red-500 bg-red-950/40 text-red-200 focus:border-red-500"
                       : "border-white/20 bg-[#161616] text-white focus:border-[#E60A1C] focus:bg-[#1C1C1C]"
@@ -236,7 +236,7 @@ export default function Calculator() {
                   aria-describedby={inputError ? "brutto-error" : undefined}
                   aria-invalid={!!inputError}
                 />
-                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-white/50 font-mono text-base font-bold">EUR</span>
+                <span className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 text-white/50 font-mono text-sm sm:text-base font-bold">EUR</span>
               </div>
               {inputError && (
                 <p id="brutto-error" role="alert" className="flex items-center gap-2 text-sm text-red-500 mt-2 font-medium">
@@ -269,15 +269,15 @@ export default function Calculator() {
             </div>
 
             {/* ── Steuerjahr ────────────────────────────────────── */}
-            <div className="mb-8">
+            <div className="mb-6 sm:mb-8">
               <span className="text-base font-bold text-white block mb-3">Steuerjahr</span>
-              <div className="flex gap-4">
+              <div className="flex gap-2.5 sm:gap-4">
                 {([2026, 2027] as Steuerjahr[]).map((j) => (
                   <button
                     key={j}
                     id={`jahr-${j}`}
                     onClick={() => setJahr(j)}
-                    className={`flex-1 py-3.5 rounded-2xl text-base font-bold border transition-all ${
+                    className={`flex-1 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base font-bold border transition-all ${
                       jahr === j
                         ? "text-white border-transparent shadow-[0_0_20px_rgba(230,10,28,0.4)]"
                         : "border-white/20 text-white/60 hover:border-white/40 hover:bg-white/5 hover:text-white"
@@ -289,7 +289,7 @@ export default function Calculator() {
                 ))}
               </div>
               {jahr === 2027 && (
-                <div className="flex items-start gap-3 text-sm text-amber-300 mt-3 bg-amber-950/40 rounded-2xl p-4 border border-amber-500/30 font-medium">
+                <div className="flex items-start gap-3 text-xs sm:text-sm text-amber-300 mt-3 bg-amber-950/40 rounded-2xl p-3.5 sm:p-4 border border-amber-500/30 font-medium">
                   <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-amber-400" />
                   <span>Für 2027 liegen noch keine finalen Tarifwerte vor (Stand: Juli 2026). Es werden vorläufig die amtlichen 2026-Werte angezeigt.</span>
                 </div>
@@ -297,9 +297,9 @@ export default function Calculator() {
             </div>
 
             {/* ── Steuerklasse ──────────────────────────────────── */}
-            <div className="mb-8">
+            <div className="mb-6 sm:mb-8">
               <span className="text-base font-bold text-white block mb-3">Steuerklasse</span>
-              <div className="grid grid-cols-6 gap-2.5">
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-2.5">
                 {([1, 2, 3, 4, 5, 6] as Steuerklasse[]).map((sk) => (
                   <button
                     key={sk}
@@ -307,7 +307,7 @@ export default function Calculator() {
                     onClick={() => setSteuerklasse(sk)}
                     title={STEUERKLASSE_INFO[sk]}
                     aria-pressed={steuerklasse === sk}
-                    className={`sk-tab py-3.5 rounded-2xl text-base sm:text-lg font-extrabold border transition-all ${
+                    className={`sk-tab py-3 sm:py-3.5 rounded-2xl text-base sm:text-lg font-extrabold border transition-all ${
                       steuerklasse === sk
                         ? "text-white border-transparent shadow-[0_0_20px_rgba(230,10,28,0.4)]"
                         : "border-white/20 text-white/60 hover:border-white/40 hover:bg-white/5 hover:text-white"
@@ -318,9 +318,9 @@ export default function Calculator() {
                   </button>
                 ))}
               </div>
-              <p className="text-sm text-white/70 mt-2.5 flex items-center gap-2 font-medium">
-                <ChevronRight size={16} className="text-[#E60A1C]" />
-                {STEUERKLASSE_INFO[steuerklasse]}
+              <p className="text-xs sm:text-sm text-white/70 mt-2.5 flex items-center gap-2 font-medium">
+                <ChevronRight size={16} className="text-[#E60A1C] flex-shrink-0" />
+                <span>{STEUERKLASSE_INFO[steuerklasse]}</span>
               </p>
             </div>
 
@@ -352,17 +352,17 @@ export default function Calculator() {
         </div>
 
         {/* ═══ RIGHT — Results (LUXURY FINTECH DASHBOARD) ════════════ */}
-        <div className="p-6 sm:p-10 bg-[#0B0B0B] text-white flex flex-col justify-between">
+        <div className="p-4 sm:p-10 bg-[#0B0B0B] text-white flex flex-col justify-between">
 
           <div>
             {/* Header row */}
-            <div className="flex items-center justify-between mb-8">
-              <span className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest px-4 py-2 bg-[#E60A1C]/15 border border-[#E60A1C]/30 text-[#E60A1C] rounded-full">
-                <span className="w-2 h-2 rounded-full bg-[#E60A1C] animate-pulse" />
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
+              <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-widest px-3 sm:px-4 py-1.5 sm:py-2 bg-[#E60A1C]/15 border border-[#E60A1C]/30 text-[#E60A1C] rounded-full">
+                <span className="w-2 h-2 rounded-full bg-[#E60A1C] animate-pulse flex-shrink-0" />
                 ERGEBNIS · {jahr}
               </span>
-              <div className="flex items-center gap-2.5">
-                <span className="font-mono text-xs font-semibold px-3 py-1.5 rounded-xl border border-white/15 text-white/60 bg-white/5">
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 rounded-xl border border-white/15 text-white/60 bg-white/5">
                   Juli 2026
                 </span>
                 <button
@@ -370,7 +370,7 @@ export default function Calculator() {
                   onClick={handleCopy}
                   aria-label="Ergebnis-Link kopieren"
                   title="Link für dieses Ergebnis kopieren"
-                  className="flex items-center gap-2 text-xs font-semibold px-3.5 py-1.5 rounded-xl border border-white/15 text-white/80 bg-white/5 hover:text-white hover:bg-white/15 hover:border-white/35 transition-all"
+                  className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-semibold px-3 sm:px-3.5 py-1.5 rounded-xl border border-white/15 text-white/80 bg-white/5 hover:text-white hover:bg-white/15 hover:border-white/35 transition-all"
                 >
                   {copied
                     ? <><Check size={14} className="text-[#E60A1C]" /><span>Kopiert!</span></>
@@ -381,28 +381,28 @@ export default function Calculator() {
             </div>
 
             {/* ── Main Netto Hero Card ───────────────────────────── */}
-            <div className="bg-gradient-to-br from-[#181818] via-[#121212] to-[#0D0D0D] border border-white/20 rounded-3xl p-6 sm:p-8 mb-8 shadow-[0_10px_30px_rgba(0,0,0,0.8)] relative group overflow-hidden">
+            <div className="bg-gradient-to-br from-[#181818] via-[#121212] to-[#0D0D0D] border border-white/20 rounded-3xl p-5 sm:p-8 mb-6 sm:mb-8 shadow-[0_10px_30px_rgba(0,0,0,0.8)] relative group overflow-hidden">
               <div className="absolute top-0 right-0 w-72 h-72 bg-[#E60A1C]/15 rounded-full blur-3xl pointer-events-none group-hover:bg-[#E60A1C]/25 transition-all duration-500" />
               
               <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-                <div>
-                  <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-white/70 font-semibold mb-2">
-                    <Sparkles size={14} className="text-[#E60A1C]" />
-                    {isJahresansicht ? "Jahres-Nettogehalt" : "Monatliches Nettogehalt"}
+                <div className="w-full">
+                  <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-white/70 font-semibold mb-2">
+                    <Sparkles size={14} className="text-[#E60A1C] flex-shrink-0" />
+                    <span>{isJahresansicht ? "Jahres-Nettogehalt" : "Monatliches Nettogehalt"}</span>
                   </div>
-                  <p className="font-display font-black tabular-nums leading-none tracking-tight text-white text-4xl sm:text-6xl number-animate">
+                  <p className="font-display font-black tabular-nums leading-none tracking-tight text-white text-3xl sm:text-5xl md:text-6xl number-animate break-all sm:break-normal">
                     {formatEUR(animatedNetto)}
                   </p>
                   {isJahresansicht && (
-                    <p className="text-sm text-white/60 mt-3 font-medium flex items-center gap-1.5">
+                    <p className="text-xs sm:text-sm text-white/60 mt-3 font-medium flex items-center gap-1.5">
                       Entspricht <strong className="text-white font-bold">{formatEUR(result.nettoMonat)}</strong> / Monat
                     </p>
                   )}
                 </div>
 
                 <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-t-0 border-white/10">
-                  <span className="text-sm font-medium text-white/60">Netto-Anteil</span>
-                  <span className="text-3xl sm:text-4xl font-extrabold font-display text-white mt-0.5">
+                  <span className="text-xs sm:text-sm font-medium text-white/60">Netto-Anteil</span>
+                  <span className="text-2xl sm:text-4xl font-extrabold font-display text-white mt-0.5">
                     {bm > 0 ? Math.round((nm / bm) * 100) : 0}%
                   </span>
                 </div>
@@ -410,17 +410,17 @@ export default function Calculator() {
             </div>
 
             {/* ── Donut + legend + bar Card ────────────────────────── */}
-            <div className="bg-[#121212] border border-white/15 rounded-3xl p-6 sm:p-7 mb-8 shadow-lg">
-              <p className="text-xs font-mono uppercase tracking-widest text-white/60 font-bold mb-5">Verteilung von Brutto zu Netto</p>
+            <div className="bg-[#121212] border border-white/15 rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-lg">
+              <p className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-white/60 font-bold mb-5">Verteilung von Brutto zu Netto</p>
               
-              <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-5">
+              <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-8 mb-5">
                 {/* LARGE Donut */}
                 <div className="relative flex-shrink-0">
                   <DonutChart netto={nm} steuer={tm} sv={sm} total={bm} />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
-                      <p className="text-xs font-mono uppercase text-white/50 font-bold leading-none">Netto</p>
-                      <p className="text-xl font-black text-white leading-tight mt-1">
+                      <p className="text-[10px] sm:text-xs font-mono uppercase text-white/50 font-bold leading-none">Netto</p>
+                      <p className="text-lg sm:text-xl font-black text-white leading-tight mt-1">
                         {bm > 0 ? Math.round((nm / bm) * 100) : 0}%
                       </p>
                     </div>
@@ -428,19 +428,19 @@ export default function Calculator() {
                 </div>
 
                 {/* Clear Legend */}
-                <div className="flex-1 w-full space-y-3.5">
+                <div className="flex-1 w-full space-y-3">
                   {[
                     { color: "#FFFFFF", label: "Nettogehalt",          val: showVal(nm), icon: CircleDollarSign },
                     { color: "#E60A1C", label: "Lohnsteuer & Soli",    val: showVal(tm), icon: Landmark },
                     { color: "#808080", label: "Sozialversicherungen", val: showVal(sm), icon: HeartPulse },
                   ].map(({ color, label, val, icon: Icon }) => (
-                    <div key={label} className="flex items-center justify-between text-base font-semibold">
-                      <div className="flex items-center gap-3">
-                        <span className="w-3.5 h-3.5 rounded-full flex-shrink-0 shadow-sm" style={{ background: color }} />
-                        <Icon size={18} className="text-white/70 flex-shrink-0" />
-                        <span className="text-white/90">{label}</span>
+                    <div key={label} className="flex items-center justify-between text-sm sm:text-base font-semibold gap-2">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <span className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full flex-shrink-0 shadow-sm" style={{ background: color }} />
+                        <Icon size={16} className="text-white/70 flex-shrink-0" />
+                        <span className="text-white/90 truncate">{label}</span>
                       </div>
-                      <span className="font-mono font-bold text-white tabular-nums text-lg">{formatEUR(val)}</span>
+                      <span className="font-mono font-bold text-white tabular-nums text-base sm:text-lg flex-shrink-0">{formatEUR(val)}</span>
                     </div>
                   ))}
                 </div>
@@ -454,68 +454,68 @@ export default function Calculator() {
 
             {/* ── Detailed breakdown (PROPER STRATIFIED CARDS) ──────── */}
             <div className="space-y-2 pt-2">
-              <p className="text-xs font-mono uppercase tracking-widest text-white/60 font-bold mb-3">Detaillierte Aufschlüsselung</p>
+              <p className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-white/60 font-bold mb-3">Detaillierte Aufschlüsselung</p>
 
               {/* Brutto Row */}
-              <div className="flex justify-between items-center py-4 px-5 bg-white/[0.04] rounded-2xl border border-white/15 text-lg font-bold text-white">
-                <span className="flex items-center gap-2.5">
-                  <CircleDollarSign size={20} className="text-[#E60A1C]" />
-                  Bruttogehalt
+              <div className="flex justify-between items-center py-3.5 sm:py-4 px-4 sm:px-5 bg-white/[0.04] rounded-2xl border border-white/15 text-base sm:text-lg font-bold text-white gap-2">
+                <span className="flex items-center gap-2 min-w-0">
+                  <CircleDollarSign size={18} className="text-[#E60A1C] flex-shrink-0" />
+                  <span className="truncate">Bruttogehalt</span>
                 </span>
-                <span className="font-mono font-extrabold text-xl text-white tabular-nums">{formatEUR(showVal(bm))}</span>
+                <span className="font-mono font-extrabold text-lg sm:text-xl text-white tabular-nums flex-shrink-0">{formatEUR(showVal(bm))}</span>
               </div>
 
               {/* Lohnsteuer Group */}
-              <div className="flex justify-between items-center py-3.5 px-5 bg-white/[0.02] rounded-xl border border-white/10 text-base sm:text-lg font-bold text-white mt-4">
-                <span className="flex items-center gap-2.5">
-                  <Landmark size={18} className="text-[#E60A1C]" />
-                  Steuern Gesamt
+              <div className="flex justify-between items-center py-3 sm:py-3.5 px-4 sm:px-5 bg-white/[0.02] rounded-xl border border-white/10 text-sm sm:text-lg font-bold text-white mt-4 gap-2">
+                <span className="flex items-center gap-2 min-w-0">
+                  <Landmark size={16} className="text-[#E60A1C] flex-shrink-0" />
+                  <span className="truncate">Steuern Gesamt</span>
                 </span>
-                <span className="font-mono font-bold text-lg text-[#FF2436] tabular-nums">-{formatEUR(showVal(tm))}</span>
+                <span className="font-mono font-bold text-base sm:text-lg text-[#FF2436] tabular-nums flex-shrink-0">-{formatEUR(showVal(tm))}</span>
               </div>
               
-              <div className="pl-6 pr-4 space-y-2 text-sm sm:text-base text-white/80 font-medium py-1">
-                <div className="flex justify-between items-center py-1.5 border-b border-white/5">
-                  <span>Einkommensteuer (Lohnsteuer)</span>
-                  <span className="font-mono font-semibold tabular-nums text-white/90">-{formatEUR(showVal(result.steuer.einkommensteuerJahr / 12))}</span>
+              <div className="pl-2 sm:pl-6 pr-1 sm:pr-4 space-y-1.5 text-xs sm:text-base text-white/80 font-medium py-1">
+                <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-white/5 gap-2">
+                  <span className="leading-snug">Einkommensteuer (Lohnsteuer)</span>
+                  <span className="font-mono font-semibold tabular-nums text-white/90 flex-shrink-0">-{formatEUR(showVal(result.steuer.einkommensteuerJahr / 12))}</span>
                 </div>
-                <div className="flex justify-between items-center py-1.5 border-b border-white/5">
-                  <span>Solidaritätszuschlag</span>
-                  <span className="font-mono font-semibold tabular-nums text-white/90">-{formatEUR(showVal(result.steuer.soliJahr / 12))}</span>
+                <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-white/5 gap-2">
+                  <span className="leading-snug">Solidaritätszuschlag</span>
+                  <span className="font-mono font-semibold tabular-nums text-white/90 flex-shrink-0">-{formatEUR(showVal(result.steuer.soliJahr / 12))}</span>
                 </div>
                 {result.steuer.kirchensteuerJahr > 0 && (
-                  <div className="flex justify-between items-center py-1.5">
-                    <span>Kirchensteuer</span>
-                    <span className="font-mono font-semibold tabular-nums text-white/90">-{formatEUR(showVal(result.steuer.kirchensteuerJahr / 12))}</span>
+                  <div className="flex justify-between items-start sm:items-center py-1.5 gap-2">
+                    <span className="leading-snug">Kirchensteuer</span>
+                    <span className="font-mono font-semibold tabular-nums text-white/90 flex-shrink-0">-{formatEUR(showVal(result.steuer.kirchensteuerJahr / 12))}</span>
                   </div>
                 )}
               </div>
 
               {/* Sozialabgaben Group */}
-              <div className="flex justify-between items-center py-3.5 px-5 bg-white/[0.02] rounded-xl border border-white/10 text-base sm:text-lg font-bold text-white mt-4">
-                <span className="flex items-center gap-2.5">
-                  <HeartPulse size={18} className="text-[#E60A1C]" />
-                  Sozialabgaben Gesamt
+              <div className="flex justify-between items-center py-3 sm:py-3.5 px-4 sm:px-5 bg-white/[0.02] rounded-xl border border-white/10 text-sm sm:text-lg font-bold text-white mt-4 gap-2">
+                <span className="flex items-center gap-2 min-w-0">
+                  <HeartPulse size={16} className="text-[#E60A1C] flex-shrink-0" />
+                  <span className="truncate">Sozialabgaben Gesamt</span>
                 </span>
-                <span className="font-mono font-bold text-lg text-[#FF2436] tabular-nums">-{formatEUR(showVal(sm))}</span>
+                <span className="font-mono font-bold text-base sm:text-lg text-[#FF2436] tabular-nums flex-shrink-0">-{formatEUR(showVal(sm))}</span>
               </div>
 
-              <div className="pl-6 pr-4 space-y-2 text-sm sm:text-base text-white/80 font-medium py-1">
-                <div className="flex justify-between items-center py-1.5 border-b border-white/5">
-                  <span>Rentenversicherung (9,30 %)</span>
-                  <span className="font-mono font-semibold tabular-nums text-white/90">-{formatEUR(showVal(result.sv.rente / 12))}</span>
+              <div className="pl-2 sm:pl-6 pr-1 sm:pr-4 space-y-1.5 text-xs sm:text-base text-white/80 font-medium py-1">
+                <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-white/5 gap-2">
+                  <span className="leading-snug">Rentenversicherung (9,30 %)</span>
+                  <span className="font-mono font-semibold tabular-nums text-white/90 flex-shrink-0">-{formatEUR(showVal(result.sv.rente / 12))}</span>
                 </div>
-                <div className="flex justify-between items-center py-1.5 border-b border-white/5">
-                  <span>Krankenversicherung (ca. 8,75 %)</span>
-                  <span className="font-mono font-semibold tabular-nums text-white/90">-{formatEUR(showVal(result.sv.kranken / 12))}</span>
+                <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-white/5 gap-2">
+                  <span className="leading-snug">Krankenversicherung (ca. 8,75 %)</span>
+                  <span className="font-mono font-semibold tabular-nums text-white/90 flex-shrink-0">-{formatEUR(showVal(result.sv.kranken / 12))}</span>
                 </div>
-                <div className="flex justify-between items-center py-1.5 border-b border-white/5">
-                  <span>Pflegeversicherung</span>
-                  <span className="font-mono font-semibold tabular-nums text-white/90">-{formatEUR(showVal(result.sv.pflege / 12))}</span>
+                <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-white/5 gap-2">
+                  <span className="leading-snug">Pflegeversicherung</span>
+                  <span className="font-mono font-semibold tabular-nums text-white/90 flex-shrink-0">-{formatEUR(showVal(result.sv.pflege / 12))}</span>
                 </div>
-                <div className="flex justify-between items-center py-1.5">
-                  <span>Arbeitslosenversicherung (1,30 %)</span>
-                  <span className="font-mono font-semibold tabular-nums text-white/90">-{formatEUR(showVal(result.sv.arbeitslosen / 12))}</span>
+                <div className="flex justify-between items-start sm:items-center py-1.5 gap-2">
+                  <span className="leading-snug">Arbeitslosenversicherung (1,30 %)</span>
+                  <span className="font-mono font-semibold tabular-nums text-white/90 flex-shrink-0">-{formatEUR(showVal(result.sv.arbeitslosen / 12))}</span>
                 </div>
               </div>
 
@@ -524,14 +524,14 @@ export default function Calculator() {
           </div>
 
           {/* ── Tax rates footer ────────────────────────────── */}
-          <div className="bg-[#141414] border border-white/15 rounded-2xl p-5 mt-8 flex flex-wrap justify-between items-center gap-4 text-sm sm:text-base text-white/80 font-medium">
+          <div className="bg-[#141414] border border-white/15 rounded-2xl p-4 sm:p-5 mt-6 sm:mt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 text-xs sm:text-base text-white/80 font-medium">
             <span className="flex items-center gap-2">
-              <TrendingUp size={16} className="text-[#E60A1C]" />
-              Grenzsteuersatz: <strong className="text-white ml-1 font-bold">{result.grenzsteuersatzPct.toFixed(1)} %</strong>
+              <TrendingUp size={16} className="text-[#E60A1C] flex-shrink-0" />
+              <span>Grenzsteuersatz: <strong className="text-white ml-1 font-bold">{result.grenzsteuersatzPct.toFixed(1)} %</strong></span>
             </span>
             <span className="flex items-center gap-2">
-              <Briefcase size={16} className="text-[#E60A1C]" />
-              Ø-Steuersatz: <strong className="text-white ml-1 font-bold">{result.durchschnittssteuersatzPct.toFixed(1)} %</strong>
+              <Briefcase size={16} className="text-[#E60A1C] flex-shrink-0" />
+              <span>Ø-Steuersatz: <strong className="text-white ml-1 font-bold">{result.durchschnittssteuersatzPct.toFixed(1)} %</strong></span>
             </span>
           </div>
 
