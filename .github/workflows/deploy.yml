@@ -21,8 +21,17 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           script: |
+            mkdir -p /var/www/bruttonetto
             cd /var/www/bruttonetto
-            git pull origin main
+            if [ ! -d ".git" ]; then
+              echo "Git repo not found. Cloning..."
+              git clone https://github.com/monildomadiya/-bruttonettocalculator.git .
+            else
+              echo "Pulling latest changes..."
+              git reset --hard
+              git pull origin main
+            fi
             npm install
             npm run build
-            pm2 restart bruttonetto_live
+            pm2 restart bruttonetto_live || pm2 start npm --name "bruttonetto_live" -- run start
+            pm2 save
