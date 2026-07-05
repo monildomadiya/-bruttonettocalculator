@@ -7,6 +7,20 @@ export const metadata: Metadata = {
   description:
     "Rechnen Sie Ihr Bruttogehalt direkt in Ihr Nettogehalt um — aktuell für 2026 mit allen offiziellen Steuern und Abgaben.",
   alternates: { canonical: "https://bruttonettocalculator.com/rechner/brutto-zu-netto" },
+  openGraph: {
+    title: "Brutto zu Netto Rechner 2026 | Gehaltsberechnung",
+    description: "Bruttogehalt in Nettogehalt umrechnen — aktuell für 2026 mit Lohnsteuer, Soli & Sozialabgaben.",
+    url: "https://bruttonettocalculator.com/rechner/brutto-zu-netto",
+    locale: "de_DE",
+    type: "website",
+    images: [{ url: "https://bruttonettocalculator.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Brutto zu Netto Rechner 2026",
+    description: "Bruttogehalt sofort in Nettogehalt umrechnen — kostenlos & präzise.",
+    images: ["https://bruttonettocalculator.com/og-image.png"],
+  },
 };
 
 export default function BruttoZuNettoPage() {

@@ -8,6 +8,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://bruttonettocalculator.com/ueber-uns",
   },
+  openGraph: {
+    title: "Über uns & Redaktionsstandards | BruttoNettoCalculator.com",
+    description: "Unsere Mission, Transparenz und fachliche Prüf-Standards für den Gehaltsrechner 2026.",
+    url: "https://bruttonettocalculator.com/ueber-uns",
+    locale: "de_DE",
+    type: "website",
+    images: [{ url: "https://bruttonettocalculator.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Über uns | BruttoNettoCalculator.com",
+    description: "Unsere Mission und Redaktionsstandards für den kostenlosen Brutto Netto Rechner 2026.",
+    images: ["https://bruttonettocalculator.com/og-image.png"],
+  },
 };
 
 export default function UeberUnsPage() {

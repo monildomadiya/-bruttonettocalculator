@@ -6,6 +6,13 @@ export const metadata: Metadata = {
   description: "Informationen zum Datenschutz, zur Verarbeitung personenbezogener Daten und zu Ihren Rechten auf BruttoNettoCalculator.com.",
   alternates: { canonical: "https://bruttonettocalculator.com/datenschutz" },
   robots: { index: true, follow: true },
+  openGraph: {
+    title: "Datenschutzerklärung | BruttoNettoCalculator.com",
+    description: "Datenschutz & Verarbeitung personenbezogener Daten gem. DSGVO auf BruttoNettoCalculator.com.",
+    url: "https://bruttonettocalculator.com/datenschutz",
+    locale: "de_DE",
+    type: "website",
+  },
 };
 
 export default function DatenschutzPage() {

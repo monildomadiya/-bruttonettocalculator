@@ -5,6 +5,13 @@ export const metadata: Metadata = {
   title: "Kontakt | Brutto Netto Rechner 2026",
   description: "Treten Sie mit unserem Team in Kontakt bei Fragen, Feedback oder Verbesserungsvorschlägen zum Gehaltsrechner.",
   alternates: { canonical: "https://bruttonettocalculator.com/kontakt" },
+  openGraph: {
+    title: "Kontakt | BruttoNettoCalculator.com",
+    description: "Fragen, Feedback oder Verbesserungsvorschläge — kontaktieren Sie unser Team.",
+    url: "https://bruttonettocalculator.com/kontakt",
+    locale: "de_DE",
+    type: "website",
+  },
 };
 
 export default function KontaktPage() {

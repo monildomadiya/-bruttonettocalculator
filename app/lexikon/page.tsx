@@ -5,6 +5,20 @@ export const metadata: Metadata = {
   title: "Steuer-Lexikon | Brutto Netto Rechner 2026",
   description: "Kurz und verständlich erklärt: die wichtigsten Begriffe rund um Brutto, Netto, Steuern und Sozialversicherung.",
   alternates: { canonical: "https://bruttonettocalculator.com/lexikon" },
+  openGraph: {
+    title: "Steuer-Lexikon | Brutto Netto Rechner 2026",
+    description: "Alle wichtigen Steuerbegriffe einfach erklärt: Grundfreibetrag, Soli, Beitragsbemessungsgrenze & mehr.",
+    url: "https://bruttonettocalculator.com/lexikon",
+    locale: "de_DE",
+    type: "website",
+    images: [{ url: "https://bruttonettocalculator.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Steuer-Lexikon 2026",
+    description: "Steuerbegriffe einfach erklärt: Grundfreibetrag, Soli, Beitragsbemessungsgrenze & mehr.",
+    images: ["https://bruttonettocalculator.com/og-image.png"],
+  },
 };
 
 const begriffe = [

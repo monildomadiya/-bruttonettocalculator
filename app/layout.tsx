@@ -101,6 +101,14 @@ export const metadata: Metadata = {
     siteName: "BruttoNettoCalculator.com",
     locale: "de_DE",
     type: "website",
+    images: [
+      {
+        url: "https://bruttonettocalculator.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -108,10 +116,12 @@ export const metadata: Metadata = {
     description:
       "Nettogehalt berechnen — Lohnsteuer, Soli, alle Steuerklassen, Mindestlohn 2027, BKK Zusatzbeitrag 2026, Firmenwagenrechner & Düsseldorfer Tabelle.",
     creator: "@bruttonetto_de",
+    site: "@bruttonetto_de",
+    images: ["https://bruttonettocalculator.com/og-image.png"],
   },
   alternates: {
-    canonical: "/",
-    languages: { "de-DE": "/" },
+    canonical: "https://bruttonettocalculator.com",
+    languages: { "de-DE": "https://bruttonettocalculator.com" },
   },
   icons: {
     icon: [

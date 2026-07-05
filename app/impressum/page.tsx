@@ -6,6 +6,18 @@ export const metadata: Metadata = {
   description: "Amtliche Angaben, Anbieterkennzeichnung gem. § 5 TMG und rechtliche Hinweise zum Gehaltsrechner BruttoNettoCalculator.com.",
   alternates: { canonical: "https://bruttonettocalculator.com/impressum" },
   robots: { index: true, follow: true },
+  openGraph: {
+    title: "Impressum | BruttoNettoCalculator.com",
+    description: "Anbieterkennzeichnung gem. § 5 TMG für BruttoNettoCalculator.com.",
+    url: "https://bruttonettocalculator.com/impressum",
+    locale: "de_DE",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Impressum | BruttoNettoCalculator.com",
+    description: "Anbieterkennzeichnung gem. § 5 TMG für BruttoNettoCalculator.com.",
+  },
 };
 
 export default function ImpressumPage() {

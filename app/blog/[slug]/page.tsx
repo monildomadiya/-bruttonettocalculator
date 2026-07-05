@@ -125,7 +125,9 @@ export default async function ArticleReaderPage({ params }: { params: { slug: st
       "name": "BruttoNettoCalculator",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://bruttonettocalculator.com/logo.png"
+        "url": "https://bruttonettocalculator.com/BRUTTO-NETTO-LOGO.svg",
+        "width": 280,
+        "height": 65
       }
     },
     "mainEntityOfPage": {

@@ -7,6 +7,20 @@ export const metadata: Metadata = {
   description:
     "Rechnen Sie Ihr gewünschtes Nettogehalt in das benötigte Bruttogehalt um — exakt kalkuliert für Verhandlungen im Steuerjahr 2026.",
   alternates: { canonical: "https://bruttonettocalculator.com/rechner/netto-zu-brutto" },
+  openGraph: {
+    title: "Netto zu Brutto Rechner 2026 | Gehaltsberechnung",
+    description: "Zielnettogehalt in Bruttogehalt umrechnen — ideal für Gehaltsverhandlungen 2026.",
+    url: "https://bruttonettocalculator.com/rechner/netto-zu-brutto",
+    locale: "de_DE",
+    type: "website",
+    images: [{ url: "https://bruttonettocalculator.com/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Netto zu Brutto Rechner 2026",
+    description: "Nettowunschgehalt in Bruttobedarf umrechnen — kostenlos & präzise.",
+    images: ["https://bruttonettocalculator.com/og-image.png"],
+  },
 };
 
 export default function NettoZuBruttoPage() {
