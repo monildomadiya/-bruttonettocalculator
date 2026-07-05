@@ -10,9 +10,9 @@ import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 
 export const metadata: Metadata = {
-  title: "Brutto Netto Rechner 2026 — Gehaltsrechner Deutschland kostenlos",
+  title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
   description:
-    "Kostenloser Brutto Netto Rechner 2026: Nettogehalt sofort berechnen — Lohnsteuer, Soli, alle 6 Steuerklassen, Sozialabgaben nach § 32a EStG. Ohne Anmeldung.",
+    "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli, alle 6 Steuerklassen. Mit Firmenwagenrechner, Rentenrechner, Mindestlohn 2027 & BKK/TK Zusatzbeitrag 2026. Ohne Anmeldung, 100% kostenlos.",
   alternates: { canonical: "/" },
 };
 
@@ -43,7 +43,7 @@ const faqs = [
   },
   {
     q: "Kann ich diesen Rechner als Brutto Netto Rechner 2027 und Lohnrechner 2027 nutzen?",
-    a: "Ja! Unser Gehaltsrechner fungiert auch für das Steuerjahr 2027 als präziser Brutto Netto Rechner für 2027 sowie als Netto Brutto Rechner 2027. Schalten Sie oben im Lohnrechner einfach das Jahr von 2026 auf 2027 um, um die vorläufigen Netto-Unterschiede und Entlastungen durch den neuen Grundfreibetrag zu vergleichen.",
+    a: "Ja! Unser Gehaltsrechner fungiert auch für das Steuerjahr 2027 als präziser Brutto Netto Rechner für 2027 sowie als Netto Brutto Rechner 2027. Schalten Sie oben im Lohnrechner einfach das Jahr von 2026 auf 2027 um, um die vorläufigen Netto-Unterschiede und Entlastungen durch den neuen Grundfreibetrag sowie die geänderten Beitragssätze (z.B. Mindestlohn 2027) zu vergleichen.",
   },
   {
     q: "Gilt das Tool auch als Gehaltsrechner mit Auto (Firmenwagenrechner & 1%-Regelung)?",
@@ -52,6 +52,26 @@ const faqs = [
   {
     q: "Kann ich das Tool auch als Arbeitslosengeld Rechner zur Orientierung verwenden?",
     a: "Ja. Das amtliche Arbeitslosengeld I (ALG I) beträgt in Deutschland 60 % (bzw. 67 % mit Kind) Ihres durchschnittlichen Nettoentgelts der letzten 12 Monate. Sie können unseren Gehaltsrechner ideal als Orientierungs-Arbeitslosengeld Rechner nutzen, indem Sie Ihr bisheriges Brutto eingeben und 60 % bzw. 67 % vom errechneten Nettogehalt ermitteln.",
+  },
+  {
+    q: "Was ist der BKK Zusatzbeitrag 2026 und wie beeinflusst er das Nettogehalt?",
+    a: "Der durchschnittliche Zusatzbeitrag der gesetzlichen Krankenkassen (GKV) beträgt 2026 ca. 1,7 %. Kassen wie BKK, HKK oder TK haben individuelle Sätze. Unser Brutto Netto Rechner 2026 berücksichtigt den aktuellen GKV-Zusatzbeitrag automatisch — Sie erhalten so ein möglichst präzises Nettogehalt auf Basis Ihrer tatsächlichen Krankenversicherungskosten.",
+  },
+  {
+    q: "Was ist der Mindestlohn 2027?",
+    a: "Der gesetzliche Mindestlohn in Deutschland soll ab 2027 schrittweise erhöht werden. Aktuell (2026) liegt er bei 12,82 € brutto pro Stunde. Unser Lohnrechner 2027 zeigt Ihnen bereits heute, wie sich eine Mindestlohnerhöhung auf Ihr monatliches Nettogehalt in allen 6 Steuerklassen auswirken würde.",
+  },
+  {
+    q: "Was ist die Düsseldorfer Tabelle 2026?",
+    a: "Die Düsseldorfer Tabelle 2026 ist eine Leitlinie der deutschen Oberlandesgerichte für die Berechnung von Kindesunterhalt. Sie orientiert sich am Nettoeinkommen des Unterhaltspflichtigen. Unser Brutto Netto Rechner hilft Ihnen, Ihr genaues Nettoeinkommen zu ermitteln, das als Grundlage für die Düsseldorfer Tabelle 2026 dient.",
+  },
+  {
+    q: "Was ist die Pfändungstabelle 2026 und welcher Teil des Gehalts ist pfändungsfrei?",
+    a: "Die Pfändungstabelle 2026 (§ 850c ZPO) legt den pfändungsfreien Betrag des Nettoeinkommens fest. Für Alleinstehende ohne Unterhaltspflicht liegt der monatliche Pfändungsfreibetrag 2026 bei 1.491,75 € netto. Unser Gehaltsrechner hilft Ihnen, zunächst Ihr exaktes Nettoeinkommen zu ermitteln, damit Sie die Pfändungstabelle 2026 korrekt anwenden können.",
+  },
+  {
+    q: "Wie hoch ist das Durchschnittsgehalt in Deutschland 2026?",
+    a: "Das durchschnittliche Bruttogehalt in Deutschland liegt 2026 bei ca. 4.323 € pro Monat (Vollzeit). Das entspricht einem Nettogehalt von ca. 2.600–2.900 € (je nach Steuerklasse). Mit unserem Brutto Netto Rechner können Sie das Nettogehalt für jeden Betrag sofort und kostenlos berechnen — egal ob 2.800, 3.200 oder 4.200 € brutto.",
   },
   {
     q: "Wie werden KI und moderne Web-Technologien eingesetzt?",
@@ -67,37 +87,37 @@ const infoCards = [
   {
     Icon:  FileText,
     title: "Was ist der Grundfreibetrag?",
-    text:  "Bis 12.348 € (2026, Alleinstehende) zahlen Sie keine Einkommensteuer. Er sichert das steuerliche Existenzminimum ab. Für Verheiratete gilt das Doppelte: 24.696 €.",
+    text:  "Bis 12.348 € (2026, Alleinstehende) zahlen Sie keine Einkommensteuer. Er sichert das steuerliche Existenzminimum ab. Für Verheiratete gilt das Doppelte: 24.696 €. Auch der Kinderfreibetrag reduziert Ihre Steuerlast erheblich.",
     accentColor: "#E60A1C",
   },
   {
     Icon:  TrendingUp,
     title: "Wie hoch ist der Spitzensteuersatz?",
-    text:  "Der Spitzensteuersatz von 42 % greift 2026 ab einem zvE von 69.879 €. Die Reichensteuer (45 %) gilt ab 277.826 €.",
+    text:  "Der Spitzensteuersatz von 42 % greift 2026 ab einem zvE von 69.879 €. Die Reichensteuer (45 %) gilt ab 277.826 €. Für Berechnungen von 60.000 Brutto in Netto ist dieser Satz entscheidend.",
     accentColor: "#FFFFFF",
   },
   {
     Icon:  Building2,
     title: "Was zahlt der Arbeitgeber?",
-    text:  "Neben Ihrem Nettogehalt trägt der Arbeitgeber die andere Hälfte der Sozialversicherungsbeiträge (Rente, Kranken, Pflege, Arbeitslosen) sowie weitere Umlagen.",
+    text:  "Neben Ihrem Nettogehalt trägt der Arbeitgeber die andere Hälfte der Sozialversicherungsbeiträge (Rente, Kranken, Pflege, Arbeitslosen) sowie weitere Umlagen. Der BKK, HKK und TK Zusatzbeitrag 2026 ist bereits im Rechner hinterlegt.",
     accentColor: "#E60A1C",
   },
   {
     Icon:  Wallet,
     title: "Brutto Netto Rechner 2027",
-    text:  "Nutzen Sie unser Tool als Brutto Netto Rechner für 2027, Netto Brutto Rechner 2027 und Lohnrechner 2027, um vorläufige Reformwerte und Entlastungen abzugleichen.",
+    text:  "Nutzen Sie unser Tool als Brutto Netto Rechner für 2027, Netto Brutto Rechner 2027 und Lohnrechner 2027, um voräufige Reformwerte, Mindestlohn 2027 und Entlastungen abzugleichen.",
     accentColor: "#FFFFFF",
   },
   {
     Icon:  SlidersHorizontal,
-    title: "Gehaltsrechner mit Auto",
-    text:  "Als präziser Gehaltsrechner mit Auto bzw. Firmenwagenrechner berechnen Sie Ihren geldwerten Vorteil (1%-Regelung) einfach direkt im Bruttolohn mit ein.",
+    title: "Firmenwagenrechner (1%-Regelung)",
+    text:  "Als präziser Gehaltsrechner mit Auto bzw. Firmenwagenrechner berechnen Sie Ihren geldwerten Vorteil (1%-Regelung) direkt im Bruttolohn mit ein. Ideal für den Brutto Netto Rechner mit Firmenwagen.",
     accentColor: "#E60A1C",
   },
   {
     Icon:  Shield,
-    title: "Arbeitslosengeld Rechner",
-    text:  "Verwenden Sie unser Tool als Orientierungs-Arbeitslosengeld Rechner: Errechnen Sie Ihr Nettoentgelt und leiten Sie daraus 60 % bzw. 67 % (mit Kind) ALG I ab.",
+    title: "Rentenrechner & Arbeitslosengeld",
+    text:  "Nutzen Sie unser Tool als Brutto Netto Rentenrechner oder Orientierungs-Arbeitslosengeld Rechner. Errechnen Sie Ihr Nettoentgelt und leiten Sie daraus 60 % bzw. 67 % (mit Kind) ALG I oder Ihre Rente ab.",
     accentColor: "#FFFFFF",
   },
 ];
@@ -135,11 +155,11 @@ const steps = [
 const webAppSchema = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Brutto Netto Rechner Deutschland",
+  "name": "Brutto Netto Rechner Deutschland 2026/2027",
   "url": "https://bruttonettocalculator.com",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "All",
-  "description": "Präziser Brutto Netto Rechner für Deutschland. Gehaltsberechnung nach amtlichen Vorgaben § 32a EStG für das Steuerjahr 2026/2027 mit allen 6 Steuerklassen und Sozialabgaben.",
+  "description": "Präziser Brutto Netto Rechner für Deutschland. Gehaltsberechnung nach amtlichen Vorgaben § 32a EStG für das Steuerjahr 2026/2027 mit allen 6 Steuerklassen, BKK/TK Zusatzbeitrag 2026, Mindestlohn 2027, Firmenwagen (1%-Regelung) und Rentenrechner.",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -149,8 +169,15 @@ const webAppSchema = {
     "Berechnung von Lohnsteuer, Solidaritätszuschlag und Kirchensteuer",
     "Unterstützung aller 6 deutschen Steuerklassen",
     "Sozialabgaben nach SV-Rechengrößen 2026 und 2027",
+    "BKK, HKK und TK Zusatzbeitrag 2026 eingerechnet",
+    "Mindestlohn 2027 Vorschau",
+    "Firmenwagenrechner (1%-Regelung / geldwerter Vorteil)",
+    "Brutto Netto Rentenrechner",
+    "Düsseldorfer Tabelle 2026 Referenz",
+    "Pfändungstabelle 2026 Hinweis",
     "Jahres- und Monatsansicht",
-    "Bundesland-Vergleich für Kirchensteuer und Pflegeversicherung"
+    "Bundesland-Vergleich für Kirchensteuer und Pflegeversicherung",
+    "Durchschnittsgehalt Deutschland Vergleich"
   ]
 };
 
@@ -205,8 +232,14 @@ export default function HomePage() {
             className="text-base sm:text-xl md:text-2xl text-white/85 w-full max-w-5xl leading-relaxed mb-8 sm:mb-10 animate-fade-up font-normal px-2"
             style={{ animationDelay: "160ms" }}
           >
-            Ermitteln Sie in Sekundenschnelle Ihr exaktes Nettogehalt — inklusive Lohnsteuer, 
-            Solidaritätszuschlag und allen amtlichen Sozialabgaben. Nutzen Sie unser Tool auch als präzisen <strong className="text-white font-semibold">Brutto Netto Rechner für 2027</strong>, als <strong className="text-white font-semibold">Lohnrechner 2027</strong> oder für spezielle Berechnungen wie einen <strong className="text-white font-semibold">Firmenwagenrechner (Gehaltsrechner mit Auto)</strong> und <strong className="text-white font-semibold">Arbeitslosengeld Rechner</strong>.
+            Ermitteln Sie in Sekundenschnelle Ihr exaktes Nettogehalt — inklusive Lohnsteuer,
+            Solidaritätszuschlag und allen amtlichen Sozialabgaben. Nutzen Sie unser Tool auch als{" "}
+            <strong className="text-white font-semibold">Brutto Netto Rechner 2027</strong>,{" "}
+            <strong className="text-white font-semibold">Lohnrechner 2027</strong>,{" "}
+            <strong className="text-white font-semibold">Firmenwagenrechner (1%-Regelung)</strong>,{" "}
+            <strong className="text-white font-semibold">Brutto Netto Rentenrechner</strong>,{" "}
+            <strong className="text-white font-semibold">Arbeitslosengeld Rechner</strong> oder für Berechnungen nach{" "}
+            <strong className="text-white font-semibold">Steuerklasse 1, 3, 4 & 6</strong>. BKK, TK & HKK Zusatzbeitrag 2026 bereits eingerechnet.
           </p>
 
           {/* CTA buttons */}
