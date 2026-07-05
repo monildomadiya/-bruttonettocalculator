@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Calculator, Calendar, BookOpen, HelpCircle, Newspaper } from "lucide-react";
+import { Calculator, Calendar, BookOpen, HelpCircle, Newspaper, LayoutList } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 
 const nav = [
@@ -12,6 +12,7 @@ const nav = [
   { href: "/blog",                      label: "Blog",          icon: Newspaper },
   { href: "/lexikon",                   label: "Lexikon",       icon: BookOpen },
   { href: "/faq",                       label: "FAQ",           icon: HelpCircle },
+  { href: "/steuerklassen",             label: "Steuerklassen", icon: LayoutList },
 ];
 
 export default function SiteHeader() {

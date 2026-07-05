@@ -29,8 +29,18 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/steuerklassen",
-        destination: "/",
+        source: "/steuerklassen-vergleich",
+        destination: "/steuerklassen",
+        permanent: true,
+      },
+      {
+        source: "/mindestlohn-rechner",
+        destination: "/mindestlohn",
+        permanent: true,
+      },
+      {
+        source: "/pfandungstabelle",
+        destination: "/pfaendungstabelle",
         permanent: true,
       },
       {

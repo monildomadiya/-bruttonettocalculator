@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X, ArrowRight, Calculator, Calendar, BookOpen, HelpCircle, Newspaper } from "lucide-react";
+import { Menu, X, ArrowRight, Calculator, Calendar, BookOpen, HelpCircle, Newspaper, LayoutList } from "lucide-react";
 
 const nav = [
   { href: "/",                          label: "Rechner",       icon: Calculator },
@@ -10,6 +10,7 @@ const nav = [
   { href: "/blog",                      label: "Blog",          icon: Newspaper },
   { href: "/lexikon",                   label: "Lexikon",       icon: BookOpen },
   { href: "/faq",                       label: "FAQ",           icon: HelpCircle },
+  { href: "/steuerklassen",             label: "Steuerklassen", icon: LayoutList },
 ];
 
 export default function MobileMenu() {
