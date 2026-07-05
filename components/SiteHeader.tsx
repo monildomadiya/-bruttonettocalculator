@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Calculator, Calendar, BookOpen, HelpCircle, Newspaper } from "lucide-react";
 import MobileMenu from "./MobileMenu";
@@ -13,33 +14,6 @@ const nav = [
   { href: "/faq",                       label: "FAQ",           icon: HelpCircle },
 ];
 
-function LogoMark({ size = 32 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 32 32"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect width="32" height="32" rx="8" fill="url(#logoGrad)" />
-      <path
-        d="M7 16h6M13 16l4-5M13 16l4 5M19 11h6M19 21h6"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <defs>
-        <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#E60A1C" />
-          <stop offset="100%" stopColor="#000000" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
 export default function SiteHeader() {
   const pathname = usePathname();
 
@@ -50,15 +24,18 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 bg-black/85 backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
-      <div className="max-w-6xl mx-auto px-5 h-16 sm:h-20 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-5 h-[72px] sm:h-[84px] md:h-[92px] flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0" aria-label="BruttoNettoCalculator Startseite">
-          <LogoMark size={34} />
-          <span className="font-display font-extrabold text-[19px] sm:text-2xl text-white tracking-tight">
-            Brutto<span className="text-gradient-accent">Netto</span>
-            <span className="hidden sm:inline">Calculator</span>
-          </span>
+        <Link href="/" className="flex items-center group flex-shrink-0" aria-label="BruttoNettoCalculator Startseite">
+          <Image
+            src="/BRUTTO-NETTO-LOGO.svg"
+            alt="BruttoNetto Calculator Logo"
+            width={280}
+            height={65}
+            className="h-[38px] sm:h-[45px] md:h-[50px] w-auto transition-transform duration-200 group-hover:scale-[1.02]"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}

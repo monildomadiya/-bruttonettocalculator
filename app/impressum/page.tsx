@@ -3,6 +3,8 @@ import { Landmark } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Impressum | Brutto Netto Rechner 2026",
+  description: "Amtliche Angaben, Anbieterkennzeichnung gem. § 5 TMG und rechtliche Hinweise zum Gehaltsrechner BruttoNettoCalculator.com.",
+  alternates: { canonical: "https://bruttonettocalculator.com/impressum" },
   robots: { index: true, follow: true },
 };
 

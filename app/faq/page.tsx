@@ -5,6 +5,7 @@ import AccordionFaq from "@/components/AccordionFaq";
 export const metadata: Metadata = {
   title: "Häufige Fragen (FAQ) | Brutto Netto Rechner 2026",
   description: "Alle wichtigen Antworten rund um Brutto, Netto, Lohnsteuer, Steuerklassen und Abgaben in Deutschland.",
+  alternates: { canonical: "https://bruttonettocalculator.com/faq" },
 };
 
 const faqs = [

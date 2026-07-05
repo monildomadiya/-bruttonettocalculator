@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Calendar, Tag, Share2, Calculator, CheckCircle2, ChevronRight } from "lucide-react";
 import { dbQuery, Article } from "@/lib/db";
 import { Metadata } from "next";
+import { primaryReviewer } from "@/lib/authors";
+import ReviewerByline from "@/components/ReviewerByline";
 
 export const revalidate = 0; // Always fresh
 
@@ -29,6 +31,15 @@ async function getArticle(slug: string): Promise<Article | null> {
 
 function tryParseJson(str: string) {
   try { return JSON.parse(str); } catch { return []; }
+}
+
+export async function generateStaticParams() {
+  try {
+    const articles = await dbQuery<Article[]>("SELECT slug FROM articles WHERE status = 'Published'");
+    return articles.map((art) => ({ slug: art.slug }));
+  } catch (err) {
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -103,9 +114,11 @@ export default async function ArticleReaderPage({ params }: { params: { slug: st
     "datePublished": article.created_at || new Date().toISOString(),
     "dateModified": article.updated_at || article.created_at || new Date().toISOString(),
     "author": {
-      "@type": "Organization",
-      "name": "BruttoNettoCalculator Redaktion",
-      "url": "https://bruttonettocalculator.com"
+      "@type": "Person",
+      "name": primaryReviewer.name,
+      "jobTitle": primaryReviewer.credentials,
+      "image": primaryReviewer.photo,
+      "url": primaryReviewer.profile_url
     },
     "publisher": {
       "@type": "Organization",
@@ -206,6 +219,10 @@ export default async function ArticleReaderPage({ params }: { params: { slug: st
                 <span>{article.read_time || "3 min read"}</span>
               </div>
             </div>
+          </div>
+
+          <div className="pt-2">
+            <ReviewerByline />
           </div>
         </header>
 

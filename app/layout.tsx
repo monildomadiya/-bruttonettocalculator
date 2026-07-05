@@ -17,7 +17,17 @@ export const metadata: Metadata = {
     "Kostenloser Brutto Netto Rechner für 2026: Berechnen Sie Ihr Nettogehalt aus dem Bruttogehalt — inkl. Lohnsteuer, Soli, Kranken-, Renten-, Pflege- und Arbeitslosenversicherung. Alle 6 Steuerklassen.",
   keywords: [
     "brutto netto rechner",
+    "brutto netto rechner 2027",
+    "brutto netto 2027",
+    "brutto-netto-rechner 2027",
+    "netto brutto rechner 2027",
+    "lohnrechner 2027",
+    "netto 2027",
+    "brutto netto rechner für 2027",
     "gehaltsrechner",
+    "gehaltsrechner mit auto",
+    "firmenwagenrechner",
+    "arbeitslosengeld rechner",
     "netto rechner 2026",
     "lohnrechner deutschland",
     "steuerrechner",
@@ -61,11 +71,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.png?v=3", type: "image/png" },
+      { url: "/favicon.ico?v=3", type: "image/x-icon" },
     ],
-    shortcut: ["/favicon.png"],
+    shortcut: ["/favicon.png?v=3"],
     apple: [
-      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.png?v=3", type: "image/png" },
     ],
   },
   other: {
@@ -108,43 +119,6 @@ const orgSchema = {
   url: "https://bruttonettocalculator.com",
   description: "Kostenloser Online-Gehaltsrechner für Deutschland",
 };
-
-const nav = [
-  { href: "/",                          label: "Rechner",       icon: Calculator },
-  { href: "/brutto-netto-rechner-2027", label: "Vorschau 2027", icon: Calendar },
-  { href: "/blog",                      label: "Blog",          icon: Newspaper },
-  { href: "/lexikon",                   label: "Lexikon",       icon: BookOpen },
-  { href: "/faq",                       label: "FAQ",           icon: HelpCircle },
-];
-
-
-/* ── Logo mark ────────────────────────────────────────────────────── */
-function LogoMark({ size = 32 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 32 32"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect width="32" height="32" rx="8" fill="url(#logoGrad)" />
-      <path
-        d="M7 16h6M13 16l4-5M13 16l4 5M19 11h6M19 21h6"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <defs>
-        <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#E60A1C" />
-          <stop offset="100%" stopColor="#000000" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

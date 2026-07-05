@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { dbQuery, Article } from "@/lib/db";
+import { getCommonGrossSalaryAmounts } from "@/data/wage-stats";
 
 export const revalidate = 0; // Dynamic sitemap generation
 
@@ -31,6 +32,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency,
     priority,
   }));
+
+  // Add all programmatic long-tail salary pages
+  const longTailAmounts = getCommonGrossSalaryAmounts();
+  for (const amount of longTailAmounts) {
+    sitemapEntries.push({
+      url: `${base}/rechner/${amount}-euro-brutto-netto`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    });
+  }
 
   // Dynamically fetch all published blog articles for Google indexing
   try {

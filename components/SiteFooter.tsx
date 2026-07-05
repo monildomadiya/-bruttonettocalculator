@@ -1,35 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-
-function LogoMark({ size = 32 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 32 32"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect width="32" height="32" rx="8" fill="url(#logoGrad)" />
-      <path
-        d="M7 16h6M13 16l4-5M13 16l4 5M19 11h6M19 21h6"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <defs>
-        <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#E60A1C" />
-          <stop offset="100%" stopColor="#000000" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
 
 export default function SiteFooter() {
   const pathname = usePathname();
@@ -52,12 +26,15 @@ export default function SiteFooter() {
           
           {/* Col 1: Brand Info (Spans 4 cols on lg) */}
           <div className="lg:col-span-4 space-y-5">
-            <div className="flex items-center gap-3">
-              <LogoMark size={36} />
-              <span className="font-display font-black text-xl text-white tracking-tight">
-                Brutto<span className="text-gradient-accent">Netto</span>Calculator<span className="text-[#E60A1C]">.</span>
-              </span>
-            </div>
+            <Link href="/" className="inline-block group" aria-label="BruttoNettoCalculator Startseite">
+              <Image
+                src="/BRUTTO-NETTO-LOGO.svg"
+                alt="BruttoNetto Calculator Logo"
+                width={220}
+                height={52}
+                className="h-8 sm:h-10 w-auto opacity-90 transition-opacity group-hover:opacity-100"
+              />
+            </Link>
             <p className="leading-relaxed text-white/60 text-sm font-normal pr-4">
               Der präzise Gehaltsrechner für Deutschland nach § 32a EStG. Berechnen Sie Ihr Nettogehalt in Sekundenschnelle — kostenlos, ohne Registrierung und DSGVO-konform.
             </p>

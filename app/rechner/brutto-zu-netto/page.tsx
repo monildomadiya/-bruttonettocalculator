@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Brutto zu Netto Rechner | Gehaltsberechnung 2026",
   description:
     "Rechnen Sie Ihr Bruttogehalt direkt in Ihr Nettogehalt um — aktuell für 2026 mit allen offiziellen Steuern und Abgaben.",
+  alternates: { canonical: "https://bruttonettocalculator.com/rechner/brutto-zu-netto" },
 };
 
 export default function BruttoZuNettoPage() {

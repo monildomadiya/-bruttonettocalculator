@@ -4,6 +4,7 @@ import { Mail, MessageSquare, Clock } from "lucide-react";
 export const metadata: Metadata = {
   title: "Kontakt | Brutto Netto Rechner 2026",
   description: "Treten Sie mit unserem Team in Kontakt bei Fragen, Feedback oder Verbesserungsvorschlägen zum Gehaltsrechner.",
+  alternates: { canonical: "https://bruttonettocalculator.com/kontakt" },
 };
 
 export default function KontaktPage() {

@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { Loader2, LogOut, ShieldCheck, AlertCircle } from "lucide-react";
+import Image from "next/image";
+import { Loader2, LogOut, ShieldCheck, AlertCircle, Sparkles, Database, Globe, Layers, User, ExternalLink, Activity } from "lucide-react";
 
 /* ── Exact PromptKing Emblem SVG ──────────────────────────────────────── */
 function PromptKingEmblem({ size = 130 }: { size?: number }) {
@@ -256,31 +257,75 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
 
   // Render Admin Dashboard when authorized!
   return (
-    <div className="min-h-screen bg-[#060606] text-white flex flex-col">
-      {/* Security Top Bar */}
-      <div className="bg-[#0e0e0e] border-b border-white/15 py-3 px-4 sm:px-8 sticky top-0 z-50 shadow-md">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-extrabold uppercase tracking-widest text-white/80 flex items-center gap-1.5">
-              <ShieldCheck size={14} className="text-emerald-400" />
-              <span>Admin Center — Secure Access (`/admin-secure`)</span>
-            </span>
+    <div className="min-h-screen bg-[#050505] text-white flex flex-col font-sans selection:bg-[#E60A1C]/30 selection:text-white">
+      {/* Executive SaaS Top Navigation Header */}
+      <header className="bg-[#0b0b0b]/90 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+          
+          {/* Left Brand Logo & System Status */}
+          <div className="flex items-center gap-4">
+            <a href="/admin-secure" className="flex items-center gap-3.5 group">
+              <Image
+                src="/BRUTTO-NETTO-LOGO.svg"
+                alt="BruttoNetto Calculator Logo"
+                width={190}
+                height={45}
+                className="h-7 sm:h-8 w-auto transition-transform duration-200 group-hover:scale-[1.02]"
+                priority
+              />
+              <div className="hidden sm:block border-l border-white/15 pl-3">
+                <div className="font-extrabold text-xs tracking-tight text-white flex items-center gap-1.5">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF2E44] to-[#ff7e8a]">ADMIN PRO</span>
+                  <span className="px-1.5 py-0.5 rounded bg-white/10 text-[8px] font-black uppercase text-white/90">2026</span>
+                </div>
+                <div className="text-[10px] text-white/50 font-semibold flex items-center gap-1.5 mt-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+                  <span>MySQL Ready</span>
+                </div>
+              </div>
+            </a>
           </div>
 
-          <button
-            onClick={handleLogout}
-            type="button"
-            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-400 text-xs font-extrabold uppercase tracking-wider transition-all"
-          >
-            <LogOut size={13} />
-            <span>Abmelden (Logout)</span>
-          </button>
-        </div>
-      </div>
+          {/* Center Navigation Shortcuts */}
+          <div className="hidden md:flex items-center gap-1.5 bg-[#121212] p-1.5 rounded-full border border-white/10 text-xs font-bold shadow-inner">
+            <a href="/admin-secure" className={`px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-all ${!pathname.includes("/new") && !pathname.includes("/edit") ? "bg-gradient-to-r from-[#E60A1C] to-[#FF2436] text-white shadow-md" : "text-white/70 hover:text-white hover:bg-white/5"}`}>
+              <Layers size={14} className={!pathname.includes("/new") && !pathname.includes("/edit") ? "text-white" : "text-[#FF2E44]"} />
+              <span>Beiträge & Dashboard</span>
+            </a>
+            <a href="/admin-secure/articles/new" className={`px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-all ${pathname.includes("/new") ? "bg-gradient-to-r from-[#E60A1C] to-[#FF2436] text-white shadow-md" : "text-white/70 hover:text-white hover:bg-white/5"}`}>
+              <Sparkles size={14} className={pathname.includes("/new") ? "text-white" : "text-amber-400"} />
+              <span>+ Neuer Artikel</span>
+            </a>
+            <a href="/" target="_blank" className="px-4 py-1.5 rounded-full text-white/70 hover:text-white hover:bg-white/5 transition-all flex items-center gap-1.5">
+              <Globe size={14} className="text-blue-400" />
+              <span>Live Webseite ↗</span>
+            </a>
+          </div>
 
-      {/* Main Content */}
-      <div className="flex-1">
+          {/* Right Executive Actions & User Profile */}
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs font-semibold text-white/90 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+              <User size={13} className="text-amber-300" />
+              <span>Superuser Admin</span>
+            </div>
+
+            <button
+              onClick={handleLogout}
+              type="button"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-400 hover:text-red-300 text-xs font-extrabold uppercase tracking-wider transition-all hover:scale-105 active:scale-95 shadow-sm"
+              title="Sicher abmelden"
+            >
+              <LogOut size={13} />
+              <span className="hidden sm:inline">Abmelden</span>
+            </button>
+          </div>
+
+        </div>
+      </header>
+
+      {/* Main Workspace */}
+      <div className="flex-1 flex flex-col">
         {children}
       </div>
     </div>

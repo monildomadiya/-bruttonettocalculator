@@ -4,9 +4,10 @@ import { useMemo, useState, useCallback, useEffect, useRef } from "react";
 import {
   AlertCircle, Share2, Check, ChevronRight,
   TrendingUp, Landmark, HeartPulse, Briefcase,
-  CircleDollarSign, Sparkles,
+  CircleDollarSign, Sparkles, MapPin, Calendar, ChevronDown, ChevronUp,
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr } from "@/lib/taxCalculator";
+import ReviewerByline from "@/components/ReviewerByline";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
@@ -99,16 +100,24 @@ function BreakdownBar({ steuer, sv, netto, total }: {
 }
 
 /* ─── Main Calculator ──────────────────────────────────────────────── */
-export default function Calculator() {
-  const [bruttoMonat,  setBruttoMonat]  = useState<number>(3800);
-  const [inputStr,     setInputStr]     = useState<string>("3800");
+interface CalculatorProps {
+  initialBrutto?: number;
+  initialJahr?: Steuerjahr;
+  initialSk?: Steuerklasse;
+}
+
+export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1 }: CalculatorProps = {}) {
+  const [bruttoMonat,  setBruttoMonat]  = useState<number>(initialBrutto);
+  const [inputStr,     setInputStr]     = useState<string>(String(initialBrutto));
   const [inputError,   setInputError]   = useState<string>("");
-  const [jahr,         setJahr]         = useState<Steuerjahr>(2026);
-  const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
+  const [jahr,         setJahr]         = useState<Steuerjahr>(initialJahr);
+  const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(initialSk);
   const [kinderlosUeber23, setKinderlosUeber23] = useState(true);
   const [kirche,       setKirche]       = useState(false);
   const [isJahresansicht, setIsJahresansicht]   = useState(false);
   const [copied,       setCopied]       = useState(false);
+  const [showBundesland, setShowBundesland] = useState(false);
+  const [showYearCompare, setShowYearCompare] = useState(false);
 
   const verheiratet = steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5;
 
@@ -157,6 +166,39 @@ export default function Calculator() {
     [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, steuerklasse]
   );
 
+  const resBW_BY = useMemo(() => calculateNetto({
+    bruttoMonat: Math.max(0, bruttoMonat || 0),
+    jahr,
+    verheiratet,
+    kinderlosUeber23,
+    kirche: true,
+    kirchensteuerSatz: 0.08,
+    steuerklasse,
+  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse]);
+
+  const resOtherStates = useMemo(() => calculateNetto({
+    bruttoMonat: Math.max(0, bruttoMonat || 0),
+    jahr,
+    verheiratet,
+    kinderlosUeber23,
+    kirche: true,
+    kirchensteuerSatz: 0.09,
+    steuerklasse,
+  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse]);
+
+  const otherYear = jahr === 2026 ? 2027 : 2026;
+  const resOtherYear = useMemo(() => calculateNetto({
+    bruttoMonat: Math.max(0, bruttoMonat || 0),
+    jahr: otherYear,
+    verheiratet,
+    kinderlosUeber23,
+    kirche,
+    kirchensteuerSatz: 0.09,
+    steuerklasse,
+  }), [bruttoMonat, otherYear, verheiratet, kinderlosUeber23, kirche, steuerklasse]);
+
+  const diffYear = result.nettoMonat - resOtherYear.nettoMonat;
+
   const animatedNetto = useAnimatedValue(
     isJahresansicht ? result.nettoJahr : result.nettoMonat
   );
@@ -181,8 +223,12 @@ export default function Calculator() {
   const bm = result.bruttoMonat;
 
   return (
-    <div className="rounded-3xl overflow-hidden border border-white/20 bg-[#101010] shadow-[0_0_60px_rgba(0,0,0,0.95)] w-full max-w-full">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.15fr] w-full max-w-full min-w-0">
+    <div className="w-full">
+      <div className="flex justify-center mb-6">
+        <ReviewerByline />
+      </div>
+      <div className="rounded-3xl overflow-hidden border border-white/20 bg-[#101010] shadow-[0_0_60px_rgba(0,0,0,0.95)] w-full max-w-full">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.15fr] w-full max-w-full min-w-0">
 
         {/* ═══ LEFT — Inputs ════════════════════════════════════════ */}
         <div className="p-4 sm:p-10 bg-[#101010] border-b md:border-b-0 md:border-r border-white/15 flex flex-col justify-between w-full max-w-full min-w-0">
@@ -532,8 +578,130 @@ export default function Calculator() {
             </span>
           </div>
 
+          {/* ── Expandable: Bundesland Comparison ──────────────────────── */}
+          <div className="mt-4 bg-[#141414] border border-white/15 rounded-2xl overflow-hidden transition-all shadow-lg">
+            <button
+              type="button"
+              onClick={() => setShowBundesland(!showBundesland)}
+              className="w-full p-4 sm:p-5 flex items-center justify-between text-left hover:bg-white/5 transition-colors group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-[#E60A1C]/15 border border-[#E60A1C]/30 flex items-center justify-center text-[#E60A1C] font-bold shrink-0">
+                  <MapPin size={16} />
+                </div>
+                <div>
+                  <div className="text-sm sm:text-base font-bold text-white group-hover:text-[#E60A1C] transition-colors">
+                    So unterscheidet sich Ihr Netto je Bundesland
+                  </div>
+                  <div className="text-xs text-white/50">
+                    Kirchensteuer-Tarife (8 % vs. 9 %) & Pflegeversicherung regional
+                  </div>
+                </div>
+              </div>
+              <div className="text-white/60 group-hover:text-white ml-2 shrink-0">
+                {showBundesland ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </div>
+            </button>
+
+            {showBundesland && (
+              <div className="p-4 sm:p-5 border-t border-white/10 bg-black/40 space-y-4 text-xs sm:text-sm text-white/80">
+                <p className="leading-relaxed text-white/70">
+                  Die Höhe der Abzüge hängt in Deutschland von Ihrem Wohnsitz-Bundesland ab. Bei Kirchensteuerpflicht gilt in Bayern und Baden-Württemberg ein ermäßigter Satz von <strong>8 %</strong>, in allen anderen 14 Bundesländern <strong>9 %</strong>. Zudem tragen Arbeitnehmer in Sachsen einen um 0,5 % höheren Eigenanteil an der Pflegeversicherung.
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="bg-white/5 p-3.5 rounded-xl border border-white/10">
+                    <div className="text-xs font-mono text-amber-400 font-bold mb-1">8 % K-Steuer</div>
+                    <div className="font-bold text-white text-sm sm:text-base mb-1">Bayern & Baden-Württemberg</div>
+                    <div className="text-xs text-white/60 mb-2">Bei Kirchensteuerpflicht im Jahr {jahr}:</div>
+                    <div className="font-mono font-extrabold text-white text-base sm:text-lg bg-black/50 p-2 rounded border border-white/10 flex justify-between items-center">
+                      <span>Netto ({isJahresansicht ? "Jahr" : "Mon."}):</span>
+                      <span className="text-emerald-400">{formatEUR(showVal(resBW_BY.nettoMonat))}</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/5 p-3.5 rounded-xl border border-white/10">
+                    <div className="text-xs font-mono text-rose-400 font-bold mb-1">9 % K-Steuer</div>
+                    <div className="font-bold text-white text-sm sm:text-base mb-1">Übrige 14 Bundesländer</div>
+                    <div className="text-xs text-white/60 mb-2">Bei Kirchensteuerpflicht im Jahr {jahr}:</div>
+                    <div className="font-mono font-extrabold text-white text-base sm:text-lg bg-black/50 p-2 rounded border border-white/10 flex justify-between items-center">
+                      <span>Netto ({isJahresansicht ? "Jahr" : "Mon."}):</span>
+                      <span className="text-emerald-400">{formatEUR(showVal(resOtherStates.nettoMonat))}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ── Expandable: Year Comparison ────────────────────────────── */}
+          <div className="mt-3 bg-[#141414] border border-white/15 rounded-2xl overflow-hidden transition-all shadow-lg">
+            <button
+              type="button"
+              onClick={() => setShowYearCompare(!showYearCompare)}
+              className="w-full p-4 sm:p-5 flex items-center justify-between text-left hover:bg-white/5 transition-colors group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-[#E60A1C]/15 border border-[#E60A1C]/30 flex items-center justify-center text-[#E60A1C] font-bold shrink-0">
+                  <Calendar size={16} />
+                </div>
+                <div>
+                  <div className="text-sm sm:text-base font-bold text-white group-hover:text-[#E60A1C] transition-colors">
+                    Vergleich {jahr} vs. {otherYear} (Steuerreform & Tarifverlauf)
+                  </div>
+                  <div className="text-xs text-white/50">
+                    {diffYear !== 0 ? (
+                      <span>Differenz: <strong className={diffYear > 0 ? "text-emerald-400" : "text-rose-400"}>{diffYear > 0 ? `+${formatEUR(showVal(diffYear))}` : formatEUR(showVal(diffYear))}</strong> Netto ({isJahresansicht ? "/ Jahr" : "/ Monat"})</span>
+                    ) : (
+                      <span>Vergleichen Sie Ihr Netto zwischen Steuerjahr 2026 und 2027</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="text-white/60 group-hover:text-white ml-2 shrink-0">
+                {showYearCompare ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </div>
+            </button>
+
+            {showYearCompare && (
+              <div className="p-4 sm:p-5 border-t border-white/10 bg-black/40 space-y-4 text-xs sm:text-sm text-white/80">
+                <p className="leading-relaxed text-white/70">
+                  Durch den angepassten Steuertarif nach § 32a EStG und modifizierte Beitragsbemessungsgrenzen verändert sich Ihr Nettogehalt bei gleichem Bruttogehalt wie folgt:
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="bg-white/5 p-3.5 rounded-xl border border-white/10">
+                    <div className="text-xs font-mono text-white/50 uppercase mb-1">Ausgewähltes Jahr</div>
+                    <div className="font-bold text-white text-base mb-2">Steuerjahr {jahr}</div>
+                    <div className="font-mono font-extrabold text-white text-base sm:text-lg bg-black/50 p-2.5 rounded border border-white/10 flex justify-between items-center">
+                      <span>Netto ({isJahresansicht ? "Jahr" : "Mon."}):</span>
+                      <span className="text-white font-bold">{formatEUR(showVal(result.nettoMonat))}</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/5 p-3.5 rounded-xl border border-white/10">
+                    <div className="text-xs font-mono text-white/50 uppercase mb-1">Vergleichsjahr</div>
+                    <div className="font-bold text-white text-base mb-2">Steuerjahr {otherYear}</div>
+                    <div className="font-mono font-extrabold text-white text-base sm:text-lg bg-black/50 p-2.5 rounded border border-white/10 flex justify-between items-center">
+                      <span>Netto ({isJahresansicht ? "Jahr" : "Mon."}):</span>
+                      <span className="text-emerald-400 font-bold">{formatEUR(showVal(resOtherYear.nettoMonat))}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-[#E60A1C]/10 border border-[#E60A1C]/30 rounded-xl text-white/90 text-xs sm:text-sm flex items-center justify-between font-medium">
+                  <span>Rechnerische Netto-Differenz ({isJahresansicht ? "jährlich" : "monatlich"}):</span>
+                  <span className={`font-mono font-bold text-sm sm:text-base ${diffYear >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                    {diffYear > 0 ? `+${formatEUR(showVal(diffYear))}` : formatEUR(showVal(diffYear))}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
+    </div>
     </div>
   );
 }

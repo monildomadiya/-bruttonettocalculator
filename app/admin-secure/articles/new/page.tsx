@@ -8,7 +8,7 @@ import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
 export default function NewArticlePage() {
   return (
     <AdminAuthGuard>
-      <main className="min-h-screen bg-[#060606] text-white py-10 sm:py-16 px-3.5 sm:px-8">
+      <main className="min-h-screen bg-[#050505] text-white py-10 sm:py-16 px-3.5 sm:px-8">
         <div className="max-w-6xl mx-auto">
           
           {/* Back link */}

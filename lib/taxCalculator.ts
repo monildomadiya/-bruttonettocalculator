@@ -25,7 +25,7 @@ export interface CalculatorInput {
   verheiratet: boolean;   // Splittingverfahren (abgeleitet aus SK)
   kinderlosUeber23: boolean; // Pflegeversicherungszuschlag
   kirche: boolean;
-  kirchensteuerSatz: number; // 0.08 oder 0.09
+  kirchensteuerSatz?: number; // 0.08 oder 0.09, default 0.09
   steuerklasse?: Steuerklasse; // 1–6, default 1
 }
 
@@ -163,7 +163,8 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   }
 
   const soliJahr = soliBerechnen(estJahr, sk === 3);
-  const kirchensteuerJahr = input.kirche ? estJahr * input.kirchensteuerSatz : 0;
+  const ksSatz = input.kirchensteuerSatz ?? 0.09;
+  const kirchensteuerJahr = input.kirche ? estJahr * ksSatz : 0;
 
   const steuerSummeJahr = estJahr + soliJahr + kirchensteuerJahr;
   const nettoJahr = bruttoJahr - svSummeJahr - steuerSummeJahr;

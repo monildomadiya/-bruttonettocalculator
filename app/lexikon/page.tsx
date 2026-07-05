@@ -4,6 +4,7 @@ import { BookOpen } from "lucide-react";
 export const metadata: Metadata = {
   title: "Steuer-Lexikon | Brutto Netto Rechner 2026",
   description: "Kurz und verständlich erklärt: die wichtigsten Begriffe rund um Brutto, Netto, Steuern und Sozialversicherung.",
+  alternates: { canonical: "https://bruttonettocalculator.com/lexikon" },
 };
 
 const begriffe = [

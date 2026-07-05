@@ -42,6 +42,18 @@ const faqs = [
     a: "Der Spitzensteuersatz von 42 % greift ab einem zu versteuernden Einkommen von 69.879 €. Die sogenannte Reichensteuer von 45 % gilt ab 277.826 €.",
   },
   {
+    q: "Kann ich diesen Rechner als Brutto Netto Rechner 2027 und Lohnrechner 2027 nutzen?",
+    a: "Ja! Unser Gehaltsrechner fungiert auch für das Steuerjahr 2027 als präziser Brutto Netto Rechner für 2027 sowie als Netto Brutto Rechner 2027. Schalten Sie oben im Lohnrechner einfach das Jahr von 2026 auf 2027 um, um die vorläufigen Netto-Unterschiede und Entlastungen durch den neuen Grundfreibetrag zu vergleichen.",
+  },
+  {
+    q: "Gilt das Tool auch als Gehaltsrechner mit Auto (Firmenwagenrechner & 1%-Regelung)?",
+    a: "Ein Firmenwagen stellt einen geldwerten Vorteil dar, der das monatliche Bruttogehalt erhöht (meist über die 1%-Regelung). Als praktischer Firmenwagenrechner bzw. Gehaltsrechner mit Auto können Sie Ihren geldwerten Vorteil einfach zu Ihrem regulären Bruttolohn addieren und die exakte Lohnsteuer- sowie Sozialabgabenlast sofort online ermitteln.",
+  },
+  {
+    q: "Kann ich das Tool auch als Arbeitslosengeld Rechner zur Orientierung verwenden?",
+    a: "Ja. Das amtliche Arbeitslosengeld I (ALG I) beträgt in Deutschland 60 % (bzw. 67 % mit Kind) Ihres durchschnittlichen Nettoentgelts der letzten 12 Monate. Sie können unseren Gehaltsrechner ideal als Orientierungs-Arbeitslosengeld Rechner nutzen, indem Sie Ihr bisheriges Brutto eingeben und 60 % bzw. 67 % vom errechneten Nettogehalt ermitteln.",
+  },
+  {
     q: "Wie werden KI und moderne Web-Technologien eingesetzt?",
     a: (
       <span>
@@ -69,6 +81,24 @@ const infoCards = [
     title: "Was zahlt der Arbeitgeber?",
     text:  "Neben Ihrem Nettogehalt trägt der Arbeitgeber die andere Hälfte der Sozialversicherungsbeiträge (Rente, Kranken, Pflege, Arbeitslosen) sowie weitere Umlagen.",
     accentColor: "#E60A1C",
+  },
+  {
+    Icon:  Wallet,
+    title: "Brutto Netto Rechner 2027",
+    text:  "Nutzen Sie unser Tool als Brutto Netto Rechner für 2027, Netto Brutto Rechner 2027 und Lohnrechner 2027, um vorläufige Reformwerte und Entlastungen abzugleichen.",
+    accentColor: "#FFFFFF",
+  },
+  {
+    Icon:  SlidersHorizontal,
+    title: "Gehaltsrechner mit Auto",
+    text:  "Als präziser Gehaltsrechner mit Auto bzw. Firmenwagenrechner berechnen Sie Ihren geldwerten Vorteil (1%-Regelung) einfach direkt im Bruttolohn mit ein.",
+    accentColor: "#E60A1C",
+  },
+  {
+    Icon:  Shield,
+    title: "Arbeitslosengeld Rechner",
+    text:  "Verwenden Sie unser Tool als Orientierungs-Arbeitslosengeld Rechner: Errechnen Sie Ihr Nettoentgelt und leiten Sie daraus 60 % bzw. 67 % (mit Kind) ALG I ab.",
+    accentColor: "#FFFFFF",
   },
 ];
 
@@ -102,6 +132,28 @@ const steps = [
 ];
 
 /* ── Structured Data (JSON-LD) ───────────────────────────────────────── */
+const webAppSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Brutto Netto Rechner Deutschland",
+  "url": "https://bruttonettocalculator.com",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "All",
+  "description": "Präziser Brutto Netto Rechner für Deutschland. Gehaltsberechnung nach amtlichen Vorgaben § 32a EStG für das Steuerjahr 2026/2027 mit allen 6 Steuerklassen und Sozialabgaben.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "featureList": [
+    "Berechnung von Lohnsteuer, Solidaritätszuschlag und Kirchensteuer",
+    "Unterstützung aller 6 deutschen Steuerklassen",
+    "Sozialabgaben nach SV-Rechengrößen 2026 und 2027",
+    "Jahres- und Monatsansicht",
+    "Bundesland-Vergleich für Kirchensteuer und Pflegeversicherung"
+  ]
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -110,7 +162,7 @@ const faqSchema = {
     name: f.q,
     acceptedAnswer: {
       "@type": "Answer",
-      text: f.a,
+      text: typeof f.a === "string" ? f.a : "Für die präzise Umsetzung und stetige Optimierung unserer Rechner und Web-Workflows setzen wir auf innovative KI-Technologien. Erstklassige Ressourcen und professionelles Prompt Engineering entdecken Sie bei unserem Kooperationspartner PromptKing, dem führenden Portal für KI-Prompts und Workflow-Optimierung.",
     },
   })),
 };
@@ -154,7 +206,7 @@ export default function HomePage() {
             style={{ animationDelay: "160ms" }}
           >
             Ermitteln Sie in Sekundenschnelle Ihr exaktes Nettogehalt — inklusive Lohnsteuer, 
-            Solidaritätszuschlag und allen amtlichen Sozialabgaben.
+            Solidaritätszuschlag und allen amtlichen Sozialabgaben. Nutzen Sie unser Tool auch als präzisen <strong className="text-white font-semibold">Brutto Netto Rechner für 2027</strong>, als <strong className="text-white font-semibold">Lohnrechner 2027</strong> oder für spezielle Berechnungen wie einen <strong className="text-white font-semibold">Firmenwagenrechner (Gehaltsrechner mit Auto)</strong> und <strong className="text-white font-semibold">Arbeitslosengeld Rechner</strong>.
           </p>
 
           {/* CTA buttons */}
@@ -219,7 +271,7 @@ export default function HomePage() {
           </div>
           <h2 className="font-display text-display-md font-extrabold text-white">Das sollten Sie wissen</h2>
         </div>
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {infoCards.map((card) => (
             <InfoCard key={card.title} {...card} />
           ))}
@@ -302,6 +354,7 @@ export default function HomePage() {
       </section>
 
       {/* ── JSON-LD ──────────────────────────────────────────────────── */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
     </>
