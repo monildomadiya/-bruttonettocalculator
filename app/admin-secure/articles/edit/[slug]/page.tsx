@@ -20,10 +20,10 @@ export default function EditArticlePage({ params }: { params: { slug: string } }
         if (data.success && data.article) {
           setArticle(data.article);
         } else {
-          setError(data.error || "Artikel nicht gefunden.");
+          setError(data.error || "Article not found.");
         }
       } catch (err: any) {
-        setError("Netzwerkfehler beim Laden.");
+        setError("Network error while loading.");
       } finally {
         setLoading(false);
       }
@@ -42,23 +42,23 @@ export default function EditArticlePage({ params }: { params: { slug: string } }
             className="inline-flex items-center gap-2 text-white/60 hover:text-white mb-6 text-sm font-semibold transition-colors"
           >
             <ArrowLeft size={16} />
-            <span>Zurück zum Dashboard</span>
+            <span>Back to Dashboard</span>
           </Link>
 
           {loading ? (
             <div className="text-center py-24 bg-[#0a0a0a] border border-white/10 rounded-3xl">
               <Loader2 size={32} className="animate-spin text-[#E60A1C] mx-auto mb-4" />
-              <p className="text-white/60 text-sm">Lade Artikeldaten aus MySQL...</p>
+              <p className="text-white/60 text-sm">Loading article data from MySQL...</p>
             </div>
           ) : error || !article ? (
             <div className="p-8 rounded-3xl bg-red-500/10 border border-red-500/30 text-center">
               <AlertCircle size={40} className="text-red-400 mx-auto mb-3" />
-              <h3 className="text-xl font-bold text-red-400 mb-2">{error || "Beitrag nicht vorhanden"}</h3>
+              <h3 className="text-xl font-bold text-red-400 mb-2">{error || "Article does not exist"}</h3>
               <Link
                 href="/admin-secure"
                 className="inline-block mt-4 px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-sm"
               >
-                Zum Admin Dashboard
+                Go to Admin Dashboard
               </Link>
             </div>
           ) : (

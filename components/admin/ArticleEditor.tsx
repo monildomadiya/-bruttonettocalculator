@@ -145,7 +145,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
     setErrorMessage(null);
 
     if (!headline || !slug) {
-      setErrorMessage("Bitte mindestens eine Headline und einen Slug eingeben.");
+      setErrorMessage("Please enter at least a Headline and a Slug.");
       return;
     }
 
@@ -188,10 +188,10 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
         router.push("/admin-secure");
         router.refresh();
       } else {
-        setErrorMessage(data.error || "Speichern fehlgeschlagen.");
+        setErrorMessage(data.error || "Save failed.");
       }
     } catch (err: any) {
-      setErrorMessage("Netzwerkfehler beim Speichern.");
+      setErrorMessage("Network error while saving.");
     } finally {
       setSaving(false);
     }
@@ -636,10 +636,10 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 type="button"
                 onClick={() => router.push("/admin-secure")}
                 className="w-full py-3 px-3 rounded-2xl bg-red-500/15 hover:bg-red-500/30 border border-red-500/40 text-red-400 hover:text-red-300 font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-sm cursor-pointer"
-                title="Editor schließen und zurück zum Dashboard"
+                title="Close editor and return to dashboard"
               >
                 <X size={16} />
-                <span>Schließen</span>
+                <span>Close</span>
               </button>
               <button
                 type="submit"
@@ -648,7 +648,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)", boxShadow: "0 4px 15px rgba(230,10,28,0.40)" }}
               >
                 {saving ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
-                <span>{saving ? "Speichert..." : "Speichern"}</span>
+                <span>{saving ? "Saving..." : "Save Article"}</span>
               </button>
             </div>
           </div>

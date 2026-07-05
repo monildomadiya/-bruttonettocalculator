@@ -17,7 +17,7 @@ export default function NewArticlePage() {
             className="inline-flex items-center gap-2 text-white/60 hover:text-white mb-6 text-sm font-semibold transition-colors"
           >
             <ArrowLeft size={16} />
-            <span>Zurück zum Dashboard</span>
+            <span>Back to Dashboard</span>
           </Link>
 
           {/* Editor */}

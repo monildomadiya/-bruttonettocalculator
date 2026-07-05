@@ -23,13 +23,15 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const { username = "admin", password } = await req.json();
+    const body = await req.json();
+    const username = body.username || "admin";
+    const passToCheck = body.password || body.pin;
 
     const isUserValid = !username || VALID_USERS.includes(username?.toLowerCase()?.trim());
-    const isPassValid = VALID_PASSWORDS.includes(password);
+    const isPassValid = VALID_PASSWORDS.includes(passToCheck);
 
     if (isUserValid && isPassValid) {
-      const response = NextResponse.json({ success: true, message: "Erfolgreich eingeloggt." });
+      const response = NextResponse.json({ success: true, message: "Successfully logged in." });
       response.cookies.set("admin_session", "authenticated_secret_token_2026", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -41,11 +43,11 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json(
-      { success: false, error: "Ungültiger Benutzername oder Passwort." },
+      { success: false, error: "Invalid Admin PIN or password." },
       { status: 401 }
     );
   } catch (err: any) {
-    return NextResponse.json({ success: false, error: "Fehler bei der Authentifizierung." }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Authentication error." }, { status: 500 });
   }
 }
 
