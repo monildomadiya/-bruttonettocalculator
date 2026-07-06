@@ -11,6 +11,8 @@ import {
   Zap, Settings, Tag, Eye,
 } from "lucide-react";
 import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
 
 interface Article {
   id: number;
@@ -103,8 +105,11 @@ export default function AdminDashboard() {
 
   async function handleLogout() {
     try {
-      await fetch("/api/auth/admin", { method: "DELETE" });
-    } catch {}
+      await signOut(auth); // Sign out of Firebase first
+      await fetch("/api/auth/admin", { method: "DELETE" }); // Remove session cookie
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
     window.location.href = "/admin-secure";
   }
 
