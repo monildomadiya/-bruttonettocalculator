@@ -7,7 +7,13 @@ export const dynamic = "force-dynamic";
 export async function GET(req: Request, { params }: { params: { slug: string } }) {
   try {
     const { slug } = params;
-    const articles = await dbQuery<Article[]>("SELECT * FROM articles WHERE slug = ? OR id = ? LIMIT 1", [slug, slug]);
+    const isId = !isNaN(Number(slug));
+    const query = isId 
+      ? "SELECT * FROM articles WHERE slug = ? OR id = ? LIMIT 1"
+      : "SELECT * FROM articles WHERE slug = ? LIMIT 1";
+    const sqlParams = isId ? [slug, Number(slug)] : [slug];
+    
+    const articles = await dbQuery<Article[]>(query, sqlParams);
 
     if (!articles || articles.length === 0) {
       return NextResponse.json({ success: false, error: "Artikel nicht gefunden." }, { status: 404 });
@@ -40,7 +46,8 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
 
     const faqsStr = typeof body.faqs === "string" ? body.faqs : JSON.stringify(body.faqs || []);
 
-    const sql = `
+    const isId = !isNaN(Number(slug));
+    const sql = isId ? `
       UPDATE articles SET
         headline = ?, slug = ?, category = ?, tags = ?, excerpt = ?,
         meta_title = ?, meta_description = ?, focus_keyword = ?, canonical_url = ?,
@@ -48,6 +55,14 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
         enable_toc = ?, content = ?, faqs = ?, og_title = ?, og_description = ?,
         og_image = ?, status = ?, read_time = ?
       WHERE slug = ? OR id = ?
+    ` : `
+      UPDATE articles SET
+        headline = ?, slug = ?, category = ?, tags = ?, excerpt = ?,
+        meta_title = ?, meta_description = ?, focus_keyword = ?, canonical_url = ?,
+        featured_image = ?, featured_image_alt = ?, featured_image_caption = ?,
+        enable_toc = ?, content = ?, faqs = ?, og_title = ?, og_description = ?,
+        og_image = ?, status = ?, read_time = ?
+      WHERE slug = ?
     `;
 
     const sqlParams = [
@@ -70,10 +85,13 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
       body.og_description || body.meta_description || body.excerpt || "",
       body.og_image || body.featured_image || "",
       body.status || "Published",
-      body.read_time || "3 min read",
-      slug,
-      slug
     ];
+    
+    if (isId) {
+      sqlParams.push(slug, Number(slug));
+    } else {
+      sqlParams.push(slug);
+    }
 
     await dbQuery(sql, sqlParams);
 
@@ -93,7 +111,14 @@ export async function DELETE(req: Request, { params }: { params: { slug: string 
     }
 
     const { slug } = params;
-    await dbQuery("DELETE FROM articles WHERE slug = ? OR id = ?", [slug, slug]);
+    const isId = !isNaN(Number(slug));
+    
+    if (isId) {
+      await dbQuery("DELETE FROM articles WHERE slug = ? OR id = ?", [slug, Number(slug)]);
+    } else {
+      await dbQuery("DELETE FROM articles WHERE slug = ?", [slug]);
+    }
+    
     return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error(`❌ DELETE /api/articles/${params.slug} error:`, err);
