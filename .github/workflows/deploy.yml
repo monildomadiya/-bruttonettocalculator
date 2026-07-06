@@ -31,9 +31,23 @@ jobs:
               git fetch origin
               git reset --hard origin/main
             fi
+            cat > .env << 'ENVEOF'
+DB_HOST="localhost"
+DB_PORT="3306"
+DB_USER="${{ secrets.DB_USER }}"
+DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
+DB_NAME="bruttonetto_db"
+CLOUDINARY_CLOUD_NAME="${{ secrets.CLOUDINARY_CLOUD_NAME }}"
+CLOUDINARY_API_KEY="${{ secrets.CLOUDINARY_API_KEY }}"
+CLOUDINARY_API_SECRET="${{ secrets.CLOUDINARY_API_SECRET }}"
+CLOUDINARY_URL="${{ secrets.CLOUDINARY_URL }}"
+ENVEOF
             npm install
             npm run build
             pm2 delete bruttonetto_live || true
             fuser -k 3007/tcp || true
             PORT=3007 pm2 start npm --name "bruttonetto_live" -- run start
             pm2 save
+            sleep 5
+            pm2 status
+            pm2 logs bruttonetto_live --lines 30 --nostream
