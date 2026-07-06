@@ -129,13 +129,9 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
             />
           </div>
           
-          <h1 className="font-display font-bold text-[22px] sm:text-[24px] tracking-tight text-white mb-2 text-center">
+          <h1 className="font-display font-bold text-[22px] sm:text-[24px] tracking-tight text-white mb-8 text-center">
             Admin Login
           </h1>
-          
-          <p className="text-[#666666] text-sm font-medium tracking-normal mb-8 text-center">
-            Secured by Firebase
-          </p>
 
           {loginError && (
             <div className="w-full mb-6 px-4 py-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-semibold flex items-center gap-2 animate-shake">
