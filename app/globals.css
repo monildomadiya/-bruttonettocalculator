@@ -769,5 +769,42 @@ input[type="number"]::-webkit-outer-spin-button {
 .no-scrollbar,
 .cat-pill-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* ─── Override Editor Inline Styles for Dark Mode ─────────────────────
+   When copying/pasting from Word or other websites into the CMS, 
+   text often gets hardcoded black colors or white backgrounds. 
+   This forces it to adapt to our dark theme.
+──────────────────────────────────────────────────────────────────────── */
+.article-content [style*="color: rgb(0, 0, 0)"],
+.article-content [style*="color: rgb(34, 34, 34)"],
+.article-content [style*="color: #000000"],
+.article-content [style*="color: #000"],
+.article-content [style*="color: #333333"],
+.article-content [style*="color: #333"],
+.article-content [style*="color: #222222"],
+.article-content [style*="color: #222"],
+.article-content [style*="color: black"] {
+  color: inherit !important;
+}
 
+.article-content [style*="background-color: rgb(255, 255, 255)"],
+.article-content [style*="background-color: #ffffff"],
+.article-content [style*="background-color: #fff"],
+.article-content [style*="background-color: white"] {
+  background-color: transparent !important;
+}
 
+/* Ensure strong/b tags inside inline-styled spans still get the bold color */
+.article-content span[style] strong,
+.article-content span[style] b {
+  color: #ffffff !important;
+}
+
+/* Ensure headings inside custom divs get proper spacing */
+.article-content div[style*="border"] h2,
+.article-content div[style*="background"] h2,
+.article-content div[style*="border"] h3,
+.article-content div[style*="background"] h3 {
+  margin-top: 0.5rem;
+  padding-top: 0;
+  border-bottom: none;
+}
