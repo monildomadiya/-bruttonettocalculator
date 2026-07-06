@@ -403,17 +403,8 @@ export async function initDb() {
     isDbInitialized = true;
     console.log("✅ MySQL articles table checked/initialized successfully.");
 
-    // Seed MySQL table with any missing fallback articles by slug
-    for (const art of fallbackArticles) {
-      const [existing]: any = await pool.query("SELECT id FROM articles WHERE slug = ?", [art.slug]);
-      if (!existing || existing.length === 0) {
-        await pool.query(
-          `INSERT INTO articles (id, headline, slug, category, tags, excerpt, meta_title, meta_description, focus_keyword, canonical_url, featured_image, featured_image_alt, featured_image_caption, enable_toc, content, faqs, status, read_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [art.id, art.headline, art.slug, art.category, art.tags, art.excerpt, art.meta_title, art.meta_description, art.focus_keyword, art.canonical_url, art.featured_image, art.featured_image_alt, art.featured_image_caption, art.enable_toc ? 1 : 0, art.content, art.faqs, art.status, art.read_time]
-        );
-      }
-    }
-    console.log("✅ Seeded/verified MySQL articles table with all blog articles.");
+    // Seeding is disabled so user can delete articles without them coming back
+    // console.log("✅ MySQL articles table checked/initialized successfully.");
   } catch (err: any) {
     console.warn("⚠️ MySQL offline or connection failed. Using resilient fallback store:", err.message);
   }
