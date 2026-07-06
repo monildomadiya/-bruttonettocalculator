@@ -34,5 +34,5 @@ jobs:
             npm install
             npm run build
             pm2 delete bruttonetto_live || true
-            pm2 start npm --name "bruttonetto_live" -- run start
+            pm2 start npm --name "bruttonetto_live" -- start -- -p 3007
             pm2 save
