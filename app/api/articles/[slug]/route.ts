@@ -65,7 +65,7 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
       WHERE slug = ?
     `;
 
-    const sqlParams = [
+    const sqlParams: (string | boolean | number)[] = [
       body.headline,
       body.slug || slug,
       body.category || "",
