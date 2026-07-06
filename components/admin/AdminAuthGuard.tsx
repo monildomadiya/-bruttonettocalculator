@@ -146,27 +146,27 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
 
           <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={18} />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10 pointer-events-none" size={18} />
               <input
                 type="email"
                 placeholder="E-Mail Adresse"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loginLoading}
-                className="w-full bg-[#141414] border border-[#222222] rounded-2xl py-3.5 pl-11 pr-4 text-sm font-medium text-white focus:border-white/35 focus:bg-[#1a1a1a] outline-none transition-all duration-150 disabled:opacity-50"
+                className="w-full bg-[#141414] border border-[#222222] rounded-2xl py-3.5 pl-11 pr-4 text-sm font-medium text-white focus:border-white/35 focus:bg-[#1a1a1a] outline-none transition-all duration-150 disabled:opacity-50 relative z-0"
                 required
               />
             </div>
 
-            <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={18} />
+            <div className="relative mt-4">
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10 pointer-events-none" size={18} />
               <input
                 type="password"
                 placeholder="Passwort"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={loginLoading}
-                className="w-full bg-[#141414] border border-[#222222] rounded-2xl py-3.5 pl-11 pr-4 text-sm font-medium text-white focus:border-white/35 focus:bg-[#1a1a1a] outline-none transition-all duration-150 disabled:opacity-50"
+                className="w-full bg-[#141414] border border-[#222222] rounded-2xl py-3.5 pl-11 pr-4 text-sm font-medium text-white focus:border-white/35 focus:bg-[#1a1a1a] outline-none transition-all duration-150 disabled:opacity-50 relative z-0"
                 required
               />
             </div>
