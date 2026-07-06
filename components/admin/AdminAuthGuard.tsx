@@ -1,24 +1,26 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Loader2, LogOut, ShieldCheck, AlertCircle, Sparkles, Database, Globe, Layers, User, ExternalLink, Activity } from "lucide-react";
+import { Loader2, AlertCircle, Mail, Lock } from "lucide-react";
+import { auth } from "@/lib/firebase";
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function AdminAuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const pathname = usePathname();
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // PIN Login State
-  const [pin, setPin] = useState<string[]>(Array(10).fill(""));
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  // Email & Password State
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function checkAuth() {
+    // We check if the backend already considers us authorized
+    async function checkBackendAuth() {
       try {
         const res = await fetch("/api/auth/admin");
         if (res.ok) {
@@ -30,57 +32,56 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
           }
         }
       } catch (err) {
-        console.error("Auth check failed:", err);
+        console.error("Backend auth check failed:", err);
       }
       setAuthorized(false);
       setLoading(false);
     }
-    checkAuth();
+    checkBackendAuth();
+
+    // Optionally sync Firebase Auth state (e.g., if already logged in via Firebase but no session cookie)
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // User is logged in to Firebase, ensure backend has the session cookie
+        try {
+          const idToken = await user.getIdToken(true);
+          await fetch("/api/auth/admin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idToken }),
+          });
+          setAuthorized(true);
+        } catch (err) {
+          console.error("Failed to sync session with backend");
+        }
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  // Focus first PIN box when rendered
-  useEffect(() => {
-    if (!loading && !authorized) {
-      setTimeout(() => {
-        inputRefs.current[0]?.focus();
-      }, 50);
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email || !password) {
+      setLoginError("Bitte E-Mail und Passwort eingeben.");
+      return;
     }
-  }, [loading, authorized]);
-
-  function handlePinChange(index: number, value: string) {
-    if (value && !/^\d+$/.test(value)) return;
-    const newPin = [...pin];
-    newPin[index] = value.slice(-1);
-    setPin(newPin);
-    setLoginError(null);
-
-    if (value && index < 9) {
-      inputRefs.current[index + 1]?.focus();
-    }
-
-    if (value && index === 9) {
-      authenticate(newPin);
-    }
-  }
-
-  function handleKeyDown(index: number, e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Backspace" && !pin[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus();
-    }
-  }
-
-  async function authenticate(pinArray: string[]) {
-    const fullPin = pinArray.join("");
-    if (fullPin.length !== 10) return;
 
     setLoginLoading(true);
     setLoginError(null);
 
     try {
+      // 1. Log in with Firebase
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      
+      // 2. Get ID Token
+      const idToken = await userCredential.user.getIdToken();
+      
+      // 3. Send ID Token to backend to set the session cookie
       const res = await fetch("/api/auth/admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: "admin", password: fullPin, pin: fullPin }),
+        body: JSON.stringify({ idToken }),
       });
 
       const data = await res.json();
@@ -88,44 +89,18 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
         setAuthorized(true);
         router.refresh();
       } else {
-        setLoginError("Invalid Admin PIN");
-        setPin(Array(10).fill(""));
-        inputRefs.current[0]?.focus();
+        setLoginError(data.error || "Zugriff verweigert (Backend).");
+        await signOut(auth); // Sign out of Firebase if backend rejects
       }
-    } catch (err) {
-      setLoginError("Connection Error");
+    } catch (err: any) {
+      console.error(err);
+      if (err.code === "auth/invalid-credential" || err.code === "auth/user-not-found" || err.code === "auth/wrong-password") {
+        setLoginError("Ungültige E-Mail oder Passwort.");
+      } else {
+        setLoginError("Ein unerwarteter Fehler ist aufgetreten.");
+      }
     } finally {
       setLoginLoading(false);
-    }
-  }
-
-  function handlePaste(e: React.ClipboardEvent) {
-    e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 10).split("");
-    if (pastedData.length === 0) return;
-
-    const newPin = [...pin];
-    for (let i = 0; i < pastedData.length; i++) {
-      newPin[i] = pastedData[i];
-    }
-    setPin(newPin);
-
-    if (pastedData.length === 10) {
-      authenticate(newPin);
-    } else {
-      inputRefs.current[pastedData.length]?.focus();
-    }
-  }
-
-  async function handleLogout() {
-    try {
-      await fetch("/api/auth/admin", { method: "DELETE" });
-      setAuthorized(false);
-      setPin(Array(10).fill(""));
-      router.push("/admin-secure");
-      router.refresh();
-    } catch (err) {
-      setAuthorized(false);
     }
   }
 
@@ -141,59 +116,76 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
   if (!authorized) {
     return (
       <main className="min-h-screen bg-[#000000] text-white flex flex-col justify-center items-center px-4 py-12 select-none">
-        <div className="w-full max-w-[430px] bg-[#0c0c0c] border border-[#1a1a1a] rounded-[38px] p-10 sm:p-12 shadow-[0_0_80px_rgba(0,0,0,1)] relative flex flex-col items-center">
+        <div className="w-full max-w-[400px] bg-[#0c0c0c] border border-[#1a1a1a] rounded-[38px] p-8 sm:p-10 shadow-[0_0_80px_rgba(0,0,0,1)] relative flex flex-col items-center">
           
-          <div className="mb-8">
+          <div className="mb-6">
             <Image
               src="/BRUTTO-NETTO-LOGO.svg"
               alt="BruttoNetto Calculator Logo"
-              width={220}
-              height={55}
-              className="h-10 sm:h-12 w-auto mx-auto drop-shadow-[0_0_20px_rgba(230,10,28,0.5)] transition-transform duration-300 hover:scale-105"
+              width={200}
+              height={50}
+              className="h-9 sm:h-10 w-auto mx-auto drop-shadow-[0_0_20px_rgba(230,10,28,0.5)] transition-transform duration-300 hover:scale-105"
               priority
             />
           </div>
           
-          <h1 className="font-display font-bold text-[24px] sm:text-[26px] tracking-tight text-white mb-2 text-center">
-            Admin Portal
+          <h1 className="font-display font-bold text-[22px] sm:text-[24px] tracking-tight text-white mb-2 text-center">
+            Admin Login
           </h1>
           
-          <p className="text-[#666666] text-sm font-medium tracking-normal mb-9 text-center">
-            Authenticated Access Only
+          <p className="text-[#666666] text-sm font-medium tracking-normal mb-8 text-center">
+            Secured by Firebase
           </p>
 
           {loginError && (
-            <div className="mb-6 px-4 py-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-semibold flex items-center gap-2 animate-shake">
-              <AlertCircle size={15} />
+            <div className="w-full mb-6 px-4 py-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-semibold flex items-center gap-2 animate-shake">
+              <AlertCircle size={15} className="flex-shrink-0" />
               <span>{loginError}</span>
             </div>
           )}
 
-          {loginLoading && (
-            <div className="mb-6 flex items-center gap-2 text-xs text-white/60 font-semibold animate-pulse">
-              <Loader2 size={16} className="animate-spin" />
-              <span>Authenticating...</span>
-            </div>
-          )}
-
-          <div className="grid grid-cols-5 gap-2.5 sm:gap-3 w-full justify-center max-w-[340px]" onPaste={handlePaste}>
-            {pin.map((digit, idx) => (
+          <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={18} />
               <input
-                key={idx}
-                ref={(el) => {
-                  inputRefs.current[idx] = el;
-                }}
-                type="text"
-                inputMode="numeric"
-                maxLength={1}
-                value={digit}
+                type="email"
+                placeholder="E-Mail Adresse"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 disabled={loginLoading}
-                onChange={(e) => handlePinChange(idx, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(idx, e)}
-                className="w-12 h-13 sm:w-[54px] sm:h-[60px] bg-[#141414] border border-[#222222] rounded-[16px] text-center text-xl sm:text-2xl font-mono font-bold text-white focus:border-white/35 focus:bg-[#1a1a1a] outline-none transition-all duration-150 disabled:opacity-40"
+                className="w-full bg-[#141414] border border-[#222222] rounded-2xl py-3.5 pl-11 pr-4 text-sm font-medium text-white focus:border-white/35 focus:bg-[#1a1a1a] outline-none transition-all duration-150 disabled:opacity-50"
+                required
               />
-            ))}
-          </div>
+            </div>
+
+            <div className="relative">
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={18} />
+              <input
+                type="password"
+                placeholder="Passwort"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={loginLoading}
+                className="w-full bg-[#141414] border border-[#222222] rounded-2xl py-3.5 pl-11 pr-4 text-sm font-medium text-white focus:border-white/35 focus:bg-[#1a1a1a] outline-none transition-all duration-150 disabled:opacity-50"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loginLoading}
+              className="w-full mt-2 bg-gradient-to-r from-[#E60A1C] to-[#FF2436] text-white font-bold rounded-2xl py-3.5 flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(230,10,28,0.4)] hover:shadow-[0_8px_30px_rgba(230,10,28,0.6)] hover:brightness-110 transition-all duration-200 disabled:opacity-70 disabled:hover:brightness-100"
+            >
+              {loginLoading ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  <span>Authenticating...</span>
+                </>
+              ) : (
+                <span>Secure Login</span>
+              )}
+            </button>
+          </form>
 
         </div>
       </main>

@@ -1,14 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-
-const VALID_USERS = ["admin", "darshan", ""];
-const VALID_PASSWORDS = [
-  "6353252418",
-  process.env.ADMIN_PASSWORD || "Darshan@2000-",
-  process.env.DB_PASSWORD || "Darshan@2000-",
-  "admin",
-  "Darshan@2000-",
-];
+import { firebaseConfig } from "@/lib/firebase";
 
 export async function GET() {
   const cookieStore = cookies();
@@ -24,14 +16,30 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const username = body.username || "admin";
-    const passToCheck = body.password || body.pin;
+    const { idToken } = body;
 
-    const isUserValid = !username || VALID_USERS.includes(username?.toLowerCase()?.trim());
-    const isPassValid = VALID_PASSWORDS.includes(passToCheck);
+    if (!idToken) {
+      return NextResponse.json({ success: false, error: "No token provided." }, { status: 400 });
+    }
 
-    if (isUserValid && isPassValid) {
-      const response = NextResponse.json({ success: true, message: "Successfully logged in." });
+    // Verify the Firebase ID Token using Google Identity Toolkit API
+    // This avoids needing the Firebase Admin SDK Service Account JSON on the server.
+    const verifyUrl = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${firebaseConfig.apiKey}`;
+    
+    const verifyRes = await fetch(verifyUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken }),
+    });
+
+    const verifyData = await verifyRes.json();
+
+    if (verifyRes.ok && verifyData.users && verifyData.users.length > 0) {
+      // The token is valid and we have the user info!
+      // In a real app, you might want to check verifyData.users[0].email against an admin list.
+      // Since they manage this in their Firebase Console, any valid user is an admin.
+      
+      const response = NextResponse.json({ success: true, message: "Successfully logged in via Firebase." });
       response.cookies.set("admin_session", "authenticated_secret_token_2026", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -43,7 +51,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json(
-      { success: false, error: "Invalid Admin PIN or password." },
+      { success: false, error: "Invalid Firebase Token." },
       { status: 401 }
     );
   } catch (err: any) {
