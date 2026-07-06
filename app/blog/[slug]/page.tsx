@@ -1,12 +1,21 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock, Calendar, Tag, Share2, Calculator, CheckCircle2, ChevronRight } from "lucide-react";
+import {
+  Clock,
+  Calendar,
+  Tag,
+  Calculator,
+  ChevronRight,
+  BookOpen,
+  Share2,
+  ExternalLink,
+} from "lucide-react";
 import { dbQuery, Article } from "@/lib/db";
 import { Metadata } from "next";
 import { primaryReviewer } from "@/lib/authors";
 import ReviewerByline from "@/components/ReviewerByline";
 
-export const revalidate = 0; // Always fresh
+export const revalidate = 0;
 
 interface FAQItem {
   question: string;
@@ -15,12 +24,16 @@ interface FAQItem {
 
 async function getArticle(slug: string): Promise<Article | null> {
   try {
-    const rows = await dbQuery<Article[]>("SELECT * FROM articles WHERE slug = ? LIMIT 1", [slug]);
+    const rows = await dbQuery<Article[]>(
+      "SELECT * FROM articles WHERE slug = ? LIMIT 1",
+      [slug]
+    );
     if (!rows || rows.length === 0) return null;
     const art = rows[0];
     return {
       ...art,
-      faqs: typeof art.faqs === "string" ? tryParseJson(art.faqs) : art.faqs || [],
+      faqs:
+        typeof art.faqs === "string" ? tryParseJson(art.faqs) : art.faqs || [],
       enable_toc: Boolean(art.enable_toc),
     };
   } catch (err) {
@@ -30,19 +43,29 @@ async function getArticle(slug: string): Promise<Article | null> {
 }
 
 function tryParseJson(str: string) {
-  try { return JSON.parse(str); } catch { return []; }
-}
-
-export async function generateStaticParams() {
   try {
-    const articles = await dbQuery<Article[]>("SELECT slug FROM articles WHERE status = 'Published'");
-    return articles.map((art) => ({ slug: art.slug }));
-  } catch (err) {
+    return JSON.parse(str);
+  } catch {
     return [];
   }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateStaticParams() {
+  try {
+    const articles = await dbQuery<Article[]>(
+      "SELECT slug FROM articles WHERE status = 'Published'"
+    );
+    return articles.map((art) => ({ slug: art.slug }));
+  } catch {
+    return [];
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   const art = await getArticle(params.slug);
   if (!art) {
     return { title: "Artikel nicht gefunden | BruttoNettoCalculator" };
@@ -51,9 +74,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: `${art.meta_title || art.headline} | BruttoNettoCalculator`,
     description: art.meta_description || art.excerpt || "",
-    keywords: art.focus_keyword ? [art.focus_keyword, art.tags || ""].join(", ") : art.tags || "",
+    keywords: art.focus_keyword
+      ? [art.focus_keyword, art.tags || ""].join(", ")
+      : art.tags || "",
     alternates: {
-      canonical: art.canonical_url || `https://bruttonettocalculator.com/blog/${art.slug}`,
+      canonical:
+        art.canonical_url ||
+        `https://bruttonettocalculator.com/blog/${art.slug}`,
     },
     robots: {
       index: true,
@@ -68,94 +95,170 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     },
     openGraph: {
       title: art.og_title || art.meta_title || art.headline,
-      description: art.og_description || art.meta_description || art.excerpt || "",
-      url: art.canonical_url || `https://bruttonettocalculator.com/blog/${art.slug}`,
+      description:
+        art.og_description || art.meta_description || art.excerpt || "",
+      url:
+        art.canonical_url ||
+        `https://bruttonettocalculator.com/blog/${art.slug}`,
       type: "article",
-      images: art.og_image || art.featured_image ? [{ url: art.og_image || art.featured_image! }] : [],
+      images:
+        art.og_image || art.featured_image
+          ? [{ url: art.og_image || art.featured_image! }]
+          : [],
     },
     twitter: {
       card: "summary_large_image",
       title: art.og_title || art.meta_title || art.headline,
-      description: art.og_description || art.meta_description || art.excerpt || "",
-      images: art.og_image || art.featured_image ? [art.og_image || art.featured_image!] : [],
+      description:
+        art.og_description || art.meta_description || art.excerpt || "",
+      images:
+        art.og_image || art.featured_image
+          ? [art.og_image || art.featured_image!]
+          : [],
     },
   };
 }
 
-// Simple H2 extractor for Table of Contents
+/* Extract H2 headings + slugified IDs for the TOC */
 function extractToc(html: string = "") {
   const regex = /<h2[^>]*>(.*?)<\/h2>/gi;
-  const headings: string[] = [];
+  const headings: { text: string; id: string }[] = [];
   let match;
   while ((match = regex.exec(html)) !== null) {
     const text = match[1].replace(/<[^>]+>/g, "").trim();
-    if (text) headings.push(text);
+    if (text) {
+      const id = text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+      headings.push({ text, id });
+    }
   }
   return headings;
 }
 
-export default async function ArticleReaderPage({ params }: { params: { slug: string } }) {
+/* Inject id attributes into H2 tags so anchor links work */
+function injectHeadingIds(html: string): string {
+  return html.replace(/<h2([^>]*)>(.*?)<\/h2>/gi, (_, attrs, inner) => {
+    const text = inner.replace(/<[^>]+>/g, "").trim();
+    const id = text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-");
+    return `<h2${attrs} id="${id}">${inner}</h2>`;
+  });
+}
+
+function formatDate(dateStr?: string) {
+  if (!dateStr) return "Aktuell";
+  return new Date(dateStr).toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export default async function ArticleReaderPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const article = await getArticle(params.slug);
-  if (!article) {
-    notFound();
-  }
+  if (!article) notFound();
 
   const faqs: FAQItem[] = Array.isArray(article.faqs) ? article.faqs : [];
   const toc = article.enable_toc ? extractToc(article.content) : [];
-  const articleUrl = article.canonical_url || `https://bruttonettocalculator.com/blog/${article.slug}`;
+  const contentWithIds = injectHeadingIds(article.content || "");
+  const articleUrl =
+    article.canonical_url ||
+    `https://bruttonettocalculator.com/blog/${article.slug}`;
 
-  // Structured Data JSON-LD
+  /* ── JSON-LD Schemas ────────────────────────────────────────────── */
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": article.headline,
-    "description": article.meta_description || article.excerpt,
-    "image": article.featured_image ? [article.featured_image] : [],
-    "datePublished": article.created_at || new Date().toISOString(),
-    "dateModified": article.updated_at || article.created_at || new Date().toISOString(),
-    "author": {
+    headline: article.headline,
+    description: article.meta_description || article.excerpt,
+    image: article.featured_image ? [article.featured_image] : [],
+    datePublished: article.created_at || new Date().toISOString(),
+    dateModified:
+      article.updated_at || article.created_at || new Date().toISOString(),
+    author: {
       "@type": "Person",
-      "name": primaryReviewer.name,
-      "jobTitle": primaryReviewer.credentials,
-      "image": primaryReviewer.photo,
-      "url": primaryReviewer.profile_url
+      name: primaryReviewer.name,
+      jobTitle: primaryReviewer.credentials,
+      image: primaryReviewer.photo,
+      url: primaryReviewer.profile_url,
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": "BruttoNettoCalculator",
-      "logo": {
+      name: "BruttoNettoCalculator",
+      logo: {
         "@type": "ImageObject",
-        "url": "https://bruttonettocalculator.com/BRUTTO-NETTO-LOGO.svg",
-        "width": 280,
-        "height": 65
-      }
+        url: "https://bruttonettocalculator.com/BRUTTO-NETTO-LOGO.svg",
+        width: 280,
+        height: 65,
+      },
     },
-    "mainEntityOfPage": {
+    mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": articleUrl
-    }
+      "@id": articleUrl,
+    },
   };
 
-  const faqSchema = faqs.length > 0 ? {
+  const faqSchema =
+    faqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: f.answer,
+            },
+          })),
+        }
+      : null;
+
+  const breadcrumbSchema = {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(f => ({
-      "@type": "Question",
-      "name": f.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": f.answer
-      }
-    }))
-  } : null;
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Startseite",
+        item: "https://bruttonettocalculator.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Ratgeber & Blog",
+        item: "https://bruttonettocalculator.com/blog",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: article.headline,
+        item: articleUrl,
+      },
+    ],
+  };
 
   return (
-    <main className="min-h-screen bg-[#060606] text-white py-12 sm:py-20 px-4 sm:px-8 relative overflow-hidden">
-      
-      {/* JSON-LD Schemas */}
+    <>
+      {/* ── Structured Data ─────────────────────────────────────────── */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       {faqSchema && (
         <script
@@ -164,179 +267,450 @@ export default async function ArticleReaderPage({ params }: { params: { slug: st
         />
       )}
 
-      {/* Ambient background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-[#E60A1C]/15 to-transparent blur-[140px] rounded-full pointer-events-none -z-10" />
+      <main className="min-h-screen bg-[#060606] text-white relative overflow-hidden">
+        {/* Ambient background */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full -z-10"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(230,10,28,0.10) 0%, transparent 70%)",
+            filter: "blur(60px)",
+          }}
+        />
 
-      <div className="max-w-4xl mx-auto">
-        
-        {/* Navigation Breadcrumbs */}
-        <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-white/50 mb-8 overflow-x-auto whitespace-nowrap">
-          <Link href="/" className="hover:text-white transition-colors">Startseite</Link>
-          <ChevronRight size={14} className="flex-shrink-0 text-white/30" />
-          <Link href="/blog" className="hover:text-white transition-colors">Ratgeber & Blog</Link>
-          {article.category && (
-            <>
-              <ChevronRight size={14} className="flex-shrink-0 text-white/30" />
-              <span className="text-white/80">{article.category}</span>
-            </>
-          )}
-        </div>
-
-        {/* Article Header */}
-        <header className="space-y-6 mb-12">
-          {article.category && (
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#E60A1C]/15 border border-[#E60A1C]/30 text-[#FF2E44] text-xs font-bold uppercase tracking-wider">
-              {article.category}
-            </span>
-          )}
-
-          <h1 className="font-display font-black text-3xl sm:text-5xl md:text-6xl tracking-tight leading-[1.1] text-white">
-            {article.headline}
-          </h1>
-
-          {article.excerpt && (
-            <p className="text-white/75 text-lg sm:text-2xl font-normal leading-relaxed">
-              {article.excerpt}
-            </p>
-          )}
-
-          {/* Author & Meta bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-white/10 text-sm text-white/60">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#E60A1C] to-[#FF2436] flex items-center justify-center font-bold text-white text-sm shadow">
-                BN
-              </div>
-              <div>
-                <div className="font-bold text-white">Redaktion BruttoNettoCalculator</div>
-                <div className="text-xs text-white/50 flex items-center gap-2">
-                  <Calendar size={12} />
-                  <span>{article.created_at ? new Date(article.created_at).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" }) : "Aktuell"}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-semibold">
-                <Clock size={13} className="text-[#FF2E44]" />
-                <span>{article.read_time || "3 min read"}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-2">
-            <ReviewerByline />
-          </div>
-        </header>
-
-        {/* Featured Image */}
-        {article.featured_image && (
-          <figure className="mb-12 rounded-3xl overflow-hidden border border-white/15 bg-[#0e0e0e] shadow-2xl">
-            <img
-              src={article.featured_image}
-              alt={article.featured_image_alt || article.headline}
-              className="w-full h-auto max-h-[500px] object-cover"
-            />
-            {article.featured_image_caption && (
-              <figcaption className="p-3 text-center text-xs text-white/50 bg-black/60 border-t border-white/10 font-medium">
-                {article.featured_image_caption}
-              </figcaption>
-            )}
-          </figure>
-        )}
-
-        {/* Table of Contents Box (if enabled & headings exist) */}
-        {toc.length > 0 && (
-          <nav aria-label="Inhaltsverzeichnis" className="mb-12 p-6 sm:p-8 rounded-3xl bg-[#0e0e0e] border border-white/15 shadow-xl">
-            <h2 className="text-xs font-black tracking-widest uppercase text-[#FF2E44] mb-4 flex items-center gap-2">
-              <span>INHALTSVERZEICHNIS DES ARTIKELS</span>
-            </h2>
-            <ul className="space-y-2.5">
-              {toc.map((heading, idx) => (
-                <li key={idx} className="text-sm font-semibold text-white/80 hover:text-white transition-colors flex items-center gap-2.5">
-                  <span className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs text-[#FF2E44] font-bold flex-shrink-0">
-                    {idx + 1}
-                  </span>
-                  <span>{heading}</span>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
-
-        {/* Rich Article Content */}
-        <article className="prose prose-invert prose-lg max-w-none text-white/85 leading-relaxed space-y-6 [&>h2]:font-display [&>h2]:font-black [&>h2]:text-2xl sm:[&>h2]:text-3xl [&>h2]:text-white [&>h2]:mt-12 [&>h2]:mb-4 [&>h2]:pt-4 [&>h2]:border-t [&>h2]:border-white/10 [&>h3]:font-display [&>h3]:font-bold [&>h3]:text-xl sm:[&>h3]:text-2xl [&>h3]:text-white [&>h3]:mt-8 [&>h3]:mb-3 [&>p]:mb-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>blockquote]:border-l-4 [&>blockquote]:border-[#E60A1C] [&>blockquote]:pl-6 [&>blockquote]:py-2 [&>blockquote]:italic [&>blockquote]:bg-white/[0.02] [&>blockquote]:rounded-r-2xl">
-          <div dangerouslySetInnerHTML={{ __html: article.content || "" }} />
-        </article>
-
-        {/* Tags */}
-        {article.tags && (
-          <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center gap-2">
-            <Tag size={16} className="text-white/40 mr-2" />
-            {article.tags.split(",").map((t, idx) => (
-              <span key={idx} className="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-white/80">
-                #{t.trim()}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Interactive FAQ Section */}
-        {faqs.length > 0 && (
-          <section className="mt-16 pt-12 border-t border-white/15">
-            <div className="text-center sm:text-left mb-8">
-              <h2 className="font-display font-black text-2xl sm:text-3xl tracking-tight text-white mb-2">
-                Häufig gestellte Fragen (FAQ)
-              </h2>
-              <p className="text-white/60 text-sm">
-                Amtliche Antworten auf die wichtigsten Fragen zu diesem Thema.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {faqs.map((faq, idx) => (
-                <details key={idx} className="group rounded-2xl bg-[#0e0e0e] border border-white/15 p-5 sm:p-6 transition-all duration-300 open:bg-[#121212] open:border-white/25 shadow-md">
-                  <summary className="font-bold text-base sm:text-lg text-white cursor-pointer flex items-center justify-between gap-4 outline-none list-none">
-                    <span className="flex items-center gap-3">
-                      <span className="w-6 h-6 rounded-full bg-[#E60A1C]/15 text-[#FF2E44] flex items-center justify-center text-xs font-black flex-shrink-0">?</span>
-                      {faq.question}
-                    </span>
-                    <span className="text-xl text-white/40 group-open:rotate-45 transition-transform flex-shrink-0">+</span>
-                  </summary>
-                  <p className="mt-4 pt-4 border-t border-white/10 text-white/75 text-sm sm:text-base leading-relaxed pl-9">
-                    {faq.answer}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* CTA Calculator Banner */}
-        <section className="my-16 sm:my-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#0e0e0e] border border-white/20 shadow-[0_15px_60px_rgba(0,0,0,0.8)] relative overflow-hidden text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-8">
-          <div className="space-y-3 max-w-xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E60A1C]/20 border border-[#E60A1C]/40 text-[#FF2E44] text-xs font-bold uppercase tracking-wider">
-              <Calculator size={13} />
-              <span>Amtlicher Rechner 2026/2027</span>
-            </div>
-            <h3 className="font-display font-black text-2xl sm:text-3xl tracking-tight text-white">
-              Berechnen Sie jetzt Ihr exaktes Nettogehalt
-            </h3>
-            <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-              Nutzen Sie unseren kostenlosen, DSGVO-konformen Rechner für eine sekundenschnelle Auswertung aller Steuern und Sozialabgaben.
-            </p>
-          </div>
-
-          <Link
-            href="/rechner/brutto-zu-netto"
-            className="px-8 py-4 rounded-full font-extrabold text-white text-base shadow-2xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95 whitespace-nowrap flex-shrink-0"
-            style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)", boxShadow: "0 6px 25px rgba(230,10,28,0.50)" }}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+          {/* ── Breadcrumbs ─────────────────────────────────────────── */}
+          <nav
+            aria-label="Breadcrumb"
+            className="flex items-center gap-1.5 text-xs font-medium text-white/40 mb-8 flex-wrap"
           >
-            <span>Jetzt Gehalt berechnen</span>
-            <Calculator size={18} />
-          </Link>
-        </section>
+            <Link
+              href="/"
+              className="hover:text-white/80 transition-colors duration-150"
+            >
+              Startseite
+            </Link>
+            <ChevronRight size={12} className="text-white/25 flex-shrink-0" />
+            <Link
+              href="/blog"
+              className="hover:text-white/80 transition-colors duration-150"
+            >
+              Ratgeber &amp; Blog
+            </Link>
+            {article.category && (
+              <>
+                <ChevronRight
+                  size={12}
+                  className="text-white/25 flex-shrink-0"
+                />
+                <span className="text-white/60">{article.category}</span>
+              </>
+            )}
+          </nav>
 
-      </div>
-    </main>
+          {/* ── Two-column layout ────────────────────────────────────── */}
+          <div className="flex gap-12 xl:gap-16 items-start">
+            {/* ─── Main content column ─────────────────────────────── */}
+            <div className="min-w-0 flex-1">
+              {/* Article Header */}
+              <header className="mb-10">
+                {article.category && (
+                  <div className="mb-4">
+                    <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-widest text-[#FF2E44] bg-[#E60A1C]/12 border border-[#E60A1C]/25">
+                      {article.category}
+                    </span>
+                  </div>
+                )}
+
+                <h1 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.12] text-white mb-5">
+                  {article.headline}
+                </h1>
+
+                {article.excerpt && (
+                  <p className="text-white/65 text-lg sm:text-xl font-normal leading-relaxed mb-6 max-w-2xl">
+                    {article.excerpt}
+                  </p>
+                )}
+
+                {/* Author / Meta bar */}
+                <div className="flex flex-wrap items-center gap-4 py-5 border-t border-b border-white/8">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div
+                      className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-sm"
+                      style={{
+                        background:
+                          "linear-gradient(135deg,#E60A1C,#FF2436)",
+                      }}
+                      aria-hidden="true"
+                    >
+                      BN
+                    </div>
+                    <div>
+                      <div className="font-bold text-sm text-white leading-tight">
+                        Redaktion BruttoNettoCalculator
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-white/45 mt-0.5">
+                        <Calendar size={11} />
+                        <time dateTime={article.created_at || ""}>
+                          {formatDate(article.created_at)}
+                        </time>
+                        {article.updated_at &&
+                          article.updated_at !== article.created_at && (
+                            <>
+                              <span className="text-white/20">·</span>
+                              <span>
+                                Aktualisiert:{" "}
+                                {formatDate(article.updated_at)}
+                              </span>
+                            </>
+                          )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-white/60">
+                      <Clock size={12} className="text-[#E60A1C]" />
+                      <span>{article.read_time || "5 min read"}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-white/60">
+                      <BookOpen size={12} className="text-white/40" />
+                      <span>Ratgeber</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Reviewer byline */}
+                <div className="mt-4">
+                  <ReviewerByline />
+                </div>
+              </header>
+
+              {/* Featured Image */}
+              {article.featured_image && (
+                <figure className="mb-10 rounded-2xl overflow-hidden border border-white/10 bg-[#0e0e0e]">
+                  <img
+                    src={article.featured_image}
+                    alt={article.featured_image_alt || article.headline}
+                    className="w-full h-auto max-h-[480px] object-cover"
+                    loading="eager"
+                    decoding="async"
+                  />
+                  {article.featured_image_caption && (
+                    <figcaption className="px-4 py-2.5 text-center text-xs text-white/45 bg-black/50 border-t border-white/8 italic">
+                      {article.featured_image_caption}
+                    </figcaption>
+                  )}
+                </figure>
+              )}
+
+              {/* Mobile-only TOC */}
+              {toc.length > 0 && (
+                <details
+                  className="lg:hidden mb-8 rounded-2xl border border-white/12 bg-[#0d0d0d] overflow-hidden"
+                  open
+                >
+                  <summary className="flex items-center justify-between gap-3 px-5 py-4 cursor-pointer font-bold text-sm text-white/80 select-none list-none [&::-webkit-details-marker]:hidden">
+                    <span className="flex items-center gap-2">
+                      <BookOpen size={15} className="text-[#E60A1C]" />
+                      Inhaltsverzeichnis
+                    </span>
+                    <ChevronRight
+                      size={16}
+                      className="text-white/30 transition-transform details-open:rotate-90"
+                    />
+                  </summary>
+                  <nav
+                    aria-label="Inhaltsverzeichnis"
+                    className="px-5 pb-5 pt-1"
+                  >
+                    <ol className="space-y-2">
+                      {toc.map((h, i) => (
+                        <li key={i}>
+                          <a
+                            href={`#${h.id}`}
+                            className="flex items-start gap-2.5 text-sm text-white/65 hover:text-white transition-colors duration-150 group"
+                          >
+                            <span className="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-[#E60A1C]/15 text-[#FF2E44] text-[10px] font-black flex items-center justify-center">
+                              {i + 1}
+                            </span>
+                            <span className="group-hover:text-white transition-colors">
+                              {h.text}
+                            </span>
+                          </a>
+                        </li>
+                      ))}
+                    </ol>
+                  </nav>
+                </details>
+              )}
+
+              {/* ── Article Body ─────────────────────────────────── */}
+              <article
+                className="article-content"
+                dangerouslySetInnerHTML={{ __html: contentWithIds }}
+              />
+
+              {/* Tags */}
+              {article.tags && (
+                <div className="mt-10 pt-6 border-t border-white/8 flex flex-wrap items-center gap-2">
+                  <Tag
+                    size={14}
+                    className="text-white/30 mr-1 flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                  {article.tags.split(",").map((t, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-white/65 hover:border-white/20 hover:text-white/85 transition-colors"
+                    >
+                      #{t.trim()}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* FAQ Section */}
+              {faqs.length > 0 && (
+                <section
+                  className="mt-14 pt-10 border-t border-white/10"
+                  aria-labelledby="faq-heading"
+                >
+                  <div className="mb-8">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="w-1 h-6 rounded-full bg-[#E60A1C] inline-block" />
+                      <h2
+                        id="faq-heading"
+                        className="font-display font-black text-2xl sm:text-3xl tracking-tight text-white"
+                      >
+                        Häufig gestellte Fragen (FAQ)
+                      </h2>
+                    </div>
+                    <p className="text-white/55 text-sm ml-5">
+                      Fundierte Antworten auf die wichtigsten Fragen zu diesem
+                      Thema.
+                    </p>
+                  </div>
+
+                  <div className="space-y-3">
+                    {faqs.map((faq, idx) => (
+                      <details
+                        key={idx}
+                        className="group rounded-xl bg-[#0d0d0d] border border-white/10 overflow-hidden transition-all duration-200 open:border-white/18 open:bg-[#111111] open:shadow-[0_4px_24px_rgba(0,0,0,0.6)]"
+                      >
+                        <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
+                          <span className="flex items-start gap-3">
+                            <span
+                              className="flex-shrink-0 w-6 h-6 mt-0.5 rounded-full flex items-center justify-center text-xs font-black text-[#FF2E44]"
+                              style={{
+                                background: "rgba(230,10,28,0.12)",
+                              }}
+                            >
+                              ?
+                            </span>
+                            <span className="font-semibold text-sm sm:text-base text-white/90 leading-snug">
+                              {faq.question}
+                            </span>
+                          </span>
+                          <span className="flex-shrink-0 text-white/35 text-xl leading-none group-open:rotate-45 transition-transform duration-200">
+                            +
+                          </span>
+                        </summary>
+                        <div className="px-5 pb-5 pt-2 border-t border-white/8 ml-0">
+                          <p className="text-white/70 text-sm sm:text-base leading-relaxed pl-9">
+                            {faq.answer}
+                          </p>
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* CTA Banner */}
+              <section
+                className="mt-12 sm:mt-16 rounded-2xl overflow-hidden relative"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #110608 0%, #1a0709 50%, #0e0304 100%)",
+                  border: "1px solid rgba(230,10,28,0.22)",
+                  boxShadow: "0 12px 48px rgba(0,0,0,0.8)",
+                }}
+              >
+                {/* Glow effect */}
+                <div
+                  aria-hidden="true"
+                  className="absolute top-0 right-0 w-48 h-48 rounded-full pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(230,10,28,0.18) 0%, transparent 70%)",
+                    filter: "blur(30px)",
+                  }}
+                />
+                <div className="relative z-10 p-7 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+                  <div className="space-y-2 sm:space-y-3 max-w-lg">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-[#FF2E44] border border-[#E60A1C]/30 bg-[#E60A1C]/10">
+                      <Calculator size={12} />
+                      Kostenloser Rechner 2026/2027
+                    </div>
+                    <h3 className="font-display font-black text-xl sm:text-2xl lg:text-3xl text-white tracking-tight leading-tight">
+                      Berechnen Sie jetzt Ihr exaktes Nettogehalt
+                    </h3>
+                    <p className="text-white/60 text-sm leading-relaxed">
+                      DSGVO-konform · sekundenschnell · alle Steuerklassen ·
+                      inkl. Sozialabgaben 2027
+                    </p>
+                  </div>
+                  <Link
+                    href="/rechner/brutto-zu-netto"
+                    className="flex-shrink-0 inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-extrabold text-white text-sm transition-all duration-150 hover:scale-105 active:scale-95 whitespace-nowrap"
+                    style={{
+                      background:
+                        "linear-gradient(135deg,#E60A1C,#FF2436)",
+                      boxShadow: "0 6px 24px rgba(230,10,28,0.45)",
+                    }}
+                  >
+                    Jetzt berechnen
+                    <Calculator size={16} />
+                  </Link>
+                </div>
+              </section>
+            </div>
+
+            {/* ─── Sticky Sidebar (desktop only) ──────────────────── */}
+            {toc.length > 0 && (
+              <aside className="hidden lg:block w-72 xl:w-80 flex-shrink-0">
+                <div className="sticky top-24 space-y-6">
+                  {/* Table of Contents */}
+                  <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] overflow-hidden">
+                    <div className="px-5 py-4 border-b border-white/8 flex items-center gap-2">
+                      <BookOpen size={14} className="text-[#E60A1C]" />
+                      <h2 className="text-xs font-black tracking-widest uppercase text-white/60">
+                        Inhaltsverzeichnis
+                      </h2>
+                    </div>
+                    <nav
+                      aria-label="Inhaltsverzeichnis"
+                      className="p-4"
+                    >
+                      <ol className="space-y-1">
+                        {toc.map((h, i) => (
+                          <li key={i}>
+                            <a
+                              href={`#${h.id}`}
+                              className="flex items-start gap-2.5 px-3 py-2 rounded-lg text-sm text-white/55 hover:text-white hover:bg-white/5 transition-all duration-150 group"
+                            >
+                              <span className="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-[#E60A1C]/12 text-[#FF2E44] text-[10px] font-black flex items-center justify-center">
+                                {i + 1}
+                              </span>
+                              <span className="leading-snug line-clamp-2">
+                                {h.text}
+                              </span>
+                            </a>
+                          </li>
+                        ))}
+                      </ol>
+                    </nav>
+                  </div>
+
+                  {/* Mini Calculator CTA */}
+                  <div
+                    className="rounded-2xl p-5 text-center"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #110608 0%, #1a0709 100%)",
+                      border: "1px solid rgba(230,10,28,0.2)",
+                    }}
+                  >
+                    <Calculator
+                      size={28}
+                      className="text-[#E60A1C] mx-auto mb-3"
+                    />
+                    <h3 className="font-display font-black text-base text-white mb-2 leading-snug">
+                      Nettogehalt berechnen
+                    </h3>
+                    <p className="text-white/50 text-xs leading-relaxed mb-4">
+                      Kostenlos, sofort & DSGVO-konform für 2026/2027.
+                    </p>
+                    <Link
+                      href="/rechner/brutto-zu-netto"
+                      className="block w-full text-center py-2.5 rounded-full font-bold text-white text-sm transition-all hover:opacity-90 active:scale-95"
+                      style={{
+                        background:
+                          "linear-gradient(135deg,#E60A1C,#FF2436)",
+                        boxShadow: "0 4px 16px rgba(230,10,28,0.4)",
+                      }}
+                    >
+                      Jetzt berechnen
+                    </Link>
+                  </div>
+
+                  {/* Article meta card */}
+                  <div className="rounded-2xl border border-white/8 bg-[#0d0d0d] p-5 space-y-3 text-xs text-white/50">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-white/40 uppercase tracking-wider text-[10px]">
+                        Veröffentlicht
+                      </span>
+                      <time
+                        dateTime={article.created_at || ""}
+                        className="font-medium text-white/65"
+                      >
+                        {formatDate(article.created_at)}
+                      </time>
+                    </div>
+                    {article.updated_at &&
+                      article.updated_at !== article.created_at && (
+                        <div className="flex items-center justify-between">
+                          <span className="font-semibold text-white/40 uppercase tracking-wider text-[10px]">
+                            Aktualisiert
+                          </span>
+                          <time
+                            dateTime={article.updated_at}
+                            className="font-medium text-white/65"
+                          >
+                            {formatDate(article.updated_at)}
+                          </time>
+                        </div>
+                      )}
+                    {article.read_time && (
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-white/40 uppercase tracking-wider text-[10px]">
+                          Lesezeit
+                        </span>
+                        <span className="font-medium text-white/65">
+                          {article.read_time}
+                        </span>
+                      </div>
+                    )}
+                    {article.focus_keyword && (
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-white/40 uppercase tracking-wider text-[10px]">
+                          Thema
+                        </span>
+                        <span className="font-medium text-white/65 truncate max-w-[130px] text-right">
+                          {article.focus_keyword}
+                        </span>
+                      </div>
+                    )}
+                    <div className="pt-2 border-t border-white/6">
+                      <a
+                        href={articleUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-white/35 hover:text-white/65 transition-colors text-[11px]"
+                      >
+                        <ExternalLink size={11} />
+                        Artikel-URL kopieren
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            )}
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
