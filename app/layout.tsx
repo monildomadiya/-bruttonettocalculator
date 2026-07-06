@@ -125,12 +125,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.png?v=5", type: "image/png" },
-      { url: "/favicon.ico?v=5", type: "image/x-icon" },
+      { url: "/favicon.png?v=6", type: "image/png" },
+      { url: "/favicon.ico?v=6", type: "image/x-icon" },
     ],
-    shortcut: ["/favicon.png?v=5"],
+    shortcut: ["/favicon.png?v=6"],
     apple: [
-      { url: "/favicon.png?v=5", type: "image/png" },
+      { url: "/favicon.png?v=6", type: "image/png" },
     ],
   },
   other: {
