@@ -36,7 +36,7 @@ jobs:
             npm run build
             pm2 delete bruttonetto_live || true
             fuser -k 3007/tcp || true
-            PORT=3007 pm2 start npm --name "bruttonetto_live" --cwd /var/www/bruttonetto -- run start
+            pm2 start node_modules/.bin/next --name "bruttonetto_live" -- start -p 3007
             pm2 save
             sleep 3
             pm2 status
