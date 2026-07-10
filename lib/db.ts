@@ -92,6 +92,14 @@ export async function initDb() {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS settings (
+        \`key\` VARCHAR(100) PRIMARY KEY,
+        value TEXT,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+
     isDbInitialized = true;
     console.log("✅ MySQL articles table checked/initialized successfully.");
 
@@ -99,6 +107,53 @@ export async function initDb() {
     // console.log("✅ MySQL articles table checked/initialized successfully.");
   } catch (err: any) {
     console.warn("⚠️ MySQL offline or connection failed. Using resilient fallback store:", err.message);
+  }
+}
+
+// In-memory fallback store for key-value settings if MySQL is offline
+const fallbackSettings: Record<string, string> = {};
+
+// Simple key-value settings store (used e.g. for AdSense configuration)
+export async function getSetting(key: string): Promise<string | null> {
+  await initDb();
+  try {
+    const pool = getPool();
+    const [rows] = await pool.query("SELECT value FROM settings WHERE `key` = ?", [key]);
+    const row = (rows as any[])[0];
+    return row ? row.value : null;
+  } catch {
+    return fallbackSettings[key] ?? null;
+  }
+}
+
+export async function getSettings(keys: string[]): Promise<Record<string, string | null>> {
+  await initDb();
+  const result: Record<string, string | null> = {};
+  try {
+    const pool = getPool();
+    const [rows] = await pool.query(
+      `SELECT \`key\`, value FROM settings WHERE \`key\` IN (${keys.map(() => "?").join(",")})`,
+      keys
+    );
+    for (const key of keys) result[key] = null;
+    for (const row of rows as any[]) result[row.key] = row.value;
+  } catch {
+    for (const key of keys) result[key] = fallbackSettings[key] ?? null;
+  }
+  return result;
+}
+
+export async function setSetting(key: string, value: string): Promise<void> {
+  await initDb();
+  fallbackSettings[key] = value;
+  try {
+    const pool = getPool();
+    await pool.query(
+      "INSERT INTO settings (`key`, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE value = VALUES(value)",
+      [key, value]
+    );
+  } catch (err: any) {
+    console.warn(`⚠️ MySQL settings write failed (${err.message}). Kept in fallback store only.`);
   }
 }
 

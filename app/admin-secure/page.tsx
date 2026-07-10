@@ -8,7 +8,7 @@ import {
   List as ListIcon, FileText, Check, Globe, LogOut, ChevronRight,
   BookOpen, Share2, RefreshCw, Layers, CheckCircle2, Clock,
   ArrowUpRight, ShieldCheck, Cpu, Calendar, X, Menu, BarChart2,
-  Zap, Settings, Tag, Eye,
+  Zap, Settings, Tag, Eye, Megaphone,
 } from "lucide-react";
 import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
 import { auth } from "@/lib/firebase";
@@ -225,6 +225,22 @@ export default function AdminDashboard() {
               <Globe size={15} className="text-white/35" />
               <span>Live Website</span>
               <ArrowUpRight size={12} className="ml-auto text-white/25" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Monetization */}
+        <div>
+          <p className="text-[10px] font-mono uppercase tracking-widest text-white/30 px-3 mb-2">
+            Monetarisierung
+          </p>
+          <div className="space-y-0.5">
+            <Link
+              href="/admin-secure/ads"
+              className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium text-white/55 hover:text-white hover:bg-white/[0.05] transition-all"
+            >
+              <Megaphone size={15} className="text-white/35" />
+              <span>Google AdSense</span>
             </Link>
           </div>
         </div>
