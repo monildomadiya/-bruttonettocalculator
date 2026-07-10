@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Calculator, BookOpen, HelpCircle } from "lucide-react";
-
+import "./globals.css";
 export const metadata: Metadata = {
   title: "Seite nicht gefunden (404) | BruttoNettoCalculator.com",
   description: "Die gesuchte Seite konnte nicht gefunden werden. Nutzen Sie unseren kostenlosen Gehaltsrechner für 2026.",

@@ -266,7 +266,7 @@ export default function AdminDashboard() {
 
         {/* ── Toast Notification ────────────────────────────────────── */}
         {actionFeedback && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 z-[100] flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#161616] border border-white/12 text-white text-sm font-medium shadow-2xl backdrop-blur-xl">
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 z-[100] flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#161616] border border-white/[12%] text-white text-sm font-medium shadow-2xl backdrop-blur-xl">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
             {actionFeedback}
           </div>
@@ -275,7 +275,7 @@ export default function AdminDashboard() {
         {/* ── Delete Confirm Modal ──────────────────────────────────── */}
         {deleteConfirm && (
           <div className="fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-[#111] border border-white/12 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <div className="bg-[#111] border border-white/[12%] rounded-2xl p-6 max-w-sm w-full shadow-2xl">
               <div className="flex items-start gap-4 mb-5">
                 <div className="w-10 h-10 rounded-xl bg-red-500/15 border border-red-500/25 flex items-center justify-center flex-shrink-0">
                   <Trash2 size={18} className="text-red-400" />
@@ -480,7 +480,7 @@ export default function AdminDashboard() {
                             <span>{cat === "All" ? "All Categories" : cat}</span>
                             <span
                               className={`text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded ${
-                                active ? "bg-black/12 text-black/70" : "bg-white/[0.07] text-white/40"
+                                active ? "bg-black/[12%] text-black/70" : "bg-white/[0.07] text-white/40"
                               }`}
                             >
                               {count}

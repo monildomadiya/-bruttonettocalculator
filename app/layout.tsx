@@ -136,12 +136,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.png?v=6", type: "image/png" },
-      { url: "/favicon.ico?v=6", type: "image/x-icon" },
+      { url: "/favicon.png?v=7", type: "image/png" },
+      { url: "/favicon.ico?v=7", type: "image/x-icon" },
     ],
-    shortcut: ["/favicon.png?v=6"],
+    shortcut: ["/favicon.png?v=7"],
     apple: [
-      { url: "/favicon.png?v=6", type: "image/png" },
+      { url: "/favicon.png?v=7", type: "image/png" },
     ],
   },
   other: {

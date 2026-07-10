@@ -22,10 +22,10 @@ export default function SiteFooter() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-24 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
 
         {/* Footer grid */}
-        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 sm:gap-12 pb-12 border-b border-white/10">
-          
-          {/* Col 1: Brand Info (Spans 4 cols on lg) */}
-          <div className="lg:col-span-4 space-y-5">
+        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-x-8 gap-y-10 sm:gap-x-10 sm:gap-y-12 pb-12 border-b border-white/10">
+
+          {/* Brand Info (full width until lg, then 4/12) */}
+          <div className="sm:col-span-2 md:col-span-4 lg:col-span-4 space-y-5">
             <Link href="/" className="inline-block group" aria-label="BruttoNettoCalculator Startseite">
               <Image
                 src="/BRUTTO-NETTO-LOGO.svg"
@@ -35,7 +35,7 @@ export default function SiteFooter() {
                 className="h-8 sm:h-10 w-auto opacity-90 transition-opacity group-hover:opacity-100"
               />
             </Link>
-            <p className="leading-relaxed text-white/60 text-sm font-normal pr-4">
+            <p className="leading-relaxed text-white/60 text-sm font-normal max-w-sm">
               Der präzise Gehaltsrechner für Deutschland nach § 32a EStG. Berechnen Sie Ihr Nettogehalt in Sekundenschnelle — kostenlos, ohne Registrierung und DSGVO-konform.
             </p>
             <div className="pt-1 flex items-center gap-3 text-xs font-mono text-white/40">
@@ -44,44 +44,38 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          {/* Col 2: Rechner (Spans 2 cols on lg) */}
-          <div className="lg:col-span-2">
+          {/* Rechner (core, high-traffic) */}
+          <div className="md:col-span-2 lg:col-span-2">
             <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-6">
               RECHNER
             </p>
             <ul className="space-y-3.5 text-sm sm:text-base text-white/60 font-medium">
-              <li><Link href="/"                          className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner 2026</Link></li>
-              <li><Link href="/brutto-netto-rechner-2027" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Rechner 2027 (Vorschau)</Link></li>
-              <li><Link href="/blog"                      className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Blog</Link></li>
+              <li><Link href="/"                          className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner</Link></li>
               <li><Link href="/rechner/brutto-zu-netto"   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Brutto zu Netto</Link></li>
               <li><Link href="/rechner/netto-zu-brutto"   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Netto zu Brutto</Link></li>
+              <li><Link href="/mindestlohn"                className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Mindestlohn Rechner</Link></li>
+              <li><Link href="/minijob-rechner"            className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Minijob-Rechner</Link></li>
+              <li><Link href="/steuerklassen"             className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Steuerklassen</Link></li>
+            </ul>
+          </div>
+
+          {/* Tools & Wissen (secondary calculators + knowledge resources) */}
+          <div className="md:col-span-2 lg:col-span-2">
+            <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-6">
+              TOOLS & WISSEN
+            </p>
+            <ul className="space-y-3.5 text-sm sm:text-base text-white/60 font-medium">
               <li><Link href="/firmenwagenrechner"        className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Firmenwagenrechner</Link></li>
               <li><Link href="/rentenrechner"              className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Rentenrechner</Link></li>
-              <li><Link href="/arbeitslosengeld-rechner"  className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Arbeitslosengeld-Rechner</Link></li>
-              <li><Link href="/mindestlohn"                className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Mindestlohn Rechner</Link></li>
+              <li><Link href="/elterngeld-rechner"        className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Elterngeld-Rechner</Link></li>
               <li><Link href="/pfaendungstabelle"          className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Pfändungstabelle</Link></li>
               <li><Link href="/lexikon"                   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Steuer-Lexikon</Link></li>
               <li><Link href="/faq"                       className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">FAQ & Hilfe</Link></li>
             </ul>
           </div>
 
-          {/* Col 2b: Weitere Rechner (Spans 2 cols on lg) */}
-          <div className="lg:col-span-2">
-            <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-6">
-              WEITERE RECHNER
-            </p>
-            <ul className="space-y-3.5 text-sm sm:text-base text-white/60 font-medium">
-              <li><Link href="/minijob-rechner"           className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Minijob-Rechner</Link></li>
-              <li><Link href="/elterngeld-rechner"        className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Elterngeld-Rechner</Link></li>
-              <li><Link href="/abfindungsrechner"         className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Abfindungsrechner</Link></li>
-              <li><Link href="/bonus-steuerrechner"       className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Bonus-Steuerrechner</Link></li>
-              <li><Link href="/stundenlohn-rechner"       className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Stundenlohn-Rechner</Link></li>
-              <li><Link href="/steuerklassen"             className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Steuerklassen</Link></li>
-            </ul>
-          </div>
-
-          {/* Col 3: Rechtliches (Spans 2 cols on lg) */}
-          <div className="lg:col-span-2">
+          {/* Rechtliches */}
+          <div className="md:col-span-2 lg:col-span-2">
             <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-6">
               RECHTLICHES
             </p>
@@ -90,11 +84,12 @@ export default function SiteFooter() {
               <li><Link href="/datenschutz" className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Datenschutz</Link></li>
               <li><Link href="/kontakt"     className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Kontakt</Link></li>
               <li><Link href="/ueber-uns"   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Über uns</Link></li>
+              <li><Link href="/blog"        className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Blog</Link></li>
             </ul>
           </div>
 
-          {/* Col 4: Partner & Newsletter (Spans 2 cols on lg) */}
-          <div className="lg:col-span-2 space-y-6">
+          {/* Partner & Newsletter */}
+          <div className="md:col-span-2 lg:col-span-2 space-y-6">
             <div>
               <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-4">
                 PARTNER & KI-TOOLS

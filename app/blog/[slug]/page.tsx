@@ -317,7 +317,7 @@ export default async function ArticleReaderPage({
               <header className="mb-10">
                 {article.category && (
                   <div className="mb-4">
-                    <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-widest text-[#FF2E44] bg-[#E60A1C]/12 border border-[#E60A1C]/25">
+                    <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-widest text-[#FF2E44] bg-[#E60A1C]/[12%] border border-[#E60A1C]/25">
                       {article.category}
                     </span>
                   </div>
@@ -334,7 +334,7 @@ export default async function ArticleReaderPage({
                 )}
 
                 {/* Author / Meta bar */}
-                <div className="flex flex-wrap items-center gap-4 py-5 border-t border-b border-white/8">
+                <div className="flex flex-wrap items-center gap-4 py-5 border-t border-b border-white/[8%]">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <div
                       className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-sm"
@@ -398,7 +398,7 @@ export default async function ArticleReaderPage({
                     decoding="async"
                   />
                   {article.featured_image_caption && (
-                    <figcaption className="px-4 py-2.5 text-center text-xs text-white/45 bg-black/50 border-t border-white/8 italic">
+                    <figcaption className="px-4 py-2.5 text-center text-xs text-white/45 bg-black/50 border-t border-white/[8%] italic">
                       {article.featured_image_caption}
                     </figcaption>
                   )}
@@ -408,7 +408,7 @@ export default async function ArticleReaderPage({
               {/* Mobile-only TOC */}
               {toc.length > 0 && (
                 <details
-                  className="lg:hidden mb-8 rounded-2xl border border-white/12 bg-[#0d0d0d] overflow-hidden"
+                  className="lg:hidden mb-8 rounded-2xl border border-white/[12%] bg-[#0d0d0d] overflow-hidden"
                   open
                 >
                   <summary className="flex items-center justify-between gap-3 px-5 py-4 cursor-pointer font-bold text-sm text-white/80 select-none list-none [&::-webkit-details-marker]:hidden">
@@ -454,7 +454,7 @@ export default async function ArticleReaderPage({
 
               {/* Tags */}
               {article.tags && (
-                <div className="mt-10 pt-6 border-t border-white/8 flex flex-wrap items-center gap-2">
+                <div className="mt-10 pt-6 border-t border-white/[8%] flex flex-wrap items-center gap-2">
                   <Tag
                     size={14}
                     className="text-white/30 mr-1 flex-shrink-0"
@@ -497,7 +497,7 @@ export default async function ArticleReaderPage({
                     {faqs.map((faq, idx) => (
                       <details
                         key={idx}
-                        className="group rounded-xl bg-[#0d0d0d] border border-white/10 overflow-hidden transition-all duration-200 open:border-white/18 open:bg-[#111111] open:shadow-[0_4px_24px_rgba(0,0,0,0.6)]"
+                        className="group rounded-xl bg-[#0d0d0d] border border-white/10 overflow-hidden transition-all duration-200 open:border-white/[18%] open:bg-[#111111] open:shadow-[0_4px_24px_rgba(0,0,0,0.6)]"
                       >
                         <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
                           <span className="flex items-start gap-3">
@@ -517,7 +517,7 @@ export default async function ArticleReaderPage({
                             +
                           </span>
                         </summary>
-                        <div className="px-5 pb-5 pt-2 border-t border-white/8 ml-0">
+                        <div className="px-5 pb-5 pt-2 border-t border-white/[8%] ml-0">
                           <p className="text-white/70 text-sm sm:text-base leading-relaxed pl-9">
                             {faq.answer}
                           </p>
@@ -584,7 +584,7 @@ export default async function ArticleReaderPage({
                 <div className="sticky top-24 space-y-6">
                   {/* Table of Contents */}
                   <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] overflow-hidden">
-                    <div className="px-5 py-4 border-b border-white/8 flex items-center gap-2">
+                    <div className="px-5 py-4 border-b border-white/[8%] flex items-center gap-2">
                       <BookOpen size={14} className="text-[#E60A1C]" />
                       <h2 className="text-xs font-black tracking-widest uppercase text-white/60">
                         Inhaltsverzeichnis
@@ -601,7 +601,7 @@ export default async function ArticleReaderPage({
                               href={`#${h.id}`}
                               className="flex items-start gap-2.5 px-3 py-2 rounded-lg text-sm text-white/55 hover:text-white hover:bg-white/5 transition-all duration-150 group"
                             >
-                              <span className="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-[#E60A1C]/12 text-[#FF2E44] text-[10px] font-black flex items-center justify-center">
+                              <span className="flex-shrink-0 w-5 h-5 mt-0.5 rounded-full bg-[#E60A1C]/[12%] text-[#FF2E44] text-[10px] font-black flex items-center justify-center">
                                 {i + 1}
                               </span>
                               <span className="leading-snug line-clamp-2">
@@ -647,7 +647,7 @@ export default async function ArticleReaderPage({
                   </div>
 
                   {/* Article meta card */}
-                  <div className="rounded-2xl border border-white/8 bg-[#0d0d0d] p-5 space-y-3 text-xs text-white/50">
+                  <div className="rounded-2xl border border-white/[8%] bg-[#0d0d0d] p-5 space-y-3 text-xs text-white/50">
                     <div className="flex items-center justify-between">
                       <span className="font-semibold text-white/40 uppercase tracking-wider text-[10px]">
                         Veröffentlicht
@@ -693,7 +693,7 @@ export default async function ArticleReaderPage({
                         </span>
                       </div>
                     )}
-                    <div className="pt-2 border-t border-white/6">
+                    <div className="pt-2 border-t border-white/[6%]">
                       <a
                         href={articleUrl}
                         target="_blank"
