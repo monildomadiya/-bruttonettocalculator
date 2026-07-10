@@ -481,6 +481,15 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #FF4D60;
   text-decoration-color: rgba(255,77,96,0.8);
 }
+/* Button-style links (CTA blocks with a gradient/solid background) must keep
+   readable white text — override the red inline-link color + underline. */
+.article-content a[style*="gradient"],
+.article-content a[style*="background"],
+.article-content a[style*="gradient"]:hover,
+.article-content a[style*="background"]:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
 
 /* Unordered lists */
 .article-content ul {

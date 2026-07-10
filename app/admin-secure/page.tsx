@@ -8,7 +8,7 @@ import {
   List as ListIcon, FileText, Check, Globe, LogOut, ChevronRight,
   BookOpen, Share2, RefreshCw, Layers, CheckCircle2, Clock,
   ArrowUpRight, ShieldCheck, Cpu, Calendar, X, Menu, BarChart2,
-  Zap, Settings, Tag, Eye, Megaphone,
+  Zap, Settings, Tag, Eye, Megaphone, ChevronUp, ChevronDown, FolderOpen, History,
 } from "lucide-react";
 import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
 import { auth } from "@/lib/firebase";
@@ -40,6 +40,29 @@ export default function AdminDashboard() {
   const [actionFeedback, setActionFeedback] = useState<string | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{ slug: string; title: string } | null>(null);
 
+  // Sorting + bulk selection
+  const [sortKey, setSortKey] = useState<"headline" | "category" | "status" | "created_at">("created_at");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const [selectedSlugs, setSelectedSlugs] = useState<Set<string>>(new Set());
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+
+  function toggleSort(key: typeof sortKey) {
+    if (sortKey === key) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir(key === "created_at" ? "desc" : "asc");
+    }
+  }
+
+  function toggleSelect(slug: string) {
+    setSelectedSlugs((prev) => {
+      const next = new Set(prev);
+      next.has(slug) ? next.delete(slug) : next.add(slug);
+      return next;
+    });
+  }
+
   async function fetchArticles() {
     setLoading(true);
     try {
@@ -65,11 +88,13 @@ export default function AdminDashboard() {
         if (searchQuery) setSearchQuery("");
         if (mobileSidebarOpen) setMobileSidebarOpen(false);
         if (deleteConfirm) setDeleteConfirm(null);
+        if (bulkDeleteOpen) setBulkDeleteOpen(false);
+        else if (selectedSlugs.size > 0) setSelectedSlugs(new Set());
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [searchQuery, mobileSidebarOpen, deleteConfirm]);
+  }, [searchQuery, mobileSidebarOpen, deleteConfirm, bulkDeleteOpen, selectedSlugs]);
 
   // Close mobile sidebar on route change
   useEffect(() => {
@@ -78,9 +103,10 @@ export default function AdminDashboard() {
 
   async function confirmDelete() {
     if (!deleteConfirm) return;
-    const { slug, title } = deleteConfirm;
+    const { slug } = deleteConfirm;
     setDeleteConfirm(null);
     setArticles((prev) => prev.filter((a) => a.slug !== slug));
+    setSelectedSlugs((prev) => { const n = new Set(prev); n.delete(slug); return n; });
     showFeedback("Article deleted successfully.");
     try {
       const res = await fetch(`/api/articles/${slug}`, { method: "DELETE" });
@@ -91,6 +117,23 @@ export default function AdminDashboard() {
       }
     } catch {
       showFeedback("Network error. Refreshing...");
+      fetchArticles();
+    }
+  }
+
+  async function confirmBulkDelete() {
+    const slugs = Array.from(selectedSlugs);
+    if (slugs.length === 0) return;
+    setBulkDeleteOpen(false);
+    setArticles((prev) => prev.filter((a) => !selectedSlugs.has(a.slug)));
+    setSelectedSlugs(new Set());
+    showFeedback(`${slugs.length} article${slugs.length > 1 ? "s" : ""} deleted.`);
+    const results = await Promise.allSettled(
+      slugs.map((slug) => fetch(`/api/articles/${slug}`, { method: "DELETE" }).then((r) => r.json()))
+    );
+    const failed = results.filter((r) => r.status === "rejected" || !(r as any).value?.success).length;
+    if (failed > 0) {
+      showFeedback(`${failed} delete(s) failed on server. Refreshing…`);
       fetchArticles();
     }
   }
@@ -129,8 +172,8 @@ export default function AdminDashboard() {
     [articles]
   );
 
-  const filteredArticles = useMemo(() =>
-    articles.filter((art) => {
+  const filteredArticles = useMemo(() => {
+    const filtered = articles.filter((art) => {
       const q = searchQuery.toLowerCase();
       const matchesSearch = !q ||
         art.headline?.toLowerCase().includes(q) ||
@@ -140,15 +183,54 @@ export default function AdminDashboard() {
       const matchesCategory = selectedCategory === "All" || (art.category || "General") === selectedCategory;
       const matchesStatus = selectedStatus === "All" || art.status === selectedStatus;
       return matchesSearch && matchesCategory && matchesStatus;
-    }),
-    [articles, searchQuery, selectedCategory, selectedStatus]
-  );
+    });
+
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...filtered].sort((a, b) => {
+      let cmp = 0;
+      if (sortKey === "created_at") {
+        cmp = new Date(a.created_at || 0).getTime() - new Date(b.created_at || 0).getTime();
+      } else {
+        cmp = String(a[sortKey] || "").localeCompare(String(b[sortKey] || ""), "de", { sensitivity: "base" });
+      }
+      return cmp * dir;
+    });
+  }, [articles, searchQuery, selectedCategory, selectedStatus, sortKey, sortDir]);
+
+  // Insight: most-used category and most recent update
+  const { topCategory, lastUpdated } = useMemo(() => {
+    const counts: Record<string, number> = {};
+    let latest = 0;
+    for (const a of articles) {
+      const c = a.category || "General";
+      counts[c] = (counts[c] || 0) + 1;
+      const t = new Date(a.created_at || 0).getTime();
+      if (t > latest) latest = t;
+    }
+    const top = Object.entries(counts).sort((x, y) => y[1] - x[1])[0];
+    return {
+      topCategory: top ? `${top[0]} (${top[1]})` : "—",
+      lastUpdated: latest ? new Date(latest).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : "—",
+    };
+  }, [articles]);
+
+  // Clear selection when the visible set changes
+  useEffect(() => { setSelectedSlugs(new Set()); }, [searchQuery, selectedCategory, selectedStatus]);
+
+  const visibleSlugs = filteredArticles.map((a) => a.slug);
+  const allVisibleSelected = visibleSlugs.length > 0 && visibleSlugs.every((s) => selectedSlugs.has(s));
+  function toggleSelectAll() {
+    setSelectedSlugs((prev) => {
+      if (allVisibleSelected) return new Set();
+      return new Set(visibleSlugs);
+    });
+  }
 
   /* ─── Sidebar content (shared between desktop & mobile) ─────────── */
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="px-5 pt-6 pb-5 border-b border-white/[0.07]">
+      <div className="px-5 pt-6 pb-5 border-b border-white/[0.08]">
         <Link href="/admin-secure" className="block">
           <Image
             src="/BRUTTO-NETTO-LOGO.svg"
@@ -185,7 +267,7 @@ export default function AdminDashboard() {
                   onClick={() => setSelectedStatus(value)}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
                     active
-                      ? "bg-white/10 text-white shadow-sm border border-white/10"
+                      ? "bg-white/10 text-white shadow-sm border border-white/[0.08]"
                       : "text-white/55 hover:text-white hover:bg-white/[0.05]"
                   }`}
                 >
@@ -247,7 +329,7 @@ export default function AdminDashboard() {
       </nav>
 
       {/* Logout */}
-      <div className="px-3 pb-5 pt-4 border-t border-white/[0.07]">
+      <div className="px-3 pb-5 pt-4 border-t border-white/[0.08]">
         <button
           type="button"
           onClick={handleLogout}
@@ -262,11 +344,11 @@ export default function AdminDashboard() {
 
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-[#040404] text-[#e5e5e5] font-sans antialiased selection:bg-[#E60A1C] selection:text-white">
+      <div className="min-h-screen bg-[#0a0a0a] text-[#e5e5e5] font-sans antialiased selection:bg-[#E60A1C] selection:text-white">
 
         {/* ── Toast Notification ────────────────────────────────────── */}
         {actionFeedback && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 z-[100] flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#161616] border border-white/[12%] text-white text-sm font-medium shadow-2xl backdrop-blur-xl">
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 z-[100] flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#181818] border border-white/[12%] text-white text-sm font-medium shadow-2xl backdrop-blur-xl">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
             {actionFeedback}
           </div>
@@ -290,7 +372,7 @@ export default function AdminDashboard() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setDeleteConfirm(null)}
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 text-white/70 hover:text-white text-sm font-medium transition-all"
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-white/70 hover:text-white text-sm font-medium transition-all"
                 >
                   Cancel
                 </button>
@@ -299,6 +381,39 @@ export default function AdminDashboard() {
                   className="flex-1 px-4 py-2.5 rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 text-sm font-bold transition-all"
                 >
                   Delete Permanently
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Bulk Delete Confirm Modal ─────────────────────────────── */}
+        {bulkDeleteOpen && (
+          <div className="fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-[#111] border border-white/[0.08] rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+              <div className="flex items-start gap-4 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-red-500/15 border border-red-500/25 flex items-center justify-center flex-shrink-0">
+                  <Trash2 size={18} className="text-red-400" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-white text-base leading-snug">Delete {selectedSlugs.size} article{selectedSlugs.size > 1 ? "s" : ""}?</h3>
+                  <p className="text-white/55 text-sm mt-1 leading-relaxed">
+                    The selected article{selectedSlugs.size > 1 ? "s" : ""} will be permanently removed. This cannot be undone.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setBulkDeleteOpen(false)}
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-white/70 hover:text-white text-sm font-medium transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmBulkDelete}
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 text-sm font-bold transition-all"
+                >
+                  Delete All
                 </button>
               </div>
             </div>
@@ -314,13 +429,13 @@ export default function AdminDashboard() {
         )}
 
         {/* ── Desktop Sidebar (fixed, hidden on mobile) ─────────────── */}
-        <aside className="hidden lg:flex lg:flex-col fixed top-0 left-0 h-screen w-60 xl:w-64 bg-[#080808] border-r border-white/[0.07] z-30 overflow-hidden">
+        <aside className="hidden lg:flex lg:flex-col fixed top-0 left-0 h-screen w-60 xl:w-64 bg-[#0d0d0d] border-r border-white/[0.08] z-30 overflow-hidden">
           <SidebarContent />
         </aside>
 
         {/* ── Mobile Sidebar (slide-in drawer) ─────────────────────── */}
         <aside
-          className={`fixed top-0 left-0 h-screen w-72 bg-[#080808] border-r border-white/[0.07] z-50 transform transition-transform duration-300 ease-out lg:hidden ${
+          className={`fixed top-0 left-0 h-screen w-72 bg-[#0d0d0d] border-r border-white/[0.08] z-50 transform transition-transform duration-300 ease-out lg:hidden ${
             mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -337,7 +452,7 @@ export default function AdminDashboard() {
         <div className="lg:pl-60 xl:pl-64 min-h-screen flex flex-col">
 
           {/* ── Top Bar ──────────────────────────────────────────────── */}
-          <header className="sticky top-0 z-20 bg-[#040404]/90 backdrop-blur-xl border-b border-white/[0.07] px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
+          <header className="sticky top-0 z-20 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/[0.08] px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
             {/* Mobile hamburger + title */}
             <div className="flex items-center gap-3 min-w-0">
               <button
@@ -388,8 +503,7 @@ export default function AdminDashboard() {
               {/* New Article */}
               <Link
                 href="/admin-secure/articles/new"
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-bold text-white text-sm transition-all hover:opacity-90 active:scale-95 whitespace-nowrap"
-                style={{ background: "linear-gradient(135deg,#E60A1C,#b8000f)", boxShadow: "0 3px 14px rgba(230,10,28,0.35)" }}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-semibold text-white text-sm bg-[#E60A1C] hover:bg-[#ff1a2e] transition-colors active:scale-95 whitespace-nowrap"
               >
                 <Plus size={15} />
                 <span className="hidden sm:inline">New Article</span>
@@ -418,26 +532,40 @@ export default function AdminDashboard() {
             </div>
 
             {/* ── KPI Stats ────────────────────────────────────────── */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               {[
-                { label: "Total Articles",  value: loading ? "—" : totalCount,     sub: "In database",               color: "text-white",       dot: "" },
-                { label: "Published",       value: loading ? "—" : publishedCount, sub: "Live & indexed",             color: "text-emerald-400", dot: "bg-emerald-400" },
-                { label: "Drafts",          value: loading ? "—" : draftCount,     sub: "Pending publish",           color: "text-amber-400",   dot: "bg-amber-400" },
-                { label: "System",          value: "100%",                          sub: "DB query: 0.1ms",           color: "text-white",       dot: "bg-emerald-400" },
-              ].map(({ label, value, sub, color, dot }) => (
-                <div key={label} className="bg-[#090909] border border-white/[0.07] rounded-2xl p-4 sm:p-5 flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-white/35">{label}</span>
-                    {dot && <span className={`w-2 h-2 rounded-full ${dot} ${label === "Published" ? "animate-pulse" : ""}`} />}
-                  </div>
-                  <div className={`text-2xl sm:text-3xl font-black ${color}`}>{value}</div>
-                  <div className="text-[11px] text-white/35">{sub}</div>
+                { label: "Total Articles", value: loading ? "—" : totalCount,     sub: "In database",     color: "text-white" },
+                { label: "Published",      value: loading ? "—" : publishedCount, sub: "Live & indexed",  color: "text-emerald-400" },
+                { label: "Drafts",         value: loading ? "—" : draftCount,     sub: "Pending publish", color: "text-amber-400" },
+              ].map(({ label, value, sub, color }) => (
+                <div key={label} className="bg-[#111] border border-white/[0.08] rounded-2xl p-5 flex flex-col gap-1.5">
+                  <span className="text-xs font-medium text-white/40">{label}</span>
+                  <div className={`text-3xl font-bold tracking-tight ${color}`}>{value}</div>
+                  <div className="text-xs text-white/35">{sub}</div>
                 </div>
               ))}
             </div>
 
+            {/* ── Insights strip ───────────────────────────────────── */}
+            {!loading && totalCount > 0 && (
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.08] text-xs text-white/50">
+                <span className="flex items-center gap-2">
+                  <FolderOpen size={13} className="text-white/35" />
+                  Top category: <span className="text-white/75 font-medium">{topCategory}</span>
+                </span>
+                <span className="flex items-center gap-2">
+                  <History size={13} className="text-white/35" />
+                  Last updated: <span className="text-white/75 font-medium">{lastUpdated}</span>
+                </span>
+                <span className="flex items-center gap-2">
+                  <Layers size={13} className="text-white/35" />
+                  Categories: <span className="text-white/75 font-medium">{allCategories.length - 1}</span>
+                </span>
+              </div>
+            )}
+
             {/* ── Filters & View Toggle ────────────────────────────── */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/[0.07]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/[0.08]">
 
               {/* Category pills with fade-masked scroll */}
               <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -452,12 +580,12 @@ export default function AdminDashboard() {
                   {/* Right fade overlay */}
                   <div
                     className="pointer-events-none absolute right-0 top-0 h-full w-10 z-10"
-                    style={{ background: "linear-gradient(to right, transparent, #040404)" }}
+                    style={{ background: "linear-gradient(to right, transparent, #0a0a0a)" }}
                   />
                   {/* Left fade overlay */}
                   <div
                     className="pointer-events-none absolute left-0 top-0 h-full w-4 z-10"
-                    style={{ background: "linear-gradient(to left, transparent, #040404)" }}
+                    style={{ background: "linear-gradient(to left, transparent, #0a0a0a)" }}
                   />
                   <div
                     className="flex items-center gap-1.5 overflow-x-auto cat-pill-scroll"
@@ -474,7 +602,7 @@ export default function AdminDashboard() {
                             className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 whitespace-nowrap ${
                               active
                                 ? "bg-white text-black font-bold shadow-md"
-                                : "bg-white/[0.05] border border-white/[0.09] text-white/55 hover:text-white hover:bg-white/[0.1] hover:border-white/20"
+                                : "bg-white/[0.05] border border-white/[0.08] text-white/55 hover:text-white hover:bg-white/[0.1] hover:border-white/20"
                             }`}
                           >
                             <span>{cat === "All" ? "All Categories" : cat}</span>
@@ -494,7 +622,7 @@ export default function AdminDashboard() {
               </div>
 
               {/* View mode toggle */}
-              <div className="flex items-center flex-shrink-0 self-end sm:self-auto p-1 rounded-xl bg-white/[0.04] border border-white/[0.07]">
+              <div className="flex items-center flex-shrink-0 self-end sm:self-auto p-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
                 {([["table", ListIcon, "List"], ["grid", LayoutGrid, "Grid"]] as const).map(([mode, Icon, label]) => (
                   <button
                     key={mode}
@@ -510,8 +638,29 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* ── Results count ────────────────────────────────────── */}
-            {!loading && (
+            {/* ── Results count / Bulk action bar ──────────────────── */}
+            {!loading && selectedSlugs.size > 0 ? (
+              <div className="flex items-center justify-between gap-3 -mt-2 px-4 py-2.5 rounded-xl bg-[#E60A1C]/10 border border-[#E60A1C]/25">
+                <span className="text-sm font-medium text-white">
+                  {selectedSlugs.size} selected
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setSelectedSlugs(new Set())}
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors"
+                  >
+                    Clear
+                  </button>
+                  <button
+                    onClick={() => setBulkDeleteOpen(true)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 border border-red-500/25 text-red-400 text-xs font-semibold transition-colors"
+                  >
+                    <Trash2 size={13} />
+                    Delete selected
+                  </button>
+                </div>
+              </div>
+            ) : !loading && (
               <p className="text-xs text-white/35 -mt-2">
                 Showing <span className="text-white/65 font-semibold">{filteredArticles.length}</span> of {totalCount} articles
                 {searchQuery && <> matching <span className="text-white/65 font-medium">"{searchQuery}"</span></>}
@@ -520,8 +669,8 @@ export default function AdminDashboard() {
 
             {/* ── Content: Loading / Empty / Table / Grid ───────────── */}
             {loading ? (
-              <div className="bg-[#090909] border border-white/[0.07] rounded-2xl overflow-hidden">
-                <div className="px-6 py-4 border-b border-white/[0.06] text-[11px] font-mono text-white/30 uppercase tracking-widest flex items-center gap-2">
+              <div className="bg-[#111] border border-white/[0.08] rounded-2xl overflow-hidden">
+                <div className="px-6 py-4 border-b border-white/[0.08] text-[11px] font-mono text-white/30 uppercase tracking-widest flex items-center gap-2">
                   <RefreshCw size={12} className="animate-spin text-[#E60A1C]" />
                   Fetching from database...
                 </div>
@@ -540,7 +689,7 @@ export default function AdminDashboard() {
               </div>
 
             ) : filteredArticles.length === 0 ? (
-              <div className="text-center py-20 bg-[#090909] border border-white/[0.07] rounded-2xl">
+              <div className="text-center py-20 bg-[#111] border border-white/[0.08] rounded-2xl">
                 <FileText size={36} className="text-white/15 mx-auto mb-4" />
                 <h3 className="text-base font-bold text-white mb-1">No articles found</h3>
                 <p className="text-white/40 text-sm max-w-xs mx-auto mb-6">
@@ -548,8 +697,7 @@ export default function AdminDashboard() {
                 </p>
                 <Link
                   href="/admin-secure/articles/new"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm text-white shadow-lg transition-all hover:opacity-90"
-                  style={{ background: "linear-gradient(135deg,#E60A1C,#b8000f)" }}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white bg-[#E60A1C] hover:bg-[#ff1a2e] transition-colors"
                 >
                   <Plus size={15} />
                   Write New Article
@@ -558,21 +706,53 @@ export default function AdminDashboard() {
 
             ) : viewMode === "table" ? (
               /* ── TABLE VIEW ─────────────────────────────────────── */
-              <div className="bg-[#090909] border border-white/[0.07] rounded-2xl overflow-hidden">
+              <div className="bg-[#111] border border-white/[0.08] rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse min-w-[640px]">
+                  <table className="w-full text-left border-collapse min-w-[680px]">
                     <thead>
-                      <tr className="border-b border-white/[0.07] bg-[#0c0c0c] text-[10px] font-mono uppercase tracking-widest text-white/35">
-                        <th className="py-3.5 px-5">Article</th>
-                        <th className="py-3.5 px-5 hidden md:table-cell">Category</th>
-                        <th className="py-3.5 px-5 text-center">Status</th>
-                        <th className="py-3.5 px-5 hidden lg:table-cell">Date</th>
+                      <tr className="border-b border-white/[0.08] bg-[#111] text-[10px] font-mono uppercase tracking-widest text-white/35">
+                        <th className="py-3.5 pl-5 pr-2 w-10">
+                          <input
+                            type="checkbox"
+                            checked={allVisibleSelected}
+                            onChange={toggleSelectAll}
+                            aria-label="Select all"
+                            className="w-4 h-4 rounded border-white/20 bg-transparent accent-[#E60A1C] cursor-pointer align-middle"
+                          />
+                        </th>
+                        {([
+                          ["headline", "Article", ""],
+                          ["category", "Category", "hidden md:table-cell"],
+                          ["status", "Status", "text-center"],
+                          ["created_at", "Date", "hidden lg:table-cell"],
+                        ] as const).map(([key, label, cls]) => (
+                          <th key={key} className={`py-3.5 px-5 ${cls}`}>
+                            <button
+                              type="button"
+                              onClick={() => toggleSort(key)}
+                              className={`inline-flex items-center gap-1 hover:text-white/70 transition-colors ${sortKey === key ? "text-white/70" : ""} ${cls.includes("text-center") ? "mx-auto" : ""}`}
+                            >
+                              {label}
+                              {sortKey === key && (sortDir === "asc" ? <ChevronUp size={11} /> : <ChevronDown size={11} />)}
+                            </button>
+                          </th>
+                        ))}
                         <th className="py-3.5 px-5 text-right">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.04]">
+                    <tbody className="divide-y divide-white/[0.06]">
                       {filteredArticles.map((art) => (
-                        <tr key={art.id} className="group hover:bg-white/[0.02] transition-colors">
+                        <tr key={art.id} className={`group transition-colors ${selectedSlugs.has(art.slug) ? "bg-[#E60A1C]/[0.06]" : "hover:bg-white/[0.02]"}`}>
+                          {/* Select */}
+                          <td className="py-4 pl-5 pr-2">
+                            <input
+                              type="checkbox"
+                              checked={selectedSlugs.has(art.slug)}
+                              onChange={() => toggleSelect(art.slug)}
+                              aria-label={`Select ${art.headline}`}
+                              className="w-4 h-4 rounded border-white/20 bg-transparent accent-[#E60A1C] cursor-pointer align-middle"
+                            />
+                          </td>
                           {/* Title */}
                           <td className="py-4 px-5">
                             <Link
@@ -679,7 +859,7 @@ export default function AdminDashboard() {
                 {filteredArticles.map((art) => (
                   <div
                     key={art.id}
-                    className="group bg-[#090909] border border-white/[0.07] hover:border-white/15 rounded-2xl p-5 flex flex-col gap-4 transition-all duration-200 hover:bg-white/[0.015] shadow-xl"
+                    className="group bg-[#111] border border-white/[0.08] hover:border-white/[0.08] rounded-2xl p-5 flex flex-col gap-4 transition-all duration-200 hover:bg-white/[0.015] shadow-xl"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <span className="px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08] text-xs font-medium text-white/70 truncate max-w-[120px]">
@@ -714,7 +894,7 @@ export default function AdminDashboard() {
                       )}
                     </div>
 
-                    <div className="flex items-center justify-between pt-4 border-t border-white/[0.06] gap-2">
+                    <div className="flex items-center justify-between pt-4 border-t border-white/[0.08] gap-2">
                       <span className="text-[11px] font-mono text-white/35">
                         {art.created_at ? new Date(art.created_at).toLocaleDateString("en-GB") : "—"}
                       </span>
@@ -750,15 +930,12 @@ export default function AdminDashboard() {
             )}
 
             {/* Footer */}
-            <footer className="pt-6 border-t border-white/[0.07] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono text-white/30">
-              <span>BRUTTO-NETTO-CALCULATOR.COM · EDITORIAL STUDIO</span>
-              <div className="flex items-center gap-4">
-                <span className="flex items-center gap-1.5 text-emerald-400/70">
-                  <ShieldCheck size={13} />
-                  Secure Session
-                </span>
-                <span>v3.0</span>
-              </div>
+            <footer className="pt-6 border-t border-white/[0.08] flex items-center justify-between gap-3 text-xs text-white/30">
+              <span>BruttoNettoCalculator.com · Editorial Studio</span>
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck size={13} />
+                Secure Session
+              </span>
             </footer>
           </main>
         </div>

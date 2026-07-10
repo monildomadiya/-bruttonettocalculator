@@ -67,8 +67,8 @@ export default function AdsSettingsPage() {
 
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-[#040404] text-[#e5e5e5] font-sans antialiased">
-        <header className="sticky top-0 z-20 bg-[#040404]/90 backdrop-blur-xl border-b border-white/[0.07] px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
+      <div className="min-h-screen bg-[#0a0a0a] text-[#e5e5e5] font-sans antialiased">
+        <header className="sticky top-0 z-20 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/[0.08] px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
           <Link
             href="/admin-secure"
             className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/10 text-white/70 hover:text-white transition-all"
@@ -91,7 +91,7 @@ export default function AdsSettingsPage() {
           ) : (
             <>
               {/* Status banner */}
-              <div className="bg-[#090909] border border-white/[0.07] rounded-2xl p-5 flex items-start gap-4">
+              <div className="bg-[#111] border border-white/[0.08] rounded-2xl p-5 flex items-start gap-4">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${settings.enabled && settings.publisherId ? "bg-emerald-500/15 border border-emerald-500/25" : "bg-amber-500/15 border border-amber-500/25"}`}>
                   <Megaphone size={18} className={settings.enabled && settings.publisherId ? "text-emerald-400" : "text-amber-400"} />
                 </div>
@@ -108,9 +108,9 @@ export default function AdsSettingsPage() {
               </div>
 
               {/* Main form */}
-              <div className="bg-[#090909] border border-white/[0.07] rounded-2xl p-6 sm:p-8 space-y-6">
+              <div className="bg-[#111] border border-white/[0.08] rounded-2xl p-6 sm:p-8 space-y-6">
                 {/* Enable toggle */}
-                <div className="flex items-center justify-between gap-4 pb-6 border-b border-white/[0.07]">
+                <div className="flex items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
                   <div>
                     <div className="font-bold text-white text-sm">Anzeigen aktivieren</div>
                     <p className="text-xs text-white/45 mt-1">Schaltet AdSense-Script & Anzeigen live auf der gesamten Website.</p>
@@ -137,7 +137,7 @@ export default function AdsSettingsPage() {
                     onChange={(e) => setSettings((s) => ({ ...s, publisherId: e.target.value }))}
                     placeholder="pub-1234567890123456"
                     className={`w-full bg-black border rounded-xl px-4 py-3 text-white font-mono text-sm outline-none transition-colors ${
-                      publisherIdValid ? "border-white/15 focus:border-[#E60A1C]" : "border-red-500/50"
+                      publisherIdValid ? "border-white/[0.08] focus:border-[#E60A1C]" : "border-red-500/50"
                     }`}
                   />
                   {!publisherIdValid && (
@@ -177,7 +177,7 @@ export default function AdsSettingsPage() {
                 </div>
 
                 {/* Manual ad slots (optional, advanced) */}
-                <div className="pt-6 border-t border-white/[0.07] space-y-4">
+                <div className="pt-6 border-t border-white/[0.08] space-y-4">
                   <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-white/35">
                     <Info size={12} /> Optional: Manuelle Anzeigenblöcke
                   </div>
@@ -188,7 +188,7 @@ export default function AdsSettingsPage() {
                       value={settings.slotHomepage}
                       onChange={(e) => setSettings((s) => ({ ...s, slotHomepage: e.target.value }))}
                       placeholder="1234567890"
-                      className="w-full bg-black border border-white/15 rounded-xl px-4 py-2.5 text-white font-mono text-sm focus:border-[#E60A1C] outline-none"
+                      className="w-full bg-black border border-white/[0.08] rounded-xl px-4 py-2.5 text-white font-mono text-sm focus:border-[#E60A1C] outline-none"
                     />
                   </div>
                   <div>
@@ -198,14 +198,14 @@ export default function AdsSettingsPage() {
                       value={settings.slotInArticle}
                       onChange={(e) => setSettings((s) => ({ ...s, slotInArticle: e.target.value }))}
                       placeholder="1234567890"
-                      className="w-full bg-black border border-white/15 rounded-xl px-4 py-2.5 text-white font-mono text-sm focus:border-[#E60A1C] outline-none"
+                      className="w-full bg-black border border-white/[0.08] rounded-xl px-4 py-2.5 text-white font-mono text-sm focus:border-[#E60A1C] outline-none"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Compliance note */}
-              <div className="bg-[#090909] border border-white/[0.07] rounded-2xl p-5 flex items-start gap-3">
+              <div className="bg-[#111] border border-white/[0.08] rounded-2xl p-5 flex items-start gap-3">
                 <ShieldCheck size={18} className="text-emerald-400 flex-shrink-0 mt-0.5" />
                 <p className="text-xs text-white/50 leading-relaxed">
                   Die Datenschutzerklärung enthält bereits die erforderlichen AdSense-Hinweise (Cookies, Google-Partner,
@@ -221,8 +221,7 @@ export default function AdsSettingsPage() {
                   type="button"
                   onClick={handleSave}
                   disabled={saving || !publisherIdValid}
-                  className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 active:scale-95 disabled:opacity-50"
-                  style={{ background: "linear-gradient(135deg,#E60A1C,#b8000f)", boxShadow: "0 3px 14px rgba(230,10,28,0.35)" }}
+                  className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white text-sm bg-[#E60A1C] hover:bg-[#ff1a2e] transition-colors active:scale-95 disabled:opacity-50"
                 >
                   {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                   {saving ? "Speichern..." : "Einstellungen speichern"}

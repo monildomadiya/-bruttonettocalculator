@@ -106,8 +106,8 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#000000] text-white flex items-center justify-center">
-        <Loader2 size={24} className="animate-spin text-white/40" />
+      <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center">
+        <Loader2 size={22} className="animate-spin text-white/40" />
       </div>
     );
   }
@@ -115,74 +115,74 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
   // Render Login Screen directly on /admin-secure when unauthorized!
   if (!authorized) {
     return (
-      <main className="min-h-screen bg-[#000000] text-white flex flex-col justify-center items-center px-4 py-12 select-none">
-        <div className="w-full max-w-[400px] bg-[#0c0c0c] border border-[#1a1a1a] rounded-[38px] p-8 sm:p-10 shadow-[0_0_80px_rgba(0,0,0,1)] relative flex flex-col items-center">
-          
-          <div className="mb-6">
+      <main className="min-h-screen bg-[#0a0a0a] text-white flex flex-col justify-center items-center px-4 py-12">
+        <div className="w-full max-w-sm">
+          <div className="flex flex-col items-center mb-8">
             <Image
               src="/BRUTTO-NETTO-LOGO.svg"
               alt="BruttoNetto Calculator Logo"
               width={200}
               height={50}
-              className="h-9 sm:h-10 w-auto mx-auto drop-shadow-[0_0_20px_rgba(230,10,28,0.5)] transition-transform duration-300 hover:scale-105"
+              className="h-9 w-auto mb-6"
               priority
             />
+            <h1 className="font-display font-bold text-xl tracking-tight text-white">
+              Admin Login
+            </h1>
+            <p className="text-sm text-white/40 mt-1.5">Bitte melden Sie sich an, um fortzufahren.</p>
           </div>
-          
-          <h1 className="font-display font-bold text-[22px] sm:text-[24px] tracking-tight text-white mb-8 text-center">
-            Admin Login
-          </h1>
 
-          {loginError && (
-            <div className="w-full mb-6 px-4 py-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-semibold flex items-center gap-2 animate-shake">
-              <AlertCircle size={15} className="flex-shrink-0" />
-              <span>{loginError}</span>
-            </div>
-          )}
+          <div className="bg-[#111] border border-white/[0.08] rounded-2xl p-6 sm:p-7">
+            {loginError && (
+              <div className="mb-5 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium flex items-center gap-2">
+                <AlertCircle size={15} className="flex-shrink-0" />
+                <span>{loginError}</span>
+              </div>
+            )}
 
-          <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
-            <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10 pointer-events-none" size={18} />
-              <input
-                type="email"
-                placeholder="E-Mail Adresse"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+            <form onSubmit={handleLogin} className="flex flex-col gap-3">
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35 pointer-events-none" size={17} />
+                <input
+                  type="email"
+                  placeholder="E-Mail Adresse"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loginLoading}
+                  className="w-full bg-[#181818] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder:text-white/35 focus:border-white/25 outline-none transition-colors disabled:opacity-50"
+                  required
+                />
+              </div>
+
+              <div className="relative">
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35 pointer-events-none" size={17} />
+                <input
+                  type="password"
+                  placeholder="Passwort"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={loginLoading}
+                  className="w-full bg-[#181818] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder:text-white/35 focus:border-white/25 outline-none transition-colors disabled:opacity-50"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
                 disabled={loginLoading}
-                className="w-full bg-[#141414] border border-[#222222] rounded-2xl py-3.5 pl-11 pr-4 text-sm font-medium text-white focus:border-white/35 focus:bg-[#1a1a1a] outline-none transition-all duration-150 disabled:opacity-50 relative z-0"
-                required
-              />
-            </div>
-
-            <div className="relative mt-4">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10 pointer-events-none" size={18} />
-              <input
-                type="password"
-                placeholder="Passwort"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                disabled={loginLoading}
-                className="w-full bg-[#141414] border border-[#222222] rounded-2xl py-3.5 pl-11 pr-4 text-sm font-medium text-white focus:border-white/35 focus:bg-[#1a1a1a] outline-none transition-all duration-150 disabled:opacity-50 relative z-0"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loginLoading}
-              className="w-full mt-2 bg-gradient-to-r from-[#E60A1C] to-[#FF2436] text-white font-bold rounded-2xl py-3.5 flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(230,10,28,0.4)] hover:shadow-[0_8px_30px_rgba(230,10,28,0.6)] hover:brightness-110 transition-all duration-200 disabled:opacity-70 disabled:hover:brightness-100"
-            >
-              {loginLoading ? (
-                <>
-                  <Loader2 size={18} className="animate-spin" />
-                  <span>Authenticating...</span>
-                </>
-              ) : (
-                <span>Secure Login</span>
-              )}
-            </button>
-          </form>
-
+                className="w-full mt-2 bg-[#E60A1C] hover:bg-[#ff1a2e] text-white font-semibold text-sm rounded-xl py-3 flex items-center justify-center gap-2 transition-colors disabled:opacity-60"
+              >
+                {loginLoading ? (
+                  <>
+                    <Loader2 size={17} className="animate-spin" />
+                    <span>Anmelden…</span>
+                  </>
+                ) : (
+                  <span>Anmelden</span>
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </main>
     );

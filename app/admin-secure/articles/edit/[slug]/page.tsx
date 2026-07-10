@@ -33,7 +33,7 @@ export default function EditArticlePage({ params }: { params: { slug: string } }
 
   return (
     <AdminAuthGuard>
-      <main className="min-h-screen bg-[#050505] text-white py-10 sm:py-16 px-3.5 sm:px-8">
+      <main className="min-h-screen bg-[#0a0a0a] text-white py-10 sm:py-16 px-3.5 sm:px-8">
         <div className="max-w-6xl mx-auto">
           
           {/* Back link */}
@@ -46,12 +46,12 @@ export default function EditArticlePage({ params }: { params: { slug: string } }
           </Link>
 
           {loading ? (
-            <div className="text-center py-24 bg-[#0a0a0a] border border-white/10 rounded-3xl">
+            <div className="text-center py-24 bg-[#111] border border-white/[0.08] rounded-2xl">
               <Loader2 size={32} className="animate-spin text-[#E60A1C] mx-auto mb-4" />
               <p className="text-white/60 text-sm">Loading article data from MySQL...</p>
             </div>
           ) : error || !article ? (
-            <div className="p-8 rounded-3xl bg-red-500/10 border border-red-500/30 text-center">
+            <div className="p-8 rounded-2xl bg-red-500/10 border border-red-500/30 text-center">
               <AlertCircle size={40} className="text-red-400 mx-auto mb-3" />
               <h3 className="text-xl font-bold text-red-400 mb-2">{error || "Article does not exist"}</h3>
               <Link

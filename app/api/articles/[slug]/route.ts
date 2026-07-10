@@ -85,8 +85,9 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
       body.og_description || body.meta_description || body.excerpt || "",
       body.og_image || body.featured_image || "",
       body.status || "Published",
+      body.read_time || "3 min read",
     ];
-    
+
     if (isId) {
       sqlParams.push(slug, Number(slug));
     } else {

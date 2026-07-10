@@ -152,12 +152,17 @@ export const metadata: Metadata = {
 };
 
 /* ── Structured data ──────────────────────────────────────────────── */
+const ORG_ID = "https://bruttonettocalculator.com/#organization";
+
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": "https://bruttonettocalculator.com/#website",
   name: "BruttoNettoCalculator.com",
   url: "https://bruttonettocalculator.com",
   description: "Kostenloser Brutto-Netto-Rechner für Deutschland",
+  inLanguage: "de-DE",
+  publisher: { "@id": ORG_ID },
   potentialAction: {
     "@type": "SearchAction",
     target: "https://bruttonettocalculator.com/?brutto={search_term_string}",
@@ -171,18 +176,49 @@ const appSchema = {
   name: "Brutto Netto Rechner 2026",
   applicationCategory: "FinanceApplication",
   operatingSystem: "Any",
+  browserRequirements: "Requires JavaScript. Requires HTML5.",
+  inLanguage: "de-DE",
+  isAccessibleForFree: true,
   offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
   description:
     "Online-Gehaltsrechner: Netto aus Brutto berechnen — § 32a EStG 2026, alle Steuerklassen, Sozialabgaben.",
   url: "https://bruttonettocalculator.com",
+  featureList: [
+    "Brutto-Netto-Berechnung 2026 & 2027",
+    "Alle 6 Steuerklassen",
+    "Lohnsteuer, Solidaritätszuschlag & Kirchensteuer",
+    "Sozialabgaben inkl. BKK/TK/HKK-Zusatzbeitrag 2026",
+    "Firmenwagen-, Renten-, Minijob- & Elterngeldrechner",
+    "Mindestlohn 2027 & Pfändungstabelle 2026",
+  ],
+  publisher: { "@id": ORG_ID },
 };
 
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": ORG_ID,
   name: "BruttoNettoCalculator.com",
   url: "https://bruttonettocalculator.com",
-  description: "Kostenloser Online-Gehaltsrechner für Deutschland",
+  description:
+    "Kostenloser Online-Gehaltsrechner für Deutschland — Brutto-Netto, Steuerklassen und Sozialabgaben nach § 32a EStG.",
+  logo: {
+    "@type": "ImageObject",
+    url: "https://bruttonettocalculator.com/BRUTTO-NETTO-LOGO.svg",
+    caption: "BruttoNettoCalculator.com Logo",
+  },
+  image: "https://bruttonettocalculator.com/og-image.png",
+  areaServed: { "@type": "Country", name: "Deutschland" },
+  knowsAbout: [
+    "Brutto-Netto-Berechnung",
+    "Lohnsteuer",
+    "Einkommensteuer § 32a EStG",
+    "Steuerklassen",
+    "Sozialversicherung Deutschland",
+    "Mindestlohn",
+    "Pfändungstabelle",
+  ],
+  sameAs: ["https://twitter.com/bruttonetto_de"],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

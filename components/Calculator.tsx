@@ -471,7 +471,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 </div>
 
                 {/* Clear Legend */}
-                <div className="flex-1 w-full space-y-3">
+                <div className="flex-1 w-full sm:w-auto min-w-0 space-y-3">
                   {[
                     { color: "#FFFFFF", label: "Nettogehalt",          val: showVal(nm), icon: CircleDollarSign },
                     { color: "#E60A1C", label: "Lohnsteuer & Soli",    val: showVal(tm), icon: Landmark },

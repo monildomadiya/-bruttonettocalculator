@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 export default function SiteFooter() {
   const pathname = usePathname();
@@ -100,12 +100,13 @@ export default function SiteFooter() {
                 rel="noopener"
                 className="group block p-4 rounded-2xl bg-gradient-to-br from-[#161616] to-[#0C0C0C] border border-white/15 hover:border-[#E60A1C]/60 transition-all shadow-md hover:shadow-[0_0_25px_rgba(230,10,28,0.25)]"
               >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-display font-bold text-white group-hover:text-[#E60A1C] transition-colors flex items-center gap-2">
-                    PromptKing.in <span className="w-1.5 h-1.5 rounded-full bg-[#E60A1C] animate-pulse" />
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <span className="min-w-0 font-display font-bold text-white group-hover:text-[#E60A1C] transition-colors flex items-center gap-2">
+                    <span className="truncate">PromptKing.in</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#E60A1C] animate-pulse flex-shrink-0" />
                   </span>
-                  <span className="w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 group-hover:bg-[#E60A1C] group-hover:text-white group-hover:border-transparent transition-all font-mono">
-                    ↗
+                  <span className="w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 group-hover:bg-[#E60A1C] group-hover:text-white group-hover:border-transparent transition-all flex-shrink-0">
+                    <ArrowUpRight size={15} />
                   </span>
                 </div>
                 <p className="text-xs text-white/50 font-medium">Die Nr. 1 Plattform für KI-Prompts & Workflows</p>

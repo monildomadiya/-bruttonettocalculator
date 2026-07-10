@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import {
   Check, X, Plus, Trash2, Upload, Sparkles, HelpCircle,
   Bold, Italic, Underline, Strikethrough, AlignLeft, AlignCenter, AlignRight,
   List, ListOrdered, Quote, Code, Link as LinkIcon, Unlink, Image as ImageIcon,
   Table as TableIcon, Video, RotateCcw, RotateCw, Loader2, CheckCircle2, Circle,
-  Eye, Edit3, Columns, Wand2, Calculator, AlertCircle, Info, Highlighter, FileText
+  Eye, Edit3, Columns, Wand2, Calculator, AlertCircle, Info, Highlighter, FileText, History
 } from "lucide-react";
 import { Article } from "@/lib/db";
 import WordPressEditor from "@/components/admin/WordPressEditor";
@@ -87,12 +87,92 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
     }
   }, [headline, isEdit, slug]);
 
+  // Live word count from the HTML content (tags stripped)
+  const wordCount = useMemo(() => {
+    const text = content.replace(/<[^>]*>/g, " ").replace(/&[a-z#0-9]+;/gi, " ");
+    const trimmed = text.trim();
+    return trimmed ? trimmed.split(/\s+/).length : 0;
+  }, [content]);
+
   // Auto read time calculation
   useEffect(() => {
-    const wordCount = content.trim().split(/\s+/).filter(Boolean).length;
     const mins = Math.max(1, Math.ceil(wordCount / 200));
     setReadTime(`${mins} min read`);
-  }, [content]);
+  }, [wordCount]);
+
+  // ── Autosave draft + unsaved-changes protection ──────────────────
+  const draftKey = `bnc_draft_${isEdit ? (initialArticle?.slug || slug || "edit") : "new"}`;
+  const [draftSavedAt, setDraftSavedAt] = useState<number | null>(null);
+  const [restorable, setRestorable] = useState<{ savedAt: number; data: string } | null>(null);
+  const savedRef = useRef(false);
+
+  // Serialized snapshot of every field, used for dirty-detection + autosave
+  const snapshot = useMemo(() => JSON.stringify({
+    headline, slug, category, tags, excerpt, metaTitle, metaDescription,
+    focusKeyword, canonicalUrl, featuredImage, featuredImageAlt, featuredImageCaption,
+    enableToc, content, faqs, ogTitle, ogDescription, ogImage, status, readTime,
+  }), [headline, slug, category, tags, excerpt, metaTitle, metaDescription,
+    focusKeyword, canonicalUrl, featuredImage, featuredImageAlt, featuredImageCaption,
+    enableToc, content, faqs, ogTitle, ogDescription, ogImage, status, readTime]);
+
+  const initialSnapshotRef = useRef<string | null>(null);
+  useEffect(() => {
+    initialSnapshotRef.current = snapshot;
+    // Offer to restore a newer autosaved draft if one exists
+    try {
+      const raw = localStorage.getItem(draftKey);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed?.data && parsed.data !== snapshot) setRestorable(parsed);
+      }
+    } catch { /* ignore */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const isDirty = initialSnapshotRef.current !== null && snapshot !== initialSnapshotRef.current;
+
+  // Debounced autosave to localStorage while dirty
+  useEffect(() => {
+    if (!isDirty || savedRef.current) return;
+    const t = setTimeout(() => {
+      try {
+        localStorage.setItem(draftKey, JSON.stringify({ savedAt: Date.now(), data: snapshot }));
+        setDraftSavedAt(Date.now());
+      } catch { /* quota / private mode */ }
+    }, 1200);
+    return () => clearTimeout(t);
+  }, [snapshot, isDirty, draftKey]);
+
+  // Warn before leaving with unsaved changes
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (isDirty && !savedRef.current) { e.preventDefault(); e.returnValue = ""; }
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [isDirty]);
+
+  function restoreDraft() {
+    if (!restorable) return;
+    try {
+      const d = JSON.parse(restorable.data);
+      setHeadline(d.headline ?? ""); setSlug(d.slug ?? ""); setCategory(d.category ?? "");
+      setTags(d.tags ?? ""); setExcerpt(d.excerpt ?? ""); setMetaTitle(d.metaTitle ?? "");
+      setMetaDescription(d.metaDescription ?? ""); setFocusKeyword(d.focusKeyword ?? "");
+      setCanonicalUrl(d.canonicalUrl ?? ""); setFeaturedImage(d.featuredImage ?? "");
+      setFeaturedImageAlt(d.featuredImageAlt ?? ""); setFeaturedImageCaption(d.featuredImageCaption ?? "");
+      setEnableToc(Boolean(d.enableToc)); setContent(d.content ?? "");
+      if (Array.isArray(d.faqs)) setFaqs(d.faqs);
+      setOgTitle(d.ogTitle ?? ""); setOgDescription(d.ogDescription ?? ""); setOgImage(d.ogImage ?? "");
+      setStatus(d.status ?? "Published");
+    } catch { /* ignore */ }
+    setRestorable(null);
+  }
+
+  function dismissDraft() {
+    try { localStorage.removeItem(draftKey); } catch { /* ignore */ }
+    setRestorable(null);
+  }
 
   // SEO Validation Checklist
   const checks = [
@@ -185,6 +265,8 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
 
       const data = await res.json();
       if (data.success) {
+        savedRef.current = true;
+        try { localStorage.removeItem(draftKey); } catch { /* ignore */ }
         router.push("/admin-secure");
         router.refresh();
       } else {
@@ -198,7 +280,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 sm:p-8 text-white shadow-2xl relative">
+    <form onSubmit={handleSubmit} className="bg-[#111] border border-white/[0.08] rounded-2xl p-6 sm:p-8 text-white shadow-2xl relative">
       
       {/* Hidden file input for Cloudinary */}
       <input
@@ -210,39 +292,63 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
       />
 
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 mb-8 border-b border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-white/[0.08]">
         <div>
-          <h1 className="font-display font-black text-2xl sm:text-3xl tracking-tight text-white flex items-center gap-2.5">
-            <span>{isEdit ? "Edit Article" : "Draft New Article"}</span>
+          <h1 className="font-display font-bold text-2xl tracking-tight text-white">
+            {isEdit ? "Edit Article" : "New Article"}
           </h1>
-          <p className="text-white/60 text-sm mt-1">
+          <p className="text-white/40 text-sm mt-1">
             Optimize for SEO and craft a compelling story.
           </p>
         </div>
 
-        {/* Dynamic SEO Score Badge & Close Button */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#141414] border border-amber-500/40 shadow-inner">
-            <Sparkles size={16} className="text-amber-400 animate-pulse" />
-            <span className="text-sm font-bold text-amber-400">
-              SEO Score: {passedCount}/{checks.length}
-            </span>
-          </div>
+        <div className="flex items-center gap-2.5">
+          {/* Autosave status */}
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-white/40" aria-live="polite">
+            {isDirty ? (
+              <><Circle size={9} className="text-amber-400 fill-amber-400" /> Unsaved</>
+            ) : draftSavedAt ? (
+              <><CheckCircle2 size={13} className="text-emerald-400" /> Draft saved</>
+            ) : null}
+          </span>
+
+          <span className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#181818] border border-white/[0.08] text-sm font-medium text-white/70">
+            <Sparkles size={15} className="text-amber-400" />
+            SEO {passedCount}/{checks.length}
+          </span>
 
           <button
             type="button"
             onClick={() => router.push("/admin-secure")}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-red-500/15 hover:bg-red-500/30 border border-red-500/40 text-red-400 hover:text-red-300 font-extrabold text-sm transition-all shadow-md active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-white/70 hover:text-white font-medium text-sm transition-colors"
             title="Editor schließen und zum Dashboard zurückkehren"
           >
-            <X size={18} />
-            <span>Editor schließen</span>
+            <X size={16} />
+            <span>Schließen</span>
           </button>
         </div>
       </div>
 
+      {/* Restore autosaved draft */}
+      {restorable && (
+        <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 text-sm text-amber-200/90">
+            <History size={16} className="text-amber-400 flex-shrink-0" />
+            <span>Ein automatisch gespeicherter Entwurf von {new Date(restorable.savedAt).toLocaleString("de-DE")} wurde gefunden.</span>
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button type="button" onClick={dismissDraft} className="px-3 py-1.5 rounded-lg text-xs font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors">
+              Verwerfen
+            </button>
+            <button type="button" onClick={restoreDraft} className="px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-300 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 transition-colors">
+              Entwurf wiederherstellen
+            </button>
+          </div>
+        </div>
+      )}
+
       {errorMessage && (
-        <div className="mb-6 p-4 rounded-2xl bg-red-500/15 border border-red-500/30 text-red-400 text-sm font-semibold">
+        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium">
           {errorMessage}
         </div>
       )}
@@ -255,7 +361,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
           
           {/* SECTION 1: CORE PUBLICATION DETAILS */}
           <div className="space-y-6">
-            <h2 className="text-xs font-black tracking-widest text-[#FF2E44] uppercase flex items-center gap-2 border-b border-white/10 pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
               <span>1. CORE PUBLICATION DETAILS</span>
             </h2>
 
@@ -269,7 +375,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={headline}
                 onChange={(e) => setHeadline(e.target.value)}
                 placeholder="Enter a captivating title..."
-                className="w-full px-4 py-3.5 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white font-bold text-lg outline-none transition-all"
+                className="w-full px-4 py-3.5 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white font-bold text-lg outline-none transition-all"
               />
             </div>
 
@@ -284,7 +390,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
                   placeholder="best-ai-image-generator-2026"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm font-mono outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm font-mono outline-none transition-all"
                 />
               </div>
 
@@ -297,7 +403,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   placeholder="e.g. Steuerrecht oder AI Tools"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
                 />
               </div>
             </div>
@@ -311,7 +417,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
                 placeholder="Steuern, Grundfreibetrag, Lohnsteuer"
-                className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
               />
             </div>
 
@@ -329,14 +435,14 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
                 placeholder="Short summary for blog cards and previews (120-180 chars)..."
-                className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all resize-none"
+                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all resize-none"
               />
             </div>
           </div>
 
           {/* SECTION 2: SEO SETTINGS */}
           <div className="space-y-6">
-            <h2 className="text-xs font-black tracking-widest text-[#FF2E44] uppercase flex items-center gap-2 border-b border-white/10 pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
               <span>2. SEO SETTINGS</span>
             </h2>
 
@@ -354,7 +460,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={metaTitle}
                 onChange={(e) => setMetaTitle(e.target.value)}
                 placeholder="Defaults to Article Headline if empty"
-                className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
               />
             </div>
 
@@ -372,7 +478,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={metaDescription}
                 onChange={(e) => setMetaDescription(e.target.value)}
                 placeholder="Defaults to Excerpt if empty"
-                className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all resize-none"
+                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all resize-none"
               />
             </div>
 
@@ -386,7 +492,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                   value={focusKeyword}
                   onChange={(e) => setFocusKeyword(e.target.value)}
                   placeholder="e.g. Grundfreibetrag 2026"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
                 />
               </div>
 
@@ -399,7 +505,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                   value={canonicalUrl}
                   onChange={(e) => setCanonicalUrl(e.target.value)}
                   placeholder="Defaults to this article's URL"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
                 />
               </div>
             </div>
@@ -407,7 +513,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
 
           {/* SECTION 3: FEATURED IMAGE */}
           <div className="space-y-6">
-            <h2 className="text-xs font-black tracking-widest text-[#FF2E44] uppercase flex items-center gap-2 border-b border-white/10 pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
               <span>3. FEATURED IMAGE</span>
             </h2>
 
@@ -417,14 +523,13 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={featuredImage}
                 onChange={(e) => setFeaturedImage(e.target.value)}
                 placeholder="https://res.cloudinary.com/diuy76wgh/image/upload/..."
-                className="flex-1 px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm font-mono outline-none transition-all"
+                className="flex-1 px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm font-mono outline-none transition-all"
               />
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploadingImage}
-                className="px-6 py-3 rounded-2xl font-bold text-white shadow-lg flex items-center justify-center gap-2 transition-all hover:opacity-90 active:scale-95 disabled:opacity-50 whitespace-nowrap"
-                style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)", boxShadow: "0 4px 15px rgba(230,10,28,0.40)" }}
+                className="px-6 py-3 rounded-2xl font-semibold text-white bg-[#E60A1C] hover:bg-[#ff1a2e] flex items-center justify-center gap-2 transition-colors active:scale-95 disabled:opacity-50 whitespace-nowrap"
               >
                 {uploadingImage ? (
                   <>
@@ -441,7 +546,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
             </div>
 
             {featuredImage && (
-              <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-black/40 p-2 max-w-md">
+              <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] bg-black/40 p-2 max-w-md">
                 <img src={featuredImage} alt="Preview" className="w-full h-auto rounded-xl object-cover max-h-48" />
               </div>
             )}
@@ -456,7 +561,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                   value={featuredImageAlt}
                   onChange={(e) => setFeaturedImageAlt(e.target.value)}
                   placeholder="Taschenrechner und Gehaltsabrechnung"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
                 />
               </div>
 
@@ -469,7 +574,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                   value={featuredImageCaption}
                   onChange={(e) => setFeaturedImageCaption(e.target.value)}
                   placeholder="Optional caption below image"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
                 />
               </div>
             </div>
@@ -477,7 +582,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
 
           {/* SECTION 4: SOCIAL SHARING */}
           <div className="space-y-6">
-            <h2 className="text-xs font-black tracking-widest text-[#FF2E44] uppercase flex items-center gap-2 border-b border-white/10 pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
               <span>4. SOCIAL SHARING</span>
             </h2>
 
@@ -488,32 +593,36 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={ogTitle}
                 onChange={(e) => setOgTitle(e.target.value)}
                 placeholder="OG Title (Fallback: Meta Title)"
-                className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
               />
               <input
                 type="text"
                 value={ogDescription}
                 onChange={(e) => setOgDescription(e.target.value)}
                 placeholder="OG Description (Fallback: Meta Desc)"
-                className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
               />
               <input
                 type="text"
                 value={ogImage}
                 onChange={(e) => setOgImage(e.target.value)}
                 placeholder="OG Image URL (Fallback: Featured)"
-                className="w-full px-4 py-3 rounded-2xl bg-[#141414] border border-white/15 focus:border-[#E60A1C] text-white/90 text-sm font-mono outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm font-mono outline-none transition-all"
               />
             </div>
           </div>
 
           {/* SECTION 5: ADVANCED LUXURY RICH-TEXT STUDIO */}
           <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
-              <h2 className="text-xs font-black tracking-widest text-[#FF2E44] uppercase flex items-center gap-2">
-                <span>5. ADVANCED LUXURY STORY STUDIO</span>
-                <span className="px-2 py-0.5 rounded-md bg-[#E60A1C]/20 text-[#FF2E44] text-[10px] font-bold">PRO 2026</span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
+              <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2">
+                <span>5. Story Editor</span>
               </h2>
+              <span className="inline-flex items-center gap-3 text-xs font-mono text-white/40">
+                <span className={wordCount >= 800 ? "text-emerald-400" : ""}>{wordCount.toLocaleString("de-DE")} words</span>
+                <span className="text-white/20">·</span>
+                <span>{readTime}</span>
+              </span>
             </div>
 
             <div className="flex items-center justify-between flex-wrap gap-4">
@@ -546,13 +655,13 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
 
           {/* SECTION 6: FAQ SECTION */}
           <div className="space-y-6">
-            <h2 className="text-xs font-black tracking-widest text-[#FF2E44] uppercase flex items-center gap-2 border-b border-white/10 pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
               <span>6. FAQ SECTION</span>
             </h2>
 
             <div className="space-y-4">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="p-5 rounded-2xl bg-[#141414] border border-white/15 relative space-y-3">
+                <div key={idx} className="p-5 rounded-2xl bg-[#181818] border border-white/[0.08] relative space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase text-white/50">Question #{idx + 1}</span>
                     <button
@@ -572,7 +681,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                       setFaqs(copy);
                     }}
                     placeholder="e.g. Wie hoch ist der Grundfreibetrag 2026?"
-                    className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 text-white font-semibold text-sm outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/[0.08] text-white font-semibold text-sm outline-none"
                   />
                   <textarea
                     rows={2}
@@ -583,7 +692,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                       setFaqs(copy);
                     }}
                     placeholder="Antwort hier eingeben..."
-                    className="w-full px-4 py-2 rounded-xl bg-black/50 border border-white/10 text-white/85 text-sm outline-none resize-none"
+                    className="w-full px-4 py-2 rounded-xl bg-black/50 border border-white/[0.08] text-white/85 text-sm outline-none resize-none"
                   />
                 </div>
               ))}
@@ -591,7 +700,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
               <button
                 type="button"
                 onClick={() => setFaqs([...faqs, { question: "", answer: "" }])}
-                className="px-5 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-bold text-sm flex items-center gap-2 transition-all"
+                className="px-5 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/[0.08] text-white font-bold text-sm flex items-center gap-2 transition-all"
               >
                 <Plus size={16} />
                 <span>Add FAQ</span>
@@ -600,23 +709,21 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
           </div>
 
           {/* Bottom Actions Button Bar */}
-          <div className="flex flex-wrap items-center justify-end gap-4 pt-8 border-t border-white/10">
+          <div className="flex items-center justify-end gap-3 pt-8 border-t border-white/[0.08]">
             <button
               type="button"
               onClick={() => router.push("/admin-secure")}
-              className="px-6 py-3.5 rounded-2xl bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-400 font-extrabold text-sm transition-all flex items-center gap-2 active:scale-95 cursor-pointer"
+              className="px-5 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-white/70 hover:text-white font-medium text-sm transition-colors flex items-center gap-2"
             >
-              <X size={18} />
-              <span>Editor schließen (Abbrechen)</span>
+              <span>Abbrechen</span>
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="px-8 py-3.5 rounded-2xl font-extrabold text-white text-base shadow-xl flex items-center gap-2 transition-all hover:opacity-90 active:scale-95 disabled:opacity-50 cursor-pointer"
-              style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)", boxShadow: "0 4px 20px rgba(230,10,28,0.50)" }}
+              className="px-7 py-3 rounded-xl font-semibold text-white text-sm bg-[#E60A1C] hover:bg-[#ff1a2e] flex items-center gap-2 transition-colors active:scale-95 disabled:opacity-50"
             >
-              {saving && <Loader2 size={18} className="animate-spin" />}
-              <span>{saving ? "Saving..." : "Save & Publish"}</span>
+              {saving && <Loader2 size={17} className="animate-spin" />}
+              <span>{saving ? "Saving…" : "Save & Publish"}</span>
             </button>
           </div>
 
@@ -626,36 +733,31 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
         <div className="lg:col-span-4 space-y-8">
           
           {/* STICKY QUICK ACTION & CLOSE BAR */}
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-[#181818] via-[#121212] to-[#1a0507] border border-red-500/30 space-y-3 sticky top-24 z-40 shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
-            <div className="flex items-center justify-between text-xs font-black text-white/80 border-b border-white/10 pb-2.5">
-              <span className="flex items-center gap-1.5"><Sparkles size={14} className="text-[#FF2E44]" /><span>SCHNELL-AKTIONEN</span></span>
-              <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold animate-pulse">● Live</span>
-            </div>
+          <div className="p-4 rounded-2xl bg-[#181818] border border-white/[0.08] space-y-2.5 sticky top-24 z-40">
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => router.push("/admin-secure")}
-                className="w-full py-3 px-3 rounded-2xl bg-red-500/15 hover:bg-red-500/30 border border-red-500/40 text-red-400 hover:text-red-300 font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-sm cursor-pointer"
+                className="w-full py-2.5 px-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-white/70 hover:text-white font-medium text-sm transition-colors flex items-center justify-center gap-1.5"
                 title="Close editor and return to dashboard"
               >
-                <X size={16} />
+                <X size={15} />
                 <span>Close</span>
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="w-full py-3 px-3 rounded-2xl font-extrabold text-white text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-1.5 transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 cursor-pointer"
-                style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)", boxShadow: "0 4px 15px rgba(230,10,28,0.40)" }}
+                className="w-full py-2.5 px-3 rounded-xl font-semibold text-white text-sm bg-[#E60A1C] hover:bg-[#ff1a2e] flex items-center justify-center gap-1.5 transition-colors active:scale-95 disabled:opacity-50"
               >
-                {saving ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
-                <span>{saving ? "Saving..." : "Save Article"}</span>
+                {saving ? <Loader2 size={15} className="animate-spin" /> : <Check size={15} />}
+                <span>{saving ? "Saving…" : "Save"}</span>
               </button>
             </div>
           </div>
 
           {/* SECTION 7: PUBLISHING SETTINGS */}
-          <div className="p-6 rounded-3xl bg-[#141414] border border-white/15 space-y-6">
-            <h2 className="text-xs font-black tracking-widest text-[#FF2E44] uppercase flex items-center gap-2 border-b border-white/10 pb-3">
+          <div className="p-6 rounded-2xl bg-[#181818] border border-white/[0.08] space-y-6">
+            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
               <span>7. PUBLISHING SETTINGS</span>
             </h2>
 
@@ -666,7 +768,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="w-full px-4 py-3 rounded-2xl bg-black border border-white/15 text-white font-bold text-sm outline-none cursor-pointer"
+                className="w-full px-4 py-3 rounded-2xl bg-black border border-white/[0.08] text-white font-bold text-sm outline-none cursor-pointer"
               >
                 <option value="Published">Published</option>
                 <option value="Draft">Draft</option>
@@ -682,14 +784,14 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={readTime}
                 onChange={(e) => setReadTime(e.target.value)}
                 placeholder="3 min read"
-                className="w-full px-4 py-3 rounded-2xl bg-black border border-white/15 text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-black border border-white/[0.08] text-white/90 text-sm outline-none transition-all"
               />
             </div>
           </div>
 
           {/* SEO CHECKLIST PANEL */}
-          <div className="p-6 rounded-3xl bg-[#141414] border border-white/15 space-y-5 sticky top-28">
-            <h3 className="text-xs font-black tracking-widest text-[#FF2E44] uppercase flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="p-6 rounded-2xl bg-[#181818] border border-white/[0.08] space-y-5 sticky top-28">
+            <h3 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center justify-between border-b border-white/[0.08] pb-3">
               <span>SEO CHECKLIST</span>
               <span className="text-white/60 font-mono text-xs">{passedCount}/{checks.length}</span>
             </h3>
@@ -709,7 +811,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
               ))}
             </div>
 
-            <div className="pt-3 border-t border-white/10 text-xs text-white/40 leading-relaxed">
+            <div className="pt-3 border-t border-white/[0.08] text-xs text-white/40 leading-relaxed">
               Tipp: Eine vollständige SEO-Optimierung (8/8) erhöht Ihre Chancen auf Google Featured Snippets erheblich.
             </div>
           </div>
