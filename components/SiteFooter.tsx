@@ -44,8 +44,8 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          {/* Col 2: Rechner (Spans 3 cols on lg) */}
-          <div className="lg:col-span-3">
+          {/* Col 2: Rechner (Spans 2 cols on lg) */}
+          <div className="lg:col-span-2">
             <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-6">
               RECHNER
             </p>
@@ -55,8 +55,28 @@ export default function SiteFooter() {
               <li><Link href="/blog"                      className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Blog</Link></li>
               <li><Link href="/rechner/brutto-zu-netto"   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Brutto zu Netto</Link></li>
               <li><Link href="/rechner/netto-zu-brutto"   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Netto zu Brutto</Link></li>
+              <li><Link href="/firmenwagenrechner"        className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Firmenwagenrechner</Link></li>
+              <li><Link href="/rentenrechner"              className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Rentenrechner</Link></li>
+              <li><Link href="/arbeitslosengeld-rechner"  className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Arbeitslosengeld-Rechner</Link></li>
+              <li><Link href="/mindestlohn"                className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Mindestlohn Rechner</Link></li>
+              <li><Link href="/pfaendungstabelle"          className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Pfändungstabelle</Link></li>
               <li><Link href="/lexikon"                   className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Steuer-Lexikon</Link></li>
               <li><Link href="/faq"                       className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">FAQ & Hilfe</Link></li>
+            </ul>
+          </div>
+
+          {/* Col 2b: Weitere Rechner (Spans 2 cols on lg) */}
+          <div className="lg:col-span-2">
+            <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-6">
+              WEITERE RECHNER
+            </p>
+            <ul className="space-y-3.5 text-sm sm:text-base text-white/60 font-medium">
+              <li><Link href="/minijob-rechner"           className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Minijob-Rechner</Link></li>
+              <li><Link href="/elterngeld-rechner"        className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Elterngeld-Rechner</Link></li>
+              <li><Link href="/abfindungsrechner"         className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Abfindungsrechner</Link></li>
+              <li><Link href="/bonus-steuerrechner"       className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Bonus-Steuerrechner</Link></li>
+              <li><Link href="/stundenlohn-rechner"       className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Stundenlohn-Rechner</Link></li>
+              <li><Link href="/steuerklassen"             className="hover:text-white hover:translate-x-1 inline-block transition-all duration-200">Steuerklassen</Link></li>
             </ul>
           </div>
 
@@ -73,8 +93,8 @@ export default function SiteFooter() {
             </ul>
           </div>
 
-          {/* Col 4: Partner & Newsletter (Spans 3 cols on lg) */}
-          <div className="lg:col-span-3 space-y-6">
+          {/* Col 4: Partner & Newsletter (Spans 2 cols on lg) */}
+          <div className="lg:col-span-2 space-y-6">
             <div>
               <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white mb-4">
                 PARTNER & KI-TOOLS

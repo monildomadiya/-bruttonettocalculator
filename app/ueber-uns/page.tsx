@@ -3,7 +3,7 @@ import { Users, Shield, CheckCircle2, Award, BookOpen, ExternalLink, RefreshCw }
 import { primaryReviewer, siteConfig } from "@/lib/authors";
 
 export const metadata: Metadata = {
-  title: "Über uns & Redaktionsstandards | Brutto Netto Rechner 2026",
+  title: "Über uns & Redaktionsstandards — Brutto Netto Rechner 2026",
   description: "Erfahren Sie mehr über unsere Mission, Transparenz, amtliche Steuergrundlagen nach § 32a EStG und unser fachliches Prüfer-Team.",
   alternates: {
     canonical: "https://bruttonettocalculator.com/ueber-uns",

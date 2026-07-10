@@ -12,8 +12,8 @@ export interface WageStats {
 export const WAGE_STATS_2026: WageStats = {
   averageGrossMonthly: 4323,
   medianGrossMonthly: 3650,
-  minWageHourly2026: 12.82,
-  minWageMonthlyFulltime: 2222, // ca. 173.33 Stunden * 12.82 €
+  minWageHourly2026: 13.90,
+  minWageMonthlyFulltime: 2409, // ca. 173.33 Stunden * 13,90 €
   kvPvBbgMonthly2026: 5812.50, // 69.750 € / 12
   rvAlvBbgMonthly2026: 8450.00, // 101.400 € / 12
   source: "Statistisches Bundesamt (Destatis) & Bundesagentur für Arbeit, Erhebung der Verdienststruktur und SV-Rechengrößen 2026",
@@ -35,7 +35,7 @@ export function getWagePercentileContext(grossMonthly: number): {
   if (grossMonthly < s.minWageMonthlyFulltime) {
     return {
       headline: `${formatted} Brutto im Vergleich zum Mindestlohn`,
-      summary: `Ein Monatsgehalt von ${formatted} liegt unter dem rechnerischen Vollzeit-Mindestlohnniveau von ca. 2.222 € (bei 12,82 €/Std. und 40-Stunden-Woche). Oft handelt es sich hierbei um Teilzeitstellen, Einstiegspositionen oder Midijobs.`,
+      summary: `Ein Monatsgehalt von ${formatted} liegt unter dem rechnerischen Vollzeit-Mindestlohnniveau von ca. 2.409 € (bei 13,90 €/Std. und 40-Stunden-Woche). Oft handelt es sich hierbei um Teilzeitstellen, Einstiegspositionen oder Midijobs.`,
       detail: `In diesem Lohnbereich fallen die Steuerabzüge dank des amtlichen Grundfreibetrags (12.348 € im Jahr 2026 für Ledige) extrem gering aus oder entfallen komplett. Die Sozialversicherungsbeiträge werden proportional nach dem regulären AN-Satz berechnet.`,
       badgeText: "Teilzeit / Einstiegssegment",
     };

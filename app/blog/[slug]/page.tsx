@@ -68,11 +68,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const art = await getArticle(params.slug);
   if (!art) {
-    return { title: "Artikel nicht gefunden | BruttoNettoCalculator" };
+    return { title: "Artikel nicht gefunden" };
   }
 
   return {
-    title: `${art.meta_title || art.headline} | BruttoNettoCalculator`,
+    title: art.meta_title || art.headline,
     description: art.meta_description || art.excerpt || "",
     keywords: art.focus_keyword
       ? [art.focus_keyword, art.tags || ""].join(", ")

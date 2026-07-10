@@ -4,7 +4,7 @@ import { dbQuery, Article } from "@/lib/db";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Fintech & Steuer-Ratgeber | BruttoNettoCalculator",
+  title: "Fintech & Steuer-Ratgeber",
   description: "Amtliche Berechnungen, Tipps zur Lohnsteuer und detaillierte Erklärungen nach § 32a EStG für Arbeitnehmer in Deutschland.",
   alternates: {
     canonical: "https://bruttonettocalculator.com/blog",

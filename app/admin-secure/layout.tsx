@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Admin Center | BruttoNettoCalculator",
+  title: "Admin Center",
   description: "Private administration workspace for editorial content and MySQL database.",
   robots: {
     index: false,

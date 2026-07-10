@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ShieldAlert } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Datenschutzerklärung | Brutto Netto Rechner 2026",
+  title: "Datenschutzerklärung — Brutto Netto Rechner 2026",
   description: "Informationen zum Datenschutz, zur Verarbeitung personenbezogener Daten und zu Ihren Rechten auf BruttoNettoCalculator.com.",
   alternates: { canonical: "https://bruttonettocalculator.com/datenschutz" },
   robots: { index: true, follow: true },

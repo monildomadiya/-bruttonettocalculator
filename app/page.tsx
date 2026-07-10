@@ -59,7 +59,7 @@ const faqs = [
   },
   {
     q: "Was ist der Mindestlohn 2027?",
-    a: "Der gesetzliche Mindestlohn in Deutschland soll ab 2027 schrittweise erhöht werden. Aktuell (2026) liegt er bei 12,82 € brutto pro Stunde. Unser Lohnrechner 2027 zeigt Ihnen bereits heute, wie sich eine Mindestlohnerhöhung auf Ihr monatliches Nettogehalt in allen 6 Steuerklassen auswirken würde.",
+    a: "Der gesetzliche Mindestlohn in Deutschland ist zum 1. Januar 2026 auf 13,90 € brutto pro Stunde gestiegen und steigt zum 1. Januar 2027 auf 14,60 €. Unser Lohnrechner 2027 zeigt Ihnen bereits heute, wie sich diese Erhöhung auf Ihr monatliches Nettogehalt in allen 6 Steuerklassen auswirken würde.",
   },
   {
     q: "Was ist die Düsseldorfer Tabelle 2026?",
@@ -113,12 +113,14 @@ const infoCards = [
     title: "Firmenwagenrechner (1%-Regelung)",
     text:  "Als präziser Gehaltsrechner mit Auto bzw. Firmenwagenrechner berechnen Sie Ihren geldwerten Vorteil (1%-Regelung) direkt im Bruttolohn mit ein. Ideal für den Brutto Netto Rechner mit Firmenwagen.",
     accentColor: "#E60A1C",
+    href: "/firmenwagenrechner",
   },
   {
     Icon:  Shield,
     title: "Rentenrechner & Arbeitslosengeld",
     text:  "Nutzen Sie unser Tool als Brutto Netto Rentenrechner oder Orientierungs-Arbeitslosengeld Rechner. Errechnen Sie Ihr Nettoentgelt und leiten Sie daraus 60 % bzw. 67 % (mit Kind) ALG I oder Ihre Rente ab.",
     accentColor: "#FFFFFF",
+    href: "/rentenrechner",
   },
 ];
 
@@ -396,16 +398,16 @@ export default function HomePage() {
 
 /* ── InfoCard (Dark Tech Luxury Style) ─────────────────────────────── */
 function InfoCard({
-  Icon, title, text, accentColor,
+  Icon, title, text, accentColor, href,
 }: {
   Icon: React.ElementType;
-  title: string; text: string; accentColor: string;
+  title: string; text: string; accentColor: string; href?: string;
 }) {
   return (
     <div className="bg-[#101010] hover:bg-[#151515] relative rounded-3xl border border-white/15 p-8 overflow-hidden transition-all duration-300 hover:border-[#E60A1C]/50 hover:-translate-y-1 shadow-lg group">
       {/* Top accent glow */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#E60A1C] to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
-      
+
       {/* Icon */}
       <div
         className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-[#E60A1C]/15 border border-[#E60A1C]/30 group-hover:scale-110 transition-transform"
@@ -414,6 +416,14 @@ function InfoCard({
       </div>
       <h3 className="font-display font-extrabold text-white mb-3 text-xl">{title}</h3>
       <p className="text-base text-white/80 leading-relaxed font-normal">{text}</p>
+      {href && (
+        <Link
+          href={href}
+          className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#E60A1C] hover:text-[#FF4D5E] transition-colors"
+        >
+          Jetzt berechnen <ArrowRight size={14} />
+        </Link>
+      )}
     </div>
   );
 }

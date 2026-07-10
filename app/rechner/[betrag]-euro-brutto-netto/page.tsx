@@ -36,7 +36,7 @@ function parseAmount(betragStr: string): number | null {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const amount = parseAmount(params.betrag);
   if (!amount) {
-    return { title: "Gehalt nicht gefunden | BruttoNettoCalculator" };
+    return { title: "Gehalt nicht gefunden" };
   }
 
   const res2026 = calculateNetto({ bruttoMonat: amount, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });

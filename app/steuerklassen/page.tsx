@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BarChart3, ChevronDown, Calculator, ArrowRight, Users, RefreshCw } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Steuerklassen 2026 — Alle 6 Steuerklassen im Vergleich | BruttoNettoCalculator",
+  title: "Steuerklassen 2026 — Alle 6 Steuerklassen im Vergleich",
   description:
     "Steuerklassen 2026 Vergleich: Alle 6 Steuerklassen erklärt mit Nettogehalt-Beispielen für 2.500–5.000 € Brutto. Steuerklassenwechsel, Steuerklasse III vs. IV vs. V — jetzt informieren.",
   keywords: [

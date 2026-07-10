@@ -68,7 +68,7 @@ const RECHENGROESSEN_2026 = {
   sonderausgabenPauschale: 36,
 };
 
-function estFormel2026(zvE: number): number {
+export function estFormel2026(zvE: number): number {
   const x = Math.floor(zvE);
   if (x <= 12348) return 0;
   if (x <= 17799) {
@@ -103,7 +103,7 @@ function grenzsteuersatz2026(zvE: number): number {
 
 // Solidaritätszuschlag mit Milderungszone (20%-Abschmelzung)
 // Freigrenze 2026: 18.130 € ESt (Einzelveranlagung) / 36.260 € (Splitting)
-function soliBerechnen(estJahr: number, verheiratet: boolean): number {
+export function soliBerechnen(estJahr: number, verheiratet: boolean): number {
   const freigrenze = verheiratet ? 36260 : 18130;
   if (estJahr <= freigrenze) return 0;
   const voll = estJahr * 0.055;

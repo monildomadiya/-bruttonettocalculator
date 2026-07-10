@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TrendingUp, Clock, Calculator, ChevronDown, ArrowRight, Info } from "lucide-react";
 
-const MINDESTLOHN_2026 = 12.82;
-const MINDESTLOHN_2027_EXPECTED = 13.0;
+const MINDESTLOHN_2026 = 13.90;
+const MINDESTLOHN_2027_EXPECTED = 14.60;
 
 const history = [
   { year: "2020", betrag: "9,35 €", change: "" },
@@ -14,8 +14,8 @@ const history = [
   { year: "2023 (Jan)", betrag: "12,00 €", change: "+14,8 %" },
   { year: "2024 (Jan)", betrag: "12,41 €", change: "+3,4 %" },
   { year: "2025 (Jan)", betrag: "12,82 €", change: "+3,3 %" },
-  { year: "2026 (Jan)", betrag: "12,82 €", change: "±0 %" },
-  { year: "2027 (geplant)", betrag: "~13,00 €", change: "~+1,4 %" },
+  { year: "2026 (Jan)", betrag: "13,90 €", change: "+8,4 %" },
+  { year: "2027 (Jan)", betrag: "14,60 €", change: "+5,0 %" },
 ];
 
 // Approximate net multipliers per Steuerklasse for estimation
@@ -29,15 +29,15 @@ const netMultipliers = [
 const faqs = [
   {
     q: "Wie hoch ist der Mindestlohn 2026?",
-    a: "Der gesetzliche Mindestlohn beträgt in Deutschland seit dem 1. Januar 2025 und weiterhin in 2026 exakt 12,82 € brutto pro Stunde.",
+    a: "Der gesetzliche Mindestlohn in Deutschland ist zum 1. Januar 2026 auf 13,90 € brutto pro Stunde gestiegen (zuvor 12,82 € in 2025).",
   },
   {
     q: "Wann kommt der neue Mindestlohn 2027?",
-    a: "Die Mindestlohnkommission berät derzeit über eine Erhöhung zum 1. Januar 2027. Ein Richtwert von ca. 13,00 € wird diskutiert, eine offizielle Entscheidung steht noch aus.",
+    a: "Die Bundesregierung hat die zweistufige Erhöhung der Mindestlohnkommission per Verordnung bereits beschlossen: Zum 1. Januar 2027 steigt der Mindestlohn auf 14,60 € brutto pro Stunde.",
   },
   {
     q: "Wie viel Netto bleibt vom Mindestlohn 2026 übrig?",
-    a: "Bei Vollzeit (40 Std./Woche, 12,82 €/h) ergibt sich ein Bruttogehalt von ca. 2.222 €/Monat. In Steuerklasse I bleiben nach Abzügen etwa 1.644 € netto, in Steuerklasse III ca. 1.844 €.",
+    a: "Bei Vollzeit (40 Std./Woche, 13,90 €/h) ergibt sich ein Bruttogehalt von ca. 2.409 €/Monat. In Steuerklasse I bleiben nach Abzügen etwa 1.724 € netto, in Steuerklasse III ca. 1.883 €.",
   },
   {
     q: "Gilt der Mindestlohn für alle Beschäftigten?",
@@ -45,7 +45,7 @@ const faqs = [
   },
   {
     q: "Was ist der Unterschied zwischen Mindestlohn brutto und netto?",
-    a: "Der Mindestlohn von 12,82 € ist ein Bruttobetrag. Vom Bruttogehalt werden Lohnsteuer (abhängig von Steuerklasse) sowie Sozialversicherungsbeiträge (ca. 20 %) abgezogen. Das Netto variiert je nach Steuerklasse und persönlichen Abzügen.",
+    a: "Der Mindestlohn von 13,90 € ist ein Bruttobetrag. Vom Bruttogehalt werden Lohnsteuer (abhängig von Steuerklasse) sowie Sozialversicherungsbeiträge (ca. 20 %) abgezogen. Das Netto variiert je nach Steuerklasse und persönlichen Abzügen.",
   },
 ];
 
@@ -85,7 +85,7 @@ export default function MindestlohnCalculator() {
           </h1>
           <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie Ihr monatliches Brutto- &amp; Nettogehalt beim gesetzlichen Mindestlohn
-            von <strong className="text-white">12,82&nbsp;€&nbsp;/&nbsp;Stunde</strong>. Alle
+            von <strong className="text-white">13,90&nbsp;€&nbsp;/&nbsp;Stunde</strong>. Alle
             Steuerklassen, Vollzeit &amp; Teilzeit.
           </p>
         </div>
@@ -132,7 +132,7 @@ export default function MindestlohnCalculator() {
             <div className="bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-2xl p-5 mb-6">
               <div className="flex items-center justify-between">
                 <span className="text-white/70 text-sm font-medium">Mindestlohn 2026</span>
-                <span className="text-2xl font-extrabold text-white">12,82 €&nbsp;/&nbsp;h</span>
+                <span className="text-2xl font-extrabold text-white">13,90 €&nbsp;/&nbsp;h</span>
               </div>
             </div>
 
@@ -197,24 +197,24 @@ export default function MindestlohnCalculator() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
             <div className="flex-1">
               <div className="text-xs font-mono uppercase tracking-widest text-[#E60A1C] mb-2">
-                VORSCHAU
+                BESCHLOSSEN
               </div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-2">
-                Mindestlohn 2027 — Was erwartet uns?
+                Mindestlohn 2027 — Was kommt?
               </h2>
               <p className="text-white/60 text-sm sm:text-base leading-relaxed">
-                Die Mindestlohnkommission empfiehlt für 2027 eine Erhöhung auf voraussichtlich{" "}
+                Die Bundesregierung hat die zweistufige Erhöhung der Mindestlohnkommission per Verordnung bereits beschlossen: Zum 1. Januar 2027 steigt der Mindestlohn auf{" "}
                 <strong className="text-white">
-                  ~{MINDESTLOHN_2027_EXPECTED.toFixed(2).replace(".", ",")} €&nbsp;/&nbsp;h
+                  {MINDESTLOHN_2027_EXPECTED.toFixed(2).replace(".", ",")} €&nbsp;/&nbsp;h
                 </strong>
-                . Eine offizielle Festlegung durch die Bundesregierung steht noch aus.
+                .
               </p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center min-w-[140px]">
               <div className="text-3xl font-extrabold text-white mb-1">
-                ~{MINDESTLOHN_2027_EXPECTED.toFixed(2).replace(".", ",")} €
+                {MINDESTLOHN_2027_EXPECTED.toFixed(2).replace(".", ",")} €
               </div>
-              <div className="text-xs text-white/50">erwartet / Stunde</div>
+              <div className="text-xs text-white/50">ab 2027 / Stunde</div>
             </div>
           </div>
         </div>
