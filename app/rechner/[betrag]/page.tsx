@@ -118,6 +118,23 @@ export default function LongTailSalaryPage({ params }: PageProps) {
   // Unique German context from wage-stats
   const context = getWagePercentileContext(amount);
 
+  // Amount-derived figures — make every page numerically unique (reduces templating
+  // between neighbouring salary pages and adds genuinely useful data).
+  const STUNDEN_PRO_MONAT = 173.33; // 40h-Woche
+  const bruttoStunde = amount / STUNDEN_PRO_MONAT;
+  const nettoStunde = sk1Res.nettoMonat / STUNDEN_PRO_MONAT;
+  const nettoQuote = (sk1Res.nettoMonat / amount) * 100;
+  const abzugQuote = 100 - nettoQuote;
+  const diffMedian = amount - WAGE_STATS_2026.medianGrossMonthly;
+  const diffSchnitt = amount - WAGE_STATS_2026.averageGrossMonthly;
+  const eur0 = (n: number) => new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(Math.abs(n));
+  const medianText = diffMedian >= 0
+    ? `${eur0(diffMedian)} über dem deutschen Medianlohn`
+    : `${eur0(diffMedian)} unter dem deutschen Medianlohn`;
+  const schnittText = diffSchnitt >= 0
+    ? `${eur0(diffSchnitt)} über dem Durchschnittsgehalt`
+    : `${eur0(diffSchnitt)} unter dem Durchschnittsgehalt`;
+
   // Neighboring amounts for internal linking
   const prevAmount = amount > 1500 ? amount - 100 : null;
   const nextAmount = amount < 15000 ? amount + 100 : null;
@@ -213,6 +230,41 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <div className="mt-4 text-xs text-white/50 flex items-center gap-1.5 font-mono">
           <Building2 size={13} className="text-[#E60A1C]" /> Quelle: {WAGE_STATS_2026.source}
         </div>
+      </div>
+
+      {/* Amount-specific figures — unique per page */}
+      <div className="mb-16">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-2">
+          {formattedBrutto} Brutto in Zahlen
+        </h2>
+        <p className="text-sm sm:text-base text-white/70 mb-6">
+          Konkrete Kennzahlen für ein Bruttogehalt von {formattedBrutto} im Monat (Steuerklasse I, 2026).
+        </p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {[
+            { label: "Netto / Monat", value: formatEUR(sk1Res.nettoMonat), accent: true },
+            { label: "Netto / Jahr", value: formatEUR(sk1Res.nettoJahr) },
+            { label: "Netto-Quote", value: `${nettoQuote.toFixed(1).replace(".", ",")} %` },
+            { label: "Abzüge gesamt", value: `${abzugQuote.toFixed(1).replace(".", ",")} %` },
+            { label: "Brutto / Stunde", value: formatEUR(bruttoStunde) },
+            { label: "Netto / Stunde", value: formatEUR(nettoStunde) },
+            { label: "Brutto / Jahr", value: formatEUR(amount * 12) },
+            { label: "Netto / Tag", value: formatEUR(sk1Res.nettoMonat / 21.7) },
+          ].map((k) => (
+            <div key={k.label} className={`rounded-2xl border p-4 sm:p-5 ${k.accent ? "bg-[#E60A1C]/10 border-[#E60A1C]/40" : "bg-[#101010] border-white/10"}`}>
+              <div className="text-xs font-mono uppercase tracking-wider text-white/50 mb-1.5">{k.label}</div>
+              <div className={`font-mono font-extrabold text-lg sm:text-xl ${k.accent ? "text-[#E60A1C]" : "text-white"}`}>{k.value}</div>
+            </div>
+          ))}
+        </div>
+        <p className="text-sm sm:text-base text-white/75 leading-relaxed mt-6 bg-black/30 border border-white/10 rounded-2xl p-4 sm:p-5">
+          Ein Bruttogehalt von <strong className="text-white">{formattedBrutto}</strong> im Monat liegt{" "}
+          <strong className="text-white">{medianText}</strong> ({formatEUR(WAGE_STATS_2026.medianGrossMonthly)}) und{" "}
+          <strong className="text-white">{schnittText}</strong> ({formatEUR(WAGE_STATS_2026.averageGrossMonthly)}) in Deutschland.
+          Bei einer 40-Stunden-Woche entspricht das einem Brutto-Stundenlohn von rund{" "}
+          <strong className="text-white">{formatEUR(bruttoStunde)}</strong> — nach Steuern und Sozialabgaben bleiben davon in
+          Steuerklasse I etwa <strong className="text-white">{formatEUR(nettoStunde)}</strong> netto pro Stunde.
+        </p>
       </div>
 
       {/* Table 1: All 6 Steuerklassen Comparison */}
