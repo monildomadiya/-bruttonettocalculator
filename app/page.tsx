@@ -12,7 +12,7 @@ import AccordionFaq from "@/components/AccordionFaq";
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
   description:
-    "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli, alle 6 Steuerklassen. Mit Firmenwagenrechner, Rentenrechner, Mindestlohn 2027 & BKK/TK Zusatzbeitrag 2026. Ohne Anmeldung, 100% kostenlos.",
+    "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",
   alternates: { canonical: "/" },
 };
 

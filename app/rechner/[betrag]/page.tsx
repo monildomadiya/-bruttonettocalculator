@@ -21,13 +21,17 @@ interface PageProps {
 export async function generateStaticParams() {
   const amounts = getCommonGrossSalaryAmounts();
   return amounts.map((amount) => ({
-    betrag: String(amount),
+    betrag: `${amount}-euro-brutto-netto`,
   }));
 }
 
-// Helper to parse amount from slug param
+// Helper to parse amount from slug param.
+// Accepts only the canonical slug form "<amount>-euro-brutto-netto"
+// (e.g. "3000-euro-brutto-netto") to avoid duplicate-content variants.
 function parseAmount(betragStr: string): number | null {
-  const num = parseInt(betragStr, 10);
+  const match = /^(\d+)-euro-brutto-netto$/.exec(betragStr);
+  if (!match) return null;
+  const num = parseInt(match[1], 10);
   if (isNaN(num) || num < 500 || num > 100000) return null;
   return num;
 }
