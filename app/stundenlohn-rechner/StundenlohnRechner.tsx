@@ -186,6 +186,42 @@ export default function StundenlohnRechner() {
         </div>
       </section>
 
+      {/* Explainer / SEO content */}
+      <section className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            Netto-Stundenlohn berechnen: So funktioniert es
+          </h2>
+          <p>
+            Ihr <strong className="text-white">Brutto-Stundenlohn</strong> ist nur die halbe Wahrheit —
+            entscheidend ist, was nach Lohnsteuer und Sozialabgaben netto pro Stunde übrig bleibt.
+            Der Stundenlohn-Rechner rechnet dazu zuerst Ihren Stundenlohn in ein Monatsbrutto um und
+            wendet anschließend die amtliche Berechnung nach § 32a EStG an.
+          </p>
+          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
+            <p className="font-mono text-white text-sm mb-2">Formel Monatsbrutto:</p>
+            <p className="font-mono text-[#E60A1C] text-sm sm:text-base">
+              Stundenlohn × Wochenstunden × 52 ÷ 12
+            </p>
+            <p className="mt-3 text-white/60 text-sm">
+              Beispiel: 18 € × 40 Std. × 52 ÷ 12 = <strong className="text-white">3.120 € Brutto/Monat</strong> —
+              in Steuerklasse I bleiben davon rund 2.147 € netto, also etwa <strong className="text-white">12,39 € netto pro Stunde</strong>.
+            </p>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-white">Was beeinflusst Ihren Netto-Stundenlohn?</h3>
+          <ul className="space-y-2">
+            <li className="flex gap-2"><span className="text-[#E60A1C] font-bold">›</span> <span><strong className="text-white">Steuerklasse:</strong> In Klasse III bleibt deutlich mehr netto als in Klasse I oder VI.</span></li>
+            <li className="flex gap-2"><span className="text-[#E60A1C] font-bold">›</span> <span><strong className="text-white">Wochenstunden:</strong> Mehr Stunden erhöhen das Monatsbrutto und können in eine höhere Steuerprogression führen.</span></li>
+            <li className="flex gap-2"><span className="text-[#E60A1C] font-bold">›</span> <span><strong className="text-white">Kirchensteuer &amp; Zusatzbeitrag:</strong> Je nach Krankenkasse und Konfession sinkt der Netto-Stundenlohn um einige Cent.</span></li>
+          </ul>
+          <p>
+            Als Faustregel liegt der Netto-Stundenlohn je nach Steuerklasse rund <strong className="text-white">25–35 % unter</strong> dem
+            Brutto-Stundenlohn. Wer den gesetzlichen Mindestlohn von 13,90 € (2026) bzw. 14,60 € (2027) verdient,
+            kann so vorab sehen, wie viel davon tatsächlich auf dem Konto ankommt.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">

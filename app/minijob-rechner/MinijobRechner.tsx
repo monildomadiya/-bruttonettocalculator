@@ -149,6 +149,42 @@ export default function MinijobRechner() {
         </div>
       </section>
 
+      {/* Explainer / SEO content */}
+      <section className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            Minijob 2026: Wie viel bleibt netto vom 603-Euro-Job?
+          </h2>
+          <p>
+            Ein <strong className="text-white">Minijob</strong> (geringfügige Beschäftigung) ist für
+            Arbeitnehmer besonders attraktiv: Bis zur Verdienstgrenze von{" "}
+            <strong className="text-white">603 € im Monat</strong> (Stand 2026) bleibt der Lohn in der
+            Regel <strong className="text-white">steuer- und abgabenfrei</strong> — brutto ist hier fast
+            gleich netto. Die Grenze ist seit 2024 dynamisch an den Mindestlohn gekoppelt und steigt zum
+            1. Januar 2027 auf <strong className="text-white">633 €</strong>.
+          </p>
+          <h3 className="text-lg sm:text-xl font-bold text-white">Rentenversicherung: der einzige Abzug</h3>
+          <p>
+            Der einzige mögliche Abzug beim Arbeitnehmer ist der{" "}
+            <strong className="text-white">Rentenversicherungs-Eigenanteil von 3,6 %</strong>. Von diesem
+            können Sie sich auf Antrag befreien lassen — dann bleibt Ihr Minijob-Lohn zu 100 % netto.
+            Bleiben Sie in der Rentenversicherung, sammeln Sie dafür vollwertige Rentenanwartschaften.
+          </p>
+          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
+            <p className="text-white/60 text-sm">
+              <strong className="text-white">Achtung Übergangsbereich:</strong> Wer mehr als 603 € verdient,
+              ist kein Minijobber mehr, sondern arbeitet im <strong className="text-white">Midijob</strong>{" "}
+              (Übergangsbereich bis 2.000 €). Dort steigen die Sozialabgaben gleitend an — der Rechner
+              warnt Sie automatisch, sobald Sie die Grenze überschreiten.
+            </p>
+          </div>
+          <p>
+            Bei Zahlung des Mindestlohns von 13,90 €/Std. entsprechen 603 € rund{" "}
+            <strong className="text-white">43 Arbeitsstunden im Monat</strong> bzw. etwa 10 Stunden pro Woche.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">

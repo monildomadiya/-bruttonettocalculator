@@ -165,6 +165,44 @@ export default function ArbeitslosengeldRechner() {
         </div>
       </section>
 
+      {/* Explainer / SEO content */}
+      <section className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            Arbeitslosengeld I berechnen: 60 % oder 67 % vom Netto
+          </h2>
+          <p>
+            Das <strong className="text-white">Arbeitslosengeld I (ALG I)</strong> ersetzt einen Teil Ihres
+            bisherigen Einkommens. Es beträgt <strong className="text-white">60 % Ihres pauschalierten
+            Nettoentgelts</strong> der letzten 12 Monate — bzw. <strong className="text-white">67 %</strong>,
+            wenn Sie mindestens ein Kind haben (erhöhter Leistungssatz). Anders als beim Gehalt zahlen Sie
+            auf ALG I keine Lohnsteuer, es unterliegt aber dem Progressionsvorbehalt.
+          </p>
+          <h3 className="text-lg sm:text-xl font-bold text-white">So funktioniert die Berechnung</h3>
+          <p>
+            Die Bundesagentur für Arbeit ermittelt zunächst ein <strong className="text-white">pauschaliertes
+            Nettoentgelt</strong> aus Ihrem Bruttolohn — abzüglich einer 21-%-Sozialpauschale, der Lohnsteuer
+            nach Ihrer Steuerklasse und des Solidaritätszuschlags. Von diesem Betrag erhalten Sie dann 60 %
+            bzw. 67 %. Weil pauschaliert gerechnet wird, kann Ihr ALG I geringfügig von 60 % Ihres
+            tatsächlichen Nettogehalts abweichen — der Rechner liefert eine realistische Orientierung.
+          </p>
+          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
+            <p className="text-white/60 text-sm">
+              <strong className="text-white">Bezugsdauer:</strong> Wie lange Sie ALG I bekommen, hängt von
+              Alter und Versicherungszeit ab — von <strong className="text-white">6 Monaten</strong> (mind.
+              12 Monate versichert) bis zu <strong className="text-white">24 Monaten</strong> (ab 58 Jahren
+              mit entsprechend langer Beschäftigung).
+            </p>
+          </div>
+          <p>
+            Voraussetzung ist eine <strong className="text-white">Anwartschaftszeit</strong> von mindestens
+            12 Monaten sozialversicherungspflichtiger Beschäftigung innerhalb der letzten 30 Monate. Geben Sie
+            oben Ihr durchschnittliches Bruttogehalt ein, um Ihren voraussichtlichen monatlichen Leistungssatz
+            zu sehen.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">

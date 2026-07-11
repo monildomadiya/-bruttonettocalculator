@@ -214,6 +214,45 @@ export default function BonusSteuerrechner() {
         </div>
       </section>
 
+      {/* Explainer / SEO content */}
+      <section className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            Weihnachtsgeld &amp; Bonus versteuern: Warum netto so wenig übrig bleibt
+          </h2>
+          <p>
+            Einmalzahlungen wie <strong className="text-white">Weihnachtsgeld</strong>,{" "}
+            <strong className="text-white">Urlaubsgeld</strong>, Boni oder das{" "}
+            <strong className="text-white">13. Monatsgehalt</strong> gelten steuerlich als „sonstige Bezüge".
+            Sie werden nicht dem laufenden Monat, sondern dem gesamten Jahreseinkommen hinzugerechnet und
+            nach der Jahreslohnsteuertabelle versteuert. Weil dadurch oft ein höherer Grenzsteuersatz greift,
+            fühlt sich die Abzugslast beim Bonus spürbar höher an als beim normalen Gehalt.
+          </p>
+          <h3 className="text-lg sm:text-xl font-bold text-white">Fallen auf den Bonus auch Sozialabgaben an?</h3>
+          <p>
+            Ja — Weihnachts- und Urlaubsgeld sind grundsätzlich sozialversicherungspflichtig, solange die
+            jeweilige <strong className="text-white">Beitragsbemessungsgrenze</strong> noch nicht erreicht ist.
+            Liegt Ihr Jahreseinkommen inklusive Sonderzahlung bereits über der Grenze (2026: 96.600 € in der
+            Renten-/Arbeitslosenversicherung), fallen auf den darüber liegenden Teil keine Renten- und
+            Arbeitslosenbeiträge mehr an — netto bleibt dann relativ mehr übrig.
+          </p>
+          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
+            <p className="font-mono text-white text-sm mb-2">So rechnet der Bonus-Steuerrechner:</p>
+            <p className="text-white/60 text-sm">
+              Er vergleicht Ihre Jahreslohnsteuer <strong className="text-white">mit</strong> und{" "}
+              <strong className="text-white">ohne</strong> Sonderzahlung. Die Differenz ist die auf den
+              Bonus entfallende Steuer — so sehen Sie exakt, wie viel von 500 €, 1.000 € oder einem vollen
+              Monatsgehalt Weihnachtsgeld netto ankommt.
+            </p>
+          </div>
+          <p>
+            Tipp: Wird der Bonus in einem Monat mit ohnehin hohem Gehalt ausgezahlt, kann die Steuerlast
+            höher ausfallen. Eine vorausschauende Planung mit dem Rechner hilft, keine böse Überraschung
+            auf der Gehaltsabrechnung zu erleben.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">
