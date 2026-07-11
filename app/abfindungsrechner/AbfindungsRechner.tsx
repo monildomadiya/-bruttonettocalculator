@@ -205,6 +205,42 @@ export default function AbfindungsRechner() {
         </div>
       </section>
 
+      {/* Explainer / SEO content */}
+      <section className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            Abfindung versteuern: So funktioniert die Fünftelregelung
+          </h2>
+          <p>
+            Eine <strong className="text-white">Abfindung</strong> bei Kündigung oder Aufhebungsvertrag ist
+            voll steuerpflichtig, wird aber steuerlich begünstigt: Über die{" "}
+            <strong className="text-white">Fünftelregelung (§ 34 EStG)</strong> soll die Steuerprogression
+            abgemildert werden, die sonst durch die geballte Einmalzahlung entstehen würde.
+          </p>
+          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
+            <p className="font-mono text-white text-sm mb-2">So rechnet die Fünftelregelung:</p>
+            <p className="text-white/60 text-sm">
+              Nur <strong className="text-white">ein Fünftel</strong> der Abfindung wird fiktiv zum
+              Jahreseinkommen addiert und die Steuer­mehrbelastung berechnet. Diese Differenz wird{" "}
+              <strong className="text-white">× 5</strong> genommen — so verteilt sich der Progressionseffekt
+              rechnerisch auf fünf Jahre.
+            </p>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-white">Der große Vorteil: keine Sozialabgaben</h3>
+          <p>
+            Anders als beim Gehalt sind Abfindungen <strong className="text-white">sozialversicherungsfrei</strong> —
+            es fallen weder Renten-, Kranken-, Pflege- noch Arbeitslosenversicherungsbeiträge an. Fällig wird
+            ausschließlich Lohn-/Einkommensteuer zzgl. Soli und ggf. Kirchensteuer.
+          </p>
+          <p>
+            Die Fünftelregelung wirkt am stärksten, wenn die Abfindung im Verhältnis zum sonstigen
+            Jahreseinkommen hoch ist. <strong className="text-white">Steuertipp:</strong> Der Bezug in einem
+            Jahr mit niedrigerem Einkommen (etwa bei Arbeitslosigkeit über den Jahreswechsel) oder die
+            Einzahlung eines Teils in eine Basis-/Rürup-Rente kann die Steuerlast weiter senken.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">

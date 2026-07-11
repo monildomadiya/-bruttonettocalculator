@@ -238,6 +238,43 @@ export default function FirmenwagenrechnerCalculator() {
         </div>
       </section>
 
+      {/* Explainer / SEO content */}
+      <section className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            Firmenwagen versteuern: 1%-Regelung &amp; geldwerter Vorteil
+          </h2>
+          <p>
+            Dürfen Sie Ihren <strong className="text-white">Firmenwagen</strong> auch privat nutzen, ist das
+            ein <strong className="text-white">geldwerter Vorteil</strong>, der wie zusätzliches Gehalt
+            versteuert wird. Bei der <strong className="text-white">1%-Regelung</strong> wird monatlich{" "}
+            <strong className="text-white">1 % des Bruttolistenpreises</strong> (inkl. Sonderausstattung und
+            MwSt.) zu Ihrem Bruttogehalt addiert — darauf fallen dann Lohnsteuer und Sozialabgaben an.
+          </p>
+          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
+            <p className="text-white/60 text-sm mb-2">
+              <strong className="text-white">Arbeitsweg-Zuschlag:</strong> Nutzen Sie den Wagen für den Weg
+              zur Arbeit, kommen zusätzlich <strong className="text-white">0,03 % des Listenpreises je
+              Entfernungskilometer</strong> pro Monat hinzu.
+            </p>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-white">Elektroauto: der große Steuervorteil</h3>
+          <p>
+            Für vollelektrische Firmenwagen gilt eine stark reduzierte Versteuerung: nur{" "}
+            <strong className="text-white">0,25 %</strong> des Listenpreises bei E-Autos bis 70.000 €, und{" "}
+            <strong className="text-white">0,5 %</strong> bei teureren Modellen oder bestimmten Hybriden — statt
+            der vollen 1 %. Ein E-Firmenwagen kann Ihr Nettogehalt daher deutlich weniger belasten als ein
+            Verbrenner.
+          </p>
+          <p>
+            <strong className="text-white">Alternative Fahrtenbuch:</strong> Bei geringer Privatnutzung oder
+            hohem Anschaffungspreis kann die Fahrtenbuch-Methode günstiger sein, da nur die tatsächliche
+            private Nutzung versteuert wird. Der Rechner zeigt Ihnen die Belastung nach der 1%-Regelung, damit
+            Sie beide Varianten vergleichen können.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">

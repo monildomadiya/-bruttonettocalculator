@@ -202,6 +202,41 @@ export default function ElterngeldRechner() {
         </div>
       </section>
 
+      {/* Explainer / SEO content */}
+      <section className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            Elterngeld berechnen: 65 % vom Netto — mindestens 300 €
+          </h2>
+          <p>
+            Das <strong className="text-white">Basiselterngeld</strong> ersetzt einen Teil des wegfallenden
+            Einkommens nach der Geburt. Es beträgt <strong className="text-white">65–100 % des durchschnittlichen
+            Nettoeinkommens</strong> der letzten 12 Monate vor der Geburt — mindestens{" "}
+            <strong className="text-white">300 €</strong> und höchstens <strong className="text-white">1.800 €</strong>{" "}
+            im Monat. Auch nicht-erwerbstätige Eltern erhalten den Mindestbetrag von 300 €.
+          </p>
+          <h3 className="text-lg sm:text-xl font-bold text-white">Warum ist der Prozentsatz nicht fix?</h3>
+          <p>
+            Der Ersatzsatz ist sozial gestaffelt: Bei einem Nettoeinkommen zwischen{" "}
+            <strong className="text-white">1.000 € und 1.200 €</strong> gilt die Standardrate von{" "}
+            <strong className="text-white">67 %</strong>. Verdienen Sie weniger, steigt der Satz schrittweise
+            bis auf 100 %; verdienen Sie mehr, sinkt er bis auf 65 %. Geringverdiener werden also relativ
+            stärker entlastet.
+          </p>
+          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
+            <p className="text-white/60 text-sm">
+              <strong className="text-white">Basiselterngeld vs. ElterngeldPlus:</strong> Beim ElterngeldPlus
+              erhalten Sie monatlich nur die Hälfte des Betrags, dafür über die doppelte Anzahl an Monaten.
+              Das lohnt sich besonders, wenn Sie während des Bezugs bereits in Teilzeit arbeiten.
+            </p>
+          </div>
+          <p>
+            Geben Sie oben Ihr durchschnittliches Netto der letzten 12 Monate ein, um Ihren voraussichtlichen
+            Elterngeld-Anspruch und den ElterngeldPlus-Betrag sofort zu sehen.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">

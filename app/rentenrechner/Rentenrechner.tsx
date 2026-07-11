@@ -212,6 +212,45 @@ export default function Rentenrechner() {
         </div>
       </section>
 
+      {/* Explainer / SEO content */}
+      <section className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+            Gesetzliche Rente berechnen: Von Entgeltpunkten zur Monatsrente
+          </h2>
+          <p>
+            Ihre spätere <strong className="text-white">gesetzliche Rente</strong> hängt nicht direkt von
+            Ihrem Nettogehalt ab, sondern von <strong className="text-white">Entgeltpunkten</strong>. Wer in
+            einem Jahr genau das Durchschnittsentgelt aller Versicherten verdient, erhält einen Entgeltpunkt.
+            Verdienen Sie mehr, gibt es anteilig mehr Punkte — bis zur Beitragsbemessungsgrenze.
+          </p>
+          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
+            <p className="font-mono text-white text-sm mb-2">Formel Monatsrente:</p>
+            <p className="font-mono text-[#E60A1C] text-sm sm:text-base">
+              Entgeltpunkte × aktueller Rentenwert
+            </p>
+            <p className="mt-3 text-white/60 text-sm">
+              Beispiel: 35 Entgeltpunkte ergeben mit dem aktuellen Rentenwert eine monatliche Brutto-Rente,
+              von der noch Kranken- und Pflegeversicherungsbeiträge sowie ggf. Steuern abgehen.
+            </p>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-white">Wie viel zahlen Sie ein?</h3>
+          <p>
+            Der Beitrag zur gesetzlichen Rentenversicherung beträgt <strong className="text-white">18,6 %</strong>{" "}
+            des Bruttogehalts (bis zur Beitragsbemessungsgrenze von 101.400 € im Jahr 2026) — je zur Hälfte
+            von Arbeitnehmer und Arbeitgeber getragen. Aus Ihrem eigenen Brutto zahlen Sie also{" "}
+            <strong className="text-white">9,3 %</strong>. Genau diesen Anteil zeigt der Rechner zusammen mit
+            Ihrer voraussichtlichen Rente an.
+          </p>
+          <p>
+            Wichtig: Die gesetzliche Rente unterliegt im Ruhestand der{" "}
+            <strong className="text-white">nachgelagerten Besteuerung</strong> — je nach Renteneintrittsjahr
+            ist ein steigender Anteil steuerpflichtig. Der Rechner liefert eine realistische Orientierung, ersetzt
+            aber keine individuelle Rentenberatung der Deutschen Rentenversicherung.
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">
