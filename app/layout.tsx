@@ -7,6 +7,7 @@ import MobileMenu from "@/components/MobileMenu";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import GoogleAdSense from "@/components/GoogleAdSense";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bruttonettocalculator.com"),
@@ -148,6 +149,7 @@ export const metadata: Metadata = {
     "geo.region": "DE",
     "geo.placename": "Deutschland",
     "DC.language": "de",
+    "google-adsense-account": "ca-pub-5005860402493815",
   },
 };
 
@@ -241,6 +243,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* ── Google Analytics 4 (GA4) ────────────────────────────────── */}
         <GoogleAnalytics />
+
+        {/* ── Google AdSense ──────────────────────────────────────────── */}
+        <GoogleAdSense />
       </body>
     </html>
   );
