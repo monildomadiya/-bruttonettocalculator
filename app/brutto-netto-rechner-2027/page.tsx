@@ -5,7 +5,7 @@ import Calculator from "@/components/Calculator";
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2027 – Steuerreform & Lohnrechner",
   description:
-    "Steuerreform 2027 Rechner: Berechnen Sie Ihr Nettogehalt ab dem 1.1.2027 mit höherem Grundfreibetrag. Kostenloser Brutto Netto Rechner 2027 & Lohnrechner 2027 mit Jahresvergleich – so viel Netto bringt Ihnen die Steuerreform.",
+    "Steuerreform 2027 Rechner: Grundfreibetrag steigt auf 12.900 €, Kindergeld auf 272 €. Berechnen Sie mit dem Brutto Netto Rechner 2027 & Lohnrechner 2027, wie viel mehr Netto vom Brutto Sie ab dem 1.1.2027 haben – kostenlos & im Jahresvergleich zu 2026.",
   keywords: [
     "steuerreform 2027 rechner",
     "steuerreform rechner 2027",
@@ -21,6 +21,14 @@ export const metadata: Metadata = {
     "gehaltsrechner 2027",
     "steuerreform 2027 netto",
     "steuer rechner 2027",
+    "grundfreibetrag 2027",
+    "grundfreibetrag 12900",
+    "kindergeld 2027",
+    "kindergeld 272 euro",
+    "einkommensteuer reform 2027",
+    "wie viel mehr netto 2027",
+    "mehr netto vom brutto 2027",
+    "kinderfreibetrag 2027",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/brutto-netto-rechner-2027" },
 };
@@ -29,6 +37,14 @@ const faqs = [
   {
     q: "Was bringt die Steuerreform 2027 netto?",
     a: "Kernstück der Steuerreform 2027 ist die Anhebung des Grundfreibetrags sowie der Kinderfreibeträge zum Ausgleich der kalten Progression. Für die meisten Arbeitnehmer bedeutet das bei gleichem Bruttogehalt ein spürbar höheres Nettogehalt ab dem 1. Januar 2027. Mit dem Steuerreform-2027-Rechner oben sehen Sie im direkten Jahresvergleich, wie viel mehr Netto bei Ihrem konkreten Gehalt übrig bleibt.",
+  },
+  {
+    q: "Wie hoch ist der Grundfreibetrag 2027?",
+    a: "Nach den im Juni 2026 verkündeten Reformplänen soll der steuerliche Grundfreibetrag von 12.348 € (2026) schrittweise auf rund 12.900 € angehoben werden. Bis zu diesem Betrag fällt keine Einkommensteuer an — ein höherer Grundfreibetrag 2027 bedeutet also für alle Steuerklassen ein höheres Nettogehalt. Die endgültigen Werte werden erst mit dem Existenzminimumbericht im Herbst 2026 final festgelegt.",
+  },
+  {
+    q: "Wie viel mehr Netto habe ich durch die Steuerreform 2027?",
+    a: "Das hängt stark von Ihrem Bruttogehalt, Ihrer Steuerklasse und Ihrer Familiensituation ab. Familien mit Kindern profitieren zusätzlich vom höheren Kindergeld (272 € pro Kind) und Kinderfreibetrag. Wichtig: Die steuerliche Entlastung kann teilweise durch steigende Sozialversicherungsbeiträge gemindert werden. Geben Sie Ihr Bruttogehalt oben in den Rechner ein und vergleichen Sie das Steuerjahr 2026 mit 2027, um Ihr persönliches Netto-Plus zu sehen.",
   },
   {
     q: "Wie funktioniert der Netto Brutto Rechner 2027?",
@@ -130,11 +146,11 @@ export default function Rechner2027Page() {
           <ul className="space-y-3">
             <li className="flex gap-3">
               <span className="text-[#E60A1C] font-bold">›</span>
-              <span><strong className="text-white">Höherer Grundfreibetrag:</strong> Ein größerer Teil des Einkommens bleibt steuerfrei — das erste Netto-Plus für alle Steuerklassen.</span>
+              <span><strong className="text-white">Grundfreibetrag 2027 steigt auf rund 12.900 €</strong> (von 12.348 € in 2026): Ein größerer Teil des Einkommens bleibt steuerfrei — das erste Netto-Plus für alle Steuerklassen.</span>
             </li>
             <li className="flex gap-3">
               <span className="text-[#E60A1C] font-bold">›</span>
-              <span><strong className="text-white">Angehobener Kinderfreibetrag &amp; Kindergeld:</strong> Zusätzliche Entlastung für Familien mit Kindern.</span>
+              <span><strong className="text-white">Kindergeld steigt auf 272 € pro Kind</strong> und der Kinderfreibetrag 2027 wird angehoben: Zusätzliche Entlastung für Familien mit Kindern.</span>
             </li>
             <li className="flex gap-3">
               <span className="text-[#E60A1C] font-bold">›</span>
@@ -142,9 +158,15 @@ export default function Rechner2027Page() {
             </li>
           </ul>
           <p>
-            Nutzen Sie den Rechner im Modus <strong className="text-white font-semibold">Brutto zu Netto</strong> oder{" "}
+            Wie viel mehr Netto vom Brutto Sie 2027 konkret haben, hängt von Ihrem Gehalt und Ihrer
+            Steuerklasse ab. Nutzen Sie den Rechner im Modus <strong className="text-white font-semibold">Brutto zu Netto</strong> oder{" "}
             <strong className="text-white font-semibold">Netto zu Brutto</strong> und schalten Sie auf das Steuerjahr 2027,
-            um Ihre Entlastung durch die Steuerreform 2027 im direkten Vergleich zu 2026 zu sehen.
+            um Ihre persönliche Entlastung durch die Steuerreform 2027 im direkten Vergleich zu 2026 zu sehen.
+          </p>
+          <p className="text-xs text-white/50">
+            Hinweis: Die genannten Werte (Grundfreibetrag rund 12.900 €, Kindergeld 272 €) beruhen auf den
+            im Juni 2026 verkündeten Reformplänen und werden bis zur endgültigen Verabschiedung im Herbst/Winter 2026
+            noch konkretisiert. Die volle Entlastungswirkung entfaltet sich schrittweise bis 2028.
           </p>
         </div>
       </div>
