@@ -35,7 +35,10 @@ export default function AdsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let active = true;
     fetch("/api/settings/ads")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
       .then((data) => {
         if (active && data?.success && data.settings) {
           setSettings(data.settings as AdsSettings);
