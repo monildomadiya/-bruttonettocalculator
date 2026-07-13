@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, Save, Loader2, CheckCircle2, AlertCircle,
-  Megaphone, Info, ExternalLink, ShieldCheck,
+  Megaphone, Info, ExternalLink, ShieldCheck, X,
 } from "lucide-react";
 import AdminAuthGuard from "@/components/admin/AdminAuthGuard";
 
@@ -72,19 +72,28 @@ export default function AdsSettingsPage() {
   return (
     <AdminAuthGuard>
       <div className="min-h-screen bg-[#0a0a0a] text-[#e5e5e5] font-sans antialiased">
-        <header className="sticky top-0 z-20 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/[0.08] px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-4">
+        <header className="sticky top-0 z-20 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/[0.08] px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Link
+              href="/admin-secure"
+              className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/10 text-white/70 hover:text-white transition-all"
+            >
+              <ArrowLeft size={18} />
+            </Link>
+            <div>
+              <h1 className="font-display font-black text-lg sm:text-xl text-white tracking-tight">
+                Google AdSense
+              </h1>
+              <p className="text-xs text-white/40 mt-0.5">Anzeigen-Konfiguration & Monetarisierung</p>
+            </div>
+          </div>
           <Link
             href="/admin-secure"
-            className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/10 text-white/70 hover:text-white transition-all"
+            className="p-2 rounded-lg bg-white/[0.05] hover:bg-red-500/20 text-white/50 hover:text-red-400 transition-all"
+            title="Schließen"
           >
-            <ArrowLeft size={18} />
+            <X size={18} />
           </Link>
-          <div>
-            <h1 className="font-display font-black text-lg sm:text-xl text-white tracking-tight">
-              Google AdSense
-            </h1>
-            <p className="text-xs text-white/40 mt-0.5">Anzeigen-Konfiguration & Monetarisierung</p>
-          </div>
         </header>
 
         <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
@@ -127,11 +136,13 @@ export default function AdsSettingsPage() {
                   </div>
                   <button
                     type="button"
+                    role="switch"
+                    aria-checked={settings.enabled}
                     onClick={() => setSettings((s) => ({ ...s, enabled: !s.enabled }))}
-                    className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${settings.enabled ? "bg-[#E60A1C]" : "bg-white/10"}`}
+                    className={`relative inline-flex h-7 w-[52px] flex-shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E60A1C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#111] ${settings.enabled ? "bg-[#E60A1C]" : "bg-white/15"}`}
                   >
                     <span
-                      className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-transform ${settings.enabled ? "translate-x-6" : "translate-x-1"}`}
+                      className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ease-in-out ${settings.enabled ? "translate-x-[26px]" : "translate-x-[3px]"}`}
                     />
                   </button>
                 </div>
@@ -177,11 +188,13 @@ export default function AdsSettingsPage() {
                   </div>
                   <button
                     type="button"
+                    role="switch"
+                    aria-checked={settings.autoAds}
                     onClick={() => setSettings((s) => ({ ...s, autoAds: !s.autoAds }))}
-                    className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${settings.autoAds ? "bg-[#E60A1C]" : "bg-white/10"}`}
+                    className={`relative inline-flex h-7 w-[52px] flex-shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E60A1C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#111] ${settings.autoAds ? "bg-[#E60A1C]" : "bg-white/15"}`}
                   >
                     <span
-                      className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-transform ${settings.autoAds ? "translate-x-6" : "translate-x-1"}`}
+                      className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ease-in-out ${settings.autoAds ? "translate-x-[26px]" : "translate-x-[3px]"}`}
                     />
                   </button>
                 </div>
