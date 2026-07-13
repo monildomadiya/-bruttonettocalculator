@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import StundenlohnRechner from "./StundenlohnRechner";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Stundenlohn-Rechner 2026 — Netto-Stundenlohn berechnen",
@@ -43,6 +44,7 @@ export default function StundenlohnRechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <StundenlohnRechner />
+      <AdUnit placement="content" />
     </>
   );
 }

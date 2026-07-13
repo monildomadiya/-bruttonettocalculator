@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ArbeitslosengeldRechner from "./ArbeitslosengeldRechner";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Arbeitslosengeld Rechner 2026 (ALG I) — 60%/67% berechnen",
@@ -52,6 +53,7 @@ export default function ArbeitslosengeldRechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ArbeitslosengeldRechner />
+      <AdUnit placement="content" />
     </>
   );
 }

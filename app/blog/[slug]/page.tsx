@@ -14,6 +14,7 @@ import { dbQuery, Article } from "@/lib/db";
 import { Metadata } from "next";
 import { primaryReviewer } from "@/lib/authors";
 import ReviewerByline from "@/components/ReviewerByline";
+import AdUnit from "@/components/AdUnit";
 
 export const revalidate = 0;
 
@@ -451,6 +452,9 @@ export default async function ArticleReaderPage({
                 className="article-content"
                 dangerouslySetInnerHTML={{ __html: contentWithIds }}
               />
+
+              {/* ── Ad: in-content, right after the article (high viewability / high CPM) ── */}
+              <AdUnit placement="inArticle" className="!my-8" />
 
               {/* Tags */}
               {article.tags && (

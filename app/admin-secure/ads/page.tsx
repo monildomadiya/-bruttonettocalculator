@@ -14,6 +14,7 @@ interface AdsSettings {
   autoAds: boolean;
   slotHomepage: string;
   slotInArticle: string;
+  slotContent: string;
 }
 
 const EMPTY: AdsSettings = {
@@ -22,6 +23,7 @@ const EMPTY: AdsSettings = {
   autoAds: true,
   slotHomepage: "",
   slotInArticle: "",
+  slotContent: "",
 };
 
 export default function AdsSettingsPage() {
@@ -200,6 +202,19 @@ export default function AdsSettingsPage() {
                       placeholder="1234567890"
                       className="w-full bg-black border border-white/[0.08] rounded-xl px-4 py-2.5 text-white font-mono text-sm focus:border-[#E60A1C] outline-none"
                     />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-white/60 mb-1.5">Slot-ID — Content-Seiten (Gehaltsrechner-Seiten)</label>
+                    <input
+                      type="text"
+                      value={settings.slotContent}
+                      onChange={(e) => setSettings((s) => ({ ...s, slotContent: e.target.value }))}
+                      placeholder="1234567890"
+                      className="w-full bg-black border border-white/[0.08] rounded-xl px-4 py-2.5 text-white font-mono text-sm focus:border-[#E60A1C] outline-none"
+                    />
+                    <p className="text-xs text-white/40 mt-1.5">
+                      Wird auf den Betrags-Seiten (z. B. /rechner/3000-euro-brutto-netto) und allen Spezial-Rechnern angezeigt.
+                    </p>
                   </div>
                 </div>
               </div>

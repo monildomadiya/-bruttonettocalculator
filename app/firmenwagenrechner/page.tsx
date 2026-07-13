@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import FirmenwagenrechnerCalculator from "./FirmenwagenrechnerCalculator";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Firmenwagenrechner 2026 — 1%-Regelung berechnen",
@@ -56,6 +57,7 @@ export default function FirmenwagenrechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <FirmenwagenrechnerCalculator />
+      <AdUnit placement="content" />
     </>
   );
 }

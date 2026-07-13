@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
@@ -297,6 +298,9 @@ export default function HomePage() {
       <section id="rechner" className="max-w-6xl mx-auto px-2.5 sm:px-5 mt-4 sm:-mt-16 pb-20 relative z-20 scroll-mt-24">
         <Calculator />
       </section>
+
+      {/* ── Ad: right after the calculator result (high engagement / high CPM) ─ */}
+      <AdUnit placement="homepage" />
 
       {/* ── Info Cards (Dark Tech Grid) ─────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-5 py-20 border-t border-white/15">

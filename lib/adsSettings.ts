@@ -6,6 +6,7 @@ export interface AdsSettings {
   autoAds: boolean;
   slotHomepage: string;
   slotInArticle: string;
+  slotContent: string;
 }
 
 const KEYS = {
@@ -14,24 +15,30 @@ const KEYS = {
   autoAds: "ads_auto_ads",
   slotHomepage: "ads_slot_homepage",
   slotInArticle: "ads_slot_in_article",
+  slotContent: "ads_slot_content",
 } as const;
 
+// Defaults reflect the current live configuration so that the site keeps
+// serving ads exactly as before until an admin explicitly changes something
+// in the dashboard (avoids accidentally switching ads off during approval).
 const DEFAULTS: AdsSettings = {
-  enabled: false,
-  publisherId: "",
+  enabled: true,
+  publisherId: "pub-5005860402493815",
   autoAds: true,
   slotHomepage: "",
   slotInArticle: "",
+  slotContent: "",
 };
 
 export async function getAdsSettings(): Promise<AdsSettings> {
   const raw = await getSettings(Object.values(KEYS));
   return {
-    enabled: raw[KEYS.enabled] === "true",
+    enabled: raw[KEYS.enabled] !== null ? raw[KEYS.enabled] === "true" : DEFAULTS.enabled,
     publisherId: raw[KEYS.publisherId] || DEFAULTS.publisherId,
     autoAds: raw[KEYS.autoAds] !== null ? raw[KEYS.autoAds] === "true" : DEFAULTS.autoAds,
     slotHomepage: raw[KEYS.slotHomepage] || DEFAULTS.slotHomepage,
     slotInArticle: raw[KEYS.slotInArticle] || DEFAULTS.slotInArticle,
+    slotContent: raw[KEYS.slotContent] || DEFAULTS.slotContent,
   };
 }
 
@@ -41,6 +48,7 @@ export async function saveAdsSettings(settings: Partial<AdsSettings>): Promise<v
   if (settings.autoAds !== undefined) await setSetting(KEYS.autoAds, String(settings.autoAds));
   if (settings.slotHomepage !== undefined) await setSetting(KEYS.slotHomepage, settings.slotHomepage.trim());
   if (settings.slotInArticle !== undefined) await setSetting(KEYS.slotInArticle, settings.slotInArticle.trim());
+  if (settings.slotContent !== undefined) await setSetting(KEYS.slotContent, settings.slotContent.trim());
 }
 
 /** Normalizes user input like "1234567890123456" or "pub-1234567890123456" to "pub-1234567890123456". */

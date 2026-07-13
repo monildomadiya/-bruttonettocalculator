@@ -8,6 +8,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleAdSense from "@/components/GoogleAdSense";
+import AdsProvider from "@/components/AdsProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bruttonettocalculator.com"),
@@ -227,6 +228,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de">
       <body className="font-body bg-black text-white antialiased">
+       <AdsProvider>
 
         {/* ── Sticky glass header (conditional) ───────────────────────── */}
         <SiteHeader />
@@ -246,6 +248,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* ── Google AdSense ──────────────────────────────────────────── */}
         <GoogleAdSense />
+       </AdsProvider>
       </body>
     </html>
   );

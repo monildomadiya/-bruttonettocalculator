@@ -10,6 +10,7 @@ import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse } from "@/lib/taxCa
 import { getCommonGrossSalaryAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
+import AdUnit from "@/components/AdUnit";
 
 export const revalidate = 0; // Always generate fresh or static
 
@@ -328,6 +329,9 @@ export default function LongTailSalaryPage({ params }: PageProps) {
           </table>
         </div>
       </div>
+
+      {/* Ad: in-content after the main comparison table (high viewability / high CPM) */}
+      <AdUnit placement="content" className="!my-0 !mb-16 !px-0" />
 
       {/* Table 2: 2-Year Tax Comparison (2026 vs 2027) */}
       <div className="mb-16">

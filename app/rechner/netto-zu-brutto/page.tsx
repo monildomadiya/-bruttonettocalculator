@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowRightLeft, Sparkles, ListChecks, ChevronDown } from "lucide-react";
 import Calculator from "@/components/Calculator";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Netto zu Brutto Rechner | Gehaltsberechnung 2026",
@@ -90,6 +91,9 @@ export default function NettoZuBruttoPage() {
           verschiedene Bruttostufen oben direkt in Echtzeit aus!
         </p>
       </div>
+
+      {/* Ad: in-content after the calculator + tip block (high viewability) */}
+      <AdUnit placement="content" className="!my-0 !mb-16 !px-0" />
 
       {/* Erklärung: So funktioniert die Rückrechnung */}
       <div className="w-full max-w-6xl mx-auto mb-16">

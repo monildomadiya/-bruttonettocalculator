@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import MindestlohnCalculator from "./MindestlohnCalculator";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Mindestlohn Rechner 2026/2027 — Brutto Netto Berechnen",
@@ -27,5 +28,10 @@ export const metadata: Metadata = {
 };
 
 export default function MindestlohnPage() {
-  return <MindestlohnCalculator />;
+  return (
+    <>
+      <MindestlohnCalculator />
+      <AdUnit placement="content" />
+    </>
+  );
 }

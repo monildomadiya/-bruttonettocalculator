@@ -3,12 +3,12 @@ import { ShieldAlert } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung — Brutto Netto Rechner 2026",
-  description: "Informationen zum Datenschutz, zur Verarbeitung personenbezogener Daten und zu Ihren Rechten auf BruttoNettoCalculator.com.",
+  description: "Informationen zum Datenschutz, zur Verarbeitung personenbezogener Daten, zu Cookies, Google Analytics, Google AdSense und zu Ihren Rechten auf BruttoNettoCalculator.com.",
   alternates: { canonical: "https://bruttonettocalculator.com/datenschutz" },
   robots: { index: true, follow: true },
   openGraph: {
     title: "Datenschutzerklärung | BruttoNettoCalculator.com",
-    description: "Datenschutz & Verarbeitung personenbezogener Daten gem. DSGVO auf BruttoNettoCalculator.com.",
+    description: "Datenschutz, Cookies, Google Analytics & Google AdSense gem. DSGVO auf BruttoNettoCalculator.com.",
     url: "https://bruttonettocalculator.com/datenschutz",
     locale: "de_DE",
     type: "website",
@@ -32,13 +32,18 @@ export default function DatenschutzPage() {
 
       <div className="bg-[#101010] border border-white/15 rounded-3xl p-8 sm:p-12 text-white/80 leading-relaxed space-y-8 shadow-xl w-full max-w-6xl">
         <div className="bg-[#121212] border border-[#E60A1C]/30 rounded-2xl p-6 text-sm text-white/90">
-          <strong className="text-[#E60A1C]">Hinweis:</strong> Alle Berechnungen in unserem Brutto-Netto-Rechner erfolgen
-          100% anonym, lokal auf Ihrem Endgerät und ohne Speicherung sensibler Gehaltsdaten auf externen Servern.
+          <strong className="text-[#E60A1C]">Hinweis:</strong> Alle Gehaltsberechnungen in unserem Brutto-Netto-Rechner erfolgen
+          100% anonym, lokal auf Ihrem Endgerät und ohne Speicherung Ihrer sensiblen Gehaltsdaten auf externen Servern.
+          Zur Finanzierung des kostenlosen Angebots und zur Reichweitenmessung setzen wir jedoch – nur mit Ihrer
+          Einwilligung – Cookies von Google Analytics und Google AdSense ein. Details finden Sie nachstehend.
         </div>
 
         <div>
           <h2 className="font-display font-bold text-white text-xl mb-3">1. Verantwortlicher</h2>
           <p className="text-white/70">
+            Verantwortlich für die Datenverarbeitung auf dieser Website ist der im{" "}
+            <a href="/impressum" className="text-[#E60A1C] font-semibold hover:underline">Impressum</a>{" "}
+            genannte Anbieter.<br />
             BruttoNettoCalculator.com<br />
             E-Mail: info@bruttonettocalculator.com
           </p>
@@ -46,14 +51,14 @@ export default function DatenschutzPage() {
 
         <div>
           <h2 className="font-display font-bold text-white text-xl mb-3">
-            2. Verarbeitung beim Aufruf der Website
+            2. Verarbeitung beim Aufruf der Website (Server-Logfiles)
           </h2>
           <p className="text-white/70">
-            Beim Besuch dieser Website erhebt unser Hosting-Anbieter
-            automatisch technische Daten (u. a. IP-Adresse, Datum und
-            Uhrzeit des Zugriffs, aufgerufene Seite, Browsertyp) in
-            Server-Logfiles. Dies ist zum technischen Betrieb der Website
-            erforderlich (Art. 6 Abs. 1 lit. f DSGVO).
+            Beim Besuch dieser Website erhebt unser Hosting-Anbieter automatisch technische Daten
+            (u. a. gekürzte IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, Referrer,
+            Browsertyp und Betriebssystem) in Server-Logfiles. Dies ist zum sicheren und stabilen
+            technischen Betrieb der Website erforderlich und beruht auf unserem berechtigten Interesse
+            (Art. 6 Abs. 1 lit. f DSGVO). Die Logfiles werden nach kurzer Zeit automatisch gelöscht.
           </p>
         </div>
 
@@ -68,23 +73,103 @@ export default function DatenschutzPage() {
 
         <div>
           <h2 className="font-display font-bold text-white text-xl mb-3">
-            4. Cookies und Analyse-Tools
+            4. Cookies und Einwilligung (Consent)
           </h2>
+          <p className="text-white/70 mb-3">
+            Technisch notwendige Cookies, die für den Betrieb der Website erforderlich sind, setzen wir auf
+            Grundlage von Art. 6 Abs. 1 lit. f DSGVO bzw. § 25 Abs. 2 TDDDG ein. Darüber hinaus setzen wir
+            Cookies und vergleichbare Technologien für <strong className="text-white">Statistik/Reichweitenmessung
+            (Google Analytics)</strong> und <strong className="text-white">Werbung (Google AdSense)</strong> ein.
+          </p>
           <p className="text-white/70">
-            Diese Website setzt standardmäßig keine unnötigen Tracking- oder Werbe-Cookies ein. Zur Analyse
-            der Serverauslastung und Optimierung des Rechners werden rein anonymisierte Aufrufstatistiken ausgewertet.
+            Diese nicht notwendigen Cookies werden nur mit Ihrer ausdrücklichen Einwilligung gemäß
+            § 25 Abs. 1 TDDDG und Art. 6 Abs. 1 lit. a DSGVO gesetzt, die Sie über unseren Cookie-Hinweis
+            (Consent-Banner) erteilen. Ihre Einwilligung ist freiwillig und kann jederzeit mit Wirkung
+            für die Zukunft widerrufen werden.
           </p>
         </div>
 
         <div>
-          <h2 className="font-display font-bold text-white text-xl mb-3">5. Ihre Rechte</h2>
+          <h2 className="font-display font-bold text-white text-xl mb-3">
+            5. Google Analytics
+          </h2>
+          <p className="text-white/70 mb-3">
+            Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited
+            (Gordon House, Barrow Street, Dublin 4, Irland). Google Analytics verwendet Cookies, um die
+            Nutzung der Website statistisch auszuwerten. Die IP-Adresse wird dabei gekürzt bzw. anonymisiert
+            verarbeitet. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).
+          </p>
+          <p className="text-white/70">
+            Dabei können Daten auch an Server von Google in den USA übertragen werden. Sie können der Erfassung
+            durch Google Analytics widersprechen, indem Sie das Browser-Add-on unter{" "}
+            <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-[#E60A1C] font-semibold hover:underline">tools.google.com/dlpage/gaoptout</a>{" "}
+            installieren oder Ihre Einwilligung über den Cookie-Hinweis widerrufen. Weitere Informationen finden
+            Sie in der{" "}
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#E60A1C] font-semibold hover:underline">Datenschutzerklärung von Google</a>.
+          </p>
+        </div>
+
+        <div>
+          <h2 className="font-display font-bold text-white text-xl mb-3">
+            6. Google AdSense (Werbung)
+          </h2>
+          <p className="text-white/70 mb-3">
+            Zur Finanzierung dieses kostenlosen Angebots binden wir Werbeanzeigen über Google AdSense ein,
+            einen Dienst der Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Irland).
+            Google und dessen Partner verwenden Cookies bzw. vergleichbare Technologien (z. B. Web Beacons),
+            um Anzeigen auszuliefern, deren Auslieferung zu messen und – bei entsprechender Einwilligung –
+            personalisierte Werbung auf Basis früherer Besuche auf dieser und anderen Websites anzuzeigen.
+          </p>
+          <p className="text-white/70 mb-3">
+            Rechtsgrundlage für den Einsatz von Werbe-Cookies ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO,
+            § 25 Abs. 1 TDDDG). Ohne Einwilligung werden Ihnen ggf. nur nicht personalisierte Anzeigen ausgespielt.
+            Im Rahmen der Anzeigenauslieferung können Daten (u. a. Ihre IP-Adresse und Cookie-Kennungen) an Google
+            und in Drittländer wie die USA übertragen werden.
+          </p>
+          <p className="text-white/70">
+            Sie können personalisierte Werbung jederzeit deaktivieren bzw. verwalten:
+          </p>
+          <ul className="list-disc pl-5 mt-2 space-y-1 text-white/70">
+            <li>
+              Google-Werbeeinstellungen:{" "}
+              <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-[#E60A1C] font-semibold hover:underline">adssettings.google.com</a>
+            </li>
+            <li>
+              Opt-out von Drittanbietern:{" "}
+              <a href="https://www.aboutads.info/choices" target="_blank" rel="noopener noreferrer" className="text-[#E60A1C] font-semibold hover:underline">aboutads.info/choices</a>{" "}
+              &{" "}
+              <a href="https://www.youronlinechoices.eu" target="_blank" rel="noopener noreferrer" className="text-[#E60A1C] font-semibold hover:underline">youronlinechoices.eu</a>
+            </li>
+            <li>
+              Datenschutz &amp; Cookies bei Google:{" "}
+              <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" className="text-[#E60A1C] font-semibold hover:underline">policies.google.com/technologies/ads</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="font-display font-bold text-white text-xl mb-3">7. Ihre Rechte</h2>
           <p className="text-white/70">
             Sie haben das Recht auf Auskunft, Berichtigung, Löschung,
             Einschränkung der Verarbeitung, Datenübertragbarkeit und
-            Widerspruch gemäß Art. 15–21 DSGVO sowie das Recht auf Beschwerde
-            bei einer zuständigen Datenschutz-Aufsichtsbehörde.
+            Widerspruch gemäß Art. 15–21 DSGVO sowie das Recht, eine erteilte
+            Einwilligung jederzeit mit Wirkung für die Zukunft zu widerrufen
+            (Art. 7 Abs. 3 DSGVO). Ferner steht Ihnen ein Beschwerderecht bei
+            einer zuständigen Datenschutz-Aufsichtsbehörde zu.
           </p>
         </div>
+
+        <div>
+          <h2 className="font-display font-bold text-white text-xl mb-3">8. Kontakt in Datenschutzfragen</h2>
+          <p className="text-white/70">
+            Bei Fragen zum Datenschutz oder zur Ausübung Ihrer Rechte erreichen Sie uns unter:
+            info@bruttonettocalculator.com
+          </p>
+        </div>
+
+        <p className="text-xs text-white/40 pt-4 border-t border-white/10">
+          Stand dieser Datenschutzerklärung: Juli 2026.
+        </p>
       </div>
     </section>
   );
