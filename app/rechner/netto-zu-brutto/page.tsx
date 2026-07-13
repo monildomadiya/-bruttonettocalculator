@@ -69,10 +69,10 @@ export default function NettoZuBruttoPage() {
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
           <ArrowRightLeft size={14} /> Umkehrberechnung
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white mb-4 tracking-tight">
+        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
           Netto zu <span className="text-gradient-accent">Brutto</span> Rechner
         </h1>
-        <p className="text-lg sm:text-xl text-white/80 w-full max-w-6xl leading-relaxed">
+        <p className="text-lg sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
           Sie kennen Ihr gewünschtes Nettogehalt und möchten genau wissen, welches Bruttogehalt Sie dafür im
           Bewerbungsgespräch verhandeln müssen? Nutzen Sie unseren Präzisionsrechner, um Ihr Zielgehalt
           durch schnelle Anpassung der Bruttowerte in Sekundenschnelle auf den Euro genau zu ermitteln.
@@ -83,10 +83,10 @@ export default function NettoZuBruttoPage() {
         <Calculator />
       </div>
 
-      <div className="w-full max-w-6xl mx-auto bg-[#101010] border border-white/15 rounded-3xl p-6 sm:p-8 flex items-start gap-4 text-sm sm:text-base text-white/80 leading-relaxed shadow-lg mb-16">
+      <div className="w-full max-w-6xl mx-auto bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-8 flex items-start gap-4 text-sm sm:text-base text-black/80 leading-relaxed shadow-lg mb-16">
         <Sparkles size={22} className="text-[#E60A1C] flex-shrink-0 mt-0.5" />
         <p>
-          <strong className="text-white font-bold">Pro-Tipp für Verhandlungen:</strong> Aufgrund des progressiven Steuertarifs nach § 32a EStG
+          <strong className="text-[#16181D] font-bold">Pro-Tipp für Verhandlungen:</strong> Aufgrund des progressiven Steuertarifs nach § 32a EStG
           und der Beitragsbemessungsgrenzen steigt die Steuerbelastung mit höherem Brutto nicht linear. Testen Sie
           verschiedene Bruttostufen oben direkt in Echtzeit aus!
         </p>
@@ -97,11 +97,11 @@ export default function NettoZuBruttoPage() {
 
       {/* Erklärung: So funktioniert die Rückrechnung */}
       <div className="w-full max-w-6xl mx-auto mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-6 flex items-center gap-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
           <ListChecks size={24} className="text-[#E60A1C]" />
           Warum die Rückrechnung nicht mit einer einfachen Formel funktioniert
         </h2>
-        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 space-y-4 text-white/80 text-base sm:text-lg leading-relaxed">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 space-y-4 text-black/80 text-base sm:text-lg leading-relaxed">
           <p>
             Bei der klassischen Brutto-zu-Netto-Rechnung ist der Rechenweg klar vorgegeben: erst
             Sozialabgaben, dann Lohnsteuer. Bei der umgekehrten Richtung — Sie kennen nur Ihr
@@ -126,17 +126,17 @@ export default function NettoZuBruttoPage() {
 
       {/* FAQ */}
       <div className="w-full max-w-6xl mx-auto pb-10">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-8">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
           Häufige Fragen zur Netto-Brutto-Rückrechnung
         </h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
-            <details key={i} className="group bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden">
-              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-white/5 transition-colors">
-                <span className="font-semibold text-white text-sm sm:text-base pr-4">{faq.q}</span>
+            <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
+              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
+                <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
                 <ChevronDown size={18} className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180" />
               </summary>
-              <div className="px-6 pb-5 pt-1 text-white/65 text-sm sm:text-base leading-relaxed border-t border-white/5">
+              <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
                 {faq.a}
               </div>
             </details>

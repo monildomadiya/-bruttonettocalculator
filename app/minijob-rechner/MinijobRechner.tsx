@@ -44,9 +44,9 @@ export default function MinijobRechner() {
   }, [brutto, rvBefreit]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-white/10">
+      <section className="relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-5 py-20 sm:py-28 text-center">
@@ -60,7 +60,7 @@ export default function MinijobRechner() {
               Rechner 2026
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie Ihren Netto-Verdienst im Minijob — mit der aktuellen Verdienstgrenze
             von 603 € und dem Rentenversicherungs-Eigenanteil von 3,6 %.
           </p>
@@ -71,70 +71,70 @@ export default function MinijobRechner() {
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Inputs */}
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-6 flex items-center gap-2">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
               <Calculator size={22} className="text-[#E60A1C]" />
               Ihr Verdienst
             </h2>
 
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-semibold text-white/70 mb-2">Monatlicher Verdienst (brutto)</label>
+                <label className="block text-sm font-semibold text-black/70 mb-2">Monatlicher Verdienst (brutto)</label>
                 <input
                   type="number"
                   value={brutto}
                   onChange={(e) => setBrutto(Number(e.target.value))}
-                  className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-white font-bold text-lg focus:border-[#E60A1C] outline-none"
+                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
                 />
                 {result.ueberGrenze && (
-                  <p className="text-xs text-amber-400 mt-2">
+                  <p className="text-xs text-amber-600 mt-2">
                     Achtung: Über der Minijob-Grenze von {formatEuro(MINIJOB_GRENZE_2026)} — es handelt sich
                     nicht mehr um einen Minijob, sondern um einen Midijob (Übergangsbereich).
                   </p>
                 )}
               </div>
 
-              <label className="flex items-center gap-2 text-sm font-semibold text-white/70 cursor-pointer">
+              <label className="flex items-center gap-2 text-sm font-semibold text-black/70 cursor-pointer">
                 <input type="checkbox" checked={rvBefreit} onChange={(e) => setRvBefreit(e.target.checked)} className="accent-[#E60A1C] w-4 h-4" />
                 Von der Rentenversicherungspflicht befreit
               </label>
 
               <div className="bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-2xl p-5 space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/70">Minijob-Grenze 2026</span>
-                  <span className="text-white font-bold">{formatEuro(MINIJOB_GRENZE_2026)}</span>
+                  <span className="text-black/70">Minijob-Grenze 2026</span>
+                  <span className="text-[#16181D] font-bold">{formatEuro(MINIJOB_GRENZE_2026)}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/70">Minijob-Grenze 2027</span>
-                  <span className="text-white font-bold">{formatEuro(MINIJOB_GRENZE_2027)}</span>
+                  <span className="text-black/70">Minijob-Grenze 2027</span>
+                  <span className="text-[#16181D] font-bold">{formatEuro(MINIJOB_GRENZE_2027)}</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Results */}
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-2 flex items-center gap-2">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-2 flex items-center gap-2">
               <Wallet2 size={22} className="text-[#E60A1C]" />
               Ihr Nettoverdienst
             </h2>
-            <div className="flex items-center gap-2 mb-6 text-xs text-amber-400/80 bg-amber-950/20 border border-amber-500/20 rounded-xl px-3 py-2">
+            <div className="flex items-center gap-2 mb-6 text-xs text-amber-600/80 bg-amber-50 border border-amber-500/20 rounded-xl px-3 py-2">
               <Info size={13} className="flex-shrink-0" />
               Keine Lohnsteuer im Minijob (Pauschsteuer trägt der Arbeitgeber)
             </div>
 
             <div className="space-y-3">
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4">
-                <span className="text-white/70 text-sm font-medium">Bruttoverdienst</span>
-                <span className="text-lg font-extrabold text-white">{formatEuro(brutto)}</span>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Bruttoverdienst</span>
+                <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(brutto)}</span>
               </div>
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4">
-                <span className="text-white/70 text-sm font-medium">Rentenversicherung (Eigenanteil 3,6 %)</span>
-                <span className="text-lg font-extrabold text-white">− {formatEuro(result.rvEigenanteil)}</span>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Rentenversicherung (Eigenanteil 3,6 %)</span>
+                <span className="text-lg font-extrabold text-[#16181D]">− {formatEuro(result.rvEigenanteil)}</span>
               </div>
               <div className="flex items-center justify-between bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-xl px-5 py-4">
-                <span className="text-white/80 text-sm font-semibold">Netto-Verdienst / Monat</span>
-                <span className="text-2xl font-extrabold text-emerald-400">{formatEuro(result.netto)}</span>
+                <span className="text-black/80 text-sm font-semibold">Netto-Verdienst / Monat</span>
+                <span className="text-2xl font-extrabold text-emerald-600">{formatEuro(result.netto)}</span>
               </div>
             </div>
 
@@ -151,53 +151,53 @@ export default function MinijobRechner() {
 
       {/* Explainer / SEO content */}
       <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
             Minijob 2026: Wie viel bleibt netto vom 603-Euro-Job?
           </h2>
           <p>
-            Ein <strong className="text-white">Minijob</strong> (geringfügige Beschäftigung) ist für
+            Ein <strong className="text-[#16181D]">Minijob</strong> (geringfügige Beschäftigung) ist für
             Arbeitnehmer besonders attraktiv: Bis zur Verdienstgrenze von{" "}
-            <strong className="text-white">603 € im Monat</strong> (Stand 2026) bleibt der Lohn in der
-            Regel <strong className="text-white">steuer- und abgabenfrei</strong> — brutto ist hier fast
+            <strong className="text-[#16181D]">603 € im Monat</strong> (Stand 2026) bleibt der Lohn in der
+            Regel <strong className="text-[#16181D]">steuer- und abgabenfrei</strong> — brutto ist hier fast
             gleich netto. Die Grenze ist seit 2024 dynamisch an den Mindestlohn gekoppelt und steigt zum
-            1. Januar 2027 auf <strong className="text-white">633 €</strong>.
+            1. Januar 2027 auf <strong className="text-[#16181D]">633 €</strong>.
           </p>
-          <h3 className="text-lg sm:text-xl font-bold text-white">Rentenversicherung: der einzige Abzug</h3>
+          <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Rentenversicherung: der einzige Abzug</h3>
           <p>
             Der einzige mögliche Abzug beim Arbeitnehmer ist der{" "}
-            <strong className="text-white">Rentenversicherungs-Eigenanteil von 3,6 %</strong>. Von diesem
+            <strong className="text-[#16181D]">Rentenversicherungs-Eigenanteil von 3,6 %</strong>. Von diesem
             können Sie sich auf Antrag befreien lassen — dann bleibt Ihr Minijob-Lohn zu 100 % netto.
             Bleiben Sie in der Rentenversicherung, sammeln Sie dafür vollwertige Rentenanwartschaften.
           </p>
-          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
-            <p className="text-white/60 text-sm">
-              <strong className="text-white">Achtung Übergangsbereich:</strong> Wer mehr als 603 € verdient,
-              ist kein Minijobber mehr, sondern arbeitet im <strong className="text-white">Midijob</strong>{" "}
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-2xl p-5">
+            <p className="text-black/60 text-sm">
+              <strong className="text-[#16181D]">Achtung Übergangsbereich:</strong> Wer mehr als 603 € verdient,
+              ist kein Minijobber mehr, sondern arbeitet im <strong className="text-[#16181D]">Midijob</strong>{" "}
               (Übergangsbereich bis 2.000 €). Dort steigen die Sozialabgaben gleitend an — der Rechner
               warnt Sie automatisch, sobald Sie die Grenze überschreiten.
             </p>
           </div>
           <p>
             Bei Zahlung des Mindestlohns von 13,90 €/Std. entsprechen 603 € rund{" "}
-            <strong className="text-white">43 Arbeitsstunden im Monat</strong> bzw. etwa 10 Stunden pro Woche.
+            <strong className="text-[#16181D]">43 Arbeitsstunden im Monat</strong> bzw. etwa 10 Stunden pro Woche.
           </p>
         </div>
       </section>
 
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
           Häufige Fragen zum Minijob
         </h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
-            <details key={i} className="group bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden">
-              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-white/5 transition-colors">
-                <span className="font-semibold text-white text-sm sm:text-base pr-4">{faq.q}</span>
+            <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
+              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
+                <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
                 <ChevronDown size={18} className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180" />
               </summary>
-              <div className="px-6 pb-5 pt-1 text-white/65 text-sm sm:text-base leading-relaxed border-t border-white/5">
+              <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
                 {faq.a}
               </div>
             </details>
@@ -210,18 +210,18 @@ export default function MinijobRechner() {
         <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
           <div className="relative">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
               Weitere Gehaltsrechner entdecken
             </h2>
-            <p className="text-white/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
+            <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
               Mindestlohn-Rechner, Netto-Stundenlohn-Rechner, Elterngeld-Rechner &amp; mehr —
               alle kostenlos und aktuell für 2026.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link href="/mindestlohn" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">
+              <Link href="/mindestlohn" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
                 Mindestlohn-Rechner
               </Link>
-              <Link href="/elterngeld-rechner" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">
+              <Link href="/elterngeld-rechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
                 Elterngeld-Rechner
               </Link>
               <Link href="/" className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3 rounded-xl transition-all shadow-[0_0_25px_rgba(230,10,28,0.4)] text-sm">

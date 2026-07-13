@@ -15,8 +15,8 @@ export default function AccordionFaq({ faqs }: { faqs: FaqItem[] }) {
         return (
           <div
             key={i}
-            className={`bg-[#101010] border rounded-3xl overflow-hidden transition-all duration-300 ${
-              isOpen ? "border-[#E60A1C]/50 shadow-[0_0_25px_rgba(230,10,28,0.2)] bg-[#141414]" : "border-white/15 hover:border-white/30"
+            className={`bg-[#FFFFFF] border rounded-3xl overflow-hidden transition-all duration-300 ${
+              isOpen ? "border-[#E60A1C]/50 shadow-[0_0_25px_rgba(230,10,28,0.2)] bg-[#F1F3F5]" : "border-black/[0.10] hover:border-black/[0.16]"
             }`}
           >
             <button
@@ -27,16 +27,16 @@ export default function AccordionFaq({ faqs }: { faqs: FaqItem[] }) {
               className="w-full flex items-center justify-between px-5 sm:px-7 py-5 sm:py-6 text-left group"
             >
               <h3 className={`font-display font-bold text-lg sm:text-xl pr-4 transition-colors ${
-                isOpen ? "text-[#E60A1C]" : "text-white group-hover:text-white/90"
+                isOpen ? "text-[#E60A1C]" : "text-[#16181D] group-hover:text-black/90"
               }`}>
                 {f.q}
               </h3>
               <span
                 className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200"
                 style={{
-                  background: isOpen ? "#E60A1C" : "rgba(255,255,255,0.05)",
-                  border: `1px solid ${isOpen ? "#E60A1C" : "rgba(255,255,255,0.15)"}`,
-                  color: "#ffffff",
+                  background: isOpen ? "#E60A1C" : "rgba(16,24,40,0.05)",
+                  border: `1px solid ${isOpen ? "#E60A1C" : "rgba(16,24,40,0.12)"}`,
+                  color: isOpen ? "#ffffff" : "#3A3F47",
                 }}
                 aria-hidden
               >
@@ -53,7 +53,7 @@ export default function AccordionFaq({ faqs }: { faqs: FaqItem[] }) {
               aria-labelledby={`faq-btn-${i}`}
               className={`accordion-content ${isOpen ? "open" : ""}`}
             >
-              <p className="px-7 pb-7 text-base sm:text-lg text-white/85 leading-relaxed font-normal border-t border-white/10 pt-5">
+              <p className="px-7 pb-7 text-base sm:text-lg text-black/85 leading-relaxed font-normal border-t border-black/[0.08] pt-5">
                 {f.a}
               </p>
             </div>

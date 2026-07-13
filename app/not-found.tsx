@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className="min-h-[80vh] bg-black text-white flex items-center justify-center px-6 py-20 relative overflow-hidden">
-      <div className="max-w-2xl w-full text-center space-y-8 bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 sm:p-14 shadow-[0_0_60px_rgba(230,10,28,0.15)] relative overflow-hidden">
+    <main className="min-h-[80vh] bg-[#F4F5F7] text-[#16181D] flex items-center justify-center px-6 py-20 relative overflow-hidden">
+      <div className="max-w-2xl w-full text-center space-y-8 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-14 shadow-[0_0_60px_rgba(230,10,28,0.15)] relative overflow-hidden">
         
         {/* Subtle Background Glow */}
         <div className="absolute -top-28 -left-28 w-56 h-56 rounded-full bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
@@ -25,15 +25,15 @@ export default function NotFound() {
         </div>
 
         <div className="space-y-3">
-          <h1 className="font-display font-black text-4xl sm:text-6xl text-white tracking-tight">
+          <h1 className="font-display font-black text-4xl sm:text-6xl text-[#16181D] tracking-tight">
             404
           </h1>
-          <h2 className="text-xl sm:text-2xl font-bold text-white/90">
+          <h2 className="text-xl sm:text-2xl font-bold text-black/90">
             Diese Seite existiert leider nicht mehr.
           </h2>
         </div>
 
-        <p className="text-white/60 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
+        <p className="text-black/60 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
           Der aufgerufene Link ist veraltet, wurde verschoben oder ist falsch geschrieben. Kehren Sie ganz einfach zu unserem aktuellen Gehaltsrechner für 2026 zurück.
         </p>
 
@@ -48,23 +48,23 @@ export default function NotFound() {
 
           <Link
             href="/blog"
-            className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-sm hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-black/[0.04] hover:bg-black/[0.05] border border-black/[0.08] text-[#16181D] font-bold text-sm hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
           >
             <BookOpen size={18} />
             <span>Zum Ratgeber & Blog</span>
           </Link>
         </div>
 
-        <div className="pt-8 border-t border-white/10 flex items-center justify-center gap-6 text-xs text-white/40">
-          <Link href="/faq" className="hover:text-white transition-colors flex items-center gap-1.5">
+        <div className="pt-8 border-t border-black/[0.08] flex items-center justify-center gap-6 text-xs text-black/40">
+          <Link href="/faq" className="hover:text-[#16181D] transition-colors flex items-center gap-1.5">
             <HelpCircle size={14} /> FAQ & Hilfe
           </Link>
           <span>•</span>
-          <Link href="/kontakt" className="hover:text-white transition-colors">
+          <Link href="/kontakt" className="hover:text-[#16181D] transition-colors">
             Kontakt
           </Link>
           <span>•</span>
-          <Link href="/lexikon" className="hover:text-white transition-colors">
+          <Link href="/lexikon" className="hover:text-[#16181D] transition-colors">
             Steuer-Lexikon
           </Link>
         </div>

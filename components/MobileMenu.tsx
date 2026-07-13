@@ -37,7 +37,7 @@ export default function MobileMenu() {
         aria-label={open ? "Menü schließen" : "Menü öffnen"}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-white shadow-sm hover:bg-white/20 active:scale-95 transition-all"
+        className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-black/[0.05] border border-black/[0.10] text-[#16181D] shadow-sm hover:bg-black/[0.08] active:scale-95 transition-all"
       >
         {open ? <X size={18} /> : <Menu size={18} />}
       </button>
@@ -46,7 +46,7 @@ export default function MobileMenu() {
       <div
         id="mobile-menu-panel"
         role="menu"
-        className={`mobile-menu absolute right-0 top-14 sm:top-16 w-[86vw] max-w-sm rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.95)] bg-[#121212]/[98%] backdrop-blur-2xl border border-white/20 overflow-hidden z-50 ${
+        className={`mobile-menu absolute right-0 top-14 sm:top-16 w-[86vw] max-w-sm rounded-3xl shadow-[0_10px_40px_rgba(16,24,40,0.12)] bg-[#FFFFFF]/[98%] backdrop-blur-2xl border border-black/[0.12] overflow-hidden z-50 ${
           open ? "open" : "closed"
         }`}
       >
@@ -64,7 +64,7 @@ export default function MobileMenu() {
                     href={n.href}
                     role="menuitem"
                     onClick={() => setOpen(false)}
-                    className="flex items-center gap-3 px-4 py-2.5 rounded-2xl text-sm font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all"
+                    className="flex items-center gap-3 px-4 py-2.5 rounded-2xl text-sm font-medium text-black/75 hover:text-[#16181D] hover:bg-black/[0.05] transition-all"
                   >
                     <Icon size={16} className="text-[#E60A1C] flex-shrink-0" />
                     {n.label}
@@ -74,7 +74,7 @@ export default function MobileMenu() {
             </div>
           ))}
 
-          <div className="h-px bg-white/10 my-2" />
+          <div className="h-px bg-black/[0.05] my-2" />
 
           {directLinks.map((n) => {
             const Icon = n.icon;
@@ -84,7 +84,7 @@ export default function MobileMenu() {
                 href={n.href}
                 role="menuitem"
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-white/75 hover:text-white hover:bg-white/10 transition-all"
+                className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-black/75 hover:text-[#16181D] hover:bg-black/[0.05] transition-all"
               >
                 <Icon size={16} className="text-[#E60A1C]" />
                 {n.label}

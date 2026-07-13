@@ -160,10 +160,10 @@ export default function LexikonPage() {
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
           <BookOpen size={14} /> Nachschlagewerk · {steuerBegriffe.length + sozialBegriffe.length + gehaltsBegriffe.length} Begriffe
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white mb-4 tracking-tight">
+        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
           Steuer-<span className="text-gradient-accent">Lexikon</span>
         </h1>
-        <p className="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-lg sm:text-xl text-black/80 max-w-3xl mx-auto leading-relaxed">
           Alle relevanten Fachbegriffe rund um Ihr Gehalt, Steuern und Sozialabgaben verständlich
           erklärt — mit den amtlichen Zahlen für 2026.
         </p>
@@ -172,20 +172,20 @@ export default function LexikonPage() {
       <div className="space-y-16">
         {gruppen.map((gruppe) => (
           <div key={gruppe.label}>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-8 pb-3 border-b border-white/10">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 pb-3 border-b border-black/[0.08]">
               {gruppe.label}
             </h2>
             <div className="grid sm:grid-cols-2 gap-6 w-full">
               {gruppe.items.map((b) => (
                 <div
                   key={b.titel}
-                  className="bg-[#101010] border border-white/15 hover:border-[#E60A1C]/50 rounded-3xl p-8 transition-all duration-300 hover:-translate-y-1 shadow-lg flex flex-col justify-between"
+                  className="bg-[#FFFFFF] border border-black/[0.10] hover:border-[#E60A1C]/50 rounded-3xl p-8 transition-all duration-300 hover:-translate-y-1 shadow-lg flex flex-col justify-between"
                 >
                   <div>
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white mb-3">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-[#16181D] mb-3">
                       {b.titel}
                     </h3>
-                    <p className="text-base sm:text-lg text-white/80 leading-relaxed font-normal">
+                    <p className="text-base sm:text-lg text-black/80 leading-relaxed font-normal">
                       {b.kurz}
                     </p>
                   </div>

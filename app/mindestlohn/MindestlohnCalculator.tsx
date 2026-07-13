@@ -67,9 +67,9 @@ export default function MindestlohnCalculator() {
   }, [stunden]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-white/10">
+      <section className="relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-5 py-20 sm:py-28 text-center">
@@ -83,9 +83,9 @@ export default function MindestlohnCalculator() {
               2026/2027
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie Ihr monatliches Brutto- &amp; Nettogehalt beim gesetzlichen Mindestlohn
-            von <strong className="text-white">13,90&nbsp;€&nbsp;/&nbsp;Stunde</strong>. Alle
+            von <strong className="text-[#16181D]">13,90&nbsp;€&nbsp;/&nbsp;Stunde</strong>. Alle
             Steuerklassen, Vollzeit &amp; Teilzeit.
           </p>
         </div>
@@ -95,15 +95,15 @@ export default function MindestlohnCalculator() {
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Input card */}
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-6 flex items-center gap-2">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
               <Calculator size={22} className="text-[#E60A1C]" />
               Mindestlohn berechnen
             </h2>
 
             {/* Stunden slider */}
             <div className="mb-6">
-              <label htmlFor="stunden-slider" className="block text-sm font-semibold text-white/70 mb-2">
+              <label htmlFor="stunden-slider" className="block text-sm font-semibold text-black/70 mb-2">
                 Arbeitsstunden pro Woche
               </label>
               <div className="flex items-center gap-4">
@@ -117,11 +117,11 @@ export default function MindestlohnCalculator() {
                   className="flex-1 accent-[#E60A1C] h-2 rounded-full"
                   aria-label="Arbeitsstunden pro Woche"
                 />
-                <div className="bg-[#E60A1C]/15 border border-[#E60A1C]/40 rounded-xl px-4 py-2 text-white font-bold text-lg w-20 text-center">
+                <div className="bg-[#E60A1C]/15 border border-[#E60A1C]/40 rounded-xl px-4 py-2 text-[#E60A1C] font-bold text-lg w-20 text-center">
                   {stunden}h
                 </div>
               </div>
-              <div className="flex justify-between text-xs text-white/40 mt-1">
+              <div className="flex justify-between text-xs text-black/40 mt-1">
                 <span>Teilzeit</span>
                 <span>Vollzeit 40h</span>
                 <span>Überstunden</span>
@@ -131,31 +131,31 @@ export default function MindestlohnCalculator() {
             {/* Mindestlohn display */}
             <div className="bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-2xl p-5 mb-6">
               <div className="flex items-center justify-between">
-                <span className="text-white/70 text-sm font-medium">Mindestlohn 2026</span>
-                <span className="text-2xl font-extrabold text-white">13,90 €&nbsp;/&nbsp;h</span>
+                <span className="text-black/70 text-sm font-medium">Mindestlohn 2026</span>
+                <span className="text-2xl font-extrabold text-[#16181D]">13,90 €&nbsp;/&nbsp;h</span>
               </div>
             </div>
 
             {/* Results */}
             <div className="space-y-3">
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4">
-                <span className="text-white/70 text-sm font-medium">Bruttogehalt / Monat</span>
-                <span className="text-xl font-extrabold text-white">{formatEuro(bruttoMonat)}</span>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Bruttogehalt / Monat</span>
+                <span className="text-xl font-extrabold text-[#16181D]">{formatEuro(bruttoMonat)}</span>
               </div>
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4">
-                <span className="text-white/70 text-sm font-medium">Bruttogehalt / Jahr</span>
-                <span className="text-xl font-extrabold text-white">{formatEuro(bruttoJahr)}</span>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Bruttogehalt / Jahr</span>
+                <span className="text-xl font-extrabold text-[#16181D]">{formatEuro(bruttoJahr)}</span>
               </div>
             </div>
           </div>
 
           {/* Net estimates */}
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-2 flex items-center gap-2">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-2 flex items-center gap-2">
               <Clock size={22} className="text-[#E60A1C]" />
               Geschätztes Nettogehalt
             </h2>
-            <div className="flex items-center gap-2 mb-6 text-xs text-amber-400/80 bg-amber-950/20 border border-amber-500/20 rounded-xl px-3 py-2">
+            <div className="flex items-center gap-2 mb-6 text-xs text-amber-600/80 bg-amber-50 border border-amber-500/20 rounded-xl px-3 py-2">
               <Info size={13} className="flex-shrink-0" />
               Schätzung — Für exakte Werte den Rechner nutzen
             </div>
@@ -166,13 +166,13 @@ export default function MindestlohnCalculator() {
                 return (
                   <div
                     key={nm.klasse}
-                    className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4 hover:bg-white/[0.08] transition-colors"
+                    className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4 hover:bg-black/[0.08] transition-colors"
                   >
                     <div>
-                      <div className="text-white font-semibold text-sm">{nm.label}</div>
-                      <div className="text-white/40 text-xs mt-0.5">ca. {Math.round(nm.factor * 100)} % von Brutto</div>
+                      <div className="text-[#16181D] font-semibold text-sm">{nm.label}</div>
+                      <div className="text-black/40 text-xs mt-0.5">ca. {Math.round(nm.factor * 100)} % von Brutto</div>
                     </div>
-                    <span className="text-lg font-extrabold text-emerald-400">
+                    <span className="text-lg font-extrabold text-emerald-600">
                       {formatEuro(netto)}
                     </span>
                   </div>
@@ -193,28 +193,28 @@ export default function MindestlohnCalculator() {
 
       {/* Mindestlohn 2027 preview */}
       <section className="max-w-6xl mx-auto px-5 py-4">
-        <div className="bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/15 rounded-3xl p-7 sm:p-9">
+        <div className="bg-gradient-to-br from-black/5 to-black/[0.02] border border-black/[0.10] rounded-3xl p-7 sm:p-9">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
             <div className="flex-1">
               <div className="text-xs font-mono uppercase tracking-widest text-[#E60A1C] mb-2">
                 BESCHLOSSEN
               </div>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-2">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-2">
                 Mindestlohn 2027 — Was kommt?
               </h2>
-              <p className="text-white/60 text-sm sm:text-base leading-relaxed">
+              <p className="text-black/60 text-sm sm:text-base leading-relaxed">
                 Die Bundesregierung hat die zweistufige Erhöhung der Mindestlohnkommission per Verordnung bereits beschlossen: Zum 1. Januar 2027 steigt der Mindestlohn auf{" "}
-                <strong className="text-white">
+                <strong className="text-[#16181D]">
                   {MINDESTLOHN_2027_EXPECTED.toFixed(2).replace(".", ",")} €&nbsp;/&nbsp;h
                 </strong>
                 .
               </p>
             </div>
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center min-w-[140px]">
-              <div className="text-3xl font-extrabold text-white mb-1">
+            <div className="bg-black/[0.04] border border-black/[0.08] rounded-2xl p-5 text-center min-w-[140px]">
+              <div className="text-3xl font-extrabold text-[#16181D] mb-1">
                 {MINDESTLOHN_2027_EXPECTED.toFixed(2).replace(".", ",")} €
               </div>
-              <div className="text-xs text-white/50">ab 2027 / Stunde</div>
+              <div className="text-xs text-black/50">ab 2027 / Stunde</div>
             </div>
           </div>
         </div>
@@ -222,29 +222,29 @@ export default function MindestlohnCalculator() {
 
       {/* History */}
       <section className="max-w-6xl mx-auto px-5 py-10">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-6">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
           Mindestlohn-Historie 2020–2027
         </h2>
-        <div className="overflow-x-auto rounded-2xl border border-white/10">
+        <div className="overflow-x-auto rounded-2xl border border-black/[0.08]">
           <table className="w-full text-sm sm:text-base">
             <thead>
-              <tr className="bg-[#E60A1C]/15 border-b border-white/10">
-                <th className="px-5 py-4 text-left font-bold text-white">Jahr</th>
-                <th className="px-5 py-4 text-right font-bold text-white">Mindestlohn / Stunde</th>
-                <th className="px-5 py-4 text-right font-bold text-white">Veränderung</th>
+              <tr className="bg-[#E60A1C]/15 border-b border-black/[0.08]">
+                <th className="px-5 py-4 text-left font-bold text-[#16181D]">Jahr</th>
+                <th className="px-5 py-4 text-right font-bold text-[#16181D]">Mindestlohn / Stunde</th>
+                <th className="px-5 py-4 text-right font-bold text-[#16181D]">Veränderung</th>
               </tr>
             </thead>
             <tbody>
               {history.map((row, i) => (
                 <tr
                   key={i}
-                  className={`border-b border-white/5 hover:bg-white/5 transition-colors ${
-                    i % 2 === 0 ? "bg-[#090909]" : "bg-[#070707]"
+                  className={`border-b border-black/[0.05] hover:bg-black/[0.04] transition-colors ${
+                    i % 2 === 0 ? "bg-[#F4F5F7]" : "bg-[#F4F5F7]"
                   }`}
                 >
-                  <td className="px-5 py-3.5 font-semibold text-white/80">{row.year}</td>
-                  <td className="px-5 py-3.5 text-right font-mono font-bold text-white">{row.betrag}</td>
-                  <td className="px-5 py-3.5 text-right font-mono text-emerald-400">
+                  <td className="px-5 py-3.5 font-semibold text-black/80">{row.year}</td>
+                  <td className="px-5 py-3.5 text-right font-mono font-bold text-[#16181D]">{row.betrag}</td>
+                  <td className="px-5 py-3.5 text-right font-mono text-emerald-600">
                     {row.change || "—"}
                   </td>
                 </tr>
@@ -256,23 +256,23 @@ export default function MindestlohnCalculator() {
 
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
           Häufige Fragen zum Mindestlohn
         </h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <details
               key={i}
-              className="group bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden"
+              className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden"
             >
-              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-white/5 transition-colors">
-                <span className="font-semibold text-white text-sm sm:text-base pr-4">{faq.q}</span>
+              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
+                <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
                 <ChevronDown
                   size={18}
                   className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180"
                 />
               </summary>
-              <div className="px-6 pb-5 pt-1 text-white/65 text-sm sm:text-base leading-relaxed border-t border-white/5">
+              <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
                 {faq.a}
               </div>
             </details>
@@ -285,10 +285,10 @@ export default function MindestlohnCalculator() {
         <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
           <div className="relative">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
               Genaues Nettogehalt berechnen
             </h2>
-            <p className="text-white/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
+            <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
               Unser Brutto-Netto-Rechner berücksichtigt alle Faktoren: Steuerklasse, Kirchensteuer,
               Kinderfreibeträge, BKK-Zusatzbeitrag und mehr — für präzise Ergebnisse 2026.
             </p>

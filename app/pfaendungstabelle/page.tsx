@@ -140,9 +140,9 @@ export default function PfaendungstabellePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="min-h-screen bg-black text-white">
+      <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
         {/* Hero */}
-        <section className="relative overflow-hidden border-b border-white/10">
+        <section className="relative overflow-hidden border-b border-black/[0.08]">
           <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
           <div className="relative max-w-6xl mx-auto px-5 py-20 sm:py-28 text-center">
@@ -156,24 +156,24 @@ export default function PfaendungstabellePage() {
                 2026
               </span>
             </h1>
-            <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
               Aktuelle Pfändungsfreigrenzen nach § 850c ZPO. Pfändungsfreies Einkommen für
               0–5&nbsp;Unterhaltspflichten auf einen Blick — kostenlos &amp; aktuell.
             </p>
 
             {/* Key stat cards */}
             <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+              <div className="bg-black/[0.04] border border-black/[0.08] rounded-2xl p-4">
                 <div className="text-2xl font-extrabold text-[#E60A1C]">1.491,75&nbsp;€</div>
-                <div className="text-xs text-white/50 mt-1">Grundfreibetrag / Monat</div>
+                <div className="text-xs text-black/50 mt-1">Grundfreibetrag / Monat</div>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-                <div className="text-2xl font-extrabold text-white">§ 850c</div>
-                <div className="text-xs text-white/50 mt-1">Rechtsgrundlage ZPO</div>
+              <div className="bg-black/[0.04] border border-black/[0.08] rounded-2xl p-4">
+                <div className="text-2xl font-extrabold text-[#16181D]">§ 850c</div>
+                <div className="text-xs text-black/50 mt-1">Rechtsgrundlage ZPO</div>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-4 col-span-2 sm:col-span-1">
-                <div className="text-2xl font-extrabold text-white">Jul 2025</div>
-                <div className="text-xs text-white/50 mt-1">Letzte Aktualisierung</div>
+              <div className="bg-black/[0.04] border border-black/[0.08] rounded-2xl p-4 col-span-2 sm:col-span-1">
+                <div className="text-2xl font-extrabold text-[#16181D]">Jul 2025</div>
+                <div className="text-xs text-black/50 mt-1">Letzte Aktualisierung</div>
               </div>
             </div>
           </div>
@@ -181,10 +181,10 @@ export default function PfaendungstabellePage() {
 
         {/* Info notice */}
         <section className="max-w-6xl mx-auto px-5 py-8">
-          <div className="flex gap-3 bg-amber-950/30 border border-amber-500/30 rounded-2xl p-4 sm:p-5">
-            <AlertCircle size={20} className="text-amber-400 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-amber-200/80 leading-relaxed">
-              <strong className="text-amber-300">Hinweis:</strong> Die Pfändungstabelle 2026 gilt
+          <div className="flex gap-3 bg-amber-50 border border-amber-500/30 rounded-2xl p-4 sm:p-5">
+            <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-amber-800/80 leading-relaxed">
+              <strong className="text-amber-700">Hinweis:</strong> Die Pfändungstabelle 2026 gilt
               für Pfändungen ab dem 1. Juli 2025. Bei rechtlichen Fragen zur Lohnpfändung wenden Sie
               sich an einen Rechtsanwalt oder eine Schuldnerberatung. Keine Rechtsberatung.
             </p>
@@ -193,28 +193,28 @@ export default function PfaendungstabellePage() {
 
         {/* What is Pfändungstabelle */}
         <section className="max-w-6xl mx-auto px-5 py-8">
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-5">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-5">
               Was ist die{" "}
               <span className="text-[#E60A1C]">Pfändungstabelle 2026</span>?
             </h2>
-            <div className="grid sm:grid-cols-2 gap-6 text-white/70 text-sm sm:text-base leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 text-black/70 text-sm sm:text-base leading-relaxed">
               <div className="space-y-3">
                 <p>
-                  Die <strong className="text-white">Pfändungstabelle</strong> legt nach{" "}
-                  <strong className="text-white">§ 850c ZPO</strong> (Zivilprozessordnung) fest,
+                  Die <strong className="text-[#16181D]">Pfändungstabelle</strong> legt nach{" "}
+                  <strong className="text-[#16181D]">§ 850c ZPO</strong> (Zivilprozessordnung) fest,
                   welcher Anteil Ihres Nettoeinkommens durch Gläubiger gepfändet werden darf. Sie
                   schützt Arbeitnehmer vor einer Vollpfändung des Lohns.
                 </p>
                 <p>
                   Das Bundesministerium der Justiz aktualisiert die Tabelle regelmäßig — zuletzt
-                  zum <strong className="text-white">1. Juli 2025</strong>. Diese Version gilt bis
+                  zum <strong className="text-[#16181D]">1. Juli 2025</strong>. Diese Version gilt bis
                   zum 30. Juni 2027.
                 </p>
               </div>
               <div className="space-y-3">
                 <p>
-                  Der <strong className="text-white">Pfändungsfreibetrag</strong> erhöht sich mit
+                  Der <strong className="text-[#16181D]">Pfändungsfreibetrag</strong> erhöht sich mit
                   der Anzahl der unterhaltsberechtigten Personen (z. B. Kinder, Ehegatten). Je mehr
                   Unterhaltspflichten bestehen, desto größer der geschützte Betrag.
                 </p>
@@ -229,27 +229,27 @@ export default function PfaendungstabellePage() {
 
         {/* Freibetraege table */}
         <section className="max-w-6xl mx-auto px-5 py-6">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-6">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
             Pfändungsfreigrenzen 2026 — Übersicht
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-white/10">
+          <div className="overflow-x-auto rounded-2xl border border-black/[0.08]">
             <table className="w-full text-sm sm:text-base">
               <thead>
-                <tr className="bg-[#E60A1C]/15 border-b border-white/10">
-                  <th className="px-5 py-4 text-left font-bold text-white">Unterhalts&shy;pflichtige Personen</th>
-                  <th className="px-5 py-4 text-right font-bold text-white">Monatlicher Pfändungs&shy;freibetrag</th>
+                <tr className="bg-[#E60A1C]/15 border-b border-black/[0.08]">
+                  <th className="px-5 py-4 text-left font-bold text-[#16181D]">Unterhalts&shy;pflichtige Personen</th>
+                  <th className="px-5 py-4 text-right font-bold text-[#16181D]">Monatlicher Pfändungs&shy;freibetrag</th>
                 </tr>
               </thead>
               <tbody>
                 {freibetraege.map((row, i) => (
                   <tr
                     key={i}
-                    className={`border-b border-white/5 transition-colors hover:bg-white/5 ${
-                      i % 2 === 0 ? "bg-[#090909]" : "bg-[#070707]"
+                    className={`border-b border-black/[0.05] transition-colors hover:bg-black/[0.04] ${
+                      i % 2 === 0 ? "bg-[#F4F5F7]" : "bg-[#F4F5F7]"
                     }`}
                   >
-                    <td className="px-5 py-4 text-white/80">{row.personen}</td>
-                    <td className="px-5 py-4 text-right font-mono font-bold text-emerald-400">
+                    <td className="px-5 py-4 text-black/80">{row.personen}</td>
+                    <td className="px-5 py-4 text-right font-mono font-bold text-emerald-600">
                       {row.betrag}
                     </td>
                   </tr>
@@ -261,33 +261,33 @@ export default function PfaendungstabellePage() {
 
         {/* Full data table */}
         <section className="max-w-6xl mx-auto px-5 py-8">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
             Vollständige Pfändungstabelle 2026
           </h2>
-          <p className="text-white/60 mb-6 text-sm sm:text-base">
+          <p className="text-black/60 mb-6 text-sm sm:text-base">
             Pfändbarer Betrag in € pro Monat je nach Nettoeinkommen und Anzahl der
             Unterhaltspflichten (0–4+):
           </p>
-          <div className="overflow-x-auto rounded-2xl border border-white/10">
+          <div className="overflow-x-auto rounded-2xl border border-black/[0.08]">
             <table className="w-full text-xs sm:text-sm">
               <thead>
-                <tr className="bg-[#E60A1C]/15 border-b border-white/10">
-                  <th className="px-3 sm:px-5 py-4 text-left font-bold text-white whitespace-nowrap">
+                <tr className="bg-[#E60A1C]/15 border-b border-black/[0.08]">
+                  <th className="px-3 sm:px-5 py-4 text-left font-bold text-[#16181D] whitespace-nowrap">
                     Netto­einkommen / Monat
                   </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-white whitespace-nowrap">
+                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
                     0 Personen
                   </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-white whitespace-nowrap">
+                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
                     1 Person
                   </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-white whitespace-nowrap">
+                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
                     2 Personen
                   </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-white whitespace-nowrap">
+                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
                     3 Personen
                   </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-white whitespace-nowrap">
+                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
                     4+ Personen
                   </th>
                 </tr>
@@ -296,26 +296,26 @@ export default function PfaendungstabellePage() {
                 {tableData.map((row, i) => (
                   <tr
                     key={i}
-                    className={`border-b border-white/5 transition-colors hover:bg-white/5 ${
-                      i % 2 === 0 ? "bg-[#090909]" : "bg-[#070707]"
+                    className={`border-b border-black/[0.05] transition-colors hover:bg-black/[0.04] ${
+                      i % 2 === 0 ? "bg-[#F4F5F7]" : "bg-[#F4F5F7]"
                     }`}
                   >
-                    <td className="px-3 sm:px-5 py-3 font-mono text-white/80 whitespace-nowrap">
+                    <td className="px-3 sm:px-5 py-3 font-mono text-black/80 whitespace-nowrap">
                       {row.nettoMonatlich} €
                     </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p0 === "0,00" ? "text-emerald-500" : "text-[#FF4D5E]"}`}>
+                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p0 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
                       {row.p0} €
                     </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p1 === "0,00" ? "text-emerald-500" : "text-[#FF4D5E]"}`}>
+                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p1 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
                       {row.p1} €
                     </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p2 === "0,00" ? "text-emerald-500" : "text-[#FF4D5E]"}`}>
+                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p2 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
                       {row.p2} €
                     </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p3 === "0,00" ? "text-emerald-500" : "text-[#FF4D5E]"}`}>
+                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p3 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
                       {row.p3} €
                     </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p4 === "0,00" ? "text-emerald-500" : "text-[#FF4D5E]"}`}>
+                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p4 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
                       {row.p4} €
                     </td>
                   </tr>
@@ -323,24 +323,24 @@ export default function PfaendungstabellePage() {
               </tbody>
             </table>
           </div>
-          <p className="text-xs text-white/40 mt-3">
+          <p className="text-xs text-black/40 mt-3">
             🟢 Grün = 0 € pfändbar (Freibetrag greift) · 🔴 Rot = pfändbarer Betrag · Quelle: § 850c ZPO, gültig ab 01.07.2025
           </p>
         </section>
 
         {/* FAQ */}
         <section className="max-w-6xl mx-auto px-5 py-10">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
             Häufige Fragen zur Pfändungstabelle
           </h2>
           <div className="space-y-3">
             {faqs.map((faq, i) => (
               <details
                 key={i}
-                className="group bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden"
+                className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden"
               >
-                <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-white/5 transition-colors">
-                  <span className="font-semibold text-white text-sm sm:text-base pr-4">
+                <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
+                  <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">
                     {faq.q}
                   </span>
                   <ChevronDown
@@ -348,7 +348,7 @@ export default function PfaendungstabellePage() {
                     className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180"
                   />
                 </summary>
-                <div className="px-6 pb-5 pt-1 text-white/65 text-sm sm:text-base leading-relaxed border-t border-white/5">
+                <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
                   {faq.a}
                 </div>
               </details>
@@ -361,10 +361,10 @@ export default function PfaendungstabellePage() {
           <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
             <div className="relative">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
                 Nettogehalt exakt berechnen
               </h2>
-              <p className="text-white/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
+              <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
                 Mit unserem kostenlosen Brutto-Netto-Rechner berechnen Sie Ihr genaues Nettogehalt
                 — inklusive aller Steuerklassen, Sozialabgaben und Freibeträge für 2026.
               </p>
@@ -378,7 +378,7 @@ export default function PfaendungstabellePage() {
                 </Link>
                 <Link
                   href="/lexikon"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white font-bold px-7 py-3.5 rounded-xl transition-all border border-white/20 text-sm sm:text-base"
+                  className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] text-[#16181D] font-bold px-7 py-3.5 rounded-xl transition-all border border-black/[0.12] text-sm sm:text-base"
                 >
                   <BookOpen size={18} />
                   Steuer-Lexikon

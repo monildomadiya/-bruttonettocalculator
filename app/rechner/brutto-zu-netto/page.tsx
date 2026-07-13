@@ -69,10 +69,10 @@ export default function BruttoZuNettoPage() {
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
           <CalcIcon size={14} /> Amtliche Berechnung
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white mb-4 tracking-tight">
+        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
           Brutto zu <span className="text-gradient-accent">Netto</span> Rechner
         </h1>
-        <p className="text-lg sm:text-xl text-white/80 w-full max-w-6xl leading-relaxed">
+        <p className="text-lg sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
           Geben Sie Ihr Bruttogehalt ein und sehen Sie in Echtzeit und präzise auf den Cent, wie viel davon
           als Nettogehalt auf Ihrem Konto übrig bleibt — inklusive Lohnsteuer, Solidaritätszuschlag und allen
           Sozialabgaben nach § 32a EStG 2026.
@@ -88,11 +88,11 @@ export default function BruttoZuNettoPage() {
 
       {/* Erklärung: So wird gerechnet */}
       <div className="w-full max-w-6xl mx-auto mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-6 flex items-center gap-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
           <ListChecks size={24} className="text-[#E60A1C]" />
           So wird Ihr Brutto zu Netto berechnet
         </h2>
-        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 space-y-4 text-white/80 text-base sm:text-lg leading-relaxed">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 space-y-4 text-black/80 text-base sm:text-lg leading-relaxed">
           <p>
             Anders als viele denken, wird die Lohnsteuer nicht direkt vom Bruttogehalt berechnet.
             Zuerst zieht Ihr Arbeitgeber die Sozialversicherungsbeiträge ab — für die Rentenversicherung
@@ -117,17 +117,17 @@ export default function BruttoZuNettoPage() {
 
       {/* FAQ */}
       <div className="w-full max-w-6xl mx-auto pb-10">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-8">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
           Häufige Fragen zur Brutto-Netto-Berechnung
         </h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
-            <details key={i} className="group bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden">
-              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-white/5 transition-colors">
-                <span className="font-semibold text-white text-sm sm:text-base pr-4">{faq.q}</span>
+            <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
+              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
+                <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
                 <ChevronDown size={18} className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180" />
               </summary>
-              <div className="px-6 pb-5 pt-1 text-white/65 text-sm sm:text-base leading-relaxed border-t border-white/5">
+              <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
                 {faq.a}
               </div>
             </details>

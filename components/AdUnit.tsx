@@ -53,7 +53,7 @@ export default function AdUnit({
       className={`w-full max-w-6xl mx-auto my-10 px-4 sm:px-5 ${className}`}
       aria-hidden="true"
     >
-      <div className="text-[10px] font-mono uppercase tracking-widest text-white/25 text-center mb-1.5">
+      <div className="text-[10px] font-mono uppercase tracking-widest text-black/25 text-center mb-1.5">
         Anzeige
       </div>
       <ins

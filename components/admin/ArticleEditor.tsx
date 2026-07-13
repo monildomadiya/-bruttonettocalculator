@@ -215,7 +215,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
   }
 
   function insertSampleHook() {
-    const hook = `<p class="text-lg leading-relaxed text-white/90 font-medium mb-6">\n  Das deutsche Steuer- und Sozialabgabensystem bringt auch im Jahr <strong>2026/2027</strong> wichtige Neuerungen mit sich. Egal ob Erhöhung des Grundfreibetrags, Anpassungen bei den Beitragsbemessungsgrenzen oder neue Regelungen in den Steuerklassen – wer seine Abrechnung genau versteht, sichert sich am Monatsende bares Geld.\n</p>\n`;
+    const hook = `<p class="text-lg leading-relaxed text-black/90 font-medium mb-6">\n  Das deutsche Steuer- und Sozialabgabensystem bringt auch im Jahr <strong>2026/2027</strong> wichtige Neuerungen mit sich. Egal ob Erhöhung des Grundfreibetrags, Anpassungen bei den Beitragsbemessungsgrenzen oder neue Regelungen in den Steuerklassen – wer seine Abrechnung genau versteht, sichert sich am Monatsende bares Geld.\n</p>\n`;
     setContent((prev) => prev + hook);
   }
 
@@ -280,7 +280,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#111] border border-white/[0.08] rounded-2xl p-6 sm:p-8 text-white shadow-2xl relative">
+    <form onSubmit={handleSubmit} className="bg-[#FFFFFF] border border-black/[0.08] rounded-2xl p-6 sm:p-8 text-[#16181D] shadow-2xl relative">
       
       {/* Hidden file input for Cloudinary */}
       <input
@@ -292,35 +292,35 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
       />
 
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-white/[0.08]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-black/[0.08]">
         <div>
-          <h1 className="font-display font-bold text-2xl tracking-tight text-white">
+          <h1 className="font-display font-bold text-2xl tracking-tight text-[#16181D]">
             {isEdit ? "Edit Article" : "New Article"}
           </h1>
-          <p className="text-white/40 text-sm mt-1">
+          <p className="text-black/40 text-sm mt-1">
             Optimize for SEO and craft a compelling story.
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
           {/* Autosave status */}
-          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-white/40" aria-live="polite">
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-black/40" aria-live="polite">
             {isDirty ? (
-              <><Circle size={9} className="text-amber-400 fill-amber-400" /> Unsaved</>
+              <><Circle size={9} className="text-amber-600 fill-amber-400" /> Unsaved</>
             ) : draftSavedAt ? (
-              <><CheckCircle2 size={13} className="text-emerald-400" /> Draft saved</>
+              <><CheckCircle2 size={13} className="text-emerald-600" /> Draft saved</>
             ) : null}
           </span>
 
-          <span className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#181818] border border-white/[0.08] text-sm font-medium text-white/70">
-            <Sparkles size={15} className="text-amber-400" />
+          <span className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#F1F3F5] border border-black/[0.08] text-sm font-medium text-black/70">
+            <Sparkles size={15} className="text-amber-600" />
             SEO {passedCount}/{checks.length}
           </span>
 
           <button
             type="button"
             onClick={() => router.push("/admin-secure")}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-white/70 hover:text-white font-medium text-sm transition-colors"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/[0.05] hover:bg-black/[0.08] border border-black/[0.08] text-black/70 hover:text-[#16181D] font-medium text-sm transition-colors"
             title="Editor schließen und zum Dashboard zurückkehren"
           >
             <X size={16} />
@@ -332,15 +332,15 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
       {/* Restore autosaved draft */}
       {restorable && (
         <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 text-sm text-amber-200/90">
-            <History size={16} className="text-amber-400 flex-shrink-0" />
+          <div className="flex items-center gap-2.5 text-sm text-amber-800/90">
+            <History size={16} className="text-amber-600 flex-shrink-0" />
             <span>Ein automatisch gespeicherter Entwurf von {new Date(restorable.savedAt).toLocaleString("de-DE")} wurde gefunden.</span>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
-            <button type="button" onClick={dismissDraft} className="px-3 py-1.5 rounded-lg text-xs font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors">
+            <button type="button" onClick={dismissDraft} className="px-3 py-1.5 rounded-lg text-xs font-medium text-black/60 hover:text-[#16181D] hover:bg-black/[0.06] transition-colors">
               Verwerfen
             </button>
-            <button type="button" onClick={restoreDraft} className="px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-300 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 transition-colors">
+            <button type="button" onClick={restoreDraft} className="px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-700 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 transition-colors">
               Entwurf wiederherstellen
             </button>
           </div>
@@ -348,7 +348,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
       )}
 
       {errorMessage && (
-        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium">
+        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 text-sm font-medium">
           {errorMessage}
         </div>
       )}
@@ -361,12 +361,12 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
           
           {/* SECTION 1: CORE PUBLICATION DETAILS */}
           <div className="space-y-6">
-            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-black/45 uppercase flex items-center gap-2 border-b border-black/[0.08] pb-3">
               <span>1. CORE PUBLICATION DETAILS</span>
             </h2>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
                 ARTICLE HEADLINE <span className="text-[#FF2E44]">*</span>
               </label>
               <input
@@ -375,13 +375,13 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={headline}
                 onChange={(e) => setHeadline(e.target.value)}
                 placeholder="Enter a captivating title..."
-                className="w-full px-4 py-3.5 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white font-bold text-lg outline-none transition-all"
+                className="w-full px-4 py-3.5 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-[#16181D] font-bold text-lg outline-none transition-all"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
                   URL SLUG <span className="text-[#FF2E44]">*</span>
                 </label>
                 <input
@@ -390,43 +390,43 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
                   placeholder="best-ai-image-generator-2026"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm font-mono outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm font-mono outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
-                  CATEGORY <span className="text-white/40 font-normal">(Optional)</span>
+                <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
+                  CATEGORY <span className="text-black/40 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   placeholder="e.g. Steuerrecht oder AI Tools"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
-                TAGS (COMMA SEPARATED) <span className="text-white/40 font-normal">(Optional)</span>
+              <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
+                TAGS (COMMA SEPARATED) <span className="text-black/40 font-normal">(Optional)</span>
               </label>
               <input
                 type="text"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
                 placeholder="Steuern, Grundfreibetrag, Lohnsteuer"
-                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all"
               />
             </div>
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/70">
-                  ARTICLE EXCERPT (SHORT SUMMARY) <span className="text-white/40 font-normal">(Optional)</span>
+                <label className="block text-xs font-bold uppercase tracking-wider text-black/70">
+                  ARTICLE EXCERPT (SHORT SUMMARY) <span className="text-black/40 font-normal">(Optional)</span>
                 </label>
-                <span className={`text-xs font-mono ${excerpt.length > 180 ? "text-amber-400" : "text-white/40"}`}>
+                <span className={`text-xs font-mono ${excerpt.length > 180 ? "text-amber-600" : "text-black/40"}`}>
                   {excerpt.length} / 180
                 </span>
               </div>
@@ -435,23 +435,23 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
                 placeholder="Short summary for blog cards and previews (120-180 chars)..."
-                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all resize-none"
+                className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all resize-none"
               />
             </div>
           </div>
 
           {/* SECTION 2: SEO SETTINGS */}
           <div className="space-y-6">
-            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-black/45 uppercase flex items-center gap-2 border-b border-black/[0.08] pb-3">
               <span>2. SEO SETTINGS</span>
             </h2>
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/70">
-                  SEO META TITLE <span className="text-white/40 font-normal">(Optional)</span>
+                <label className="block text-xs font-bold uppercase tracking-wider text-black/70">
+                  SEO META TITLE <span className="text-black/40 font-normal">(Optional)</span>
                 </label>
-                <span className={`text-xs font-mono ${metaTitle.length > 60 ? "text-amber-400" : "text-white/40"}`}>
+                <span className={`text-xs font-mono ${metaTitle.length > 60 ? "text-amber-600" : "text-black/40"}`}>
                   {metaTitle.length} / 60
                 </span>
               </div>
@@ -460,16 +460,16 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={metaTitle}
                 onChange={(e) => setMetaTitle(e.target.value)}
                 placeholder="Defaults to Article Headline if empty"
-                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all"
               />
             </div>
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/70">
-                  META DESCRIPTION <span className="text-white/40 font-normal">(Optional)</span>
+                <label className="block text-xs font-bold uppercase tracking-wider text-black/70">
+                  META DESCRIPTION <span className="text-black/40 font-normal">(Optional)</span>
                 </label>
-                <span className={`text-xs font-mono ${metaDescription.length > 160 ? "text-amber-400" : "text-white/40"}`}>
+                <span className={`text-xs font-mono ${metaDescription.length > 160 ? "text-amber-600" : "text-black/40"}`}>
                   {metaDescription.length} / 160
                 </span>
               </div>
@@ -478,34 +478,34 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={metaDescription}
                 onChange={(e) => setMetaDescription(e.target.value)}
                 placeholder="Defaults to Excerpt if empty"
-                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all resize-none"
+                className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all resize-none"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
-                  FOCUS KEYWORD <span className="text-white/40 font-normal">(Optional)</span>
+                <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
+                  FOCUS KEYWORD <span className="text-black/40 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   value={focusKeyword}
                   onChange={(e) => setFocusKeyword(e.target.value)}
                   placeholder="e.g. Grundfreibetrag 2026"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
-                  CANONICAL URL <span className="text-white/40 font-normal">(Optional)</span>
+                <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
+                  CANONICAL URL <span className="text-black/40 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   value={canonicalUrl}
                   onChange={(e) => setCanonicalUrl(e.target.value)}
                   placeholder="Defaults to this article's URL"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all"
                 />
               </div>
             </div>
@@ -513,7 +513,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
 
           {/* SECTION 3: FEATURED IMAGE */}
           <div className="space-y-6">
-            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-black/45 uppercase flex items-center gap-2 border-b border-black/[0.08] pb-3">
               <span>3. FEATURED IMAGE</span>
             </h2>
 
@@ -523,7 +523,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 value={featuredImage}
                 onChange={(e) => setFeaturedImage(e.target.value)}
                 placeholder="https://res.cloudinary.com/diuy76wgh/image/upload/..."
-                className="flex-1 px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm font-mono outline-none transition-all"
+                className="flex-1 px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm font-mono outline-none transition-all"
               />
               <button
                 type="button"
@@ -546,35 +546,35 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
             </div>
 
             {featuredImage && (
-              <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] bg-black/40 p-2 max-w-md">
+              <div className="relative rounded-2xl overflow-hidden border border-black/[0.08] bg-black/[0.04] p-2 max-w-md">
                 <img src={featuredImage} alt="Preview" className="w-full h-auto rounded-xl object-cover max-h-48" />
               </div>
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
-                  FEATURED IMAGE ALT TEXT <span className="text-white/40 font-normal">(Optional)</span>
+                <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
+                  FEATURED IMAGE ALT TEXT <span className="text-black/40 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   value={featuredImageAlt}
                   onChange={(e) => setFeaturedImageAlt(e.target.value)}
                   placeholder="Taschenrechner und Gehaltsabrechnung"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
-                  FEATURED IMAGE CAPTION <span className="text-white/40 font-normal">(Optional)</span>
+                <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
+                  FEATURED IMAGE CAPTION <span className="text-black/40 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   value={featuredImageCaption}
                   onChange={(e) => setFeaturedImageCaption(e.target.value)}
                   placeholder="Optional caption below image"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all"
                 />
               </div>
             </div>
@@ -582,45 +582,45 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
 
           {/* SECTION 4: SOCIAL SHARING */}
           <div className="space-y-6">
-            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-black/45 uppercase flex items-center gap-2 border-b border-black/[0.08] pb-3">
               <span>4. SOCIAL SHARING</span>
             </h2>
 
             <div className="space-y-4">
-              <h3 className="text-sm font-bold text-white/90">Open Graph (Facebook/LinkedIn)</h3>
+              <h3 className="text-sm font-bold text-black/90">Open Graph (Facebook/LinkedIn)</h3>
               <input
                 type="text"
                 value={ogTitle}
                 onChange={(e) => setOgTitle(e.target.value)}
                 placeholder="OG Title (Fallback: Meta Title)"
-                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all"
               />
               <input
                 type="text"
                 value={ogDescription}
                 onChange={(e) => setOgDescription(e.target.value)}
                 placeholder="OG Description (Fallback: Meta Desc)"
-                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm outline-none transition-all"
               />
               <input
                 type="text"
                 value={ogImage}
                 onChange={(e) => setOgImage(e.target.value)}
                 placeholder="OG Image URL (Fallback: Featured)"
-                className="w-full px-4 py-3 rounded-2xl bg-[#181818] border border-white/[0.08] focus:border-[#E60A1C] text-white/90 text-sm font-mono outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] focus:border-[#E60A1C] text-black/90 text-sm font-mono outline-none transition-all"
               />
             </div>
           </div>
 
           {/* SECTION 5: ADVANCED LUXURY RICH-TEXT STUDIO */}
           <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
-              <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/[0.08] pb-3">
+              <h2 className="text-xs font-semibold tracking-wide text-black/45 uppercase flex items-center gap-2">
                 <span>5. Story Editor</span>
               </h2>
-              <span className="inline-flex items-center gap-3 text-xs font-mono text-white/40">
-                <span className={wordCount >= 800 ? "text-emerald-400" : ""}>{wordCount.toLocaleString("de-DE")} words</span>
-                <span className="text-white/20">·</span>
+              <span className="inline-flex items-center gap-3 text-xs font-mono text-black/40">
+                <span className={wordCount >= 800 ? "text-emerald-600" : ""}>{wordCount.toLocaleString("de-DE")} words</span>
+                <span className="text-black/20">·</span>
                 <span>{readTime}</span>
               </span>
             </div>
@@ -631,9 +631,9 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                   type="checkbox"
                   checked={enableToc}
                   onChange={(e) => setEnableToc(e.target.checked)}
-                  className="w-5 h-5 rounded border border-white/20 bg-black text-[#E60A1C] focus:ring-0 cursor-pointer accent-[#E60A1C]"
+                  className="w-5 h-5 rounded border border-black/[0.12] bg-[#F4F5F7] text-[#E60A1C] focus:ring-0 cursor-pointer accent-[#E60A1C]"
                 />
-                <span className="text-sm font-bold text-white">Inhaltsverzeichnis (TOC) automatisch aus H2/H3 generieren</span>
+                <span className="text-sm font-bold text-[#16181D]">Inhaltsverzeichnis (TOC) automatisch aus H2/H3 generieren</span>
               </label>
 
               {/* Quick AI & Helper Tools */}
@@ -641,7 +641,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                 <button
                   type="button"
                   onClick={insertSampleHook}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-bold transition-all"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-700 text-xs font-bold transition-all"
                 >
                   <Wand2 size={13} />
                   <span>⚡ SEO-Einleitung einfügen</span>
@@ -655,19 +655,19 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
 
           {/* SECTION 6: FAQ SECTION */}
           <div className="space-y-6">
-            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
+            <h2 className="text-xs font-semibold tracking-wide text-black/45 uppercase flex items-center gap-2 border-b border-black/[0.08] pb-3">
               <span>6. FAQ SECTION</span>
             </h2>
 
             <div className="space-y-4">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="p-5 rounded-2xl bg-[#181818] border border-white/[0.08] relative space-y-3">
+                <div key={idx} className="p-5 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] relative space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase text-white/50">Question #{idx + 1}</span>
+                    <span className="text-xs font-bold uppercase text-black/50">Question #{idx + 1}</span>
                     <button
                       type="button"
                       onClick={() => setFaqs(faqs.filter((_, i) => i !== idx))}
-                      className="text-red-400 hover:text-red-300 p-1"
+                      className="text-red-600 hover:text-red-700 p-1"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -681,7 +681,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                       setFaqs(copy);
                     }}
                     placeholder="e.g. Wie hoch ist der Grundfreibetrag 2026?"
-                    className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/[0.08] text-white font-semibold text-sm outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-[#16181D] font-semibold text-sm outline-none"
                   />
                   <textarea
                     rows={2}
@@ -692,7 +692,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
                       setFaqs(copy);
                     }}
                     placeholder="Antwort hier eingeben..."
-                    className="w-full px-4 py-2 rounded-xl bg-black/50 border border-white/[0.08] text-white/85 text-sm outline-none resize-none"
+                    className="w-full px-4 py-2 rounded-xl bg-black/[0.04] border border-black/[0.08] text-black/85 text-sm outline-none resize-none"
                   />
                 </div>
               ))}
@@ -700,7 +700,7 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
               <button
                 type="button"
                 onClick={() => setFaqs([...faqs, { question: "", answer: "" }])}
-                className="px-5 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/[0.08] text-white font-bold text-sm flex items-center gap-2 transition-all"
+                className="px-5 py-2.5 rounded-2xl bg-black/[0.04] hover:bg-black/[0.05] border border-black/[0.08] text-[#16181D] font-bold text-sm flex items-center gap-2 transition-all"
               >
                 <Plus size={16} />
                 <span>Add FAQ</span>
@@ -709,11 +709,11 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
           </div>
 
           {/* Bottom Actions Button Bar */}
-          <div className="flex items-center justify-end gap-3 pt-8 border-t border-white/[0.08]">
+          <div className="flex items-center justify-end gap-3 pt-8 border-t border-black/[0.08]">
             <button
               type="button"
               onClick={() => router.push("/admin-secure")}
-              className="px-5 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-white/70 hover:text-white font-medium text-sm transition-colors flex items-center gap-2"
+              className="px-5 py-3 rounded-xl bg-black/[0.05] hover:bg-black/[0.08] border border-black/[0.08] text-black/70 hover:text-[#16181D] font-medium text-sm transition-colors flex items-center gap-2"
             >
               <span>Abbrechen</span>
             </button>
@@ -733,12 +733,12 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
         <div className="lg:col-span-4 space-y-8">
           
           {/* STICKY QUICK ACTION & CLOSE BAR */}
-          <div className="p-4 rounded-2xl bg-[#181818] border border-white/[0.08] space-y-2.5 sticky top-24 z-40">
+          <div className="p-4 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] space-y-2.5 sticky top-24 z-40">
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => router.push("/admin-secure")}
-                className="w-full py-2.5 px-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-white/70 hover:text-white font-medium text-sm transition-colors flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 px-3 rounded-xl bg-black/[0.05] hover:bg-black/[0.08] border border-black/[0.08] text-black/70 hover:text-[#16181D] font-medium text-sm transition-colors flex items-center justify-center gap-1.5"
                 title="Close editor and return to dashboard"
               >
                 <X size={15} />
@@ -756,19 +756,19 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
           </div>
 
           {/* SECTION 7: PUBLISHING SETTINGS */}
-          <div className="p-6 rounded-2xl bg-[#181818] border border-white/[0.08] space-y-6">
-            <h2 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center gap-2 border-b border-white/[0.08] pb-3">
+          <div className="p-6 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] space-y-6">
+            <h2 className="text-xs font-semibold tracking-wide text-black/45 uppercase flex items-center gap-2 border-b border-black/[0.08] pb-3">
               <span>7. PUBLISHING SETTINGS</span>
             </h2>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
-                STATUS <span className="text-white/40 font-normal">(Optional)</span>
+              <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
+                STATUS <span className="text-black/40 font-normal">(Optional)</span>
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="w-full px-4 py-3 rounded-2xl bg-black border border-white/[0.08] text-white font-bold text-sm outline-none cursor-pointer"
+                className="w-full px-4 py-3 rounded-2xl bg-[#F4F5F7] border border-black/[0.08] text-[#16181D] font-bold text-sm outline-none cursor-pointer"
               >
                 <option value="Published">Published</option>
                 <option value="Draft">Draft</option>
@@ -776,42 +776,42 @@ export default function ArticleEditor({ initialArticle, isEdit = false }: Props)
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">
-                READ TIME (AUTO) <span className="text-white/40 font-normal">(Optional)</span>
+              <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-2">
+                READ TIME (AUTO) <span className="text-black/40 font-normal">(Optional)</span>
               </label>
               <input
                 type="text"
                 value={readTime}
                 onChange={(e) => setReadTime(e.target.value)}
                 placeholder="3 min read"
-                className="w-full px-4 py-3 rounded-2xl bg-black border border-white/[0.08] text-white/90 text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#F4F5F7] border border-black/[0.08] text-black/90 text-sm outline-none transition-all"
               />
             </div>
           </div>
 
           {/* SEO CHECKLIST PANEL */}
-          <div className="p-6 rounded-2xl bg-[#181818] border border-white/[0.08] space-y-5 sticky top-28">
-            <h3 className="text-xs font-semibold tracking-wide text-white/45 uppercase flex items-center justify-between border-b border-white/[0.08] pb-3">
+          <div className="p-6 rounded-2xl bg-[#F1F3F5] border border-black/[0.08] space-y-5 sticky top-28">
+            <h3 className="text-xs font-semibold tracking-wide text-black/45 uppercase flex items-center justify-between border-b border-black/[0.08] pb-3">
               <span>SEO CHECKLIST</span>
-              <span className="text-white/60 font-mono text-xs">{passedCount}/{checks.length}</span>
+              <span className="text-black/60 font-mono text-xs">{passedCount}/{checks.length}</span>
             </h3>
 
             <div className="space-y-3">
               {checks.map((chk, idx) => (
                 <div key={idx} className="flex items-center gap-3 text-sm">
                   {chk.passed ? (
-                    <CheckCircle2 size={18} className="text-emerald-400 flex-shrink-0" />
+                    <CheckCircle2 size={18} className="text-emerald-600 flex-shrink-0" />
                   ) : (
-                    <Circle size={18} className="text-white/20 flex-shrink-0" />
+                    <Circle size={18} className="text-black/20 flex-shrink-0" />
                   )}
-                  <span className={chk.passed ? "text-white font-medium" : "text-white/50"}>
+                  <span className={chk.passed ? "text-[#16181D] font-medium" : "text-black/50"}>
                     {chk.label}
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="pt-3 border-t border-white/[0.08] text-xs text-white/40 leading-relaxed">
+            <div className="pt-3 border-t border-black/[0.08] text-xs text-black/40 leading-relaxed">
               Tipp: Eine vollständige SEO-Optimierung (8/8) erhöht Ihre Chancen auf Google Featured Snippets erheblich.
             </div>
           </div>

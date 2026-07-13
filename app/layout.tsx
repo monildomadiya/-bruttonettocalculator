@@ -227,7 +227,7 @@ const orgSchema = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
-      <body className="font-body bg-black text-white antialiased">
+      <body className="font-body bg-[#F4F5F7] text-[#16181D] antialiased">
        <AdsProvider>
 
         {/* ── Sticky glass header (conditional) ───────────────────────── */}

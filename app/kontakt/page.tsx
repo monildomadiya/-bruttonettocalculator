@@ -21,22 +21,22 @@ export default function KontaktPage() {
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
           <MessageSquare size={14} /> Kundenservice & Feedback
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white mb-4 tracking-tight">
+        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
           Kon<span className="text-gradient-accent">takt</span>
         </h1>
-        <p className="text-lg sm:text-xl text-white/80 w-full max-w-6xl leading-relaxed">
+        <p className="text-lg sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
           Haben Sie Fragen, Feedback oder einen Vorschlag zur Erweiterung unserer Steuer- oder Gehaltsformeln? Wir freuen uns auf Ihre Nachricht!
         </p>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-8 w-full max-w-6xl mx-auto">
-        <div className="bg-[#101010] border border-white/15 rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col justify-between">
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col justify-between">
           <div>
             <div className="w-14 h-14 rounded-2xl bg-[#E60A1C]/15 border border-[#E60A1C]/30 flex items-center justify-center mb-6">
               <Mail size={26} className="text-[#E60A1C]" />
             </div>
-            <h2 className="font-display font-bold text-2xl text-white mb-3">Direkter E-Mail-Support</h2>
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+            <h2 className="font-display font-bold text-2xl text-[#16181D] mb-3">Direkter E-Mail-Support</h2>
+            <p className="text-base sm:text-lg text-black/80 leading-relaxed mb-6">
               Senden Sie uns Ihr Feedback oder Anregungen direkt per E-Mail. Unser Redaktions- und Entwicklerteam
               prüft jede Eingabe sorgfältig.
             </p>
@@ -49,18 +49,18 @@ export default function KontaktPage() {
           </a>
         </div>
 
-        <div className="bg-[#101010] border border-white/15 rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col justify-between">
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col justify-between">
           <div>
-            <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mb-6">
-              <Clock size={26} className="text-white" />
+            <div className="w-14 h-14 rounded-2xl bg-black/[0.05] border border-black/[0.12] flex items-center justify-center mb-6">
+              <Clock size={26} className="text-[#16181D]" />
             </div>
-            <h2 className="font-display font-bold text-2xl text-white mb-3">Schnelle Bearbeitungszeit</h2>
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed">
+            <h2 className="font-display font-bold text-2xl text-[#16181D] mb-3">Schnelle Bearbeitungszeit</h2>
+            <p className="text-base sm:text-lg text-black/80 leading-relaxed">
               Wir bemühen uns, alle technischen Anfragen zu Steuerklassen oder Berechnungsformeln innerhalb von
               24 bis 48 Stunden zu beantworten.
             </p>
           </div>
-          <div className="text-sm font-mono text-white/50 pt-6 border-t border-white/10">
+          <div className="text-sm font-mono text-black/50 pt-6 border-t border-black/[0.08]">
             Erreichbarkeit: Montag bis Freitag, 09:00 – 18:00 Uhr
           </div>
         </div>

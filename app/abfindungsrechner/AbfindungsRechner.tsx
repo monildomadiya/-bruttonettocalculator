@@ -91,9 +91,9 @@ export default function AbfindungsRechner() {
   }, [brutto, steuerklasse, kirche, abfindung]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-white/10">
+      <section className="relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-5 py-20 sm:py-28 text-center">
@@ -107,7 +107,7 @@ export default function AbfindungsRechner() {
               2026
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie die Steuerlast Ihrer Abfindung nach der Fünftelregelung (§ 34 EStG) —
             sozialversicherungsfrei, nur Lohnsteuer, Soli und ggf. Kirchensteuer.
           </p>
@@ -118,40 +118,40 @@ export default function AbfindungsRechner() {
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Inputs */}
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-6 flex items-center gap-2">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
               <Calculator size={22} className="text-[#E60A1C]" />
               Ihre Angaben
             </h2>
 
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-semibold text-white/70 mb-2">Reguläres Bruttogehalt / Monat</label>
+                <label className="block text-sm font-semibold text-black/70 mb-2">Reguläres Bruttogehalt / Monat</label>
                 <input
                   type="number"
                   value={brutto}
                   onChange={(e) => setBrutto(Number(e.target.value))}
-                  className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-white font-bold text-lg focus:border-[#E60A1C] outline-none"
+                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-white/70 mb-2">Höhe der Abfindung (einmalig)</label>
+                <label className="block text-sm font-semibold text-black/70 mb-2">Höhe der Abfindung (einmalig)</label>
                 <input
                   type="number"
                   value={abfindung}
                   onChange={(e) => setAbfindung(Number(e.target.value))}
-                  className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-white font-bold text-lg focus:border-[#E60A1C] outline-none"
+                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-semibold text-white/70 mb-2">Steuerklasse</label>
+                  <label className="block text-sm font-semibold text-black/70 mb-2">Steuerklasse</label>
                   <select
                     value={steuerklasse}
                     onChange={(e) => setSteuerklasse(Number(e.target.value) as Steuerklasse)}
-                    className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-white font-semibold focus:border-[#E60A1C] outline-none"
+                    className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-semibold focus:border-[#E60A1C] outline-none"
                   >
                     {([1, 2, 3, 4, 5, 6] as Steuerklasse[]).map((sk) => (
                       <option key={sk} value={sk}>{STEUERKLASSE_INFO[sk]}</option>
@@ -159,7 +159,7 @@ export default function AbfindungsRechner() {
                   </select>
                 </div>
                 <div className="flex items-end pb-1">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-white/70 cursor-pointer">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-black/70 cursor-pointer">
                     <input type="checkbox" checked={kirche} onChange={(e) => setKirche(e.target.checked)} className="accent-[#E60A1C] w-4 h-4" />
                     Kirchensteuer
                   </label>
@@ -169,28 +169,28 @@ export default function AbfindungsRechner() {
           </div>
 
           {/* Results */}
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-2 flex items-center gap-2">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-2 flex items-center gap-2">
               <Banknote size={22} className="text-[#E60A1C]" />
               Netto-Abfindung
             </h2>
-            <div className="flex items-center gap-2 mb-6 text-xs text-amber-400/80 bg-amber-950/20 border border-amber-500/20 rounded-xl px-3 py-2">
+            <div className="flex items-center gap-2 mb-6 text-xs text-amber-600/80 bg-amber-50 border border-amber-500/20 rounded-xl px-3 py-2">
               <Info size={13} className="flex-shrink-0" />
               Vereinfachte Berechnung — keine Steuerberatung
             </div>
 
             <div className="space-y-3">
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4">
-                <span className="text-white/70 text-sm font-medium">Steuerlast auf Abfindung (Fünftelregelung)</span>
-                <span className="text-lg font-extrabold text-white">{formatEuro(result.steuerAufAbfindungGesamt)}</span>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Steuerlast auf Abfindung (Fünftelregelung)</span>
+                <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.steuerAufAbfindungGesamt)}</span>
               </div>
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4">
-                <span className="text-white/70 text-sm font-medium">Effektiver Steuersatz auf Abfindung</span>
-                <span className="text-lg font-extrabold text-white">{result.effektiverSteuersatz.toFixed(1)} %</span>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Effektiver Steuersatz auf Abfindung</span>
+                <span className="text-lg font-extrabold text-[#16181D]">{result.effektiverSteuersatz.toFixed(1)} %</span>
               </div>
               <div className="flex items-center justify-between bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-xl px-5 py-4">
-                <span className="text-white/80 text-sm font-semibold">Netto-Abfindung (nach Steuer)</span>
-                <span className="text-2xl font-extrabold text-emerald-400">{formatEuro(result.nettoAbfindung)}</span>
+                <span className="text-black/80 text-sm font-semibold">Netto-Abfindung (nach Steuer)</span>
+                <span className="text-2xl font-extrabold text-emerald-600">{formatEuro(result.nettoAbfindung)}</span>
               </div>
             </div>
 
@@ -207,34 +207,34 @@ export default function AbfindungsRechner() {
 
       {/* Explainer / SEO content */}
       <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
             Abfindung versteuern: So funktioniert die Fünftelregelung
           </h2>
           <p>
-            Eine <strong className="text-white">Abfindung</strong> bei Kündigung oder Aufhebungsvertrag ist
+            Eine <strong className="text-[#16181D]">Abfindung</strong> bei Kündigung oder Aufhebungsvertrag ist
             voll steuerpflichtig, wird aber steuerlich begünstigt: Über die{" "}
-            <strong className="text-white">Fünftelregelung (§ 34 EStG)</strong> soll die Steuerprogression
+            <strong className="text-[#16181D]">Fünftelregelung (§ 34 EStG)</strong> soll die Steuerprogression
             abgemildert werden, die sonst durch die geballte Einmalzahlung entstehen würde.
           </p>
-          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
-            <p className="font-mono text-white text-sm mb-2">So rechnet die Fünftelregelung:</p>
-            <p className="text-white/60 text-sm">
-              Nur <strong className="text-white">ein Fünftel</strong> der Abfindung wird fiktiv zum
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-2xl p-5">
+            <p className="font-mono text-[#16181D] text-sm mb-2">So rechnet die Fünftelregelung:</p>
+            <p className="text-black/60 text-sm">
+              Nur <strong className="text-[#16181D]">ein Fünftel</strong> der Abfindung wird fiktiv zum
               Jahreseinkommen addiert und die Steuer­mehrbelastung berechnet. Diese Differenz wird{" "}
-              <strong className="text-white">× 5</strong> genommen — so verteilt sich der Progressionseffekt
+              <strong className="text-[#16181D]">× 5</strong> genommen — so verteilt sich der Progressionseffekt
               rechnerisch auf fünf Jahre.
             </p>
           </div>
-          <h3 className="text-lg sm:text-xl font-bold text-white">Der große Vorteil: keine Sozialabgaben</h3>
+          <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Der große Vorteil: keine Sozialabgaben</h3>
           <p>
-            Anders als beim Gehalt sind Abfindungen <strong className="text-white">sozialversicherungsfrei</strong> —
+            Anders als beim Gehalt sind Abfindungen <strong className="text-[#16181D]">sozialversicherungsfrei</strong> —
             es fallen weder Renten-, Kranken-, Pflege- noch Arbeitslosenversicherungsbeiträge an. Fällig wird
             ausschließlich Lohn-/Einkommensteuer zzgl. Soli und ggf. Kirchensteuer.
           </p>
           <p>
             Die Fünftelregelung wirkt am stärksten, wenn die Abfindung im Verhältnis zum sonstigen
-            Jahreseinkommen hoch ist. <strong className="text-white">Steuertipp:</strong> Der Bezug in einem
+            Jahreseinkommen hoch ist. <strong className="text-[#16181D]">Steuertipp:</strong> Der Bezug in einem
             Jahr mit niedrigerem Einkommen (etwa bei Arbeitslosigkeit über den Jahreswechsel) oder die
             Einzahlung eines Teils in eine Basis-/Rürup-Rente kann die Steuerlast weiter senken.
           </p>
@@ -243,17 +243,17 @@ export default function AbfindungsRechner() {
 
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
           Häufige Fragen zur Abfindung
         </h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
-            <details key={i} className="group bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden">
-              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-white/5 transition-colors">
-                <span className="font-semibold text-white text-sm sm:text-base pr-4">{faq.q}</span>
+            <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
+              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
+                <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
                 <ChevronDown size={18} className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180" />
               </summary>
-              <div className="px-6 pb-5 pt-1 text-white/65 text-sm sm:text-base leading-relaxed border-t border-white/5">
+              <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
                 {faq.a}
               </div>
             </details>
@@ -266,18 +266,18 @@ export default function AbfindungsRechner() {
         <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
           <div className="relative">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
               Weitere Gehaltsrechner entdecken
             </h2>
-            <p className="text-white/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
+            <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
               Bonus-Steuerrechner, Arbeitslosengeld-Rechner, Firmenwagenrechner &amp; mehr —
               alle kostenlos und aktuell für 2026.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link href="/bonus-steuerrechner" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">
+              <Link href="/bonus-steuerrechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
                 Bonus-Steuerrechner
               </Link>
-              <Link href="/arbeitslosengeld-rechner" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">
+              <Link href="/arbeitslosengeld-rechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
                 Arbeitslosengeld-Rechner
               </Link>
               <Link href="/" className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3 rounded-xl transition-all shadow-[0_0_25px_rgba(230,10,28,0.4)] text-sm">

@@ -106,8 +106,8 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center">
-        <Loader2 size={22} className="animate-spin text-white/40" />
+      <div className="min-h-screen bg-[#F4F5F7] text-[#16181D] flex items-center justify-center">
+        <Loader2 size={22} className="animate-spin text-black/40" />
       </div>
     );
   }
@@ -115,7 +115,7 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
   // Render Login Screen directly on /admin-secure when unauthorized!
   if (!authorized) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a] text-white flex flex-col justify-center items-center px-4 py-12">
+      <main className="min-h-screen bg-[#F4F5F7] text-[#16181D] flex flex-col justify-center items-center px-4 py-12">
         <div className="w-full max-w-sm">
           <div className="flex flex-col items-center mb-8">
             <Image
@@ -126,15 +126,15 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
               className="h-9 w-auto mb-6"
               priority
             />
-            <h1 className="font-display font-bold text-xl tracking-tight text-white">
+            <h1 className="font-display font-bold text-xl tracking-tight text-[#16181D]">
               Admin Login
             </h1>
-            <p className="text-sm text-white/40 mt-1.5">Bitte melden Sie sich an, um fortzufahren.</p>
+            <p className="text-sm text-black/40 mt-1.5">Bitte melden Sie sich an, um fortzufahren.</p>
           </div>
 
-          <div className="bg-[#111] border border-white/[0.08] rounded-2xl p-6 sm:p-7">
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-2xl p-6 sm:p-7">
             {loginError && (
-              <div className="mb-5 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium flex items-center gap-2">
+              <div className="mb-5 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 text-sm font-medium flex items-center gap-2">
                 <AlertCircle size={15} className="flex-shrink-0" />
                 <span>{loginError}</span>
               </div>
@@ -142,27 +142,27 @@ export default function AdminAuthGuard({ children }: { children: React.ReactNode
 
             <form onSubmit={handleLogin} className="flex flex-col gap-3">
               <div className="relative">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35 pointer-events-none" size={17} />
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-black/35 pointer-events-none" size={17} />
                 <input
                   type="email"
                   placeholder="E-Mail Adresse"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loginLoading}
-                  className="w-full bg-[#181818] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder:text-white/35 focus:border-white/25 outline-none transition-colors disabled:opacity-50"
+                  className="w-full bg-[#F1F3F5] border border-black/[0.08] rounded-xl py-3 pl-11 pr-4 text-sm text-[#16181D] placeholder:text-black/35 focus:border-black/[0.14] outline-none transition-colors disabled:opacity-50"
                   required
                 />
               </div>
 
               <div className="relative">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35 pointer-events-none" size={17} />
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-black/35 pointer-events-none" size={17} />
                 <input
                   type="password"
                   placeholder="Passwort"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={loginLoading}
-                  className="w-full bg-[#181818] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder:text-white/35 focus:border-white/25 outline-none transition-colors disabled:opacity-50"
+                  className="w-full bg-[#F1F3F5] border border-black/[0.08] rounded-xl py-3 pl-11 pr-4 text-sm text-[#16181D] placeholder:text-black/35 focus:border-black/[0.14] outline-none transition-colors disabled:opacity-50"
                   required
                 />
               </div>

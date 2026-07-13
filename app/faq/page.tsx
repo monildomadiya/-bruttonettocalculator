@@ -116,10 +116,10 @@ export default function FaqPage() {
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             <HelpCircle size={14} /> Wissensdatenbank
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white mb-4 tracking-tight">
+          <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
             Häufige Fragen <span className="text-gradient-accent">(FAQ)</span>
           </h1>
-          <p className="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-black/80 max-w-3xl mx-auto leading-relaxed">
             Hier finden Sie verständliche Antworten auf alle Fragen bezüglich Ihrer Gehaltsabrechnung, Abzüge und Steuerklassen.
           </p>
         </div>

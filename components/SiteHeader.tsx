@@ -44,7 +44,7 @@ export default function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 bg-black/85 backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
+    <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-2xl border-b border-black/[0.08] shadow-[0_4px_25px_rgba(16,24,40,0.12)]">
       <div className="max-w-6xl mx-auto px-5 h-[72px] sm:h-[84px] md:h-[92px] flex items-center justify-between">
 
         {/* Logo */}
@@ -68,7 +68,7 @@ export default function SiteHeader() {
               onClick={() => setMenuOpen((o) => !o)}
               aria-expanded={menuOpen}
               aria-haspopup="true"
-              className="nav-link flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-sm lg:text-base font-semibold text-white/85 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap"
+              className="nav-link flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-sm lg:text-base font-semibold text-black/85 hover:text-[#16181D] hover:bg-black/[0.05] transition-all whitespace-nowrap"
             >
               <span>Rechner</span>
               <ChevronDown size={15} className={`text-[#E60A1C] transition-transform duration-200 ${menuOpen ? "rotate-180" : ""}`} />
@@ -77,7 +77,7 @@ export default function SiteHeader() {
             {/* Mega-menu panel — only mounted in the DOM while open, avoiding any opacity/transition edge cases */}
             {menuOpen && (
               <div
-                className="mega-menu-panel absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[min(90vw,760px)] z-50 rounded-3xl bg-[#121212] backdrop-blur-2xl border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.9)] overflow-hidden origin-top"
+                className="mega-menu-panel absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[min(90vw,760px)] z-50 rounded-3xl bg-[#FFFFFF] backdrop-blur-2xl border border-black/[0.10] shadow-[0_20px_60px_rgba(16,24,40,0.12)] overflow-hidden origin-top"
                 role="menu"
               >
                 <div className="grid grid-cols-3 gap-6 p-6">
@@ -94,15 +94,15 @@ export default function SiteHeader() {
                               <Link
                                 href={item.href}
                                 role="menuitem"
-                                className="group flex items-start gap-2.5 px-2.5 py-2 rounded-xl hover:bg-white/[0.07] transition-colors"
+                                className="group flex items-start gap-2.5 px-2.5 py-2 rounded-xl hover:bg-black/[0.07] transition-colors"
                               >
-                                <Icon size={15} className="text-white/40 group-hover:text-[#E60A1C] mt-0.5 flex-shrink-0 transition-colors" />
+                                <Icon size={15} className="text-black/40 group-hover:text-[#E60A1C] mt-0.5 flex-shrink-0 transition-colors" />
                                 <span>
-                                  <span className="block text-sm font-semibold text-white/85 group-hover:text-white transition-colors leading-tight">
+                                  <span className="block text-sm font-semibold text-black/85 group-hover:text-[#16181D] transition-colors leading-tight">
                                     {item.label}
                                   </span>
                                   {item.description && (
-                                    <span className="block text-[11px] text-white/40 leading-tight mt-0.5">
+                                    <span className="block text-[11px] text-black/40 leading-tight mt-0.5">
                                       {item.description}
                                     </span>
                                   )}
@@ -125,7 +125,7 @@ export default function SiteHeader() {
               <Link
                 key={n.href}
                 href={n.href}
-                className="nav-link flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm lg:text-base font-semibold text-white/85 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap"
+                className="nav-link flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm lg:text-base font-semibold text-black/85 hover:text-[#16181D] hover:bg-black/[0.05] transition-all whitespace-nowrap"
               >
                 <Icon size={16} className="text-[#E60A1C] flex-shrink-0" />
                 <span>{n.label}</span>

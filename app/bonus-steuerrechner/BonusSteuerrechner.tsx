@@ -96,9 +96,9 @@ export default function BonusSteuerrechner() {
   }, [brutto, steuerklasse, kirche, bonus]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-white/10">
+      <section className="relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-5 py-20 sm:py-28 text-center">
@@ -112,7 +112,7 @@ export default function BonusSteuerrechner() {
               Steuerrechner
             </span>
           </h1>
-          <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie, wie viel von Ihrem Weihnachtsgeld, Urlaubsgeld oder Bonus nach Steuern
             und Sozialabgaben tatsächlich übrig bleibt.
           </p>
@@ -123,40 +123,40 @@ export default function BonusSteuerrechner() {
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Inputs */}
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-6 flex items-center gap-2">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
               <Calculator size={22} className="text-[#E60A1C]" />
               Ihre Angaben
             </h2>
 
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-semibold text-white/70 mb-2">Reguläres Bruttogehalt / Monat</label>
+                <label className="block text-sm font-semibold text-black/70 mb-2">Reguläres Bruttogehalt / Monat</label>
                 <input
                   type="number"
                   value={brutto}
                   onChange={(e) => setBrutto(Number(e.target.value))}
-                  className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-white font-bold text-lg focus:border-[#E60A1C] outline-none"
+                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-white/70 mb-2">Weihnachtsgeld / Urlaubsgeld / Bonus (brutto)</label>
+                <label className="block text-sm font-semibold text-black/70 mb-2">Weihnachtsgeld / Urlaubsgeld / Bonus (brutto)</label>
                 <input
                   type="number"
                   value={bonus}
                   onChange={(e) => setBonus(Number(e.target.value))}
-                  className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-white font-bold text-lg focus:border-[#E60A1C] outline-none"
+                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-semibold text-white/70 mb-2">Steuerklasse</label>
+                  <label className="block text-sm font-semibold text-black/70 mb-2">Steuerklasse</label>
                   <select
                     value={steuerklasse}
                     onChange={(e) => setSteuerklasse(Number(e.target.value) as Steuerklasse)}
-                    className="w-full bg-black border border-white/15 rounded-xl px-4 py-3 text-white font-semibold focus:border-[#E60A1C] outline-none"
+                    className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-semibold focus:border-[#E60A1C] outline-none"
                   >
                     {([1, 2, 3, 4, 5, 6] as Steuerklasse[]).map((sk) => (
                       <option key={sk} value={sk}>{STEUERKLASSE_INFO[sk]}</option>
@@ -164,7 +164,7 @@ export default function BonusSteuerrechner() {
                   </select>
                 </div>
                 <div className="flex items-end pb-1">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-white/70 cursor-pointer">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-black/70 cursor-pointer">
                     <input type="checkbox" checked={kirche} onChange={(e) => setKirche(e.target.checked)} className="accent-[#E60A1C] w-4 h-4" />
                     Kirchensteuer
                   </label>
@@ -174,32 +174,32 @@ export default function BonusSteuerrechner() {
           </div>
 
           {/* Results */}
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-2 flex items-center gap-2">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-2 flex items-center gap-2">
               <Gift size={22} className="text-[#E60A1C]" />
               Netto-Bonus
             </h2>
-            <div className="flex items-center gap-2 mb-6 text-xs text-amber-400/80 bg-amber-950/20 border border-amber-500/20 rounded-xl px-3 py-2">
+            <div className="flex items-center gap-2 mb-6 text-xs text-amber-600/80 bg-amber-50 border border-amber-500/20 rounded-xl px-3 py-2">
               <Info size={13} className="flex-shrink-0" />
               Vereinfachte Berechnung — keine Steuerberatung
             </div>
 
             <div className="space-y-3">
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4">
-                <span className="text-white/70 text-sm font-medium">Steuer auf Bonus</span>
-                <span className="text-lg font-extrabold text-white">{formatEuro(result.steuerAufBonus)}</span>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Steuer auf Bonus</span>
+                <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.steuerAufBonus)}</span>
               </div>
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4">
-                <span className="text-white/70 text-sm font-medium">Sozialabgaben auf Bonus</span>
-                <span className="text-lg font-extrabold text-white">{formatEuro(result.svAufBonus)}</span>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Sozialabgaben auf Bonus</span>
+                <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.svAufBonus)}</span>
               </div>
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-5 py-4">
-                <span className="text-white/70 text-sm font-medium">Effektive Abgabenlast</span>
-                <span className="text-lg font-extrabold text-white">{result.effektiverSatz.toFixed(1)} %</span>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Effektive Abgabenlast</span>
+                <span className="text-lg font-extrabold text-[#16181D]">{result.effektiverSatz.toFixed(1)} %</span>
               </div>
               <div className="flex items-center justify-between bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-xl px-5 py-4">
-                <span className="text-white/80 text-sm font-semibold">Netto-Bonus (was übrig bleibt)</span>
-                <span className="text-2xl font-extrabold text-emerald-400">{formatEuro(result.nettoBonus)}</span>
+                <span className="text-black/80 text-sm font-semibold">Netto-Bonus (was übrig bleibt)</span>
+                <span className="text-2xl font-extrabold text-emerald-600">{formatEuro(result.nettoBonus)}</span>
               </div>
             </div>
 
@@ -216,31 +216,31 @@ export default function BonusSteuerrechner() {
 
       {/* Explainer / SEO content */}
       <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 sm:p-10 text-white/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
             Weihnachtsgeld &amp; Bonus versteuern: Warum netto so wenig übrig bleibt
           </h2>
           <p>
-            Einmalzahlungen wie <strong className="text-white">Weihnachtsgeld</strong>,{" "}
-            <strong className="text-white">Urlaubsgeld</strong>, Boni oder das{" "}
-            <strong className="text-white">13. Monatsgehalt</strong> gelten steuerlich als „sonstige Bezüge".
+            Einmalzahlungen wie <strong className="text-[#16181D]">Weihnachtsgeld</strong>,{" "}
+            <strong className="text-[#16181D]">Urlaubsgeld</strong>, Boni oder das{" "}
+            <strong className="text-[#16181D]">13. Monatsgehalt</strong> gelten steuerlich als „sonstige Bezüge".
             Sie werden nicht dem laufenden Monat, sondern dem gesamten Jahreseinkommen hinzugerechnet und
             nach der Jahreslohnsteuertabelle versteuert. Weil dadurch oft ein höherer Grenzsteuersatz greift,
             fühlt sich die Abzugslast beim Bonus spürbar höher an als beim normalen Gehalt.
           </p>
-          <h3 className="text-lg sm:text-xl font-bold text-white">Fallen auf den Bonus auch Sozialabgaben an?</h3>
+          <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Fallen auf den Bonus auch Sozialabgaben an?</h3>
           <p>
             Ja — Weihnachts- und Urlaubsgeld sind grundsätzlich sozialversicherungspflichtig, solange die
-            jeweilige <strong className="text-white">Beitragsbemessungsgrenze</strong> noch nicht erreicht ist.
+            jeweilige <strong className="text-[#16181D]">Beitragsbemessungsgrenze</strong> noch nicht erreicht ist.
             Liegt Ihr Jahreseinkommen inklusive Sonderzahlung bereits über der Grenze (2026: 96.600 € in der
             Renten-/Arbeitslosenversicherung), fallen auf den darüber liegenden Teil keine Renten- und
             Arbeitslosenbeiträge mehr an — netto bleibt dann relativ mehr übrig.
           </p>
-          <div className="bg-[#101010] border border-white/10 rounded-2xl p-5">
-            <p className="font-mono text-white text-sm mb-2">So rechnet der Bonus-Steuerrechner:</p>
-            <p className="text-white/60 text-sm">
-              Er vergleicht Ihre Jahreslohnsteuer <strong className="text-white">mit</strong> und{" "}
-              <strong className="text-white">ohne</strong> Sonderzahlung. Die Differenz ist die auf den
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-2xl p-5">
+            <p className="font-mono text-[#16181D] text-sm mb-2">So rechnet der Bonus-Steuerrechner:</p>
+            <p className="text-black/60 text-sm">
+              Er vergleicht Ihre Jahreslohnsteuer <strong className="text-[#16181D]">mit</strong> und{" "}
+              <strong className="text-[#16181D]">ohne</strong> Sonderzahlung. Die Differenz ist die auf den
               Bonus entfallende Steuer — so sehen Sie exakt, wie viel von 500 €, 1.000 € oder einem vollen
               Monatsgehalt Weihnachtsgeld netto ankommt.
             </p>
@@ -255,17 +255,17 @@ export default function BonusSteuerrechner() {
 
       {/* FAQ */}
       <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-8">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
           Häufige Fragen zu Weihnachtsgeld &amp; Bonus
         </h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
-            <details key={i} className="group bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden">
-              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-white/5 transition-colors">
-                <span className="font-semibold text-white text-sm sm:text-base pr-4">{faq.q}</span>
+            <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
+              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
+                <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
                 <ChevronDown size={18} className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180" />
               </summary>
-              <div className="px-6 pb-5 pt-1 text-white/65 text-sm sm:text-base leading-relaxed border-t border-white/5">
+              <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
                 {faq.a}
               </div>
             </details>
@@ -278,18 +278,18 @@ export default function BonusSteuerrechner() {
         <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
           <div className="relative">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
               Weitere Gehaltsrechner entdecken
             </h2>
-            <p className="text-white/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
+            <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
               Abfindungsrechner, Firmenwagenrechner, Rentenrechner &amp; mehr —
               alle kostenlos und aktuell für 2026.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link href="/abfindungsrechner" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">
+              <Link href="/abfindungsrechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
                 Abfindungsrechner
               </Link>
-              <Link href="/firmenwagenrechner" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">
+              <Link href="/firmenwagenrechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
                 Firmenwagenrechner
               </Link>
               <Link href="/" className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3 rounded-xl transition-all shadow-[0_0_25px_rgba(230,10,28,0.4)] text-sm">
