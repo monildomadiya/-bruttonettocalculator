@@ -66,6 +66,8 @@ export default function AdsSettingsPage() {
   }
 
   const publisherIdValid = /^pub-\d{10,20}$/.test(settings.publisherId) || settings.publisherId === "";
+  const adsActive = settings.enabled && !!settings.publisherId;
+  const adsConfiguredButOff = !settings.enabled && !!settings.publisherId;
 
   return (
     <AdminAuthGuard>
@@ -94,16 +96,22 @@ export default function AdsSettingsPage() {
             <>
               {/* Status banner */}
               <div className="bg-[#111] border border-white/[0.08] rounded-2xl p-5 flex items-start gap-4">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${settings.enabled && settings.publisherId ? "bg-emerald-500/15 border border-emerald-500/25" : "bg-amber-500/15 border border-amber-500/25"}`}>
-                  <Megaphone size={18} className={settings.enabled && settings.publisherId ? "text-emerald-400" : "text-amber-400"} />
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${adsActive ? "bg-emerald-500/15 border border-emerald-500/25" : "bg-amber-500/15 border border-amber-500/25"}`}>
+                  <Megaphone size={18} className={adsActive ? "text-emerald-400" : "text-amber-400"} />
                 </div>
                 <div>
                   <div className="font-bold text-white text-sm">
-                    {settings.enabled && settings.publisherId ? "Anzeigen sind aktiv" : "Anzeigen sind noch nicht aktiv"}
+                    {adsActive
+                      ? "Anzeigen sind aktiv"
+                      : adsConfiguredButOff
+                      ? "Anzeigen sind deaktiviert"
+                      : "Anzeigen sind noch nicht aktiv"}
                   </div>
                   <p className="text-xs text-white/50 mt-1 leading-relaxed">
-                    {settings.publisherId
-                      ? "Sobald Ihr AdSense-Konto von Google freigegeben ist, aktivieren Sie den Schalter unten."
+                    {adsActive
+                      ? "Ihre Anzeigen werden live auf der gesamten Website ausgeliefert. Zum Pausieren den Schalter unten deaktivieren."
+                      : adsConfiguredButOff
+                      ? "Publisher-ID ist hinterlegt. Aktivieren Sie den Schalter unten, um Anzeigen live zu schalten."
                       : "Tragen Sie Ihre Publisher-ID ein, sobald Ihr AdSense-Antrag von Google genehmigt wurde. Bis dahin bleibt diese Seite ohne Auswirkung auf die Live-Website."}
                   </p>
                 </div>
