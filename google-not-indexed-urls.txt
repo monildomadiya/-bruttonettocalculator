@@ -1,0 +1,146 @@
+# ============================================================================
+#  NICHT INDEXIERTE SEITEN  →  Google Search Console (URL-Prüfung → Indexierung beantragen)
+#  Stand: 2026-07-13
+#
+#  WICHTIG: Diese Liste basiert auf der "site:bruttonettocalculator.com"-Suche.
+#  Die site:-Suche ist NICHT die verlässliche Quelle — sie zeigt nur ungefähr,
+#  was indexiert ist ("einige sehr ähnliche Einträge wurden ausgelassen").
+#  Die echte, verlässliche Liste steht in der Search Console:
+#     Indexierung → Seiten → "Nicht indexiert"  (dort exportierbar).
+#
+#  Manuelles "Indexierung beantragen" ist auf ca. 10–15 URLs/Tag begrenzt.
+#  Reihenfolge unten = Priorität. Erst Abschnitt A, dann B abarbeiten.
+# ============================================================================
+
+
+# ----------------------------------------------------------------------------
+#  BEREITS INDEXIERT laut deinen Screenshots  →  NICHT erneut einreichen
+# ----------------------------------------------------------------------------
+# https://bruttonettocalculator.com                (Startseite)
+# https://bruttonettocalculator.com/firmenwagenrechner
+# https://bruttonettocalculator.com/lexikon
+# https://bruttonettocalculator.com/rentenrechner
+# https://bruttonettocalculator.com/bonus-steuerrechner
+# https://bruttonettocalculator.com/elterngeld-rechner
+# https://bruttonettocalculator.com/stundenlohn-rechner
+# https://bruttonettocalculator.com/brutto-netto-rechner-2027
+# https://bruttonettocalculator.com/rechner/netto-zu-brutto
+# https://bruttonettocalculator.com/blog/brutto-netto-rechner-2026-mindestlohn-2027
+# https://bruttonettocalculator.com/blog/minijob-grenze-2026
+
+
+# ----------------------------------------------------------------------------
+#  ABSCHNITT A — WICHTIGE SEITEN, die (noch) NICHT im Index erscheinen
+#  Zuerst diese einreichen (hoher Wert, wenige URLs).
+# ----------------------------------------------------------------------------
+https://bruttonettocalculator.com/blog
+https://bruttonettocalculator.com/rechner/brutto-zu-netto
+https://bruttonettocalculator.com/mindestlohn
+https://bruttonettocalculator.com/steuerklassen
+https://bruttonettocalculator.com/pfaendungstabelle
+https://bruttonettocalculator.com/minijob-rechner
+https://bruttonettocalculator.com/arbeitslosengeld-rechner
+https://bruttonettocalculator.com/abfindungsrechner
+https://bruttonettocalculator.com/faq
+https://bruttonettocalculator.com/ueber-uns
+https://bruttonettocalculator.com/kontakt
+https://bruttonettocalculator.com/impressum
+https://bruttonettocalculator.com/datenschutz
+https://bruttonettocalculator.com/blog/steuererklaerung-2025-frist-31-juli-2026
+
+
+# ----------------------------------------------------------------------------
+#  ABSCHNITT B — 86 GEHALTS-SEITEN (/rechner/…-euro-brutto-netto)
+#  Keine davon war in der site:-Suche sichtbar. Nach Priorität sortiert
+#  (häufig gesuchte Beträge 2.000–5.000 € zuerst).
+# ----------------------------------------------------------------------------
+
+# --- Hoch gesuchte Beträge zuerst ---
+https://bruttonettocalculator.com/rechner/2000-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/2500-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/2800-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3000-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3200-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3500-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3600-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3800-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4000-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4200-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4500-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5000-euro-brutto-netto
+
+# --- Restliche Beträge (aufsteigend) ---
+https://bruttonettocalculator.com/rechner/1500-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/1600-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/1700-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/1800-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/1900-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/2100-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/2200-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/2300-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/2400-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/2600-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/2700-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/2900-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3100-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3300-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3400-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3700-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/3900-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4100-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4300-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4400-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4600-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4700-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4800-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/4900-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5100-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5200-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5300-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5400-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5500-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5600-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5700-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5800-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/5900-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6000-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6100-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6200-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6300-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6400-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6500-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6600-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6700-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6800-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/6900-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7000-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7100-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7200-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7300-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7400-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7500-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7600-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7700-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7800-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/7900-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8000-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8100-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8200-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8300-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8400-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8500-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8600-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8700-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8800-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/8900-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9000-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9100-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9200-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9300-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9400-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9500-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9600-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9700-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9800-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/9900-euro-brutto-netto
+https://bruttonettocalculator.com/rechner/10000-euro-brutto-netto
