@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Clock, ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { dbQuery, Article } from "@/lib/db";
 import { Metadata } from "next";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Fintech & Steuer-Ratgeber",
@@ -145,6 +146,9 @@ export default async function BlogOverviewPage() {
             ))}
           </div>
         )}
+
+        {/* Ad: below the article grid */}
+        <AdUnit placement="content" className="!mb-0 !px-0" />
 
       </div>
     </main>

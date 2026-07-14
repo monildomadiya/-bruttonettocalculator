@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sparkles, AlertCircle } from "lucide-react";
 import Calculator from "@/components/Calculator";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2027 – Steuerreform & Lohnrechner",
@@ -122,6 +123,9 @@ export default function Rechner2027Page() {
         <Calculator />
       </div>
 
+      {/* Ad: right after the 2027 calculator (highest-traffic page, high engagement) */}
+      <AdUnit placement="content" className="!my-0 !mb-12 !px-0" />
+
       <div className="w-full max-w-6xl mx-auto bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-8 flex items-start gap-4 text-sm sm:text-base text-black/80 leading-relaxed shadow-lg mb-12">
         <AlertCircle size={22} className="text-[#E60A1C] flex-shrink-0 mt-0.5" />
         <p>
@@ -170,6 +174,9 @@ export default function Rechner2027Page() {
           </p>
         </div>
       </div>
+
+      {/* Ad: between the reform explainer and the FAQ block (deep-scroll) */}
+      <AdUnit placement="content" className="!my-0 !mb-8 !px-0" />
 
       {/* SEO Q&A section for 2027 long-tail queries */}
       <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">

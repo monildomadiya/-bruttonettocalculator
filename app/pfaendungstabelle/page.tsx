@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Scale, AlertCircle, ChevronDown, Calculator, BookOpen } from "lucide-react";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Pfändungstabelle 2026 — Aktuelle Pfändungsfreigrenzen",
@@ -327,6 +328,9 @@ export default function PfaendungstabellePage() {
             🟢 Grün = 0 € pfändbar (Freibetrag greift) · 🔴 Rot = pfändbarer Betrag · Quelle: § 850c ZPO, gültig ab 01.07.2025
           </p>
         </section>
+
+        {/* Ad: after the full pfändung data table (core content, high viewability) */}
+        <AdUnit placement="content" />
 
         {/* FAQ */}
         <section className="max-w-6xl mx-auto px-5 py-10">

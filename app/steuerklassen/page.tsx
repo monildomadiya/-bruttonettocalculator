@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BarChart3, ChevronDown, Calculator, ArrowRight, Users, RefreshCw } from "lucide-react";
+import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Steuerklassen 2026 — Alle 6 Steuerklassen im Vergleich",
@@ -334,6 +335,9 @@ export default function SteuerklassenPage() {
             Kirchensteuer, Kinderfreibetrag etc.
           </p>
         </section>
+
+        {/* Ad: between the comparison table and the Steuerklassenwechsel section */}
+        <AdUnit placement="content" />
 
         {/* Steuerklassenwechsel */}
         <section className="max-w-6xl mx-auto px-5 py-8">
