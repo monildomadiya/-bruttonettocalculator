@@ -68,7 +68,12 @@ const appSchema = {
   url: "https://bruttonettocalculator.com/buergergeld-rechner",
   applicationCategory: "FinanceApplication",
   operatingSystem: "All",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+  offers: {
+    "@type": "Offer",
+    price: "0.00",
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+  },
   description: "Kostenloser Bürgergeld-Rechner 2026 — Anspruch aus Regelsatz, KdU und angerechnetem Einkommen berechnen (SGB II).",
 };
 

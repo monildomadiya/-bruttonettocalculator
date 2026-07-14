@@ -32,6 +32,14 @@ export const metadata: Metadata = {
     "kinderfreibetrag 2027",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/brutto-netto-rechner-2027" },
+  openGraph: {
+    title: "Brutto Netto Rechner 2027 – Steuerreform & Lohnrechner",
+    description:
+      "Steuerreform 2027 Rechner: Grundfreibetrag steigt auf 12.900 €, Kindergeld auf 272 €. Berechnen Sie mit dem Brutto Netto Rechner 2027 & Lohnrechner 2027, wie viel mehr Netto vom Brutto Sie ab dem 1.1.2027 haben – kostenlos & im Jahresvergleich zu 2026.",
+    url: "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
+    locale: "de_DE",
+    type: "website",
+  },
 };
 
 const faqs = [
@@ -85,7 +93,12 @@ const appJsonLd = {
   inLanguage: "de-DE",
   description:
     "Kostenloser Steuerreform 2027 Rechner: Nettogehalt ab dem 1.1.2027 mit höherem Grundfreibetrag berechnen und im Jahresvergleich zu 2026 sehen.",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+  offers: {
+    "@type": "Offer",
+    price: "0.00",
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+  },
 };
 
 const breadcrumbJsonLd = {

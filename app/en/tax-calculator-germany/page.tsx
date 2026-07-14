@@ -84,7 +84,12 @@ const appSchema = {
   applicationCategory: "FinanceApplication",
   operatingSystem: "All",
   inLanguage: "en",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+  offers: {
+    "@type": "Offer",
+    price: "0.00",
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+  },
   description: "Free German gross-to-net salary and income tax calculator for 2026 (§ 32a EStG), all 6 tax classes.",
 };
 

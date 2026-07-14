@@ -92,7 +92,12 @@ const appSchema = {
   url: "https://bruttonettocalculator.com/lohnsteuerrechner",
   applicationCategory: "FinanceApplication",
   operatingSystem: "All",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+  offers: {
+    "@type": "Offer",
+    price: "0.00",
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+  },
   description: "Kostenloser Lohnsteuerrechner & Nettolohnrechner — Lohnsteuer, Soli und Nettolohn aus dem Bruttolohn berechnen (§ 32a EStG 2026).",
 };
 

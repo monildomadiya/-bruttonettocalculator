@@ -15,6 +15,14 @@ export const metadata: Metadata = {
   description:
     "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",
   alternates: { canonical: "/" },
+  openGraph: {
+    title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
+    description:
+      "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",
+    url: "https://bruttonettocalculator.com",
+    locale: "de_DE",
+    type: "website",
+  },
 };
 
 const faqs = [
@@ -157,8 +165,9 @@ const webAppSchema = {
   "description": "Präziser Brutto Netto Rechner für Deutschland. Gehaltsberechnung nach amtlichen Vorgaben § 32a EStG für das Steuerjahr 2026/2027 mit allen 6 Steuerklassen, BKK/TK Zusatzbeitrag 2026, Mindestlohn 2027, Firmenwagen (1%-Regelung) und Rentenrechner.",
   "offers": {
     "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "EUR"
+    "price": "0.00",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock"
   },
   "featureList": [
     "Berechnung von Lohnsteuer, Solidaritätszuschlag und Kirchensteuer",
