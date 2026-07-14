@@ -3,19 +3,22 @@ import FirmenwagenrechnerCalculator from "./FirmenwagenrechnerCalculator";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Firmenwagenrechner 2026 — 1%-Regelung berechnen",
+  title: "Firmenwagenrechner & Dienstwagenrechner 2026 — 1%-Regelung",
   description:
-    "Firmenwagenrechner 2026: Geldwerten Vorteil nach der 1%-Regelung berechnen — inkl. Elektrofahrzeug-Sätze (0,25%/0,5%) und 0,03%-Zuschlag für den Arbeitsweg. Kostenlos & sofort.",
+    "Firmenwagenrechner & Dienstwagenrechner 2026: Geldwerten Vorteil nach der 1%-Regelung berechnen — inkl. Elektrofahrzeug-Sätze (0,25%/0,5%) und 0,03%-Zuschlag für den Arbeitsweg. Kostenlos & sofort.",
   keywords: [
     "Firmenwagenrechner",
     "Firmenwagenrechner 2026",
+    "Dienstwagenrechner",
+    "Dienstwagenrechner 2026",
+    "dienstwagen versteuern",
+    "dienstwagen 1 prozent regelung",
     "1%-Regelung",
     "1 Prozent Regelung Firmenwagen",
     "geldwerter Vorteil Dienstwagen",
     "gehaltsrechner mit auto",
     "brutto netto rechner firmenwagen",
     "brutto netto rechner mit firmenwagen",
-    "Dienstwagenrechner",
     "Firmenwagen versteuern",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/firmenwagenrechner" },

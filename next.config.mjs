@@ -8,11 +8,7 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
-      {
-        source: "/gehaltsrechner",
-        destination: "/",
-        permanent: true,
-      },
+      // NOTE: /gehaltsrechner is now a dedicated ranking page — no longer redirected.
       {
         source: "/brutto-netto-rechner",
         destination: "/",
@@ -23,9 +19,10 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      // "lohnrechner" (40.5K/mo) is funneled to the dedicated Lohnsteuerrechner page.
       {
         source: "/lohnrechner",
-        destination: "/",
+        destination: "/lohnsteuerrechner",
         permanent: true,
       },
       {

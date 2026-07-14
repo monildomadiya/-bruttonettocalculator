@@ -1,6 +1,7 @@
 import {
   Calculator, ArrowRightLeft, LayoutList, Calendar, Scale,
   Car, PiggyBank, Umbrella, Wallet2, Baby, Banknote, Gift, Clock3,
+  Coins, Receipt, Landmark, HandCoins, GraduationCap, HeartHandshake, Timer, Globe,
 } from "lucide-react";
 
 export interface NavLink {
@@ -21,6 +22,9 @@ export const calculatorGroups: NavGroup[] = [
     label: "Gehalt & Steuer",
     items: [
       { href: "/", label: "Brutto Netto Rechner", icon: Calculator, description: "Der Hauptrechner für 2026/2027" },
+      { href: "/gehaltsrechner", label: "Gehaltsrechner", icon: Coins, description: "Brutto Netto Gehalt 2026" },
+      { href: "/lohnsteuerrechner", label: "Lohnsteuerrechner", icon: Receipt, description: "Lohnsteuer & Nettolohn" },
+      { href: "/einkommensteuer-rechner", label: "Einkommensteuer-Rechner", icon: Landmark, description: "Jahressteuer § 32a EStG" },
       { href: "/rechner/brutto-zu-netto", label: "Brutto zu Netto", icon: ArrowRightLeft, description: "Direkt umrechnen" },
       { href: "/rechner/netto-zu-brutto", label: "Netto zu Brutto", icon: ArrowRightLeft, description: "Für Gehaltsverhandlungen" },
       { href: "/steuerklassen", label: "Steuerklassen", icon: LayoutList, description: "Alle 6 Klassen im Vergleich" },
@@ -32,6 +36,8 @@ export const calculatorGroups: NavGroup[] = [
     items: [
       { href: "/mindestlohn", label: "Mindestlohn Rechner", icon: Scale, description: "13,90 €/h ab 2026" },
       { href: "/minijob-rechner", label: "Minijob-Rechner", icon: Wallet2, description: "Verdienstgrenze 603 €" },
+      { href: "/buergergeld-rechner", label: "Bürgergeld-Rechner", icon: HandCoins, description: "Regelsatz 563 € · SGB II" },
+      { href: "/bafoeg-rechner", label: "BAföG-Rechner", icon: GraduationCap, description: "Anspruch für Studierende" },
       { href: "/elterngeld-rechner", label: "Elterngeld-Rechner", icon: Baby, description: "Basiselterngeld & Plus" },
       { href: "/arbeitslosengeld-rechner", label: "Arbeitslosengeld-Rechner", icon: Umbrella, description: "ALG I Orientierung" },
       { href: "/pfaendungstabelle", label: "Pfändungstabelle", icon: Scale, description: "Freigrenzen 2026" },
@@ -40,11 +46,14 @@ export const calculatorGroups: NavGroup[] = [
   {
     label: "Sonderfälle",
     items: [
-      { href: "/firmenwagenrechner", label: "Firmenwagenrechner", icon: Car, description: "1%-Regelung" },
+      { href: "/firmenwagenrechner", label: "Firmenwagenrechner", icon: Car, description: "1%-Regelung & Dienstwagen" },
       { href: "/rentenrechner", label: "Rentenrechner", icon: PiggyBank, description: "Rentenbeitrag & Prognose" },
+      { href: "/witwenrente-rechner", label: "Witwenrente-Rechner", icon: HeartHandshake, description: "55 % / 25 % berechnen" },
       { href: "/abfindungsrechner", label: "Abfindungsrechner", icon: Banknote, description: "Fünftelregelung" },
       { href: "/bonus-steuerrechner", label: "Bonus-Steuerrechner", icon: Gift, description: "Weihnachts- & Urlaubsgeld" },
       { href: "/stundenlohn-rechner", label: "Stundenlohn-Rechner", icon: Clock3, description: "Netto pro Stunde" },
+      { href: "/teilzeitrechner", label: "Teilzeitrechner", icon: Timer, description: "Netto bei Teilzeit" },
+      { href: "/en/tax-calculator-germany", label: "Tax Calculator (EN)", icon: Globe, description: "German salary in English" },
     ],
   },
 ];
