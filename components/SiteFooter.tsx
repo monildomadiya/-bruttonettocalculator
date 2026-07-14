@@ -15,7 +15,7 @@ export default function SiteFooter() {
 
   return (
     <footer className="no-print pb-12 px-3 sm:px-6">
-      <div className="max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-12 md:p-16 relative overflow-hidden shadow-[0_0_80px_rgba(16,24,40,0.12)]">
+      <div className="max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-12 md:p-16 relative overflow-hidden shadow-sm">
         
         {/* Subtle red accent glow line at the top */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 sm:w-1/2 h-[1px] bg-gradient-to-r from-transparent via-[#E60A1C]/70 to-transparent" />
@@ -100,7 +100,7 @@ export default function SiteFooter() {
                 href="https://promptking.in"
                 target="_blank"
                 rel="noopener"
-                className="group block p-4 rounded-2xl bg-gradient-to-br from-[#F1F3F5] to-[#FFFFFF] border border-black/[0.10] hover:border-[#E60A1C]/60 transition-all shadow-md hover:shadow-[0_0_25px_rgba(230,10,28,0.25)]"
+                className="group block p-4 rounded-2xl bg-gradient-to-br from-[#F1F3F5] to-[#FFFFFF] border border-black/[0.10] hover:border-[#E60A1C]/60 transition-all shadow-md"
               >
                 <div className="flex items-center justify-between gap-2 mb-1">
                   <span className="min-w-0 font-display font-bold text-[#16181D] group-hover:text-[#E60A1C] transition-colors flex items-center gap-2">
@@ -134,7 +134,7 @@ export default function SiteFooter() {
                   type="button"
                   title="Anmelden"
                   aria-label="Für Newsletter anmelden"
-                  className="w-9 h-9 rounded-full bg-[#E60A1C] hover:bg-[#FF2436] flex items-center justify-center text-white flex-shrink-0 shadow-[0_0_15px_rgba(230,10,28,0.5)] transition-all"
+                  className="w-9 h-9 rounded-full bg-[#E60A1C] hover:bg-[#FF2436] flex items-center justify-center text-white flex-shrink-0 transition-all"
                 >
                   <ArrowRight size={16} />
                 </button>
@@ -149,7 +149,7 @@ export default function SiteFooter() {
           <div>
             © {new Date().getFullYear()} BruttoNettoCalculator.com. Alle Rechte vorbehalten. · Keine Steuerberatung.
           </div>
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-500/30 text-emerald-600 text-xs font-mono font-semibold shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-500/30 text-emerald-600 text-xs font-mono font-semibold shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
             <span>Amtliche Steuerwerte 2026 aktiv</span>
           </div>

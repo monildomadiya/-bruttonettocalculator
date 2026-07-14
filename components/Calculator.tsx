@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
+import AdUnit from "@/components/AdUnit";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
@@ -227,7 +228,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
       <div className="flex justify-center mb-6">
         <ReviewerByline />
       </div>
-      <div className="rounded-3xl overflow-hidden border border-black/[0.12] bg-[#FFFFFF] shadow-[0_0_60px_rgba(16,24,40,0.12)] w-full max-w-full">
+      <div className="rounded-3xl overflow-hidden border border-black/[0.12] bg-[#FFFFFF] shadow-sm w-full max-w-full">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.15fr] w-full max-w-full min-w-0">
 
         {/* ═══ LEFT — Inputs ════════════════════════════════════════ */}
@@ -248,7 +249,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     id={`ansicht-${val ? "jahr" : "monat"}`}
                     onClick={() => setIsJahresansicht(val)}
                     className={`px-3.5 sm:px-4 py-2 rounded-xl transition-all ${
-                      isJahresansicht === val ? "bg-[#E60A1C] text-white shadow-[0_0_15px_rgba(230,10,28,0.6)] font-bold" : "text-black/60 hover:text-white"
+                      isJahresansicht === val ? "bg-[#E60A1C] text-white  font-bold" : "text-black/60 hover:text-white"
                     }`}
                   >
                     {label}
@@ -322,7 +323,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     onClick={() => setJahr(j)}
                     className={`w-full py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base font-bold border transition-all ${
                       jahr === j
-                        ? "text-white border-transparent shadow-[0_0_20px_rgba(230,10,28,0.4)]"
+                        ? "text-white border-transparent "
                         : "border-black/[0.12] text-black/60 hover:border-black/[0.20] hover:bg-black/[0.04] hover:text-[#16181D]"
                     }`}
                     style={jahr === j ? { background: "linear-gradient(135deg,#E60A1C,#FF2436)" } : undefined}
@@ -352,7 +353,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     aria-pressed={steuerklasse === sk}
                     className={`sk-tab py-3 sm:py-3.5 rounded-2xl text-base sm:text-lg font-extrabold border transition-all w-full min-w-0 ${
                       steuerklasse === sk
-                        ? "text-white border-transparent shadow-[0_0_20px_rgba(230,10,28,0.4)]"
+                        ? "text-white border-transparent "
                         : "border-black/[0.12] text-black/60 hover:border-black/[0.20] hover:bg-black/[0.04] hover:text-[#16181D]"
                     }`}
                     style={steuerklasse === sk ? { background: "linear-gradient(135deg,#E60A1C,#FF2436)" } : undefined}
@@ -385,6 +386,9 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 hint="9 % auf die Einkommensteuer"
               />
             </div>
+
+            {/* Ad — fills the space below the options (self-hides if unfilled) */}
+            <AdUnit placement="content" className="!my-0 !px-0" />
           </div>
 
           {/* Disclaimer */}
@@ -424,7 +428,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             </div>
 
             {/* ── Main Netto Hero Card ───────────────────────────── */}
-            <div className="bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FFFFFF] border border-black/[0.12] rounded-3xl p-5 sm:p-8 mb-6 sm:mb-8 shadow-[0_10px_30px_rgba(16,24,40,0.12)] relative group overflow-hidden">
+            <div className="bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FFFFFF] border border-black/[0.12] rounded-3xl p-5 sm:p-8 mb-6 sm:mb-8 shadow-sm relative group overflow-hidden">
               <div className="absolute top-0 right-0 w-72 h-72 bg-[#E60A1C]/15 rounded-full blur-3xl pointer-events-none group-hover:bg-[#E60A1C]/25 transition-all duration-500" />
               
               <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
@@ -724,7 +728,7 @@ function Toggle({
         style={{
           width: "50px", height: "28px",
           background: checked ? "#E60A1C" : "rgba(16,24,40,0.12)",
-          boxShadow: checked ? "0 0 15px rgba(230,10,28,0.60)" : "none",
+          boxShadow: checked ? "0 1px 3px rgba(16,24,40,0.20)" : "none",
         }}
       >
         <span

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  CheckCircle2, Shield, Lock, ArrowRight, ChevronDown,
+  Shield, ArrowRight, ChevronDown,
   FileText, TrendingUp, Building2,
   MousePointerClick, SlidersHorizontal, Wallet,
-  BadgePercent, AlertTriangle, Sparkles,
+  AlertTriangle, Sparkles,
 } from "lucide-react";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
@@ -125,14 +125,6 @@ const infoCards = [
   },
 ];
 
-const trustBadges = [
-  { label: "Amtliche Formel § 32a EStG",     icon: Shield },
-  { label: "SV-Rechengrößen 2026 (amtlich)", icon: CheckCircle2 },
-  { label: "Alle 6 Steuerklassen",           icon: BadgePercent },
-  { label: "Keine Registrierung",            icon: Lock },
-  { label: "DSGVO-konform",                  icon: Shield },
-];
-
 const steps = [
   {
     Icon:  MousePointerClick,
@@ -213,8 +205,8 @@ export default function HomePage() {
         <div className="w-full max-w-6xl mx-auto relative z-10 text-center flex flex-col items-center">
 
           {/* Glowing Pill Badge */}
-          <div className="inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-[#FFFFFF] border border-black/[0.12] rounded-full px-4 sm:px-6 py-2 sm:py-2.5 mb-6 sm:mb-8 shadow-[0_0_25px_rgba(230,10,28,0.25)] animate-fade-up max-w-[95vw]">
-            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#E60A1C] shadow-[0_0_8px_#E60A1C] animate-pulse flex-shrink-0" />
+          <div className="inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-[#FFFFFF] border border-black/[0.12] rounded-full px-4 sm:px-6 py-2 sm:py-2.5 mb-6 sm:mb-8 animate-fade-up max-w-[95vw]">
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#E60A1C] animate-pulse flex-shrink-0" />
             <span className="font-mono text-[11px] sm:text-sm uppercase tracking-wider sm:tracking-widest text-black/90 font-bold leading-tight">
               OFFIZIELL · § 32A ESTG · STEUERJAHR 2026/2027
             </span>
@@ -252,7 +244,7 @@ export default function HomePage() {
           >
             <a
               href="#rechner"
-              className="btn-primary text-base sm:text-lg font-bold px-7 sm:px-9 py-4 rounded-full shadow-[0_0_25px_rgba(230,10,28,0.5)] hover:shadow-[0_0_35px_rgba(230,10,28,0.8)] transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
+              className="btn-primary text-base sm:text-lg font-bold px-7 sm:px-9 py-4 rounded-full transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
             >
               <Sparkles size={20} className="flex-shrink-0" /> Jetzt Gehalt berechnen
             </a>
@@ -264,27 +256,8 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Trust badges — clean pill chips */}
-          <div
-            className="w-full max-w-4xl mx-auto mt-6 sm:mt-9 animate-fade-up px-2 sm:px-0"
-            style={{ animationDelay: "320ms" }}
-          >
-            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
-              {trustBadges.map(({ label, icon: Icon }) => (
-                <div
-                  key={label}
-                  className="group flex items-center gap-2.5 rounded-full bg-white border border-black/[0.08] pl-1.5 pr-4 py-1.5 shadow-[0_1px_3px_rgba(16,24,40,0.05)] hover:border-[#E60A1C]/35 hover:shadow-[0_6px_18px_rgba(230,10,28,0.10)] hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  <span className="w-8 h-8 rounded-full bg-[#E60A1C]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#E60A1C]/15 transition-colors">
-                    <Icon size={15} className="text-[#E60A1C]" />
-                  </span>
-                  <span className="text-xs sm:text-[13px] font-semibold text-[#16181D] leading-tight whitespace-nowrap">
-                    {label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Ad: hero banner (replaces the former trust badges) */}
+          <AdUnit placement="homepage" className="!mt-8 sm:!mt-10 !mb-0" />
         </div>
       </section>
 
@@ -351,7 +324,7 @@ export default function HomePage() {
 
       {/* ── Ready CTA Banner (Like PromptKing Screenshot) ─────────────── */}
       <section className="max-w-6xl mx-auto px-5 pb-8 sm:pb-10">
-        <div className="relative rounded-3xl bg-gradient-to-r from-[#FFFFFF] via-[#F1F3F5] to-[#FFFFFF] p-8 sm:p-14 border border-black/[0.12] overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-8 shadow-[0_0_50px_rgba(16,24,40,0.12)]">
+        <div className="relative rounded-3xl bg-gradient-to-r from-[#FFFFFF] via-[#F1F3F5] to-[#FFFFFF] p-8 sm:p-14 border border-black/[0.12] overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-8 shadow-sm">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#E60A1C]/15 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10 text-center sm:text-left max-w-xl">
             <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/20 px-4 py-1.5 rounded-full mb-4">
@@ -366,7 +339,7 @@ export default function HomePage() {
           </div>
           <a
             href="#rechner"
-            className="relative z-10 btn-primary flex-shrink-0 text-base sm:text-lg font-bold px-8 sm:px-9 py-4 rounded-full shadow-[0_0_25px_rgba(230,10,28,0.5)] hover:shadow-[0_0_35px_rgba(230,10,28,0.8)] transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
+            className="relative z-10 btn-primary flex-shrink-0 text-base sm:text-lg font-bold px-8 sm:px-9 py-4 rounded-full transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
           >
             Jetzt berechnen <ArrowRight size={20} className="flex-shrink-0" />
           </a>

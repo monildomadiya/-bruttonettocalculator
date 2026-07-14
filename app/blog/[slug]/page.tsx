@@ -280,7 +280,7 @@ export default async function ArticleReaderPage({
           }}
         />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
           {/* ── Breadcrumbs ─────────────────────────────────────────── */}
           <nav
             aria-label="Breadcrumb"
@@ -501,7 +501,7 @@ export default async function ArticleReaderPage({
                     {faqs.map((faq, idx) => (
                       <details
                         key={idx}
-                        className="group rounded-xl bg-[#FFFFFF] border border-black/[0.08] overflow-hidden transition-all duration-200 open:border-black/[18%] open:bg-[#FFFFFF] open:shadow-[0_4px_24px_rgba(16,24,40,0.12)]"
+                        className="group rounded-xl bg-[#FFFFFF] border border-black/[0.08] overflow-hidden transition-all duration-200 open:border-black/[18%] open:bg-[#FFFFFF] open:shadow-sm"
                       >
                         <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
                           <span className="flex items-start gap-3">
@@ -539,7 +539,7 @@ export default async function ArticleReaderPage({
                   background:
                     "linear-gradient(135deg, #FFECEE 0%, #FFF6F7 50%, #FFE4E7 100%)",
                   border: "1px solid rgba(230,10,28,0.20)",
-                  boxShadow: "0 12px 40px rgba(230,10,28,0.10)",
+                  boxShadow: "0 4px 16px rgba(16,24,40,0.06)",
                 }}
               >
                 {/* Glow effect */}
@@ -572,7 +572,7 @@ export default async function ArticleReaderPage({
                     style={{
                       background:
                         "linear-gradient(135deg,#E60A1C,#FF2436)",
-                      boxShadow: "0 6px 24px rgba(230,10,28,0.35)",
+                      boxShadow: "0 2px 8px rgba(230,10,28,0.18)",
                     }}
                   >
                     Jetzt berechnen
@@ -625,7 +625,7 @@ export default async function ArticleReaderPage({
                       background:
                         "linear-gradient(135deg, #FFECEE 0%, #FFE4E7 100%)",
                       border: "1px solid rgba(230,10,28,0.18)",
-                      boxShadow: "0 6px 20px rgba(230,10,28,0.08)",
+                      boxShadow: "0 4px 14px rgba(16,24,40,0.06)",
                     }}
                   >
                     <Calculator
@@ -644,7 +644,7 @@ export default async function ArticleReaderPage({
                       style={{
                         background:
                           "linear-gradient(135deg,#E60A1C,#FF2436)",
-                        boxShadow: "0 4px 16px rgba(230,10,28,0.35)",
+                        boxShadow: "0 2px 8px rgba(230,10,28,0.18)",
                       }}
                     >
                       Jetzt berechnen

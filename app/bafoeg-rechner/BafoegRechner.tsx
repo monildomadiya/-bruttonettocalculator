@@ -203,7 +203,7 @@ export default function BafoegRechner() {
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link href="/minijob-rechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.08] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">Minijob-Rechner</Link>
             <Link href="/gehaltsrechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.08] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">Gehaltsrechner</Link>
-            <Link href="/" className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3 rounded-xl transition-all shadow-[0_0_25px_rgba(230,10,28,0.4)] text-sm"><GraduationCap size={16} /> Brutto-Netto-Rechner <ArrowRight size={16} /></Link>
+            <Link href="/" className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3 rounded-xl transition-all text-sm"><GraduationCap size={16} /> Brutto-Netto-Rechner <ArrowRight size={16} /></Link>
           </div>
         </div>
       </section>

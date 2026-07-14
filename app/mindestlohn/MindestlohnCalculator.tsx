@@ -182,7 +182,7 @@ export default function MindestlohnCalculator() {
 
             <Link
               href="/"
-              className="mt-5 w-full flex items-center justify-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3.5 rounded-xl transition-all shadow-[0_0_20px_rgba(230,10,28,0.35)] hover:shadow-[0_0_30px_rgba(230,10,28,0.55)] text-sm"
+              className="mt-5 w-full flex items-center justify-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3.5 rounded-xl transition-all text-sm"
             >
               Exakt berechnen im Brutto-Netto-Rechner
               <ArrowRight size={16} />
@@ -294,7 +294,7 @@ export default function MindestlohnCalculator() {
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-8 py-3.5 rounded-xl transition-all shadow-[0_0_25px_rgba(230,10,28,0.4)] hover:shadow-[0_0_35px_rgba(230,10,28,0.6)] text-sm sm:text-base"
+              className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-8 py-3.5 rounded-xl transition-all text-sm sm:text-base"
             >
               <Calculator size={18} />
               Jetzt Netto berechnen

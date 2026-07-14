@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main className="min-h-[80vh] bg-[#F4F5F7] text-[#16181D] flex items-center justify-center px-6 py-20 relative overflow-hidden">
-      <div className="max-w-2xl w-full text-center space-y-8 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-14 shadow-[0_0_60px_rgba(230,10,28,0.15)] relative overflow-hidden">
+      <div className="max-w-2xl w-full text-center space-y-8 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-14 relative overflow-hidden">
         
         {/* Subtle Background Glow */}
         <div className="absolute -top-28 -left-28 w-56 h-56 rounded-full bg-[#E60A1C]/20 blur-3xl pointer-events-none" />

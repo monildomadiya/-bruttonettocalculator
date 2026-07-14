@@ -16,7 +16,7 @@ export default function AccordionFaq({ faqs }: { faqs: FaqItem[] }) {
           <div
             key={i}
             className={`bg-[#FFFFFF] border rounded-3xl overflow-hidden transition-all duration-300 ${
-              isOpen ? "border-[#E60A1C]/50 shadow-[0_0_25px_rgba(230,10,28,0.2)] bg-[#F1F3F5]" : "border-black/[0.10] hover:border-black/[0.16]"
+              isOpen ? "border-[#E60A1C]/50  bg-[#F1F3F5]" : "border-black/[0.10] hover:border-black/[0.16]"
             }`}
           >
             <button

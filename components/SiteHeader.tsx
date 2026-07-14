@@ -44,7 +44,7 @@ export default function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-2xl border-b border-black/[0.08] shadow-[0_4px_25px_rgba(16,24,40,0.12)]">
+    <header className="sticky top-0 z-40 bg-white/60 backdrop-blur-2xl backdrop-saturate-150 border-b border-black/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_4px_20px_rgba(0,0,0,0.05)]">
       <div className="max-w-6xl mx-auto px-5 h-[72px] sm:h-[84px] md:h-[92px] flex items-center justify-between">
 
         {/* Logo */}
@@ -77,7 +77,7 @@ export default function SiteHeader() {
             {/* Mega-menu panel — only mounted in the DOM while open, avoiding any opacity/transition edge cases */}
             {menuOpen && (
               <div
-                className="mega-menu-panel absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[min(90vw,760px)] z-50 rounded-3xl bg-[#FFFFFF] backdrop-blur-2xl border border-black/[0.10] shadow-[0_20px_60px_rgba(16,24,40,0.12)] overflow-hidden origin-top"
+                className="mega-menu-panel absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[min(90vw,760px)] z-50 rounded-3xl bg-white/80 backdrop-blur-2xl backdrop-saturate-150 border border-black/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.10)] overflow-hidden origin-top"
                 role="menu"
               >
                 <div className="grid grid-cols-3 gap-6 p-6">

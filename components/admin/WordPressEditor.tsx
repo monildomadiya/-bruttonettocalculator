@@ -122,13 +122,13 @@ export default function WordPressEditor({ content, onChange }: WordPressEditorPr
     if (type === "tip") {
       snippet = `\n<div class="my-6 p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 flex items-start gap-4 shadow-lg">\n  <div class="text-2xl select-none mt-1">💡</div>\n  <div>\n    <h4 class="font-bold text-[#16181D] mb-1 !mt-0">Experten-Tipp</h4>\n    <p class="text-sm leading-relaxed text-emerald-800/90 !mb-0">Hier Ihren hilfreichen Tipp oder Hinweis eintragen...</p>\n  </div>\n</div>\n`;
     } else if (type === "warning") {
-      snippet = `\n<div class="my-6 p-5 rounded-2xl bg-[#E60A1C]/10 border border-[#E60A1C]/40 text-[#16181D] flex items-start gap-4 shadow-[0_0_25px_rgba(230,10,28,0.12)]">\n  <div class="text-2xl select-none mt-1">⚠️</div>\n  <div>\n    <h4 class="font-bold text-[#C81020] mb-1 !mt-0">Wichtiger Hinweis (Achtung)</h4>\n    <p class="text-sm leading-relaxed text-black/80 !mb-0">Hier wichtige Fristen, Steuerstrafen oder Gesetzesänderungen notieren...</p>\n  </div>\n</div>\n`;
+      snippet = `\n<div class="my-6 p-5 rounded-2xl bg-[#E60A1C]/10 border border-[#E60A1C]/40 text-[#16181D] flex items-start gap-4 ">\n  <div class="text-2xl select-none mt-1">⚠️</div>\n  <div>\n    <h4 class="font-bold text-[#C81020] mb-1 !mt-0">Wichtiger Hinweis (Achtung)</h4>\n    <p class="text-sm leading-relaxed text-black/80 !mb-0">Hier wichtige Fristen, Steuerstrafen oder Gesetzesänderungen notieren...</p>\n  </div>\n</div>\n`;
     } else if (type === "info") {
       snippet = `\n<div class="my-6 p-5 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-700 flex items-start gap-4">\n  <div class="text-2xl select-none mt-1">ℹ️</div>\n  <div>\n    <h4 class="font-bold text-[#16181D] mb-1 !mt-0">Gut zu wissen</h4>\n    <p class="text-sm leading-relaxed text-blue-800/90 !mb-0">Hier Hintergrundinformationen oder Details zur Sozialversicherung angeben...</p>\n  </div>\n</div>\n`;
     } else if (type === "tax") {
       snippet = `\n<div class="my-8 p-6 rounded-3xl bg-gradient-to-r from-amber-500/15 via-[#F1F3F5] to-transparent border-l-4 border-amber-400 text-amber-800 shadow-xl">\n  <div class="flex items-center gap-2 mb-2">\n    <span class="text-xl">💰</span>\n    <h4 class="font-extrabold text-amber-600 uppercase tracking-wider text-xs">Steuer-Optimierung 2026/2027</h4>\n  </div>\n  <p class="text-base text-[#16181D] font-medium leading-relaxed">Wussten Sie schon? Mit der richtigen Steuerklasse oder Freibeträgen lassen sich jährlich bis zu 1.200 € mehr Netto herausholen!</p>\n</div>\n`;
     } else if (type === "calculator") {
-      snippet = `\n<div class="my-10 p-8 rounded-[32px] bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FDECEE] border border-[#E60A1C]/40 text-center shadow-[0_20px_50px_rgba(16,24,40,0.12)] relative overflow-hidden">\n  <div class="absolute top-0 right-0 w-48 h-48 bg-[#E60A1C]/15 rounded-full blur-3xl pointer-events-none"></div>\n  <span class="inline-block px-3 py-1 rounded-full bg-[#E60A1C]/20 border border-[#E60A1C]/40 text-[#FF2E44] text-xs font-extrabold uppercase tracking-widest mb-3">Kostenloser Gehaltsrechner</span>\n  <h3 class="text-2xl sm:text-3xl font-black text-[#16181D] mb-3">Wie viel Netto bleibt von Ihrem Brutto in 2026/2027?</h3>\n  <p class="text-black/70 max-w-xl mx-auto mb-6 text-sm sm:text-base">Berechnen Sie jetzt sekundenschnell Ihre exakten Abzüge für Lohnsteuer, Krankenkasse, Rentenversicherung und Pflegeversicherung!</p>\n  <a href="/" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-extrabold text-white text-sm sm:text-base shadow-xl transition-all hover:scale-105" style="background: linear-gradient(135deg,#E60A1C,#FF2436); box-shadow: 0 4px 20px rgba(230,10,28,0.5); color:#ffffff; text-decoration:none;">🧮 Jetzt Brutto-Netto berechnen →</a>\n</div>\n`;
+      snippet = `\n<div class="my-10 p-8 rounded-[32px] bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FDECEE] border border-[#E60A1C]/40 text-center shadow-sm relative overflow-hidden">\n  <div class="absolute top-0 right-0 w-48 h-48 bg-[#E60A1C]/15 rounded-full blur-3xl pointer-events-none"></div>\n  <span class="inline-block px-3 py-1 rounded-full bg-[#E60A1C]/20 border border-[#E60A1C]/40 text-[#FF2E44] text-xs font-extrabold uppercase tracking-widest mb-3">Kostenloser Gehaltsrechner</span>\n  <h3 class="text-2xl sm:text-3xl font-black text-[#16181D] mb-3">Wie viel Netto bleibt von Ihrem Brutto in 2026/2027?</h3>\n  <p class="text-black/70 max-w-xl mx-auto mb-6 text-sm sm:text-base">Berechnen Sie jetzt sekundenschnell Ihre exakten Abzüge für Lohnsteuer, Krankenkasse, Rentenversicherung und Pflegeversicherung!</p>\n  <a href="/" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-extrabold text-white text-sm sm:text-base shadow-xl transition-all hover:scale-105" style="background: linear-gradient(135deg,#E60A1C,#FF2436); box-shadow: 0 4px 20px rgba(230,10,28,0.5); color:#ffffff; text-decoration:none;">🧮 Jetzt Brutto-Netto berechnen →</a>\n</div>\n`;
     } else if (type === "table") {
       snippet = `\n<div class="my-8 overflow-x-auto rounded-2xl border border-black/[0.10] bg-[#FFFFFF] shadow-2xl">\n  <table class="w-full text-left border-collapse text-sm">\n    <thead>\n      <tr class="bg-[#F1F3F5] text-[#16181D] border-b border-black/[0.10] font-bold">\n        <th class="p-4">Steuerklasse</th>\n        <th class="p-4">Zielgruppe / Merkmal</th>\n        <th class="p-4">Durchschnittlicher Abzug</th>\n      </tr>\n    </thead>\n    <tbody class="divide-y divide-black/10 text-black/80">\n      <tr class="hover:bg-black/[0.04] transition-colors">\n        <td class="p-4 font-bold text-[#16181D]">Klasse I</td>\n        <td class="p-4">Ledige, Geschiedene</td>\n        <td class="p-4 text-[#FF2E44] font-semibold">Standard (ca. 32-36%)</td>\n      </tr>\n      <tr class="hover:bg-black/[0.04] transition-colors">\n        <td class="p-4 font-bold text-[#16181D]">Klasse III</td>\n        <td class="p-4">Verheiratete (Allein- / Besserverdiener)</td>\n        <td class="p-4 text-emerald-600 font-semibold">Geringster Abzug (ca. 20-25%)</td>\n      </tr>\n      <tr class="hover:bg-black/[0.04] transition-colors">\n        <td class="p-4 font-bold text-[#16181D]">Klasse V</td>\n        <td class="p-4">Verheiratete (Zweitverdiener)</td>\n        <td class="p-4 text-amber-600 font-semibold">Höchster Abzug (ca. 45-50%)</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n`;
     } else if (type === "hr") {
@@ -182,7 +182,7 @@ export default function WordPressEditor({ content, onChange }: WordPressEditorPr
       {/* Editor Header Card */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/[0.08] pb-3">
         <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-[#E60A1C] shadow-[0_0_10px_#E60A1C] animate-pulse" />
+          <span className="w-3 h-3 rounded-full bg-[#E60A1C] animate-pulse" />
           <h3 className="text-sm font-black tracking-widest text-[#16181D] uppercase flex items-center gap-2">
             <span>WordPress Gutenberg & Classic WYSIWYG Studio</span>
             <span className="px-2 py-0.5 rounded-md bg-[#E60A1C]/20 text-[#FF2E44] text-[10px] font-bold">PRO</span>
@@ -197,7 +197,7 @@ export default function WordPressEditor({ content, onChange }: WordPressEditorPr
               onClick={() => setMode("visual")}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
                 mode === "visual"
-                  ? "bg-[#E60A1C] text-white shadow-lg shadow-[#E60A1C]/30"
+                  ? "bg-[#E60A1C] text-white shadow-lg /30"
                   : "text-black/60 hover:text-[#16181D]"
               }`}
             >
@@ -209,7 +209,7 @@ export default function WordPressEditor({ content, onChange }: WordPressEditorPr
               onClick={() => setMode("code")}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
                 mode === "code"
-                  ? "bg-[#E60A1C] text-white shadow-lg shadow-[#E60A1C]/30"
+                  ? "bg-[#E60A1C] text-white shadow-lg /30"
                   : "text-black/60 hover:text-[#16181D]"
               }`}
             >
@@ -221,7 +221,7 @@ export default function WordPressEditor({ content, onChange }: WordPressEditorPr
               onClick={() => setMode("split")}
               className={`hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
                 mode === "split"
-                  ? "bg-[#E60A1C] text-white shadow-lg shadow-[#E60A1C]/30"
+                  ? "bg-[#E60A1C] text-white shadow-lg /30"
                   : "text-black/60 hover:text-[#16181D]"
               }`}
             >

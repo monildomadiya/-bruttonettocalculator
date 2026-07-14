@@ -46,7 +46,7 @@ export default function MobileMenu() {
       <div
         id="mobile-menu-panel"
         role="menu"
-        className={`mobile-menu absolute right-0 top-14 sm:top-16 w-[86vw] max-w-sm rounded-3xl shadow-[0_10px_40px_rgba(16,24,40,0.12)] bg-[#FFFFFF]/[98%] backdrop-blur-2xl border border-black/[0.12] overflow-hidden z-50 ${
+        className={`mobile-menu absolute right-0 top-14 sm:top-16 w-[86vw] max-w-sm rounded-3xl shadow-sm bg-[#FFFFFF]/[98%] backdrop-blur-2xl border border-black/[0.12] overflow-hidden z-50 ${
           open ? "open" : "closed"
         }`}
       >
@@ -97,7 +97,7 @@ export default function MobileMenu() {
               href="/rechner/brutto-zu-netto"
               onClick={() => setOpen(false)}
               className="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold text-white transition-all hover:opacity-90 shadow-lg"
-              style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)", boxShadow: "0 4px 15px rgba(230,10,28,0.40)" }}
+              style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)", boxShadow: "0 2px 8px rgba(230,10,28,0.18)" }}
             >
               Jetzt berechnen
               <ArrowRight size={16} />

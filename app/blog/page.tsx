@@ -56,7 +56,7 @@ export default async function BlogOverviewPage() {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E60A1C]/15 border border-[#E60A1C]/30 text-[#FF2E44] text-xs font-bold uppercase tracking-wider mb-4 shadow-[0_0_20px_rgba(230,10,28,0.2)]">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E60A1C]/15 border border-[#E60A1C]/30 text-[#FF2E44] text-xs font-bold uppercase tracking-wider mb-4">
             <Sparkles size={14} />
             <span>Wissen & Gesetzliche Neuerungen</span>
           </div>
@@ -90,7 +90,7 @@ export default async function BlogOverviewPage() {
             {articles.map((art) => (
               <article
                 key={art.slug}
-                className="group flex flex-col bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-black/[0.08] hover:border-black/[0.14] rounded-3xl overflow-hidden transition-all duration-300 shadow-xl hover:shadow-[0_15px_40px_rgba(16,24,40,0.12)] hover:-translate-y-1.5"
+                className="group flex flex-col bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-black/[0.08] hover:border-black/[0.14] rounded-3xl overflow-hidden transition-all duration-300 shadow-xl hover:shadow-sm hover:-translate-y-1.5"
               >
                 {/* Image */}
                 <Link href={`/blog/${art.slug}`} className="block relative h-52 overflow-hidden bg-black/[0.04]">

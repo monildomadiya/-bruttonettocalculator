@@ -464,7 +464,7 @@ export default function SteuerklassenPage() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   href="/"
-                  className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-8 py-3.5 rounded-xl transition-all shadow-[0_0_25px_rgba(230,10,28,0.4)] hover:shadow-[0_0_35px_rgba(230,10,28,0.6)] text-sm sm:text-base"
+                  className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-8 py-3.5 rounded-xl transition-all text-sm sm:text-base"
                 >
                   <Calculator size={18} />
                   Brutto-Netto-Rechner
