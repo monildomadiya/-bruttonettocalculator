@@ -1,6 +1,23 @@
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    outputFileTracingRoot: __dirname,
+  },
+  webpack: (config) => {
+    // Normalize the snapshot paths so that the bracket in [Light Mode]
+    // doesn't trip up webpack's module resolution / casing on Windows.
+    config.snapshot = {
+      ...(config.snapshot || {}),
+      managedPaths: [/^(.+?[\\/]node_modules[\\/])/],
+    };
+    return config;
+  },
   async redirects() {
     return [
       {
