@@ -4,6 +4,7 @@ export interface AdsSettings {
   enabled: boolean;
   publisherId: string;   // e.g. "pub-1234567890123456"
   autoAds: boolean;
+  slotDefault: string;   // single responsive unit used for any placement without its own slot
   slotHomepage: string;
   slotInArticle: string;
   slotContent: string;
@@ -13,6 +14,7 @@ const KEYS = {
   enabled: "ads_enabled",
   publisherId: "ads_publisher_id",
   autoAds: "ads_auto_ads",
+  slotDefault: "ads_slot_default",
   slotHomepage: "ads_slot_homepage",
   slotInArticle: "ads_slot_in_article",
   slotContent: "ads_slot_content",
@@ -25,6 +27,7 @@ const DEFAULTS: AdsSettings = {
   enabled: true,
   publisherId: "pub-5005860402493815",
   autoAds: true,
+  slotDefault: "",
   slotHomepage: "",
   slotInArticle: "",
   slotContent: "",
@@ -36,6 +39,7 @@ export async function getAdsSettings(): Promise<AdsSettings> {
     enabled: raw[KEYS.enabled] !== null ? raw[KEYS.enabled] === "true" : DEFAULTS.enabled,
     publisherId: raw[KEYS.publisherId] || DEFAULTS.publisherId,
     autoAds: raw[KEYS.autoAds] !== null ? raw[KEYS.autoAds] === "true" : DEFAULTS.autoAds,
+    slotDefault: raw[KEYS.slotDefault] || DEFAULTS.slotDefault,
     slotHomepage: raw[KEYS.slotHomepage] || DEFAULTS.slotHomepage,
     slotInArticle: raw[KEYS.slotInArticle] || DEFAULTS.slotInArticle,
     slotContent: raw[KEYS.slotContent] || DEFAULTS.slotContent,
@@ -46,6 +50,7 @@ export async function saveAdsSettings(settings: Partial<AdsSettings>): Promise<v
   if (settings.enabled !== undefined) await setSetting(KEYS.enabled, String(settings.enabled));
   if (settings.publisherId !== undefined) await setSetting(KEYS.publisherId, settings.publisherId.trim());
   if (settings.autoAds !== undefined) await setSetting(KEYS.autoAds, String(settings.autoAds));
+  if (settings.slotDefault !== undefined) await setSetting(KEYS.slotDefault, settings.slotDefault.trim());
   if (settings.slotHomepage !== undefined) await setSetting(KEYS.slotHomepage, settings.slotHomepage.trim());
   if (settings.slotInArticle !== undefined) await setSetting(KEYS.slotInArticle, settings.slotInArticle.trim());
   if (settings.slotContent !== undefined) await setSetting(KEYS.slotContent, settings.slotContent.trim());

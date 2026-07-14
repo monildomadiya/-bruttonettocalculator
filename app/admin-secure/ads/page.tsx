@@ -12,6 +12,7 @@ interface AdsSettings {
   enabled: boolean;
   publisherId: string;
   autoAds: boolean;
+  slotDefault: string;
   slotHomepage: string;
   slotInArticle: string;
   slotContent: string;
@@ -21,6 +22,7 @@ const EMPTY: AdsSettings = {
   enabled: false,
   publisherId: "",
   autoAds: true,
+  slotDefault: "",
   slotHomepage: "",
   slotInArticle: "",
   slotContent: "",
@@ -199,10 +201,34 @@ export default function AdsSettingsPage() {
                   </button>
                 </div>
 
-                {/* Manual ad slots (optional, advanced) */}
+                {/* Manual ad slots */}
                 <div className="pt-6 border-t border-black/[0.08] space-y-4">
                   <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-black/35">
-                    <Info size={12} /> Optional: Manuelle Anzeigenblöcke
+                    <Info size={12} /> Manuelle Anzeigenblöcke
+                  </div>
+
+                  {/* Default slot — the ONE field that switches on every placement */}
+                  <div className="bg-emerald-500/[0.06] border border-emerald-500/25 rounded-xl p-4">
+                    <label className="block text-sm font-bold text-[#16181D] mb-1.5">
+                      Standard Slot-ID <span className="text-emerald-600">(empfohlen — schaltet alle Anzeigen frei)</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={settings.slotDefault}
+                      onChange={(e) => setSettings((s) => ({ ...s, slotDefault: e.target.value }))}
+                      placeholder="1234567890"
+                      className="w-full bg-white border border-black/[0.08] rounded-xl px-4 py-2.5 text-[#16181D] font-mono text-sm focus:border-[#E60A1C] outline-none"
+                    />
+                    <p className="text-xs text-black/50 mt-2 leading-relaxed">
+                      Erstellen Sie in AdSense <b>eine einzige</b> Anzeige vom Typ „Display&quot; (responsiv) und fügen Sie
+                      die Slot-ID hier ein. Damit werden <b>sofort alle Anzeigenplätze</b> der gesamten Website aktiv
+                      (Startseite, Rechner-Seiten, Blog). Für einzelne Plätze mit eigener Slot-ID nutzen Sie optional die
+                      Felder darunter — diese haben Vorrang vor der Standard-ID.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-black/30 pt-1">
+                    Optional: einzelne Plätze überschreiben
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-black/60 mb-1.5">Slot-ID — Startseite (nach Rechner)</label>

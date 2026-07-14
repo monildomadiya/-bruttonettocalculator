@@ -6,6 +6,7 @@ export interface AdsSettings {
   enabled: boolean;
   publisherId: string; // stored as "pub-XXXXXXXXXXXXXXXX"
   autoAds: boolean;
+  slotDefault: string; // single responsive unit used for any placement without its own slot
   slotHomepage: string;
   slotInArticle: string;
   slotContent: string;

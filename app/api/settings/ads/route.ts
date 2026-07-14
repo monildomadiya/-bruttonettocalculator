@@ -40,6 +40,7 @@ export async function PUT(req: Request) {
       enabled: typeof body.enabled === "boolean" ? body.enabled : undefined,
       publisherId,
       autoAds: typeof body.autoAds === "boolean" ? body.autoAds : undefined,
+      slotDefault: typeof body.slotDefault === "string" ? body.slotDefault : undefined,
       slotHomepage: typeof body.slotHomepage === "string" ? body.slotHomepage : undefined,
       slotInArticle: typeof body.slotInArticle === "string" ? body.slotInArticle : undefined,
       slotContent: typeof body.slotContent === "string" ? body.slotContent : undefined,

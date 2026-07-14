@@ -388,6 +388,9 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <Calculator initialBrutto={amount} initialJahr={2026} initialSk={1} />
       </div>
 
+      {/* Ad: after the interactive calculator (deep-scroll, high engagement) */}
+      <AdUnit placement="content" className="!my-0 !mb-16 !px-0" />
+
       {/* Internal Linking Footer Block */}
       <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 shadow-xl">
         <h3 className="font-display font-bold text-xl text-[#16181D] mb-6 flex items-center gap-2">

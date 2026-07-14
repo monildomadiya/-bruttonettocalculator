@@ -24,12 +24,15 @@ export default function AdUnit({
   const insRef = useRef<HTMLModElement | null>(null);
   const pushed = useRef(false);
 
-  const slot =
+  const placementSlot =
     placement === "homepage"
       ? ads?.slotHomepage
       : placement === "inArticle"
       ? ads?.slotInArticle
       : ads?.slotContent;
+  // Fall back to the single "default" responsive unit so one Slot-ID lights up
+  // every placement site-wide — no need to create a separate unit per position.
+  const slot = placementSlot || ads?.slotDefault || "";
   const clientId = ads ? toClientId(ads.publisherId) : "";
   const active = !!ads && ads.enabled && !!clientId && !!slot;
 
