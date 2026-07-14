@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Wallet2, Calculator, ArrowRight, Info, ChevronDown } from "lucide-react";
+import AdUnit from "@/components/AdUnit";
 
 const MINIJOB_GRENZE_2026 = 603;
 const MINIJOB_GRENZE_2027 = 633;
@@ -66,6 +67,9 @@ export default function MinijobRechner() {
           </p>
         </div>
       </section>
+
+      {/* Ad — right below the hero */}
+      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       {/* Calculator */}
       <section className="max-w-6xl mx-auto px-5 py-12">

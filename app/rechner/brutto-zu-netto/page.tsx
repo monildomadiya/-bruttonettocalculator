@@ -79,6 +79,9 @@ export default function BruttoZuNettoPage() {
         </p>
       </div>
 
+      {/* Ad — right below the hero, above the calculator */}
+      <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
+
       <div className="w-full max-w-6xl mx-auto mb-16">
         <Calculator />
       </div>

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Landmark, Percent, ArrowRight, Info, ChevronDown, Users, User } from "lucide-react";
+import AdUnit from "@/components/AdUnit";
 import { estFormel2026, soliBerechnen } from "@/lib/taxCalculator";
 
 function eur(v: number): string {
@@ -71,6 +72,9 @@ export default function EinkommensteuerRechner() {
           </p>
         </div>
       </section>
+
+      {/* Ad — right below the hero */}
+      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       {/* Calculator */}
       <section className="max-w-6xl mx-auto px-5 py-12">

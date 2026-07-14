@@ -125,6 +125,9 @@ export default function GermanyTaxCalculatorPage() {
         </p>
       </div>
 
+      {/* Ad — right below the hero, above the calculator */}
+      <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
+
       <section id="calculator" className="mb-14 scroll-mt-24">
         <Calculator initialBrutto={3500} />
       </section>

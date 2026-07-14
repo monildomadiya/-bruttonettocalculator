@@ -207,6 +207,9 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <ReviewerByline />
       </div>
 
+      {/* Ad — right below the hero */}
+      <AdUnit placement="content" className="!my-0 !mb-12 !px-0" />
+
       {/* Unique Destatis Percentile & Wage Context Block */}
       <div className="mb-14 bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#E60A1C]/10 rounded-full blur-3xl pointer-events-none" />

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TrendingUp, Clock, Calculator, ChevronDown, ArrowRight, Info } from "lucide-react";
+import AdUnit from "@/components/AdUnit";
 
 const MINDESTLOHN_2026 = 13.90;
 const MINDESTLOHN_2027_EXPECTED = 14.60;
@@ -90,6 +91,9 @@ export default function MindestlohnCalculator() {
           </p>
         </div>
       </section>
+
+      {/* Ad — right below the hero */}
+      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       {/* Interactive Calculator */}
       <section className="max-w-6xl mx-auto px-5 py-12">

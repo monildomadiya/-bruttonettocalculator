@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { GraduationCap, Wallet, ArrowRight, Info, ChevronDown, Home, Users } from "lucide-react";
+import AdUnit from "@/components/AdUnit";
 
 /* BAföG-Bedarfssätze (gültig seit Wintersemester 2024/25, in €/Monat) */
 const GRUNDBEDARF = 475;
@@ -78,6 +79,9 @@ export default function BafoegRechner() {
           </p>
         </div>
       </section>
+
+      {/* Ad — right below the hero */}
+      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">
