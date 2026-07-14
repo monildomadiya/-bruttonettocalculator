@@ -13,6 +13,7 @@ interface AdsSettings {
   publisherId: string;
   autoAds: boolean;
   slotDefault: string;
+  slotNative: string;
   slotHomepage: string;
   slotInArticle: string;
   slotContent: string;
@@ -23,6 +24,7 @@ const EMPTY: AdsSettings = {
   publisherId: "",
   autoAds: true,
   slotDefault: "",
+  slotNative: "",
   slotHomepage: "",
   slotInArticle: "",
   slotContent: "",
@@ -224,6 +226,26 @@ export default function AdsSettingsPage() {
                       die Slot-ID hier ein. Damit werden <b>sofort alle Anzeigenplätze</b> der gesamten Website aktiv
                       (Startseite, Rechner-Seiten, Blog). Für einzelne Plätze mit eigener Slot-ID nutzen Sie optional die
                       Felder darunter — diese haben Vorrang vor der Standard-ID.
+                    </p>
+                  </div>
+
+                  {/* Native in-article slot — higher CPM for in-content ads */}
+                  <div className="bg-[#E60A1C]/[0.05] border border-[#E60A1C]/20 rounded-xl p-4">
+                    <label className="block text-sm font-bold text-[#16181D] mb-1.5">
+                      Native In-Article Slot-ID <span className="text-[#E60A1C]">(optional — höheres CPM)</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={settings.slotNative}
+                      onChange={(e) => setSettings((s) => ({ ...s, slotNative: e.target.value }))}
+                      placeholder="1234567890"
+                      className="w-full bg-white border border-black/[0.08] rounded-xl px-4 py-2.5 text-[#16181D] font-mono text-sm focus:border-[#E60A1C] outline-none"
+                    />
+                    <p className="text-xs text-black/50 mt-2 leading-relaxed">
+                      Erstellen Sie in AdSense zusätzlich eine Anzeige vom Typ <b>„In-Article&quot; (nativ)</b> und fügen Sie
+                      deren Slot-ID hier ein. Alle Anzeigen <b>im Textinhalt</b> (Rechner-Seiten, Blog) werden dann als
+                      native Anzeige ausgeliefert — das erzielt in der Regel einen <b>höheren TKP/CPM</b> und fügt sich
+                      besser in den Inhalt ein. Leer lassen = Standard-Display-Anzeigen.
                     </p>
                   </div>
 

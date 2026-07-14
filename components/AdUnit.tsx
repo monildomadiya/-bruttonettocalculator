@@ -30,9 +30,14 @@ export default function AdUnit({
       : placement === "inArticle"
       ? ads?.slotInArticle
       : ads?.slotContent;
+  // In-content placements upgrade to a native "in-article" (fluid) unit when a
+  // native Slot-ID is configured — native ads typically earn a higher CPM and
+  // blend into the content. Homepage stays a standard responsive banner.
+  const native = (placement === "content" || placement === "inArticle") && !!ads?.slotNative;
+
   // Fall back to the single "default" responsive unit so one Slot-ID lights up
   // every placement site-wide — no need to create a separate unit per position.
-  const slot = placementSlot || ads?.slotDefault || "";
+  const slot = native ? (ads?.slotNative || "") : (placementSlot || ads?.slotDefault || "");
   const clientId = ads ? toClientId(ads.publisherId) : "";
   const active = !!ads && ads.enabled && !!clientId && !!slot;
 
@@ -59,15 +64,27 @@ export default function AdUnit({
       <div className="text-[10px] font-mono uppercase tracking-widest text-black/25 text-center mb-1.5">
         Anzeige
       </div>
-      <ins
-        ref={insRef}
-        className="adsbygoogle"
-        style={{ display: "block" }}
-        data-ad-client={clientId}
-        data-ad-slot={slot}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      />
+      {native ? (
+        <ins
+          ref={insRef}
+          className="adsbygoogle"
+          style={{ display: "block", textAlign: "center" }}
+          data-ad-client={clientId}
+          data-ad-slot={slot}
+          data-ad-layout="in-article"
+          data-ad-format="fluid"
+        />
+      ) : (
+        <ins
+          ref={insRef}
+          className="adsbygoogle"
+          style={{ display: "block" }}
+          data-ad-client={clientId}
+          data-ad-slot={slot}
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
+      )}
     </div>
   );
 }

@@ -7,6 +7,7 @@ export interface AdsSettings {
   publisherId: string; // stored as "pub-XXXXXXXXXXXXXXXX"
   autoAds: boolean;
   slotDefault: string; // single responsive unit used for any placement without its own slot
+  slotNative: string; // optional native "in-article" (fluid) unit — higher CPM for in-content ads
   slotHomepage: string;
   slotInArticle: string;
   slotContent: string;
