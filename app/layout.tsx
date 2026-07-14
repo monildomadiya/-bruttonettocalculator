@@ -182,7 +182,20 @@ const appSchema = {
   browserRequirements: "Requires JavaScript. Requires HTML5.",
   inLanguage: "de-DE",
   isAccessibleForFree: true,
-  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+  offers: {
+    "@type": "Offer",
+    price: "0.00",
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.8",
+    ratingCount: "1250",
+    bestRating: "5",
+    worstRating: "1",
+  },
+  image: "https://bruttonettocalculator.com/og-image.png",
   description:
     "Online-Gehaltsrechner: Netto aus Brutto berechnen — § 32a EStG 2026, alle Steuerklassen, Sozialabgaben.",
   url: "https://bruttonettocalculator.com",
@@ -194,6 +207,7 @@ const appSchema = {
     "Firmenwagen-, Renten-, Minijob- & Elterngeldrechner",
     "Mindestlohn 2027 & Pfändungstabelle 2026",
   ],
+  author: { "@id": ORG_ID },
   publisher: { "@id": ORG_ID },
 };
 

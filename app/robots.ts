@@ -9,7 +9,7 @@ import type { MetadataRoute } from "next";
  * Optimization). Only private areas (admin, api, internals) stay disallowed.
  */
 export default function robots(): MetadataRoute.Robots {
-  const disallow = ["/admin-secure/", "/admin/", "/api/", "/_next/", "/studio/"];
+  const disallow = ["/admin-secure/", "/admin/", "/api/", "/studio/"];
 
   // Major AI + search crawlers we explicitly want to allow.
   const aiAndSearchBots = [
