@@ -55,6 +55,8 @@ export default function SiteFooter() {
               <li><Link href="/arbeitgeber-brutto-netto-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Arbeitgeber-Rechner</Link></li>
               <li><Link href="/lohnsteuerrechner"          className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Lohnsteuerrechner</Link></li>
               <li><Link href="/einkommensteuer-rechner"    className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Einkommensteuer-Rechner</Link></li>
+              <li><Link href="/steuerklassenwechsel-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerklassenwechsel</Link></li>
+              <li><Link href="/gehaltserhoehung-rechner"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Gehaltserhöhung-Rechner</Link></li>
               <li><Link href="/rechner/netto-zu-brutto"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Netto zu Brutto</Link></li>
               <li><Link href="/mindestlohn"                className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Mindestlohn Rechner</Link></li>
               <li><Link href="/steuerklassen"             className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerklassen</Link></li>
@@ -71,6 +73,8 @@ export default function SiteFooter() {
               <li><Link href="/weihnachtsgeld-rechner"    className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Weihnachtsgeld-Rechner</Link></li>
               <li><Link href="/brutto-netto-rechner/bayern" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner Bayern</Link></li>
               <li><Link href="/brutto-netto-rechner/nordrhein-westfalen" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner NRW</Link></li>
+              <li><Link href="/krankengeld-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Krankengeld-Rechner</Link></li>
+              <li><Link href="/pendlerpauschale-rechner"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Pendlerpauschale-Rechner</Link></li>
               <li><Link href="/rentenrechner"              className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rentenrechner</Link></li>
               <li><Link href="/buergergeld-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Bürgergeld-Rechner</Link></li>
               <li><Link href="/witwenrente-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Witwenrente-Rechner</Link></li>
