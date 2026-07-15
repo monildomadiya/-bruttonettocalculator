@@ -2,6 +2,7 @@ import {
   Calculator, ArrowRightLeft, LayoutList, Calendar, Scale,
   Car, PiggyBank, Umbrella, Wallet2, Baby, Banknote, Gift, Clock3,
   Coins, Receipt, Landmark, HandCoins, GraduationCap, HeartHandshake, Timer, Globe,
+  Building2, Snowflake,
 } from "lucide-react";
 
 export interface NavLink {
@@ -23,6 +24,7 @@ export const calculatorGroups: NavGroup[] = [
     items: [
       { href: "/", label: "Brutto Netto Rechner", icon: Calculator, description: "Der Hauptrechner für 2026/2027" },
       { href: "/gehaltsrechner", label: "Gehaltsrechner", icon: Coins, description: "Brutto Netto Gehalt 2026" },
+      { href: "/arbeitgeber-brutto-netto-rechner", label: "Arbeitgeber-Rechner", icon: Building2, description: "Arbeitgeberkosten & -anteil" },
       { href: "/lohnsteuerrechner", label: "Lohnsteuerrechner", icon: Receipt, description: "Lohnsteuer & Nettolohn" },
       { href: "/einkommensteuer-rechner", label: "Einkommensteuer-Rechner", icon: Landmark, description: "Jahressteuer § 32a EStG" },
       { href: "/rechner/brutto-zu-netto", label: "Brutto zu Netto", icon: ArrowRightLeft, description: "Direkt umrechnen" },
@@ -50,6 +52,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/rentenrechner", label: "Rentenrechner", icon: PiggyBank, description: "Rentenbeitrag & Prognose" },
       { href: "/witwenrente-rechner", label: "Witwenrente-Rechner", icon: HeartHandshake, description: "55 % / 25 % berechnen" },
       { href: "/abfindungsrechner", label: "Abfindungsrechner", icon: Banknote, description: "Fünftelregelung" },
+      { href: "/weihnachtsgeld-rechner", label: "Weihnachtsgeld-Rechner", icon: Snowflake, description: "Netto vom Weihnachtsgeld" },
       { href: "/bonus-steuerrechner", label: "Bonus-Steuerrechner", icon: Gift, description: "Weihnachts- & Urlaubsgeld" },
       { href: "/stundenlohn-rechner", label: "Stundenlohn-Rechner", icon: Clock3, description: "Netto pro Stunde" },
       { href: "/teilzeitrechner", label: "Teilzeitrechner", icon: Timer, description: "Netto bei Teilzeit" },

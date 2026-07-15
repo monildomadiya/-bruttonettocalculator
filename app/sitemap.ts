@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { dbQuery, Article } from "@/lib/db";
 import { getCommonGrossSalaryAmounts } from "@/data/wage-stats";
+import { BUNDESLAENDER } from "@/data/bundeslaender";
 
 export const revalidate = 0; // Dynamic sitemap generation
 
@@ -16,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "",                            changeFrequency: "daily",   priority: 1.0 },
     { path: "/blog",                       changeFrequency: "daily",   priority: 0.9 },
     { path: "/gehaltsrechner",             changeFrequency: "monthly", priority: 0.95 },
+    { path: "/arbeitgeber-brutto-netto-rechner", changeFrequency: "monthly", priority: 0.92 },
     { path: "/lohnsteuerrechner",          changeFrequency: "monthly", priority: 0.9 },
     { path: "/einkommensteuer-rechner",    changeFrequency: "monthly", priority: 0.9 },
     { path: "/brutto-netto-rechner-2027",  changeFrequency: "monthly", priority: 0.9 },
@@ -34,6 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/minijob-rechner",             changeFrequency: "monthly", priority: 0.8 },
     { path: "/elterngeld-rechner",          changeFrequency: "monthly", priority: 0.8 },
     { path: "/abfindungsrechner",           changeFrequency: "monthly", priority: 0.8 },
+    { path: "/weihnachtsgeld-rechner",      changeFrequency: "monthly", priority: 0.82 },
     { path: "/bonus-steuerrechner",         changeFrequency: "monthly", priority: 0.75 },
     { path: "/stundenlohn-rechner",         changeFrequency: "monthly", priority: 0.75 },
     { path: "/en/tax-calculator-germany",  changeFrequency: "monthly", priority: 0.75 },
@@ -51,6 +54,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency,
     priority,
   }));
+
+  // Add all 16 Bundesland pages (brutto netto rechner <bundesland>)
+  for (const bl of BUNDESLAENDER) {
+    sitemapEntries.push({
+      url: `${base}/brutto-netto-rechner/${bl.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    });
+  }
 
   // Add all programmatic long-tail salary pages
   const longTailAmounts = getCommonGrossSalaryAmounts();

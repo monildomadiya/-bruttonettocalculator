@@ -27,6 +27,7 @@ export interface CalculatorInput {
   kirche: boolean;
   kirchensteuerSatz?: number; // 0.08 oder 0.09, default 0.09
   steuerklasse?: Steuerklasse; // 1–6, default 1
+  sachsen?: boolean; // Sachsen: AN trägt 0,5 % höheren Pflegeversicherungs-Eigenanteil
 }
 
 export interface CalculatorResult {
@@ -121,8 +122,10 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
 
   const kvSatzAn = (r.kvSatz + r.kvZusatzbeitragDurchschnitt) / 2;
   const pvSatzGesamt = r.pvSatzBasis + (input.kinderlosUeber23 ? r.pvZuschlagKinderlos : 0);
-  // Arbeitgeberanteil PV ist immer 1,7 % fix; AN trägt den Rest
-  const pvSatzAn = pvSatzGesamt - 0.017;
+  // Arbeitgeberanteil PV ist regulär 1,7 % fix; AN trägt den Rest.
+  // Sachsen-Sonderfall: AG trägt nur 1,2 %, AN daher 0,5 % mehr.
+  const pvAgAnteil = input.sachsen ? 0.012 : 0.017;
+  const pvSatzAn = pvSatzGesamt - pvAgAnteil;
 
   const kranken = kvPvBemessung * kvSatzAn;
   const pflege = kvPvBemessung * pvSatzAn;
@@ -204,4 +207,81 @@ export function formatEUR(value: number): string {
     currency: "EUR",
     maximumFractionDigits: 2,
   }).format(value);
+}
+
+// --- Arbeitgeberkosten (employer's share) ---
+// Der Arbeitgeber zahlt on top auf das Bruttogehalt seinen Anteil zur
+// Sozialversicherung. Beitragssätze/BBG identisch zum Arbeitnehmerteil oben
+// (RECHENGROESSEN_2026), damit die Zahlen konsistent zum Haupt-Rechner sind.
+//  - RV:  9,3 % (halber Satz), bis RV/ALV-BBG
+//  - ALV: 1,3 % (halber Satz), bis RV/ALV-BBG
+//  - KV:  8,75 % (halber Satz inkl. hälftigem Zusatzbeitrag), bis KV/PV-BBG
+//  - PV:  1,7 % fix (AG-Anteil), bis KV/PV-BBG (Sachsen-Sonderfall unberücksichtigt)
+// Nicht enthalten sind die Umlagen U1/U2/U3 (Insolvenzgeldumlage), die je nach
+// Krankenkasse/Betrieb ~1,5–2 % ausmachen — im Rechner separat ausgewiesen.
+export interface ArbeitgeberkostenResult {
+  bruttoMonat: number;
+  bruttoJahr: number;
+  ag: {
+    rente: number;
+    arbeitslosen: number;
+    kranken: number;
+    pflege: number;
+    summeMonat: number;
+    summeJahr: number;
+  };
+  umlagenMonat: number;           // geschätzte Umlagen (U1/U2/U3) — optional
+  arbeitgeberbruttoMonat: number; // Bruttogehalt + AG-Anteil (ohne Umlagen)
+  arbeitgeberbruttoJahr: number;
+  gesamtkostenMonat: number;      // inkl. geschätzter Umlagen
+  gesamtkostenJahr: number;
+  agQuotePct: number;             // AG-Anteil (ohne Umlagen) in % des Bruttos
+}
+
+// Durchschnittliche Umlagen (U1 Entgeltfortzahlung, U2 Mutterschaft,
+// U3 Insolvenzgeldumlage). Nur eine grobe Orientierung — kassenabhängig.
+const UMLAGEN_SATZ_SCHAETZUNG = 0.019;
+
+export function calculateArbeitgeberkosten(
+  bruttoMonat: number,
+  mitUmlagen: boolean = true
+): ArbeitgeberkostenResult {
+  const r = RECHENGROESSEN_2026;
+  const bruttoJahr = bruttoMonat * 12;
+
+  const kvPvBemessung = Math.min(bruttoJahr, r.kvPvBbgJahr);
+  const rvAlvBemessung = Math.min(bruttoJahr, r.rvAlvBbgJahr);
+
+  // Arbeitgeber trägt den halben KV-Satz inkl. halbem Zusatzbeitrag (Parität seit 2019)
+  const kvSatzAg = (r.kvSatz + r.kvZusatzbeitragDurchschnitt) / 2;
+
+  const renteJahr = rvAlvBemessung * (r.rvSatz / 2);
+  const arbeitslosenJahr = rvAlvBemessung * (r.alvSatz / 2);
+  const krankenJahr = kvPvBemessung * kvSatzAg;
+  const pflegeJahr = kvPvBemessung * 0.017; // AG-Anteil PV fix 1,7 %
+
+  const agSummeJahr = renteJahr + arbeitslosenJahr + krankenJahr + pflegeJahr;
+  const umlagenJahr = mitUmlagen ? kvPvBemessung * UMLAGEN_SATZ_SCHAETZUNG : 0;
+
+  const arbeitgeberbruttoJahr = bruttoJahr + agSummeJahr;
+  const gesamtkostenJahr = arbeitgeberbruttoJahr + umlagenJahr;
+
+  return {
+    bruttoMonat,
+    bruttoJahr,
+    ag: {
+      rente: renteJahr / 12,
+      arbeitslosen: arbeitslosenJahr / 12,
+      kranken: krankenJahr / 12,
+      pflege: pflegeJahr / 12,
+      summeMonat: agSummeJahr / 12,
+      summeJahr: agSummeJahr,
+    },
+    umlagenMonat: umlagenJahr / 12,
+    arbeitgeberbruttoMonat: arbeitgeberbruttoJahr / 12,
+    arbeitgeberbruttoJahr,
+    gesamtkostenMonat: gesamtkostenJahr / 12,
+    gesamtkostenJahr,
+    agQuotePct: bruttoJahr > 0 ? (agSummeJahr / bruttoJahr) * 100 : 0,
+  };
 }
