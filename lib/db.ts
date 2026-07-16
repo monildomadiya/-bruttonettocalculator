@@ -48,9 +48,15 @@ function getPool(): mysql.Pool {
     queueLimit: 0,
   });
 
-  if (process.env.NODE_ENV !== "production") {
-    global._mysqlPool = pool;
-  }
+  // Always cache the pool as a global singleton — in EVERY environment,
+  // production included. Previously this was gated behind
+  // `NODE_ENV !== "production"`, so in production every request created a
+  // brand-new pool (connectionLimit: 10) that was never released. Those
+  // connections leaked until MySQL rejected everything with
+  // ER_CON_COUNT_ERROR ("Too many connections") and the app silently fell
+  // back to an empty in-memory list — making the blog and admin panel look
+  // wiped even though the data was intact in the database.
+  global._mysqlPool = pool;
 
   return pool;
 }
