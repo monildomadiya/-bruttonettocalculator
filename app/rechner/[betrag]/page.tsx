@@ -388,7 +388,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             Passen Sie Kirchensteuer, Bundesland, Kinderfreibeträge und Steuerjahr hier direkt interaktiv an:
           </p>
         </div>
-        <Calculator initialBrutto={amount} initialJahr={2026} initialSk={1} />
+        <Calculator initialBrutto={amount} initialJahr={2026} initialSk={1} deepLink={false} />
       </div>
 
       {/* Ad: after the interactive calculator (deep-scroll, high engagement) */}

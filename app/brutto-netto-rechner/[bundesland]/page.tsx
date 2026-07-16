@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonical = `https://bruttonettocalculator.com/brutto-netto-rechner/${bl.slug}`;
   const aliasPart = bl.alias ? ` (${bl.alias})` : "";
 
-  const title = `Brutto-Netto-Rechner ${bl.name}${aliasPart} 2026 — Nettogehalt berechnen`;
+  const title = `Brutto-Netto-Rechner ${bl.name}${aliasPart} 2026`;
   const description = `Brutto-Netto-Rechner für ${bl.name}: Nettogehalt 2026 mit dem in ${bl.name} gültigen Kirchensteuersatz von ${(bl.kirchensteuerSatz * 100).toFixed(0)} % berechnen. 4.000 € brutto ergeben ca. ${nettoFmt} netto (Steuerklasse I). Kostenlos & sofort.`;
 
   const kwBase = [

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useCallback, useEffect, useRef } from "react";
+import Link from "next/link";
 import {
   AlertCircle, Share2, Check, ChevronRight,
   TrendingUp, Landmark, HeartPulse, Briefcase,
@@ -105,9 +106,11 @@ interface CalculatorProps {
   initialBrutto?: number;
   initialJahr?: Steuerjahr;
   initialSk?: Steuerklasse;
+  /** Show the "full analysis" deep-link CTA under the result. Off on the /rechner/[betrag] pages to avoid a self-link. */
+  deepLink?: boolean;
 }
 
-export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1 }: CalculatorProps = {}) {
+export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1, deepLink = true }: CalculatorProps = {}) {
   const [bruttoMonat,  setBruttoMonat]  = useState<number>(initialBrutto);
   const [inputStr,     setInputStr]     = useState<string>(String(initialBrutto));
   const [inputError,   setInputError]   = useState<string>("");
@@ -455,6 +458,27 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 </div>
               </div>
             </div>
+
+            {/* ── Deep-link funnel: full salary analysis (more pageviews / engagement) ─ */}
+            {deepLink && bruttoMonat >= 500 && bruttoMonat <= 100000 && (
+              <Link
+                href={`/rechner/${Math.round(bruttoMonat)}-euro-brutto-netto`}
+                className="group flex items-center justify-between gap-3 bg-[#16181D] hover:bg-black text-white rounded-2xl px-5 sm:px-6 py-4 mb-6 sm:mb-8 shadow-lg transition-all"
+              >
+                <span className="flex items-center gap-3 min-w-0">
+                  <TrendingUp size={20} className="text-[#E60A1C] flex-shrink-0" />
+                  <span className="min-w-0">
+                    <span className="block text-sm sm:text-base font-bold truncate">
+                      Vollständige Analyse für {Math.round(bruttoMonat).toLocaleString("de-DE")} € Brutto
+                    </span>
+                    <span className="block text-xs text-white/60 truncate">
+                      Alle 6 Steuerklassen, 2026 vs. 2027 &amp; Netto-Stundenlohn im Detail
+                    </span>
+                  </span>
+                </span>
+                <ChevronRight size={20} className="text-[#E60A1C] flex-shrink-0 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            )}
 
             {/* ── Donut + legend + bar Card ────────────────────────── */}
             <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-lg">

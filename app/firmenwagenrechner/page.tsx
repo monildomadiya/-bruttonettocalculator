@@ -3,7 +3,7 @@ import FirmenwagenrechnerCalculator from "./FirmenwagenrechnerCalculator";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Firmenwagenrechner 2026 — Geldwerter Vorteil & 1%-Regelung (Brutto Netto)",
+  title: "Firmenwagenrechner 2026 — Geldwerter Vorteil & 1%-Regelung",
   description:
     "Firmenwagenrechner & Dienstwagenrechner 2026: Geldwerten Vorteil nach der 1%-Regelung berechnen und direkt aufs Brutto-Netto-Gehalt anrechnen — inkl. Elektro-Sätze (0,25%/0,5%) und 0,03%-Zuschlag für den Arbeitsweg. Auch für 2025. Kostenlos & sofort.",
   keywords: [

@@ -3,7 +3,7 @@ import BonusSteuerrechner from "./BonusSteuerrechner";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Bonus-Steuerrechner 2026 — Weihnachtsgeld & Urlaubsgeld versteuern",
+  title: "Bonus-Steuerrechner 2026 — Bonus & Urlaubsgeld versteuern",
   description:
     "Bonus-Steuerrechner 2026: Berechnen Sie, wie viel von Ihrem Weihnachtsgeld, Urlaubsgeld oder Bonus nach Steuern und Sozialabgaben netto übrig bleibt. Kostenlos & sofort.",
   keywords: [
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/bonus-steuerrechner" },
   openGraph: {
-    title: "Bonus-Steuerrechner 2026 — Weihnachtsgeld & Urlaubsgeld versteuern",
+    title: "Bonus-Steuerrechner 2026 — Bonus & Urlaubsgeld versteuern",
     description: "Berechnen Sie, wie viel von Ihrem Weihnachtsgeld, Urlaubsgeld oder Bonus netto übrig bleibt.",
     url: "https://bruttonettocalculator.com/bonus-steuerrechner",
     locale: "de_DE",

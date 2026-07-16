@@ -11,7 +11,7 @@ import AccordionFaq from "@/components/AccordionFaq";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
+  title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
   description:
     "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",
   alternates: { canonical: "/" },
@@ -329,6 +329,64 @@ export default function HomePage() {
           <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Alles über Brutto & Netto</h2>
         </div>
         <AccordionFaq faqs={faqs} />
+      </section>
+
+      {/* ── Alle Rechner (internal-link hub / HTML-sitemap for crawlers) ─ */}
+      <section className="max-w-6xl mx-auto px-5 pt-8 pb-16 sm:pb-20 border-t border-black/[0.10]">
+        <div className="text-center mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
+            <Sparkles size={14} /> Alle Rechner
+          </div>
+          <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Alle Rechner im Überblick</h2>
+          <p className="text-black/70 text-base sm:text-lg mt-3 max-w-2xl mx-auto">
+            Über 30 kostenlose Rechner für Gehalt, Steuern und Sozialleistungen — alle aktuell für das Steuerjahr 2026/2027.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          {[
+            { label: "Gehaltsrechner", href: "/gehaltsrechner" },
+            { label: "Lohnsteuerrechner", href: "/lohnsteuerrechner" },
+            { label: "Einkommensteuer-Rechner", href: "/einkommensteuer-rechner" },
+            { label: "Arbeitgeber-Rechner", href: "/arbeitgeber-brutto-netto-rechner" },
+            { label: "Steuerklassenwechsel", href: "/steuerklassenwechsel-rechner" },
+            { label: "Gehaltserhöhung-Rechner", href: "/gehaltserhoehung-rechner" },
+            { label: "Jahresgehalt-Rechner", href: "/jahresgehalt-rechner" },
+            { label: "Stundenlohn-Rechner", href: "/stundenlohn-rechner" },
+            { label: "Netto zu Brutto", href: "/rechner/netto-zu-brutto" },
+            { label: "Brutto zu Netto", href: "/rechner/brutto-zu-netto" },
+            { label: "Brutto Netto Rechner 2027", href: "/brutto-netto-rechner-2027" },
+            { label: "Teilzeitrechner", href: "/teilzeitrechner" },
+            { label: "Minijob-Rechner", href: "/minijob-rechner" },
+            { label: "Werkstudent-Rechner", href: "/werkstudent-rechner" },
+            { label: "Firmenwagenrechner", href: "/firmenwagenrechner" },
+            { label: "Abfindungsrechner", href: "/abfindungsrechner" },
+            { label: "Bonus-Steuerrechner", href: "/bonus-steuerrechner" },
+            { label: "Weihnachtsgeld-Rechner", href: "/weihnachtsgeld-rechner" },
+            { label: "Rentenrechner", href: "/rentenrechner" },
+            { label: "Elterngeld-Rechner", href: "/elterngeld-rechner" },
+            { label: "Arbeitslosengeld-Rechner", href: "/arbeitslosengeld-rechner" },
+            { label: "Kurzarbeitergeld-Rechner", href: "/kurzarbeitergeld-rechner" },
+            { label: "Krankengeld-Rechner", href: "/krankengeld-rechner" },
+            { label: "Bürgergeld-Rechner", href: "/buergergeld-rechner" },
+            { label: "Witwenrente-Rechner", href: "/witwenrente-rechner" },
+            { label: "BAföG-Rechner", href: "/bafoeg-rechner" },
+            { label: "Pendlerpauschale-Rechner", href: "/pendlerpauschale-rechner" },
+            { label: "Steuerklassen", href: "/steuerklassen" },
+            { label: "Mindestlohn 2026/2027", href: "/mindestlohn" },
+            { label: "Pfändungstabelle 2026", href: "/pfaendungstabelle" },
+            { label: "Steuer-Lexikon", href: "/lexikon" },
+            { label: "Häufige Fragen (FAQ)", href: "/faq" },
+          ].map(({ label, href }) => (
+            <Link
+              key={href}
+              href={href}
+              className="group flex items-center justify-between gap-2 bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-black/[0.10] hover:border-[#E60A1C]/50 rounded-2xl px-4 py-3.5 text-sm font-semibold text-[#16181D] shadow-sm transition-all"
+            >
+              <span className="truncate">{label}</span>
+              <ArrowRight size={14} className="text-[#E60A1C] flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+          ))}
+        </div>
       </section>
 
       {/* ── Ready CTA Banner (Like PromptKing Screenshot) ─────────────── */}

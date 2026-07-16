@@ -13,8 +13,11 @@ import AdsProvider from "@/components/AdsProvider";
 export const metadata: Metadata = {
   metadataBase: new URL("https://bruttonettocalculator.com"),
   title: {
-    default: "Brutto Netto Rechner 2026/2027 | Gehaltsrechner Deutschland kostenlos",
-    template: "%s | BruttoNettoCalculator.com",
+    default: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
+    // No forced brand suffix: the domain "BruttoNettoCalculator.com" is 25 chars
+    // and pushed every rendered <title> past Google's ~60-char limit, cutting off
+    // the tail keywords. Each page now owns its full, self-contained title.
+    template: "%s",
   },
   description:
     "Kostenloser Brutto Netto Rechner 2026/2027 — Nettogehalt sofort berechnen: Lohnsteuer, Soli, alle 6 Steuerklassen, Firmenwagenrechner, Rentenrechner & Mindestlohn 2027. BKK Zusatzbeitrag 2026 bereits eingerechnet. Pfändungstabelle 2026 abrufbar.",

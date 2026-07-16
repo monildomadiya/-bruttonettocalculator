@@ -8,7 +8,7 @@ import ReviewerByline from "@/components/ReviewerByline";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Teilzeitrechner 2026 — Brutto Netto Gehalt bei Teilzeit berechnen",
+  title: "Teilzeitrechner 2026 — Brutto Netto Gehalt berechnen",
   description:
     "Teilzeitrechner 2026: Berechnen Sie Ihr Nettogehalt bei Teilzeit — Brutto in Netto für 10, 20, 30 oder beliebige Wochenstunden. Kostenloser Brutto-Netto-Rechner für Teilzeit, alle Steuerklassen.",
   keywords: [

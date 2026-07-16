@@ -3,7 +3,7 @@ import ArbeitgeberRechner from "./ArbeitgeberRechner";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Arbeitgeber Brutto-Netto-Rechner 2026 — Arbeitgeberkosten & Arbeitgeberanteil",
+  title: "Arbeitgeber Brutto-Netto-Rechner 2026 — Arbeitgeberkosten",
   description:
     "Arbeitgeber-Brutto-Netto-Rechner 2026: Berechnen Sie den Arbeitgeberanteil zur Sozialversicherung, das Arbeitgeberbrutto und die tatsächlichen Personalkosten — sowie das Nettogehalt des Arbeitnehmers. Kostenlos & sofort.",
   keywords: [

@@ -60,6 +60,10 @@ export default function SiteFooter() {
               <li><Link href="/rechner/netto-zu-brutto"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Netto zu Brutto</Link></li>
               <li><Link href="/mindestlohn"                className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Mindestlohn Rechner</Link></li>
               <li><Link href="/steuerklassen"             className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerklassen</Link></li>
+              <li><Link href="/jahresgehalt-rechner"      className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Jahresgehalt-Rechner</Link></li>
+              <li><Link href="/rechner/brutto-zu-netto"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto zu Netto</Link></li>
+              <li><Link href="/brutto-netto-rechner-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner 2027</Link></li>
+              <li><Link href="/pfaendungstabelle"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Pfändungstabelle 2026</Link></li>
             </ul>
           </div>
 
@@ -80,6 +84,14 @@ export default function SiteFooter() {
               <li><Link href="/witwenrente-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Witwenrente-Rechner</Link></li>
               <li><Link href="/bafoeg-rechner"             className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">BAföG-Rechner</Link></li>
               <li><Link href="/teilzeitrechner"            className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Teilzeitrechner</Link></li>
+              <li><Link href="/minijob-rechner"           className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Minijob-Rechner</Link></li>
+              <li><Link href="/werkstudent-rechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Werkstudent-Rechner</Link></li>
+              <li><Link href="/elterngeld-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Elterngeld-Rechner</Link></li>
+              <li><Link href="/arbeitslosengeld-rechner"  className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Arbeitslosengeld-Rechner</Link></li>
+              <li><Link href="/kurzarbeitergeld-rechner"  className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kurzarbeitergeld-Rechner</Link></li>
+              <li><Link href="/abfindungsrechner"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Abfindungsrechner</Link></li>
+              <li><Link href="/bonus-steuerrechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Bonus-Steuerrechner</Link></li>
+              <li><Link href="/stundenlohn-rechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Stundenlohn-Rechner</Link></li>
               <li><Link href="/lexikon"                   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuer-Lexikon</Link></li>
             </ul>
           </div>
@@ -95,6 +107,8 @@ export default function SiteFooter() {
               <li><Link href="/kontakt"     className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kontakt</Link></li>
               <li><Link href="/ueber-uns"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Über uns</Link></li>
               <li><Link href="/blog"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Blog</Link></li>
+              <li><Link href="/faq"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">FAQ</Link></li>
+              <li><Link href="/en/tax-calculator-germany" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Tax Calculator (EN)</Link></li>
             </ul>
           </div>
 

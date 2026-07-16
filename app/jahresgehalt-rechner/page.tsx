@@ -6,7 +6,7 @@ import AdUnit from "@/components/AdUnit";
 const URL = "https://bruttonettocalculator.com/jahresgehalt-rechner";
 
 export const metadata: Metadata = {
-  title: "Jahresgehalt-Rechner 2026 — Brutto- & Nettojahresgehalt berechnen",
+  title: "Jahresgehalt-Rechner 2026 — Brutto & Netto berechnen",
   description:
     "Jahresgehalt-Rechner 2026: Berechnen Sie Ihr Brutto- und Nettojahresgehalt aus dem Monatsgehalt — inklusive 13. und 14. Monatsgehalt. Kostenlos & sofort.",
   keywords: [

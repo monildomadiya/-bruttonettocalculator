@@ -3,7 +3,7 @@ import ElterngeldRechner from "./ElterngeldRechner";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Elterngeld-Rechner 2026 — Basiselterngeld & ElterngeldPlus berechnen",
+  title: "Elterngeld-Rechner 2026 — Basiselterngeld & ElterngeldPlus",
   description:
     "Elterngeld-Rechner 2026: Berechnen Sie Ihr Basiselterngeld (65–100 % des Nettoeinkommens) und ElterngeldPlus. Mindestbetrag 300 €, Höchstbetrag 1.800 €. Kostenlos.",
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/elterngeld-rechner" },
   openGraph: {
-    title: "Elterngeld-Rechner 2026 — Basiselterngeld & ElterngeldPlus berechnen",
+    title: "Elterngeld-Rechner 2026 — Basiselterngeld & ElterngeldPlus",
     description: "Basiselterngeld (65–100 % des Nettoeinkommens) und ElterngeldPlus berechnen.",
     url: "https://bruttonettocalculator.com/elterngeld-rechner",
     locale: "de_DE",

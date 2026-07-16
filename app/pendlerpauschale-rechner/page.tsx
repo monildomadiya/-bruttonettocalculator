@@ -6,7 +6,7 @@ import AdUnit from "@/components/AdUnit";
 const URL = "https://bruttonettocalculator.com/pendlerpauschale-rechner";
 
 export const metadata: Metadata = {
-  title: "Pendlerpauschale-Rechner 2026 — Entfernungspauschale & Steuerersparnis",
+  title: "Pendlerpauschale-Rechner 2026 — Entfernungspauschale",
   description:
     "Pendlerpauschale-Rechner 2026: Berechnen Sie Ihre Entfernungspauschale (0,30 € / ab 21 km 0,38 € pro km) und die mögliche Steuerersparnis. Kostenlos & sofort.",
   keywords: [

@@ -3,7 +3,7 @@ import WeihnachtsgeldRechner from "./WeihnachtsgeldRechner";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Weihnachtsgeld-Rechner 2026 — Brutto Netto berechnen (Sonderzahlung)",
+  title: "Weihnachtsgeld-Rechner 2026 — Brutto Netto berechnen",
   description:
     "Weihnachtsgeld-Rechner 2026: Berechnen Sie brutto zu netto, wie viel von Ihrem Weihnachtsgeld nach Steuern und Sozialabgaben übrig bleibt. Gilt auch für Urlaubsgeld, 13. Monatsgehalt & Einmalzahlungen. Kostenlos & sofort.",
   keywords: [

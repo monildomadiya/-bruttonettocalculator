@@ -3,7 +3,7 @@ import BuergergeldRechner from "./BuergergeldRechner";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Bürgergeld-Rechner 2026 — Anspruch & Regelsatz 563 € berechnen",
+  title: "Bürgergeld-Rechner 2026 — Anspruch & Regelsatz berechnen",
   description:
     "Bürgergeld-Rechner 2026: Berechnen Sie Ihren Anspruch aus Regelsatz (563 €), Kosten für Unterkunft & Heizung und angerechnetem Einkommen inkl. Freibeträgen. Kostenlos für Ihre Bedarfsgemeinschaft.",
   keywords: [
