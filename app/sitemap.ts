@@ -27,6 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/werkstudent-rechner",        changeFrequency: "monthly", priority: 0.8 },
     { path: "/lohnsteuerrechner",          changeFrequency: "monthly", priority: 0.9 },
     { path: "/einkommensteuer-rechner",    changeFrequency: "monthly", priority: 0.9 },
+    { path: "/brutto-netto-rechner-2026",  changeFrequency: "weekly",  priority: 0.95 },
     { path: "/brutto-netto-rechner-2027",  changeFrequency: "monthly", priority: 0.9 },
     { path: "/buergergeld-rechner",        changeFrequency: "monthly", priority: 0.88 },
     { path: "/rechner/brutto-zu-netto",    changeFrequency: "monthly", priority: 0.85 },

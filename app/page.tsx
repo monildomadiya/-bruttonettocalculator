@@ -354,6 +354,7 @@ export default function HomePage() {
             { label: "Stundenlohn-Rechner", href: "/stundenlohn-rechner" },
             { label: "Netto zu Brutto", href: "/rechner/netto-zu-brutto" },
             { label: "Brutto zu Netto", href: "/rechner/brutto-zu-netto" },
+            { label: "Brutto Netto Rechner 2026", href: "/brutto-netto-rechner-2026" },
             { label: "Brutto Netto Rechner 2027", href: "/brutto-netto-rechner-2027" },
             { label: "Teilzeitrechner", href: "/teilzeitrechner" },
             { label: "Minijob-Rechner", href: "/minijob-rechner" },
