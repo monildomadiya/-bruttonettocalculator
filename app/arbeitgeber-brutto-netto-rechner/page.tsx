@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import ArbeitgeberRechner from "./ArbeitgeberRechner";
+import ArbeitgeberContent from "./ArbeitgeberContent";
+import RelatedCalculators from "@/components/RelatedCalculators";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Arbeitgeber Brutto-Netto-Rechner 2026 — Arbeitgeberkosten",
+  title: "Arbeitgeberrechner 2026: Lohnkosten berechnen",
   description:
-    "Arbeitgeber-Brutto-Netto-Rechner 2026: Berechnen Sie den Arbeitgeberanteil zur Sozialversicherung, das Arbeitgeberbrutto und die tatsächlichen Personalkosten — sowie das Nettogehalt des Arbeitnehmers. Kostenlos & sofort.",
+    "Berechnen Sie die tatsächlichen Arbeitgeberkosten 2026 inklusive Bruttogehalt, Sozialabgaben, Umlagen und Arbeitgeberanteilen.",
   keywords: [
     "arbeitgeber brutto netto rechner",
     "brutto netto arbeitgeber rechner",
@@ -78,17 +80,11 @@ const breadcrumbSchema = {
 
 const appSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   name: "Arbeitgeber Brutto-Netto-Rechner 2026",
   url: "https://bruttonettocalculator.com/arbeitgeber-brutto-netto-rechner",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "All",
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
   description:
     "Kostenloser Arbeitgeber-Brutto-Netto-Rechner für Deutschland — Arbeitgeberanteil, Arbeitgeberbrutto und Personalkosten sowie das Nettogehalt des Arbeitnehmers berechnen (2026).",
 };
@@ -99,7 +95,15 @@ export default function ArbeitgeberRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <ArbeitgeberRechner />
+      <ArbeitgeberRechner content={<ArbeitgeberContent />} />
+      <RelatedCalculators
+        links={[
+          { href: "/", label: "Brutto-Netto-Rechner", desc: "Nettogehalt des Arbeitnehmers 2026" },
+          { href: "/rechner/brutto-zu-netto", label: "Brutto zu Netto", desc: "Direkt vom Brutto zum Netto" },
+          { href: "/rechner/netto-zu-brutto", label: "Netto zu Brutto", desc: "Für Gehaltsverhandlungen" },
+          { href: "/stundenlohn-rechner", label: "Stundenlohnrechner", desc: "Stundenlohn aus dem Monatsgehalt" },
+        ]}
+      />
       <AdUnit placement="content" />
     </>
   );

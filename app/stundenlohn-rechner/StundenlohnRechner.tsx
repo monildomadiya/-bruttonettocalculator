@@ -36,7 +36,7 @@ const faqs = [
   },
 ];
 
-export default function StundenlohnRechner() {
+export default function StundenlohnRechner({ content }: { content?: React.ReactNode }) {
   const [stundenlohn, setStundenlohn] = useState(18);
   const [wochenstunden, setWochenstunden] = useState(40);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
@@ -73,14 +73,14 @@ export default function StundenlohnRechner() {
             Stundenlohn ↔ Monatsgehalt
           </div>
           <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
-            Stundenlohn-{" "}
+            Stundenlohnrechner:{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              Rechner
+              Monatslohn und Stundenlohn berechnen
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Rechnen Sie Ihren Stundenlohn in Monatsgehalt um und sehen Sie sofort Ihren
-            Netto-Stundenlohn nach Steuern und Sozialabgaben.
+            Rechnen Sie Ihren Stundenlohn in Monats- und Jahresgehalt um – und sehen Sie sofort Ihren
+            Netto-Stundenlohn nach Steuern und Sozialabgaben (2026).
           </p>
         </div>
       </section>
@@ -189,6 +189,9 @@ export default function StundenlohnRechner() {
           </div>
         </div>
       </section>
+
+      {/* Server-rendered SEO content (Kurzantwort, formulas, reverse table) */}
+      {content}
 
       {/* Explainer / SEO content */}
       <section className="max-w-6xl mx-auto px-5 py-6">

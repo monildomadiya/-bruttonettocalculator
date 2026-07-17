@@ -64,17 +64,11 @@ const breadcrumbSchema = {
 
 const appSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   name: "Einkommensteuer-Rechner 2026",
   url: "https://bruttonettocalculator.com/einkommensteuer-rechner",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "All",
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
   description: "Kostenloser Einkommensteuer-Rechner nach § 32a EStG 2026 — mit Grund- und Splittingtarif, Soli und Kirchensteuer.",
 };
 

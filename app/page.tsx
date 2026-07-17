@@ -157,32 +157,12 @@ const steps = [
 /* ── Structured Data (JSON-LD) ───────────────────────────────────────── */
 const webAppSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   "name": "Brutto Netto Rechner Deutschland 2026/2027",
   "url": "https://bruttonettocalculator.com",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "All",
-  "description": "Präziser Brutto Netto Rechner für Deutschland. Gehaltsberechnung nach amtlichen Vorgaben § 32a EStG für das Steuerjahr 2026/2027 mit allen 6 Steuerklassen, BKK/TK Zusatzbeitrag 2026, Mindestlohn 2027, Firmenwagen (1%-Regelung) und Rentenrechner.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0.00",
-    "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock"
-  },
-  "featureList": [
-    "Berechnung von Lohnsteuer, Solidaritätszuschlag und Kirchensteuer",
-    "Unterstützung aller 6 deutschen Steuerklassen",
-    "Sozialabgaben nach SV-Rechengrößen 2026 und 2027",
-    "BKK, HKK und TK Zusatzbeitrag 2026 eingerechnet",
-    "Mindestlohn 2027 Vorschau",
-    "Firmenwagenrechner (1%-Regelung / geldwerter Vorteil)",
-    "Brutto Netto Rentenrechner",
-    "Düsseldorfer Tabelle 2026 Referenz",
-    "Pfändungstabelle 2026 Hinweis",
-    "Jahres- und Monatsansicht",
-    "Bundesland-Vergleich für Kirchensteuer und Pflegeversicherung",
-    "Durchschnittsgehalt Deutschland Vergleich"
-  ]
+  "description": "Präziser Brutto Netto Rechner für Deutschland. Gehaltsberechnung nach § 32a EStG für das Steuerjahr 2026/2027 mit allen 6 Steuerklassen, BKK/TK Zusatzbeitrag 2026, Mindestlohn 2027, Firmenwagen (1%-Regelung) und Rentenrechner.",
 };
 
 const faqSchema = {
@@ -217,7 +197,7 @@ export default function HomePage() {
           <div className="inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-[#FFFFFF] border border-black/[0.12] rounded-full px-4 sm:px-6 py-2 sm:py-2.5 mb-6 sm:mb-8 animate-fade-up max-w-[95vw]">
             <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#E60A1C] animate-pulse flex-shrink-0" />
             <span className="font-mono text-[11px] sm:text-sm uppercase tracking-wider sm:tracking-widest text-black/90 font-bold leading-tight">
-              OFFIZIELL · § 32A ESTG · STEUERJAHR 2026/2027
+              AUF BASIS OFFIZIELLER WERTE · § 32A ESTG · 2026/2027
             </span>
           </div>
 
@@ -354,6 +334,7 @@ export default function HomePage() {
             { label: "Stundenlohn-Rechner", href: "/stundenlohn-rechner" },
             { label: "Netto zu Brutto", href: "/rechner/netto-zu-brutto" },
             { label: "Brutto zu Netto", href: "/rechner/brutto-zu-netto" },
+            { label: "Brutto-Netto-Tabelle", href: "/brutto-netto-gehaltstabelle" },
             { label: "Brutto Netto Rechner 2026", href: "/brutto-netto-rechner-2026" },
             { label: "Brutto Netto Rechner 2027", href: "/brutto-netto-rechner-2027" },
             { label: "Teilzeitrechner", href: "/teilzeitrechner" },

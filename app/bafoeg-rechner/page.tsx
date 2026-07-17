@@ -62,17 +62,11 @@ const breadcrumbSchema = {
 
 const appSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   name: "BAföG-Rechner 2026",
   url: "https://bruttonettocalculator.com/bafoeg-rechner",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "All",
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
   description: "Kostenloser BAföG-Rechner 2026 — Anspruch aus Bedarfssatz, eigenem Einkommen und Elterneinkommen schätzen.",
 };
 

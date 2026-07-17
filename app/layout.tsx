@@ -176,43 +176,13 @@ const websiteSchema = {
   },
 };
 
-const appSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Brutto Netto Rechner 2026",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "Any",
-  browserRequirements: "Requires JavaScript. Requires HTML5.",
-  inLanguage: "de-DE",
-  isAccessibleForFree: true,
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.8",
-    ratingCount: "1250",
-    bestRating: "5",
-    worstRating: "1",
-  },
-  image: "https://bruttonettocalculator.com/og-image.png",
-  description:
-    "Online-Gehaltsrechner: Netto aus Brutto berechnen — § 32a EStG 2026, alle Steuerklassen, Sozialabgaben.",
-  url: "https://bruttonettocalculator.com",
-  featureList: [
-    "Brutto-Netto-Berechnung 2026 & 2027",
-    "Alle 6 Steuerklassen",
-    "Lohnsteuer, Solidaritätszuschlag & Kirchensteuer",
-    "Sozialabgaben inkl. BKK/TK/HKK-Zusatzbeitrag 2026",
-    "Firmenwagen-, Renten-, Minijob- & Elterngeldrechner",
-    "Mindestlohn 2027 & Pfändungstabelle 2026",
-  ],
-  author: { "@id": ORG_ID },
-  publisher: { "@id": ORG_ID },
-};
+// NOTE: A global SoftwareApplication schema with a hard-coded aggregateRating
+// (4.8 / 1250) used to live here. It was removed because (a) the site has no
+// genuine, visible user reviews — the rating was fabricated — and (b) the
+// `browserRequirements` value plus the site-wide duplication triggered dozens of
+// structured-data errors in Semrush. The site-wide graph is now limited to the
+// legitimate WebSite + Organization entities below; individual pages emit their
+// own WebPage / Article / FAQPage / BreadcrumbList schema.
 
 const orgSchema = {
   "@context": "https://schema.org",
@@ -255,9 +225,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* ── Ultra-Luxury Fintech Footer (conditional) ───────────────── */}
         <SiteFooter />
 
-        {/* ── Global JSON-LD ──────────────────────────────────────────── */}
+        {/* ── Global JSON-LD (WebSite + Organization only) ────────────── */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
 
         {/* ── Google Analytics 4 (GA4) ────────────────────────────────── */}

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import StundenlohnRechner from "./StundenlohnRechner";
+import StundenlohnContent from "./StundenlohnContent";
+import RelatedCalculators from "@/components/RelatedCalculators";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Stundenlohn-Rechner 2026 — Netto-Stundenlohn berechnen",
+  title: "Stundenlohnrechner 2026: Stundenlohn berechnen",
   description:
-    "Stundenlohn-Rechner 2026: Stundenlohn in Monatsgehalt umrechnen und Netto-Stundenlohn nach Steuern & Sozialabgaben berechnen. Alle Steuerklassen, kostenlos.",
+    "Stundenlohn in Monats- und Jahresgehalt umrechnen und Netto-Stundenlohn nach Steuern & Sozialabgaben berechnen. Alle Steuerklassen, kostenlos.",
   keywords: [
     "Stundenlohn Rechner",
     "Netto Stundenlohn Rechner",
@@ -43,7 +45,15 @@ export default function StundenlohnRechnerPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <StundenlohnRechner />
+      <StundenlohnRechner content={<StundenlohnContent />} />
+      <RelatedCalculators
+        links={[
+          { href: "/", label: "Brutto-Netto-Rechner", desc: "Vollständiges Nettogehalt 2026" },
+          { href: "/mindestlohn", label: "Mindestlohn-Rechner", desc: "13,90 € (2026) / 14,60 € (2027)" },
+          { href: "/teilzeitrechner", label: "Teilzeitrechner", desc: "Netto bei reduzierter Stundenzahl" },
+          { href: "/minijob-rechner", label: "Minijob-Rechner", desc: "Verdienstgrenze & Stunden" },
+        ]}
+      />
       <AdUnit placement="content" />
     </>
   );

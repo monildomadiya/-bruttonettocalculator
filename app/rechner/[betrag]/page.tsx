@@ -49,8 +49,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const formattedBrutto = new Intl.NumberFormat("de-DE").format(amount);
   const formattedNetto = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(netSK1);
 
-  const title = `${formattedBrutto} € Brutto ist wieviel Netto? Rechner 2026/2027`;
-  const description = `${formattedBrutto} € Bruttogehalt ergibt in Steuerklasse 1 ca. ${formattedNetto} Netto im Monat (Jahr 2026). Alle 6 Steuerklassen, Abzüge & Destatis-Lohnvergleich im Detail.`;
+  const title = `${formattedBrutto} Euro brutto in netto 2026`;
+  const description = `${formattedBrutto} € brutto sind in Steuerklasse I ca. ${formattedNetto} netto im Monat (2026). Alle 6 Steuerklassen, Abzüge, Jahreswerte und Lohnvergleich im Detail.`;
   const canonicalUrl = `https://bruttonettocalculator.com/rechner/${amount}-euro-brutto-netto`;
 
   return {
@@ -140,10 +140,46 @@ export default function LongTailSalaryPage({ params }: PageProps) {
   const prevAmount = amount > 1500 ? amount - 100 : null;
   const nextAmount = amount < 15000 ? amount + 100 : null;
 
-  // Relevant blog post recommendation based on tier
+  // Relevant blog post recommendation (published article — verified slug).
   const blogLink = amount >= 5800
-    ? { slug: "steuern-grundfreibetrag-2026-2027-uebersicht", title: "Beitragsbemessungsgrenzen & Steuerjahr 2026/2027 im Überblick" }
-    : { slug: "steuern-grundfreibetrag-2026-2027-uebersicht", title: "Grundfreibetrag 2026: Wie viel Gehalt bleibt steuerfrei?" };
+    ? { slug: "brutto-netto-rechner-2026-mindestlohn-2027", title: "Beitragsbemessungsgrenzen, Steuerklassen & Netto-Beispiele 2026/2027" }
+    : { slug: "brutto-netto-rechner-2026-mindestlohn-2027", title: "Mindestlohn 2027, Steuerklassen & konkrete Brutto-Netto-Beispiele" };
+
+  // Related salary pages for internal linking — nearby amounts (±100 / ±500 /
+  // ±1000) within the generated 1.500–10.000 € range, excluding the current one.
+  // Only amounts that are multiples of 100 have a real page, so the filter keeps
+  // us from linking to non-existent routes.
+  const relatedAmounts = Array.from(
+    new Set([
+      amount - 500, amount - 100, amount + 100, amount + 500,
+      amount - 1000, amount + 1000,
+    ])
+  )
+    .filter((a) => a >= 1500 && a <= 10000 && a !== amount && a % 100 === 0)
+    .sort((a, b) => a - b)
+    .slice(0, 6);
+
+  // Amount-specific FAQs (visible + FAQPage schema below).
+  const nf = (n: number) => new Intl.NumberFormat("de-DE").format(n);
+  const sk3Res = resultsAllSK.find((r) => r.sk === 3)!.res;
+  const salaryFaqs = [
+    {
+      q: `Wie viel sind ${nf(amount)} Euro brutto in netto?`,
+      a: `In Steuerklasse I (ledig, ohne Kirchensteuer) bleiben von ${nf(amount)} € brutto rund ${formatEUR(sk1Res.nettoMonat)} netto im Monat, also etwa ${formatEUR(sk1Res.nettoJahr)} im Jahr (2026). Der genaue Betrag hängt von Steuerklasse, Bundesland, Kirchensteuer und Freibeträgen ab.`,
+    },
+    {
+      q: `Wie viel netto sind ${nf(amount)} € brutto in Steuerklasse 3?`,
+      a: `In Steuerklasse III bleiben von ${nf(amount)} € brutto rund ${formatEUR(sk3Res.nettoMonat)} netto im Monat – etwa ${formatEUR(sk3Res.nettoMonat - sk1Res.nettoMonat)} mehr als in Steuerklasse I. Steuerklasse III lohnt sich für Verheiratete mit deutlich höherem Einkommen als der Partner.`,
+    },
+    {
+      q: `Wie hoch sind die Abzüge bei ${nf(amount)} € brutto?`,
+      a: `Von ${nf(amount)} € brutto gehen in Steuerklasse I rund ${formatEUR(sk1Res.steuer.summeMonat)} Steuern und ${formatEUR(sk1Res.sv.summeMonat)} Sozialabgaben ab. Die Netto-Quote liegt bei etwa ${nettoQuote.toFixed(1).replace(".", ",")} %.`,
+    },
+    {
+      q: `Was sind ${nf(amount)} € brutto im Jahr?`,
+      a: `${nf(amount)} € brutto im Monat entsprechen ${formatEUR(amount * 12)} brutto im Jahr. Nach Steuern und Sozialabgaben bleiben davon in Steuerklasse I rund ${formatEUR(sk1Res.nettoJahr)} netto im Jahr (2026, unverbindlich).`,
+    },
+  ];
 
   // Structured Data — BreadcrumbList + WebPage (isPartOf)
   const canonicalUrl = `https://bruttonettocalculator.com/rechner/${amount}-euro-brutto-netto`;
@@ -163,14 +199,19 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         "@type": "WebPage",
         "@id": `${canonicalUrl}#webpage`,
         "url": canonicalUrl,
-        "name": `${formattedBrutto} Brutto ist wieviel Netto? Rechner 2026/2027`,
-        "description": `${formattedBrutto} Bruttogehalt ergibt in Steuerklasse 1 ca. ${formatEUR(sk1Res.nettoMonat)} Netto im Monat (Jahr 2026).`,
-        "isPartOf": {
-          "@type": "WebApplication",
-          "name": "Brutto Netto Rechner Deutschland",
-          "url": "https://bruttonettocalculator.com",
-        },
+        "name": `${formattedBrutto} Euro brutto in netto 2026`,
+        "description": `${formattedBrutto} € brutto ergeben in Steuerklasse I ca. ${formatEUR(sk1Res.nettoMonat)} netto im Monat (2026).`,
+        "isPartOf": { "@id": "https://bruttonettocalculator.com/#website" },
         "breadcrumb": { "@id": `${canonicalUrl}#breadcrumb` },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${canonicalUrl}#faq`,
+        "mainEntity": salaryFaqs.map((f) => ({
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a },
+        })),
       },
     ],
   };
@@ -194,14 +235,14 @@ export default function LongTailSalaryPage({ params }: PageProps) {
       {/* Hero Section */}
       <div className="mb-12">
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
-          <CalcIcon size={14} /> Amtliche Berechnung § 32a EStG
+          <CalcIcon size={14} /> Berechnung nach § 32a EStG
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-4 tracking-tight leading-tight">
-          <span className="text-gradient-accent">{formattedBrutto}</span> Brutto ist wie viel Netto?
+          <span className="text-gradient-accent">{formattedBrutto} Euro</span> brutto in netto: Berechnung 2026
         </h1>
         <p className="text-lg sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-6">
-          Wieviel bleibt von {formattedBrutto} Brutto monatlich übrig? In Steuerklasse 1 (ledig, ohne Kirchensteuer) 
-          beträgt Ihr Nettogehalt im Jahr 2026 exakt <strong className="text-[#E60A1C] font-extrabold bg-[#E60A1C]/10 px-2 py-0.5 rounded border border-[#E60A1C]/40">{formatEUR(sk1Res.nettoMonat)}</strong> im Monat 
+          Wieviel bleibt von {formattedBrutto} Brutto monatlich übrig? In Steuerklasse 1 (ledig, ohne Kirchensteuer)
+          beträgt Ihr Nettogehalt im Jahr 2026 rund <strong className="text-[#E60A1C] font-extrabold bg-[#E60A1C]/10 px-2 py-0.5 rounded border border-[#E60A1C]/40">{formatEUR(sk1Res.nettoMonat)}</strong> im Monat
           ({formatEUR(sk1Res.nettoJahr)} im Jahr). Hier finden Sie alle 6 Steuerklassen im Vergleich und die detaillierten Abzüge.
         </p>
         <ReviewerByline />
@@ -391,6 +432,26 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <Calculator initialBrutto={amount} initialJahr={2026} initialSk={1} deepLink={false} />
       </div>
 
+      {/* FAQ — amount-specific (visible + FAQPage schema) */}
+      <div className="mb-16">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+          Häufige Fragen zu {formattedBrutto} brutto
+        </h2>
+        <div className="space-y-3">
+          {salaryFaqs.map((faq, i) => (
+            <details key={i} className="group bg-[#FFFFFF] border border-black/[0.10] rounded-2xl overflow-hidden shadow-sm">
+              <summary className="flex items-center justify-between px-5 sm:px-6 py-4 cursor-pointer list-none hover:bg-black/[0.03] transition-colors">
+                <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
+                <ChevronRight size={18} className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-90" />
+              </summary>
+              <div className="px-5 sm:px-6 pb-5 pt-1 text-black/70 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
+                {faq.a}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+
       {/* Ad: after the interactive calculator (deep-scroll, high engagement) */}
       <AdUnit placement="content" className="!my-0 !mb-16 !px-0" />
 
@@ -479,6 +540,32 @@ export default function LongTailSalaryPage({ params }: PageProps) {
           >
             Artikel lesen &rarr;
           </Link>
+        </div>
+
+        {/* Related salary pages + salary-hub link */}
+        <div className="mt-6 pt-6 border-t border-black/[0.08]">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <h4 className="font-bold text-sm text-[#16181D] flex items-center gap-2">
+              <BarChart3 size={16} className="text-[#E60A1C]" /> Ähnliche Gehälter im Vergleich
+            </h4>
+            <Link
+              href="/brutto-netto-gehaltstabelle"
+              className="text-xs font-bold text-[#E60A1C] hover:underline inline-flex items-center gap-1"
+            >
+              Alle Beträge in der Brutto-Netto-Gehaltstabelle <ArrowRight size={13} />
+            </Link>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {relatedAmounts.map((a) => (
+              <Link
+                key={a}
+                href={`/rechner/${a}-euro-brutto-netto`}
+                className="text-xs font-semibold bg-[#F1F3F5] hover:bg-[#FFFFFF] border border-black/[0.08] hover:border-[#E60A1C]/50 text-[#16181D] px-3.5 py-2 rounded-xl transition-all"
+              >
+                {new Intl.NumberFormat("de-DE").format(a)} Euro brutto in netto
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </main>

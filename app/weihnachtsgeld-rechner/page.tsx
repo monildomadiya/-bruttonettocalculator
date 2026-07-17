@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import WeihnachtsgeldRechner from "./WeihnachtsgeldRechner";
+import WeihnachtsgeldContent from "./WeihnachtsgeldContent";
+import RelatedCalculators from "@/components/RelatedCalculators";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Weihnachtsgeld-Rechner 2026 — Brutto Netto berechnen",
+  title: "Weihnachtsgeld-Rechner 2026: Brutto & Netto",
   description:
-    "Weihnachtsgeld-Rechner 2026: Berechnen Sie brutto zu netto, wie viel von Ihrem Weihnachtsgeld nach Steuern und Sozialabgaben übrig bleibt. Gilt auch für Urlaubsgeld, 13. Monatsgehalt & Einmalzahlungen. Kostenlos & sofort.",
+    "Berechnen Sie Ihr Weihnachtsgeld 2026 netto. Mit Steuerklassen, Beispielrechnungen und Erklärung zur Versteuerung von Sonderzahlungen.",
   keywords: [
     "weihnachtsgeld rechner",
     "brutto netto rechner weihnachtsgeld",
@@ -54,6 +56,14 @@ const faqs = [
     q: "Warum ist die Abgabenlast auf Weihnachtsgeld oft höher als erwartet?",
     a: "Weil das Weihnachtsgeld zusätzlich zum regulären Gehalt versteuert wird und in einen höheren Bereich der Steuerprogression fällt. Der Grenzsteuersatz auf die Sonderzahlung liegt daher meist über dem Durchschnittssteuersatz des normalen Gehalts.",
   },
+  {
+    q: "Bekomme ich zu viel gezahlte Steuer auf das Weihnachtsgeld zurück?",
+    a: "Möglicherweise. Der Arbeitgeber behält die Lohnsteuer nach der Jahresmethode ein. Fällt Ihre tatsächliche Jahressteuer niedriger aus – etwa wegen Werbungskosten, Sonderausgaben oder eines Steuerklassenwechsels – erstattet das Finanzamt die Differenz über die Einkommensteuererklärung. Eine Garantie auf Erstattung gibt es aber nicht.",
+  },
+  {
+    q: "Wie hoch ist Weihnachtsgeld in Deutschland üblicherweise?",
+    a: "Die Höhe ist gesetzlich nicht vorgeschrieben und ergibt sich aus Arbeits- oder Tarifvertrag. Verbreitet sind ein halbes oder ein volles Monatsgehalt (13. Gehalt); teils werden feste Beträge oder ein Prozentsatz des Bruttolohns gezahlt. Ob überhaupt Weihnachtsgeld gezahlt wird, hängt vom Arbeitgeber ab.",
+  },
 ];
 
 const faqSchema = {
@@ -77,17 +87,11 @@ const breadcrumbSchema = {
 
 const appSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   name: "Weihnachtsgeld-Rechner 2026",
   url: "https://bruttonettocalculator.com/weihnachtsgeld-rechner",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "All",
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
   description:
     "Kostenloser Weihnachtsgeld-Rechner für Deutschland — berechnet brutto zu netto, wie viel von Weihnachtsgeld, Urlaubsgeld oder einer Sonderzahlung nach Steuern und Sozialabgaben übrig bleibt (2026).",
 };
@@ -98,7 +102,15 @@ export default function WeihnachtsgeldRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <WeihnachtsgeldRechner />
+      <WeihnachtsgeldRechner content={<WeihnachtsgeldContent />} />
+      <RelatedCalculators
+        links={[
+          { href: "/", label: "Brutto-Netto-Rechner", desc: "Reguläres Nettogehalt 2026/2027 berechnen" },
+          { href: "/bonus-steuerrechner", label: "Bonus-Steuerrechner", desc: "Urlaubsgeld, Bonus & Einmalzahlungen" },
+          { href: "/steuerklassen", label: "Steuerklassen", desc: "Alle 6 Klassen im Vergleich" },
+          { href: "/arbeitgeber-brutto-netto-rechner", label: "Arbeitgeberrechner", desc: "Was Sonderzahlungen den Arbeitgeber kosten" },
+        ]}
+      />
       <AdUnit placement="content" />
     </>
   );

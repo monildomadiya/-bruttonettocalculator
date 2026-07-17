@@ -85,20 +85,13 @@ const faqJsonLd = {
 
 const appJsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   name: "Brutto Netto Rechner 2027 – Steuerreform Rechner",
-  url: "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "Web",
+  url: "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
   inLanguage: "de-DE",
   description:
     "Kostenloser Steuerreform 2027 Rechner: Nettogehalt ab dem 1.1.2027 mit höherem Grundfreibetrag berechnen und im Jahresvergleich zu 2026 sehen.",
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
 };
 
 const breadcrumbJsonLd = {

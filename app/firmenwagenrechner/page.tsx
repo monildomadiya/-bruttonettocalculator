@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import FirmenwagenrechnerCalculator from "./FirmenwagenrechnerCalculator";
+import FirmenwagenContent from "./FirmenwagenContent";
+import RelatedCalculators from "@/components/RelatedCalculators";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Firmenwagenrechner 2026 — Geldwerter Vorteil & 1%-Regelung",
+  title: "Firmenwagenrechner 2026: Geldwerten Vorteil berechnen",
   description:
-    "Firmenwagenrechner & Dienstwagenrechner 2026: Geldwerten Vorteil nach der 1%-Regelung berechnen und direkt aufs Brutto-Netto-Gehalt anrechnen — inkl. Elektro-Sätze (0,25%/0,5%) und 0,03%-Zuschlag für den Arbeitsweg. Auch für 2025. Kostenlos & sofort.",
+    "Firmenwagenrechner 2026: Geldwerten Vorteil nach der 1%-Regelung berechnen und aufs Brutto-Netto-Gehalt anrechnen — inkl. Elektro-Sätze (0,25%/0,5%) und 0,03%-Zuschlag für den Arbeitsweg.",
   keywords: [
     "Firmenwagenrechner",
     "Firmenwagenrechner 2026",
@@ -83,17 +85,11 @@ const breadcrumbSchema = {
 
 const appSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   name: "Firmenwagenrechner 2026 — Geldwerter Vorteil & 1%-Regelung",
   url: "https://bruttonettocalculator.com/firmenwagenrechner",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "All",
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
   description:
     "Kostenloser Firmenwagenrechner für Deutschland — geldwerten Vorteil nach der 1%-Regelung berechnen und aufs Brutto-Netto-Gehalt anrechnen (2025/2026), inkl. Elektro-Sätze.",
 };
@@ -104,7 +100,15 @@ export default function FirmenwagenrechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <FirmenwagenrechnerCalculator />
+      <FirmenwagenrechnerCalculator content={<FirmenwagenContent />} />
+      <RelatedCalculators
+        links={[
+          { href: "/", label: "Brutto-Netto-Rechner", desc: "Nettogehalt ohne Firmenwagen" },
+          { href: "/arbeitgeber-brutto-netto-rechner", label: "Arbeitgeberrechner", desc: "Firmenwagen als Personalkosten" },
+          { href: "/stundenlohn-rechner", label: "Stundenlohnrechner", desc: "Stundenlohn aus dem Gehalt" },
+          { href: "/gehaltsrechner", label: "Gehaltsrechner", desc: "Brutto-Netto-Gehalt 2026" },
+        ]}
+      />
       <AdUnit placement="content" />
     </>
   );

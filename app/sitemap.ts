@@ -2,12 +2,16 @@ import type { MetadataRoute } from "next";
 import { dbQuery, Article } from "@/lib/db";
 import { getCommonGrossSalaryAmounts } from "@/data/wage-stats";
 import { BUNDESLAENDER } from "@/data/bundeslaender";
+import { siteConfig } from "@/lib/authors";
 
 export const revalidate = 0; // Dynamic sitemap generation
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://bruttonettocalculator.com";
-  const now  = new Date();
+  // Stable "content updated" date for pages without an individual timestamp.
+  // Using the deployment time (new Date()) would reset every URL's
+  // <lastmod> on each deploy, which search engines learn to distrust.
+  const contentUpdated = new Date(siteConfig.lastUpdatedISO);
 
   const staticRoutes: Array<{
     path: string;
@@ -32,6 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/buergergeld-rechner",        changeFrequency: "monthly", priority: 0.88 },
     { path: "/rechner/brutto-zu-netto",    changeFrequency: "monthly", priority: 0.85 },
     { path: "/rechner/netto-zu-brutto",    changeFrequency: "monthly", priority: 0.85 },
+    { path: "/brutto-netto-gehaltstabelle", changeFrequency: "monthly", priority: 0.8 },
     { path: "/pfaendungstabelle",           changeFrequency: "yearly",  priority: 0.85 },
     { path: "/mindestlohn",               changeFrequency: "monthly", priority: 0.85 },
     { path: "/steuerklassen",             changeFrequency: "monthly", priority: 0.85 },
@@ -58,7 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const sitemapEntries: MetadataRoute.Sitemap = staticRoutes.map(({ path, changeFrequency, priority }) => ({
     url:             `${base}${path}`,
-    lastModified:    now,
+    lastModified:    contentUpdated,
     changeFrequency,
     priority,
   }));
@@ -67,7 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const bl of BUNDESLAENDER) {
     sitemapEntries.push({
       url: `${base}/brutto-netto-rechner/${bl.slug}`,
-      lastModified: now,
+      lastModified: contentUpdated,
       changeFrequency: "monthly",
       priority: 0.85,
     });
@@ -78,7 +83,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const amount of longTailAmounts) {
     sitemapEntries.push({
       url: `${base}/rechner/${amount}-euro-brutto-netto`,
-      lastModified: now,
+      lastModified: contentUpdated,
       changeFrequency: "weekly",
       priority: 0.8,
     });
@@ -91,7 +96,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const art of articles) {
         sitemapEntries.push({
           url: `${base}/blog/${art.slug}`,
-          lastModified: art.updated_at ? new Date(art.updated_at) : (art.created_at ? new Date(art.created_at) : now),
+          lastModified: art.updated_at ? new Date(art.updated_at) : (art.created_at ? new Date(art.created_at) : contentUpdated),
           changeFrequency: "weekly",
           priority: 0.85,
         });

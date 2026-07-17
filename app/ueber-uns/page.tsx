@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Users, Shield, CheckCircle2, Award, BookOpen, ExternalLink, RefreshCw } from "lucide-react";
+import { Users, Shield, ShieldCheck, CheckCircle2, Award, BookOpen, ExternalLink, RefreshCw } from "lucide-react";
 import { primaryReviewer, siteConfig } from "@/lib/authors";
 
 export const metadata: Metadata = {
@@ -35,23 +35,18 @@ export default function UeberUnsPage() {
         "name": "Über uns & Redaktionsstandards | Brutto Netto Rechner 2026",
         "description": "Erfahren Sie mehr über unsere Mission, Transparenz und die amtlichen Steuergrundlagen unseres Gehaltsrechners.",
         "mainEntity": {
-          "@id": "https://bruttonettocalculator.com/ueber-uns#person",
+          "@id": "https://bruttonettocalculator.com/ueber-uns#team",
         },
       },
       {
-        "@type": "Person",
-        "@id": "https://bruttonettocalculator.com/ueber-uns#person",
+        // Content is team-authored, so the reviewing entity is an Organization,
+        // not a (fabricated) Person. This links to the site-wide Organization.
+        "@type": "Organization",
+        "@id": "https://bruttonettocalculator.com/ueber-uns#team",
         "name": primaryReviewer.name,
-        "jobTitle": primaryReviewer.credentials,
         "description": primaryReviewer.bio,
-        "image": primaryReviewer.photo,
         "url": primaryReviewer.profile_url,
-        "sameAs": primaryReviewer.linkedin ? [primaryReviewer.linkedin] : [],
-        "worksFor": {
-          "@type": "Organization",
-          "name": "BruttoNettoCalculator.com",
-          "url": "https://bruttonettocalculator.com",
-        },
+        "parentOrganization": { "@id": "https://bruttonettocalculator.com/#organization" },
       },
     ],
   };
@@ -71,8 +66,8 @@ export default function UeberUnsPage() {
           Über <span className="text-gradient-accent">uns & Redaktion</span>
         </h1>
         <p className="text-lg sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed">
-          BruttoNettoCalculator.com steht für 100% präzise, unabhängige und blitzschnelle Gehaltsberechnungen
-          nach den offiziellen Vorgaben der Bundesrepublik Deutschland. Transparenz, fachliche Prüfung und
+          BruttoNettoCalculator.com steht für präzise, unabhängige und blitzschnelle Gehaltsberechnungen
+          auf Basis der offiziellen Vorgaben der Bundesrepublik Deutschland. Transparenz, fachliche Prüfung und
           stetige Aktualität bilden die Grundpfeiler unseres Angebots.
         </p>
       </div>
@@ -81,11 +76,21 @@ export default function UeberUnsPage() {
       <div className="mb-16 bg-gradient-to-br from-[#F1F3F5] to-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#E60A1C]/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 relative z-10">
-          <img
-            src={primaryReviewer.photo}
-            alt={primaryReviewer.name}
-            className="w-32 h-32 md:w-40 md:h-40 rounded-3xl object-cover border-4 border-[#E60A1C]/40 shadow-xl shrink-0"
-          />
+          {primaryReviewer.photo ? (
+            <img
+              src={primaryReviewer.photo}
+              alt={primaryReviewer.name}
+              className="w-32 h-32 md:w-40 md:h-40 rounded-3xl object-cover border-4 border-[#E60A1C]/40 shadow-xl shrink-0"
+            />
+          ) : (
+            <span
+              className="w-32 h-32 md:w-40 md:h-40 rounded-3xl shrink-0 flex items-center justify-center text-white border-4 border-[#E60A1C]/40 shadow-xl"
+              style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)" }}
+              aria-hidden="true"
+            >
+              <ShieldCheck size={64} />
+            </span>
+          )}
           <div>
             <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-3">
               <Award size={14} /> {primaryReviewer.role}

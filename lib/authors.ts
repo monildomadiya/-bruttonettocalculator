@@ -9,14 +9,19 @@ export interface Author {
   profile_url?: string;
 }
 
+// Content is produced and maintained by the site's editorial team, not a single
+// named individual. A previous version credited a "Dr. Thomas Weber" with a
+// stock photo and unverifiable credentials — that fabricated persona was removed
+// to keep the E-E-A-T signals honest (no invented author, no fake reviewer).
+// If a real, named professional reviews the content in future, replace the
+// fields below with their genuine name, credentials and photo.
 export const primaryReviewer: Author = {
-  name: "Dr. Thomas Weber",
-  slug: "dr-thomas-weber",
-  credentials: "Dipl.-Kfm., Steuerberater & Lohnrecht-Spezialist",
-  role: "Fachlicher Prüfer & Steuerberater",
-  bio: "Dr. Thomas Weber ist diplomierter Kaufmann, bestellter Steuerberater und seit über 15 Jahren auf deutsches Lohn- und Einkommensteuerrecht spezialisiert. Er berät mittelständische Unternehmen und Arbeitnehmer bei komplexen Fragen der Gehaltsgestaltung, Sozialversicherung und betrieblichen Altersvorsorge. Als fachlicher Prüfer für BruttoNettoCalculator.com überwacht er die exakte Umsetzung aller Berechnungsalgorithmen auf Basis des jeweils gültigen Einkommensteuergesetzes (§ 32a EStG) und der aktuellen Sozialversicherungs-Rechengrößenverordnung. Seine Expertise garantiert, dass alle steuerlichen Inhalte und Rechnerergebnisse den amtlichen Vorgaben des Bundesministeriums der Finanzen entsprechen.",
-  photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
-  linkedin: "https://www.linkedin.com/",
+  name: "Redaktion BruttoNettoCalculator",
+  slug: "redaktion",
+  credentials: "Fachredaktion für Lohn- & Steuerthemen",
+  role: "Redaktion & fachliche Prüfung",
+  bio: "Die Redaktion von BruttoNettoCalculator.com erstellt und pflegt alle Rechner und Ratgeber auf Basis der amtlichen Vorgaben — insbesondere des Einkommensteuergesetzes (§ 32a EStG) und der jeweils gültigen Sozialversicherungs-Rechengrößenverordnung. Steuerliche Inhalte werden regelmäßig anhand der offiziellen Veröffentlichungen des Bundesministeriums der Finanzen (BMF) und des Bundesministeriums für Arbeit und Soziales (BMAS) überprüft und aktualisiert. Die Inhalte dienen der Information und ersetzen keine individuelle Steuerberatung.",
+  photo: "",
   profile_url: "https://bruttonettocalculator.com/ueber-uns",
 };
 

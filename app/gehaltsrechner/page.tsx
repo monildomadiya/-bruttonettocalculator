@@ -91,17 +91,11 @@ const breadcrumbSchema = {
 
 const appSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   name: "Gehaltsrechner 2026/2027 Deutschland",
   url: "https://bruttonettocalculator.com/gehaltsrechner",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "All",
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
   description:
     "Kostenloser Netto-Gehaltsrechner für Deutschland — Bruttogehalt in Nettogehalt umrechnen nach § 32a EStG 2026 mit allen 6 Steuerklassen.",
 };

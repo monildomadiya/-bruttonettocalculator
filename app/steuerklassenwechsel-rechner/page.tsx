@@ -6,7 +6,7 @@ import AdUnit from "@/components/AdUnit";
 const URL = "https://bruttonettocalculator.com/steuerklassenwechsel-rechner";
 
 export const metadata: Metadata = {
-  title: "Steuerklassen 3/5 oder 4/4 Rechner 2026 — Steuerklassenwechsel",
+  title: "Steuerklassenwechsel 2026 — 3/5 oder 4/4 Rechner",
   description:
     "Steuerklassenwechsel-Rechner 2026: Berechnen Sie für Ehepaare, ob die Kombination III/V, IV/IV oder IV/IV mit Faktor das meiste monatliche Netto bringt. Kostenlos & sofort.",
   keywords: [

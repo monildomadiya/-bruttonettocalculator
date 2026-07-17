@@ -12,8 +12,10 @@ import {
 } from "lucide-react";
 import { dbQuery, Article } from "@/lib/db";
 import { Metadata } from "next";
+import { blogCanonical } from "@/lib/seo";
 import { primaryReviewer } from "@/lib/authors";
 import ReviewerByline from "@/components/ReviewerByline";
+import RelatedArticles from "@/components/RelatedArticles";
 import AdUnit from "@/components/AdUnit";
 
 export const revalidate = 0;
@@ -72,6 +74,13 @@ export async function generateMetadata({
     return { title: "Artikel nicht gefunden" };
   }
 
+  // A blog post always lives at /blog/<slug>. We derive the canonical from the
+  // slug rather than trusting the stored canonical_url — an editor value that
+  // was missing the /blog/ segment produced the broken canonical Semrush flagged
+  // (…/brutto-netto-rechner-2026-mindestlohn-2027 → 404). This guarantees a
+  // single, self-referencing, non-WWW canonical on every article.
+  const canonicalUrl = blogCanonical(art.slug);
+
   return {
     title: art.meta_title || art.headline,
     description: art.meta_description || art.excerpt || "",
@@ -79,9 +88,7 @@ export async function generateMetadata({
       ? [art.focus_keyword, art.tags || ""].join(", ")
       : art.tags || "",
     alternates: {
-      canonical:
-        art.canonical_url ||
-        `https://bruttonettocalculator.com/blog/${art.slug}`,
+      canonical: canonicalUrl,
     },
     robots: {
       index: true,
@@ -98,9 +105,7 @@ export async function generateMetadata({
       title: art.og_title || art.meta_title || art.headline,
       description:
         art.og_description || art.meta_description || art.excerpt || "",
-      url:
-        art.canonical_url ||
-        `https://bruttonettocalculator.com/blog/${art.slug}`,
+      url: canonicalUrl,
       type: "article",
       images:
         art.og_image || art.featured_image
@@ -172,9 +177,9 @@ export default async function ArticleReaderPage({
   const faqs: FAQItem[] = Array.isArray(article.faqs) ? article.faqs : [];
   const toc = article.enable_toc ? extractToc(article.content) : [];
   const contentWithIds = injectHeadingIds(article.content || "");
-  const articleUrl =
-    article.canonical_url ||
-    `https://bruttonettocalculator.com/blog/${article.slug}`;
+  // Self-referencing /blog/<slug> URL — see generateMetadata for why we don't
+  // trust article.canonical_url here.
+  const articleUrl = blogCanonical(article.slug);
 
   /* ── JSON-LD Schemas ────────────────────────────────────────────── */
   const blogPostingSchema = {
@@ -186,15 +191,17 @@ export default async function ArticleReaderPage({
     datePublished: article.created_at || new Date().toISOString(),
     dateModified:
       article.updated_at || article.created_at || new Date().toISOString(),
+    // Team-authored content → Organization author (not a fabricated Person),
+    // linked to the site-wide Organization entity defined in the root layout.
     author: {
-      "@type": "Person",
+      "@type": "Organization",
+      "@id": "https://bruttonettocalculator.com/#organization",
       name: primaryReviewer.name,
-      jobTitle: primaryReviewer.credentials,
-      image: primaryReviewer.photo,
       url: primaryReviewer.profile_url,
     },
     publisher: {
       "@type": "Organization",
+      "@id": "https://bruttonettocalculator.com/#organization",
       name: "BruttoNettoCalculator",
       logo: {
         "@type": "ImageObject",
@@ -531,6 +538,9 @@ export default async function ArticleReaderPage({
                   </div>
                 </section>
               )}
+
+              {/* Ähnliche Artikel (reusable related-posts block) */}
+              <RelatedArticles currentSlug={article.slug} category={article.category} />
 
               {/* CTA Banner */}
               <section

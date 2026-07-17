@@ -62,6 +62,7 @@ export default function SiteFooter() {
               <li><Link href="/steuerklassen"             className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerklassen</Link></li>
               <li><Link href="/jahresgehalt-rechner"      className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Jahresgehalt-Rechner</Link></li>
               <li><Link href="/rechner/brutto-zu-netto"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto zu Netto</Link></li>
+              <li><Link href="/brutto-netto-gehaltstabelle" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto-Netto-Tabelle</Link></li>
               <li><Link href="/brutto-netto-rechner-2026" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner 2026</Link></li>
               <li><Link href="/brutto-netto-rechner-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner 2027</Link></li>
               <li><Link href="/pfaendungstabelle"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Pfändungstabelle 2026</Link></li>

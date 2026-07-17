@@ -71,17 +71,11 @@ const breadcrumbSchema = {
 };
 const appSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   name: "Teilzeitrechner 2026 Deutschland",
   url: "https://bruttonettocalculator.com/teilzeitrechner",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "All",
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
   description: "Kostenloser Teilzeitrechner — Netto-Gehalt bei Teilzeit aus dem Brutto berechnen (§ 32a EStG 2026).",
 };
 

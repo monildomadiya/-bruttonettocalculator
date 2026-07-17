@@ -67,7 +67,7 @@ export default function BruttoZuNettoPage() {
 
       <div className="mb-14">
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
-          <CalcIcon size={14} /> Amtliche Berechnung
+          <CalcIcon size={14} /> Berechnung nach § 32a EStG
         </div>
         <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
           Brutto zu <span className="text-gradient-accent">Netto</span> Rechner

@@ -142,12 +142,11 @@ export default function BundeslandPage({ params }: PageProps) {
   };
   const appSchema = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
+    "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
     name: `Brutto-Netto-Rechner ${bl.name} 2026`,
     url: canonical,
-    applicationCategory: "FinanceApplication",
-    operatingSystem: "All",
-    offers: { "@type": "Offer", price: "0.00", priceCurrency: "EUR", availability: "https://schema.org/InStock" },
     description: `Kostenloser Brutto-Netto-Rechner für ${bl.name} — Nettogehalt 2026 mit dem regionalen Kirchensteuersatz von ${kirchePct} % berechnen.`,
   };
 

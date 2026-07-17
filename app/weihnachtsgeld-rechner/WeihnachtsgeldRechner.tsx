@@ -47,9 +47,17 @@ const faqs = [
     q: "Warum ist die Abgabenlast auf Weihnachtsgeld oft höher als erwartet?",
     a: "Weil das Weihnachtsgeld zusätzlich zum regulären Gehalt versteuert wird und dadurch in einen höheren Bereich der Steuerprogression fällt. Der Grenzsteuersatz auf die Sonderzahlung liegt daher meist über dem Durchschnittssteuersatz des normalen Gehalts.",
   },
+  {
+    q: "Bekomme ich zu viel gezahlte Steuer auf das Weihnachtsgeld zurück?",
+    a: "Möglicherweise. Der Arbeitgeber behält die Lohnsteuer nach der Jahresmethode ein. Fällt Ihre tatsächliche Jahressteuer niedriger aus – etwa wegen Werbungskosten, Sonderausgaben oder eines Steuerklassenwechsels – erstattet das Finanzamt die Differenz über die Einkommensteuererklärung. Eine Garantie auf Erstattung gibt es aber nicht.",
+  },
+  {
+    q: "Wie hoch ist Weihnachtsgeld in Deutschland üblicherweise?",
+    a: "Die Höhe ist gesetzlich nicht vorgeschrieben und ergibt sich aus Arbeits- oder Tarifvertrag. Verbreitet sind ein halbes oder ein volles Monatsgehalt (13. Gehalt); teils werden feste Beträge oder ein Prozentsatz des Bruttolohns gezahlt. Ob überhaupt Weihnachtsgeld gezahlt wird, hängt vom Arbeitgeber ab.",
+  },
 ];
 
-export default function WeihnachtsgeldRechner() {
+export default function WeihnachtsgeldRechner({ content }: { content?: React.ReactNode }) {
   const [brutto, setBrutto] = useState(3500);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kirche, setKirche] = useState(false);
@@ -114,15 +122,15 @@ export default function WeihnachtsgeldRechner() {
             Weihnachtsgeld · Urlaubsgeld · Einmalzahlung · 2026
           </div>
           <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
-            Weihnachtsgeld{" "}
+            Weihnachtsgeld-Rechner 2026:{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              Rechner
+              So viel bleibt netto
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Berechnen Sie brutto zu netto, wie viel von Ihrem{" "}
-            <strong className="text-[#16181D]">Weihnachtsgeld</strong> nach Steuern und Sozialabgaben
-            übrig bleibt — die Berechnung gilt auch für Urlaubsgeld, 13. Monatsgehalt und Sonderzahlungen.
+            Berechnen Sie Ihr <strong className="text-[#16181D]">Weihnachtsgeld 2026</strong> brutto zu netto —
+            wie viel nach Steuern und Sozialabgaben übrig bleibt. Die Berechnung gilt auch für Urlaubsgeld,
+            13. Monatsgehalt und andere Sonderzahlungen.
           </p>
         </div>
       </section>
@@ -232,6 +240,9 @@ export default function WeihnachtsgeldRechner() {
           </div>
         </div>
       </section>
+
+      {/* Server-rendered SEO content (Kurzantwort, engine-based examples, deep sections) */}
+      {content}
 
       {/* Explainer / SEO content */}
       <section className="max-w-6xl mx-auto px-5 py-6">

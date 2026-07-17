@@ -54,7 +54,7 @@ function formatEuro(value: number): string {
   return value.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
 }
 
-export default function MindestlohnCalculator() {
+export default function MindestlohnCalculator({ content }: { content?: React.ReactNode }) {
   const [stunden, setStunden] = useState(40);
   const [bruttoMonat, setBruttoMonat] = useState(0);
   const [bruttoJahr, setBruttoJahr] = useState(0);
@@ -79,14 +79,15 @@ export default function MindestlohnCalculator() {
             Trending +50% · Aktuell 2026
           </div>
           <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
-            Mindestlohn Rechner{" "}
+            Mindestlohn-Rechner{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              2026/2027
+              2026 und 2027
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Berechnen Sie Ihr monatliches Brutto- &amp; Nettogehalt beim gesetzlichen Mindestlohn
-            von <strong className="text-[#16181D]">13,90&nbsp;€&nbsp;/&nbsp;Stunde</strong>. Alle
+            Berechnen Sie Ihr monatliches Brutto- &amp; Nettogehalt beim gesetzlichen Mindestlohn von{" "}
+            <strong className="text-[#16181D]">13,90&nbsp;€&nbsp;/&nbsp;Stunde</strong> (2026) bzw.{" "}
+            <strong className="text-[#16181D]">14,60&nbsp;€&nbsp;/&nbsp;Stunde</strong> (ab 2027). Alle
             Steuerklassen, Vollzeit &amp; Teilzeit.
           </p>
         </div>
@@ -223,6 +224,9 @@ export default function MindestlohnCalculator() {
           </div>
         </div>
       </section>
+
+      {/* Server-rendered SEO content (Minijob, Arbeitgeberkosten, BMAS-Quelle) */}
+      {content}
 
       {/* History */}
       <section className="max-w-6xl mx-auto px-5 py-10">

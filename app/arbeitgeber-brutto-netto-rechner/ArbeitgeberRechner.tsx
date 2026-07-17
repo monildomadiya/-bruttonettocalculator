@@ -53,7 +53,7 @@ function Row({ label, value, strong }: { label: string; value: string; strong?: 
   );
 }
 
-export default function ArbeitgeberRechner() {
+export default function ArbeitgeberRechner({ content }: { content?: React.ReactNode }) {
   const [brutto, setBrutto] = useState(4000);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kirche, setKirche] = useState(false);
@@ -87,9 +87,9 @@ export default function ArbeitgeberRechner() {
             Arbeitgeberkosten · Arbeitgeberanteil · 2026
           </div>
           <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
-            Arbeitgeber{" "}
+            Arbeitgeberrechner 2026:{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              Brutto-Netto-Rechner
+              Gesamte Lohnkosten berechnen
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
@@ -224,6 +224,9 @@ export default function ArbeitgeberRechner() {
           </div>
         </div>
       </section>
+
+      {/* Server-rendered SEO content (Kurzantwort, engine-based examples, deep sections) */}
+      {content}
 
       {/* Explainer / SEO content */}
       <section className="max-w-6xl mx-auto px-5 py-6">

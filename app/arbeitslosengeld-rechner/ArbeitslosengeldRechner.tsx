@@ -36,27 +36,41 @@ const faqs = [
   },
 ];
 
-export default function ArbeitslosengeldRechner() {
+export default function ArbeitslosengeldRechner({ content }: { content?: React.ReactNode }) {
   const [brutto, setBrutto] = useState(3500);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kind, setKind] = useState(false);
-  const [kirche, setKirche] = useState(false);
 
   const result = useMemo(() => {
-    const netto = calculateNetto({
-      bruttoMonat: brutto,
+    // ALG I wird NICHT als 60/67 % des tatsächlichen Kontonettos berechnet,
+    // sondern nach der Methode der Bundesagentur für Arbeit:
+    //  1. Bemessungsentgelt = beitragspflichtiges Brutto, gedeckelt auf die
+    //     Beitragsbemessungsgrenze der Arbeitslosenversicherung (2026: 8.450 €/Monat).
+    //  2. Pauschaliertes Leistungsentgelt = Bemessungsentgelt − 20 % Sozial-
+    //     versicherungspauschale − fiktive Lohnsteuer (nach Steuerklasse, ohne
+    //     Kirchensteuer) − Soli. Die fiktive Lohnsteuer stammt aus der zentralen
+    //     Engine (kirche = false), damit die Beträge konsistent bleiben.
+    //  3. Leistungssatz = 60 % (bzw. 67 % mit Kind) des Leistungsentgelts.
+    const RV_ALV_BBG_MONAT = 101400 / 12; // 8.450 €
+    const bemessungsentgeltMonat = Math.min(brutto, RV_ALV_BBG_MONAT);
+
+    const steuerBasis = calculateNetto({
+      bruttoMonat: bemessungsentgeltMonat,
       jahr: 2026,
       verheiratet: steuerklasse === 3 || steuerklasse === 5,
       kinderlosUeber23: false,
-      kirche,
+      kirche: false,
       steuerklasse,
     });
+    const svPauschale = bemessungsentgeltMonat * 0.20;
+    const fiktiveLohnsteuer = steuerBasis.steuer.summeMonat; // ESt + Soli, ohne Kirche
+    const leistungsentgeltMonat = Math.max(0, bemessungsentgeltMonat - svPauschale - fiktiveLohnsteuer);
 
     const satz = kind ? 0.67 : 0.60;
-    const algMonat = netto.nettoMonat * satz;
+    const algMonat = leistungsentgeltMonat * satz;
 
-    return { nettoMonat: netto.nettoMonat, satz, algMonat };
-  }, [brutto, steuerklasse, kind, kirche]);
+    return { bemessungsentgeltMonat, leistungsentgeltMonat, satz, algMonat };
+  }, [brutto, steuerklasse, kind]);
 
   return (
     <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
@@ -70,14 +84,15 @@ export default function ArbeitslosengeldRechner() {
             ALG I · Orientierungswert 2026
           </div>
           <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
-            Arbeitslosengeld-Rechner{" "}
+            ALG-1-Rechner 2026:{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              (ALG I)
+              Höhe des Arbeitslosengeldes
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Schätzen Sie Ihr Arbeitslosengeld I auf Basis Ihres letzten Bruttogehalts —
-            60 % bzw. 67 % Ihres Nettoentgelts, je nachdem ob Sie Kinder haben.
+            Berechnen Sie Ihr voraussichtliches <strong className="text-[#16181D]">Arbeitslosengeld I</strong> für
+            2026 auf Basis Ihres letzten Bruttogehalts – mit Bemessungsentgelt, pauschaliertem Leistungsentgelt
+            und Leistungssatz (60&nbsp;% bzw. 67&nbsp;% mit Kind).
           </p>
         </div>
       </section>
@@ -124,11 +139,11 @@ export default function ArbeitslosengeldRechner() {
                   <input type="checkbox" checked={kind} onChange={(e) => setKind(e.target.checked)} className="accent-[#E60A1C] w-4 h-4" />
                   Mindestens ein Kind (erhöhter Satz 67 %)
                 </label>
-                <label className="flex items-center gap-2 text-sm font-semibold text-black/70 cursor-pointer">
-                  <input type="checkbox" checked={kirche} onChange={(e) => setKirche(e.target.checked)} className="accent-[#E60A1C] w-4 h-4" />
-                  Kirchensteuer
-                </label>
               </div>
+              <p className="text-xs text-black/50">
+                Hinweis: Kirchensteuer spielt beim ALG&nbsp;I keine Rolle – die Bundesagentur rechnet mit einem
+                pauschalierten Nettoentgelt.
+              </p>
             </div>
           </div>
 
@@ -145,8 +160,12 @@ export default function ArbeitslosengeldRechner() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
-                <span className="text-black/70 text-sm font-medium">Geschätztes Nettogehalt / Monat</span>
-                <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.nettoMonat)}</span>
+                <span className="text-black/70 text-sm font-medium">Bemessungsentgelt / Monat <span className="text-black/40">(gedeckelt)</span></span>
+                <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.bemessungsentgeltMonat)}</span>
+              </div>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Pauschaliertes Leistungsentgelt / Monat</span>
+                <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.leistungsentgeltMonat)}</span>
               </div>
               <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
                 <span className="text-black/70 text-sm font-medium">Leistungssatz</span>
@@ -169,11 +188,14 @@ export default function ArbeitslosengeldRechner() {
         </div>
       </section>
 
+      {/* Server-rendered SEO content (Kurzantwort, Bemessungsentgelt, examples, source) */}
+      {content}
+
       {/* Explainer / SEO content */}
       <section className="max-w-6xl mx-auto px-5 py-6">
         <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
-            Arbeitslosengeld I berechnen: 60 % oder 67 % vom Netto
+            Arbeitslosengeld I berechnen: 60 % oder 67 % vom Leistungsentgelt
           </h2>
           <p>
             Das <strong className="text-[#16181D]">Arbeitslosengeld I (ALG I)</strong> ersetzt einen Teil Ihres
@@ -185,10 +207,11 @@ export default function ArbeitslosengeldRechner() {
           <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">So funktioniert die Berechnung</h3>
           <p>
             Die Bundesagentur für Arbeit ermittelt zunächst ein <strong className="text-[#16181D]">pauschaliertes
-            Nettoentgelt</strong> aus Ihrem Bruttolohn — abzüglich einer 21-%-Sozialpauschale, der Lohnsteuer
-            nach Ihrer Steuerklasse und des Solidaritätszuschlags. Von diesem Betrag erhalten Sie dann 60 %
-            bzw. 67 %. Weil pauschaliert gerechnet wird, kann Ihr ALG I geringfügig von 60 % Ihres
-            tatsächlichen Nettogehalts abweichen — der Rechner liefert eine realistische Orientierung.
+            Nettoentgelt</strong> aus Ihrem Bruttolohn — abzüglich einer pauschalen 20-%-Sozialversicherungs­pauschale,
+            der fiktiven Lohnsteuer nach Ihrer Steuerklasse und des Solidaritätszuschlags. Von diesem Leistungsentgelt
+            erhalten Sie dann 60 % bzw. 67 %. Weil pauschaliert und auf die Beitragsbemessungsgrenze gedeckelt
+            gerechnet wird, kann Ihr ALG I von 60 % Ihres tatsächlichen Nettogehalts abweichen — der Rechner liefert
+            eine realistische Orientierung, ist aber keine verbindliche Auskunft der Bundesagentur.
           </p>
           <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-2xl p-5">
             <p className="text-black/60 text-sm">

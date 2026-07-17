@@ -6,7 +6,7 @@ import AdUnit from "@/components/AdUnit";
 const URL = "https://bruttonettocalculator.com/gehaltserhoehung-rechner";
 
 export const metadata: Metadata = {
-  title: "Gehaltserhöhung Netto-Rechner 2026 — Was bleibt von der Erhöhung?",
+  title: "Gehaltserhöhung-Rechner 2026 — Was bleibt netto?",
   description:
     "Gehaltserhöhung-Rechner 2026: Berechnen Sie, wie viel von Ihrer Gehaltserhöhung nach Steuern und Sozialabgaben netto übrig bleibt. Grenzsteuersatz sofort sichtbar. Kostenlos.",
   keywords: [

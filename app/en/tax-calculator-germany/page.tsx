@@ -78,18 +78,11 @@ const breadcrumbSchema = {
 };
 const appSchema = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebPage",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
   name: "Germany Tax Calculator 2026",
   url: "https://bruttonettocalculator.com/en/tax-calculator-germany",
-  applicationCategory: "FinanceApplication",
-  operatingSystem: "All",
   inLanguage: "en",
-  offers: {
-    "@type": "Offer",
-    price: "0.00",
-    priceCurrency: "EUR",
-    availability: "https://schema.org/InStock",
-  },
   description: "Free German gross-to-net salary and income tax calculator for 2026 (§ 32a EStG), all 6 tax classes.",
 };
 

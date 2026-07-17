@@ -47,7 +47,7 @@ const faqs = [
   },
 ];
 
-export default function FirmenwagenrechnerCalculator() {
+export default function FirmenwagenrechnerCalculator({ content }: { content?: React.ReactNode }) {
   const [brutto, setBrutto] = useState(4000);
   const [listenpreis, setListenpreis] = useState(45000);
   const [entfernung, setEntfernung] = useState(15);
@@ -100,14 +100,14 @@ export default function FirmenwagenrechnerCalculator() {
             1%-Regelung · Aktuell 2026
           </div>
           <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
-            Firmenwagenrechner{" "}
+            Firmenwagenrechner 2026:{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              (1%-Regelung)
+              1%-Regelung berechnen
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Berechnen Sie den geldwerten Vorteil Ihres Dienstwagens und sehen Sie sofort, wie viel
-            von Ihrem Nettogehalt durch die Firmenwagen-Versteuerung übrig bleibt.
+            Berechnen Sie den geldwerten Vorteil Ihres Dienstwagens nach der 1%-Regelung und sehen Sie sofort,
+            wie viel von Ihrem Nettogehalt durch die Firmenwagen-Versteuerung übrig bleibt.
           </p>
         </div>
       </section>
@@ -241,6 +241,9 @@ export default function FirmenwagenrechnerCalculator() {
           </div>
         </div>
       </section>
+
+      {/* Server-rendered SEO content (worked example, Listenpreis vs Kaufpreis, employer view) */}
+      {content}
 
       {/* Explainer / SEO content */}
       <section className="max-w-6xl mx-auto px-5 py-6">

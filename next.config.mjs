@@ -20,6 +20,19 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Broken legacy blog URL (missing the /blog/ segment) → correct article.
+      // Was a hard 404 and the source of the broken canonical Semrush reported.
+      {
+        source: "/brutto-netto-rechner-2026-mindestlohn-2027",
+        destination: "/blog/brutto-netto-rechner-2026-mindestlohn-2027",
+        permanent: true,
+      },
+      // Salary hub moved to the keyword-aligned top-level route.
+      {
+        source: "/rechner/gehaltstabelle",
+        destination: "/brutto-netto-gehaltstabelle",
+        permanent: true,
+      },
       {
         source: "/rechner",
         destination: "/",
@@ -71,6 +84,31 @@ const nextConfig = {
         source: "/wp-admin",
         destination: "/admin-secure",
         permanent: false,
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        // Apply baseline security headers to every route.
+        source: "/:path*",
+        headers: [
+          {
+            // HSTS: force HTTPS for a year, including subdomains. No `preload`
+            // — that requires an explicit submission to the preload list and
+            // is intentionally left off until the owner opts in.
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains",
+          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          // Deliberately NO Content-Security-Policy or Permissions-Policy here:
+          // a strict CSP would break AdSense/Analytics, and restricting
+          // `browsing-topics` would opt the site out of the Topics API that
+          // AdSense uses for ad relevance. Locking only unused powerful features.
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
       },
     ];
   },
