@@ -6,7 +6,7 @@ import {
   TrendingUp, ShieldCheck, HelpCircle, Calendar, Sparkles, Building2,
   ChevronRight, BarChart3,
 } from "lucide-react";
-import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse } from "@/lib/taxCalculator";
+import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse, isMidijob2026, midijobArbeitnehmerBemessungMonat } from "@/lib/taxCalculator";
 import { getCommonGrossSalaryAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
@@ -49,8 +49,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const formattedBrutto = new Intl.NumberFormat("de-DE").format(amount);
   const formattedNetto = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(netSK1);
 
-  const title = `${formattedBrutto} Euro brutto in netto 2026`;
-  const description = `${formattedBrutto} € brutto sind in Steuerklasse I ca. ${formattedNetto} netto im Monat (2026). Alle 6 Steuerklassen, Abzüge, Jahreswerte und Lohnvergleich im Detail.`;
+  const midijobSuffix = isMidijob2026(amount) ? " (Midijob)" : "";
+  const title = `${formattedBrutto} € Brutto in Netto 2026 – Rechner & Steuerklassen`;
+  const description = `${formattedBrutto} € brutto sind in Steuerklasse I ca. ${formattedNetto} netto im Monat (2026)${midijobSuffix}. Alle 6 Steuerklassen, Abzüge, Jahreswerte und Lohnvergleich im Detail.`;
   const canonicalUrl = `https://bruttonettocalculator.com/rechner/${amount}-euro-brutto-netto`;
 
   return {
@@ -136,9 +137,14 @@ export default function LongTailSalaryPage({ params }: PageProps) {
     ? `${eur0(diffSchnitt)} über dem Durchschnittsgehalt`
     : `${eur0(diffSchnitt)} unter dem Durchschnittsgehalt`;
 
-  // Neighboring amounts for internal linking
-  const prevAmount = amount > 1500 ? amount - 100 : null;
-  const nextAmount = amount < 15000 ? amount + 100 : null;
+  // Neighboring amounts for internal linking — derived from the whitelist so
+  // every link points to a real, indexable, sitemap-included page (never a
+  // dynamically-rendered amount that isn't approved for indexing).
+  const whitelist = getCommonGrossSalaryAmounts(); // sorted ascending
+  const wlIndex = whitelist.indexOf(amount);
+  const prevAmount = wlIndex > 0 ? whitelist[wlIndex - 1] : null;
+  const nextAmount = wlIndex >= 0 && wlIndex < whitelist.length - 1 ? whitelist[wlIndex + 1] : null;
+  const isMidijobAmount = isMidijob2026(amount);
 
   // Relevant blog post recommendation (published article — verified slug).
   const blogLink = amount >= 5800
@@ -155,7 +161,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
       amount - 1000, amount + 1000,
     ])
   )
-    .filter((a) => a >= 1500 && a <= 10000 && a !== amount && a % 100 === 0)
+    .filter((a) => a !== amount && whitelist.includes(a))
     .sort((a, b) => a - b)
     .slice(0, 6);
 
@@ -166,6 +172,10 @@ export default function LongTailSalaryPage({ params }: PageProps) {
     {
       q: `Wie viel sind ${nf(amount)} Euro brutto in netto?`,
       a: `In Steuerklasse I (ledig, ohne Kirchensteuer) bleiben von ${nf(amount)} € brutto rund ${formatEUR(sk1Res.nettoMonat)} netto im Monat, also etwa ${formatEUR(sk1Res.nettoJahr)} im Jahr (2026). Der genaue Betrag hängt von Steuerklasse, Bundesland, Kirchensteuer und Freibeträgen ab.`,
+    },
+    {
+      q: `Wie viel netto sind ${nf(amount)} € brutto in Steuerklasse 1?`,
+      a: `${nf(amount)} € brutto in Steuerklasse 1 (ledig, kinderlos ab 23, ohne Kirchensteuer) ergeben 2026 rund ${formatEUR(sk1Res.nettoMonat)} netto im Monat (${formatEUR(sk1Res.nettoJahr)} im Jahr). Abgezogen werden ca. ${formatEUR(sk1Res.steuer.summeMonat)} Steuern und ${formatEUR(sk1Res.sv.summeMonat)} Sozialabgaben.`,
     },
     {
       q: `Wie viel netto sind ${nf(amount)} € brutto in Steuerklasse 3?`,
@@ -179,6 +189,10 @@ export default function LongTailSalaryPage({ params }: PageProps) {
       q: `Was sind ${nf(amount)} € brutto im Jahr?`,
       a: `${nf(amount)} € brutto im Monat entsprechen ${formatEUR(amount * 12)} brutto im Jahr. Nach Steuern und Sozialabgaben bleiben davon in Steuerklasse I rund ${formatEUR(sk1Res.nettoJahr)} netto im Jahr (2026, unverbindlich).`,
     },
+    ...(isMidijobAmount ? [{
+      q: `Warum ist ${nf(amount)} € brutto ein Midijob?`,
+      a: `${nf(amount)} € liegt im Übergangsbereich (Midijob) 2026, der von 603,01 € bis 2.000 € reicht. In diesem Bereich zahlen Arbeitnehmer reduzierte Sozialversicherungsbeiträge: Diese werden nicht vom vollen Brutto, sondern von einer verminderten beitragspflichtigen Einnahme von rund ${formatEUR(midijobArbeitnehmerBemessungMonat(amount))} berechnet. Dadurch bleibt netto mehr übrig als bei einer regulären Beschäftigung.`,
+    }] : []),
   ];
 
   // Structured Data — BreadcrumbList + WebPage (isPartOf)
@@ -238,7 +252,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
           <CalcIcon size={14} /> Berechnung nach § 32a EStG
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-4 tracking-tight leading-tight">
-          <span className="text-gradient-accent">{formattedBrutto} Euro</span> brutto in netto: Berechnung 2026
+          <span className="text-gradient-accent">{formattedBrutto} Brutto</span> in Netto 2026
         </h1>
         <p className="text-lg sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-6">
           Wieviel bleibt von {formattedBrutto} Brutto monatlich übrig? In Steuerklasse 1 (ledig, ohne Kirchensteuer)
@@ -250,6 +264,23 @@ export default function LongTailSalaryPage({ params }: PageProps) {
 
       {/* Ad — right below the hero */}
       <AdUnit placement="content" className="!my-0 !mb-12 !px-0" />
+
+      {/* Midijob / Übergangsbereich explainer — only for salaries inside 603,01–2.000 € */}
+      {isMidijobAmount && (
+        <div className="mb-14 bg-amber-50 border border-amber-500/30 rounded-3xl p-6 sm:p-8">
+          <div className="flex items-center gap-2 text-amber-700 font-bold text-sm sm:text-base mb-3">
+            <TrendingUp size={18} /> Midijob-Hinweis: reduzierte Sozialabgaben
+          </div>
+          <p className="text-sm sm:text-base text-black/80 leading-relaxed">
+            {formattedBrutto} liegt im <strong className="text-[#16181D]">Übergangsbereich (Midijob) 2026</strong>,
+            der von 603,01 € bis 2.000 € reicht. Ihre Sozialversicherungsbeiträge werden hier nicht vom vollen
+            Bruttogehalt berechnet, sondern von einer reduzierten beitragspflichtigen Einnahme von rund{" "}
+            <strong className="text-[#16181D]">{formatEUR(midijobArbeitnehmerBemessungMonat(amount))}</strong>.
+            Dadurch zahlen Sie weniger Sozialabgaben und behalten mehr netto — Ihr voller Rentenanspruch bleibt
+            trotzdem erhalten. Die Werte in diesem Rechner berücksichtigen die Midijob-Formel bereits.
+          </p>
+        </div>
+      )}
 
       {/* Unique Destatis Percentile & Wage Context Block */}
       <div className="mb-14 bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
@@ -376,6 +407,36 @@ export default function LongTailSalaryPage({ params }: PageProps) {
 
       {/* Ad: in-content after the main comparison table (high viewability / high CPM) */}
       <AdUnit placement="content" className="!my-0 !mb-16 !px-0" />
+
+      {/* Prominent Steuerklasse I subsection (main search intent for exact-salary queries) */}
+      <div className="mb-16 bg-gradient-to-br from-[#E60A1C]/10 via-[#FFFFFF] to-[#FFFFFF] border border-[#E60A1C]/30 rounded-3xl p-6 sm:p-10 shadow-xl">
+        <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-3 py-1 rounded-full mb-4">
+          <CheckCircle2 size={13} /> Steuerklasse I im Detail
+        </div>
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+          {formattedBrutto} Brutto in Netto in Steuerklasse 1
+        </h2>
+        <p className="text-base sm:text-lg text-black/80 leading-relaxed mb-6">
+          Für Alleinstehende (ledig, kinderlos ab 23 Jahren, ohne Kirchensteuer) ist Steuerklasse I die
+          Standard-Steuerklasse. Von {formattedBrutto} brutto bleiben 2026 rund{" "}
+          <strong className="text-[#E60A1C] font-extrabold">{formatEUR(sk1Res.nettoMonat)}</strong> netto im Monat
+          ({formatEUR(sk1Res.nettoJahr)} im Jahr) — das entspricht einer Netto-Quote von{" "}
+          <strong className="text-[#16181D]">{nettoQuote.toFixed(1).replace(".", ",")} %</strong>.
+        </p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {[
+            { label: "Netto / Monat", value: formatEUR(sk1Res.nettoMonat), accent: true },
+            { label: "Netto / Jahr", value: formatEUR(sk1Res.nettoJahr), accent: true },
+            { label: "Lohnsteuer + Soli / Mon.", value: formatEUR(sk1Res.steuer.summeMonat) },
+            { label: "Sozialabgaben / Mon.", value: formatEUR(sk1Res.sv.summeMonat) },
+          ].map((k) => (
+            <div key={k.label} className={`rounded-2xl border p-4 sm:p-5 ${k.accent ? "bg-[#E60A1C]/10 border-[#E60A1C]/40" : "bg-[#FFFFFF] border-black/[0.08]"}`}>
+              <div className="text-xs font-mono uppercase tracking-wider text-black/50 mb-1.5">{k.label}</div>
+              <div className={`font-mono font-extrabold text-lg sm:text-xl ${k.accent ? "text-[#E60A1C]" : "text-[#16181D]"}`}>{k.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Table 2: 2-Year Tax Comparison (2026 vs 2027) */}
       <div className="mb-16">

@@ -53,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/bonus-steuerrechner",         changeFrequency: "monthly", priority: 0.75 },
     { path: "/stundenlohn-rechner",         changeFrequency: "monthly", priority: 0.75 },
     { path: "/en/tax-calculator-germany",  changeFrequency: "monthly", priority: 0.75 },
+    { path: "/pl/kalkulator-brutto-netto-niemcy", changeFrequency: "monthly", priority: 0.75 },
     { path: "/lexikon",                    changeFrequency: "monthly", priority: 0.75 },
     { path: "/faq",                        changeFrequency: "monthly", priority: 0.75 },
     { path: "/ueber-uns",                  changeFrequency: "yearly",  priority: 0.4 },

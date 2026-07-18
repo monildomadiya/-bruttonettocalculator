@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     languages: {
       "de-DE": "https://bruttonettocalculator.com/",
       "en-DE": "https://bruttonettocalculator.com/en/tax-calculator-germany",
+      "pl-DE": "https://bruttonettocalculator.com/pl/kalkulator-brutto-netto-niemcy",
       "x-default": "https://bruttonettocalculator.com/",
     },
   },
@@ -270,6 +271,36 @@ export default function HomePage() {
             <InfoCard key={card.title} {...card} />
           ))}
         </div>
+      </section>
+
+      {/* ── Beliebte Gehälter (exact-salary internal links) ──────────── */}
+      <section className="max-w-6xl mx-auto px-5 pt-4 pb-16 sm:pb-20">
+        <div className="text-center mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
+            <Wallet size={14} /> Beliebte Gehälter
+          </div>
+          <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Beliebte Gehälter berechnen</h2>
+          <p className="text-black/70 text-base sm:text-lg mt-3 max-w-2xl mx-auto">
+            Direkt zum fertig berechneten Nettogehalt für ein konkretes Bruttogehalt — mit allen 6 Steuerklassen für 2026.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          {[1200, 2800, 3000, 3300, 3500, 4000, 4400, 5000].map((amount) => (
+            <Link
+              key={amount}
+              href={`/rechner/${amount}-euro-brutto-netto`}
+              className="group flex items-center justify-between gap-2 bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-black/[0.10] hover:border-[#E60A1C]/50 rounded-2xl px-4 py-3.5 text-sm font-semibold text-[#16181D] shadow-sm transition-all"
+            >
+              <span className="truncate">{amount.toLocaleString("de-DE")} € Brutto in Netto</span>
+              <ArrowRight size={14} className="text-[#E60A1C] flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+          ))}
+        </div>
+        <p className="text-center mt-6">
+          <Link href="/brutto-netto-gehaltstabelle" className="text-sm font-bold text-[#E60A1C] hover:underline inline-flex items-center gap-1.5">
+            Alle Beträge in der Brutto-Netto-Gehaltstabelle <ArrowRight size={14} />
+          </Link>
+        </p>
       </section>
 
       {/* ── How it works (3 Steps Dark Tech) ─────────────────────────── */}

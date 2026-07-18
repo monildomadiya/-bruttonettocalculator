@@ -36,7 +36,7 @@ export function getWagePercentileContext(grossMonthly: number): {
     return {
       headline: `${formatted} Brutto im Vergleich zum Mindestlohn`,
       summary: `Ein Monatsgehalt von ${formatted} liegt unter dem rechnerischen Vollzeit-Mindestlohnniveau von ca. 2.409 € (bei 13,90 €/Std. und 40-Stunden-Woche). Oft handelt es sich hierbei um Teilzeitstellen, Einstiegspositionen oder Midijobs.`,
-      detail: `In diesem Lohnbereich fallen die Steuerabzüge dank des amtlichen Grundfreibetrags (12.348 € im Jahr 2026 für Ledige) extrem gering aus oder entfallen komplett. Die Sozialversicherungsbeiträge werden proportional nach dem regulären AN-Satz berechnet.`,
+      detail: `In diesem Lohnbereich fallen die Steuerabzüge dank des amtlichen Grundfreibetrags (12.348 € im Jahr 2026 für Ledige) extrem gering aus oder entfallen komplett. Liegt das Monatsgehalt im Midijob-Übergangsbereich (603,01–2.000 €), werden die Arbeitnehmer-Sozialbeiträge zusätzlich von einer reduzierten Bemessungsgrundlage berechnet — dadurch bleibt netto mehr übrig.`,
       badgeText: "Teilzeit / Einstiegssegment",
     };
   } else if (grossMonthly < s.medianGrossMonthly) {
@@ -78,12 +78,19 @@ export function getWagePercentileContext(grossMonthly: number): {
 }
 
 /**
- * Generates array of gross salary amounts from 1500 to 10000 in steps of 100.
+ * Whitelisted, indexable exact-salary amounts.
+ *
+ * 1.500–10.000 € in steps of 100, plus the validated Midijob amount 1.200 €
+ * (only enabled once the 2026 Übergangsbereich logic in the engine passes its
+ * checkpoints — see scripts/midijob.test.mts). New amounts are added here
+ * deliberately, never auto-generated for every possible value.
  */
+const APPROVED_MIDIJOB_AMOUNTS = [1200];
+
 export function getCommonGrossSalaryAmounts(): number[] {
-  const amounts: number[] = [];
+  const amounts: number[] = [...APPROVED_MIDIJOB_AMOUNTS];
   for (let amount = 1500; amount <= 10000; amount += 100) {
     amounts.push(amount);
   }
-  return amounts;
+  return amounts.sort((a, b) => a - b);
 }

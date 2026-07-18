@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BarChart3, ChevronDown, Calculator, ArrowRight, Users, RefreshCw } from "lucide-react";
+import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Steuerklassen 2026 — Alle 6 Steuerklassen im Vergleich",
+  title: "Steuerklassen 2026: Welche Steuerklasse für Verheiratete?",
   description:
-    "Steuerklassen 2026 Vergleich: Alle 6 Steuerklassen erklärt mit Nettogehalt-Beispielen für 2.500–5.000 € Brutto. Steuerklassenwechsel, Steuerklasse III vs. IV vs. V — jetzt informieren.",
+    "Steuerklassen 2026 im Vergleich: alle 6 Klassen erklärt und für Verheiratete die Kombinationen III/V, IV/IV und IV/IV mit Faktor. Mit Nettogehalt-Beispielen, Steuerklassenwechsel & FAQ.",
   keywords: [
     "Steuerklassen 2026",
+    "Steuerklasse verheiratet",
+    "welche Steuerklasse verheiratet",
+    "Steuerklasse 3 und 5",
+    "Steuerklasse 4 Faktor",
     "Steuerklassenvergleich",
     "Steuerklasse 1 2 3 4 5 6",
     "Steuerklassenwechsel",
     "Steuerklasse III vs IV vs V",
     "Steuerklasse wechseln 2026",
-    "Steuerklasse 3 und 5",
     "welche Steuerklasse bin ich",
-    "Steuerklasse Unterschied",
     "Lohnsteuer Steuerklassen",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/steuerklassen" },
@@ -44,10 +47,18 @@ const jsonLd = {
     },
     {
       "@type": "Question",
+      name: "Welche Steuerklasse haben Verheiratete automatisch?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Nach der Heirat werden beide Partner automatisch in Steuerklasse IV eingestuft (IV/IV). Sie können danach jederzeit in III/V oder IV/IV mit Faktor wechseln. Die Steuerklasse ändert nur die monatliche Lohnsteuer-Einbehaltung, nicht die endgültige Jahressteuer.",
+      },
+    },
+    {
+      "@type": "Question",
       name: "Wann lohnt sich Steuerklasse III und V?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Die Kombination III/V lohnt sich, wenn ein Ehepartner deutlich mehr verdient. Der Geringverdienende wechselt zu V (höhere Steuerlast), der Besserverdienende zu III (niedrigere Steuerlast). Am Jahresende wird über die gemeinsame Steuererklärung ausgeglichen.",
+        text: "Die Kombination III/V bringt monatlich mehr Netto, wenn ein Ehepartner deutlich mehr verdient. Der Geringverdienende wechselt zu V, der Besserverdienende zu III. Bei III/V ist eine Steuererklärung meist Pflicht, weil es zu Nachzahlungen kommen kann; die Jahressteuer ist am Ende gleich wie bei IV/IV.",
       },
     },
     {
@@ -71,7 +82,7 @@ const jsonLd = {
       name: "Welche Steuerklasse zahlt am wenigsten Steuern?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Steuerklasse III zahlt die geringste monatliche Lohnsteuer, da sie für den Hauptverdiener im Ehepaar den doppelten Grundfreibetrag gewährt. Im Jahresausgleich wird die Gesamtsteuer des Haushalts gemeinsam berechnet.",
+        text: "Steuerklasse III hat die geringste monatliche Lohnsteuer, weil der Splitting-Vorteil des Ehepaares bereits beim Lohnsteuerabzug des Hauptverdieners berücksichtigt wird. Das ist nur eine vorläufige monatliche Einbehaltung — die tatsächliche Jahressteuer ergibt sich erst aus der gemeinsamen Veranlagung und ist bei III/V und IV/IV gleich hoch.",
       },
     },
   ],
@@ -113,9 +124,9 @@ const steuerklassen = [
     badge: "Niedrigste Steuer",
     badgeColor: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30",
     description:
-      "Für Verheiratete oder eingetragene Lebenspartner mit deutlich höherem Einkommen. Doppelter Grundfreibetrag — höchste monatliche Nettoauszahlung. Partner muss in Klasse V sein.",
-    vorteile: ["Doppelter Grundfreibetrag", "Höchstes Netto monatlich", "Splitting-Vorteil"],
-    nachteile: ["Partner trägt Klasse V", "Jahresausgleich nötig", "Nur gemeinsam sinnvoll"],
+      "Für Verheiratete oder eingetragene Lebenspartner mit deutlich höherem Einkommen. Der Splitting-Vorteil wird bereits beim monatlichen Lohnsteuerabzug berücksichtigt — höchste monatliche Nettoauszahlung. Der Partner ist dann in Klasse V. Die endgültige Steuer ergibt sich erst aus der gemeinsamen Veranlagung.",
+    vorteile: ["Splitting-Vorteil schon im Monat", "Höchstes Netto monatlich", "Für Hauptverdiener"],
+    nachteile: ["Partner trägt Klasse V", "Steuererklärung meist Pflicht", "Nur gemeinsam sinnvoll"],
   },
   {
     nr: "IV",
@@ -158,34 +169,29 @@ const steuerklassen = [
   },
 ];
 
-// Pre-calculated approximate net amounts per gross income and Steuerklasse
-// (Estimated, not from live calculator)
-const vergleichsData = [
-  {
-    brutto: 2500,
-    klassen: { I: 1850, III: 2075, IV: 1850, V: 1550 },
-  },
-  {
-    brutto: 3000,
-    klassen: { I: 2185, III: 2470, IV: 2185, V: 1770 },
-  },
-  {
-    brutto: 3500,
-    klassen: { I: 2490, III: 2840, IV: 2490, V: 1990 },
-  },
-  {
-    brutto: 4000,
-    klassen: { I: 2790, III: 3210, IV: 2790, V: 2210 },
-  },
-  {
-    brutto: 5000,
-    klassen: { I: 3310, III: 3870, IV: 3310, V: 2650 },
-  },
-];
-
-function formatEuro(v: number) {
-  return v.toLocaleString("de-DE") + " €";
+// Net amounts per gross income and Steuerklasse — computed by the SAME tested
+// engine the calculator uses (no hand-authored estimates), § 32a EStG 2026,
+// kinderlos ab 23, ohne Kirchensteuer.
+function netMonat(brutto: number, sk: Steuerklasse): number {
+  return calculateNetto({
+    bruttoMonat: brutto,
+    jahr: 2026,
+    verheiratet: sk === 3 || sk === 4 || sk === 5,
+    kinderlosUeber23: true,
+    kirche: false,
+    steuerklasse: sk,
+  }).nettoMonat;
 }
+
+const vergleichsData = [2500, 3000, 3500, 4000, 5000].map((brutto) => ({
+  brutto,
+  klassen: {
+    I: netMonat(brutto, 1),
+    III: netMonat(brutto, 3),
+    IV: netMonat(brutto, 4),
+    V: netMonat(brutto, 5),
+  },
+}));
 
 const faqs = [
   {
@@ -193,8 +199,12 @@ const faqs = [
     a: "Deutschland hat 6 Steuerklassen: I (ledig), II (Alleinerziehende), III (verheiratet, Hauptverdiener), IV (verheiratet, gleiches Einkommen), V (verheiratet, Geringverdiener), VI (Zweitjob).",
   },
   {
+    q: "Welche Steuerklasse haben Verheiratete automatisch?",
+    a: "Nach der Heirat werden beide Partner automatisch in Steuerklasse IV eingestuft (IV/IV). Danach ist jederzeit ein Wechsel zu III/V oder IV/IV mit Faktor möglich. Die Steuerklasse ändert nur die monatliche Lohnsteuer-Einbehaltung, nicht die endgültige Jahressteuer.",
+  },
+  {
     q: "Wann lohnt sich Steuerklasse III und V?",
-    a: "Die Kombination III/V lohnt sich, wenn ein Partner deutlich mehr verdient. Der Hauptverdiener erhält Klasse III (doppelter Freibetrag, weniger Steuer), der Geringverdiener Klasse V. Im Jahresausgleich wird die tatsächliche Steuerschuld ermittelt.",
+    a: "Die Kombination III/V bringt monatlich mehr Netto, wenn ein Partner deutlich mehr verdient: Hauptverdiener Klasse III, Geringverdiener Klasse V. Bei III/V ist eine Steuererklärung meist Pflicht, da Nachzahlungen möglich sind — die Jahressteuer ist am Ende gleich wie bei IV/IV.",
   },
   {
     q: "Wie oft kann ich die Steuerklasse wechseln?",
@@ -206,7 +216,7 @@ const faqs = [
   },
   {
     q: "Welche Steuerklasse zahlt am wenigsten Steuern?",
-    a: "Steuerklasse III hat die niedrigste monatliche Lohnsteuer durch den doppelten Grundfreibetrag. Im Haushalt gesamt (III + V) entspricht die Jahressteuerlast dem Ehegattensplitting — gleich wie bei Klasse IV/IV.",
+    a: "Steuerklasse III hat die niedrigste monatliche Lohnsteuer, weil der Splitting-Vorteil des Ehepaares bereits beim Lohnsteuerabzug berücksichtigt wird. Das ist nur die vorläufige monatliche Einbehaltung — die tatsächliche Jahressteuerlast ist bei III/V und IV/IV gleich und ergibt sich erst aus der gemeinsamen Veranlagung.",
   },
 ];
 
@@ -229,14 +239,14 @@ export default function SteuerklassenPage() {
               Alle 6 Steuerklassen · 2026
             </div>
             <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
-              Steuerklassen{" "}
+              Steuerklassen 2026{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
                 im Vergleich
               </span>
             </h1>
             <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-              Alle 6 deutschen Steuerklassen erklärt: Unterschiede, Nettogehalt-Beispiele für
-              2026, Steuerklassenwechsel und Tipps — auf einen Blick.
+              Alle 6 deutschen Steuerklassen erklärt — und für Verheiratete die Kombinationen III/V,
+              IV/IV und IV/IV mit Faktor. Mit Nettogehalt-Beispielen 2026, Steuerklassenwechsel und FAQ.
             </p>
           </div>
         </section>
@@ -288,8 +298,8 @@ export default function SteuerklassenPage() {
             Steuerklassen III vs. IV vs. V — Nettogehalt 2026
           </h2>
           <p className="text-black/55 mb-6 text-sm sm:text-base">
-            Geschätzte monatliche Nettobeträge (Steuerklasse I, III, IV, V) bei verschiedenen
-            Bruttogehältern. Steuerklasse I als Referenz für Alleinstehende.
+            Monatliche Nettobeträge (Steuerklasse I, III, IV, V) bei verschiedenen Bruttogehältern —
+            berechnet mit unserem Brutto-Netto-Rechner für 2026. Steuerklasse I dient als Referenz für Alleinstehende.
           </p>
           <div className="overflow-x-auto rounded-2xl border border-black/[0.08]">
             <table className="w-full text-sm sm:text-base">
@@ -311,19 +321,19 @@ export default function SteuerklassenPage() {
                     }`}
                   >
                     <td className="px-4 sm:px-6 py-4 font-mono font-bold text-[#16181D]">
-                      {formatEuro(row.brutto)}
+                      {formatEUR(row.brutto)}
                     </td>
                     <td className="px-4 sm:px-6 py-4 text-right font-mono text-black/80">
-                      {formatEuro(row.klassen.I)}
+                      {formatEUR(row.klassen.I)}
                     </td>
                     <td className="px-4 sm:px-6 py-4 text-right font-mono font-bold text-emerald-600">
-                      {formatEuro(row.klassen.III)}
+                      {formatEUR(row.klassen.III)}
                     </td>
                     <td className="px-4 sm:px-6 py-4 text-right font-mono text-black/80">
-                      {formatEuro(row.klassen.IV)}
+                      {formatEUR(row.klassen.IV)}
                     </td>
                     <td className="px-4 sm:px-6 py-4 text-right font-mono text-orange-600">
-                      {formatEuro(row.klassen.V)}
+                      {formatEUR(row.klassen.V)}
                     </td>
                   </tr>
                 ))}
@@ -331,9 +341,60 @@ export default function SteuerklassenPage() {
             </table>
           </div>
           <p className="text-xs text-black/35 mt-3">
-            ⚠ Schätzwerte — Einzelfall-Berechnung im Brutto-Netto-Rechner empfohlen. Ohne
-            Kirchensteuer, Kinderfreibetrag etc.
+            Berechnet nach § 32a EStG 2026 (kinderlos ab 23, ohne Kirchensteuer/Kinderfreibetrag).
+            Die monatlichen Beträge sind vorläufige Lohnsteuer-Einbehaltungen — die endgültige Jahressteuer
+            von Ehepaaren ist bei III/V und IV/IV gleich. Unverbindlich.
           </p>
+        </section>
+
+        {/* Verheiratet: welche Steuerklasse? (married-intent cluster) */}
+        <section className="max-w-6xl mx-auto px-5 py-8">
+          <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-7 sm:p-10 shadow-sm">
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-3 py-1 rounded-full mb-4">
+              <Users size={13} /> Für Verheiratete
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-4">
+              Welche Steuerklasse gilt nach der Heirat?
+            </h2>
+            <div className="space-y-4 text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl">
+              <p>
+                Nach der Heirat werden beide Partner automatisch in <strong className="text-[#16181D]">Steuerklasse IV</strong>{" "}
+                eingestuft (IV/IV). Sie können danach jederzeit in eine andere Kombination wechseln. Wichtig: Die
+                Steuerklasse bestimmt nur, <strong className="text-[#16181D]">wie viel Lohnsteuer monatlich einbehalten</strong>{" "}
+                wird — die tatsächliche Jahressteuer wird erst über die gemeinsame Steuererklärung ermittelt und ist
+                bei allen Kombinationen gleich hoch.
+              </p>
+              <div className="grid sm:grid-cols-3 gap-4 pt-2">
+                <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-2xl p-5">
+                  <div className="font-bold text-[#16181D] mb-1.5">IV / IV</div>
+                  <p className="text-xs sm:text-sm text-black/65">Beide verdienen ähnlich viel. Ausgewogene monatliche Abzüge, meist keine Nachzahlung.</p>
+                </div>
+                <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-2xl p-5">
+                  <div className="font-bold text-[#16181D] mb-1.5">III / V</div>
+                  <p className="text-xs sm:text-sm text-black/65">Ein Partner verdient deutlich mehr (Hauptverdiener III, Partner V). Mehr Netto im Monat, aber Steuererklärung meist Pflicht — es kann zu Nachzahlungen kommen.</p>
+                </div>
+                <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-2xl p-5">
+                  <div className="font-bold text-[#16181D] mb-1.5">IV / IV mit Faktor</div>
+                  <p className="text-xs sm:text-sm text-black/65">Berücksichtigt die unterschiedlichen Einkommen schon monatlich möglichst genau und vermeidet so hohe Nachzahlungen.</p>
+                </div>
+              </div>
+              <p>
+                Welche Kombination im Monat am meisten Netto bringt, hängt vom Einkommensverhältnis ab. Vergleichen Sie
+                die Varianten mit echten Zahlen im{" "}
+                <Link href="/steuerklassenwechsel-rechner" className="text-[#E60A1C] font-semibold hover:underline">
+                  Steuerklassenwechsel-Rechner
+                </Link>.
+              </p>
+            </div>
+            <div className="mt-6">
+              <Link
+                href="/steuerklassenwechsel-rechner"
+                className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3 rounded-xl transition-all text-sm sm:text-base"
+              >
+                <RefreshCw size={16} /> Steuerklassen-Kombination berechnen
+              </Link>
+            </div>
+          </div>
         </section>
 
         {/* Ad: between the comparison table and the Steuerklassenwechsel section */}

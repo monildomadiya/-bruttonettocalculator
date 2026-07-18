@@ -13,7 +13,7 @@ import AdUnit from "@/components/AdUnit";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
-type Lang = "de" | "en";
+type Lang = "de" | "en" | "pl";
 
 const STEUERKLASSE_INFO: Record<Lang, Record<Steuerklasse, string>> = {
   de: {
@@ -31,6 +31,14 @@ const STEUERKLASSE_INFO: Record<Lang, Record<Steuerklasse, string>> = {
     4: "Married — equal earners (Class IV)",
     5: "Married — lower earner (Class V)",
     6: "Second job (Class VI)",
+  },
+  pl: {
+    1: "Osoba samotna (klasa I)",
+    2: "Samotny rodzic (klasa II)",
+    3: "Małżeństwo — wyższy dochód (klasa III)",
+    4: "Małżeństwo — równe dochody (klasa IV)",
+    5: "Małżeństwo — niższy dochód (klasa V)",
+    6: "Drugi etat (klasa VI)",
   },
 };
 
@@ -181,6 +189,79 @@ const T: Record<Lang, Record<string, string>> = {
     perMonthWord2: "/ month",
     yearWord: "Year",
     monthShort: "Mo.",
+  },
+  pl: {
+    inputParams: "Dane · Parametry",
+    yourGross: "Twoje wynagrodzenie brutto",
+    perMonth: "/mies.",
+    perYear: "/rok",
+    grossPerMonth: "Wynagrodzenie brutto miesięcznie",
+    errInvalid: "Podaj prawidłową kwotę",
+    errPositive: "Kwota musi być dodatnia",
+    errMax: "Maksymalna kwota: 200 000 €",
+    sliderAria: "Suwak wynagrodzenia brutto",
+    taxYear: "Rok podatkowy",
+    year2027Note: "Ostateczne wartości podatkowe na 2027 r. nie są jeszcze dostępne (stan: lipiec 2026). Tymczasowo stosowane są urzędowe wartości z 2026 r.",
+    taxClass: "Klasa podatkowa",
+    moreOptions: "Więcej opcji",
+    childlessLabel: "Bezdzietny/a i powyżej 23 lat",
+    childlessHint: "Ubezpieczenie pielęgnacyjne +0,6%",
+    churchLabel: "Podatek kościelny",
+    churchHint: "9% od podatku dochodowego",
+    disclaimer: "Uproszczone obliczenie niemieckiego wynagrodzenia wg § 32a EStG 2026. Nie stanowi porady podatkowej.",
+    result: "Wynik",
+    dateChip: "lipiec 2026",
+    copyAria: "Kopiuj link do wyniku",
+    copyTitle: "Skopiuj link do tego wyniku",
+    copied: "Skopiowano!",
+    share: "Udostępnij",
+    annualNet: "Wynagrodzenie netto rocznie",
+    monthlyNet: "Wynagrodzenie netto miesięcznie",
+    equals: "Odpowiada",
+    perMonthWord: "/ miesiąc",
+    netShare: "Udział netto",
+    fullAnalysisSub: "Wszystkie 6 klas podatkowych, 2026 vs 2027 i stawka godzinowa netto",
+    distribution: "Podział brutto na netto",
+    legendNet: "Wynagrodzenie netto",
+    legendTax: "Podatek + dopłata solid.",
+    legendSv: "Ubezpieczenia społeczne",
+    netWord: "Netto",
+    detailed: "Szczegółowy podział",
+    grossSalary: "Wynagrodzenie brutto",
+    totalTaxes: "Podatki łącznie",
+    incomeTax: "Podatek dochodowy (Lohnsteuer)",
+    soli: "Dodatek solidarnościowy (Soli)",
+    churchTax: "Podatek kościelny",
+    totalSv: "Składki społeczne łącznie",
+    pension: "Ubezpieczenie emerytalne (9,30%)",
+    health: "Ubezpieczenie zdrowotne (ok. 8,75%)",
+    care: "Ubezpieczenie pielęgnacyjne",
+    unemployment: "Ubezpieczenie na wypadek bezrobocia (1,30%)",
+    marginalRate: "Krańcowa stawka podatku",
+    avgRate: "Średnia stawka podatku",
+    blTitle: "Jak netto różni się w zależności od landu",
+    blSub: "Podatek kościelny (8% vs 9%) i regionalne ubezpieczenie pielęgnacyjne",
+    bl8: "8% pod. kośc.",
+    bl8States: "Bawaria i Badenia-Wirtembergia",
+    bl9: "9% pod. kośc.",
+    bl9States: "Pozostałe 14 landów",
+    blChurchIn: "Przy podatku kościelnym w roku",
+    netLabelShort: "Netto",
+    yearCompareTitle: "Porównanie",
+    yearCompareVs: "vs.",
+    yearCompareSuffix: "(reforma podatkowa i taryfa)",
+    diff: "Różnica",
+    net: "Netto",
+    selectedYear: "Wybrany rok",
+    compareYear: "Rok porównawczy",
+    taxYearWord: "Rok podatkowy",
+    netDiff: "Obliczona różnica netto",
+    monthlyAdj: "miesięcznie",
+    annualAdj: "rocznie",
+    perYearWord: "/ rok",
+    perMonthWord2: "/ miesiąc",
+    yearWord: "rok",
+    monthShort: "mies.",
   },
 };
 
@@ -803,6 +884,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 <p className="leading-relaxed text-black/70">
                   {lang === "en" ? (
                     <>Deductions in Germany depend on your state of residence. With church-tax liability, Bavaria and Baden-Württemberg apply a reduced rate of <strong>8%</strong>, all other 14 states <strong>9%</strong>. Employees in Saxony also pay a 0.5% higher share of long-term care insurance.</>
+                  ) : lang === "pl" ? (
+                    <>Wysokość potrąceń w Niemczech zależy od landu zamieszkania. Przy podatku kościelnym Bawaria i Badenia-Wirtembergia stosują obniżoną stawkę <strong>8%</strong>, pozostałe 14 landów <strong>9%</strong>. Ponadto pracownicy w Saksonii płacą o 0,5% wyższy udział w ubezpieczeniu pielęgnacyjnym.</>
                   ) : (
                     <>Die Höhe der Abzüge hängt in Deutschland von Ihrem Wohnsitz-Bundesland ab. Bei Kirchensteuerpflicht gilt in Bayern und Baden-Württemberg ein ermäßigter Satz von <strong>8 %</strong>, in allen anderen 14 Bundesländern <strong>9 %</strong>. Zudem tragen Arbeitnehmer in Sachsen einen um 0,5 % höheren Eigenanteil an der Pflegeversicherung.</>
                   )}
@@ -852,7 +935,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     {diffYear !== 0 ? (
                       <span>{t.diff}: <strong className={diffYear > 0 ? "text-emerald-600" : "text-rose-600"}>{diffYear > 0 ? `+${formatEUR(showVal(diffYear))}` : formatEUR(showVal(diffYear))}</strong> {t.net} ({isJahresansicht ? t.perYearWord : t.perMonthWord2})</span>
                     ) : (
-                      <span>{lang === "en" ? `Compare your net pay between tax years 2026 and 2027` : `Vergleichen Sie Ihr Netto zwischen Steuerjahr 2026 und 2027`}</span>
+                      <span>{lang === "en" ? `Compare your net pay between tax years 2026 and 2027` : lang === "pl" ? `Porównaj swoje netto między latami podatkowymi 2026 i 2027` : `Vergleichen Sie Ihr Netto zwischen Steuerjahr 2026 und 2027`}</span>
                     )}
                   </div>
                 </div>
@@ -867,6 +950,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 <p className="leading-relaxed text-black/70">
                   {lang === "en"
                     ? "Due to the adjusted § 32a EStG tax tariff and modified contribution ceilings, your net salary changes at the same gross pay as follows:"
+                    : lang === "pl"
+                    ? "Ze względu na zmienioną taryfę podatkową wg § 32a EStG i zmodyfikowane limity składek, Twoje wynagrodzenie netto przy tym samym brutto zmienia się następująco:"
                     : "Durch den angepassten Steuertarif nach § 32a EStG und modifizierte Beitragsbemessungsgrenzen verändert sich Ihr Nettogehalt bei gleichem Bruttogehalt wie folgt:"}
                 </p>
 

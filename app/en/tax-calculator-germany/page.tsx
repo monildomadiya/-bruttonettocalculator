@@ -26,6 +26,7 @@ export const metadata: Metadata = {
     languages: {
       "de-DE": "https://bruttonettocalculator.com/",
       "en-DE": "https://bruttonettocalculator.com/en/tax-calculator-germany",
+      "pl-DE": "https://bruttonettocalculator.com/pl/kalkulator-brutto-netto-niemcy",
       "x-default": "https://bruttonettocalculator.com/",
     },
   },

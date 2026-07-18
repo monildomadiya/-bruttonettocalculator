@@ -69,6 +69,50 @@ const RECHENGROESSEN_2026 = {
   sonderausgabenPauschale: 36,
 };
 
+/**
+ * Midijob / Übergangsbereich 2026 (§ 20 Abs. 2a SGB IV).
+ *
+ * Für Monatsentgelte von 603,01 € bis 2.000 € werden die
+ * Arbeitnehmer-Sozialversicherungsbeiträge nicht vom vollen Bruttoentgelt,
+ * sondern von einer reduzierten "beitragspflichtigen Einnahme" berechnet. Das
+ * entlastet Geringverdiener; der Arbeitgeber trägt den Differenzbetrag.
+ *
+ * Faktor F 2026: 0,6619. Die beiden linearen Formeln unten sind die amtliche
+ * geschlossene Form für die 2026-Grenzen (603,01 € / 2.000 €). Amtlicher
+ * Prüfpunkt bei 1.200 €: Gesamt-BE 1.083,25 €, AN-BE 854,69 €.
+ * Quelle: Deutsche Rentenversicherung, Übergangsbereich/Gleitzone 2026.
+ */
+export const UEBERGANGSBEREICH_2026 = {
+  untergrenze: 603, // Minijob-Grenze; Midijob beginnt bei 603,01 €
+  obergrenze: 2000,
+  faktorF: 0.6619,
+} as const;
+
+/** Ist das Monatsbrutto im Übergangsbereich (Midijob) 2026? */
+export function isMidijob2026(bruttoMonat: number): boolean {
+  return (
+    bruttoMonat > UEBERGANGSBEREICH_2026.untergrenze &&
+    bruttoMonat <= UEBERGANGSBEREICH_2026.obergrenze
+  );
+}
+
+/**
+ * Beitragspflichtige Einnahme des Arbeitnehmers (Bemessungsgrundlage für die
+ * AN-Beiträge) im Übergangsbereich 2026.
+ * Formel: 1,43163922691 × Entgelt − 863,2784538207. Bei 1.200 € = 854,69 €.
+ */
+export function midijobArbeitnehmerBemessungMonat(bruttoMonat: number): number {
+  return 1.43163922691 * bruttoMonat - 863.2784538207;
+}
+
+/**
+ * Gesamte beitragspflichtige Einnahme (AG + AN) im Übergangsbereich 2026.
+ * Formel: 1,1459372226 × Entgelt − 291.8744452399. Bei 1.200 € = 1.083,25 €.
+ */
+export function midijobGesamtBemessungMonat(bruttoMonat: number): number {
+  return 1.1459372226 * bruttoMonat - 291.8744452399;
+}
+
 export function estFormel2026(zvE: number): number {
   const x = Math.floor(zvE);
   if (x <= 12348) return 0;
@@ -116,9 +160,16 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   const bruttoJahr = input.bruttoMonat * 12;
   const r = RECHENGROESSEN_2026; // 2026-Parameter (auch als 2027-Platzhalter verwendet)
 
-  // Sozialversicherung (Arbeitnehmeranteil)
-  const kvPvBemessung = Math.min(bruttoJahr, r.kvPvBbgJahr);
-  const rvAlvBemessung = Math.min(bruttoJahr, r.rvAlvBbgJahr);
+  // Sozialversicherung (Arbeitnehmeranteil).
+  // Im Midijob-Übergangsbereich (603,01–2.000 €/Monat) werden die AN-Beiträge
+  // von der reduzierten beitragspflichtigen Einnahme berechnet, sonst vom Brutto.
+  const svBemessungMonat = isMidijob2026(input.bruttoMonat)
+    ? Math.max(0, midijobArbeitnehmerBemessungMonat(input.bruttoMonat))
+    : input.bruttoMonat;
+  const svBemessungJahr = svBemessungMonat * 12;
+
+  const kvPvBemessung = Math.min(svBemessungJahr, r.kvPvBbgJahr);
+  const rvAlvBemessung = Math.min(svBemessungJahr, r.rvAlvBbgJahr);
 
   const kvSatzAn = (r.kvSatz + r.kvZusatzbeitragDurchschnitt) / 2;
   const pvSatzGesamt = r.pvSatzBasis + (input.kinderlosUeber23 ? r.pvZuschlagKinderlos : 0);

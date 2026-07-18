@@ -6,7 +6,7 @@ import { primaryReviewer, siteConfig } from "@/lib/authors";
 interface ReviewerBylineProps {
   className?: string;
   variant?: "compact" | "banner";
-  lang?: "de" | "en";
+  lang?: "de" | "en" | "pl";
 }
 
 const BYLINE_T = {
@@ -25,6 +25,14 @@ const BYLINE_T = {
     updated: "Last updated on",
     standards: "Editorial standards",
     credentials: "Editorial team for payroll & tax topics",
+  },
+  pl: {
+    reviewedByTeam: "Zweryfikowane przez",
+    reviewedBy: "Zweryfikowane przez:",
+    basis: "Podstawa obliczeń: § 32a EStG — Ostatnia aktualizacja:",
+    updated: "Ostatnia aktualizacja:",
+    standards: "Standardy redakcyjne",
+    credentials: "Redakcja ds. wynagrodzeń i podatków",
   },
 } as const;
 
