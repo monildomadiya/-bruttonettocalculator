@@ -14,7 +14,14 @@ export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
   description:
     "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "https://bruttonettocalculator.com/",
+    languages: {
+      "de-DE": "https://bruttonettocalculator.com/",
+      "en-DE": "https://bruttonettocalculator.com/en/tax-calculator-germany",
+      "x-default": "https://bruttonettocalculator.com/",
+    },
+  },
   openGraph: {
     title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
     description:
@@ -56,15 +63,15 @@ const faqs = [
   },
   {
     q: "Gilt das Tool auch als Gehaltsrechner mit Auto (Firmenwagenrechner & 1%-Regelung)?",
-    a: "Ein Firmenwagen stellt einen geldwerten Vorteil dar, der das monatliche Bruttogehalt erhöht (meist über die 1%-Regelung). Als praktischer Firmenwagenrechner bzw. Gehaltsrechner mit Auto können Sie Ihren geldwerten Vorteil einfach zu Ihrem regulären Bruttolohn addieren und die exakte Lohnsteuer- sowie Sozialabgabenlast sofort online ermitteln.",
+    a: "Ein Firmenwagen stellt einen geldwerten Vorteil dar, der das monatliche Bruttogehalt erhöht (meist über die 1%-Regelung). Als praktischer Firmenwagenrechner bzw. Gehaltsrechner mit Auto können Sie Ihren geldwerten Vorteil einfach zu Ihrem regulären Bruttolohn addieren und die voraussichtliche Lohnsteuer- sowie Sozialabgabenlast sofort online abschätzen.",
   },
   {
     q: "Kann ich das Tool auch als Arbeitslosengeld Rechner zur Orientierung verwenden?",
     a: "Ja. Das amtliche Arbeitslosengeld I (ALG I) beträgt in Deutschland 60 % (bzw. 67 % mit Kind) Ihres durchschnittlichen Nettoentgelts der letzten 12 Monate. Sie können unseren Gehaltsrechner ideal als Orientierungs-Arbeitslosengeld Rechner nutzen, indem Sie Ihr bisheriges Brutto eingeben und 60 % bzw. 67 % vom errechneten Nettogehalt ermitteln.",
   },
   {
-    q: "Was ist der BKK Zusatzbeitrag 2026 und wie beeinflusst er das Nettogehalt?",
-    a: "Der durchschnittliche Zusatzbeitrag der gesetzlichen Krankenkassen (GKV) beträgt 2026 ca. 1,7 %. Kassen wie BKK, HKK oder TK haben individuelle Sätze. Unser Brutto Netto Rechner 2026 berücksichtigt den aktuellen GKV-Zusatzbeitrag automatisch — Sie erhalten so ein möglichst präzises Nettogehalt auf Basis Ihrer tatsächlichen Krankenversicherungskosten.",
+    q: "Was ist der GKV-Zusatzbeitrag 2026 und wie beeinflusst er das Nettogehalt?",
+    a: "Der vom Bundesgesundheitsministerium für 2026 festgelegte durchschnittliche Zusatzbeitragssatz der gesetzlichen Krankenkassen (GKV) beträgt 2,9 %. Ihre konkrete Krankenkasse (z. B. BKK, HKK oder TK) kann einen höheren oder niedrigeren Satz erheben. Unser Rechner verwendet den durchschnittlichen Satz von 2,9 % als Standardwert — der individuelle Kassensatz kann davon abweichen.",
   },
   {
     q: "Was ist der Mindestlohn 2027?",
@@ -76,19 +83,11 @@ const faqs = [
   },
   {
     q: "Was ist die Pfändungstabelle 2026 und welcher Teil des Gehalts ist pfändungsfrei?",
-    a: "Die Pfändungstabelle 2026 (§ 850c ZPO) legt den pfändungsfreien Betrag des Nettoeinkommens fest. Für Alleinstehende ohne Unterhaltspflicht liegt der monatliche Pfändungsfreibetrag 2026 bei 1.491,75 € netto. Unser Gehaltsrechner hilft Ihnen, zunächst Ihr exaktes Nettoeinkommen zu ermitteln, damit Sie die Pfändungstabelle 2026 korrekt anwenden können.",
+    a: "Die Pfändungstabelle 2026 (§ 850c ZPO) legt den pfändungsfreien Betrag des Nettoeinkommens fest. Für Alleinstehende ohne Unterhaltspflicht liegt der monatliche Pfändungsfreibetrag 2026 bei 1.491,75 € netto. Unser Gehaltsrechner hilft Ihnen, zunächst Ihr voraussichtliches Nettoeinkommen zu ermitteln, damit Sie die Pfändungstabelle 2026 korrekt anwenden können.",
   },
   {
     q: "Wie hoch ist das Durchschnittsgehalt in Deutschland 2026?",
     a: "Das durchschnittliche Bruttogehalt in Deutschland liegt 2026 bei ca. 4.323 € pro Monat (Vollzeit). Das entspricht einem Nettogehalt von ca. 2.600–2.900 € (je nach Steuerklasse). Mit unserem Brutto Netto Rechner können Sie das Nettogehalt für jeden Betrag sofort und kostenlos berechnen — egal ob 2.800, 3.200 oder 4.200 € brutto.",
-  },
-  {
-    q: "Wie werden KI und moderne Web-Technologien eingesetzt?",
-    a: (
-      <span>
-        Für die präzise Umsetzung und stetige Optimierung unserer Rechner und Web-Workflows setzen wir auf innovative KI-Technologien. Erstklassige Ressourcen und professionelles Prompt Engineering entdecken Sie bei unserem Kooperationspartner <a href="https://promptking.in" target="_blank" rel="noopener" className="text-[#E60A1C] font-semibold hover:underline">PromptKing</a>, dem führenden Portal für KI-Prompts und Workflow-Optimierung.
-      </span>
-    ),
   },
 ];
 
@@ -150,7 +149,7 @@ const steps = [
     Icon:  Wallet,
     step:  "03",
     title: "Netto sofort ablesen",
-    desc:  "Der Rechner ermittelt in Echtzeit Ihr exaktes Nettogehalt, Lohnsteuer und alle Sozialabgaben.",
+    desc:  "Der Rechner ermittelt in Echtzeit Ihr voraussichtliches Nettogehalt, Lohnsteuer und alle Sozialabgaben.",
   },
 ];
 
@@ -173,7 +172,7 @@ const faqSchema = {
     name: f.q,
     acceptedAnswer: {
       "@type": "Answer",
-      text: typeof f.a === "string" ? f.a : "Für die präzise Umsetzung und stetige Optimierung unserer Rechner und Web-Workflows setzen wir auf innovative KI-Technologien. Erstklassige Ressourcen und professionelles Prompt Engineering entdecken Sie bei unserem Kooperationspartner PromptKing, dem führenden Portal für KI-Prompts und Workflow-Optimierung.",
+      text: f.a,
     },
   })),
 };
@@ -216,8 +215,8 @@ export default function HomePage() {
             className="text-base sm:text-xl md:text-2xl text-black/85 w-full max-w-5xl leading-relaxed mb-8 sm:mb-10 animate-fade-up font-normal px-2"
             style={{ animationDelay: "160ms" }}
           >
-            Ermitteln Sie in Sekundenschnelle Ihr exaktes Nettogehalt — inklusive Lohnsteuer,
-            Solidaritätszuschlag und allen amtlichen Sozialabgaben. Nutzen Sie unser Tool auch als{" "}
+            Ermitteln Sie in Sekundenschnelle Ihr voraussichtliches Nettogehalt — inklusive Lohnsteuer,
+            Solidaritätszuschlag und allen Sozialabgaben. Nutzen Sie unser Tool auch als{" "}
             <strong className="text-[#16181D] font-semibold">Brutto Netto Rechner 2027</strong>,{" "}
             <strong className="text-[#16181D] font-semibold">Lohnrechner 2027</strong>,{" "}
             <strong className="text-[#16181D] font-semibold">Firmenwagenrechner (1%-Regelung)</strong>,{" "}
@@ -371,7 +370,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Ready CTA Banner (Like PromptKing Screenshot) ─────────────── */}
+      {/* ── Ready CTA Banner ──────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-5 pb-8 sm:pb-10">
         <div className="relative rounded-3xl bg-gradient-to-r from-[#FFFFFF] via-[#F1F3F5] to-[#FFFFFF] p-8 sm:p-14 border border-black/[0.12] overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-8 shadow-sm">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#E60A1C]/15 rounded-full blur-3xl pointer-events-none" />
@@ -380,10 +379,10 @@ export default function HomePage() {
               <Sparkles size={14} /> Kostenloser Rechner
             </div>
             <h3 className="font-display text-3xl sm:text-4xl font-extrabold text-[#16181D] mb-3 tracking-tight">
-              Bereit für Ihre exakte Gehaltsberechnung?
+              Bereit für Ihre Gehaltsberechnung?
             </h3>
             <p className="text-black/85 text-base sm:text-lg leading-relaxed font-normal">
-              Ohne Anmeldung, 100% anonym und nach den offiziellen Vorgaben des BMF für das Steuerjahr 2026/2027.
+              Ohne Anmeldung, 100% anonym und auf Basis der amtlichen Rechengrößen für das Steuerjahr 2026/2027.
             </p>
           </div>
           <a

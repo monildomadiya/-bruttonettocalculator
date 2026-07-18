@@ -7,14 +7,15 @@ import AccordionFaq from "@/components/AccordionFaq";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Germany Tax Calculator 2026 — Gross to Net Salary (English)",
+  title: "Germany Salary Calculator 2026 – Gross to Net",
   description:
-    "Free German tax calculator 2026: work out your net salary from gross — income tax, solidarity surcharge and social security contributions for all 6 tax classes. English brutto-netto calculator, no sign-up.",
+    "Free Germany salary calculator 2026: work out your net salary from gross — income tax, solidarity surcharge and social security contributions for all 6 tax classes. English gross-to-net calculator, no sign-up.",
   keywords: [
-    "tax calculator",
+    "salary calculator germany",
+    "germany salary calculator",
     "tax calculator germany",
     "german tax calculator",
-    "germany salary calculator",
+    "germany gross to net calculator",
     "gross net calculator germany",
     "net salary germany",
     "income tax germany calculator",
@@ -23,12 +24,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://bruttonettocalculator.com/en/tax-calculator-germany",
     languages: {
-      "en-US": "https://bruttonettocalculator.com/en/tax-calculator-germany",
       "de-DE": "https://bruttonettocalculator.com/",
+      "en-DE": "https://bruttonettocalculator.com/en/tax-calculator-germany",
+      "x-default": "https://bruttonettocalculator.com/",
     },
   },
   openGraph: {
-    title: "Germany Tax Calculator 2026 — Gross to Net Salary",
+    title: "Germany Salary Calculator 2026 – Gross to Net",
     description:
       "Work out your net salary in Germany from gross — income tax, solidarity surcharge and social security for all 6 tax classes. Free English calculator.",
     url: "https://bruttonettocalculator.com/en/tax-calculator-germany",
@@ -94,7 +96,7 @@ export default function GermanyTaxCalculatorPage() {
   });
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-24 text-[#16181D]">
+    <main lang="en" className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-24 text-[#16181D]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
@@ -110,7 +112,7 @@ export default function GermanyTaxCalculatorPage() {
           <Globe size={14} /> Germany · Tax year 2026 · English
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-5 max-w-4xl">
-          Germany <span className="text-gradient-accent">Tax Calculator</span> 2026
+          Salary <span className="text-gradient-accent">Calculator</span> Germany 2026
         </h1>
         <p className="text-lg sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-4">
           Work out your <strong className="text-[#16181D]">net salary</strong> in Germany from your gross pay. This free{" "}
@@ -118,7 +120,6 @@ export default function GermanyTaxCalculatorPage() {
           solidarity surcharge, church tax and all social security contributions — for all six tax classes, updated for 2026.
         </p>
         <p className="text-sm text-black/55 max-w-2xl">
-          Note: the interactive calculator below uses German labels (Brutto = gross, Netto = net, Steuerklasse = tax class).
           Prefer German? Use the <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner</Link>.
         </p>
       </div>
@@ -127,7 +128,7 @@ export default function GermanyTaxCalculatorPage() {
       <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
 
       <section id="calculator" className="mb-14 scroll-mt-24">
-        <Calculator initialBrutto={3500} />
+        <Calculator initialBrutto={3500} lang="en" deepLink={false} />
       </section>
 
       <AdUnit placement="content" className="!my-0 !mb-14 !px-0" />

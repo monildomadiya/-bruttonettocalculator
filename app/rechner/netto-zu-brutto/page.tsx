@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { ArrowRightLeft, Sparkles, ListChecks, ChevronDown } from "lucide-react";
-import Calculator from "@/components/Calculator";
+import ReverseCalculator from "@/components/ReverseCalculator";
 import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
-  title: "Netto zu Brutto Rechner | Gehaltsberechnung 2026",
+  title: "Netto Brutto Rechner 2026 – Wunschbrutto berechnen",
   description:
-    "Rechnen Sie Ihr gewünschtes Nettogehalt in das benötigte Bruttogehalt um — exakt kalkuliert für Verhandlungen im Steuerjahr 2026.",
+    "Netto Brutto Rechner 2026: Geben Sie Ihr gewünschtes Nettogehalt ein und berechnen Sie das dafür nötige Bruttogehalt — ideal für Gehaltsverhandlungen. Kostenlos & unverbindlich.",
   keywords: [
     "netto zu brutto rechner",
     "netto in brutto umrechnen",
@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: "Wie nutze ich den Rechner für eine Gehaltsverhandlung?",
-    a: "Stellen Sie sich vor, Sie möchten 2.800 € netto im Monat erhalten. Geben Sie im Rechner oben verschiedene Bruttobeträge ein und beobachten Sie das errechnete Netto, bis es Ihrem Zielwert entspricht — das so ermittelte Brutto ist die Zahl, die Sie im Gespräch mit dem Arbeitgeber nennen sollten.",
+    a: "Geben Sie Ihr gewünschtes monatliches Nettogehalt ein, z. B. 2.800 €, und wählen Sie Ihre Steuerklasse und Ihr Steuerjahr. Der Rechner ermittelt automatisch das dafür benötigte Bruttogehalt — genau die Zahl, die Sie im Gespräch mit dem Arbeitgeber nennen sollten.",
   },
   {
     q: "Ändert sich das benötigte Brutto, wenn ich die Steuerklasse wechsle?",
@@ -70,12 +70,12 @@ export default function NettoZuBruttoPage() {
           <ArrowRightLeft size={14} /> Umkehrberechnung
         </div>
         <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
-          Netto zu <span className="text-gradient-accent">Brutto</span> Rechner
+          Netto Brutto <span className="text-gradient-accent">Rechner</span> 2026
         </h1>
         <p className="text-lg sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
-          Sie kennen Ihr gewünschtes Nettogehalt und möchten genau wissen, welches Bruttogehalt Sie dafür im
-          Bewerbungsgespräch verhandeln müssen? Nutzen Sie unseren Präzisionsrechner, um Ihr Zielgehalt
-          durch schnelle Anpassung der Bruttowerte in Sekundenschnelle auf den Euro genau zu ermitteln.
+          Sie kennen Ihr gewünschtes Nettogehalt und möchten wissen, welches Bruttogehalt Sie dafür
+          verhandeln müssen? Geben Sie einfach Ihr Wunsch-Netto ein — der Rechner ermittelt automatisch das
+          dafür benötigte Bruttogehalt. Die perfekte Vorbereitung für Ihre nächste Gehaltsverhandlung.
         </p>
       </div>
 
@@ -83,15 +83,16 @@ export default function NettoZuBruttoPage() {
       <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
 
       <div className="w-full max-w-6xl mx-auto mb-10">
-        <Calculator />
+        <ReverseCalculator />
       </div>
 
       <div className="w-full max-w-6xl mx-auto bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-8 flex items-start gap-4 text-sm sm:text-base text-black/80 leading-relaxed shadow-lg mb-16">
         <Sparkles size={22} className="text-[#E60A1C] flex-shrink-0 mt-0.5" />
         <p>
           <strong className="text-[#16181D] font-bold">Pro-Tipp für Verhandlungen:</strong> Aufgrund des progressiven Steuertarifs nach § 32a EStG
-          und der Beitragsbemessungsgrenzen steigt die Steuerbelastung mit höherem Brutto nicht linear. Testen Sie
-          verschiedene Bruttostufen oben direkt in Echtzeit aus!
+          und der Beitragsbemessungsgrenzen steigt das nötige Brutto überproportional zum Wunsch-Netto.
+          Vergleichen Sie oben verschiedene Steuerklassen — schon der Wechsel von Klasse I zu III kann das
+          benötigte Bruttogehalt für dasselbe Netto deutlich senken.
         </p>
       </div>
 
@@ -112,17 +113,17 @@ export default function NettoZuBruttoPage() {
             weil die Steuerlast selbst vom gesuchten Bruttobetrag abhängt.
           </p>
           <p>
-            Deshalb arbeitet dieser Rechner mit einer Annäherung: Er testet verschiedene
-            Bruttowerte durch, berechnet für jeden das resultierende Netto und nähert sich so
-            iterativ Ihrem Zielbetrag an. Das ist exakt die Methode, die auch professionelle
-            Gehaltsabrechnungsprogramme verwenden, wenn ein Arbeitgeber ein Netto-Fixgehalt
-            zusagt.
+            Deshalb arbeitet dieser Rechner mit einem iterativen Verfahren: Er testet im Hintergrund
+            automatisch verschiedene Bruttowerte durch, berechnet für jeden das resultierende Netto und
+            nähert sich so schrittweise an Ihren Zielbetrag an, bis er das niedrigste passende
+            Bruttogehalt gefunden hat. Das ist dieselbe Methode, die auch professionelle
+            Gehaltsabrechnungsprogramme verwenden, wenn ein Arbeitgeber ein Netto-Fixgehalt zusagt.
           </p>
           <p>
             Für Sie als Verhandlungspartner bedeutet das: Je höher Ihr Wunsch-Netto, desto
             überproportional stärker muss das Brutto steigen, um die zusätzliche Steuerprogression
-            auszugleichen. Ein realistisches Gefühl für diesen Effekt bekommen Sie am schnellsten,
-            indem Sie oben mehrere Bruttowerte direkt ausprobieren.
+            auszugleichen. Ein realistisches Gefühl für diesen Effekt bekommen Sie, indem Sie oben
+            verschiedene Wunsch-Netto-Beträge und Steuerklassen vergleichen.
           </p>
         </div>
       </div>

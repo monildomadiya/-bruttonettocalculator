@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function SiteFooter() {
   const pathname = usePathname();
@@ -114,32 +114,8 @@ export default function SiteFooter() {
             </ul>
           </div>
 
-          {/* Partner & Newsletter */}
+          {/* Newsletter */}
           <div className="md:col-span-2 lg:col-span-2 space-y-6">
-            <div>
-              <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-[#16181D] mb-4">
-                PARTNER & KI-TOOLS
-              </p>
-              <a
-                href="https://promptking.in"
-                target="_blank"
-                rel="noopener"
-                className="group block p-4 rounded-2xl bg-gradient-to-br from-[#F1F3F5] to-[#FFFFFF] border border-black/[0.10] hover:border-[#E60A1C]/60 transition-all shadow-md"
-              >
-                <div className="flex items-center justify-between gap-2 mb-1">
-                  <span className="min-w-0 font-display font-bold text-[#16181D] group-hover:text-[#E60A1C] transition-colors flex items-center gap-2">
-                    <span className="truncate">PromptKing.in</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E60A1C] animate-pulse flex-shrink-0" />
-                  </span>
-                  <span className="w-7 h-7 rounded-full bg-black/[0.04] border border-black/[0.08] flex items-center justify-center text-black/70 group-hover:bg-[#E60A1C] group-hover:text-white group-hover:border-transparent transition-all flex-shrink-0">
-                    <ArrowUpRight size={15} />
-                  </span>
-                </div>
-                <p className="text-xs text-black/50 font-medium">Die Nr. 1 Plattform für KI-Prompts & Workflows</p>
-              </a>
-            </div>
-
-            {/* Newsletter Box (Exact match to PromptKing style!) */}
             <div>
               <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-[#16181D] mb-3">
                 NEWSLETTER

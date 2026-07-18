@@ -13,14 +13,175 @@ import AdUnit from "@/components/AdUnit";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
+type Lang = "de" | "en";
 
-const STEUERKLASSE_INFO: Record<Steuerklasse, string> = {
-  1: "Alleinstehende",
-  2: "Alleinerziehende",
-  3: "Verheiratet — höheres Einkommen",
-  4: "Verheiratet — gleiches Einkommen",
-  5: "Verheiratet — geringeres Einkommen",
-  6: "Zweiter Job / Nebentätigkeit",
+const STEUERKLASSE_INFO: Record<Lang, Record<Steuerklasse, string>> = {
+  de: {
+    1: "Alleinstehende",
+    2: "Alleinerziehende",
+    3: "Verheiratet — höheres Einkommen",
+    4: "Verheiratet — gleiches Einkommen",
+    5: "Verheiratet — geringeres Einkommen",
+    6: "Zweiter Job / Nebentätigkeit",
+  },
+  en: {
+    1: "Single (Class I)",
+    2: "Single parent (Class II)",
+    3: "Married — higher earner (Class III)",
+    4: "Married — equal earners (Class IV)",
+    5: "Married — lower earner (Class V)",
+    6: "Second job (Class VI)",
+  },
+};
+
+/* ─── UI strings (de / en) ─────────────────────────────────────────── */
+const T: Record<Lang, Record<string, string>> = {
+  de: {
+    inputParams: "Eingabe · Parameter",
+    yourGross: "Ihr Bruttogehalt",
+    perMonth: "/Monat",
+    perYear: "/Jahr",
+    grossPerMonth: "Bruttogehalt pro Monat",
+    errInvalid: "Bitte einen gültigen Betrag eingeben",
+    errPositive: "Der Betrag muss positiv sein",
+    errMax: "Maximaler Betrag: 200.000 €",
+    sliderAria: "Bruttogehalt Schieberegler",
+    taxYear: "Steuerjahr",
+    year2027Note: "Für 2027 liegen noch keine finalen Tarifwerte vor (Stand: Juli 2026). Es werden vorläufig die amtlichen 2026-Werte angezeigt.",
+    taxClass: "Steuerklasse",
+    moreOptions: "Weitere Optionen",
+    childlessLabel: "Kinderlos & über 23 Jahre",
+    childlessHint: "Pflegeversicherung +0,6 %",
+    churchLabel: "Kirchensteuerpflichtig",
+    churchHint: "9 % auf die Einkommensteuer",
+    disclaimer: "Vereinfachte Berechnung nach § 32a EStG 2026. Keine Steuerberatung.",
+    result: "Ergebnis",
+    dateChip: "Juli 2026",
+    copyAria: "Ergebnis-Link kopieren",
+    copyTitle: "Link für dieses Ergebnis kopieren",
+    copied: "Kopiert!",
+    share: "Teilen",
+    annualNet: "Jahres-Nettogehalt",
+    monthlyNet: "Monatliches Nettogehalt",
+    equals: "Entspricht",
+    perMonthWord: "/ Monat",
+    netShare: "Netto-Anteil",
+    fullAnalysisSub: "Alle 6 Steuerklassen, 2026 vs. 2027 & Netto-Stundenlohn im Detail",
+    distribution: "Verteilung von Brutto zu Netto",
+    legendNet: "Nettogehalt",
+    legendTax: "Lohnsteuer & Soli",
+    legendSv: "Sozialversicherungen",
+    netWord: "Netto",
+    detailed: "Detaillierte Aufschlüsselung",
+    grossSalary: "Bruttogehalt",
+    totalTaxes: "Steuern Gesamt",
+    incomeTax: "Einkommensteuer (Lohnsteuer)",
+    soli: "Solidaritätszuschlag",
+    churchTax: "Kirchensteuer",
+    totalSv: "Sozialabgaben Gesamt",
+    pension: "Rentenversicherung (9,30 %)",
+    health: "Krankenversicherung (ca. 8,75 %)",
+    care: "Pflegeversicherung",
+    unemployment: "Arbeitslosenversicherung (1,30 %)",
+    marginalRate: "Grenzsteuersatz",
+    avgRate: "Ø-Steuersatz",
+    blTitle: "So unterscheidet sich Ihr Netto je Bundesland",
+    blSub: "Kirchensteuer-Tarife (8 % vs. 9 %) & Pflegeversicherung regional",
+    bl8: "8 % K-Steuer",
+    bl8States: "Bayern & Baden-Württemberg",
+    bl9: "9 % K-Steuer",
+    bl9States: "Übrige 14 Bundesländer",
+    blChurchIn: "Bei Kirchensteuerpflicht im Jahr",
+    netLabelShort: "Netto",
+    yearCompareTitle: "Vergleich",
+    yearCompareVs: "vs.",
+    yearCompareSuffix: "(Steuerreform & Tarifverlauf)",
+    diff: "Differenz",
+    net: "Netto",
+    selectedYear: "Ausgewähltes Jahr",
+    compareYear: "Vergleichsjahr",
+    taxYearWord: "Steuerjahr",
+    netDiff: "Rechnerische Netto-Differenz",
+    monthlyAdj: "monatlich",
+    annualAdj: "jährlich",
+    perYearWord: "/ Jahr",
+    perMonthWord2: "/ Monat",
+    yearWord: "Jahr",
+    monthShort: "Mon.",
+  },
+  en: {
+    inputParams: "Input · Parameters",
+    yourGross: "Your gross salary",
+    perMonth: "/month",
+    perYear: "/year",
+    grossPerMonth: "Gross salary per month",
+    errInvalid: "Please enter a valid amount",
+    errPositive: "The amount must be positive",
+    errMax: "Maximum amount: €200,000",
+    sliderAria: "Gross salary slider",
+    taxYear: "Tax year",
+    year2027Note: "Final 2027 tax parameters are not yet available (as of July 2026). The official 2026 figures are shown provisionally.",
+    taxClass: "Tax class",
+    moreOptions: "More options",
+    childlessLabel: "Childless & aged 23+",
+    childlessHint: "Long-term care +0.6%",
+    churchLabel: "Liable for church tax",
+    churchHint: "9% of income tax",
+    disclaimer: "Simplified calculation under § 32a EStG 2026. Not tax advice.",
+    result: "Result",
+    dateChip: "July 2026",
+    copyAria: "Copy result link",
+    copyTitle: "Copy a link to this result",
+    copied: "Copied!",
+    share: "Share",
+    annualNet: "Annual net salary",
+    monthlyNet: "Monthly net salary",
+    equals: "Equals",
+    perMonthWord: "/ month",
+    netShare: "Net share",
+    fullAnalysisSub: "All 6 tax classes, 2026 vs. 2027 & net hourly wage in detail",
+    distribution: "Gross-to-net breakdown",
+    legendNet: "Net salary",
+    legendTax: "Income tax & soli",
+    legendSv: "Social security",
+    netWord: "Net",
+    detailed: "Detailed breakdown",
+    grossSalary: "Gross salary",
+    totalTaxes: "Total taxes",
+    incomeTax: "Income tax (Lohnsteuer)",
+    soli: "Solidarity surcharge",
+    churchTax: "Church tax",
+    totalSv: "Total social security",
+    pension: "Pension insurance (9.30%)",
+    health: "Health insurance (approx. 8.75%)",
+    care: "Long-term care insurance",
+    unemployment: "Unemployment insurance (1.30%)",
+    marginalRate: "Marginal tax rate",
+    avgRate: "Average tax rate",
+    blTitle: "How your net pay differs by federal state",
+    blSub: "Church-tax rates (8% vs. 9%) & regional long-term care",
+    bl8: "8% church tax",
+    bl8States: "Bavaria & Baden-Württemberg",
+    bl9: "9% church tax",
+    bl9States: "Other 14 federal states",
+    blChurchIn: "With church-tax liability in",
+    netLabelShort: "Net",
+    yearCompareTitle: "Comparison",
+    yearCompareVs: "vs.",
+    yearCompareSuffix: "(tax reform & tariff curve)",
+    diff: "Difference",
+    net: "Net",
+    selectedYear: "Selected year",
+    compareYear: "Comparison year",
+    taxYearWord: "Tax year",
+    netDiff: "Calculated net difference",
+    monthlyAdj: "monthly",
+    annualAdj: "annually",
+    perYearWord: "/ year",
+    perMonthWord2: "/ month",
+    yearWord: "Year",
+    monthShort: "Mo.",
+  },
 };
 
 /* ─── Animated number hook ─────────────────────────────────────────── */
@@ -108,9 +269,13 @@ interface CalculatorProps {
   initialSk?: Steuerklasse;
   /** Show the "full analysis" deep-link CTA under the result. Off on the /rechner/[betrag] pages to avoid a self-link. */
   deepLink?: boolean;
+  /** UI language. Defaults to German; pass "en" on the English landing page. */
+  lang?: Lang;
 }
 
-export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1, deepLink = true }: CalculatorProps = {}) {
+export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1, deepLink = true, lang = "de" }: CalculatorProps = {}) {
+  const t = T[lang];
+  const skInfo = STEUERKLASSE_INFO[lang];
   const [bruttoMonat,  setBruttoMonat]  = useState<number>(initialBrutto);
   const [inputStr,     setInputStr]     = useState<string>(String(initialBrutto));
   const [inputError,   setInputError]   = useState<string>("");
@@ -141,19 +306,19 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     setInputStr(raw);
     const val = parseFloat(raw.replace(",", "."));
     if (raw === "" || isNaN(val)) {
-      setInputError("Bitte einen gültigen Betrag eingeben");
+      setInputError(t.errInvalid);
       setBruttoMonat(0);
     } else if (val < 0) {
-      setInputError("Der Betrag muss positiv sein");
+      setInputError(t.errPositive);
       setBruttoMonat(0);
     } else if (val > 200000) {
-      setInputError("Maximaler Betrag: 200.000 €");
+      setInputError(t.errMax);
       setBruttoMonat(200000);
     } else {
       setInputError("");
       setBruttoMonat(val);
     }
-  }, []);
+  }, [t]);
 
   const sliderPct = Math.min((bruttoMonat || 0) / 20000, 1) * 100;
 
@@ -229,7 +394,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   return (
     <div className="w-full">
       <div className="flex justify-center mb-6">
-        <ReviewerByline />
+        <ReviewerByline lang={lang} />
       </div>
       <div className="rounded-3xl overflow-hidden border border-black/[0.12] bg-[#FFFFFF] shadow-sm w-full max-w-full">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.15fr] w-full max-w-full min-w-0">
@@ -241,12 +406,12 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
               <div>
-                <p className="font-mono text-xs uppercase tracking-widest text-black/50 mb-1 font-bold">Eingabe · Parameter</p>
-                <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D]">Ihr Bruttogehalt</h2>
+                <p className="font-mono text-xs uppercase tracking-widest text-black/50 mb-1 font-bold">{t.inputParams}</p>
+                <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D]">{t.yourGross}</h2>
               </div>
               {/* Monthly / Annual toggle */}
               <div className="flex items-center self-start sm:self-auto gap-1 bg-black/[0.04] border border-black/[0.10] rounded-2xl p-1.5 text-sm font-semibold flex-shrink-0">
-                {[{ label: "/Monat", val: false }, { label: "/Jahr", val: true }].map(({ label, val }) => (
+                {[{ label: t.perMonth, val: false }, { label: t.perYear, val: true }].map(({ label, val }) => (
                   <button
                     key={label}
                     id={`ansicht-${val ? "jahr" : "monat"}`}
@@ -264,7 +429,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             {/* ── Brutto input ────────────────────────────────────── */}
             <div className="mb-6 sm:mb-8 w-full max-w-full">
               <label htmlFor="brutto-input" className="text-base font-bold text-[#16181D] block mb-3">
-                Bruttogehalt pro Monat
+                {t.grossPerMonth}
               </label>
               <div className="relative w-full max-w-full">
                 <input
@@ -297,7 +462,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 <input
                   type="range"
                   id="brutto-slider"
-                  aria-label="Bruttogehalt Schieberegler"
+                  aria-label={t.sliderAria}
                   min={500} max={20000} step={50}
                   value={Math.min(Math.max(bruttoMonat || 500, 500), 20000)}
                   onChange={(e) => {
@@ -317,7 +482,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
 
             {/* ── Steuerjahr ────────────────────────────────────── */}
             <div className="mb-6 sm:mb-8 w-full max-w-full">
-              <span className="text-base font-bold text-[#16181D] block mb-3">Steuerjahr</span>
+              <span className="text-base font-bold text-[#16181D] block mb-3">{t.taxYear}</span>
               <div className="grid grid-cols-2 gap-2.5 sm:gap-4 w-full">
                 {([2026, 2027] as Steuerjahr[]).map((j) => (
                   <button
@@ -338,21 +503,21 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
               {jahr === 2027 && (
                 <div className="flex items-start gap-3 text-xs sm:text-sm text-amber-700 mt-3 bg-amber-50 rounded-2xl p-3.5 sm:p-4 border border-amber-500/30 font-medium">
                   <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-amber-600" />
-                  <span>Für 2027 liegen noch keine finalen Tarifwerte vor (Stand: Juli 2026). Es werden vorläufig die amtlichen 2026-Werte angezeigt.</span>
+                  <span>{t.year2027Note}</span>
                 </div>
               )}
             </div>
 
             {/* ── Steuerklasse ──────────────────────────────────── */}
             <div className="mb-6 sm:mb-8 w-full max-w-full min-w-0">
-              <span className="text-base font-bold text-[#16181D] block mb-3">Steuerklasse</span>
+              <span className="text-base font-bold text-[#16181D] block mb-3">{t.taxClass}</span>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-2.5 w-full max-w-full min-w-0">
                 {([1, 2, 3, 4, 5, 6] as Steuerklasse[]).map((sk) => (
                   <button
                     key={sk}
                     id={`sk-${sk}`}
                     onClick={() => setSteuerklasse(sk)}
-                    title={STEUERKLASSE_INFO[sk]}
+                    title={skInfo[sk]}
                     aria-pressed={steuerklasse === sk}
                     className={`sk-tab py-3 sm:py-3.5 rounded-2xl text-base sm:text-lg font-extrabold border transition-all w-full min-w-0 ${
                       steuerklasse === sk
@@ -367,26 +532,26 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
               </div>
               <p className="text-xs sm:text-sm text-black/70 mt-2.5 flex items-center gap-2 font-medium">
                 <ChevronRight size={16} className="text-[#E60A1C] flex-shrink-0" />
-                <span className="truncate">{STEUERKLASSE_INFO[steuerklasse]}</span>
+                <span className="truncate">{skInfo[steuerklasse]}</span>
               </p>
             </div>
 
             {/* ── Toggles ───────────────────────────────────────── */}
             <div className="space-y-4 pt-6 border-t border-black/[0.10] mb-8">
-              <p className="text-xs font-bold text-[#E60A1C] uppercase tracking-widest mb-4">Weitere Optionen</p>
+              <p className="text-xs font-bold text-[#E60A1C] uppercase tracking-widest mb-4">{t.moreOptions}</p>
               <Toggle
                 id="toggle-pflegeversicherung"
                 checked={kinderlosUeber23}
                 onChange={setKinderlosUeber23}
-                label="Kinderlos & über 23 Jahre"
-                hint="Pflegeversicherung +0,6 %"
+                label={t.childlessLabel}
+                hint={t.childlessHint}
               />
               <Toggle
                 id="toggle-kirchensteuer"
                 checked={kirche}
                 onChange={setKirche}
-                label="Kirchensteuerpflichtig"
-                hint="9 % auf die Einkommensteuer"
+                label={t.churchLabel}
+                hint={t.churchHint}
               />
             </div>
 
@@ -397,7 +562,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
           {/* Disclaimer */}
           <div className="flex gap-3 text-sm text-black/70 bg-[#F1F3F5] rounded-2xl p-4 border border-black/[0.10] leading-relaxed font-medium">
             <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-[#E60A1C]" />
-            <span>Vereinfachte Berechnung nach § 32a EStG 2026. Keine Steuerberatung.</span>
+            <span>{t.disclaimer}</span>
           </div>
         </div>
 
@@ -409,22 +574,22 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
               <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-widest px-3 sm:px-4 py-1.5 sm:py-2 bg-[#E60A1C]/15 border border-[#E60A1C]/30 text-[#E60A1C] rounded-full">
                 <span className="w-2 h-2 rounded-full bg-[#E60A1C] animate-pulse flex-shrink-0" />
-                ERGEBNIS · {jahr}
+                {t.result.toUpperCase()} · {jahr}
               </span>
               <div className="flex items-center gap-2">
                 <span className="font-mono text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 rounded-xl border border-black/[0.10] text-black/60 bg-black/[0.04]">
-                  Juli 2026
+                  {t.dateChip}
                 </span>
                 <button
                   id="copy-link-btn"
                   onClick={handleCopy}
-                  aria-label="Ergebnis-Link kopieren"
-                  title="Link für dieses Ergebnis kopieren"
+                  aria-label={t.copyAria}
+                  title={t.copyTitle}
                   className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-semibold px-3 sm:px-3.5 py-1.5 rounded-xl border border-black/[0.10] text-black/80 bg-black/[0.04] hover:text-[#16181D] hover:bg-black/[0.06] hover:border-black/[0.18] transition-all"
                 >
                   {copied
-                    ? <><Check size={14} className="text-[#E60A1C]" /><span>Kopiert!</span></>
-                    : <><Share2 size={14} /><span>Teilen</span></>
+                    ? <><Check size={14} className="text-[#E60A1C]" /><span>{t.copied}</span></>
+                    : <><Share2 size={14} /><span>{t.share}</span></>
                   }
                 </button>
               </div>
@@ -433,25 +598,25 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             {/* ── Main Netto Hero Card ───────────────────────────── */}
             <div className="bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FFFFFF] border border-black/[0.12] rounded-3xl p-5 sm:p-8 mb-6 sm:mb-8 shadow-sm relative group overflow-hidden">
               <div className="absolute top-0 right-0 w-72 h-72 bg-[#E60A1C]/15 rounded-full blur-3xl pointer-events-none group-hover:bg-[#E60A1C]/25 transition-all duration-500" />
-              
+
               <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div className="w-full">
                   <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-black/70 font-semibold mb-2">
                     <Sparkles size={14} className="text-[#E60A1C] flex-shrink-0" />
-                    <span>{isJahresansicht ? "Jahres-Nettogehalt" : "Monatliches Nettogehalt"}</span>
+                    <span>{isJahresansicht ? t.annualNet : t.monthlyNet}</span>
                   </div>
                   <p className="font-display font-black tabular-nums leading-none tracking-tight text-[#16181D] text-3xl sm:text-5xl md:text-6xl number-animate break-all sm:break-normal">
                     {formatEUR(animatedNetto)}
                   </p>
                   {isJahresansicht && (
                     <p className="text-xs sm:text-sm text-black/60 mt-3 font-medium flex items-center gap-1.5">
-                      Entspricht <strong className="text-[#16181D] font-bold">{formatEUR(result.nettoMonat)}</strong> / Monat
+                      {t.equals} <strong className="text-[#16181D] font-bold">{formatEUR(result.nettoMonat)}</strong> {t.perMonthWord}
                     </p>
                   )}
                 </div>
 
                 <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-t-0 border-black/[0.08]">
-                  <span className="text-xs sm:text-sm font-medium text-black/60">Netto-Anteil</span>
+                  <span className="text-xs sm:text-sm font-medium text-black/60">{t.netShare}</span>
                   <span className="text-2xl sm:text-4xl font-extrabold font-display text-[#16181D] mt-0.5">
                     {bm > 0 ? Math.round((nm / bm) * 100) : 0}%
                   </span>
@@ -469,10 +634,12 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                   <TrendingUp size={20} className="text-[#E60A1C] flex-shrink-0" />
                   <span className="min-w-0">
                     <span className="block text-sm sm:text-base font-bold truncate">
-                      Vollständige Analyse für {Math.round(bruttoMonat).toLocaleString("de-DE")} € Brutto
+                      {lang === "en"
+                        ? `Full analysis for €${Math.round(bruttoMonat).toLocaleString("en-US")} gross`
+                        : `Vollständige Analyse für ${Math.round(bruttoMonat).toLocaleString("de-DE")} € Brutto`}
                     </span>
                     <span className="block text-xs text-white/60 truncate">
-                      Alle 6 Steuerklassen, 2026 vs. 2027 &amp; Netto-Stundenlohn im Detail
+                      {t.fullAnalysisSub}
                     </span>
                   </span>
                 </span>
@@ -482,15 +649,15 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
 
             {/* ── Donut + legend + bar Card ────────────────────────── */}
             <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-lg">
-              <p className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-black/60 font-bold mb-5">Verteilung von Brutto zu Netto</p>
-              
+              <p className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-black/60 font-bold mb-5">{t.distribution}</p>
+
               <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-8 mb-5">
                 {/* LARGE Donut */}
                 <div className="relative flex-shrink-0">
                   <DonutChart netto={nm} steuer={tm} sv={sm} total={bm} />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
-                      <p className="text-[10px] sm:text-xs font-mono uppercase text-black/50 font-bold leading-none">Netto</p>
+                      <p className="text-[10px] sm:text-xs font-mono uppercase text-black/50 font-bold leading-none">{t.netWord}</p>
                       <p className="text-lg sm:text-xl font-black text-[#16181D] leading-tight mt-1">
                         {bm > 0 ? Math.round((nm / bm) * 100) : 0}%
                       </p>
@@ -501,9 +668,9 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 {/* Clear Legend */}
                 <div className="flex-1 w-full sm:w-auto min-w-0 space-y-3">
                   {[
-                    { color: "#0E9F6E", label: "Nettogehalt",          val: showVal(nm), icon: CircleDollarSign },
-                    { color: "#E60A1C", label: "Lohnsteuer & Soli",    val: showVal(tm), icon: Landmark },
-                    { color: "#6B7280", label: "Sozialversicherungen", val: showVal(sm), icon: HeartPulse },
+                    { color: "#0E9F6E", label: t.legendNet, val: showVal(nm), icon: CircleDollarSign },
+                    { color: "#E60A1C", label: t.legendTax, val: showVal(tm), icon: Landmark },
+                    { color: "#6B7280", label: t.legendSv,  val: showVal(sm), icon: HeartPulse },
                   ].map(({ color, label, val, icon: Icon }) => (
                     <div key={label} className="flex items-center justify-between text-sm sm:text-base font-semibold gap-2">
                       <div className="flex items-center gap-2.5 min-w-0">
@@ -525,13 +692,13 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
 
             {/* ── Detailed breakdown (PROPER STRATIFIED CARDS) ──────── */}
             <div className="space-y-2 pt-2">
-              <p className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-black/60 font-bold mb-3">Detaillierte Aufschlüsselung</p>
+              <p className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-black/60 font-bold mb-3">{t.detailed}</p>
 
               {/* Brutto Row */}
               <div className="flex justify-between items-center py-3.5 sm:py-4 px-4 sm:px-5 bg-black/[0.04] rounded-2xl border border-black/[0.10] text-base sm:text-lg font-bold text-[#16181D] gap-2">
                 <span className="flex items-center gap-2 min-w-0">
                   <CircleDollarSign size={18} className="text-[#E60A1C] flex-shrink-0" />
-                  <span className="truncate">Bruttogehalt</span>
+                  <span className="truncate">{t.grossSalary}</span>
                 </span>
                 <span className="font-mono font-extrabold text-lg sm:text-xl text-[#16181D] tabular-nums flex-shrink-0">{formatEUR(showVal(bm))}</span>
               </div>
@@ -540,23 +707,23 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
               <div className="flex justify-between items-center py-3 sm:py-3.5 px-4 sm:px-5 bg-black/[0.02] rounded-xl border border-black/[0.08] text-sm sm:text-lg font-bold text-[#16181D] mt-4 gap-2">
                 <span className="flex items-center gap-2 min-w-0">
                   <Landmark size={16} className="text-[#E60A1C] flex-shrink-0" />
-                  <span className="truncate">Steuern Gesamt</span>
+                  <span className="truncate">{t.totalTaxes}</span>
                 </span>
                 <span className="font-mono font-bold text-base sm:text-lg text-[#FF2436] tabular-nums flex-shrink-0">-{formatEUR(showVal(tm))}</span>
               </div>
-              
+
               <div className="pl-2 sm:pl-6 pr-1 sm:pr-4 space-y-1.5 text-xs sm:text-base text-black/80 font-medium py-1">
                 <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-black/[0.05] gap-2">
-                  <span className="leading-snug">Einkommensteuer (Lohnsteuer)</span>
+                  <span className="leading-snug">{t.incomeTax}</span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.steuer.einkommensteuerJahr / 12))}</span>
                 </div>
                 <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-black/[0.05] gap-2">
-                  <span className="leading-snug">Solidaritätszuschlag</span>
+                  <span className="leading-snug">{t.soli}</span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.steuer.soliJahr / 12))}</span>
                 </div>
                 {result.steuer.kirchensteuerJahr > 0 && (
                   <div className="flex justify-between items-start sm:items-center py-1.5 gap-2">
-                    <span className="leading-snug">Kirchensteuer</span>
+                    <span className="leading-snug">{t.churchTax}</span>
                     <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.steuer.kirchensteuerJahr / 12))}</span>
                   </div>
                 )}
@@ -566,26 +733,26 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
               <div className="flex justify-between items-center py-3 sm:py-3.5 px-4 sm:px-5 bg-black/[0.02] rounded-xl border border-black/[0.08] text-sm sm:text-lg font-bold text-[#16181D] mt-4 gap-2">
                 <span className="flex items-center gap-2 min-w-0">
                   <HeartPulse size={16} className="text-[#E60A1C] flex-shrink-0" />
-                  <span className="truncate">Sozialabgaben Gesamt</span>
+                  <span className="truncate">{t.totalSv}</span>
                 </span>
                 <span className="font-mono font-bold text-base sm:text-lg text-[#FF2436] tabular-nums flex-shrink-0">-{formatEUR(showVal(sm))}</span>
               </div>
 
               <div className="pl-2 sm:pl-6 pr-1 sm:pr-4 space-y-1.5 text-xs sm:text-base text-black/80 font-medium py-1">
                 <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-black/[0.05] gap-2">
-                  <span className="leading-snug">Rentenversicherung (9,30 %)</span>
+                  <span className="leading-snug">{t.pension}</span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.rente / 12))}</span>
                 </div>
                 <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-black/[0.05] gap-2">
-                  <span className="leading-snug">Krankenversicherung (ca. 8,75 %)</span>
+                  <span className="leading-snug">{t.health}</span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.kranken / 12))}</span>
                 </div>
                 <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-black/[0.05] gap-2">
-                  <span className="leading-snug">Pflegeversicherung</span>
+                  <span className="leading-snug">{t.care}</span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.pflege / 12))}</span>
                 </div>
                 <div className="flex justify-between items-start sm:items-center py-1.5 gap-2">
-                  <span className="leading-snug">Arbeitslosenversicherung (1,30 %)</span>
+                  <span className="leading-snug">{t.unemployment}</span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.arbeitslosen / 12))}</span>
                 </div>
               </div>
@@ -598,11 +765,11 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
           <div className="bg-[#F1F3F5] border border-black/[0.10] rounded-2xl p-4 sm:p-5 mt-6 sm:mt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 text-xs sm:text-base text-black/80 font-medium">
             <span className="flex items-center gap-2">
               <TrendingUp size={16} className="text-[#E60A1C] flex-shrink-0" />
-              <span>Grenzsteuersatz: <strong className="text-[#16181D] ml-1 font-bold">{result.grenzsteuersatzPct.toFixed(1)} %</strong></span>
+              <span>{t.marginalRate}: <strong className="text-[#16181D] ml-1 font-bold">{result.grenzsteuersatzPct.toFixed(1)} %</strong></span>
             </span>
             <span className="flex items-center gap-2">
               <Briefcase size={16} className="text-[#E60A1C] flex-shrink-0" />
-              <span>Ø-Steuersatz: <strong className="text-[#16181D] ml-1 font-bold">{result.durchschnittssteuersatzPct.toFixed(1)} %</strong></span>
+              <span>{t.avgRate}: <strong className="text-[#16181D] ml-1 font-bold">{result.durchschnittssteuersatzPct.toFixed(1)} %</strong></span>
             </span>
           </div>
 
@@ -619,10 +786,10 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 </div>
                 <div>
                   <div className="text-sm sm:text-base font-bold text-[#16181D] group-hover:text-[#E60A1C] transition-colors">
-                    So unterscheidet sich Ihr Netto je Bundesland
+                    {t.blTitle}
                   </div>
                   <div className="text-xs text-black/50">
-                    Kirchensteuer-Tarife (8 % vs. 9 %) & Pflegeversicherung regional
+                    {t.blSub}
                   </div>
                 </div>
               </div>
@@ -634,26 +801,30 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             {showBundesland && (
               <div className="p-4 sm:p-5 border-t border-black/[0.08] bg-black/[0.04] space-y-4 text-xs sm:text-sm text-black/80">
                 <p className="leading-relaxed text-black/70">
-                  Die Höhe der Abzüge hängt in Deutschland von Ihrem Wohnsitz-Bundesland ab. Bei Kirchensteuerpflicht gilt in Bayern und Baden-Württemberg ein ermäßigter Satz von <strong>8 %</strong>, in allen anderen 14 Bundesländern <strong>9 %</strong>. Zudem tragen Arbeitnehmer in Sachsen einen um 0,5 % höheren Eigenanteil an der Pflegeversicherung.
+                  {lang === "en" ? (
+                    <>Deductions in Germany depend on your state of residence. With church-tax liability, Bavaria and Baden-Württemberg apply a reduced rate of <strong>8%</strong>, all other 14 states <strong>9%</strong>. Employees in Saxony also pay a 0.5% higher share of long-term care insurance.</>
+                  ) : (
+                    <>Die Höhe der Abzüge hängt in Deutschland von Ihrem Wohnsitz-Bundesland ab. Bei Kirchensteuerpflicht gilt in Bayern und Baden-Württemberg ein ermäßigter Satz von <strong>8 %</strong>, in allen anderen 14 Bundesländern <strong>9 %</strong>. Zudem tragen Arbeitnehmer in Sachsen einen um 0,5 % höheren Eigenanteil an der Pflegeversicherung.</>
+                  )}
                 </p>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div className="bg-black/[0.04] p-3.5 rounded-xl border border-black/[0.08]">
-                    <div className="text-xs font-mono text-amber-600 font-bold mb-1">8 % K-Steuer</div>
-                    <div className="font-bold text-[#16181D] text-sm sm:text-base mb-1">Bayern & Baden-Württemberg</div>
-                    <div className="text-xs text-black/60 mb-2">Bei Kirchensteuerpflicht im Jahr {jahr}:</div>
+                    <div className="text-xs font-mono text-amber-600 font-bold mb-1">{t.bl8}</div>
+                    <div className="font-bold text-[#16181D] text-sm sm:text-base mb-1">{t.bl8States}</div>
+                    <div className="text-xs text-black/60 mb-2">{t.blChurchIn} {jahr}:</div>
                     <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2 rounded border border-black/[0.08] flex justify-between items-center">
-                      <span>Netto ({isJahresansicht ? "Jahr" : "Mon."}):</span>
+                      <span>{t.netLabelShort} ({isJahresansicht ? t.yearWord : t.monthShort}):</span>
                       <span className="text-emerald-600">{formatEUR(showVal(resBW_BY.nettoMonat))}</span>
                     </div>
                   </div>
 
                   <div className="bg-black/[0.04] p-3.5 rounded-xl border border-black/[0.08]">
-                    <div className="text-xs font-mono text-rose-600 font-bold mb-1">9 % K-Steuer</div>
-                    <div className="font-bold text-[#16181D] text-sm sm:text-base mb-1">Übrige 14 Bundesländer</div>
-                    <div className="text-xs text-black/60 mb-2">Bei Kirchensteuerpflicht im Jahr {jahr}:</div>
+                    <div className="text-xs font-mono text-rose-600 font-bold mb-1">{t.bl9}</div>
+                    <div className="font-bold text-[#16181D] text-sm sm:text-base mb-1">{t.bl9States}</div>
+                    <div className="text-xs text-black/60 mb-2">{t.blChurchIn} {jahr}:</div>
                     <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2 rounded border border-black/[0.08] flex justify-between items-center">
-                      <span>Netto ({isJahresansicht ? "Jahr" : "Mon."}):</span>
+                      <span>{t.netLabelShort} ({isJahresansicht ? t.yearWord : t.monthShort}):</span>
                       <span className="text-emerald-600">{formatEUR(showVal(resOtherStates.nettoMonat))}</span>
                     </div>
                   </div>
@@ -675,13 +846,13 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 </div>
                 <div>
                   <div className="text-sm sm:text-base font-bold text-[#16181D] group-hover:text-[#E60A1C] transition-colors">
-                    Vergleich {jahr} vs. {otherYear} (Steuerreform & Tarifverlauf)
+                    {t.yearCompareTitle} {jahr} {t.yearCompareVs} {otherYear} {t.yearCompareSuffix}
                   </div>
                   <div className="text-xs text-black/50">
                     {diffYear !== 0 ? (
-                      <span>Differenz: <strong className={diffYear > 0 ? "text-emerald-600" : "text-rose-600"}>{diffYear > 0 ? `+${formatEUR(showVal(diffYear))}` : formatEUR(showVal(diffYear))}</strong> Netto ({isJahresansicht ? "/ Jahr" : "/ Monat"})</span>
+                      <span>{t.diff}: <strong className={diffYear > 0 ? "text-emerald-600" : "text-rose-600"}>{diffYear > 0 ? `+${formatEUR(showVal(diffYear))}` : formatEUR(showVal(diffYear))}</strong> {t.net} ({isJahresansicht ? t.perYearWord : t.perMonthWord2})</span>
                     ) : (
-                      <span>Vergleichen Sie Ihr Netto zwischen Steuerjahr 2026 und 2027</span>
+                      <span>{lang === "en" ? `Compare your net pay between tax years 2026 and 2027` : `Vergleichen Sie Ihr Netto zwischen Steuerjahr 2026 und 2027`}</span>
                     )}
                   </div>
                 </div>
@@ -694,31 +865,33 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             {showYearCompare && (
               <div className="p-4 sm:p-5 border-t border-black/[0.08] bg-black/[0.04] space-y-4 text-xs sm:text-sm text-black/80">
                 <p className="leading-relaxed text-black/70">
-                  Durch den angepassten Steuertarif nach § 32a EStG und modifizierte Beitragsbemessungsgrenzen verändert sich Ihr Nettogehalt bei gleichem Bruttogehalt wie folgt:
+                  {lang === "en"
+                    ? "Due to the adjusted § 32a EStG tax tariff and modified contribution ceilings, your net salary changes at the same gross pay as follows:"
+                    : "Durch den angepassten Steuertarif nach § 32a EStG und modifizierte Beitragsbemessungsgrenzen verändert sich Ihr Nettogehalt bei gleichem Bruttogehalt wie folgt:"}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div className="bg-black/[0.04] p-3.5 rounded-xl border border-black/[0.08]">
-                    <div className="text-xs font-mono text-black/50 uppercase mb-1">Ausgewähltes Jahr</div>
-                    <div className="font-bold text-[#16181D] text-base mb-2">Steuerjahr {jahr}</div>
+                    <div className="text-xs font-mono text-black/50 uppercase mb-1">{t.selectedYear}</div>
+                    <div className="font-bold text-[#16181D] text-base mb-2">{t.taxYearWord} {jahr}</div>
                     <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2.5 rounded border border-black/[0.08] flex justify-between items-center">
-                      <span>Netto ({isJahresansicht ? "Jahr" : "Mon."}):</span>
+                      <span>{t.netLabelShort} ({isJahresansicht ? t.yearWord : t.monthShort}):</span>
                       <span className="text-[#16181D] font-bold">{formatEUR(showVal(result.nettoMonat))}</span>
                     </div>
                   </div>
 
                   <div className="bg-black/[0.04] p-3.5 rounded-xl border border-black/[0.08]">
-                    <div className="text-xs font-mono text-black/50 uppercase mb-1">Vergleichsjahr</div>
-                    <div className="font-bold text-[#16181D] text-base mb-2">Steuerjahr {otherYear}</div>
+                    <div className="text-xs font-mono text-black/50 uppercase mb-1">{t.compareYear}</div>
+                    <div className="font-bold text-[#16181D] text-base mb-2">{t.taxYearWord} {otherYear}</div>
                     <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2.5 rounded border border-black/[0.08] flex justify-between items-center">
-                      <span>Netto ({isJahresansicht ? "Jahr" : "Mon."}):</span>
+                      <span>{t.netLabelShort} ({isJahresansicht ? t.yearWord : t.monthShort}):</span>
                       <span className="text-emerald-600 font-bold">{formatEUR(showVal(resOtherYear.nettoMonat))}</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-3 bg-[#E60A1C]/10 border border-[#E60A1C]/30 rounded-xl text-black/90 text-xs sm:text-sm flex items-center justify-between font-medium">
-                  <span>Rechnerische Netto-Differenz ({isJahresansicht ? "jährlich" : "monatlich"}):</span>
+                  <span>{t.netDiff} ({isJahresansicht ? t.annualAdj : t.monthlyAdj}):</span>
                   <span className={`font-mono font-bold text-sm sm:text-base ${diffYear >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
                     {diffYear > 0 ? `+${formatEUR(showVal(diffYear))}` : formatEUR(showVal(diffYear))}
                   </span>

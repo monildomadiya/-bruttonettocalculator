@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Users, Shield, ShieldCheck, CheckCircle2, Award, BookOpen, ExternalLink, RefreshCw } from "lucide-react";
+import { Users, Shield, ShieldCheck, CheckCircle2, Award, BookOpen, RefreshCw } from "lucide-react";
 import { primaryReviewer, siteConfig } from "@/lib/authors";
 
 export const metadata: Metadata = {
@@ -198,9 +198,6 @@ export default function UeberUnsPage() {
         </div>
       </div>
 
-      <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 mb-8 text-sm sm:text-base text-black/75 leading-relaxed">
-        <strong className="text-[#16181D]">Technologie & KI-Kooperationen:</strong> Für die stetige Weiterentwicklung moderner, blitzschneller Web-Applikationen und KI-unterstützter Datenprozesse setzen wir auf exzellente Ressourcen. Professionelles Prompt Engineering und inspirierende KI-Prompts finden Sie bei unserem Kooperationspartner <a href="https://promptking.in" target="_blank" rel="noopener" className="text-[#E60A1C] font-semibold hover:underline inline-flex items-center gap-1">PromptKing <ExternalLink size={14} /></a>, dem führenden Portal für KI-Workflows und Prompt-Optimierung.
-      </div>
     </section>
   );
 }

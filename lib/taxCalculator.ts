@@ -201,6 +201,61 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   };
 }
 
+/**
+ * Reverse calculation (Netto → Brutto).
+ *
+ * There is no closed-form inverse of the payroll calculation: the wage-tax tariff
+ * (§ 32a EStG) is progressive and several contributions cap out at the
+ * Beitragsbemessungsgrenzen, so `nettoMonat` is a piecewise-nonlinear function of
+ * `bruttoMonat`. It is, however, monotonically increasing, so we invert it with a
+ * bounded bisection that reuses the exact same forward engine (`calculateNetto`).
+ *
+ * Returns the lowest gross monthly amount whose net result reaches (>=) the
+ * requested net, matched to within `tolerance` euro where feasible. The `reachable`
+ * flag is false when the requested net exceeds what the search ceiling can produce.
+ */
+export interface ReverseInput extends Omit<CalculatorInput, "bruttoMonat"> {
+  nettoMonatZiel: number; // gewünschtes monatliches Nettogehalt in EUR
+}
+
+export interface ReverseResult {
+  bruttoMonat: number;
+  reachable: boolean;
+  forward: CalculatorResult; // full forward breakdown for the solved gross
+}
+
+const REVERSE_MAX_BRUTTO_MONAT = 500000; // search ceiling (matches the calculator's realistic range)
+
+export function solveBruttoForNetto(input: ReverseInput, tolerance = 0.01): ReverseResult {
+  const { nettoMonatZiel, ...rest } = input;
+  const netAt = (bruttoMonat: number) =>
+    calculateNetto({ ...rest, bruttoMonat }).nettoMonat;
+
+  if (nettoMonatZiel <= 0) {
+    return { bruttoMonat: 0, reachable: true, forward: calculateNetto({ ...rest, bruttoMonat: 0 }) };
+  }
+
+  // Gross is always >= net, so start the lower bound at the target itself.
+  let lo = nettoMonatZiel;
+  let hi = Math.max(nettoMonatZiel * 2, 1000);
+  while (netAt(hi) < nettoMonatZiel && hi < REVERSE_MAX_BRUTTO_MONAT) {
+    hi = Math.min(hi * 2, REVERSE_MAX_BRUTTO_MONAT);
+  }
+
+  const reachable = netAt(hi) >= nettoMonatZiel - tolerance;
+
+  // Bisection: converge hi onto the lowest gross that still reaches the target.
+  for (let i = 0; i < 100; i++) {
+    const mid = (lo + hi) / 2;
+    if (netAt(mid) < nettoMonatZiel) lo = mid;
+    else hi = mid;
+    if (hi - lo < tolerance / 10) break;
+  }
+
+  const bruttoMonat = Math.round(hi * 100) / 100;
+  return { bruttoMonat, reachable, forward: calculateNetto({ ...rest, bruttoMonat }) };
+}
+
 export function formatEUR(value: number): string {
   return new Intl.NumberFormat("de-DE", {
     style: "currency",
