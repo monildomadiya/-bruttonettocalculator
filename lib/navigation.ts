@@ -56,6 +56,7 @@ export const calculatorGroups: NavGroup[] = [
     items: [
       { href: "/firmenwagenrechner", label: "Firmenwagenrechner", icon: Car, description: "1%-Regelung & Dienstwagen" },
       { href: "/rentenrechner", label: "Rentenrechner", icon: PiggyBank, description: "Rentenbeitrag & Prognose" },
+      { href: "/private-krankenversicherung-vs-gesetzlich", label: "PKV vs GKV", icon: HeartPulse, description: "Ab welchem Brutto lohnt sich die PKV?" },
       { href: "/witwenrente-rechner", label: "Witwenrente-Rechner", icon: HeartHandshake, description: "55 % / 25 % berechnen" },
       { href: "/abfindungsrechner", label: "Abfindungsrechner", icon: Banknote, description: "Fünftelregelung" },
       { href: "/weihnachtsgeld-rechner", label: "Weihnachtsgeld-Rechner", icon: Snowflake, description: "Netto vom Weihnachtsgeld" },

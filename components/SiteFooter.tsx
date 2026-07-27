@@ -80,6 +80,7 @@ export default function SiteFooter() {
               <li><Link href="/brutto-netto-rechner/bayern" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner Bayern</Link></li>
               <li><Link href="/brutto-netto-rechner/nordrhein-westfalen" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner NRW</Link></li>
               <li><Link href="/krankengeld-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Krankengeld-Rechner</Link></li>
+              <li><Link href="/private-krankenversicherung-vs-gesetzlich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">PKV vs GKV Vergleich</Link></li>
               <li><Link href="/pendlerpauschale-rechner"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Pendlerpauschale-Rechner</Link></li>
               <li><Link href="/rentenrechner"              className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rentenrechner</Link></li>
               <li><Link href="/buergergeld-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Bürgergeld-Rechner</Link></li>

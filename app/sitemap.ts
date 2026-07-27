@@ -40,6 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/pfaendungstabelle",           changeFrequency: "yearly",  priority: 0.85 },
     { path: "/mindestlohn",               changeFrequency: "monthly", priority: 0.85 },
     { path: "/steuerklassen",             changeFrequency: "monthly", priority: 0.85 },
+    { path: "/private-krankenversicherung-vs-gesetzlich", changeFrequency: "monthly", priority: 0.82 },
     { path: "/witwenrente-rechner",        changeFrequency: "monthly", priority: 0.82 },
     { path: "/bafoeg-rechner",             changeFrequency: "monthly", priority: 0.82 },
     { path: "/teilzeitrechner",            changeFrequency: "monthly", priority: 0.82 },
