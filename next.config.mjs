@@ -40,9 +40,10 @@ const nextConfig = {
       },
       // NOTE: /gehaltsrechner is now a dedicated ranking page — no longer redirected.
       {
+        // Primary legacy URL called out in the SEO brief — force 301 (not 308).
         source: "/brutto-netto-rechner",
         destination: "/",
-        permanent: true,
+        statusCode: 301,
       },
       {
         source: "/netto-rechner",
@@ -65,6 +66,29 @@ const nextConfig = {
         destination: "/mindestlohn",
         permanent: true,
       },
+      // ── Legacy short-URL routes from the pre-redesign build ──────────────
+      // These paths do NOT exist in this app/ tree; they were served by the
+      // old deployment. Mapped here so that once this build is live, any
+      // still-indexed legacy URL or inbound link 301s to its current page
+      // instead of 404ing. Every destination is a real, current route.
+      // Explicit statusCode 301 (not Next's default 308) per the SEO brief.
+      { source: "/netto-brutto",      destination: "/rechner/netto-zu-brutto",          statusCode: 301 },
+      { source: "/stundenlohn",       destination: "/stundenlohn-rechner",              statusCode: 301 },
+      { source: "/arbeitgeber",       destination: "/arbeitgeber-brutto-netto-rechner", statusCode: 301 },
+      { source: "/minijob",           destination: "/minijob-rechner",                  statusCode: 301 },
+      { source: "/firmenwagen",       destination: "/firmenwagenrechner",               statusCode: 301 },
+      { source: "/pendlerpauschale",  destination: "/pendlerpauschale-rechner",         statusCode: 301 },
+      { source: "/abfindung",         destination: "/abfindungsrechner",                statusCode: 301 },
+      { source: "/kurzarbeitergeld",  destination: "/kurzarbeitergeld-rechner",         statusCode: 301 },
+      { source: "/arbeitslosengeld",  destination: "/arbeitslosengeld-rechner",         statusCode: 301 },
+      { source: "/krankengeld",       destination: "/krankengeld-rechner",              statusCode: 301 },
+      { source: "/weihnachtsgeld",    destination: "/weihnachtsgeld-rechner",           statusCode: 301 },
+      { source: "/elterngeld",        destination: "/elterngeld-rechner",               statusCode: 301 },
+      { source: "/rente",             destination: "/rentenrechner",                    statusCode: 301 },
+      { source: "/rentenpunkte",      destination: "/rentenrechner",                    statusCode: 301 },
+      // No current equivalent — 301 to the closest relevant page rather than 404.
+      { source: "/urlaubsgeld",       destination: "/bonus-steuerrechner",              statusCode: 301 },
+      { source: "/schenkungssteuer",  destination: "/lexikon",                          statusCode: 301 },
       {
         source: "/pfandungstabelle",
         destination: "/pfaendungstabelle",
