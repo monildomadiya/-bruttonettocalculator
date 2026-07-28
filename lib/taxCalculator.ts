@@ -156,6 +156,25 @@ export function soliBerechnen(estJahr: number, verheiratet: boolean): number {
   return Math.min(voll, abschmelzung);
 }
 
+/**
+ * Jahres-Einkommensteuer für ein gegebenes zu versteuerndes Einkommen (zvE)
+ * nach Steuerklasse (2026, § 32a EStG). Additive Hilfsfunktion für Tools, die
+ * eine Steuer-Differenz brauchen (z. B. der Steuerrückerstattungs-Rechner:
+ * ESt(zvE) − ESt(zvE − zusätzliche Werbungskosten) = Erstattung). Spiegelt die
+ * Steuerklassen-Behandlung von `calculateNetto` für die relevanten Klassen.
+ */
+export function einkommensteuerFuerZvE(zvE: number, steuerklasse: Steuerklasse = 1): number {
+  const z = Math.max(0, zvE);
+  switch (steuerklasse) {
+    case 3:
+      return 2 * estFormel2026(z / 2); // Splitting
+    case 2:
+      return estFormel2026(Math.max(0, z - 4260)); // Alleinerziehenden-Entlastungsbetrag
+    default:
+      return estFormel2026(z); // I, IV (und Näherung für V/VI bei der Erstattungs-Differenz)
+  }
+}
+
 export function calculateNetto(input: CalculatorInput): CalculatorResult {
   const bruttoJahr = input.bruttoMonat * 12;
   const r = RECHENGROESSEN_2026; // 2026-Parameter (auch als 2027-Platzhalter verwendet)

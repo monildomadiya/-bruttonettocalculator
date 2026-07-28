@@ -2,7 +2,7 @@ import {
   Calculator, ArrowRightLeft, LayoutList, Calendar, Scale,
   Car, PiggyBank, Umbrella, Wallet2, Baby, Banknote, Gift, Clock3,
   Coins, Receipt, Landmark, HandCoins, GraduationCap, HeartHandshake, Timer, Globe,
-  Building2, Snowflake, Users, TrendingUp, CalendarRange, HeartPulse, TrendingDown, Route, Gauge,
+  Building2, Snowflake, Users, TrendingUp, CalendarRange, HeartPulse, TrendingDown, Route, Gauge, Receipt as ReceiptIcon,
 } from "lucide-react";
 
 export interface NavLink {
@@ -27,6 +27,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/arbeitgeber-brutto-netto-rechner", label: "Arbeitgeber-Rechner", icon: Building2, description: "Arbeitgeberkosten & -anteil" },
       { href: "/lohnsteuerrechner", label: "Lohnsteuerrechner", icon: Receipt, description: "Lohnsteuer & Nettolohn" },
       { href: "/einkommensteuer-rechner", label: "Einkommensteuer-Rechner", icon: Landmark, description: "Jahressteuer § 32a EStG" },
+      { href: "/steuerrueckerstattung-rechner", label: "Steuerrückerstattung-Rechner", icon: ReceiptIcon, description: "Wie viel Steuer bekomme ich zurück?" },
       { href: "/gehaltserhoehung-rechner", label: "Gehaltserhöhung-Rechner", icon: TrendingUp, description: "Netto von der Erhöhung" },
       { href: "/jahresgehalt-rechner", label: "Jahresgehalt-Rechner", icon: CalendarRange, description: "Brutto & Netto pro Jahr" },
       { href: "/steuerklassenwechsel-rechner", label: "Steuerklassenwechsel", icon: Users, description: "3/5 oder 4/4 vergleichen" },
