@@ -2,7 +2,7 @@ import {
   Calculator, ArrowRightLeft, LayoutList, Calendar, Scale,
   Car, PiggyBank, Umbrella, Wallet2, Baby, Banknote, Gift, Clock3,
   Coins, Receipt, Landmark, HandCoins, GraduationCap, HeartHandshake, Timer, Globe,
-  Building2, Snowflake, Users, TrendingUp, CalendarRange, HeartPulse, TrendingDown, Route,
+  Building2, Snowflake, Users, TrendingUp, CalendarRange, HeartPulse, TrendingDown, Route, Gauge,
 } from "lucide-react";
 
 export interface NavLink {
@@ -42,6 +42,7 @@ export const calculatorGroups: NavGroup[] = [
     items: [
       { href: "/mindestlohn", label: "Mindestlohn Rechner", icon: Scale, description: "13,90 €/h ab 2026" },
       { href: "/minijob-rechner", label: "Minijob-Rechner", icon: Wallet2, description: "Verdienstgrenze 603 €" },
+      { href: "/midijob-rechner", label: "Midijob-Rechner", icon: Gauge, description: "Übergangsbereich 603–2.000 €" },
       { href: "/buergergeld-rechner", label: "Bürgergeld-Rechner", icon: HandCoins, description: "Regelsatz 563 € · SGB II" },
       { href: "/bafoeg-rechner", label: "BAföG-Rechner", icon: GraduationCap, description: "Anspruch für Studierende" },
       { href: "/elterngeld-rechner", label: "Elterngeld-Rechner", icon: Baby, description: "Basiselterngeld & Plus" },

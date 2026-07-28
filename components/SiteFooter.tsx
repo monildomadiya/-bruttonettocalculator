@@ -88,6 +88,7 @@ export default function SiteFooter() {
               <li><Link href="/bafoeg-rechner"             className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">BAföG-Rechner</Link></li>
               <li><Link href="/teilzeitrechner"            className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Teilzeitrechner</Link></li>
               <li><Link href="/minijob-rechner"           className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Minijob-Rechner</Link></li>
+              <li><Link href="/midijob-rechner"           className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Midijob-Rechner</Link></li>
               <li><Link href="/werkstudent-rechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Werkstudent-Rechner</Link></li>
               <li><Link href="/elterngeld-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Elterngeld-Rechner</Link></li>
               <li><Link href="/arbeitslosengeld-rechner"  className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Arbeitslosengeld-Rechner</Link></li>
