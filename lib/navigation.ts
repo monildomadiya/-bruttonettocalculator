@@ -71,3 +71,40 @@ export const calculatorGroups: NavGroup[] = [
 ];
 
 export const allCalculatorLinks: NavLink[] = calculatorGroups.flatMap((g) => g.items);
+
+/**
+ * High-value "hub" pages every visitor is likely to want next. Used to fill up
+ * a related-tools block once the topically-closest siblings are exhausted, so
+ * we always funnel toward the main money pages.
+ */
+const EVERGREEN_HREFS = ["/", "/gehaltsrechner", "/steuerklassen", "/brutto-netto-rechner-2026"];
+
+/**
+ * Returns topically-related tools for a given page, for the "Ähnliche Rechner"
+ * internal-linking block. Prioritises siblings from the same category (most
+ * relevant), then fills with evergreen hub pages, then anything else — always
+ * excluding the current page and de-duplicating. Pages that aren't in the nav
+ * (e.g. amount pages) still get a sensible evergreen-led set.
+ */
+export function getRelatedCalculators(
+  currentHref: string,
+  count = 6
+): { href: string; label: string; desc?: string }[] {
+  const group = calculatorGroups.find((g) => g.items.some((i) => i.href === currentHref));
+  const picked: NavLink[] = [];
+  const add = (link?: NavLink) => {
+    if (!link) return;
+    if (link.href === currentHref) return;
+    if (picked.some((p) => p.href === link.href)) return;
+    picked.push(link);
+  };
+
+  // 1) siblings from the same category — the most relevant next steps
+  group?.items.forEach(add);
+  // 2) evergreen hubs to funnel toward the main pages
+  EVERGREEN_HREFS.forEach((href) => add(allCalculatorLinks.find((l) => l.href === href)));
+  // 3) fall back to filling from everything else
+  allCalculatorLinks.forEach(add);
+
+  return picked.slice(0, count).map((i) => ({ href: i.href, label: i.label, desc: i.description }));
+}

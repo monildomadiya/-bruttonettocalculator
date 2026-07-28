@@ -6,6 +6,7 @@ import "./globals.css";
 import MobileMenu from "@/components/MobileMenu";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import RelatedToolsAuto from "@/components/RelatedToolsAuto";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import AdsProvider from "@/components/AdsProvider";
@@ -159,6 +160,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
 
         <main>{children}</main>
+
+        {/* ── Auto "Ähnliche Rechner" internal-linking block (per-page) ── */}
+        <RelatedToolsAuto />
 
         {/* ── Ultra-Luxury Fintech Footer (conditional) ───────────────── */}
         <SiteFooter />
