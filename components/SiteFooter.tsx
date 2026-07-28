@@ -57,6 +57,7 @@ export default function SiteFooter() {
               <li><Link href="/einkommensteuer-rechner"    className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Einkommensteuer-Rechner</Link></li>
               <li><Link href="/steuerrueckerstattung-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerrückerstattung-Rechner</Link></li>
               <li><Link href="/bav-rechner"               className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">bAV-Rechner (Entgeltumwandlung)</Link></li>
+              <li><Link href="/immobilienkredit-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Immobilienkredit-Rechner</Link></li>
               <li><Link href="/steuerklassenwechsel-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerklassenwechsel</Link></li>
               <li><Link href="/gehaltserhoehung-rechner"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Gehaltserhöhung-Rechner</Link></li>
               <li><Link href="/rechner/netto-zu-brutto"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Netto zu Brutto</Link></li>

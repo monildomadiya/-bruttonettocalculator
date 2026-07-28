@@ -48,6 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/firmenwagenrechner",         changeFrequency: "monthly", priority: 0.8 },
     { path: "/rentenrechner",              changeFrequency: "monthly", priority: 0.8 },
     { path: "/bav-rechner",                changeFrequency: "monthly", priority: 0.82 },
+    { path: "/immobilienkredit-rechner",   changeFrequency: "monthly", priority: 0.85 },
     { path: "/arbeitslosengeld-rechner",   changeFrequency: "monthly", priority: 0.8 },
     { path: "/minijob-rechner",             changeFrequency: "monthly", priority: 0.8 },
     { path: "/midijob-rechner",             changeFrequency: "monthly", priority: 0.82 },
