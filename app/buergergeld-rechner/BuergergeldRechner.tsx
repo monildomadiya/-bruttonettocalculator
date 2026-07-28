@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { HandCoins, Home, Users, ArrowRight, Info, ChevronDown, Plus, Minus } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 
 /* Regelbedarfsstufen 2026 (Nullrunde — Werte wie 2025, in €/Monat) */
 const RBS = {
@@ -107,9 +106,6 @@ export default function BuergergeldRechner() {
           </p>
         </div>
       </section>
-
-      {/* Ad — right below the hero */}
-      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">

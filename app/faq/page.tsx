@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { HelpCircle } from "lucide-react";
 import AccordionFaq from "@/components/AccordionFaq";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Häufige Fragen (FAQ) — Brutto Netto Rechner 2026",
@@ -121,8 +120,6 @@ export default function FaqPage() {
           <AccordionFaq faqs={faqs} />
         </div>
 
-        {/* Ad: after the FAQ accordion */}
-        <AdUnit placement="content" className="!mb-0 !px-0" />
       </section>
     </>
   );

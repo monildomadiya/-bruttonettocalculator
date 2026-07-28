@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Car, Calculator, Info, ChevronDown, ArrowRight } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 import { formatEUR } from "@/lib/taxCalculator";
 
 const WK_PAUSCHALE = 1230; // Arbeitnehmer-Pauschbetrag 2026
@@ -48,8 +47,6 @@ export default function PendlerpauschaleRechner() {
           </p>
         </div>
       </section>
-
-      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">

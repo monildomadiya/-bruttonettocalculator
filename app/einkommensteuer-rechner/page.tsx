@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import EinkommensteuerRechner from "./EinkommensteuerRechner";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Einkommensteuer-Rechner 2026 — Steuer nach § 32a EStG",
@@ -79,7 +78,6 @@ export default function EinkommensteuerRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <EinkommensteuerRechner />
-      <AdUnit placement="content" />
     </>
   );
 }

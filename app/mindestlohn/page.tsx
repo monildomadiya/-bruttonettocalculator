@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import MindestlohnCalculator from "./MindestlohnCalculator";
 import MindestlohnContent from "./MindestlohnContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
-import AdUnit from "@/components/AdUnit";
 
 const URL = "https://bruttonettocalculator.com/mindestlohn";
 
@@ -83,7 +82,6 @@ export default function MindestlohnPage() {
           { href: "/blog/brutto-netto-rechner-2026-mindestlohn-2027", label: "Ratgeber: Mindestlohn 2027", desc: "Alle Werte & Beispiele" },
         ]}
       />
-      <AdUnit placement="content" />
     </>
   );
 }

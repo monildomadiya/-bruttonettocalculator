@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import ArbeitgeberRechner from "./ArbeitgeberRechner";
 import ArbeitgeberContent from "./ArbeitgeberContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Arbeitgeberrechner 2026: Lohnkosten berechnen",
@@ -104,7 +103,6 @@ export default function ArbeitgeberRechnerPage() {
           { href: "/stundenlohn-rechner", label: "Stundenlohnrechner", desc: "Stundenlohn aus dem Monatsgehalt" },
         ]}
       />
-      <AdUnit placement="content" />
     </>
   );
 }

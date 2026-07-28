@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Calculator as CalcIcon, ChevronRight, Globe, BarChart3 } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Kalkulator brutto netto Niemcy 2026 – Oblicz wynagrodzenie",
@@ -125,13 +124,10 @@ export default function KalkulatorNiemcyPage() {
       </div>
 
       {/* Reklama — pod nagłówkiem, nad kalkulatorem */}
-      <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
 
       <section id="kalkulator" className="mb-14 scroll-mt-24">
         <Calculator initialBrutto={3500} lang="pl" deepLink={false} />
       </section>
-
-      <AdUnit placement="content" className="!my-0 !mb-14 !px-0" />
 
       <section className="mb-16">
         <div className="mb-6">

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import MinijobRechner from "./MinijobRechner";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Minijob-Rechner 2026 — Verdienstgrenze 603 € berechnen",
@@ -53,7 +52,6 @@ export default function MinijobRechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <MinijobRechner />
-      <AdUnit placement="content" />
     </>
   );
 }

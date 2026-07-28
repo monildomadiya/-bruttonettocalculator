@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import PendlerpauschaleRechner from "./PendlerpauschaleRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
-import AdUnit from "@/components/AdUnit";
 
 const URL = "https://bruttonettocalculator.com/pendlerpauschale-rechner";
 
@@ -42,7 +41,6 @@ export default function Page() {
         description="Kostenloser Pendlerpauschale-Rechner — Entfernungspauschale (0,30 € / ab 21 km 0,38 €) und Steuerersparnis berechnen (2026)."
         faqs={faqs} />
       <PendlerpauschaleRechner />
-      <AdUnit placement="content" />
     </>
   );
 }

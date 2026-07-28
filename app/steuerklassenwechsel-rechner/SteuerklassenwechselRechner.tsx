@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Users, Calculator, ArrowRight, Info, ChevronDown, CheckCircle2 } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 import { calculateNetto, estFormel2026, soliBerechnen, formatEUR } from "@/lib/taxCalculator";
 
 const faqs = [
@@ -94,8 +93,6 @@ export default function SteuerklassenwechselRechner() {
           </p>
         </div>
       </section>
-
-      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">

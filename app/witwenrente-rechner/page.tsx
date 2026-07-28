@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import WitwenrenteRechner from "./WitwenrenteRechner";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Witwenrente-Rechner 2026 — Höhe berechnen (55 % / 25 %)",
@@ -78,7 +77,6 @@ export default function WitwenrenteRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <WitwenrenteRechner />
-      <AdUnit placement="content" />
     </>
   );
 }

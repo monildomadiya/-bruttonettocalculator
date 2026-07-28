@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import AbfindungsRechner from "./AbfindungsRechner";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Abfindungsrechner 2026 — Fünftelregelung berechnen",
@@ -54,7 +53,6 @@ export default function AbfindungsrechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <AbfindungsRechner />
-      <AdUnit placement="content" />
     </>
   );
 }

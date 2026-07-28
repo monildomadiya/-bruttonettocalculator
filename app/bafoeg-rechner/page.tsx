@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import BafoegRechner from "./BafoegRechner";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "BAföG-Rechner 2026 — Anspruch & Höhe berechnen (Studium)",
@@ -77,7 +76,6 @@ export default function BafoegRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <BafoegRechner />
-      <AdUnit placement="content" />
     </>
   );
 }

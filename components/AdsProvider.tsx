@@ -6,11 +6,6 @@ export interface AdsSettings {
   enabled: boolean;
   publisherId: string; // stored as "pub-XXXXXXXXXXXXXXXX"
   autoAds: boolean;
-  slotDefault: string; // single responsive unit used for any placement without its own slot
-  slotNative: string; // optional native "in-article" (fluid) unit — higher CPM for in-content ads
-  slotHomepage: string;
-  slotInArticle: string;
-  slotContent: string;
 }
 
 const AdsContext = createContext<AdsSettings | null>(null);
@@ -28,8 +23,8 @@ export function toClientId(publisherId: string): string {
 
 /**
  * Fetches the admin-managed ad configuration once and shares it with the
- * AdSense loader and every <AdUnit> via context, so the whole ads system is
- * controlled from /admin-secure/ads without any code change.
+ * AdSense loader via context, so the whole ads system is controlled from
+ * /admin-secure/ads without any code change.
  */
 export default function AdsProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<AdsSettings | null>(null);

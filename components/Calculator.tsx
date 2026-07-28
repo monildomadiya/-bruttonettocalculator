@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
-import AdUnit from "@/components/AdUnit";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
@@ -636,8 +635,6 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
               />
             </div>
 
-            {/* Ad — fills the space below the options (self-hides if unfilled) */}
-            <AdUnit placement="content" className="!my-0 !px-0" />
           </div>
 
           {/* Disclaimer */}

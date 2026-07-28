@@ -10,7 +10,6 @@ import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse, isMidijob2026, mid
 import { getCommonGrossSalaryAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
-import AdUnit from "@/components/AdUnit";
 
 export const revalidate = 0; // Always generate fresh or static
 
@@ -262,9 +261,6 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <ReviewerByline />
       </div>
 
-      {/* Ad — right below the hero */}
-      <AdUnit placement="content" className="!my-0 !mb-12 !px-0" />
-
       {/* Midijob / Übergangsbereich explainer — only for salaries inside 603,01–2.000 € */}
       {isMidijobAmount && (
         <div className="mb-14 bg-amber-50 border border-amber-500/30 rounded-3xl p-6 sm:p-8">
@@ -405,9 +401,6 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Ad: in-content after the main comparison table (high viewability / high CPM) */}
-      <AdUnit placement="content" className="!my-0 !mb-16 !px-0" />
-
       {/* Prominent Steuerklasse I subsection (main search intent for exact-salary queries) */}
       <div className="mb-16 bg-gradient-to-br from-[#E60A1C]/10 via-[#FFFFFF] to-[#FFFFFF] border border-[#E60A1C]/30 rounded-3xl p-6 sm:p-10 shadow-xl">
         <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-3 py-1 rounded-full mb-4">
@@ -512,9 +505,6 @@ export default function LongTailSalaryPage({ params }: PageProps) {
           ))}
         </div>
       </div>
-
-      {/* Ad: after the interactive calculator (deep-scroll, high engagement) */}
-      <AdUnit placement="content" className="!my-0 !mb-16 !px-0" />
 
       {/* Internal Linking Footer Block */}
       <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 shadow-xl">

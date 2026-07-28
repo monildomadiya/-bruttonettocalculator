@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import FirmenwagenrechnerCalculator from "./FirmenwagenrechnerCalculator";
 import FirmenwagenContent from "./FirmenwagenContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Firmenwagenrechner 2026: Geldwerten Vorteil berechnen",
@@ -109,7 +108,6 @@ export default function FirmenwagenrechnerPage() {
           { href: "/gehaltsrechner", label: "Gehaltsrechner", desc: "Brutto-Netto-Gehalt 2026" },
         ]}
       />
-      <AdUnit placement="content" />
     </>
   );
 }

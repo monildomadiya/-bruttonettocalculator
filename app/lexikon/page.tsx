@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { BookOpen } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Steuer-Lexikon — Brutto Netto Rechner 2026",
@@ -197,8 +196,6 @@ export default function LexikonPage() {
         ))}
       </div>
 
-      {/* Ad: below the glossary groups */}
-      <AdUnit placement="content" className="!mb-0 !px-0" />
     </section>
   );
 }

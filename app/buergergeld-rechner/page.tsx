@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import BuergergeldRechner from "./BuergergeldRechner";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Bürgergeld-Rechner 2026 — Anspruch & Regelsatz berechnen",
@@ -78,7 +77,6 @@ export default function BuergergeldRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <BuergergeldRechner />
-      <AdUnit placement="content" />
     </>
   );
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowRightLeft, Sparkles, ListChecks, ChevronDown } from "lucide-react";
 import ReverseCalculator from "@/components/ReverseCalculator";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Netto Brutto Rechner 2026 – Wunschbrutto berechnen",
@@ -79,9 +78,6 @@ export default function NettoZuBruttoPage() {
         </p>
       </div>
 
-      {/* Ad — right below the hero, above the calculator */}
-      <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
-
       <div className="w-full max-w-6xl mx-auto mb-10">
         <ReverseCalculator />
       </div>
@@ -95,9 +91,6 @@ export default function NettoZuBruttoPage() {
           benötigte Bruttogehalt für dasselbe Netto deutlich senken.
         </p>
       </div>
-
-      {/* Ad: in-content after the calculator + tip block (high viewability) */}
-      <AdUnit placement="content" className="!my-0 !mb-16 !px-0" />
 
       {/* Erklärung: So funktioniert die Rückrechnung */}
       <div className="w-full max-w-6xl mx-auto mb-16">

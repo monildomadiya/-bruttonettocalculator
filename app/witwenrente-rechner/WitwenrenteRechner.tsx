@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { HeartHandshake, Percent, ArrowRight, Info, ChevronDown, Baby } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 
 /* Aktueller Rentenwert seit 1.7.2025: 40,79 € (gilt bis zur nächsten Anpassung 1.7.2026) */
 const RENTENWERT = 40.79;
@@ -67,9 +66,6 @@ export default function WitwenrenteRechner() {
           </p>
         </div>
       </section>
-
-      {/* Ad — right below the hero */}
-      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">

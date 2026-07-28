@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Sparkles, AlertCircle, CheckCircle2 } from "lucide-react";
 import Calculator from "@/components/Calculator";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026 — Gehaltsrechner & Lohnrechner",
@@ -144,15 +143,9 @@ export default function Rechner2026Page() {
         </p>
       </div>
 
-      {/* Ad — right below the hero, above the calculator */}
-      <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
-
       <div className="w-full max-w-6xl mx-auto mb-14">
         <Calculator initialJahr={2026} />
       </div>
-
-      {/* Ad: right after the calculator (high engagement) */}
-      <AdUnit placement="content" className="!my-0 !mb-12 !px-0" />
 
       {/* Amtliche Rechengrößen 2026 — unique, engine-backed reference table */}
       <div className="w-full max-w-6xl mx-auto bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-10 shadow-lg mb-8">
@@ -185,9 +178,6 @@ export default function Rechner2026Page() {
           Zusatzbeitrag zur Krankenversicherung wird individuell von jeder Krankenkasse festgelegt.
         </p>
       </div>
-
-      {/* Ad: between the values table and the explainer (deep-scroll) */}
-      <AdUnit placement="content" className="!my-0 !mb-8 !px-0" />
 
       {/* Content section — targets "brutto netto rechner 2026" / "netto 2026" cluster */}
       <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 mb-8">
@@ -226,9 +216,6 @@ export default function Rechner2026Page() {
           </p>
         </div>
       </div>
-
-      {/* Ad: before the FAQ block */}
-      <AdUnit placement="content" className="!my-0 !mb-8 !px-0" />
 
       {/* SEO Q&A section for 2026 long-tail queries */}
       <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">

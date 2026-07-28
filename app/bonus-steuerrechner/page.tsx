@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import BonusSteuerrechner from "./BonusSteuerrechner";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Bonus-Steuerrechner 2026 — Bonus & Urlaubsgeld versteuern",
@@ -54,7 +53,6 @@ export default function BonusSteuerrechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <BonusSteuerrechner />
-      <AdUnit placement="content" />
     </>
   );
 }

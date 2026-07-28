@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Umbrella, Calculator, ArrowRight, Info, ChevronDown } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 import { calculateNetto } from "@/lib/taxCalculator";
 
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
@@ -96,9 +95,6 @@ export default function ArbeitslosengeldRechner({ content }: { content?: React.R
           </p>
         </div>
       </section>
-
-      {/* Ad — right below the hero */}
-      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       {/* Calculator */}
       <section className="max-w-6xl mx-auto px-5 py-12">

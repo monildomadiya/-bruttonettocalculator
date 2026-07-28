@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import KrankengeldRechner from "./KrankengeldRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
-import AdUnit from "@/components/AdUnit";
 
 const URL = "https://bruttonettocalculator.com/krankengeld-rechner";
 
@@ -42,7 +41,6 @@ export default function Page() {
         description="Kostenloser Krankengeld-Rechner — Höhe des Krankengeldes (70 % brutto, max. 90 % netto) nach Sozialabgaben berechnen (2026)."
         faqs={faqs} />
       <KrankengeldRechner />
-      <AdUnit placement="content" />
     </>
   );
 }

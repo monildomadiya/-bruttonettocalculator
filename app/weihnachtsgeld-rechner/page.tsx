@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import WeihnachtsgeldRechner from "./WeihnachtsgeldRechner";
 import WeihnachtsgeldContent from "./WeihnachtsgeldContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Weihnachtsgeld-Rechner 2026: Brutto & Netto",
@@ -111,7 +110,6 @@ export default function WeihnachtsgeldRechnerPage() {
           { href: "/arbeitgeber-brutto-netto-rechner", label: "Arbeitgeberrechner", desc: "Was Sonderzahlungen den Arbeitgeber kosten" },
         ]}
       />
-      <AdUnit placement="content" />
     </>
   );
 }

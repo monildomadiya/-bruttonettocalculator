@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { HeartPulse, Calculator, Info, ChevronDown, ArrowRight } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
@@ -60,8 +59,6 @@ export default function KrankengeldRechner() {
           </p>
         </div>
       </section>
-
-      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">

@@ -8,7 +8,6 @@ import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 import ReviewerByline from "@/components/ReviewerByline";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Gehaltsrechner 2026/2027 — Brutto Netto Gehalt berechnen",
@@ -137,15 +136,10 @@ export default function GehaltsrechnerPage() {
         <ReviewerByline />
       </div>
 
-      {/* Ad — right below the hero, above the calculator */}
-      <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
-
       {/* Calculator */}
       <section id="rechner" className="mb-14 scroll-mt-24">
         <Calculator />
       </section>
-
-      <AdUnit placement="content" className="!my-0 !mb-14 !px-0" />
 
       {/* Reference salary table */}
       <section className="mb-16">

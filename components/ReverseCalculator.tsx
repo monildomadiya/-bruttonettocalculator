@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 import { solveBruttoForNetto, formatEUR, Steuerjahr } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
-import AdUnit from "@/components/AdUnit";
 
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -256,7 +255,6 @@ export default function ReverseCalculator() {
                 <Toggle checked={kirche} onChange={setKirche} label="Kirchensteuerpflichtig" hint="9 % auf die Einkommensteuer" />
               </div>
 
-              <AdUnit placement="content" className="!my-0 !px-0" />
             </div>
 
             <div className="flex gap-3 text-sm text-black/70 bg-[#F1F3F5] rounded-2xl p-4 border border-black/[0.10] leading-relaxed font-medium">

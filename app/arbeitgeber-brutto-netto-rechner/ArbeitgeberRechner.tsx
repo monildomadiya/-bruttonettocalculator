@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Building2, Calculator, ArrowRight, Info, ChevronDown, Wallet, Users } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 import {
   calculateNetto,
   calculateArbeitgeberkosten,
@@ -100,9 +99,6 @@ export default function ArbeitgeberRechner({ content }: { content?: React.ReactN
           </p>
         </div>
       </section>
-
-      {/* Ad — right below the hero */}
-      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       {/* Calculator */}
       <section className="max-w-6xl mx-auto px-5 py-12">

@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Car, Calculator, ArrowRight, Info, ChevronDown, Gauge } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 import { calculateNetto } from "@/lib/taxCalculator";
 
 type Fahrzeugtyp = "verbrenner" | "elektroKlein" | "elektroGross";
@@ -111,9 +110,6 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
           </p>
         </div>
       </section>
-
-      {/* Ad — right below the hero */}
-      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       {/* Calculator */}
       <section className="max-w-6xl mx-auto px-5 py-12">

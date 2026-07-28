@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { GraduationCap, Calculator, Info, ChevronDown, ArrowRight } from "lucide-react";
-import AdUnit from "@/components/AdUnit";
 import { estFormel2026, formatEUR } from "@/lib/taxCalculator";
 
 const faqs = [
@@ -46,8 +45,6 @@ export default function WerkstudentRechner() {
           </p>
         </div>
       </section>
-
-      <AdUnit placement="content" className="!mt-0 !mb-8" />
 
       <section className="max-w-6xl mx-auto px-5 py-12">
         <div className="grid lg:grid-cols-2 gap-6">

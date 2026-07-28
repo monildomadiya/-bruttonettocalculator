@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Rentenrechner from "./Rentenrechner";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Rentenrechner 2026 — Brutto Netto Rente berechnen",
@@ -53,7 +52,6 @@ export default function RentenrechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Rentenrechner />
-      <AdUnit placement="content" />
     </>
   );
 }

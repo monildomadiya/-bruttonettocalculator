@@ -10,7 +10,6 @@ import { BUNDESLAENDER, getBundeslandBySlug, Bundesland } from "@/data/bundeslae
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import AccordionFaq from "@/components/AccordionFaq";
-import AdUnit from "@/components/AdUnit";
 
 export const revalidate = 0;
 
@@ -181,8 +180,6 @@ export default function BundeslandPage({ params }: PageProps) {
         <ReviewerByline />
       </div>
 
-      <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
-
       {/* State context */}
       <section className="mb-14 bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-9 shadow-xl relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#E60A1C]/10 rounded-full blur-3xl pointer-events-none" />
@@ -238,8 +235,6 @@ export default function BundeslandPage({ params }: PageProps) {
           Vereinfachte Berechnung für einen ersten Überblick (Steuerklasse I, kinderlos ab 23, GKV-Zusatzbeitrag Ø 2,9 %). Keine Steuerberatung.
         </p>
       </section>
-
-      <AdUnit placement="content" className="!my-0 !mb-14 !px-0" />
 
       {/* Interactive calculator */}
       <section id="rechner" className="mb-16 scroll-mt-24">

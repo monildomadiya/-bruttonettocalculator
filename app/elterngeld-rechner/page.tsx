@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import ElterngeldRechner from "./ElterngeldRechner";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Elterngeld-Rechner 2026 — Basiselterngeld & ElterngeldPlus",
@@ -53,7 +52,6 @@ export default function ElterngeldRechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ElterngeldRechner />
-      <AdUnit placement="content" />
     </>
   );
 }

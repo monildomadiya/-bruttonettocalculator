@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import StundenlohnRechner from "./StundenlohnRechner";
 import StundenlohnContent from "./StundenlohnContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Stundenlohnrechner 2026: Stundenlohn berechnen",
@@ -54,7 +53,6 @@ export default function StundenlohnRechnerPage() {
           { href: "/minijob-rechner", label: "Minijob-Rechner", desc: "Verdienstgrenze & Stunden" },
         ]}
       />
-      <AdUnit placement="content" />
     </>
   );
 }

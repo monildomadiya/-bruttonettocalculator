@@ -5,8 +5,9 @@ import { usePathname } from "next/navigation";
 import { useAds, toClientId } from "./AdsProvider";
 
 /**
- * Loads the Google AdSense loader script (required for BOTH Auto Ads and
- * manual <AdUnit> blocks).
+ * Loads the Google AdSense loader script. This is all that's needed for
+ * Auto Ads — Google places the ads automatically; there are no manual ad
+ * blocks in the code anymore.
  *
  * The configuration (on/off + Publisher-ID) is managed from the admin
  * dashboard (/admin-secure/ads) and shared via <AdsProvider>, so no code

@@ -4,7 +4,6 @@ import { Calculator as CalcIcon, ChevronRight, Globe, BarChart3 } from "lucide-r
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Germany Salary Calculator 2026 – Gross to Net",
@@ -125,14 +124,9 @@ export default function GermanyTaxCalculatorPage() {
         </p>
       </div>
 
-      {/* Ad — right below the hero, above the calculator */}
-      <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
-
       <section id="calculator" className="mb-14 scroll-mt-24">
         <Calculator initialBrutto={3500} lang="en" deepLink={false} />
       </section>
-
-      <AdUnit placement="content" className="!my-0 !mb-14 !px-0" />
 
       <section className="mb-16">
         <div className="mb-6">

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Sparkles, AlertCircle, Check, X, HeartPulse } from "lucide-react";
 import Calculator from "@/components/Calculator";
-import AdUnit from "@/components/AdUnit";
 import ReviewerByline from "@/components/ReviewerByline";
 import RelatedCalculators from "@/components/RelatedCalculators";
 
@@ -159,8 +158,6 @@ export default function PkvVsGkvPage() {
           </p>
         </div>
 
-        <AdUnit placement="content" className="!my-0 !mb-10 !px-0" />
-
         {/* ── Comparison table ─────────────────────────────────── */}
         <div className="w-full max-w-6xl mx-auto mb-12">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">PKV vs GKV 2026 im direkten Vergleich</h2>
@@ -219,8 +216,6 @@ export default function PkvVsGkvPage() {
           </p>
         </div>
 
-        <AdUnit placement="content" className="!my-0 !mb-12 !px-0" />
-
         {/* ── Embedded calculator ──────────────────────────────── */}
         <div className="w-full max-w-6xl mx-auto mb-6">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">Ihr GKV-Beitrag im Netto berechnen</h2>
@@ -232,8 +227,6 @@ export default function PkvVsGkvPage() {
         <div className="w-full max-w-6xl mx-auto mb-14">
           <Calculator />
         </div>
-
-        <AdUnit placement="content" className="!my-0 !mb-12 !px-0" />
 
         {/* ── When does each make sense ────────────────────────── */}
         <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 mb-8">
@@ -268,8 +261,6 @@ export default function PkvVsGkvPage() {
             lassen Sie Tarife und Ihren persönlichen Bedarf vor einem Wechsel unabhängig prüfen.
           </p>
         </div>
-
-        <AdUnit placement="content" className="!my-0 !mb-8 !px-0" />
 
         {/* ── FAQ (visible + JSON-LD above) ────────────────────── */}
         <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">

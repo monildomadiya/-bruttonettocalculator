@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BarChart3, ChevronDown, Calculator, ArrowRight, Users, RefreshCw } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
-import AdUnit from "@/components/AdUnit";
 
 export const metadata: Metadata = {
   title: "Steuerklassen 2026: Welche Steuerklasse für Verheiratete?",
@@ -396,9 +395,6 @@ export default function SteuerklassenPage() {
             </div>
           </div>
         </section>
-
-        {/* Ad: between the comparison table and the Steuerklassenwechsel section */}
-        <AdUnit placement="content" />
 
         {/* Steuerklassenwechsel */}
         <section className="max-w-6xl mx-auto px-5 py-8">

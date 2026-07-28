@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import JahresgehaltRechner from "./JahresgehaltRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
-import AdUnit from "@/components/AdUnit";
 
 const URL = "https://bruttonettocalculator.com/jahresgehalt-rechner";
 
@@ -42,7 +41,6 @@ export default function Page() {
         description="Kostenloser Jahresgehalt-Rechner — Brutto- und Nettojahresgehalt aus dem Monatsgehalt berechnen, inkl. 13./14. Gehalt (2026)."
         faqs={faqs} />
       <JahresgehaltRechner />
-      <AdUnit placement="content" />
     </>
   );
 }
