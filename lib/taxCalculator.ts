@@ -70,6 +70,18 @@ const RECHENGROESSEN_2026 = {
 };
 
 /**
+ * Betriebliche Altersvorsorge (bAV) / Entgeltumwandlung 2026
+ * (§ 3 Nr. 63 EStG, § 1 Abs. 1 Nr. 9 SvEV). Beiträge sind bis 8 % der
+ * Beitragsbemessungsgrenze RV (West) steuerfrei und bis 4 % sozialabgabenfrei.
+ * BBG-RV 2026: 101.400 €/Jahr → 4 % = 338 €/Monat, 8 % = 676 €/Monat.
+ */
+export const BAV_2026 = {
+  bbgRvJahr: 101400,
+  svFreiProzent: 0.04,     // sozialabgabenfrei bis 4 % BBG-RV
+  steuerFreiProzent: 0.08, // steuerfrei bis 8 % BBG-RV
+} as const;
+
+/**
  * Midijob / Übergangsbereich 2026 (§ 20 Abs. 2a SGB IV).
  *
  * Für Monatsentgelte von 603,01 € bis 2.000 € werden die
