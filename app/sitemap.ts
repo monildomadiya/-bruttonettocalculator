@@ -53,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/mindestlohn",
     "/steuerklassen",
     "/welche-steuerklasse-bin-ich",
+    "/brutto-netto-rechner-vergleich",
     "/brutto-netto-rechner-beamte",
     "/mehrwertsteuer-rechner",
     "/steuerfreibetrag-2026",
