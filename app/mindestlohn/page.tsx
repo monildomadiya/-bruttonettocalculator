@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import MindestlohnCalculator from "./MindestlohnCalculator";
 import MindestlohnContent from "./MindestlohnContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import { webPageSchema } from "@/lib/seo";
 
 const URL = "https://bruttonettocalculator.com/mindestlohn";
 
@@ -45,18 +46,13 @@ const faqSchema = {
   mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
 };
 
-const webPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": `${URL}#webpage`,
+const pageSchema = webPageSchema({
   name: "Mindestlohn-Rechner 2026/2027",
   url: URL,
-  inLanguage: "de-DE",
-  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
-  breadcrumb: { "@id": `${URL}#breadcrumb` },
   description:
     "Mindestlohn-Rechner für 2026 (13,90 €) und 2027 (14,60 €): Monats- und Jahresgehalt aus Wochenstunden berechnen.",
-};
+  breadcrumbId: `${URL}#breadcrumb`,
+});
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -71,7 +67,7 @@ const breadcrumbSchema = {
 export default function MindestlohnPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <MindestlohnCalculator content={<MindestlohnContent />} />

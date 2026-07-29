@@ -6,6 +6,8 @@
  * per-page drift that caused broken canonicals and www/non-www inconsistencies.
  */
 
+import { siteConfig } from "@/lib/authors";
+
 /** Preferred canonical origin — always HTTPS, always non-WWW. */
 export const SITE_URL = "https://bruttonettocalculator.com" as const;
 
@@ -69,6 +71,14 @@ export function webPageSchema(opts: {
     url: opts.url,
     inLanguage: "de-DE",
     isPartOf: { "@id": WEBSITE_ID },
+    // Honest authorship/review signals: content is produced and reviewed by the
+    // site's editorial team (Organization node in the global @graph), never a
+    // named individual. See lib/authors.ts for why no personal reviewer is claimed.
+    dateModified: siteConfig.lastUpdatedISO,
+    lastReviewed: siteConfig.lastUpdatedISO,
+    reviewedBy: { "@id": ORG_ID },
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
   };
   if (opts.description) schema.description = opts.description;
   if (opts.breadcrumbId) schema.breadcrumb = { "@id": opts.breadcrumbId };

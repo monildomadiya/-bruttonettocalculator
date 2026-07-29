@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sparkles, AlertCircle, CheckCircle2 } from "lucide-react";
 import Calculator from "@/components/Calculator";
+import { webPageSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026 — Gehaltsrechner & Lohnrechner",
@@ -55,7 +56,9 @@ const werte2026: { label: string; value: string }[] = [
   { label: "Soli-Freigrenze (ledig)", value: "18.130 € Einkommensteuer" },
 ];
 
-const faqs = [
+// `links` are rendered as visible "Mehr dazu" anchors under the answer; the
+// FAQPage JSON-LD stays plain text (answers remain self-contained).
+const faqs: { q: string; a: string; links?: { href: string; label: string }[] }[] = [
   {
     q: "Wie berechnet der Brutto Netto Rechner 2026 mein Nettogehalt?",
     a: "Der Brutto Netto Rechner 2026 ermittelt aus Ihrem Bruttogehalt zuerst die Lohnsteuer nach § 32a EStG in der für 2026 gültigen Fassung, dann den Solidaritätszuschlag und ggf. die Kirchensteuer sowie alle Sozialversicherungsbeiträge (Kranken-, Pflege-, Renten- und Arbeitslosenversicherung). Was übrig bleibt, ist Ihr Nettogehalt 2026. Geben Sie Ihr Bruttogehalt oben ein und wählen Sie Ihre Steuerklasse.",
@@ -63,6 +66,7 @@ const faqs = [
   {
     q: "Wie hoch ist der Grundfreibetrag 2026?",
     a: "Der steuerliche Grundfreibetrag 2026 beträgt 12.348 € pro Jahr. Bis zu diesem zu versteuernden Einkommen fällt keine Einkommensteuer an — erst darüber beginnt der Eingangssteuersatz von 14 %. Der Grundfreibetrag ist bereits in jeder Berechnung dieses Rechners für 2026 berücksichtigt.",
+    links: [{ href: "/steuerfreibetrag-2026", label: "Alle Steuerfreibeträge 2026 im Überblick" }],
   },
   {
     q: "Welche Sozialabgaben gelten 2026?",
@@ -71,18 +75,25 @@ const faqs = [
   {
     q: "Wie viel Netto bleibt 2026 von 3.000 € Brutto?",
     a: "Bei 3.000 € Brutto im Monat in Steuerklasse I (ledig, ohne Kirchensteuer) bleiben 2026 rund 2.150 € netto übrig — abhängig von Zusatzbeitrag der Krankenkasse und Kinderfreibeträgen. Nutzen Sie den Rechner oben und tragen Sie Ihren exakten Betrag ein, um Ihr persönliches Netto 2026 zu sehen; eine detaillierte Aufschlüsselung finden Sie auf unseren Gehaltsseiten.",
+    links: [{ href: "/rechner/3000-euro-brutto-netto", label: "3.000 € brutto in netto — die Aufschlüsselung" }],
   },
   {
     q: "Wie hoch ist der Mindestlohn 2026?",
     a: "Der gesetzliche Mindestlohn steigt 2026 auf 13,90 € pro Stunde (2027 sind 14,60 € vorgesehen). Bei einer 40-Stunden-Woche entspricht das einem Bruttolohn von rund 2.409 € im Monat.",
+    links: [{ href: "/mindestlohn", label: "Mindestlohn 2026/2027 im Detail" }],
   },
   {
     q: "Welche Steuerklasse ist 2026 die beste?",
     a: "Die günstigste Steuerklasse hängt von Ihrer Lebenssituation ab: Ledige haben Steuerklasse I, Alleinerziehende II. Verheiratete können zwischen den Kombinationen III/V, IV/IV und IV/IV mit Faktor wählen — welche Variante 2026 am meisten Netto bringt, zeigt Ihnen unser Steuerklassenwechsel-Rechner. Wichtig: Die Steuerklasse verändert nur die monatliche Vorauszahlung, nicht die endgültige Jahressteuer.",
+    links: [
+      { href: "/welche-steuerklasse-bin-ich", label: "Steuerklassen-Finder" },
+      { href: "/steuerklassenwechsel-rechner", label: "Steuerklassenwechsel-Rechner" },
+    ],
   },
   {
     q: "Kann ich mit dem Rechner auch Netto zu Brutto 2026 berechnen?",
     a: "Ja. Der Rechner beherrscht beide Richtungen: die klassische Brutto-zu-Netto-Rechnung und die umgekehrte Netto-zu-Brutto-Kalkulation für 2026. So finden Sie zum Beispiel heraus, welches Bruttogehalt Sie verhandeln müssen, um ein bestimmtes Wunsch-Netto zu erreichen.",
+    links: [{ href: "/rechner/netto-zu-brutto", label: "Netto-zu-Brutto-Rechner" }],
   },
   {
     q: "Sind die Werte im Brutto Netto Rechner 2026 amtlich?",
@@ -100,16 +111,12 @@ const faqJsonLd = {
   })),
 };
 
-const appJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
+const appJsonLd = webPageSchema({
   name: "Brutto Netto Rechner 2026",
   url: "https://bruttonettocalculator.com/brutto-netto-rechner-2026",
-  inLanguage: "de-DE",
   description:
     "Kostenloser Brutto Netto Rechner 2026: Nettogehalt mit den amtlichen Werten 2026 nach § 32a EStG berechnen — alle Steuerklassen und Sozialabgaben.",
-};
+});
 
 const breadcrumbJsonLd = {
   "@context": "https://schema.org",
@@ -138,9 +145,9 @@ export default function Rechner2026Page() {
           Berechnen Sie Ihr Nettogehalt für das Steuerjahr 2026 — sekundenschnell und kostenlos.
           Dieser <strong className="text-[#16181D] font-semibold">Brutto Netto Rechner 2026</strong> nutzt die
           amtliche Einkommensteuer-Formel nach § 32a EStG 2026, den Grundfreibetrag von 12.348 € sowie
-          alle aktuellen Beitragssätze und Beitragsbemessungsgrenzen. Ob als <strong className="text-[#16181D] font-semibold">Gehaltsrechner 2026</strong>,{" "}
-          <strong className="text-[#16181D] font-semibold">Lohnrechner 2026</strong> oder <strong className="text-[#16181D] font-semibold">Netto Brutto Rechner 2026</strong> — hier
-          sehen Sie sofort, wie viel Netto vom Brutto übrig bleibt.
+          alle aktuellen Beitragssätze und Beitragsbemessungsgrenzen. Ob Gehaltsrechner oder{" "}
+          <strong className="text-[#16181D] font-semibold">Lohnrechner</strong>: Sie sehen sofort, wie viel Netto vom
+          Brutto übrig bleibt — auf Wunsch auch umgekehrt von Netto zu Brutto.
         </p>
       </div>
 
@@ -175,8 +182,25 @@ export default function Rechner2026Page() {
           </table>
         </div>
         <p className="text-xs text-black/50 mt-4">
-          Quelle: § 32a EStG 2026 sowie Sozialversicherungs-Rechengrößen-Verordnung 2026. Der durchschnittliche
-          Zusatzbeitrag zur Krankenversicherung wird individuell von jeder Krankenkasse festgelegt.
+          Quelle:{" "}
+          <a
+            href="https://www.gesetze-im-internet.de/estg/__32a.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-black/70"
+          >
+            § 32a EStG 2026
+          </a>{" "}
+          sowie{" "}
+          <a
+            href="https://www.gesetze-im-internet.de/svbezgrv_2026/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-black/70"
+          >
+            Sozialversicherungs-Rechengrößen-Verordnung 2026
+          </a>
+          . Der durchschnittliche Zusatzbeitrag zur Krankenversicherung wird individuell von jeder Krankenkasse festgelegt.
         </p>
       </div>
 
@@ -228,6 +252,19 @@ export default function Rechner2026Page() {
             <div key={faq.q}>
               <h3 className="font-bold text-[#16181D] text-base sm:text-lg mb-2">{faq.q}</h3>
               <p className="text-black/70 leading-relaxed">{faq.a}</p>
+              {faq.links && (
+                <p className="mt-2 text-black/60">
+                  Mehr dazu:{" "}
+                  {faq.links.map((link, i) => (
+                    <span key={link.href}>
+                      {i > 0 && " · "}
+                      <a href={link.href} className="text-[#E60A1C] font-semibold hover:underline">
+                        {link.label}
+                      </a>
+                    </span>
+                  ))}
+                </p>
+              )}
             </div>
           ))}
         </div>

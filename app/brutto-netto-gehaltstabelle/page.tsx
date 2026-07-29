@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Calculator as CalcIcon, ChevronRight, ArrowRight, Table2 } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import { getCommonGrossSalaryAmounts } from "@/data/wage-stats";
-import { SITE_URL, WEBSITE_ID } from "@/lib/seo";
+import { SITE_URL, WEBSITE_ID, ORG_ID } from "@/lib/seo";
+import { siteConfig } from "@/lib/authors";
 
 export const revalidate = 0;
 
@@ -77,6 +78,13 @@ export default function SalaryHubPage() {
     inLanguage: "de-DE",
     isPartOf: { "@id": WEBSITE_ID },
     breadcrumb: { "@id": `${CANONICAL}#breadcrumb` },
+    // Same honest authorship signals as webPageSchema() in lib/seo.ts —
+    // kept inline because this node is a CollectionPage, not a WebPage.
+    dateModified: siteConfig.lastUpdatedISO,
+    lastReviewed: siteConfig.lastUpdatedISO,
+    reviewedBy: { "@id": ORG_ID },
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
   };
 
   return (
