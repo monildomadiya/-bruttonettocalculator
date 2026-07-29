@@ -6,90 +6,110 @@ import { siteConfig } from "@/lib/authors";
 
 export const revalidate = 0; // Dynamic sitemap generation
 
+// <lastmod> policy — Google only honors lastmod when it tracks real content
+// changes, so a date is emitted only where one is actually known:
+//  - calculator/amount pages → siteConfig.lastUpdatedISO (the on-page "Stand"
+//    date; bump it only when tax data or calculator content changes, never
+//    per deploy)
+//  - blog articles → real `updated_at` from the DB
+//  - legal/info pages → no lastmod (unknown beats fabricated)
+// priority/changefreq are omitted entirely: ignored by Google and Bing.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://bruttonettocalculator.com";
-  // Stable "content updated" date for pages without an individual timestamp.
-  // Using the deployment time (new Date()) would reset every URL's
-  // <lastmod> on each deploy, which search engines learn to distrust.
-  const contentUpdated = new Date(siteConfig.lastUpdatedISO);
+  const engineUpdated = new Date(siteConfig.lastUpdatedISO);
 
-  const staticRoutes: Array<{
-    path: string;
-    changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
-    priority: number;
-  }> = [
-    { path: "",                            changeFrequency: "daily",   priority: 1.0 },
-    { path: "/blog",                       changeFrequency: "daily",   priority: 0.9 },
-    { path: "/gehaltsrechner",             changeFrequency: "monthly", priority: 0.95 },
-    { path: "/arbeitgeber-brutto-netto-rechner", changeFrequency: "monthly", priority: 0.92 },
-    { path: "/steuerklassenwechsel-rechner", changeFrequency: "monthly", priority: 0.88 },
-    { path: "/gehaltserhoehung-rechner",   changeFrequency: "monthly", priority: 0.85 },
-    { path: "/jahresgehalt-rechner",       changeFrequency: "monthly", priority: 0.82 },
-    { path: "/krankengeld-rechner",        changeFrequency: "monthly", priority: 0.82 },
-    { path: "/kurzarbeitergeld-rechner",   changeFrequency: "monthly", priority: 0.8 },
-    { path: "/pendlerpauschale-rechner",   changeFrequency: "monthly", priority: 0.8 },
-    { path: "/werkstudent-rechner",        changeFrequency: "monthly", priority: 0.8 },
-    { path: "/lohnsteuerrechner",          changeFrequency: "monthly", priority: 0.9 },
-    { path: "/einkommensteuer-rechner",    changeFrequency: "monthly", priority: 0.9 },
-    { path: "/steuerrueckerstattung-rechner", changeFrequency: "monthly", priority: 0.9 },
-    { path: "/brutto-netto-rechner-2026",  changeFrequency: "weekly",  priority: 0.95 },
-    { path: "/brutto-netto-rechner-2027",  changeFrequency: "monthly", priority: 0.9 },
-    { path: "/buergergeld-rechner",        changeFrequency: "monthly", priority: 0.88 },
-    { path: "/rechner/brutto-zu-netto",    changeFrequency: "monthly", priority: 0.85 },
-    { path: "/rechner/netto-zu-brutto",    changeFrequency: "monthly", priority: 0.85 },
-    { path: "/brutto-netto-gehaltstabelle", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/pfaendungstabelle",           changeFrequency: "yearly",  priority: 0.85 },
-    { path: "/mindestlohn",               changeFrequency: "monthly", priority: 0.85 },
-    { path: "/steuerklassen",             changeFrequency: "monthly", priority: 0.85 },
-    { path: "/welche-steuerklasse-bin-ich", changeFrequency: "monthly", priority: 0.88 },
-    { path: "/brutto-netto-rechner-beamte", changeFrequency: "monthly", priority: 0.88 },
-    { path: "/mehrwertsteuer-rechner",     changeFrequency: "monthly", priority: 0.85 },
-    { path: "/steuerfreibetrag-2026",      changeFrequency: "monthly", priority: 0.85 },
-    { path: "/private-krankenversicherung-vs-gesetzlich", changeFrequency: "monthly", priority: 0.82 },
-    { path: "/witwenrente-rechner",        changeFrequency: "monthly", priority: 0.82 },
-    { path: "/bafoeg-rechner",             changeFrequency: "monthly", priority: 0.82 },
-    { path: "/teilzeitrechner",            changeFrequency: "monthly", priority: 0.82 },
-    { path: "/firmenwagenrechner",         changeFrequency: "monthly", priority: 0.8 },
-    { path: "/rentenrechner",              changeFrequency: "monthly", priority: 0.8 },
-    { path: "/rentenpunkte-rechner",       changeFrequency: "monthly", priority: 0.82 },
-    { path: "/riester-rechner",            changeFrequency: "monthly", priority: 0.82 },
-    { path: "/grundsicherung-rechner",     changeFrequency: "monthly", priority: 0.8 },
-    { path: "/bafoeg-rueckzahlung-rechner", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/schonvermoegen-rechner",     changeFrequency: "monthly", priority: 0.8 },
-    { path: "/bav-rechner",                changeFrequency: "monthly", priority: 0.82 },
-    { path: "/immobilienkredit-rechner",   changeFrequency: "monthly", priority: 0.85 },
-    { path: "/arbeitslosengeld-rechner",   changeFrequency: "monthly", priority: 0.8 },
-    { path: "/minijob-rechner",             changeFrequency: "monthly", priority: 0.8 },
-    { path: "/midijob-rechner",             changeFrequency: "monthly", priority: 0.82 },
-    { path: "/elterngeld-rechner",          changeFrequency: "monthly", priority: 0.8 },
-    { path: "/abfindungsrechner",           changeFrequency: "monthly", priority: 0.8 },
-    { path: "/weihnachtsgeld-rechner",      changeFrequency: "monthly", priority: 0.82 },
-    { path: "/bonus-steuerrechner",         changeFrequency: "monthly", priority: 0.75 },
-    { path: "/stundenlohn-rechner",         changeFrequency: "monthly", priority: 0.75 },
-    { path: "/en/tax-calculator-germany",  changeFrequency: "monthly", priority: 0.75 },
-    { path: "/pl/kalkulator-brutto-netto-niemcy", changeFrequency: "monthly", priority: 0.75 },
-    { path: "/lexikon",                    changeFrequency: "monthly", priority: 0.75 },
-    { path: "/faq",                        changeFrequency: "monthly", priority: 0.75 },
-    { path: "/ueber-uns",                  changeFrequency: "yearly",  priority: 0.4 },
-    { path: "/kontakt",                    changeFrequency: "yearly",  priority: 0.4 },
-    { path: "/impressum",                  changeFrequency: "yearly",  priority: 0.2 },
-    { path: "/datenschutz",               changeFrequency: "yearly",  priority: 0.2 },
+  // 3-language cluster — must mirror the page-level hreflang tags exactly
+  // (app/page.tsx, app/en/tax-calculator-germany, app/pl/kalkulator-…)
+  const languageCluster = {
+    "de-DE": `${base}/`,
+    "en-DE": `${base}/en/tax-calculator-germany`,
+    "pl-DE": `${base}/pl/kalkulator-brutto-netto-niemcy`,
+    "x-default": `${base}/`,
+  };
+  const clusterPaths = new Set(["", "/en/tax-calculator-germany", "/pl/kalkulator-brutto-netto-niemcy"]);
+
+  // Pages whose content is driven by the tax engine / 2026 parameters
+  const calculatorRoutes: string[] = [
+    "",
+    "/gehaltsrechner",
+    "/arbeitgeber-brutto-netto-rechner",
+    "/steuerklassenwechsel-rechner",
+    "/gehaltserhoehung-rechner",
+    "/jahresgehalt-rechner",
+    "/krankengeld-rechner",
+    "/kurzarbeitergeld-rechner",
+    "/pendlerpauschale-rechner",
+    "/werkstudent-rechner",
+    "/lohnsteuerrechner",
+    "/einkommensteuer-rechner",
+    "/steuerrueckerstattung-rechner",
+    "/brutto-netto-rechner-2026",
+    "/brutto-netto-rechner-2027",
+    "/buergergeld-rechner",
+    "/rechner/brutto-zu-netto",
+    "/rechner/netto-zu-brutto",
+    "/brutto-netto-gehaltstabelle",
+    "/pfaendungstabelle",
+    "/mindestlohn",
+    "/steuerklassen",
+    "/welche-steuerklasse-bin-ich",
+    "/brutto-netto-rechner-beamte",
+    "/mehrwertsteuer-rechner",
+    "/steuerfreibetrag-2026",
+    "/private-krankenversicherung-vs-gesetzlich",
+    "/witwenrente-rechner",
+    "/bafoeg-rechner",
+    "/teilzeitrechner",
+    "/firmenwagenrechner",
+    "/rentenrechner",
+    "/rentenpunkte-rechner",
+    "/riester-rechner",
+    "/grundsicherung-rechner",
+    "/bafoeg-rueckzahlung-rechner",
+    "/schonvermoegen-rechner",
+    "/bav-rechner",
+    "/immobilienkredit-rechner",
+    "/arbeitslosengeld-rechner",
+    "/minijob-rechner",
+    "/midijob-rechner",
+    "/elterngeld-rechner",
+    "/abfindungsrechner",
+    "/weihnachtsgeld-rechner",
+    "/bonus-steuerrechner",
+    "/stundenlohn-rechner",
+    "/en/tax-calculator-germany",
+    "/pl/kalkulator-brutto-netto-niemcy",
   ];
 
-  const sitemapEntries: MetadataRoute.Sitemap = staticRoutes.map(({ path, changeFrequency, priority }) => ({
-    url:             `${base}${path}`,
-    lastModified:    contentUpdated,
-    changeFrequency,
-    priority,
-  }));
+  // Informational/legal pages with no known change date → no lastmod
+  const infoRoutes: string[] = [
+    "/lexikon",
+    "/faq",
+    "/ueber-uns",
+    "/kontakt",
+    "/impressum",
+    "/datenschutz",
+  ];
+
+  const sitemapEntries: MetadataRoute.Sitemap = [];
+
+  for (const path of calculatorRoutes) {
+    sitemapEntries.push({
+      url: `${base}${path}`,
+      lastModified: engineUpdated,
+      ...(clusterPaths.has(path) ? { alternates: { languages: languageCluster } } : {}),
+    });
+  }
+
+  for (const path of infoRoutes) {
+    sitemapEntries.push({ url: `${base}${path}` });
+  }
 
   // Add all 16 Bundesland pages (brutto netto rechner <bundesland>)
   for (const bl of BUNDESLAENDER) {
     sitemapEntries.push({
       url: `${base}/brutto-netto-rechner/${bl.slug}`,
-      lastModified: contentUpdated,
-      changeFrequency: "monthly",
-      priority: 0.85,
+      lastModified: engineUpdated,
     });
   }
 
@@ -98,16 +118,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const amount of longTailAmounts) {
     sitemapEntries.push({
       url: `${base}/rechner/${amount}-euro-brutto-netto`,
-      lastModified: contentUpdated,
-      changeFrequency: "weekly",
-      priority: 0.8,
+      lastModified: engineUpdated,
     });
     // Steuerklasse-1 exact-match variant — targets "<amount> brutto in netto steuerklasse 1"
     sitemapEntries.push({
       url: `${base}/rechner/${amount}-euro-brutto-netto-steuerklasse-1`,
-      lastModified: contentUpdated,
-      changeFrequency: "weekly",
-      priority: 0.75,
+      lastModified: engineUpdated,
     });
   }
 
@@ -115,9 +131,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const amount of getCommonAnnualSalaryAmounts()) {
     sitemapEntries.push({
       url: `${base}/rechner/${amount}-euro-jahresgehalt-brutto-netto`,
-      lastModified: contentUpdated,
-      changeFrequency: "weekly",
-      priority: 0.75,
+      lastModified: engineUpdated,
     });
   }
 
@@ -125,17 +139,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const articles = await dbQuery<Article[]>("SELECT slug, updated_at, created_at FROM articles WHERE status = 'Published'");
     if (articles && articles.length > 0) {
+      let newestArticle: Date | undefined;
       for (const art of articles) {
+        const articleDate = art.updated_at ? new Date(art.updated_at) : (art.created_at ? new Date(art.created_at) : undefined);
+        if (articleDate && (!newestArticle || articleDate > newestArticle)) newestArticle = articleDate;
         sitemapEntries.push({
           url: `${base}/blog/${art.slug}`,
-          lastModified: art.updated_at ? new Date(art.updated_at) : (art.created_at ? new Date(art.created_at) : contentUpdated),
-          changeFrequency: "weekly",
-          priority: 0.85,
+          ...(articleDate ? { lastModified: articleDate } : {}),
         });
       }
+      // The /blog listing genuinely changes when its newest article does
+      sitemapEntries.push({
+        url: `${base}/blog`,
+        ...(newestArticle ? { lastModified: newestArticle } : {}),
+      });
+    } else {
+      sitemapEntries.push({ url: `${base}/blog` });
     }
   } catch (err) {
     console.error("❌ Sitemap article fetch error:", err);
+    sitemapEntries.push({ url: `${base}/blog` });
   }
 
   return sitemapEntries;

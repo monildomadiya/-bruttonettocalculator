@@ -44,3 +44,14 @@
 2. After deploy: re-fetch `/sitemap.xml`, confirm 331 URLs, submit via IndexNow + resubmit sitemap in GSC (GSC resubmit is already a standing owed task).
 3. Fix `lastmod` semantics (issue 2) in the same or next deploy.
 4. Optionally drop priority/changefreq and add hreflang alternates (issues 3–4).
+
+## Status update — 2026-07-29 (later same day)
+
+| # | Issue | Status |
+|---|---|---|
+| 1 | Deployment gap | ✅ Resolved — live sitemap verified serving 331 URLs; IndexNow submission accepted (169 new URLs) |
+| 2 | Uniform `lastmod` | ✅ Fixed in `app/sitemap.ts` — calculator/amount pages carry the on-page "Stand" date (`siteConfig.lastUpdatedISO`, bumped only on real tax-data/content changes); blog uses real DB `updated_at` (incl. `/blog` listing = newest article); legal/info pages omit `lastmod` |
+| 3 | `priority`/`changefreq` | ✅ Removed — file weight 63.7 KB → ~46 KB |
+| 4 | No hreflang alternates | ✅ Added — de-DE/en-DE/pl-DE/x-default `xhtml:link` cluster on `/`, `/en/tax-calculator-germany`, `/pl/kalkulator-brutto-netto-niemcy`, mirroring the page-level tags |
+
+Remaining: resubmit the sitemap in Google Search Console (standing owed task, needs GSC account access).
