@@ -3,13 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   Calculator as CalcIcon, ArrowRight, ArrowLeft, CheckCircle2,
-  TrendingUp, ShieldCheck, HelpCircle, Calendar, Sparkles, Building2,
+  TrendingUp, HelpCircle, Calendar, Sparkles, Building2,
   ChevronRight, BarChart3,
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse, isMidijob2026, midijobArbeitnehmerBemessungMonat } from "@/lib/taxCalculator";
-import { getCommonGrossSalaryAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
+import JahresgehaltPage from "./JahresgehaltPage";
 
 export const revalidate = 0; // Always generate fresh or static
 
@@ -17,38 +18,151 @@ interface PageProps {
   params: { betrag: string };
 }
 
-// 1. Generate static params for common amounts
+// 1. Generate static params for common amounts.
+//    Two indexable slug shapes per amount:
+//      • "<amount>-euro-brutto-netto"                 → all-Steuerklassen page
+//      • "<amount>-euro-brutto-netto-steuerklasse-1"  → Steuerklasse-1 exact-match page
+//    The Steuerklasse-1 variant targets the fast-rising
+//    "<amount> brutto in netto steuerklasse 1" query pattern.
 export async function generateStaticParams() {
   const amounts = getCommonGrossSalaryAmounts();
-  return amounts.map((amount) => ({
-    betrag: `${amount}-euro-brutto-netto`,
-  }));
+  const params: { betrag: string }[] = [];
+  for (const amount of amounts) {
+    params.push({ betrag: `${amount}-euro-brutto-netto` });
+    params.push({ betrag: `${amount}-euro-brutto-netto-steuerklasse-1` });
+  }
+  // Annual-salary variant ("70000 brutto in netto"-type queries)
+  for (const amount of getCommonAnnualSalaryAmounts()) {
+    params.push({ betrag: `${amount}-euro-jahresgehalt-brutto-netto` });
+  }
+  return params;
 }
 
-// Helper to parse amount from slug param.
-// Accepts only the canonical slug form "<amount>-euro-brutto-netto"
-// (e.g. "3000-euro-brutto-netto") to avoid duplicate-content variants.
-function parseAmount(betragStr: string): number | null {
-  const match = /^(\d+)-euro-brutto-netto$/.exec(betragStr);
+// Helper to parse amount (and optional Steuerklasse) from the slug param.
+// Accepts only the canonical slug forms to avoid duplicate-content variants:
+//   "<amount>-euro-brutto-netto"                  (monthly, all classes)
+//   "<amount>-euro-brutto-netto-steuerklasse-N"   (monthly, N = 1..6 focused)
+//   "<amount>-euro-jahresgehalt-brutto-netto"     (annual salary page)
+function parseSlug(betragStr: string): { amount: number; steuerklasse: Steuerklasse | null; jahresgehalt: boolean } | null {
+  const jahrMatch = /^(\d+)-euro-jahresgehalt-brutto-netto$/.exec(betragStr);
+  if (jahrMatch) {
+    const num = parseInt(jahrMatch[1], 10);
+    if (isNaN(num) || num < 10000 || num > 500000) return null;
+    return { amount: num, steuerklasse: null, jahresgehalt: true };
+  }
+  const skMatch = /^(\d+)-euro-brutto-netto-steuerklasse-([1-6])$/.exec(betragStr);
+  const baseMatch = /^(\d+)-euro-brutto-netto$/.exec(betragStr);
+  const match = skMatch ?? baseMatch;
   if (!match) return null;
   const num = parseInt(match[1], 10);
   if (isNaN(num) || num < 500 || num > 100000) return null;
-  return num;
+  const steuerklasse = skMatch ? (parseInt(skMatch[2], 10) as Steuerklasse) : null;
+  return { amount: num, steuerklasse, jahresgehalt: false };
 }
+
+const SK_NAMES: Record<Steuerklasse, string> = {
+  1: "Steuerklasse I (Ledig)",
+  2: "Steuerklasse II (Alleinerziehend)",
+  3: "Steuerklasse III (Verheiratet - Allein-/Hauptverdiener)",
+  4: "Steuerklasse IV (Verheiratet - Gleicher Verdienst)",
+  5: "Steuerklasse V (Verheiratet - Zweitverdiener)",
+  6: "Steuerklasse VI (Zweitjob / Nebenberuf)",
+};
+
+const SK_ROMAN: Record<Steuerklasse, string> = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI" };
+
+const SK_SHORT: Record<Steuerklasse, string> = {
+  1: "ledig / alleinstehend",
+  2: "alleinerziehend",
+  3: "verheiratet, Haupt- oder Alleinverdiener",
+  4: "verheiratet, beide verdienen ähnlich viel",
+  5: "verheiratet, Zweitverdiener",
+  6: "Zweitjob / Nebenbeschäftigung",
+};
+
+// First sentence of the "Steuerklasse im Detail" block, per class.
+// SK_INTRO[1] intentionally reproduces the original copy so the all-classes
+// page renders identically to before this route learned Steuerklasse variants.
+const SK_INTRO: Record<Steuerklasse, string> = {
+  1: "Für Alleinstehende (ledig, kinderlos ab 23 Jahren, ohne Kirchensteuer) ist Steuerklasse I die Standard-Steuerklasse.",
+  2: "Steuerklasse II gilt für Alleinerziehende und berücksichtigt den Entlastungsbetrag – dadurch bleibt netto etwas mehr übrig als in Steuerklasse I.",
+  3: "Steuerklasse III ist für verheiratete Haupt- oder Alleinverdiener gedacht (der Partner wechselt in Steuerklasse V). Beim Hauptverdiener bleibt so am meisten netto übrig.",
+  4: "Steuerklasse IV gilt für Verheiratete, die ähnlich viel verdienen. Beide Partner werden wie in Steuerklasse I behandelt – der Ausgleich erfolgt über die Veranlagung.",
+  5: "Steuerklasse V trägt der Zweitverdiener in einer Ehe, wenn der Partner Steuerklasse III hat. Die monatlichen Abzüge sind hier am höchsten – der Vorteil liegt beim Partner in Steuerklasse III.",
+  6: "Steuerklasse VI gilt für den zweiten und jeden weiteren Job. Es gibt keine Freibeträge, daher sind die Abzüge am höchsten.",
+};
 
 // 3. Unique Metadata per long-tail page
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const amount = parseAmount(params.betrag);
-  if (!amount) {
+  const parsed = parseSlug(params.betrag);
+  if (!parsed) {
     return { title: "Gehalt nicht gefunden" };
   }
+  const { amount, steuerklasse } = parsed;
 
-  const res2026 = calculateNetto({ bruttoMonat: amount, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });
-  const netSK1 = res2026.nettoMonat;
+  // Annual-salary page ("<amount> € Jahresgehalt in Netto")
+  if (parsed.jahresgehalt) {
+    const monat = amount / 12;
+    const resJahr = calculateNetto({ bruttoMonat: monat, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });
+    const fmtJahr = new Intl.NumberFormat("de-DE").format(amount);
+    const fmtNettoJahr = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(resJahr.nettoJahr);
+    const fmtNettoMonat = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(resJahr.nettoMonat);
+    const canonicalUrl = `https://bruttonettocalculator.com/rechner/${amount}-euro-jahresgehalt-brutto-netto`;
+    const title = `${fmtJahr} € Jahresgehalt in Netto 2026 – Brutto Netto Rechner`;
+    const description = `${fmtJahr} € brutto im Jahr sind in Steuerklasse I ca. ${fmtNettoJahr} netto im Jahr bzw. ${fmtNettoMonat} im Monat (2026). Alle 6 Steuerklassen, Abzüge und Monatswerte im Detail.`;
+    return {
+      title,
+      description,
+      keywords: `${amount} brutto in netto, ${amount} euro jahresgehalt netto, ${amount} brutto jahr netto, ${amount} jahresbrutto, wieviel netto bei ${amount} brutto`,
+      alternates: { canonical: canonicalUrl },
+      openGraph: {
+        images: ["https://bruttonettocalculator.com/og-image.png"],
+        title,
+        description,
+        url: canonicalUrl,
+        type: "website",
+        locale: "de_DE",
+        siteName: "BruttoNettoCalculator.com",
+      },
+      twitter: { card: "summary", title, description },
+    };
+  }
+
+  const focusSk: Steuerklasse = steuerklasse ?? 1;
+
+  const focusRes = calculateNetto({
+    bruttoMonat: amount, jahr: 2026,
+    verheiratet: focusSk === 3 || focusSk === 4 || focusSk === 5,
+    kinderlosUeber23: true, kirche: false, steuerklasse: focusSk,
+  });
   const formattedBrutto = new Intl.NumberFormat("de-DE").format(amount);
-  const formattedNetto = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(netSK1);
-
+  const formattedNetto = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(focusRes.nettoMonat);
   const midijobSuffix = isMidijob2026(amount) ? " (Midijob)" : "";
+
+  // Steuerklasse-focused page (exact-match for "<amount> brutto in netto steuerklasse N")
+  if (steuerklasse !== null) {
+    const canonicalUrl = `https://bruttonettocalculator.com/rechner/${amount}-euro-brutto-netto-steuerklasse-${steuerklasse}`;
+    const title = `${formattedBrutto} € Brutto in Netto Steuerklasse ${steuerklasse} (2026)`;
+    const description = `${formattedBrutto} € brutto in Steuerklasse ${steuerklasse} (${SK_SHORT[steuerklasse]}) sind 2026 ca. ${formattedNetto} netto im Monat${midijobSuffix}. Alle Abzüge, Jahres- & Stundenwerte und der Vergleich aller Steuerklassen.`;
+    return {
+      title,
+      description,
+      keywords: `${amount} brutto in netto steuerklasse ${steuerklasse}, ${amount} euro brutto steuerklasse ${steuerklasse}, ${amount} brutto netto steuerklasse ${steuerklasse} 2026, ${amount} brutto wieviel netto steuerklasse ${steuerklasse}, gehaltsrechner steuerklasse ${steuerklasse}`,
+      alternates: { canonical: canonicalUrl },
+      openGraph: {
+        images: ["https://bruttonettocalculator.com/og-image.png"],
+        title,
+        description,
+        url: canonicalUrl,
+        type: "website",
+        locale: "de_DE",
+        siteName: "BruttoNettoCalculator.com",
+      },
+      twitter: { card: "summary", title, description },
+    };
+  }
+
+  // All-Steuerklassen page (unchanged)
   const title = `${formattedBrutto} € Brutto in Netto 2026 – Rechner & Steuerklassen`;
   const description = `${formattedBrutto} € brutto sind in Steuerklasse I ca. ${formattedNetto} netto im Monat (2026)${midijobSuffix}. Alle 6 Steuerklassen, Abzüge, Jahreswerte und Lohnvergleich im Detail.`;
   const canonicalUrl = `https://bruttonettocalculator.com/rechner/${amount}-euro-brutto-netto`;
@@ -77,23 +191,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-const SK_NAMES: Record<Steuerklasse, string> = {
-  1: "Steuerklasse I (Ledig)",
-  2: "Steuerklasse II (Alleinerziehend)",
-  3: "Steuerklasse III (Verheiratet - Allein-/Hauptverdiener)",
-  4: "Steuerklasse IV (Verheiratet - Gleicher Verdienst)",
-  5: "Steuerklasse V (Verheiratet - Zweitverdiener)",
-  6: "Steuerklasse VI (Zweitjob / Nebenberuf)",
-};
-
 export default function LongTailSalaryPage({ params }: PageProps) {
-  const amount = parseAmount(params.betrag);
-  if (!amount) {
+  const parsed = parseSlug(params.betrag);
+  if (!parsed) {
     notFound();
   }
+  const { amount, steuerklasse } = parsed;
+
+  // Annual-salary slug → dedicated Jahresgehalt page
+  if (parsed.jahresgehalt) {
+    return <JahresgehaltPage amount={amount} />;
+  }
+
+  const isSkPage = steuerklasse !== null;
+  const focusSk: Steuerklasse = steuerklasse ?? 1;
 
   const formattedBrutto = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(amount);
-  
+
   // Calculate across all 6 Steuerklassen for 2026
   const resultsAllSK = ([1, 2, 3, 4, 5, 6] as Steuerklasse[]).map((sk) => {
     const res = calculateNetto({
@@ -108,6 +222,9 @@ export default function LongTailSalaryPage({ params }: PageProps) {
   });
 
   const sk1Res = resultsAllSK[0].res;
+  // Result for the class this page focuses on (== sk1Res for the all-classes page).
+  const focusRes = resultsAllSK.find((r) => r.sk === focusSk)!.res;
+  const focusNettoQuote = (focusRes.nettoMonat / amount) * 100;
 
   // Comparison between tax years 2026 vs 2027
   const comparisonYears = ([2026, 2027] as Steuerjahr[]).map((yr) => {
@@ -169,6 +286,10 @@ export default function LongTailSalaryPage({ params }: PageProps) {
   const nf = (n: number) => new Intl.NumberFormat("de-DE").format(n);
   const sk3Res = resultsAllSK.find((r) => r.sk === 3)!.res;
   const salaryFaqs = [
+    ...(isSkPage ? [{
+      q: `Wie viel netto sind ${nf(amount)} € brutto in Steuerklasse ${focusSk}?`,
+      a: `${nf(amount)} € brutto in Steuerklasse ${focusSk} (${SK_SHORT[focusSk]}, ohne Kirchensteuer) ergeben 2026 rund ${formatEUR(focusRes.nettoMonat)} netto im Monat (${formatEUR(focusRes.nettoJahr)} im Jahr). Abgezogen werden ca. ${formatEUR(focusRes.steuer.summeMonat)} Steuern und ${formatEUR(focusRes.sv.summeMonat)} Sozialabgaben. Das entspricht einer Netto-Quote von ${focusNettoQuote.toFixed(1).replace(".", ",")} %.`,
+    }] : []),
     {
       q: `Wie viel sind ${nf(amount)} Euro brutto in netto?`,
       a: `In Steuerklasse I (ledig, ohne Kirchensteuer) bleiben von ${nf(amount)} € brutto rund ${formatEUR(sk1Res.nettoMonat)} netto im Monat, also etwa ${formatEUR(sk1Res.nettoJahr)} im Jahr (2026). Der genaue Betrag hängt von Steuerklasse, Bundesland, Kirchensteuer und Freibeträgen ab.`,
@@ -196,7 +317,18 @@ export default function LongTailSalaryPage({ params }: PageProps) {
   ];
 
   // Structured Data — BreadcrumbList + WebPage (isPartOf)
-  const canonicalUrl = `https://bruttonettocalculator.com/rechner/${amount}-euro-brutto-netto`;
+  const canonicalUrl = isSkPage
+    ? `https://bruttonettocalculator.com/rechner/${amount}-euro-brutto-netto-steuerklasse-${focusSk}`
+    : `https://bruttonettocalculator.com/rechner/${amount}-euro-brutto-netto`;
+  const breadcrumbLast = isSkPage
+    ? `${formattedBrutto} Brutto Netto Steuerklasse ${focusSk}`
+    : `${formattedBrutto} Brutto Netto`;
+  const webpageName = isSkPage
+    ? `${formattedBrutto} Euro brutto in netto Steuerklasse ${focusSk} (2026)`
+    : `${formattedBrutto} Euro brutto in netto 2026`;
+  const webpageDescription = isSkPage
+    ? `${formattedBrutto} € brutto ergeben in Steuerklasse ${focusSk} ca. ${formatEUR(focusRes.nettoMonat)} netto im Monat (2026).`
+    : `${formattedBrutto} € brutto ergeben in Steuerklasse I ca. ${formatEUR(sk1Res.nettoMonat)} netto im Monat (2026).`;
   const schemaJsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -206,15 +338,15 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://bruttonettocalculator.com" },
           { "@type": "ListItem", "position": 2, "name": "Rechner", "item": "https://bruttonettocalculator.com/#rechner" },
-          { "@type": "ListItem", "position": 3, "name": `${formattedBrutto} Brutto Netto`, "item": canonicalUrl },
+          { "@type": "ListItem", "position": 3, "name": breadcrumbLast, "item": canonicalUrl },
         ],
       },
       {
         "@type": "WebPage",
         "@id": `${canonicalUrl}#webpage`,
         "url": canonicalUrl,
-        "name": `${formattedBrutto} Euro brutto in netto 2026`,
-        "description": `${formattedBrutto} € brutto ergeben in Steuerklasse I ca. ${formatEUR(sk1Res.nettoMonat)} netto im Monat (2026).`,
+        "name": webpageName,
+        "description": webpageDescription,
         "isPartOf": { "@id": "https://bruttonettocalculator.com/#website" },
         "breadcrumb": { "@id": `${canonicalUrl}#breadcrumb` },
       },
@@ -242,8 +374,14 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <Link href="/" className="hover:text-[#16181D] transition-colors">Startseite</Link>
         <ChevronRight size={14} className="text-black/30" />
         <Link href="/#rechner" className="hover:text-[#16181D] transition-colors">Rechner</Link>
+        {isSkPage && (
+          <>
+            <ChevronRight size={14} className="text-black/30" />
+            <Link href={`/rechner/${amount}-euro-brutto-netto`} className="hover:text-[#16181D] transition-colors">{formattedBrutto} Brutto in Netto</Link>
+          </>
+        )}
         <ChevronRight size={14} className="text-black/30" />
-        <span className="text-black/80">{formattedBrutto} Brutto in Netto</span>
+        <span className="text-black/80">{isSkPage ? `Steuerklasse ${focusSk}` : `${formattedBrutto} Brutto in Netto`}</span>
       </div>
 
       {/* Hero Section */}
@@ -251,14 +389,29 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
           <CalcIcon size={14} /> Berechnung nach § 32a EStG
         </div>
-        <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-4 tracking-tight leading-tight">
-          <span className="text-gradient-accent">{formattedBrutto} Brutto</span> in Netto 2026
-        </h1>
-        <p className="text-lg sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-6">
-          Wieviel bleibt von {formattedBrutto} Brutto monatlich übrig? In Steuerklasse 1 (ledig, ohne Kirchensteuer)
-          beträgt Ihr Nettogehalt im Jahr 2026 rund <strong className="text-[#E60A1C] font-extrabold bg-[#E60A1C]/10 px-2 py-0.5 rounded border border-[#E60A1C]/40">{formatEUR(sk1Res.nettoMonat)}</strong> im Monat
-          ({formatEUR(sk1Res.nettoJahr)} im Jahr). Hier finden Sie alle 6 Steuerklassen im Vergleich und die detaillierten Abzüge.
-        </p>
+        {isSkPage ? (
+          <>
+            <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-4 tracking-tight leading-tight">
+              <span className="text-gradient-accent">{formattedBrutto} Brutto</span> in Netto – Steuerklasse {focusSk} (2026)
+            </h1>
+            <p className="text-lg sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-6">
+              Wieviel bleibt von {formattedBrutto} Brutto in <strong className="text-[#16181D]">Steuerklasse {focusSk}</strong> ({SK_SHORT[focusSk]}) übrig?
+              Ihr Nettogehalt beträgt 2026 rund <strong className="text-[#E60A1C] font-extrabold bg-[#E60A1C]/10 px-2 py-0.5 rounded border border-[#E60A1C]/40">{formatEUR(focusRes.nettoMonat)}</strong> im Monat
+              ({formatEUR(focusRes.nettoJahr)} im Jahr). Unten sehen Sie zusätzlich alle 6 Steuerklassen im direkten Vergleich und die detaillierten Abzüge.
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-4 tracking-tight leading-tight">
+              <span className="text-gradient-accent">{formattedBrutto} Brutto</span> in Netto 2026
+            </h1>
+            <p className="text-lg sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-6">
+              Wieviel bleibt von {formattedBrutto} Brutto monatlich übrig? In Steuerklasse 1 (ledig, ohne Kirchensteuer)
+              beträgt Ihr Nettogehalt im Jahr 2026 rund <strong className="text-[#E60A1C] font-extrabold bg-[#E60A1C]/10 px-2 py-0.5 rounded border border-[#E60A1C]/40">{formatEUR(sk1Res.nettoMonat)}</strong> im Monat
+              ({formatEUR(sk1Res.nettoJahr)} im Jahr). Hier finden Sie alle 6 Steuerklassen im Vergleich und die detaillierten Abzüge.
+            </p>
+          </>
+        )}
         <ReviewerByline />
       </div>
 
@@ -368,12 +521,13 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             <tbody className="divide-y divide-black/10 text-sm sm:text-base">
               {resultsAllSK.map(({ sk, res }) => {
                 const diff = res.nettoMonat - sk1Res.nettoMonat;
-                const isSK1 = sk === 1;
+                // Highlight the row this page focuses on (SK I on the all-classes page).
+                const isFocusRow = sk === focusSk;
                 return (
-                  <tr key={sk} className={`hover:bg-black/[0.04] transition-colors ${isSK1 ? "bg-[#E60A1C]/5 font-semibold" : ""}`}>
+                  <tr key={sk} className={`hover:bg-black/[0.04] transition-colors ${isFocusRow ? "bg-[#E60A1C]/5 font-semibold" : ""}`}>
                     <td className="py-4 px-5">
                       <div className="flex items-center gap-2">
-                        <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold font-mono ${isSK1 ? "bg-[#E60A1C] text-white" : "bg-black/[0.05] text-black/80"}`}>
+                        <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold font-mono ${isFocusRow ? "bg-[#E60A1C] text-white" : "bg-black/[0.05] text-black/80"}`}>
                           {sk}
                         </span>
                         <span className="text-[#16181D]">{SK_NAMES[sk]}</span>
@@ -384,7 +538,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
                     <td className="py-4 px-5 text-right text-amber-600 font-mono">-{formatEUR(res.sv.summeMonat)}</td>
                     <td className="py-4 px-5 text-right text-[#16181D] font-bold font-mono text-base bg-black/[0.04]">{formatEUR(res.nettoMonat)}</td>
                     <td className="py-4 px-5 text-right font-mono text-sm">
-                      {isSK1 ? (
+                      {sk === 1 ? (
                         <span className="text-black/40">Basis</span>
                       ) : diff > 0 ? (
                         <span className="text-emerald-600 font-bold">+{formatEUR(diff)}</span>
@@ -402,27 +556,26 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Prominent Steuerklasse I subsection (main search intent for exact-salary queries) */}
+      {/* Prominent focus-Steuerklasse subsection (main search intent for exact-salary queries) */}
       <div className="mb-16 bg-gradient-to-br from-[#E60A1C]/10 via-[#FFFFFF] to-[#FFFFFF] border border-[#E60A1C]/30 rounded-3xl p-6 sm:p-10 shadow-xl">
         <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-3 py-1 rounded-full mb-4">
-          <CheckCircle2 size={13} /> Steuerklasse I im Detail
+          <CheckCircle2 size={13} /> Steuerklasse {SK_ROMAN[focusSk]} im Detail
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
-          {formattedBrutto} Brutto in Netto in Steuerklasse 1
+          {formattedBrutto} Brutto in Netto in Steuerklasse {focusSk}
         </h2>
         <p className="text-base sm:text-lg text-black/80 leading-relaxed mb-6">
-          Für Alleinstehende (ledig, kinderlos ab 23 Jahren, ohne Kirchensteuer) ist Steuerklasse I die
-          Standard-Steuerklasse. Von {formattedBrutto} brutto bleiben 2026 rund{" "}
-          <strong className="text-[#E60A1C] font-extrabold">{formatEUR(sk1Res.nettoMonat)}</strong> netto im Monat
-          ({formatEUR(sk1Res.nettoJahr)} im Jahr) — das entspricht einer Netto-Quote von{" "}
-          <strong className="text-[#16181D]">{nettoQuote.toFixed(1).replace(".", ",")} %</strong>.
+          {SK_INTRO[focusSk]} Von {formattedBrutto} brutto bleiben 2026 rund{" "}
+          <strong className="text-[#E60A1C] font-extrabold">{formatEUR(focusRes.nettoMonat)}</strong> netto im Monat
+          ({formatEUR(focusRes.nettoJahr)} im Jahr) — das entspricht einer Netto-Quote von{" "}
+          <strong className="text-[#16181D]">{focusNettoQuote.toFixed(1).replace(".", ",")} %</strong>.
         </p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {[
-            { label: "Netto / Monat", value: formatEUR(sk1Res.nettoMonat), accent: true },
-            { label: "Netto / Jahr", value: formatEUR(sk1Res.nettoJahr), accent: true },
-            { label: "Lohnsteuer + Soli / Mon.", value: formatEUR(sk1Res.steuer.summeMonat) },
-            { label: "Sozialabgaben / Mon.", value: formatEUR(sk1Res.sv.summeMonat) },
+            { label: "Netto / Monat", value: formatEUR(focusRes.nettoMonat), accent: true },
+            { label: "Netto / Jahr", value: formatEUR(focusRes.nettoJahr), accent: true },
+            { label: "Lohnsteuer + Soli / Mon.", value: formatEUR(focusRes.steuer.summeMonat) },
+            { label: "Sozialabgaben / Mon.", value: formatEUR(focusRes.sv.summeMonat) },
           ].map((k) => (
             <div key={k.label} className={`rounded-2xl border p-4 sm:p-5 ${k.accent ? "bg-[#E60A1C]/10 border-[#E60A1C]/40" : "bg-[#FFFFFF] border-black/[0.08]"}`}>
               <div className="text-xs font-mono uppercase tracking-wider text-black/50 mb-1.5">{k.label}</div>
@@ -430,6 +583,23 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             </div>
           ))}
         </div>
+
+        {/* Cross-link between the all-classes page and its Steuerklasse-1 focus page */}
+        {isSkPage ? (
+          <Link
+            href={`/rechner/${amount}-euro-brutto-netto`}
+            className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-[#E60A1C] hover:underline"
+          >
+            <BarChart3 size={15} /> Alle 6 Steuerklassen für {formattedBrutto} vergleichen <ArrowRight size={14} />
+          </Link>
+        ) : (
+          <Link
+            href={`/rechner/${amount}-euro-brutto-netto-steuerklasse-1`}
+            className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-[#E60A1C] hover:underline"
+          >
+            <CheckCircle2 size={15} /> Ausführliche Seite: {formattedBrutto} Brutto in Netto in Steuerklasse 1 <ArrowRight size={14} />
+          </Link>
+        )}
       </div>
 
       {/* Table 2: 2-Year Tax Comparison (2026 vs 2027) */}
@@ -484,7 +654,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             Passen Sie Kirchensteuer, Bundesland, Kinderfreibeträge und Steuerjahr hier direkt interaktiv an:
           </p>
         </div>
-        <Calculator initialBrutto={amount} initialJahr={2026} initialSk={1} deepLink={false} />
+        <Calculator initialBrutto={amount} initialJahr={2026} initialSk={focusSk} deepLink={false} />
       </div>
 
       {/* FAQ — amount-specific (visible + FAQPage schema) */}
@@ -512,7 +682,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <h3 className="font-display font-bold text-xl text-[#16181D] mb-6 flex items-center gap-2">
           <Sparkles className="text-[#E60A1C]" size={20} /> Weiterführende Gehaltsrechner & Ratgeber
         </h3>
-        
+
         <div className="grid sm:grid-cols-3 gap-6">
           {/* Neighboring 1 */}
           <div className="bg-[#F1F3F5] border border-black/[0.08] rounded-2xl p-5 hover:border-[#E60A1C]/50 transition-all flex flex-col justify-between">
@@ -545,7 +715,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
               </h4>
             </div>
             <Link
-              href={`/?brutto=${amount}&jahr=2026&sk=1#rechner`}
+              href={`/?brutto=${amount}&jahr=2026&sk=${focusSk}#rechner`}
               className="text-xs font-bold text-[#16181D] hover:underline inline-flex items-center gap-1 mt-4 bg-black/[0.05] px-3 py-2 rounded-xl border border-black/[0.08]"
             >
               Hauptrechner öffnen &rarr;

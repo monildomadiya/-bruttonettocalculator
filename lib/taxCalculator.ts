@@ -338,6 +338,98 @@ export function solveBruttoForNetto(input: ReverseInput, tolerance = 0.01): Reve
   return { bruttoMonat, reachable, forward: calculateNetto({ ...rest, bruttoMonat }) };
 }
 
+// --- Beamte (civil servants) ---
+// Beamte zahlen keine Sozialversicherungsbeiträge (keine RV/ALV/GKV/SPV auf
+// Dienstbezüge); sie sichern sich privat (PKV) ab und erhalten Beihilfe.
+// Für den Lohnsteuerabzug gilt statt der SV-Beiträge die
+// Mindestvorsorgepauschale nach § 39b Abs. 2 Satz 5 Nr. 3 EStG:
+// 12 % des Arbeitslohns, höchstens 1.900 € (Steuerklassen I, II, IV–VI)
+// bzw. 3.000 € (Steuerklasse III).
+export interface BeamtenInput {
+  bruttoMonat: number;      // Dienstbezüge (Grundgehalt + Zulagen) pro Monat
+  steuerklasse?: Steuerklasse;
+  kirche: boolean;
+  kirchensteuerSatz?: number; // 0.08 oder 0.09, default 0.09
+  pkvMonat?: number;        // private Krankenversicherung (Eigenanteil) pro Monat
+}
+
+export interface BeamtenResult {
+  bruttoMonat: number;
+  bruttoJahr: number;
+  vorsorgepauschaleJahr: number;
+  steuer: {
+    zvE: number;
+    einkommensteuerJahr: number;
+    soliJahr: number;
+    kirchensteuerJahr: number;
+    summeJahr: number;
+    summeMonat: number;
+  };
+  pkvMonat: number;
+  nettoVorPkvMonat: number; // Netto nach Steuern, vor PKV-Prämie
+  nettoVorPkvJahr: number;
+  nettoMonat: number;       // Netto nach Steuern und PKV
+  nettoJahr: number;
+}
+
+export function calculateBeamtenNetto(input: BeamtenInput): BeamtenResult {
+  const sk = input.steuerklasse ?? 1;
+  const bruttoJahr = input.bruttoMonat * 12;
+
+  // Mindestvorsorgepauschale (KV/PV) für Arbeitnehmer ohne RV-Pflicht
+  const vorsorgepauschaleJahr = Math.min(bruttoJahr * 0.12, sk === 3 ? 3000 : 1900);
+
+  const r = RECHENGROESSEN_2026;
+  const zvE = Math.max(
+    0,
+    bruttoJahr - vorsorgepauschaleJahr - r.werbungskostenPauschale - r.sonderausgabenPauschale
+  );
+
+  // Steuerklassen-Behandlung spiegelt calculateNetto (gleiche Näherungen für V/VI)
+  let estJahr: number;
+  if (sk === 3) {
+    estJahr = 2 * estFormel2026(zvE / 2);
+  } else if (sk === 5) {
+    const baseEst = estFormel2026(zvE);
+    estJahr = Math.min(baseEst * 1.45, zvE * 0.40);
+  } else if (sk === 6) {
+    const zvE6 = Math.max(0, bruttoJahr - vorsorgepauschaleJahr);
+    estJahr = estFormel2026(zvE6) * 1.1;
+  } else if (sk === 2) {
+    estJahr = estFormel2026(Math.max(0, zvE - 4260));
+  } else {
+    estJahr = estFormel2026(zvE);
+  }
+
+  const soliJahr = soliBerechnen(estJahr, sk === 3);
+  const ksSatz = input.kirchensteuerSatz ?? 0.09;
+  const kirchensteuerJahr = input.kirche ? estJahr * ksSatz : 0;
+
+  const steuerSummeJahr = estJahr + soliJahr + kirchensteuerJahr;
+  const nettoVorPkvJahr = bruttoJahr - steuerSummeJahr;
+  const pkvMonat = Math.max(0, input.pkvMonat ?? 0);
+  const nettoJahr = nettoVorPkvJahr - pkvMonat * 12;
+
+  return {
+    bruttoMonat: input.bruttoMonat,
+    bruttoJahr,
+    vorsorgepauschaleJahr,
+    steuer: {
+      zvE,
+      einkommensteuerJahr: estJahr,
+      soliJahr,
+      kirchensteuerJahr,
+      summeJahr: steuerSummeJahr,
+      summeMonat: steuerSummeJahr / 12,
+    },
+    pkvMonat,
+    nettoVorPkvMonat: nettoVorPkvJahr / 12,
+    nettoVorPkvJahr,
+    nettoMonat: nettoJahr / 12,
+    nettoJahr,
+  };
+}
+
 export function formatEUR(value: number): string {
   return new Intl.NumberFormat("de-DE", {
     style: "currency",

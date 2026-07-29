@@ -3,6 +3,7 @@ import {
   Car, PiggyBank, Umbrella, Wallet2, Baby, Banknote, Gift, Clock3,
   Coins, Receipt, Landmark, HandCoins, GraduationCap, HeartHandshake, Timer, Globe,
   Building2, Snowflake, Users, TrendingUp, CalendarRange, HeartPulse, TrendingDown, Route, Gauge, Receipt as ReceiptIcon, Home,
+  HelpCircle,
 } from "lucide-react";
 
 export interface NavLink {
@@ -34,6 +35,9 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/rechner/brutto-zu-netto", label: "Brutto zu Netto", icon: ArrowRightLeft, description: "Direkt umrechnen" },
       { href: "/rechner/netto-zu-brutto", label: "Netto zu Brutto", icon: ArrowRightLeft, description: "Für Gehaltsverhandlungen" },
       { href: "/steuerklassen", label: "Steuerklassen", icon: LayoutList, description: "Alle 6 Klassen im Vergleich" },
+      { href: "/welche-steuerklasse-bin-ich", label: "Welche Steuerklasse bin ich?", icon: HelpCircle, description: "Interaktiver Steuerklassen-Finder" },
+      { href: "/brutto-netto-rechner-beamte", label: "Beamten-Rechner", icon: Landmark, description: "Netto für Beamte — ohne Sozialabgaben" },
+      { href: "/steuerfreibetrag-2026", label: "Steuerfreibetrag 2026", icon: Scale, description: "Grundfreibetrag & alle Freibeträge" },
       { href: "/brutto-netto-rechner-2026", label: "Rechner 2026", icon: Calendar, description: "Amtliche Werte 2026" },
       { href: "/brutto-netto-rechner-2027", label: "Vorschau 2027", icon: Calendar, description: "Reform-Eckwerte testen" },
     ],
@@ -70,6 +74,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/abfindungsrechner", label: "Abfindungsrechner", icon: Banknote, description: "Fünftelregelung" },
       { href: "/weihnachtsgeld-rechner", label: "Weihnachtsgeld-Rechner", icon: Snowflake, description: "Netto vom Weihnachtsgeld" },
       { href: "/bonus-steuerrechner", label: "Bonus-Steuerrechner", icon: Gift, description: "Weihnachts- & Urlaubsgeld" },
+      { href: "/mehrwertsteuer-rechner", label: "MwSt-Rechner", icon: Receipt, description: "19 % / 7 % auf- & herausrechnen" },
       { href: "/stundenlohn-rechner", label: "Stundenlohn-Rechner", icon: Clock3, description: "Netto pro Stunde" },
       { href: "/teilzeitrechner", label: "Teilzeitrechner", icon: Timer, description: "Netto bei Teilzeit" },
       { href: "/werkstudent-rechner", label: "Werkstudent-Rechner", icon: GraduationCap, description: "Nur 9,3 % Rentenbeitrag" },

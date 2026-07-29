@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { dbQuery, Article } from "@/lib/db";
-import { getCommonGrossSalaryAmounts } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts } from "@/data/wage-stats";
 import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { siteConfig } from "@/lib/authors";
 
@@ -41,6 +41,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/pfaendungstabelle",           changeFrequency: "yearly",  priority: 0.85 },
     { path: "/mindestlohn",               changeFrequency: "monthly", priority: 0.85 },
     { path: "/steuerklassen",             changeFrequency: "monthly", priority: 0.85 },
+    { path: "/welche-steuerklasse-bin-ich", changeFrequency: "monthly", priority: 0.88 },
+    { path: "/brutto-netto-rechner-beamte", changeFrequency: "monthly", priority: 0.88 },
+    { path: "/mehrwertsteuer-rechner",     changeFrequency: "monthly", priority: 0.85 },
+    { path: "/steuerfreibetrag-2026",      changeFrequency: "monthly", priority: 0.85 },
     { path: "/private-krankenversicherung-vs-gesetzlich", changeFrequency: "monthly", priority: 0.82 },
     { path: "/witwenrente-rechner",        changeFrequency: "monthly", priority: 0.82 },
     { path: "/bafoeg-rechner",             changeFrequency: "monthly", priority: 0.82 },
@@ -97,6 +101,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: contentUpdated,
       changeFrequency: "weekly",
       priority: 0.8,
+    });
+    // Steuerklasse-1 exact-match variant — targets "<amount> brutto in netto steuerklasse 1"
+    sitemapEntries.push({
+      url: `${base}/rechner/${amount}-euro-brutto-netto-steuerklasse-1`,
+      lastModified: contentUpdated,
+      changeFrequency: "weekly",
+      priority: 0.75,
+    });
+  }
+
+  // Annual-salary pages ("70000 brutto in netto"-type queries)
+  for (const amount of getCommonAnnualSalaryAmounts()) {
+    sitemapEntries.push({
+      url: `${base}/rechner/${amount}-euro-jahresgehalt-brutto-netto`,
+      lastModified: contentUpdated,
+      changeFrequency: "weekly",
+      priority: 0.75,
     });
   }
 

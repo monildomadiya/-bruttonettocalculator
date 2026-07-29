@@ -85,7 +85,7 @@ export function getWagePercentileContext(grossMonthly: number): {
  * checkpoints — see scripts/midijob.test.mts). New amounts are added here
  * deliberately, never auto-generated for every possible value.
  */
-const APPROVED_MIDIJOB_AMOUNTS = [1200];
+const APPROVED_MIDIJOB_AMOUNTS = [1200, 1300];
 
 export function getCommonGrossSalaryAmounts(): number[] {
   const amounts: number[] = [...APPROVED_MIDIJOB_AMOUNTS];
@@ -93,4 +93,17 @@ export function getCommonGrossSalaryAmounts(): number[] {
     amounts.push(amount);
   }
   return amounts.sort((a, b) => a - b);
+}
+
+/**
+ * Whitelisted, indexable annual-salary amounts for the Jahresgehalt pages
+ * ("70000 brutto in netto"-type queries). 25.000–100.000 € in 1.000-€ steps —
+ * the range where real salary negotiations and job listings live.
+ */
+export function getCommonAnnualSalaryAmounts(): number[] {
+  const amounts: number[] = [];
+  for (let amount = 25000; amount <= 100000; amount += 1000) {
+    amounts.push(amount);
+  }
+  return amounts;
 }
