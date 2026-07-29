@@ -46,6 +46,9 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/midijob-rechner", label: "Midijob-Rechner", icon: Gauge, description: "Übergangsbereich 603–2.000 €" },
       { href: "/buergergeld-rechner", label: "Bürgergeld-Rechner", icon: HandCoins, description: "Regelsatz 563 € · SGB II" },
       { href: "/bafoeg-rechner", label: "BAföG-Rechner", icon: GraduationCap, description: "Anspruch für Studierende" },
+      { href: "/bafoeg-rueckzahlung-rechner", label: "BAföG-Rückzahlung", icon: GraduationCap, description: "Raten & Dauer · max. 10.010 €" },
+      { href: "/grundsicherung-rechner", label: "Grundsicherung-Rechner", icon: HandCoins, description: "Im Alter · Regelbedarf 563 €" },
+      { href: "/schonvermoegen-rechner", label: "Schonvermögen-Rechner", icon: PiggyBank, description: "Bürgergeld Vermögensfreibetrag" },
       { href: "/elterngeld-rechner", label: "Elterngeld-Rechner", icon: Baby, description: "Basiselterngeld & Plus" },
       { href: "/arbeitslosengeld-rechner", label: "Arbeitslosengeld-Rechner", icon: Umbrella, description: "ALG I Orientierung" },
       { href: "/kurzarbeitergeld-rechner", label: "Kurzarbeitergeld-Rechner", icon: TrendingDown, description: "KUG 60 % / 67 %" },
@@ -58,6 +61,8 @@ export const calculatorGroups: NavGroup[] = [
     items: [
       { href: "/firmenwagenrechner", label: "Firmenwagenrechner", icon: Car, description: "1%-Regelung & Dienstwagen" },
       { href: "/rentenrechner", label: "Rentenrechner", icon: PiggyBank, description: "Rentenbeitrag & Prognose" },
+      { href: "/rentenpunkte-rechner", label: "Rentenpunkte-Rechner", icon: TrendingUp, description: "Entgeltpunkte & Rente · 42,52 €" },
+      { href: "/riester-rechner", label: "Riester-Rechner", icon: Landmark, description: "Zulagen & Eigenbeitrag" },
       { href: "/bav-rechner", label: "bAV-Rechner", icon: PiggyBank, description: "Entgeltumwandlung netto berechnen" },
       { href: "/immobilienkredit-rechner", label: "Immobilienkredit-Rechner", icon: Home, description: "Wie viel Haus kann ich mir leisten?" },
       { href: "/private-krankenversicherung-vs-gesetzlich", label: "PKV vs GKV", icon: HeartPulse, description: "Ab welchem Brutto lohnt sich die PKV?" },
