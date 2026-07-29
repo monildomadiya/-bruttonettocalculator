@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sparkles, AlertCircle, CheckCircle2 } from "lucide-react";
 import Calculator from "@/components/Calculator";
+import BruttoNettoBreakdownChart from "@/components/BruttoNettoBreakdownChart";
 import { webPageSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -74,7 +75,7 @@ const faqs: { q: string; a: string; links?: { href: string; label: string }[] }[
   },
   {
     q: "Wie viel Netto bleibt 2026 von 3.000 € Brutto?",
-    a: "Bei 3.000 € Brutto im Monat in Steuerklasse I (ledig, ohne Kirchensteuer) bleiben 2026 rund 2.150 € netto übrig — abhängig von Zusatzbeitrag der Krankenkasse und Kinderfreibeträgen. Nutzen Sie den Rechner oben und tragen Sie Ihren exakten Betrag ein, um Ihr persönliches Netto 2026 zu sehen; eine detaillierte Aufschlüsselung finden Sie auf unseren Gehaltsseiten.",
+    a: "Bei 3.000 € Brutto im Monat in Steuerklasse I (ledig, ohne Kirchensteuer) bleiben 2026 rund 2.065 € netto übrig — abhängig von Zusatzbeitrag der Krankenkasse und Kinderfreibeträgen. Nutzen Sie den Rechner oben und tragen Sie Ihren exakten Betrag ein, um Ihr persönliches Netto 2026 zu sehen; eine detaillierte Aufschlüsselung finden Sie auf unseren Gehaltsseiten.",
     links: [{ href: "/rechner/3000-euro-brutto-netto", label: "3.000 € brutto in netto — die Aufschlüsselung" }],
   },
   {
@@ -233,6 +234,12 @@ export default function Rechner2026Page() {
               <span><strong className="text-[#16181D]">Steuerklasse &amp; Freibeträge:</strong> Ihre Steuerklasse und mögliche Kinderfreibeträge bestimmen, wie viel Lohnsteuer monatlich einbehalten wird.</span>
             </li>
           </ul>
+
+          <h3 className="font-bold text-[#16181D] text-base sm:text-lg pt-2">
+            So verteilen sich 3.000 € brutto 2026 (Steuerklasse I)
+          </h3>
+          <BruttoNettoBreakdownChart bruttoMonat={3000} jahr={2026} steuerklasse={1} />
+
           <p>
             Wechseln Sie im Rechner bei Bedarf auf den Modus <strong className="text-[#16181D] font-semibold">Netto zu Brutto</strong>,
             um aus einem gewünschten Nettobetrag das nötige Bruttogehalt 2026 zu ermitteln. Möchten Sie die geplante

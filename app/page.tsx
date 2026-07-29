@@ -157,6 +157,22 @@ const steps = [
 ];
 
 /* ── Structured Data (JSON-LD) ───────────────────────────────────────── */
+// Mirrors the visible "In 3 Schritten zum Nettogehalt" section (same `steps` array).
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "In 3 Schritten zum Nettogehalt",
+  description:
+    "So berechnen Sie Ihr Nettogehalt 2026/2027 mit dem Brutto-Netto-Rechner: Bruttogehalt eingeben, Steuerklasse wählen, Netto sofort ablesen.",
+  totalTime: "PT1M",
+  step: steps.map((s, i) => ({
+    "@type": "HowToStep",
+    position: i + 1,
+    name: s.title,
+    text: s.desc,
+  })),
+};
+
 const webAppSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -537,6 +553,7 @@ export default function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
     </>
   );
 }

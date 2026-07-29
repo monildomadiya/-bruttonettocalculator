@@ -54,7 +54,7 @@ const faqs = [
   },
   {
     q: "Welches Nettogehalt bleibt bei 3.000 € brutto?",
-    a: "Bei 3.000 € brutto im Monat bleiben in Steuerklasse I (ledig, ohne Kirchensteuer) 2026 rund 2.150 € netto übrig. Der genaue Betrag hängt von Steuerklasse, Bundesland und Krankenkassen-Zusatzbeitrag ab — nutzen Sie den Gehaltsrechner oben, um Ihren individuellen Wert zu ermitteln.",
+    a: "Bei 3.000 € brutto im Monat bleiben in Steuerklasse I (ledig, ohne Kirchensteuer) 2026 rund 2.065 € netto übrig. Der genaue Betrag hängt von Steuerklasse, Bundesland und Krankenkassen-Zusatzbeitrag ab — nutzen Sie den Gehaltsrechner oben, um Ihren individuellen Wert zu ermitteln.",
   },
   {
     q: "Ist der Gehaltsrechner für 2025, 2026 und 2027 aktuell?",
