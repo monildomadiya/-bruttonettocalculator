@@ -1,0 +1,54 @@
+{
+  "_comment": "JSON-LD für /brutto-netto-rechner-vergleich — bewusst OHNE AggregateRating (keine echten Reviews, E-E-A-T-Policy). WebPage-Node bei Implementierung über webPageSchema() aus lib/seo.ts erzeugen.",
+  "webPage": {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich#webpage",
+    "name": "Brutto-Netto-Rechner im Vergleich 2026",
+    "url": "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich",
+    "inLanguage": "de-DE",
+    "isPartOf": { "@id": "https://bruttonettocalculator.com/#website" },
+    "dateModified": "2026-07-29",
+    "lastReviewed": "2026-07-29",
+    "reviewedBy": { "@id": "https://bruttonettocalculator.com/#organization" },
+    "author": { "@id": "https://bruttonettocalculator.com/#organization" },
+    "publisher": { "@id": "https://bruttonettocalculator.com/#organization" }
+  },
+  "itemList": {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Brutto-Netto-Rechner im Vergleich 2026",
+    "numberOfItems": 2,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": "BruttoNettoCalculator",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "url": "https://bruttonettocalculator.com/brutto-netto-rechner-2026",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": "gehalt.de Brutto-Netto-Rechner",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web",
+          "url": "https://www.gehalt.de/einkommen/brutto-netto-rechner",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+        }
+      }
+    ]
+  },
+  "faqPage": {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "_comment": "mainEntity bei Implementierung mit den sichtbaren FAQ-Texten der Seite füllen — Schema muss den sichtbaren Inhalt spiegeln"
+  }
+}
