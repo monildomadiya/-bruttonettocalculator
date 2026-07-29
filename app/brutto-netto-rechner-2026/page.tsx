@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/brutto-netto-rechner-2026" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Brutto Netto Rechner 2026 — Gehaltsrechner & Lohnrechner",
     description:
       "Nettogehalt 2026 mit den amtlichen Werten berechnen — Grundfreibetrag 12.348 €, alle Steuerklassen, Sozialabgaben & Soli nach § 32a EStG 2026. Kostenlos & sofort.",

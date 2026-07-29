@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/bav-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "bAV-Rechner 2026 — Entgeltumwandlung & Netto-Aufwand berechnen",
     description:
       "Wie viel Netto kostet Ihre betriebliche Altersvorsorge? Entgeltumwandlung mit Steuer-/Abgabenersparnis und Arbeitgeberzuschuss berechnen.",

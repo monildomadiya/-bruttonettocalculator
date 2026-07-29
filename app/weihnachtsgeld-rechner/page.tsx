@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/weihnachtsgeld-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Weihnachtsgeld-Rechner 2026 — Brutto Netto berechnen",
     description:
       "Wie viel bleibt vom Weihnachtsgeld netto? Berechnen Sie Steuern und Sozialabgaben auf Ihre Sonderzahlung — gilt auch für Urlaubsgeld & Boni.",

@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Werkstudent Brutto-Netto-Rechner 2026",
     description: "Nettogehalt als Werkstudent berechnen — nur 9,3 % Rentenbeitrag dank Werkstudentenprivileg.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

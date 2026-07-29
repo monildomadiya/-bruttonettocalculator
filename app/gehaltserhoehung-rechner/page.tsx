@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Gehaltserhöhung Netto-Rechner 2026 — Was bleibt übrig?",
     description: "Wie viel Ihrer Gehaltserhöhung netto ankommt — inkl. Grenzsteuersatz. Kostenloser Rechner für 2026.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

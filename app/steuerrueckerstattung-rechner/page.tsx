@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/steuerrueckerstattung-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Steuerrückerstattung-Rechner 2026 — Wie viel Steuer bekomme ich zurück?",
     description:
       "Schätzen Sie Ihre Steuererstattung aus Werbungskosten & Sonderausgaben. Kostenloser Rechner für die Steuererklärung 2025/2026.",

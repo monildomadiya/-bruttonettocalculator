@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/pfaendungstabelle" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Pfändungstabelle 2026 — Aktuelle Pfändungsfreigrenzen",
     description:
       "Alle Pfändungsfreigrenzen 2026 nach § 850c ZPO auf einen Blick. Basis-Freibetrag: 1.491,75 €.",

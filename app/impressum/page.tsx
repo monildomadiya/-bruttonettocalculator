@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/impressum" },
   robots: { index: true, follow: true },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Impressum | BruttoNettoCalculator.com",
     description: "Anbieterkennzeichnung gem. § 5 TMG für BruttoNettoCalculator.com.",
     url: "https://bruttonettocalculator.com/impressum",

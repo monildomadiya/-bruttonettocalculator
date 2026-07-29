@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/steuerklassen" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Steuerklassen 2026 — Alle 6 Steuerklassen im Vergleich",
     description:
       "Klarer Vergleich aller 6 deutschen Steuerklassen mit Nettogehalt-Beispielen, Steuerklassenwechsel-Info und FAQ.",

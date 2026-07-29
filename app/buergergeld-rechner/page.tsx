@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/buergergeld-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Bürgergeld-Rechner 2026 — Anspruch & Regelsatz berechnen",
     description:
       "Bürgergeld-Anspruch 2026 berechnen: Regelsatz 563 €, Kosten der Unterkunft und angerechnetes Einkommen inkl. Freibeträgen. Kostenlos & aktuell.",

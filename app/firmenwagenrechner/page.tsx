@@ -32,6 +32,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/firmenwagenrechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Firmenwagenrechner 2026 — Geldwerter Vorteil & 1%-Regelung",
     description:
       "Geldwerten Vorteil des Firmenwagens nach der 1%-Regelung berechnen und aufs Nettogehalt anrechnen — inkl. Elektro-Sätze und Arbeitsweg-Zuschlag.",

@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/arbeitslosengeld-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "ALG-1-Rechner 2026: Arbeitslosengeld berechnen",
     description: "Voraussichtliches Arbeitslosengeld I 2026 mit Leistungssatz, Bemessungsentgelt und Beispielen.",
     url: "https://bruttonettocalculator.com/arbeitslosengeld-rechner",

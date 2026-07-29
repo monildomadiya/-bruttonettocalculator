@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/gehaltsrechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Gehaltsrechner 2026/2027 — Brutto Netto Gehalt berechnen",
     description:
       "Nettogehalt aus dem Bruttogehalt berechnen: Lohnsteuer, Soli, Sozialabgaben & alle 6 Steuerklassen. Kostenloser Gehaltsrechner für 2026 & 2027.",

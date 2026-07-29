@@ -4,10 +4,12 @@ import {
   Shield, ArrowRight, ChevronDown,
   FileText, TrendingUp, Building2,
   MousePointerClick, SlidersHorizontal, Wallet,
-  AlertTriangle, Sparkles,
+  AlertTriangle, Sparkles, ArrowLeftRight, Scale,
 } from "lucide-react";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
+import { siteConfig } from "@/lib/authors";
+import { ORG_ID } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
@@ -23,6 +25,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
     description:
       "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",
@@ -162,6 +165,14 @@ const webAppSchema = {
   "name": "Brutto Netto Rechner Deutschland 2026/2027",
   "url": "https://bruttonettocalculator.com",
   "description": "Präziser Brutto Netto Rechner für Deutschland. Gehaltsberechnung nach § 32a EStG für das Steuerjahr 2026/2027 mit allen 6 Steuerklassen, BKK/TK Zusatzbeitrag 2026, Mindestlohn 2027, Firmenwagen (1%-Regelung) und Rentenrechner.",
+  // Honest authorship/review signals: content is produced and reviewed by the
+  // site's editorial team (Organization node in the global @graph), not a named
+  // individual. See lib/authors.ts for why no personal reviewer is claimed.
+  dateModified: siteConfig.lastUpdatedISO,
+  lastReviewed: siteConfig.lastUpdatedISO,
+  reviewedBy: { "@id": ORG_ID },
+  author: { "@id": ORG_ID },
+  publisher: { "@id": ORG_ID },
 };
 
 const faqSchema = {
@@ -250,6 +261,29 @@ export default function HomePage() {
       {/* ── Calculator Section ───────────────────────────────────────── */}
       <section id="rechner" className="max-w-6xl mx-auto px-2.5 sm:px-5 mt-4 sm:-mt-16 pb-20 relative z-20 scroll-mt-24">
         <Calculator />
+
+        {/* Quick-intent links: surface adjacent tools at the moment of intent (SXO) */}
+        <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href="/rechner/netto-zu-brutto"
+            className="group inline-flex items-center gap-2 bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-black/[0.12] hover:border-[#E60A1C]/50 rounded-full px-5 py-2.5 text-sm font-bold text-[#16181D] shadow-sm transition-all"
+          >
+            <ArrowLeftRight size={16} className="text-[#E60A1C]" /> Netto → Brutto berechnen
+          </Link>
+          <Link
+            href="/arbeitgeber-brutto-netto-rechner"
+            className="group inline-flex items-center gap-2 bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-black/[0.12] hover:border-[#E60A1C]/50 rounded-full px-5 py-2.5 text-sm font-bold text-[#16181D] shadow-sm transition-all"
+          >
+            <Building2 size={16} className="text-[#E60A1C]" /> Arbeitgeberkosten berechnen
+          </Link>
+          <Link
+            href="/steuerklassenwechsel-rechner"
+            className="group inline-flex items-center gap-2 bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-black/[0.12] hover:border-[#E60A1C]/50 rounded-full px-5 py-2.5 text-sm font-bold text-[#16181D] shadow-sm transition-all"
+          >
+            <SlidersHorizontal size={16} className="text-[#E60A1C]" /> Steuerklassen vergleichen
+          </Link>
+        </div>
+
       </section>
 
       {/* ── Info Cards (Dark Tech Grid) ─────────────────────────────── */}
@@ -322,6 +356,68 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ── Steuerklassen-Kombination (comparison table for married couples) ── */}
+      <section className="max-w-6xl mx-auto px-5 pt-24 pb-8 sm:pb-10">
+        <div className="text-center mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
+            <Scale size={14} /> Für Ehepaare
+          </div>
+          <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Steuerklassen-Kombination: III/V oder IV/IV?</h2>
+          <p className="text-black/70 text-base sm:text-lg mt-3 max-w-2xl mx-auto">
+            Verheiratete können zwischen drei Kombinationen wählen. Sie ändert nur die{" "}
+            <strong className="text-[#16181D]">monatliche Verteilung</strong> — nicht die endgültige Jahressteuer.
+          </p>
+        </div>
+
+        <div className="overflow-x-auto rounded-3xl border border-black/[0.10] shadow-lg">
+          <table className="w-full text-left text-sm sm:text-base border-collapse min-w-[640px]">
+            <thead>
+              <tr className="bg-[#F4F5F7] border-b border-black/[0.10]">
+                <th className="px-5 py-4 font-display font-extrabold text-[#16181D]">Kombination</th>
+                <th className="px-5 py-4 font-display font-extrabold text-[#16181D]">Passt für</th>
+                <th className="px-5 py-4 font-display font-extrabold text-[#16181D]">Monatliches Netto</th>
+                <th className="px-5 py-4 font-display font-extrabold text-[#16181D]">Steuererklärung</th>
+              </tr>
+            </thead>
+            <tbody className="[&>tr]:border-b [&>tr]:border-black/[0.08] [&>tr:last-child]:border-0">
+              <tr className="bg-[#FFFFFF]">
+                <td className="px-5 py-4 font-bold text-[#16181D] whitespace-nowrap">III / V</td>
+                <td className="px-5 py-4 text-black/80">Sehr <strong className="text-[#16181D]">ungleiche</strong> Gehälter (ca. 60/40 oder mehr)</td>
+                <td className="px-5 py-4 text-black/80">Höchstes gemeinsames Netto <strong className="text-[#16181D]">jetzt</strong>: Partner in III zahlt am wenigsten, Partner in V am meisten Lohnsteuer.</td>
+                <td className="px-5 py-4 text-black/80"><strong className="text-[#E60A1C]">Pflicht</strong>, oft mit Nachzahlung</td>
+              </tr>
+              <tr className="bg-[#FFFFFF]">
+                <td className="px-5 py-4 font-bold text-[#16181D] whitespace-nowrap">IV / IV</td>
+                <td className="px-5 py-4 text-black/80">Etwa <strong className="text-[#16181D]">gleich hohe</strong> Gehälter</td>
+                <td className="px-5 py-4 text-black/80">Ausgewogen: jeder Partner wird wie ledig besteuert, nah an der späteren Jahressteuer.</td>
+                <td className="px-5 py-4 text-black/80">Freiwillig, selten hohe Nachzahlung</td>
+              </tr>
+              <tr className="bg-[#FFFFFF]">
+                <td className="px-5 py-4 font-bold text-[#16181D] whitespace-nowrap">IV / IV mit Faktor</td>
+                <td className="px-5 py-4 text-black/80">Gehaltsunterschied, aber <strong className="text-[#16181D]">faire</strong> Aufteilung gewünscht</td>
+                <td className="px-5 py-4 text-black/80">Am genauesten pro Person: der Splittingvorteil wird schon monatlich berücksichtigt.</td>
+                <td className="px-5 py-4 text-black/80"><strong className="text-[#E60A1C]">Pflicht</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-6 flex items-start gap-3 bg-[#F4F5F7] rounded-2xl p-5 border border-black/[0.10] text-sm sm:text-base text-black/80 leading-relaxed">
+          <Scale size={20} className="flex-shrink-0 mt-0.5 text-[#E60A1C]" />
+          <p>
+            <strong className="text-[#16181D]">Wichtig:</strong> Die{" "}
+            <strong className="text-[#16181D]">Jahressteuer ist in allen Kombinationen gleich</strong>. Die Steuerklasse steuert nur,{" "}
+            <em>wann</em> Sie zahlen: monatlich mehr Netto (III/V) bedeutet meist eine Nachzahlung, monatlich weniger (IV/IV) eher eine Erstattung. Der endgültige Ausgleich erfolgt über die Zusammenveranlagung in der Steuererklärung.
+          </p>
+        </div>
+
+        <p className="text-center mt-6">
+          <Link href="/steuerklassenwechsel-rechner" className="text-sm font-bold text-[#E60A1C] hover:underline inline-flex items-center gap-1.5">
+            Ihre Kombination exakt berechnen im Steuerklassenwechsel-Rechner <ArrowRight size={14} />
+          </Link>
+        </p>
       </section>
 
       {/* ── FAQ Section ──────────────────────────────────────────────── */}

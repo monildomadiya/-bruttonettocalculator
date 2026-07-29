@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/abfindungsrechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Abfindungsrechner 2026 — Fünftelregelung berechnen",
     description: "Steuerlast auf Ihre Abfindung nach der Fünftelregelung (§ 34 EStG) berechnen — sozialversicherungsfrei.",
     url: "https://bruttonettocalculator.com/abfindungsrechner",

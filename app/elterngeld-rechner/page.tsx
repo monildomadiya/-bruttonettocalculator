@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/elterngeld-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Elterngeld-Rechner 2026 — Basiselterngeld & ElterngeldPlus",
     description: "Basiselterngeld (65–100 % des Nettoeinkommens) und ElterngeldPlus berechnen.",
     url: "https://bruttonettocalculator.com/elterngeld-rechner",

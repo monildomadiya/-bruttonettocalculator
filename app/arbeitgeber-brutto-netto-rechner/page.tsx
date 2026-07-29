@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/arbeitgeber-brutto-netto-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Arbeitgeber Brutto-Netto-Rechner 2026 — Arbeitgeberkosten berechnen",
     description:
       "Arbeitgeberanteil, Arbeitgeberbrutto und Personalkosten berechnen — plus Nettogehalt des Arbeitnehmers. Kostenloser Rechner für 2026.",

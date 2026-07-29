@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/bafoeg-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "BAföG-Rechner 2026 — Anspruch & Höhe berechnen",
     description:
       "BAföG-Anspruch 2026 schätzen: Bedarfssatz, Wohnsituation, eigenes Einkommen und Elterneinkommen. Kostenlos & mit aktuellen Bedarfssätzen.",

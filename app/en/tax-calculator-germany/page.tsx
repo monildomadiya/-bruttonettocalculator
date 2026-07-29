@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Germany Salary Calculator 2026 – Gross to Net",
     description:
       "Work out your net salary in Germany from gross — income tax, solidarity surcharge and social security for all 6 tax classes. Free English calculator.",

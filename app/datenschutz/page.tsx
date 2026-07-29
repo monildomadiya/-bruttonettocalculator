@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/datenschutz" },
   robots: { index: true, follow: true },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Datenschutzerklärung | BruttoNettoCalculator.com",
     description: "Datenschutz, Cookies, Google Analytics & Google AdSense gem. DSGVO auf BruttoNettoCalculator.com.",
     url: "https://bruttonettocalculator.com/datenschutz",

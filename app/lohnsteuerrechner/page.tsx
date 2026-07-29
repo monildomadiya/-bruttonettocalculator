@@ -27,6 +27,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/lohnsteuerrechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Lohnsteuerrechner 2026 — Lohnsteuer & Nettolohn berechnen",
     description:
       "Lohnsteuer, Soli & Nettolohn aus dem Bruttolohn berechnen — kostenloser Lohnrechner & Nettolohnrechner für 2026 & 2027, alle 6 Steuerklassen.",

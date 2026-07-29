@@ -61,6 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: canonicalUrl,
     },
     openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
       title,
       description,
       url: canonicalUrl,

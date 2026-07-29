@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/einkommensteuer-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Einkommensteuer-Rechner 2026 — Steuer nach § 32a EStG",
     description:
       "Einkommensteuer, Soli & Kirchensteuer berechnen — Grund- & Splittingtarif, Grenz- und Durchschnittssteuersatz. Kostenloser Steuerrechner 2026.",

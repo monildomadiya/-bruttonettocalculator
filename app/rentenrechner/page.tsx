@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/rentenrechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Rentenrechner 2026 — Brutto Netto Rente berechnen",
     description: "Rentenversicherungsbeitrag berechnen und gesetzliche Rente auf Basis des Entgeltpunkte-Systems schätzen.",
     url: "https://bruttonettocalculator.com/rentenrechner",

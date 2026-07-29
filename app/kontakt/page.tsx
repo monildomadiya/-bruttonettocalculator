@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description: "Treten Sie mit unserem Team in Kontakt bei Fragen, Feedback oder Verbesserungsvorschlägen zum Gehaltsrechner.",
   alternates: { canonical: "https://bruttonettocalculator.com/kontakt" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Kontakt | BruttoNettoCalculator.com",
     description: "Fragen, Feedback oder Verbesserungsvorschläge — kontaktieren Sie unser Team.",
     url: "https://bruttonettocalculator.com/kontakt",

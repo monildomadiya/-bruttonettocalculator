@@ -27,6 +27,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/midijob-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Midijob-Rechner 2026 — Übergangsbereich 603–2.000 € netto berechnen",
     description:
       "Nettogehalt im Midijob-Übergangsbereich berechnen — reduzierte Sozialabgaben, voller Rentenanspruch. Kostenloser Midijob-Rechner 2026.",

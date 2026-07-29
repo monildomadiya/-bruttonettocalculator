@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/teilzeitrechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Teilzeitrechner 2026 — Netto-Gehalt bei Teilzeit berechnen",
     description:
       "Nettogehalt bei Teilzeit berechnen — Brutto in Netto für beliebige Wochenstunden. Kostenloser Teilzeitrechner 2026.",

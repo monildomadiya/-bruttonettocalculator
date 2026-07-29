@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/stundenlohn-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Stundenlohn-Rechner 2026 — Netto-Stundenlohn berechnen",
     description: "Stundenlohn in Monatsgehalt umrechnen und Netto-Stundenlohn berechnen.",
     url: "https://bruttonettocalculator.com/stundenlohn-rechner",

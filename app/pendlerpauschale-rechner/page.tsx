@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Pendlerpauschale-Rechner 2026 — Entfernungspauschale",
     description: "Entfernungspauschale und Steuerersparnis berechnen — 0,30 €/km, ab 21 km 0,38 €.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

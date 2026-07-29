@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Jahresgehalt-Rechner 2026 — Brutto & Netto",
     description: "Brutto- und Nettojahresgehalt aus dem Monatsgehalt berechnen — inkl. 13./14. Gehalt.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Kurzarbeitergeld-Rechner 2026 — KUG berechnen",
     description: "Kurzarbeitergeld (60 %/67 %) und Gesamteinkommen bei Kurzarbeit berechnen. Kostenlos für 2026.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

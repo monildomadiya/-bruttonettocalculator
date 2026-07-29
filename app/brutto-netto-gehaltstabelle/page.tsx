@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     "Brutto-Netto-Gehaltstabelle 2026: Nettogehalt für jeden Bruttobetrag von 1.500 € bis 10.000 € in Steuerklasse I — direkt zur Detailseite jedes Betrags.",
   alternates: { canonical: CANONICAL },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Brutto-Netto-Tabelle 2026: Gehälter im Vergleich",
     description:
       "Nettogehalt für jeden Bruttobetrag von 1.500 € bis 10.000 € (Steuerklasse I, 2026) — mit Detailseite je Betrag.",

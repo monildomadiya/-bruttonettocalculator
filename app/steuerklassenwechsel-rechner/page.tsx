@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Steuerklassen 3/5 oder 4/4 Rechner 2026 — Steuerklassenwechsel",
     description: "Welche Steuerklassen-Kombination bringt Ehepaaren das meiste Netto? III/V, IV/IV oder Faktor im Vergleich.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

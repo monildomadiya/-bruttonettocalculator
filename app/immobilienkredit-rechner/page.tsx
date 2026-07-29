@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/immobilienkredit-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Immobilienkredit-Rechner 2026 — Wie viel Haus kann ich mir leisten?",
     description:
       "Aus Nettoeinkommen & Eigenkapital den möglichen Kaufpreis, das Darlehen und die monatliche Rate berechnen. Kostenloser Baufinanzierungsrechner.",

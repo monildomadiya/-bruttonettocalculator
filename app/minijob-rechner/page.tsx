@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/minijob-rechner" },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Minijob-Rechner 2026 — Verdienstgrenze 603 € berechnen",
     description: "Verdienstgrenze 603 €, Rentenversicherungs-Eigenanteil und Netto-Verdienst im Minijob berechnen.",
     url: "https://bruttonettocalculator.com/minijob-rechner",

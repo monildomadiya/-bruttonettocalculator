@@ -67,6 +67,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     keywords: kwBase,
     alternates: { canonical },
     openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
       title,
       description,
       url: canonical,

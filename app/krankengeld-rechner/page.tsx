@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
+    images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Krankengeld-Rechner 2026 — Höhe berechnen",
     description: "Wie hoch ist Ihr Krankengeld? 70 % vom Brutto, max. 90 % vom Netto — jetzt berechnen.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",
