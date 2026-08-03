@@ -28,6 +28,14 @@ export interface CalculatorInput {
   kirchensteuerSatz?: number; // 0.08 oder 0.09, default 0.09
   steuerklasse?: Steuerklasse; // 1–6, default 1
   sachsen?: boolean; // Sachsen: AN trägt 0,5 % höheren Pflegeversicherungs-Eigenanteil
+  /**
+   * Kassenindividueller KV-Zusatzbeitrag als Dezimalwert (z. B. 0.0269 für die
+   * TK). Ohne Angabe wird der amtliche Durchschnittswert 2026 von 2,9 %
+   * (§ 242a SGB V, Bekanntmachung des BMG) verwendet — so rechnen alle
+   * bestehenden Aufrufer unverändert weiter. Der Zusatzbeitrag wird seit 2019
+   * paritätisch getragen, in die AN-Belastung fließt also die Hälfte ein.
+   */
+  kvZusatzbeitrag?: number;
 }
 
 export interface CalculatorResult {
@@ -68,6 +76,17 @@ const RECHENGROESSEN_2026 = {
   werbungskostenPauschale: 1230,
   sonderausgabenPauschale: 36,
 };
+
+/**
+ * Gesetzliche Krankenversicherung 2026 — allgemeiner Beitragssatz und der
+ * amtliche durchschnittliche Zusatzbeitrag (§ 241, § 242a SGB V). Beide Sätze
+ * werden paritätisch von Arbeitnehmer und Arbeitgeber getragen; der
+ * kassenindividuelle Zusatzbeitrag ersetzt dabei den Durchschnittswert.
+ */
+export const KV_2026 = {
+  allgemeinerBeitragssatz: RECHENGROESSEN_2026.kvSatz, // 14,6 %
+  durchschnittlicherZusatzbeitrag: RECHENGROESSEN_2026.kvZusatzbeitragDurchschnitt, // 2,9 %
+} as const;
 
 /**
  * Betriebliche Altersvorsorge (bAV) / Entgeltumwandlung 2026
@@ -202,7 +221,8 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   const kvPvBemessung = Math.min(svBemessungJahr, r.kvPvBbgJahr);
   const rvAlvBemessung = Math.min(svBemessungJahr, r.rvAlvBbgJahr);
 
-  const kvSatzAn = (r.kvSatz + r.kvZusatzbeitragDurchschnitt) / 2;
+  const zusatzbeitrag = input.kvZusatzbeitrag ?? r.kvZusatzbeitragDurchschnitt;
+  const kvSatzAn = (r.kvSatz + zusatzbeitrag) / 2;
   const pvSatzGesamt = r.pvSatzBasis + (input.kinderlosUeber23 ? r.pvZuschlagKinderlos : 0);
   // Arbeitgeberanteil PV ist regulär 1,7 % fix; AN trägt den Rest.
   // Sachsen-Sonderfall: AG trägt nur 1,2 %, AN daher 0,5 % mehr.
@@ -473,7 +493,8 @@ const UMLAGEN_SATZ_SCHAETZUNG = 0.019;
 
 export function calculateArbeitgeberkosten(
   bruttoMonat: number,
-  mitUmlagen: boolean = true
+  mitUmlagen: boolean = true,
+  kvZusatzbeitrag?: number
 ): ArbeitgeberkostenResult {
   const r = RECHENGROESSEN_2026;
   const bruttoJahr = bruttoMonat * 12;
@@ -482,7 +503,7 @@ export function calculateArbeitgeberkosten(
   const rvAlvBemessung = Math.min(bruttoJahr, r.rvAlvBbgJahr);
 
   // Arbeitgeber trägt den halben KV-Satz inkl. halbem Zusatzbeitrag (Parität seit 2019)
-  const kvSatzAg = (r.kvSatz + r.kvZusatzbeitragDurchschnitt) / 2;
+  const kvSatzAg = (r.kvSatz + (kvZusatzbeitrag ?? r.kvZusatzbeitragDurchschnitt)) / 2;
 
   const renteJahr = rvAlvBemessung * (r.rvSatz / 2);
   const arbeitslosenJahr = rvAlvBemessung * (r.alvSatz / 2);

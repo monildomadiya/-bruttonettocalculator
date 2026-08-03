@@ -9,9 +9,20 @@ export interface WageStats {
   year: number;
 }
 
+/**
+ * KORREKTUR (03.08.2026): 4.323 € ist laut Destatis der *Median*-Bruttomonats-
+ * verdienst, nicht der Durchschnitt — der Wert stand hier zuvor fälschlich als
+ * `averageGrossMonthly`. Der amtliche Durchschnitt (arithmetisches Mittel) für
+ * Vollzeitbeschäftigte lag im April 2025 bei 4.784 € brutto ohne
+ * Sonderzahlungen (Destatis, Verdiensterhebung, Zeile "Landwirtschaft,
+ * Produzierendes Gewerbe und Dienstleistungsbereich": 39,1 Std./Woche,
+ * 28,19 €/Std., 4.784 €/Monat). Gegenprobe zum Median: 4.323 € × 12 =
+ * 51.876 € zzgl. Sonderzahlungen ≈ 54.066 € — exakt der von Destatis
+ * gemeldete mittlere Bruttojahresverdienst 2025 (siehe DESTATIS_JAHR_2025).
+ */
 export const WAGE_STATS_2026: WageStats = {
-  averageGrossMonthly: 4323,
-  medianGrossMonthly: 3650,
+  averageGrossMonthly: 4784,
+  medianGrossMonthly: 4323,
   minWageHourly2026: 13.90,
   minWageMonthlyFulltime: 2409, // ca. 173.33 Stunden * 13,90 €
   kvPvBbgMonthly2026: 5812.50, // 69.750 € / 12
@@ -19,6 +30,95 @@ export const WAGE_STATS_2026: WageStats = {
   source: "Statistisches Bundesamt (Destatis) & Bundesagentur für Arbeit, Erhebung der Verdienststruktur und SV-Rechengrößen 2026",
   year: 2026,
 };
+
+/**
+ * Amtliche Verdienstverteilung für Vollzeitbeschäftigte, Berichtsjahr 2025 —
+ * veröffentlicht vom Statistischen Bundesamt am 22. April 2026
+ * (Pressemitteilung Nr. 113/2026, "Mittlerer Bruttojahresverdienst lag 2025
+ * bei 54 066 Euro").
+ *
+ * WICHTIG zur Bezugsbasis: Die Jahreswerte hier verstehen sich INKLUSIVE
+ * steuerpflichtiger Sonderzahlungen (Urlaubs-/Weihnachtsgeld). Der
+ * Monatsdurchschnitt in WAGE_STATS_2026 stammt dagegen aus der
+ * Verdiensterhebung April 2025 OHNE Sonderzahlungen. Beide Basen nicht
+ * vermischen — sonst entstehen scheinbare Widersprüche.
+ *
+ * Es ist die jeweils aktuellste amtliche Erhebung: Verdienstdaten erscheinen
+ * mit rund einem Jahr Verzug, für 2026 liegen noch keine Werte vor.
+ */
+export const DESTATIS_JAHR_2025 = {
+  berichtsjahr: 2025,
+  veroeffentlicht: "22. April 2026",
+  quelle: "Statistisches Bundesamt (Destatis), Pressemitteilung Nr. 113 vom 22. April 2026",
+  quelleUrl: "https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/04/PD26_113_621.html",
+  /** Median-Bruttojahresverdienst Vollzeit, inkl. Sonderzahlungen. */
+  medianJahr: 54066,
+  /** Arithmetisches Mittel Bruttojahresverdienst Vollzeit, inkl. Sonderzahlungen. */
+  durchschnittJahr: 64441,
+  /** Ab diesem Jahresbrutto gehört man zum obersten Zehntel. */
+  top10Ab: 100719,
+  /** Ab diesem Jahresbrutto gehört man zum obersten Prozent. */
+  top1Ab: 219110,
+  /** Bis zu diesem Jahresbrutto gehört man zum untersten Zehntel. */
+  unten10Bis: 33828,
+  medianWest: 55435,
+  /** Ostdeutsche Bundesländer ohne Berlin. */
+  medianOst: 46013,
+  /** Durchschnittlicher Bruttostundenverdienst Vollzeit, April 2025. */
+  stundenverdienst: 28.19,
+  /** Bezahlte Wochenarbeitszeit Vollzeit, April 2025. */
+  wochenstunden: 39.1,
+} as const;
+
+/** Median-Bruttojahresverdienst je Wirtschaftszweig 2025 (Destatis, inkl. Sonderzahlungen). */
+export const BRANCHEN_MEDIAN_2025: { branche: string; median: number }[] = [
+  { branche: "Energieversorgung", median: 77522 },
+  { branche: "Finanz- und Versicherungsdienstleistungen", median: 76594 },
+  { branche: "Land- und Forstwirtschaft, Fischerei", median: 35689 },
+  { branche: "Gastgewerbe", median: 35545 },
+];
+
+/**
+ * Ordnet ein Bruttojahresgehalt in die amtliche Verteilung ein und schätzt den
+ * Perzentilrang. Zwischen den von Destatis veröffentlichten Stützstellen
+ * (10 %, 50 %, 90 %, 99 %) wird linear interpoliert — die Angabe ist damit
+ * bewusst eine Näherung und wird auf der Seite auch so ausgewiesen.
+ */
+export function getSalaryPercentile(bruttoJahr: number): {
+  percentile: number;
+  label: string;
+  besserAls: number;
+} {
+  const d = DESTATIS_JAHR_2025;
+  const stuetzstellen: [number, number][] = [
+    [0, 0],
+    [d.unten10Bis, 10],
+    [d.medianJahr, 50],
+    [d.top10Ab, 90],
+    [d.top1Ab, 99],
+  ];
+
+  let percentile = 99.5;
+  for (let i = 0; i < stuetzstellen.length - 1; i++) {
+    const [x0, p0] = stuetzstellen[i];
+    const [x1, p1] = stuetzstellen[i + 1];
+    if (bruttoJahr <= x1) {
+      percentile = p0 + ((bruttoJahr - x0) / (x1 - x0)) * (p1 - p0);
+      break;
+    }
+  }
+  percentile = Math.max(0, Math.min(99.9, percentile));
+
+  let label: string;
+  if (bruttoJahr >= d.top1Ab) label = "Oberstes 1 % aller Vollzeitbeschäftigten";
+  else if (bruttoJahr >= d.top10Ab) label = "Oberstes 10 % aller Vollzeitbeschäftigten";
+  else if (bruttoJahr >= d.durchschnittJahr) label = "Über dem Durchschnittsgehalt";
+  else if (bruttoJahr >= d.medianJahr) label = "Über dem Mediangehalt";
+  else if (bruttoJahr >= d.unten10Bis) label = "Unter dem Mediangehalt";
+  else label = "Unterstes 10 % aller Vollzeitbeschäftigten";
+
+  return { percentile, label, besserAls: Math.round(percentile) };
+}
 
 /**
  * Returns a unique German contextual explanation for a given monthly gross salary.

@@ -28,8 +28,8 @@ export const primaryReviewer: Author = {
 export const allAuthors: Author[] = [primaryReviewer];
 
 export const siteConfig = {
-  lastUpdatedISO: "2026-07-28",
-  lastUpdatedDisplay: "28. Juli 2026",
+  lastUpdatedISO: "2026-08-03",
+  lastUpdatedDisplay: "3. August 2026",
   sourceBMF: "Bundesministerium der Finanzen (BMF) — Amtliches Lohnsteuer-Handbuch 2026",
   sourceDestatis: "Statistisches Bundesamt (Destatis) & Bundesagentur für Arbeit",
   sourceSV: "Sozialversicherungs-Rechengrößenverordnung 2026/2027",

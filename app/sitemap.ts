@@ -57,6 +57,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/brutto-netto-rechner-beamte",
     "/mehrwertsteuer-rechner",
     "/steuerfreibetrag-2026",
+    "/brutto-netto-rechner-krankenkasse",
+    "/durchschnittsgehalt-deutschland",
     "/private-krankenversicherung-vs-gesetzlich",
     "/witwenrente-rechner",
     "/bafoeg-rechner",

@@ -3,7 +3,7 @@ import {
   Car, PiggyBank, Umbrella, Wallet2, Baby, Banknote, Gift, Clock3,
   Coins, Receipt, Landmark, HandCoins, GraduationCap, HeartHandshake, Timer, Globe,
   Building2, Snowflake, Users, TrendingUp, CalendarRange, HeartPulse, TrendingDown, Route, Gauge, Receipt as ReceiptIcon, Home,
-  HelpCircle,
+  HelpCircle, BarChart3,
 } from "lucide-react";
 
 export interface NavLink {
@@ -38,6 +38,8 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/welche-steuerklasse-bin-ich", label: "Welche Steuerklasse bin ich?", icon: HelpCircle, description: "Interaktiver Steuerklassen-Finder" },
       { href: "/brutto-netto-rechner-beamte", label: "Beamten-Rechner", icon: Landmark, description: "Netto für Beamte — ohne Sozialabgaben" },
       { href: "/steuerfreibetrag-2026", label: "Steuerfreibetrag 2026", icon: Scale, description: "Grundfreibetrag & alle Freibeträge" },
+      { href: "/brutto-netto-rechner-krankenkasse", label: "Rechner mit Krankenkasse", icon: HeartPulse, description: "AOK, TK & Co. · Zusatzbeitrag 2026" },
+      { href: "/durchschnittsgehalt-deutschland", label: "Durchschnittsgehalt Deutschland", icon: BarChart3, description: "Wo steht Ihr Gehalt im Vergleich?" },
       { href: "/brutto-netto-rechner-2026", label: "Rechner 2026", icon: Calendar, description: "Amtliche Werte 2026" },
       { href: "/brutto-netto-rechner-2027", label: "Vorschau 2027", icon: Calendar, description: "Reform-Eckwerte testen" },
       { href: "/brutto-netto-rechner-vergleich", label: "Rechner im Vergleich", icon: Scale, description: "Welcher Rechner kann was?" },
