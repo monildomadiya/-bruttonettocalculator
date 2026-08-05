@@ -8,14 +8,41 @@
  * WICHTIG: Dies ist eine vereinfachte Berechnung für einen ersten Überblick
  * (Steuerklasse I/IV, keine Kinderfreibeträge, keine individuellen
  * Freibeträge). Sie ersetzt keine Steuerberatung und keine verbindliche
- * Lohnabrechnung. Für 2027 liegen noch keine final beschlossenen Tarifwerte
- * vor (Stand: Juli 2026) — die Reform der Bundesregierung tritt frühestens
- * zum 1.1.2027 in Kraft und wird erst nach dem Existenzminimumbericht
- * (Herbst 2026) konkretisiert. Die 2027-Ansicht dieses Rechners verwendet
- * daher die 2026-Parameter als vorläufigen Platzhalter und weist dies aus.
+ * Lohnabrechnung.
+ *
+ * ── Steuerjahr 2027: Szenario-Modell ──────────────────────────────────────
+ * Für 2027 gibt es noch kein Gesetz. Der Koalitionsausschuss hat sich am
+ * 1. Juli 2026 politisch auf eine Einkommensteuerreform zum 1.1.2027
+ * verständigt (Grundfreibetrag schrittweise auf 12.900 €, Arbeitnehmer-
+ * Pauschbetrag auf 1.430 €, Kindergeld auf 272 €); das BMF beziffert den
+ * Grundfreibetrag ausdrücklich nur als "voraussichtlich". Ein Referenten-
+ * entwurf liegt (Stand: August 2026) noch nicht vor.
+ *
+ * Statt diese Unsicherheit zu verstecken, rechnet dieses Modul 2027 in drei
+ * ausgewiesenen Szenarien (siehe `Szenario`):
+ *   - "ohneReform"  → geltender Tarif 2026 fortgeschrieben (Status quo)
+ *   - "stufe1"      → modellierte erste Reformstufe zum 1.1.2027
+ *   - "vollausbau"  → Endstufe der Reform (Grundfreibetrag 12.900 €)
+ *
+ * Die Tarifeckwerte der Szenarien werden über `makeTarif()` aus dem
+ * Grundfreibetrag abgeleitet — nach der üblichen "Rechtsverschiebung" der
+ * Eckwerte, bei der die Grenzsteuersätze an den Tarifecken (14 %, 23,97 %,
+ * 42 %, 45 %) unverändert bleiben. Die Faktorisierung ist gegen den
+ * amtlichen Tarif 2026 verifiziert (siehe `makeTarif`-Doc).
+ *
+ * WICHTIG: Die Sozialversicherungs-Rechengrößen 2027 (Beitragsbemessungs-
+ * grenzen, durchschnittlicher Zusatzbeitrag) werden erst im Herbst 2026 per
+ * Verordnung festgelegt. Alle 2027-Szenarien verwenden daher weiterhin die
+ * amtlichen SV-Werte 2026; nur der Steuerteil variiert.
  */
 
 export type Steuerjahr = 2026 | 2027;
+
+/**
+ * Reformszenario für das Steuerjahr 2027. Für `jahr: 2026` ohne Wirkung —
+ * dort gilt immer der amtliche Tarif 2026.
+ */
+export type Szenario = "ohneReform" | "stufe1" | "vollausbau";
 
 export type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -36,6 +63,12 @@ export interface CalculatorInput {
    * paritätisch getragen, in die AN-Belastung fließt also die Hälfte ein.
    */
   kvZusatzbeitrag?: number;
+  /**
+   * Reformszenario für `jahr: 2027`. Ohne Angabe wird "stufe1" verwendet —
+   * die modellierte erste Reformstufe zum 1.1.2027. Für `jahr: 2026`
+   * wirkungslos.
+   */
+  szenario?: Szenario;
 }
 
 export interface CalculatorResult {
@@ -177,10 +210,153 @@ function grenzsteuersatz2026(zvE: number): number {
   return 0.45;
 }
 
+/**
+ * Tarifeckwerte des Einkommensteuertarifs nach § 32a EStG.
+ * `gfb` = Grundfreibetrag, `e1`/`e2` = Ende der ersten/zweiten Progressionszone,
+ * `topStart` = Beginn der Reichensteuer (45 %).
+ */
+export interface Tarif {
+  gfb: number;
+  e1: number;
+  e2: number;
+  topStart: number;
+  a1: number; // quadratischer Koeffizient Zone 1
+  b2: number; // linearer Koeffizient Zone 2 (= 10.000 × Grenzsteuersatz bei e1)
+  a2: number; // quadratischer Koeffizient Zone 2
+  c: number;  // ESt bei e1 (Stetigkeit Zone 1 → 2)
+  c3: number; // Abzugsbetrag 42 %-Zone
+  c4: number; // Abzugsbetrag 45 %-Zone
+}
+
+/**
+ * Leitet einen vollständigen § 32a-Tarif aus den drei Eckwerten ab.
+ *
+ * Konstruktionsprinzip (entspricht der gesetzlichen Systematik): Die
+ * Grenzsteuersätze an den Tarifecken bleiben fest — 14 % am Grundfreibetrag,
+ * 23,97 % am Ende der ersten Zone, 42 % am Ende der zweiten Zone, 45 % ab
+ * `topStart`. Verschieben sich die Eckwerte, werden die Polynomkoeffizienten
+ * so nachgeführt, dass Steuerbetrag und Grenzsteuersatz stetig bleiben.
+ *
+ * Verifikation gegen den amtlichen Tarif 2026 — `makeTarif(12348, 17799, 69878)`
+ * liefert a1 = 914,51 / a2 = 173,11 / c = 1.034,87 / c3 = 11.135,7 / c4 = 19.470,4
+ * gegenüber den Gesetzeswerten 914,51 / 173,1 / 1.034,87 / 11.135,63 / 19.470,38.
+ */
+export function makeTarif(gfb: number, e1: number, e2: number, topStart = 277825): Tarif {
+  const y1 = (e1 - gfb) / 10000;
+  const z2 = (e2 - e1) / 10000;
+  const b2 = 2397; // Grenzsteuersatz 23,97 % am Ende der ersten Progressionszone
+  const a1 = (b2 - 1400) / (2 * y1); // Eintrittssatz 14 % → linearer Term 1400
+  const a2 = (4200 - b2) / (2 * z2); // Austrittssatz 42 % am Ende der zweiten Zone
+  const c = (a1 * y1 + 1400) * y1;
+  const estAtE2 = (a2 * z2 + b2) * z2 + c;
+  const c3 = 0.42 * e2 - estAtE2;
+  const c4 = c3 + 0.03 * topStart;
+  return { gfb, e1, e2, topStart, a1, b2, a2, c, c3, c4 };
+}
+
+/** Jahres-ESt für einen beliebigen abgeleiteten Tarif. */
+export function estFuerTarif(t: Tarif, zvE: number): number {
+  const x = Math.floor(zvE);
+  if (x <= t.gfb) return 0;
+  if (x <= t.e1) {
+    const y = (x - t.gfb) / 10000;
+    return (t.a1 * y + 1400) * y;
+  }
+  if (x <= t.e2) {
+    const z = (x - t.e1) / 10000;
+    return (t.a2 * z + t.b2) * z + t.c;
+  }
+  if (x <= t.topStart) return 0.42 * x - t.c3;
+  return 0.45 * x - t.c4;
+}
+
+/** Grenzsteuersatz (als Dezimalwert) für einen beliebigen abgeleiteten Tarif. */
+export function grenzsteuersatzFuerTarif(t: Tarif, zvE: number): number {
+  const x = Math.floor(zvE);
+  if (x <= t.gfb) return 0;
+  if (x <= t.e1) {
+    const y = (x - t.gfb) / 10000;
+    return (2 * t.a1 * y + 1400) / 10000;
+  }
+  if (x <= t.e2) {
+    const z = (x - t.e1) / 10000;
+    return (2 * t.a2 * z + t.b2) / 10000;
+  }
+  if (x <= t.topStart) return 0.42;
+  return 0.45;
+}
+
+/**
+ * Grundfreibeträge der 2027-Szenarien.
+ *
+ * Das BMF nennt 12.900 € als Endstufe einer zweistufigen Anhebung bis 2028
+ * (von 12.348 € in 2026). Die Aufteilung auf die beiden Stufen ist noch nicht
+ * beziffert; "stufe1" modelliert daher die hälftige Zwischenstufe. Sobald der
+ * Referentenentwurf vorliegt, wird hier der amtliche Wert eingesetzt.
+ */
+export const GRUNDFREIBETRAG = {
+  amtlich2026: 12348,
+  stufe1_2027: 12624, // modelliert: Hälfte des Weges 12.348 € → 12.900 €
+  vollausbau: 12900,  // BMF, Koalitionsbeschluss vom 1.7.2026 ("voraussichtlich")
+} as const;
+
+/** Arbeitnehmer-Pauschbetrag: 1.230 € (2026) → 1.430 € (Reform ab 2027). */
+export const ARBEITNEHMER_PAUSCHBETRAG = { amtlich2026: 1230, reform: 1430 } as const;
+
+/** Kindergeld je Kind und Monat: 259 € (2026) → 272 € (Reform ab 2027). */
+export const KINDERGELD = { amtlich2026: 259, reform: 272 } as const;
+
+// Eckwerte der Szenarien: Rechtsverschiebung proportional zum Grundfreibetrag.
+const SHIFT_STUFE1 = GRUNDFREIBETRAG.stufe1_2027 / GRUNDFREIBETRAG.amtlich2026;
+const SHIFT_VOLL = GRUNDFREIBETRAG.vollausbau / GRUNDFREIBETRAG.amtlich2026;
+
+export const TARIF_2027_STUFE1 = makeTarif(
+  GRUNDFREIBETRAG.stufe1_2027,
+  Math.round(17799 * SHIFT_STUFE1), // 18.197 €
+  Math.round(69878 * SHIFT_STUFE1)  // 71.440 €
+);
+
+export const TARIF_2027_VOLLAUSBAU = makeTarif(
+  GRUNDFREIBETRAG.vollausbau,
+  Math.round(17799 * SHIFT_VOLL), // 18.595 €
+  Math.round(69878 * SHIFT_VOLL)  // 73.002 €
+);
+
+/**
+ * Auflösung von Steuerjahr + Szenario zu den steuerlich wirksamen Parametern.
+ * Für 2026 gilt immer der amtliche Tarif (unveränderte Gesetzesformel).
+ */
+export function resolveSteuerkontext(jahr: Steuerjahr, szenario: Szenario = "stufe1") {
+  const amtlich = {
+    est: estFormel2026,
+    grenz: grenzsteuersatz2026,
+    werbungskostenPauschale: ARBEITNEHMER_PAUSCHBETRAG.amtlich2026,
+    soliFaktor: 1,
+    grundfreibetrag: GRUNDFREIBETRAG.amtlich2026,
+    kindergeld: KINDERGELD.amtlich2026,
+    istModelliert: false,
+  };
+
+  if (jahr === 2026 || szenario === "ohneReform") return amtlich;
+
+  const tarif = szenario === "vollausbau" ? TARIF_2027_VOLLAUSBAU : TARIF_2027_STUFE1;
+  return {
+    est: (zvE: number) => estFuerTarif(tarif, zvE),
+    grenz: (zvE: number) => grenzsteuersatzFuerTarif(tarif, zvE),
+    werbungskostenPauschale: ARBEITNEHMER_PAUSCHBETRAG.reform,
+    // Die Soli-Freigrenze wird traditionell mit den Tarifeckwerten verschoben.
+    soliFaktor: tarif.gfb / GRUNDFREIBETRAG.amtlich2026,
+    grundfreibetrag: tarif.gfb,
+    kindergeld: KINDERGELD.reform,
+    istModelliert: true,
+  };
+}
+
 // Solidaritätszuschlag mit Milderungszone (20%-Abschmelzung)
-// Freigrenze 2026: 18.130 € ESt (Einzelveranlagung) / 36.260 € (Splitting)
-export function soliBerechnen(estJahr: number, verheiratet: boolean): number {
-  const freigrenze = verheiratet ? 36260 : 18130;
+// Freigrenze 2026: 18.130 € ESt (Einzelveranlagung) / 36.260 € (Splitting).
+// `faktor` verschiebt die Freigrenze in den 2027-Szenarien mit den Tarifeckwerten.
+export function soliBerechnen(estJahr: number, verheiratet: boolean, faktor = 1): number {
+  const freigrenze = (verheiratet ? 36260 : 18130) * faktor;
   if (estJahr <= freigrenze) return 0;
   const voll = estJahr * 0.055;
   const abschmelzung = (estJahr - freigrenze) * 0.2;
@@ -236,10 +412,13 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
 
   const svSummeJahr = kranken + pflege + rente + arbeitslosen;
 
+  // Steuerlicher Kontext: amtlicher Tarif 2026 bzw. das gewählte 2027-Szenario.
+  const ctx = resolveSteuerkontext(input.jahr, input.szenario);
+
   // Vereinfachtes zu versteuerndes Einkommen für den Lohnsteuerabzug
   const zvE = Math.max(
     0,
-    bruttoJahr - svSummeJahr - r.werbungskostenPauschale - r.sonderausgabenPauschale
+    bruttoJahr - svSummeJahr - ctx.werbungskostenPauschale - r.sonderausgabenPauschale
   );
 
   const sk = input.steuerklasse ?? 1;
@@ -247,34 +426,34 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   let estJahr: number;
   if (sk === 3) {
     // Steuerklasse III: Splittingverfahren
-    estJahr = 2 * estFormel2026(zvE / 2);
+    estJahr = 2 * ctx.est(zvE / 2);
   } else if (sk === 5) {
     // Steuerklasse V: Erhöhter Tarif — Näherung: 35 % Grenzbelastung auf gesamtes zvE
     // (Vereinfachung für Überblick; korrekte Berechnung erfolgt im Lohnsteuerjahresausgleich)
-    const baseEst = estFormel2026(zvE);
+    const baseEst = ctx.est(zvE);
     estJahr = Math.min(baseEst * 1.45, zvE * 0.40);
   } else if (sk === 6) {
     // Steuerklasse VI: Keine Freibeträge, ab erstem Euro Steuer
     // Näherung: Standardformel ohne Grundfreibetrag
     const zvE6 = Math.max(0, bruttoJahr - svSummeJahr); // keine Pauschalen
-    estJahr = estFormel2026(zvE6) * 1.1;
+    estJahr = ctx.est(zvE6) * 1.1;
   } else if (sk === 2) {
     // Steuerklasse II: Alleinerziehendenentlastungsbetrag 4.260 € (2026)
     const zvE2 = Math.max(0, zvE - 4260);
-    estJahr = estFormel2026(zvE2);
+    estJahr = ctx.est(zvE2);
   } else {
     // Steuerklasse I, IV: Grundtarif
-    estJahr = estFormel2026(zvE);
+    estJahr = ctx.est(zvE);
   }
 
-  const soliJahr = soliBerechnen(estJahr, sk === 3);
+  const soliJahr = soliBerechnen(estJahr, sk === 3, ctx.soliFaktor);
   const ksSatz = input.kirchensteuerSatz ?? 0.09;
   const kirchensteuerJahr = input.kirche ? estJahr * ksSatz : 0;
 
   const steuerSummeJahr = estJahr + soliJahr + kirchensteuerJahr;
   const nettoJahr = bruttoJahr - svSummeJahr - steuerSummeJahr;
 
-  const grenzsteuersatzPct = grenzsteuersatz2026(sk === 3 ? zvE / 2 : zvE) * 100;
+  const grenzsteuersatzPct = ctx.grenz(sk === 3 ? zvE / 2 : zvE) * 100;
   const durchschnittssteuersatzPct = zvE > 0 ? (estJahr / zvE) * 100 : 0;
 
   return {

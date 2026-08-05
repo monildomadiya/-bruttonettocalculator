@@ -7,7 +7,7 @@ import {
   TrendingUp, Landmark, HeartPulse, Briefcase,
   CircleDollarSign, Sparkles, MapPin, Calendar, ChevronDown, ChevronUp,
 } from "lucide-react";
-import { calculateNetto, formatEUR, Steuerjahr } from "@/lib/taxCalculator";
+import { calculateNetto, formatEUR, Steuerjahr, Szenario, GRUNDFREIBETRAG } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
@@ -54,7 +54,14 @@ const T: Record<Lang, Record<string, string>> = {
     errMax: "Maximaler Betrag: 200.000 €",
     sliderAria: "Bruttogehalt Schieberegler",
     taxYear: "Steuerjahr",
-    year2027Note: "Für 2027 liegen noch keine finalen Tarifwerte vor (Stand: Juli 2026). Es werden vorläufig die amtlichen 2026-Werte angezeigt.",
+    year2027Note: "Für 2027 gibt es noch kein Gesetz — nur den Koalitionsbeschluss vom 1.7.2026. Wählen Sie ein Szenario; die Sozialabgaben bleiben auf dem amtlichen Stand 2026.",
+    scenarioLabel: "Reformszenario 2027",
+    scenarioOhne: "Ohne Reform",
+    scenarioStufe1: "Stufe 1 (2027)",
+    scenarioVoll: "Vollausbau",
+    scenarioOhneHint: "Tarif 2026 unverändert fortgeschrieben — falls die Reform scheitert.",
+    scenarioStufe1Hint: `Modellierte erste Stufe zum 1.1.2027: Grundfreibetrag ${GRUNDFREIBETRAG.stufe1_2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag 1.430 €.`,
+    scenarioVollHint: `Endstufe der Reform: Grundfreibetrag ${GRUNDFREIBETRAG.vollausbau.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag 1.430 €.`,
     taxClass: "Steuerklasse",
     moreOptions: "Weitere Optionen",
     childlessLabel: "Kinderlos & über 23 Jahre",
@@ -127,7 +134,14 @@ const T: Record<Lang, Record<string, string>> = {
     errMax: "Maximum amount: €200,000",
     sliderAria: "Gross salary slider",
     taxYear: "Tax year",
-    year2027Note: "Final 2027 tax parameters are not yet available (as of July 2026). The official 2026 figures are shown provisionally.",
+    year2027Note: "There is no 2027 law yet — only the coalition agreement of 1 July 2026. Pick a scenario; social contributions stay at official 2026 levels.",
+    scenarioLabel: "2027 reform scenario",
+    scenarioOhne: "No reform",
+    scenarioStufe1: "Stage 1 (2027)",
+    scenarioVoll: "Full rollout",
+    scenarioOhneHint: "2026 tariff carried forward unchanged — if the reform fails.",
+    scenarioStufe1Hint: `Modelled first stage from 1 Jan 2027: basic allowance €${GRUNDFREIBETRAG.stufe1_2027.toLocaleString("de-DE")}, employee lump sum €1,430.`,
+    scenarioVollHint: `Final stage of the reform: basic allowance €${GRUNDFREIBETRAG.vollausbau.toLocaleString("de-DE")}, employee lump sum €1,430.`,
     taxClass: "Tax class",
     moreOptions: "More options",
     childlessLabel: "Childless & aged 23+",
@@ -200,7 +214,14 @@ const T: Record<Lang, Record<string, string>> = {
     errMax: "Maksymalna kwota: 200 000 €",
     sliderAria: "Suwak wynagrodzenia brutto",
     taxYear: "Rok podatkowy",
-    year2027Note: "Ostateczne wartości podatkowe na 2027 r. nie są jeszcze dostępne (stan: lipiec 2026). Tymczasowo stosowane są urzędowe wartości z 2026 r.",
+    year2027Note: "Na 2027 r. nie ma jeszcze ustawy — tylko porozumienie koalicyjne z 1.7.2026. Wybierz scenariusz; składki socjalne pozostają na urzędowym poziomie 2026 r.",
+    scenarioLabel: "Scenariusz reformy 2027",
+    scenarioOhne: "Bez reformy",
+    scenarioStufe1: "Etap 1 (2027)",
+    scenarioVoll: "Pełne wdrożenie",
+    scenarioOhneHint: "Taryfa 2026 bez zmian — jeśli reforma nie dojdzie do skutku.",
+    scenarioStufe1Hint: `Modelowany pierwszy etap od 1.1.2027: kwota wolna ${GRUNDFREIBETRAG.stufe1_2027.toLocaleString("de-DE")} €, ryczałt pracowniczy 1.430 €.`,
+    scenarioVollHint: `Etap końcowy reformy: kwota wolna ${GRUNDFREIBETRAG.vollausbau.toLocaleString("de-DE")} €, ryczałt pracowniczy 1.430 €.`,
     taxClass: "Klasa podatkowa",
     moreOptions: "Więcej opcji",
     childlessLabel: "Bezdzietny/a i powyżej 23 lat",
@@ -367,6 +388,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   const [copied,       setCopied]       = useState(false);
   const [showBundesland, setShowBundesland] = useState(false);
   const [showYearCompare, setShowYearCompare] = useState(false);
+  const [szenario,     setSzenario]     = useState<Szenario>("stufe1");
 
   const verheiratet = steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5;
 
@@ -411,8 +433,9 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
       kirche,
       kirchensteuerSatz: 0.09,
       steuerklasse,
+      szenario,
     }),
-    [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, steuerklasse]
+    [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, steuerklasse, szenario]
   );
 
   const resBW_BY = useMemo(() => calculateNetto({
@@ -423,7 +446,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     kirche: true,
     kirchensteuerSatz: 0.08,
     steuerklasse,
-  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse]);
+    szenario,
+  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse, szenario]);
 
   const resOtherStates = useMemo(() => calculateNetto({
     bruttoMonat: Math.max(0, bruttoMonat || 0),
@@ -433,7 +457,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     kirche: true,
     kirchensteuerSatz: 0.09,
     steuerklasse,
-  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse]);
+    szenario,
+  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse, szenario]);
 
   const otherYear = jahr === 2026 ? 2027 : 2026;
   const resOtherYear = useMemo(() => calculateNetto({
@@ -444,7 +469,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     kirche,
     kirchensteuerSatz: 0.09,
     steuerklasse,
-  }), [bruttoMonat, otherYear, verheiratet, kinderlosUeber23, kirche, steuerklasse]);
+    szenario,
+  }), [bruttoMonat, otherYear, verheiratet, kinderlosUeber23, kirche, steuerklasse, szenario]);
 
   const diffYear = result.nettoMonat - resOtherYear.nettoMonat;
 
@@ -581,10 +607,42 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 ))}
               </div>
               {jahr === 2027 && (
-                <div className="flex items-start gap-3 text-xs sm:text-sm text-amber-700 mt-3 bg-amber-50 rounded-2xl p-3.5 sm:p-4 border border-amber-500/30 font-medium">
-                  <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-amber-600" />
-                  <span>{t.year2027Note}</span>
-                </div>
+                <>
+                  <div className="flex items-start gap-3 text-xs sm:text-sm text-amber-700 mt-3 bg-amber-50 rounded-2xl p-3.5 sm:p-4 border border-amber-500/30 font-medium">
+                    <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-amber-600" />
+                    <span>{t.year2027Note}</span>
+                  </div>
+
+                  <div className="mt-4">
+                    <span className="text-base font-bold text-[#16181D] block mb-3">{t.scenarioLabel}</span>
+                    <div className="grid grid-cols-3 gap-2 sm:gap-2.5 w-full">
+                      {([
+                        { key: "ohneReform" as Szenario, label: t.scenarioOhne,   hint: t.scenarioOhneHint },
+                        { key: "stufe1"     as Szenario, label: t.scenarioStufe1, hint: t.scenarioStufe1Hint },
+                        { key: "vollausbau" as Szenario, label: t.scenarioVoll,   hint: t.scenarioVollHint },
+                      ]).map((s) => (
+                        <button
+                          key={s.key}
+                          id={`szenario-${s.key}`}
+                          onClick={() => setSzenario(s.key)}
+                          title={s.hint}
+                          aria-pressed={szenario === s.key}
+                          className={`w-full py-2.5 sm:py-3 px-1 rounded-2xl text-xs sm:text-sm font-bold border transition-all ${
+                            szenario === s.key
+                              ? "text-white border-transparent"
+                              : "border-black/[0.12] text-black/60 hover:border-black/[0.20] hover:bg-black/[0.04] hover:text-[#16181D]"
+                          }`}
+                          style={szenario === s.key ? { background: "linear-gradient(135deg,#E60A1C,#FF2436)" } : undefined}
+                        >
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-xs text-black/55 mt-2.5 leading-relaxed">
+                      {szenario === "ohneReform" ? t.scenarioOhneHint : szenario === "vollausbau" ? t.scenarioVollHint : t.scenarioStufe1Hint}
+                    </p>
+                  </div>
+                </>
               )}
             </div>
 
