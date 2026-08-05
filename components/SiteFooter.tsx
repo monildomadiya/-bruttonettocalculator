@@ -116,6 +116,7 @@ export default function SiteFooter() {
               <li><Link href="/blog"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Blog</Link></li>
               <li><Link href="/faq"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">FAQ</Link></li>
               <li><Link href="/en/tax-calculator-germany" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Tax Calculator (EN)</Link></li>
+              <li><Link href="/pl/kalkulator-brutto-netto-niemcy" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kalkulator (PL)</Link></li>
             </ul>
           </div>
 

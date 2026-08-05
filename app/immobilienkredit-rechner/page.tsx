@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import ImmobilienkreditRechner from "./ImmobilienkreditRechner";
 
 export const metadata: Metadata = {
-  title: "Immobilienkredit-Rechner 2026 — Wie viel Haus kann ich mir leisten?",
+  title: "Immobilienkredit-Rechner 2026 — Baufinanzierung berechnen",
   description:
-    "Immobilienkredit- & Baufinanzierungsrechner 2026: Wie viel Haus kann ich mir leisten? Aus Nettoeinkommen, Eigenkapital, Zins & Tilgung den möglichen Kaufpreis, das Darlehen und die monatliche Rate berechnen. Kostenlos.",
+    "Immobilienkredit-Rechner 2026: Wie viel Haus kann ich mir leisten? Aus Nettoeinkommen, Eigenkapital, Zins & Tilgung Kaufpreis und Monatsrate berechnen.",
   keywords: [
     "immobilienkredit rechner",
     "baufinanzierungsrechner",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/immobilienkredit-rechner" },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],
-    title: "Immobilienkredit-Rechner 2026 — Wie viel Haus kann ich mir leisten?",
+    title: "Immobilienkredit-Rechner 2026 — Baufinanzierung berechnen",
     description:
       "Aus Nettoeinkommen & Eigenkapital den möglichen Kaufpreis, das Darlehen und die monatliche Rate berechnen. Kostenloser Baufinanzierungsrechner.",
     url: "https://bruttonettocalculator.com/immobilienkredit-rechner",

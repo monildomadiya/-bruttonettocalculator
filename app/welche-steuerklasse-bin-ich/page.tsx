@@ -12,7 +12,7 @@ const CANONICAL = "https://bruttonettocalculator.com/welche-steuerklasse-bin-ich
 export const metadata: Metadata = {
   title: "Welche Steuerklasse bin ich? Finder & Test 2026",
   description:
-    "Welche Steuerklasse bin ich? In 3 Fragen zur Antwort: Ledige haben Klasse I, Alleinerziehende II, Verheiratete wählen III/V oder IV/IV, Zweitjobs laufen über VI. Mit interaktivem Finder & Netto-Vorschau 2026.",
+    "Welche Steuerklasse bin ich? In 3 Fragen zur Antwort — Ledige I, Alleinerziehende II, Verheiratete III/V oder IV/IV, Zweitjob VI. Mit Netto-Vorschau 2026.",
   keywords: [
     "welche steuerklasse bin ich",
     "welche steuerklasse habe ich",

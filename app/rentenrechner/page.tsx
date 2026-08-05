@@ -4,7 +4,7 @@ import Rentenrechner from "./Rentenrechner";
 export const metadata: Metadata = {
   title: "Rentenrechner 2026 — Brutto Netto Rente berechnen",
   description:
-    "Rentenrechner 2026: Berechnen Sie Ihren Rentenversicherungsbeitrag vom Bruttogehalt und schätzen Sie Ihre spätere gesetzliche Rente auf Basis des Entgeltpunkte-Systems. Kostenlos.",
+    "Rentenrechner 2026: Rentenversicherungsbeitrag vom Bruttogehalt berechnen und die spätere gesetzliche Rente über das Entgeltpunkte-System schätzen.",
   keywords: [
     "Rentenrechner",
     "Rentenrechner brutto netto",

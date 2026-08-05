@@ -10,7 +10,7 @@ const eur = (n: number) => n.toLocaleString("de-DE");
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2027 – Steuerreform in 3 Szenarien",
   description:
-    "Brutto Netto Rechner 2027 mit echtem Jahresvergleich: Rechnen Sie die Steuerreform 2027 in drei Szenarien durch — ohne Reform, Stufe 1 und Vollausbau. Plus Live-Status des Gesetzgebungsverfahrens. Kostenlos & für Deutschland.",
+    "Brutto Netto Rechner 2027: Steuerreform in drei Szenarien durchrechnen — ohne Reform, Stufe 1, Vollausbau. Plus Live-Status des Gesetzgebungsverfahrens.",
   keywords: [
     "steuerreform 2027 rechner",
     "steuerreform rechner 2027",

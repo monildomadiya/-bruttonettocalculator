@@ -4,7 +4,7 @@ import BonusSteuerrechner from "./BonusSteuerrechner";
 export const metadata: Metadata = {
   title: "Bonus-Steuerrechner 2026 — Bonus & Urlaubsgeld versteuern",
   description:
-    "Bonus-Steuerrechner 2026: Berechnen Sie, wie viel von Ihrem Weihnachtsgeld, Urlaubsgeld oder Bonus nach Steuern und Sozialabgaben netto übrig bleibt. Kostenlos & sofort.",
+    "Bonus-Steuerrechner 2026: Wie viel von Weihnachtsgeld, Urlaubsgeld oder Bonus nach Steuern und Sozialabgaben netto übrig bleibt. Kostenlos & sofort.",
   keywords: [
     "Bonus Steuerrechner",
     "Weihnachtsgeld Rechner",

@@ -4,7 +4,7 @@ import AbfindungsRechner from "./AbfindungsRechner";
 export const metadata: Metadata = {
   title: "Abfindungsrechner 2026 — Fünftelregelung berechnen",
   description:
-    "Abfindungsrechner 2026: Steuerlast auf Ihre Abfindung nach der Fünftelregelung (§ 34 EStG) berechnen. Sozialversicherungsfrei — nur Lohnsteuer, Soli & Kirchensteuer. Kostenlos.",
+    "Abfindungsrechner 2026: Steuerlast auf die Abfindung nach der Fünftelregelung (§ 34 EStG) berechnen — sozialversicherungsfrei, nur Lohn- und Kirchensteuer.",
   keywords: [
     "Abfindungsrechner",
     "Abfindungsrechner 2026",

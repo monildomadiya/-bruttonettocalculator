@@ -7,7 +7,7 @@ const URL = "https://bruttonettocalculator.com/kurzarbeitergeld-rechner";
 export const metadata: Metadata = {
   title: "Kurzarbeitergeld-Rechner 2026 — KUG-Höhe berechnen",
   description:
-    "Kurzarbeitergeld-Rechner 2026: Berechnen Sie Ihr Kurzarbeitergeld (60 % / 67 % der Nettoentgeltdifferenz) und Ihr gesamtes Monatseinkommen bei Kurzarbeit. Kostenlos & sofort.",
+    "Kurzarbeitergeld-Rechner 2026: Kurzarbeitergeld (60 % / 67 % der Nettoentgeltdifferenz) und Ihr gesamtes Monatseinkommen bei Kurzarbeit berechnen.",
   keywords: [
     "kurzarbeitergeld rechner",
     "kurzarbeit rechner",

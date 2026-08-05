@@ -4,7 +4,7 @@ import WitwenrenteRechner from "./WitwenrenteRechner";
 export const metadata: Metadata = {
   title: "Witwenrente-Rechner 2026 — Höhe berechnen (55 % / 25 %)",
   description:
-    "Witwenrente-Rechner 2026: Berechnen Sie die Höhe Ihrer großen (55 %) oder kleinen (25 %) Witwenrente inkl. Sterbevierteljahr und Einkommensanrechnung mit Freibetrag. Kostenlos & aktuell.",
+    "Witwenrente-Rechner 2026: große (55 %) oder kleine (25 %) Witwenrente berechnen — inkl. Sterbevierteljahr und Einkommensanrechnung mit Freibetrag.",
   keywords: [
     "witwenrente berechnen",
     "witwenrente rechner",

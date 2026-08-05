@@ -20,7 +20,7 @@ const GEPRUEFT_AM = "29. Juli 2026";
 export const metadata: Metadata = {
   title: "Brutto-Netto-Rechner im Vergleich 2026 — welcher kann was?",
   description:
-    "Brutto-Netto-Rechner im Vergleich: BruttoNettoCalculator vs. gehalt.de — 2027-Vorschau, Netto-zu-Brutto, Beamte, Midijob und Firmenwagen im ehrlichen Feature-Check. Geprüft Juli 2026.",
+    "Brutto-Netto-Rechner im Vergleich: BruttoNettoCalculator vs. gehalt.de — 2027-Vorschau, Netto-zu-Brutto, Beamte, Midijob und Firmenwagen im Feature-Check.",
   keywords: [
     "brutto netto rechner vergleich",
     "bester brutto netto rechner",

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import SteuerrueckerstattungRechner from "./SteuerrueckerstattungRechner";
 
 export const metadata: Metadata = {
-  title: "Steuerrückerstattung-Rechner 2026 — Wie viel Steuer bekomme ich zurück?",
+  title: "Steuerrückerstattung-Rechner 2026 — was kommt zurück?",
   description:
-    "Steuerrückerstattung-Rechner 2026: Wie viel Steuer bekomme ich zurück? Erstattung aus Werbungskosten & Sonderausgaben schätzen — im Schnitt rund 1.100 €. Kostenlos für die Steuererklärung 2025/2026.",
+    "Steuerrückerstattung-Rechner 2026: Wie viel Steuer bekomme ich zurück? Erstattung aus Werbungskosten & Sonderausgaben schätzen — im Schnitt rund 1.100 €.",
   keywords: [
     "steuerrückerstattung rechner",
     "steuererklärung rechner",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/steuerrueckerstattung-rechner" },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],
-    title: "Steuerrückerstattung-Rechner 2026 — Wie viel Steuer bekomme ich zurück?",
+    title: "Steuerrückerstattung-Rechner 2026 — was kommt zurück?",
     description:
       "Schätzen Sie Ihre Steuererstattung aus Werbungskosten & Sonderausgaben. Kostenloser Rechner für die Steuererklärung 2025/2026.",
     url: "https://bruttonettocalculator.com/steuerrueckerstattung-rechner",

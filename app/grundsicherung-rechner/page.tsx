@@ -4,7 +4,7 @@ import GrundsicherungRechner from "./GrundsicherungRechner";
 export const metadata: Metadata = {
   title: "Grundsicherung-Rechner 2026 — Anspruch im Alter berechnen",
   description:
-    "Grundsicherung-Rechner 2026: möglichen Anspruch auf Grundsicherung im Alter & bei Erwerbsminderung berechnen — Regelbedarf 563 €, plus Unterkunftskosten, minus anrechenbares Einkommen. Kostenlos.",
+    "Grundsicherung-Rechner 2026: Anspruch im Alter & bei Erwerbsminderung berechnen — Regelbedarf 563 €, plus Unterkunftskosten, minus Einkommen.",
   keywords: [
     "grundsicherung rechner",
     "grundsicherung im alter berechnen",

@@ -4,7 +4,7 @@ import RentenpunkteRechner from "./RentenpunkteRechner";
 export const metadata: Metadata = {
   title: "Rentenpunkte-Rechner 2026 — Entgeltpunkte & Rente berechnen",
   description:
-    "Rentenpunkte-Rechner 2026: Entgeltpunkte aus Ihrem Bruttogehalt und die spätere Monatsrente berechnen — mit aktuellem Rentenwert 42,52 € (ab Juli 2026) und Durchschnittsentgelt 51.944 €. Kostenlos & ohne Anmeldung.",
+    "Rentenpunkte-Rechner 2026: Entgeltpunkte aus Ihrem Brutto und die spätere Monatsrente berechnen — mit Rentenwert 42,52 € und Durchschnittsentgelt 51.944 €.",
   keywords: [
     "rentenpunkte rechner",
     "entgeltpunkte berechnen",

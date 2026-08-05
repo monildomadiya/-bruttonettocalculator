@@ -46,7 +46,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const aliasPart = bl.alias ? ` (${bl.alias})` : "";
 
   const title = `Brutto-Netto-Rechner ${bl.name}${aliasPart} 2026`;
-  const description = `Brutto-Netto-Rechner für ${bl.name}: Nettogehalt 2026 mit dem in ${bl.name} gültigen Kirchensteuersatz von ${(bl.kirchensteuerSatz * 100).toFixed(0)} % berechnen. 4.000 € brutto ergeben ca. ${nettoFmt} netto (Steuerklasse I). Kostenlos & sofort.`;
+  // Kurz genug, dass Google sie nicht abschneidet (~155 Zeichen): der längste
+  // Ländername (Mecklenburg-Vorpommern, 22 Zeichen) ergibt 143 Zeichen.
+  const description = `Brutto-Netto-Rechner ${bl.name}: Nettogehalt 2026 mit Kirchensteuer ${(bl.kirchensteuerSatz * 100).toFixed(0)} % berechnen. 4.000 € brutto ≈ ${nettoFmt} netto (Steuerklasse I).`;
 
   const kwBase = [
     `brutto netto rechner ${bl.name.toLowerCase()}`,

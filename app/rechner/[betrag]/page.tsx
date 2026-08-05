@@ -143,7 +143,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (steuerklasse !== null) {
     const canonicalUrl = `https://bruttonettocalculator.com/rechner/${amount}-euro-brutto-netto-steuerklasse-${steuerklasse}`;
     const title = `${formattedBrutto} € Brutto in Netto Steuerklasse ${steuerklasse} (2026)`;
-    const description = `${formattedBrutto} € brutto in Steuerklasse ${steuerklasse} (${SK_SHORT[steuerklasse]}) sind 2026 ca. ${formattedNetto} netto im Monat${midijobSuffix}. Alle Abzüge, Jahres- & Stundenwerte und der Vergleich aller Steuerklassen.`;
+    // Unter ~155 Zeichen halten, sonst schneidet Google ab. Auch mit der
+    // längsten SK_SHORT-Variante (Steuerklasse 4, 41 Zeichen) bleibt sie darunter.
+    const description = `${formattedBrutto} € brutto in Steuerklasse ${steuerklasse} sind 2026 ca. ${formattedNetto} netto im Monat${midijobSuffix} — ${SK_SHORT[steuerklasse]}. Alle Abzüge & Stundenwerte.`;
     return {
       title,
       description,

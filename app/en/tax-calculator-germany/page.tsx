@@ -8,7 +8,7 @@ import AccordionFaq from "@/components/AccordionFaq";
 export const metadata: Metadata = {
   title: "Germany Salary Calculator 2026 – Gross to Net",
   description:
-    "Free Germany salary calculator 2026: work out your net salary from gross — income tax, solidarity surcharge and social security contributions for all 6 tax classes. English gross-to-net calculator, no sign-up.",
+    "Free Germany salary calculator 2026: work out your net pay from gross — income tax, solidarity surcharge and social security for all 6 tax classes.",
   keywords: [
     "salary calculator germany",
     "germany salary calculator",

@@ -6,7 +6,7 @@ import RelatedCalculators from "@/components/RelatedCalculators";
 export const metadata: Metadata = {
   title: "Firmenwagenrechner 2026: Geldwerten Vorteil berechnen",
   description:
-    "Firmenwagenrechner 2026: Geldwerten Vorteil nach der 1%-Regelung berechnen und aufs Brutto-Netto-Gehalt anrechnen — inkl. Elektro-Sätze (0,25%/0,5%) und 0,03%-Zuschlag für den Arbeitsweg.",
+    "Firmenwagenrechner 2026: geldwerten Vorteil nach der 1%-Regelung berechnen — inkl. Elektro-Sätze (0,25 %/0,5 %) und 0,03 %-Zuschlag für den Arbeitsweg.",
   keywords: [
     "Firmenwagenrechner",
     "Firmenwagenrechner 2026",

@@ -6,9 +6,9 @@ import ReviewerByline from "@/components/ReviewerByline";
 import RelatedCalculators from "@/components/RelatedCalculators";
 
 export const metadata: Metadata = {
-  title: "PKV vs GKV 2026: Ab welchem Brutto lohnt sich die private KV?",
+  title: "PKV vs GKV 2026: Ab welchem Brutto lohnt sich die PKV?",
   description:
-    "PKV oder GKV? Ab welchem Bruttogehalt sich die private Krankenversicherung 2026 lohnt: Versicherungspflichtgrenze 77.400 €, GKV-Höchstbeitrag & Beitragsbemessungsgrenze 69.750 € einfach erklärt – mit Vergleichstabelle, Vor- & Nachteilen und Netto-Rechner.",
+    "PKV oder GKV 2026? Ab welchem Brutto sich die private Krankenversicherung lohnt: Versicherungspflichtgrenze 77.400 €, Höchstbeitrag & Vergleichstabelle.",
   keywords: [
     "pkv vs gkv",
     "private krankenversicherung ab welchem brutto",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/private-krankenversicherung-vs-gesetzlich" },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],
-    title: "PKV vs GKV 2026: Ab welchem Brutto lohnt sich die private KV?",
+    title: "PKV vs GKV 2026: Ab welchem Brutto lohnt sich die PKV?",
     description:
       "Ab welchem Bruttogehalt sich die private Krankenversicherung 2026 lohnt – Versicherungspflichtgrenze 77.400 €, GKV-Höchstbeitrag & Vergleichstabelle.",
     url: "https://bruttonettocalculator.com/private-krankenversicherung-vs-gesetzlich",

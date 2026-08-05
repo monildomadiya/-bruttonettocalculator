@@ -10,7 +10,7 @@ const CANONICAL = "https://bruttonettocalculator.com/brutto-netto-rechner-beamte
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner Beamte 2026 – Netto ohne Sozialabgaben",
   description:
-    "Brutto-Netto-Rechner für Beamte 2026: Beamte zahlen keine Renten-, Arbeitslosen- und gesetzliche Krankenversicherung. Netto aus Dienstbezügen berechnen — mit PKV-Eigenanteil und direktem Vergleich zum Angestellten.",
+    "Brutto-Netto-Rechner für Beamte 2026: Netto aus den Dienstbezügen berechnen — ohne Renten- und Arbeitslosenversicherung, mit PKV-Eigenanteil im Vergleich.",
   keywords: [
     "brutto netto rechner beamte",
     "beamte netto rechner",

@@ -18,9 +18,9 @@ import ReviewerByline from "@/components/ReviewerByline";
 const CANONICAL = "https://bruttonettocalculator.com/brutto-netto-rechner-krankenkasse";
 
 export const metadata: Metadata = {
-  title: "Brutto-Netto-Rechner mit Krankenkasse: AOK, TK & Zusatzbeitrag 2026",
+  title: "Brutto-Netto-Rechner Krankenkasse: AOK, TK & Zusatzbeitrag",
   description:
-    "Brutto-Netto-Rechner, der den Zusatzbeitrag Ihrer Krankenkasse berücksichtigt — AOK, TK, Barmer, DAK & Co. Zusatzbeiträge 2026 im Vergleich (2,18 % bis 4,39 %) und wie viel Netto der Unterschied kostet.",
+    "Brutto-Netto-Rechner mit dem Zusatzbeitrag Ihrer Krankenkasse: AOK, TK, Barmer & DAK 2026 im Vergleich (2,18–4,39 %) und was der Unterschied netto kostet.",
   keywords: [
     "brutto netto rechner aok",
     "aok brutto netto rechner",

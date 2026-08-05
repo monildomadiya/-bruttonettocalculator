@@ -7,7 +7,7 @@ import { webPageSchema } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026 — Gehaltsrechner & Lohnrechner",
   description:
-    "Brutto Netto Rechner 2026: Nettogehalt mit den amtlichen Werten 2026 berechnen — Grundfreibetrag 12.348 €, alle 6 Steuerklassen, Sozialabgaben & Soli nach § 32a EStG 2026. Kostenlos, ohne Anmeldung, sofort.",
+    "Brutto Netto Rechner 2026: Nettogehalt mit den amtlichen Werten berechnen — Grundfreibetrag 12.348 €, alle 6 Steuerklassen, Sozialabgaben & Soli.",
   keywords: [
     "brutto netto rechner 2026",
     "brutto netto 2026",

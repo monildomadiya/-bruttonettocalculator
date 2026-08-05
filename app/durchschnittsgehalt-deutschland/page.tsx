@@ -9,9 +9,9 @@ import ReviewerByline from "@/components/ReviewerByline";
 const CANONICAL = "https://bruttonettocalculator.com/durchschnittsgehalt-deutschland";
 
 export const metadata: Metadata = {
-  title: "Durchschnittsgehalt Deutschland 2026: 64.441 € brutto — netto & Vergleich",
+  title: "Durchschnittsgehalt Deutschland 2026: 64.441 € brutto netto",
   description:
-    "Durchschnittsgehalt in Deutschland: 64.441 € brutto im Jahr, Median 54.066 € (Destatis 2025). Wie viel netto bleibt, wie Sie im Perzentil-Vergleich stehen und wie groß der Ost-West-Unterschied ist.",
+    "Durchschnittsgehalt Deutschland: 64.441 € brutto im Jahr, Median 54.066 € (Destatis 2025). Wie viel netto bleibt und wo Sie im Perzentil-Vergleich stehen.",
   keywords: [
     "durchschnittsgehalt deutschland",
     "durchschnittsgehalt deutschland 2026",

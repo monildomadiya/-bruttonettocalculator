@@ -4,7 +4,7 @@ import BafoegRueckzahlungRechner from "./BafoegRueckzahlungRechner";
 export const metadata: Metadata = {
   title: "BAföG-Rückzahlung-Rechner 2026 — Raten & Dauer berechnen",
   description:
-    "BAföG-Rückzahlung-Rechner 2026: Anzahl der Raten, monatliche Rate (130 €) und Rückzahlungsdauer berechnen. Höchstbetrag 10.010 € (77 Raten), Nachlass bei vorzeitiger Rückzahlung. Kostenlos.",
+    "BAföG-Rückzahlung-Rechner 2026: Raten, monatliche Rate (130 €) und Dauer berechnen. Höchstbetrag 10.010 €, Nachlass bei vorzeitiger Rückzahlung.",
   keywords: [
     "bafög rückzahlung rechner",
     "bafög zurückzahlen",

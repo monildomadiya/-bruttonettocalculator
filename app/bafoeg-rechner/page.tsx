@@ -4,7 +4,7 @@ import BafoegRechner from "./BafoegRechner";
 export const metadata: Metadata = {
   title: "BAföG-Rechner 2026 — Anspruch & Höhe berechnen (Studium)",
   description:
-    "BAföG-Rechner 2026: Berechnen Sie Ihren voraussichtlichen BAföG-Anspruch aus Bedarfssatz, Wohnsituation, eigenem Einkommen und dem Einkommen der Eltern. Kostenlose Schätzung mit aktuellen Bedarfssätzen.",
+    "BAföG-Rechner 2026: voraussichtlichen BAföG-Anspruch aus Bedarfssatz, Wohnsituation, eigenem Einkommen und Elterneinkommen berechnen. Kostenlose Schätzung.",
   keywords: [
     "bafög rechner",
     "bafög rechner 2026",

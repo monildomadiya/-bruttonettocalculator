@@ -12,7 +12,7 @@ import ReviewerByline from "@/components/ReviewerByline";
 export const metadata: Metadata = {
   title: "Gehaltsrechner 2026/2027 — Brutto Netto Gehalt berechnen",
   description:
-    "Kostenloser Gehaltsrechner 2026/2027: Berechnen Sie Ihr Nettogehalt aus dem Brutto — Lohnsteuer, Soli, Sozialabgaben & alle 6 Steuerklassen. Netto-Gehaltsrechner ohne Anmeldung, aktuell für Deutschland.",
+    "Kostenloser Gehaltsrechner 2026/2027: Nettogehalt aus dem Brutto berechnen — Lohnsteuer, Soli, Sozialabgaben und alle 6 Steuerklassen, ohne Anmeldung.",
   keywords: [
     "gehaltsrechner",
     "gehaltsrechner 2026",

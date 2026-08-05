@@ -5,7 +5,7 @@ import ReverseCalculator from "@/components/ReverseCalculator";
 export const metadata: Metadata = {
   title: "Netto Brutto Rechner 2026 – Wunschbrutto berechnen",
   description:
-    "Netto Brutto Rechner 2026: Geben Sie Ihr gewünschtes Nettogehalt ein und berechnen Sie das dafür nötige Bruttogehalt — ideal für Gehaltsverhandlungen. Kostenlos & unverbindlich.",
+    "Netto Brutto Rechner 2026: gewünschtes Nettogehalt eingeben und das nötige Bruttogehalt berechnen — ideal für Gehaltsverhandlungen. Kostenlos.",
   keywords: [
     "netto zu brutto rechner",
     "netto in brutto umrechnen",

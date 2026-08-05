@@ -9,7 +9,7 @@ import ReviewerByline from "@/components/ReviewerByline";
 export const metadata: Metadata = {
   title: "Lohnsteuerrechner 2026 — Lohnsteuer & Nettolohn berechnen",
   description:
-    "Lohnsteuerrechner 2026/2027: Lohnsteuer, Solidaritätszuschlag und Nettolohn aus dem Bruttolohn berechnen. Kostenloser Lohnrechner & Nettolohnrechner für alle 6 Steuerklassen — ohne Anmeldung.",
+    "Lohnsteuerrechner 2026/2027: Lohnsteuer, Solidaritätszuschlag und Nettolohn aus dem Bruttolohn berechnen — für alle 6 Steuerklassen, ohne Anmeldung.",
   keywords: [
     "lohnsteuerrechner",
     "lohnsteuerrechner 2026",

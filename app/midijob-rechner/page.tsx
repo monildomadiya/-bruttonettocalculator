@@ -14,7 +14,7 @@ import ReviewerByline from "@/components/ReviewerByline";
 export const metadata: Metadata = {
   title: "Midijob-Rechner 2026 — Übergangsbereich 603–2.000 € netto",
   description:
-    "Midijob-Rechner 2026: Nettogehalt im Übergangsbereich (603,01 € bis 2.000 €) berechnen. Reduzierte Sozialabgaben nach Faktor F (0,6619), voller Rentenanspruch — kostenlos & aktuell für 2026.",
+    "Midijob-Rechner 2026: Nettogehalt im Übergangsbereich (603,01–2.000 €) berechnen. Reduzierte Sozialabgaben nach Faktor F, voller Rentenanspruch.",
   keywords: [
     "Midijob Rechner",
     "Midijob Rechner 2026",

@@ -9,7 +9,7 @@ const CANONICAL = "https://bruttonettocalculator.com/mehrwertsteuer-rechner";
 export const metadata: Metadata = {
   title: "MwSt-Rechner 2026: Mehrwertsteuer 19 % & 7 % berechnen",
   description:
-    "Mehrwertsteuer-Rechner: MwSt (19 % oder 7 %) blitzschnell aufschlagen oder herausrechnen — Netto zu Brutto und Brutto zu Netto. Mit Formeln, 7-%-Liste und FAQ zur Umsatzsteuer.",
+    "Mehrwertsteuer-Rechner: MwSt (19 % oder 7 %) aufschlagen oder herausrechnen — Netto zu Brutto und Brutto zu Netto, mit Formeln und 7-%-Liste.",
   keywords: [
     "mwst rechner",
     "mehrwertsteuer rechner",

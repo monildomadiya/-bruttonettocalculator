@@ -4,7 +4,7 @@ import RiesterRechner from "./RiesterRechner";
 export const metadata: Metadata = {
   title: "Riester-Rechner 2026 — Zulagen & Eigenbeitrag berechnen",
   description:
-    "Riester-Rechner 2026: staatliche Zulagen (Grundzulage 175 €, Kinderzulage bis 300 €) und den nötigen Mindest-Eigenbeitrag für die volle Förderung berechnen. Kostenlos & ohne Anmeldung.",
+    "Riester-Rechner 2026: staatliche Zulagen (Grundzulage 175 €, Kinderzulage bis 300 €) und den nötigen Mindest-Eigenbeitrag für die volle Förderung.",
   keywords: [
     "riester rechner",
     "riester rente rechner",

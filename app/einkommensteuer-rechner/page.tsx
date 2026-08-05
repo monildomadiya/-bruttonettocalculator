@@ -4,7 +4,7 @@ import EinkommensteuerRechner from "./EinkommensteuerRechner";
 export const metadata: Metadata = {
   title: "Einkommensteuer-Rechner 2026 — Steuer nach § 32a EStG",
   description:
-    "Einkommensteuer-Rechner 2026: Einkommensteuer, Soli & Kirchensteuer aus dem zu versteuernden Einkommen berechnen. Kostenloser Steuerrechner mit Grund- & Splittingtarif, Grenz- und Durchschnittssteuersatz.",
+    "Einkommensteuer-Rechner 2026: Einkommensteuer, Soli & Kirchensteuer aus dem zu versteuernden Einkommen berechnen — mit Grund- und Splittingtarif.",
   keywords: [
     "einkommensteuer rechner",
     "einkommensteuer berechnen",

@@ -17,6 +17,9 @@ import { primaryReviewer } from "@/lib/authors";
 import ReviewerByline from "@/components/ReviewerByline";
 import RelatedArticles from "@/components/RelatedArticles";
 
+/** Social-Vorschaubild für Beiträge ohne eigenes Bild. */
+const FALLBACK_OG_IMAGE = "https://bruttonettocalculator.com/og-image.png";
+
 export const revalidate = 0;
 
 interface FAQItem {
@@ -106,22 +109,28 @@ export async function generateMetadata({
         art.og_description || art.meta_description || art.excerpt || "",
       url: canonicalUrl,
       type: "article",
-      images:
-        art.og_image || art.featured_image
-          ? [{ url: art.og_image || art.featured_image! }]
-          : [],
+      // Ohne Bild greift das Site-Default — eine leere Liste würde bedeuten,
+      // dass der Beitrag beim Teilen und in sozialen Vorschauen gar kein Bild hat.
+      images: [{ url: art.og_image || art.featured_image || FALLBACK_OG_IMAGE }],
     },
     twitter: {
       card: "summary_large_image",
       title: art.og_title || art.meta_title || art.headline,
       description:
         art.og_description || art.meta_description || art.excerpt || "",
-      images:
-        art.og_image || art.featured_image
-          ? [art.og_image || art.featured_image!]
-          : [],
+      images: [art.og_image || art.featured_image || FALLBACK_OG_IMAGE],
     },
   };
+}
+
+/**
+ * Die Seite rendert die Überschrift des Beitrags bereits als <h1>. Bringt der
+ * Beitragstext aus dem CMS eine eigene <h1> mit, hätte die Seite zwei — deshalb
+ * werden H1 im Fließtext auf H2 herabgestuft (behält die Semantik, vermeidet
+ * die doppelte Hauptüberschrift).
+ */
+function demoteContentH1(html: string = "") {
+  return html.replace(/<(\/?)h1(\s[^>]*)?>/gi, (_m, slash, attrs) => `<${slash}h2${attrs || ""}>`);
 }
 
 /* Extract H2 headings + slugified IDs for the TOC */
@@ -174,8 +183,9 @@ export default async function ArticleReaderPage({
   if (!article) notFound();
 
   const faqs: FAQItem[] = Array.isArray(article.faqs) ? article.faqs : [];
-  const toc = article.enable_toc ? extractToc(article.content) : [];
-  const contentWithIds = injectHeadingIds(article.content || "");
+  const body = demoteContentH1(article.content || "");
+  const toc = article.enable_toc ? extractToc(body) : [];
+  const contentWithIds = injectHeadingIds(body);
   // Self-referencing /blog/<slug> URL — see generateMetadata for why we don't
   // trust article.canonical_url here.
   const articleUrl = blogCanonical(article.slug);

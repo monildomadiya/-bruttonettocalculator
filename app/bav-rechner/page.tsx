@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import BavRechner from "./BavRechner";
 
 export const metadata: Metadata = {
-  title: "bAV-Rechner 2026 — Entgeltumwandlung & Netto-Aufwand berechnen",
+  title: "bAV-Rechner 2026 — Entgeltumwandlung & Netto-Aufwand",
   description:
-    "bAV-Rechner 2026: Wie viel Netto kostet die betriebliche Altersvorsorge wirklich? Entgeltumwandlung berechnen — Steuer- & Sozialabgaben-Ersparnis plus 15 % Arbeitgeberzuschuss. Kostenlos & aktuell.",
+    "bAV-Rechner 2026: Was kostet die betriebliche Altersvorsorge netto? Entgeltumwandlung mit Steuer- und Sozialabgaben-Ersparnis plus 15 % AG-Zuschuss.",
   keywords: [
     "bav rechner",
     "entgeltumwandlung rechner",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/bav-rechner" },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],
-    title: "bAV-Rechner 2026 — Entgeltumwandlung & Netto-Aufwand berechnen",
+    title: "bAV-Rechner 2026 — Entgeltumwandlung & Netto-Aufwand",
     description:
       "Wie viel Netto kostet Ihre betriebliche Altersvorsorge? Entgeltumwandlung mit Steuer-/Abgabenersparnis und Arbeitgeberzuschuss berechnen.",
     url: "https://bruttonettocalculator.com/bav-rechner",

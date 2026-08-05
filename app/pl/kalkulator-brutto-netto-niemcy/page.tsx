@@ -7,7 +7,7 @@ import Calculator from "@/components/Calculator";
 export const metadata: Metadata = {
   title: "Kalkulator brutto netto Niemcy 2026 – Oblicz wynagrodzenie",
   description:
-    "Darmowy kalkulator brutto-netto dla Niemiec 2026: oblicz wynagrodzenie netto z brutto — podatek dochodowy, dodatek solidarnościowy i składki na niemieckie ubezpieczenia społeczne dla wszystkich 6 klas podatkowych. Bez rejestracji.",
+    "Darmowy kalkulator brutto-netto dla Niemiec 2026: oblicz wynagrodzenie netto — podatek, składki i wszystkie 6 klas podatkowych. Bez rejestracji.",
   keywords: [
     "kalkulator brutto netto niemcy",
     "kalkulator wynagrodzeń niemcy",

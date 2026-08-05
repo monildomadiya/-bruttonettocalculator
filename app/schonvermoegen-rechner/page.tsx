@@ -4,7 +4,7 @@ import SchonvermoegenRechner from "./SchonvermoegenRechner";
 export const metadata: Metadata = {
   title: "Schonvermögen-Rechner 2026 — Bürgergeld Vermögensfreibetrag",
   description:
-    "Schonvermögen-Rechner 2026: anrechnungsfreies Vermögen beim Bürgergeld berechnen — Karenzzeit 40.000 € + 15.000 €/Person und die altersgestaffelte Neuregelung ab 1. Juli 2026. Kostenlos.",
+    "Schonvermögen-Rechner 2026: anrechnungsfreies Vermögen beim Bürgergeld berechnen — Karenzzeit 40.000 € plus 15.000 € je Person, mit Neuregelung.",
   keywords: [
     "schonvermögen rechner",
     "bürgergeld vermögen 2026",

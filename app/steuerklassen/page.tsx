@@ -6,7 +6,7 @@ import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
 export const metadata: Metadata = {
   title: "Steuerklassen 2026: Welche Steuerklasse für Verheiratete?",
   description:
-    "Steuerklassen 2026 im Vergleich: alle 6 Klassen erklärt und für Verheiratete die Kombinationen III/V, IV/IV und IV/IV mit Faktor. Mit Nettogehalt-Beispielen, Steuerklassenwechsel & FAQ.",
+    "Steuerklassen 2026 im Vergleich: alle 6 Klassen erklärt, für Verheiratete III/V, IV/IV und IV/IV mit Faktor — mit Nettogehalt-Beispielen und Wechsel-FAQ.",
   keywords: [
     "Steuerklassen 2026",
     "Steuerklasse verheiratet",

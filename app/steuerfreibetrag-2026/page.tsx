@@ -7,9 +7,9 @@ import ReviewerByline from "@/components/ReviewerByline";
 const CANONICAL = "https://bruttonettocalculator.com/steuerfreibetrag-2026";
 
 export const metadata: Metadata = {
-  title: "Steuerfreibetrag 2026: Grundfreibetrag 12.348 € & alle Freibeträge",
+  title: "Steuerfreibetrag 2026: Grundfreibetrag & alle Freibeträge",
   description:
-    "Steuerfreibetrag 2026 im Überblick: Grundfreibetrag 12.348 € (24.696 € für Paare), Kinderfreibetrag 9.756 €, Arbeitnehmer-Pauschbetrag 1.230 € u. v. m. Plus: Bis zu welchem Brutto bleibt das Gehalt 2026 steuerfrei?",
+    "Steuerfreibetrag 2026: Grundfreibetrag 12.348 € (24.696 € für Paare), Kinderfreibetrag 9.756 €, Arbeitnehmer-Pauschbetrag 1.230 € — alle Werte im Überblick.",
   keywords: [
     "steuerfreibetrag 2026",
     "grundfreibetrag 2026",

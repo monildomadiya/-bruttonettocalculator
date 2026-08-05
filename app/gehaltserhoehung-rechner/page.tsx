@@ -7,7 +7,7 @@ const URL = "https://bruttonettocalculator.com/gehaltserhoehung-rechner";
 export const metadata: Metadata = {
   title: "Gehaltserhöhung-Rechner 2026 — Was bleibt netto?",
   description:
-    "Gehaltserhöhung-Rechner 2026: Berechnen Sie, wie viel von Ihrer Gehaltserhöhung nach Steuern und Sozialabgaben netto übrig bleibt. Grenzsteuersatz sofort sichtbar. Kostenlos.",
+    "Gehaltserhöhung-Rechner 2026: Wie viel von der Gehaltserhöhung nach Steuern und Sozialabgaben netto übrig bleibt — mit sofort sichtbarem Grenzsteuersatz.",
   keywords: [
     "gehaltserhöhung netto rechner",
     "gehaltserhöhung rechner",

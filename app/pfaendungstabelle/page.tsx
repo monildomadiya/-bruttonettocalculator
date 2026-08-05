@@ -5,7 +5,7 @@ import { Scale, AlertCircle, ChevronDown, Calculator, BookOpen } from "lucide-re
 export const metadata: Metadata = {
   title: "Pfändungstabelle 2026 — Aktuelle Pfändungsfreigrenzen",
   description:
-    "Pfändungstabelle 2026 mit aktuellen Pfändungsfreigrenzen nach § 850c ZPO. Pfändungsfreies Einkommen 2026: Grundfreibetrag 1.491,75 € + Erhöhung für Unterhaltspflichten. Alle Werte sofort abrufbar.",
+    "Pfändungstabelle 2026 mit den Pfändungsfreigrenzen nach § 850c ZPO: Grundfreibetrag 1.491,75 € plus Erhöhung für Unterhaltspflichten. Alle Werte sofort.",
   keywords: [
     "Pfändungstabelle 2026",
     "Pfändungstabelle",
