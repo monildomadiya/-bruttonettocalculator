@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr, Szenario, GRUNDFREIBETRAG } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
+import SupportButton from "@/components/SupportButton";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
@@ -1038,6 +1039,13 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 </div>
               </div>
             )}
+
+            {/* ── Support / Buy-me-a-coffee ──────────────────────────
+                Placed at the END of the result column on purpose: the
+                deep-link "Vollständige Analyse" CTA above drives pageviews
+                (ad revenue) and must not compete with a donation ask. Readers
+                who got this far are the ones most likely to give. */}
+            <SupportButton variant="card" lang={lang} placement="calculator_result" />
           </div>
 
         </div>

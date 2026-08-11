@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
+import SupportButton from "@/components/SupportButton";
 
 export default function SiteFooter() {
   const pathname = usePathname();
@@ -145,6 +146,17 @@ export default function SiteFooter() {
                   <ArrowRight size={16} />
                 </button>
               </div>
+            </div>
+
+            {/* Support — plain outbound link, no third-party embed (see SupportButton) */}
+            <div>
+              <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-[#16181D] mb-3">
+                UNTERSTÜTZEN
+              </p>
+              <p className="text-xs text-black/60 mb-3 font-medium">
+                Dieser Rechner bleibt kostenlos. Danke für jede Unterstützung.
+              </p>
+              <SupportButton variant="inline" lang="de" placement="footer" />
             </div>
           </div>
 
