@@ -71,11 +71,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const canonical = `${BASE}/krankenkasse/${kasse.slug}`;
   const satz = fmtPct(kasse.zusatzbeitrag);
   const gesamt = fmtPct(gesamtbeitragssatz(kasse.zusatzbeitrag));
-  const title = `${kasse.name} Zusatzbeitrag 2026: ${satz} — was bleibt netto?`;
+  // Längen bewusst knapp gehalten: Google schneidet Titles über ~60 und
+  // Descriptions über ~165 Zeichen ab, und abgeschnittene Snippets kosten CTR.
+  // Der längste Kassenname ("HEK — Hanseatische Krankenkasse") bleibt mit
+  // diesem Muster bei 57 Zeichen.
+  const title = `${kasse.name} Zusatzbeitrag 2026: ${satz}`;
   const description =
-    `${kasse.name}: Zusatzbeitrag ${satz}, Gesamtbeitrag ${gesamt} (§ 241, § 242 SGB V). ` +
-    `Berechnen Sie, wie viel Netto der Satz Ihrer Kasse kostet — mit Vergleich zum Durchschnitt von ` +
-    `${fmtPct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}. Stand ${ZUSATZBEITRAG_STAND}.`;
+    `${kasse.name}: Zusatzbeitrag ${satz}, Gesamtbeitrag ${gesamt}. ` +
+    `Was der Satz Ihrer Kasse netto kostet — mit Vergleich zum Durchschnitt ` +
+    `(${fmtPct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}).`;
 
   return {
     title,

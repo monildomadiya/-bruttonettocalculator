@@ -59,12 +59,12 @@ export async function generateMetadata({ params }: { params: { gruppe: string } 
   const stufen = belegteStufen(g);
   const min = stufen[0][1];
   const max = stufen[stufen.length - 1][1];
-  const nettoStufe1 = netto(min, 1, false);
 
   const title = `TVöD ${g.label} 2026: Gehalt ${formatEUR(min)}–${formatEUR(max)} + Netto`;
+  // Unter 165 Zeichen halten — längere Descriptions schneidet Google ab.
   const description =
-    `TVöD ${g.label} (VKA) ab ${GUELTIG_AB}: Tabellenentgelt ${formatEUR(min)} bis ${formatEUR(max)} brutto im Monat. ` +
-    `Mit Netto je Stufe — in Stufe 1 bleiben in Steuerklasse I rund ${formatEUR(nettoStufe1)} netto. Stand ${ENTGELTTABELLE_STAND}.`;
+    `TVöD ${g.label} 2026: ${formatEUR(min)} bis ${formatEUR(max)} brutto im Monat — ` +
+    `mit Netto je Stufe für Steuerklasse I und III. Gültig ab ${GUELTIG_AB}.`;
 
   return {
     title,

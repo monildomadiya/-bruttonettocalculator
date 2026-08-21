@@ -32,9 +32,9 @@ const JAEG_BESTAND_JAHR = 69750;
 const eur = (v: number) => v.toLocaleString("de-DE") + " €";
 
 export const metadata: Metadata = {
-  title: "Beitragsbemessungsgrenze 2026: 69.750 € & 101.400 € — alle Werte",
+  title: "Beitragsbemessungsgrenze 2026: 69.750 € & 101.400 €",
   description:
-    "Beitragsbemessungsgrenze 2026: 69.750 € (Kranken-/Pflegeversicherung) und 101.400 € (Renten-/Arbeitslosenversicherung), monatlich 5.812,50 € und 8.450 €. Plus Versicherungspflichtgrenze 77.400 € und was die Grenzen netto bedeuten.",
+    "Beitragsbemessungsgrenze 2026: 69.750 € für Kranken- und Pflegeversicherung, 101.400 € für Rente und Arbeitslosigkeit — plus Versicherungspflichtgrenze 77.400 €.",
   keywords: [
     "beitragsbemessungsgrenze 2026",
     "beitragsbemessungsgrenze krankenversicherung 2026",

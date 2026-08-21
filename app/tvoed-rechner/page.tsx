@@ -29,7 +29,7 @@ const CANONICAL = `${BASE}/tvoed-rechner`;
 export const metadata: Metadata = {
   title: "TVöD Entgelttabelle 2026: alle Gruppen, Stufen & Netto",
   description:
-    `TVöD-VKA Entgelttabelle ab ${GUELTIG_AB} (+${TARIFERHOEHUNG_PROZENT.toString().replace(".", ",")} %): alle Entgeltgruppen E 1 bis E 15Ü mit allen Stufen — und was davon netto bleibt. Kostenlos und mit Stand ${ENTGELTTABELLE_STAND}.`,
+    `TVöD-VKA Entgelttabelle ab ${GUELTIG_AB} (+${TARIFERHOEHUNG_PROZENT.toString().replace(".", ",")} %): alle Entgeltgruppen E 1 bis E 15Ü mit allen Stufen — und was davon netto bleibt.`,
   keywords: [
     "tvöd tabelle 2026",
     "tvöd entgelttabelle 2026",
