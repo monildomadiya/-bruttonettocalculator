@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Script from "next/script";
 import { CheckCircle2, Calculator, BookOpen, HelpCircle, ArrowRight, Shield, Lock, Calendar, Newspaper } from "lucide-react";
 import "./globals.css";
 import MobileMenu from "@/components/MobileMenu";
@@ -10,6 +9,8 @@ import RelatedToolsAuto from "@/components/RelatedToolsAuto";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import AdsProvider from "@/components/AdsProvider";
+import SiteWideAd from "@/components/SiteWideAd";
+import { AD_CLIENT, ADSENSE_LOADER_SRC } from "@/lib/adsConfig";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bruttonettocalculator.com"),
@@ -92,7 +93,7 @@ export const metadata: Metadata = {
     "geo.region": "DE",
     "geo.placename": "Deutschland",
     "DC.language": "de",
-    "google-adsense-account": "ca-pub-5005860402493815",
+    "google-adsense-account": AD_CLIENT,
   },
 };
 
@@ -154,12 +155,41 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de">
       <body className="font-body bg-[#F4F5F7] text-[#16181D] antialiased">
+        {/*
+          AdSense loader — first thing in <body>, so the browser starts it while
+          it is still parsing the document (~0.1 s).
+
+          It used to be injected by a client component that first hydrated, then
+          fetched /api/settings/ads, which hit MySQL. On production that pushed the
+          ad script to ~3.0 s and the Funding-Choices consent prompt to ~3.8 s on
+          desktop — far worse on mobile — so short calculator sessions regularly
+          ended before a single ad, or the consent prompt, was ever requested.
+
+          Deliberately a plain <script> rather than next/script: `beforeInteractive`
+          renders into <html>, which is invalid markup for a script and made React
+          throw away the server HTML and re-render the whole document on hydration.
+          A raw async tag in <body> gets the same early start with none of that.
+          On/off control and the admin-page exclusion live in <GoogleAdSense>.
+
+          data-ad-frequency-hint raises Auto Ads density: these are long pages
+          (the homepage is ~14.7 viewports) and Auto Ads was placing almost
+          nothing on them.
+        */}
+        <script
+          async
+          src={ADSENSE_LOADER_SRC}
+          crossOrigin="anonymous"
+          data-ad-frequency-hint="30s"
+        />
        <AdsProvider>
 
         {/* ── Sticky glass header (conditional) ───────────────────────── */}
         <SiteHeader />
 
         <main>{children}</main>
+
+        {/* ── End-of-content ad (site-wide, one guaranteed slot per page) ─ */}
+        <SiteWideAd />
 
         {/* ── Auto "Ähnliche Rechner" internal-linking block (per-page) ── */}
         <RelatedToolsAuto />

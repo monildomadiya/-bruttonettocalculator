@@ -13,7 +13,14 @@ function isAuthenticated(): boolean {
 export async function GET() {
   try {
     const settings = await getAdsSettings();
-    return NextResponse.json({ success: true, settings });
+    // Cached: this is hit on every single page view, and it only carries the
+    // ads on/off switch now that the AdSense loader ships statically in the
+    // layout. Without a cache header every visitor cost a MySQL round-trip.
+    // A few minutes of staleness on an admin toggle is fine.
+    return NextResponse.json(
+      { success: true, settings },
+      { headers: { "Cache-Control": "public, max-age=300, stale-while-revalidate=3600" } }
+    );
   } catch (err: any) {
     console.error("Failed to load ads settings:", err?.message);
     return NextResponse.json({ success: false, error: "Failed to load settings." }, { status: 500 });

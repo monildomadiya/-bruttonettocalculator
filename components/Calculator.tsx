@@ -10,6 +10,7 @@ import {
 import { calculateNetto, formatEUR, Steuerjahr, Szenario, GRUNDFREIBETRAG } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import SupportButton from "@/components/SupportButton";
+import AdUnit from "@/components/AdUnit";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
@@ -909,6 +910,12 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
               <span>{t.avgRate}: <strong className="text-[#16181D] ml-1 font-bold">{result.durchschnittssteuersatzPct.toFixed(1)} %</strong></span>
             </span>
           </div>
+
+          {/* ── In-content ad, placed at the result ───────────────────────
+              The user has just read their Nettogehalt and the full breakdown:
+              this is the highest-attention point on the page, and it sits below
+              the fold so it never delays or covers the calculator itself. ── */}
+          <AdUnit slot="result" format="in-article" className="!my-6" />
 
           {/* ── Expandable: Bundesland Comparison ──────────────────────── */}
           <div className="mt-4 bg-[#F1F3F5] border border-black/[0.10] rounded-2xl overflow-hidden transition-all shadow-lg">
