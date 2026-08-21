@@ -81,6 +81,15 @@ export interface CalculatorResult {
     pflege: number;
     summeMonat: number;
     summeJahr: number;
+    /**
+     * Die tatsächlich angewandten Arbeitnehmer-Beitragssätze in Prozent.
+     * KV und PV sind nicht konstant — die KV hängt am gewählten kassen-
+     * individuellen Zusatzbeitrag, die PV an Kinderlosigkeit und Sachsen.
+     * Ohne diese Werte müsste die Oberfläche pauschale Sätze anzeigen, die
+     * dann nicht zur ausgewiesenen Summe passen.
+     */
+    krankenSatzAnPct: number;
+    pflegeSatzAnPct: number;
   };
   steuer: {
     zvE: number;
@@ -473,6 +482,8 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
       pflege,
       summeMonat: svSummeJahr / 12,
       summeJahr: svSummeJahr,
+      krankenSatzAnPct: kvSatzAn * 100,
+      pflegeSatzAnPct: pvSatzAn * 100,
     },
     steuer: {
       zvE,

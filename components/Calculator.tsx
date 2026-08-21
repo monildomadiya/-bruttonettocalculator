@@ -96,7 +96,7 @@ const T: Record<Lang, Record<string, string>> = {
     churchTax: "Kirchensteuer",
     totalSv: "Sozialabgaben Gesamt",
     pension: "Rentenversicherung (9,30 %)",
-    health: "Krankenversicherung (ca. 8,75 %)",
+    health: "Krankenversicherung",
     care: "Pflegeversicherung",
     unemployment: "Arbeitslosenversicherung (1,30 %)",
     marginalRate: "Grenzsteuersatz",
@@ -176,7 +176,7 @@ const T: Record<Lang, Record<string, string>> = {
     churchTax: "Church tax",
     totalSv: "Total social security",
     pension: "Pension insurance (9.30%)",
-    health: "Health insurance (approx. 8.75%)",
+    health: "Health insurance",
     care: "Long-term care insurance",
     unemployment: "Unemployment insurance (1.30%)",
     marginalRate: "Marginal tax rate",
@@ -256,7 +256,7 @@ const T: Record<Lang, Record<string, string>> = {
     churchTax: "Podatek kościelny",
     totalSv: "Składki społeczne łącznie",
     pension: "Ubezpieczenie emerytalne (9,30%)",
-    health: "Ubezpieczenie zdrowotne (ok. 8,75%)",
+    health: "Ubezpieczenie zdrowotne",
     care: "Ubezpieczenie pielęgnacyjne",
     unemployment: "Ubezpieczenie na wypadek bezrobocia (1,30%)",
     marginalRate: "Krańcowa stawka podatku",
@@ -494,6 +494,15 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   }, [bruttoMonat, jahr, steuerklasse]);
 
   const showVal = (monthly: number) => isJahresansicht ? monthly * 12 : monthly;
+
+  // KV- und PV-Satz sind nicht fix: die KV hängt am Zusatzbeitrag der gewählten
+  // Kasse, die PV an Kinderlosigkeit und Sachsen. Der Satz wird daher aus dem
+  // Ergebnis gelesen und lokalisiert formatiert, statt im Label festzustehen.
+  const formatPct = (value: number) =>
+    new Intl.NumberFormat(lang === "en" ? "en-GB" : lang === "pl" ? "pl-PL" : "de-DE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value) + " %";
   const sm = result.sv.summeMonat;
   const tm = result.steuer.summeMonat;
   const nm = result.nettoMonat;
@@ -882,11 +891,11 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.rente / 12))}</span>
                 </div>
                 <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-black/[0.05] gap-2">
-                  <span className="leading-snug">{t.health}</span>
+                  <span className="leading-snug">{t.health} <span className="text-black/45">({formatPct(result.sv.krankenSatzAnPct)})</span></span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.kranken / 12))}</span>
                 </div>
                 <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-black/[0.05] gap-2">
-                  <span className="leading-snug">{t.care}</span>
+                  <span className="leading-snug">{t.care} <span className="text-black/45">({formatPct(result.sv.pflegeSatzAnPct)})</span></span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.pflege / 12))}</span>
                 </div>
                 <div className="flex justify-between items-start sm:items-center py-1.5 gap-2">
