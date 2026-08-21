@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { KRANKENKASSEN_2026 } from "@/data/krankenkassen";
 import { dbQuery, Article } from "@/lib/db";
 import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts } from "@/data/wage-stats";
 import { BUNDESLAENDER } from "@/data/bundeslaender";
@@ -58,6 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/mehrwertsteuer-rechner",
     "/steuerfreibetrag-2026",
     "/brutto-netto-rechner-krankenkasse",
+    "/beitragsbemessungsgrenze-2026",
     "/durchschnittsgehalt-deutschland",
     "/private-krankenversicherung-vs-gesetzlich",
     "/witwenrente-rechner",
@@ -94,6 +96,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/datenschutz",
   ];
 
+  // Kassen-Detailseiten (/krankenkasse/<slug>) — aus den Daten erzeugt, damit
+  // eine neue Kasse in data/krankenkassen.ts automatisch in der Sitemap landet.
+  const krankenkassenRoutes: string[] = KRANKENKASSEN_2026.map((k) => `/krankenkasse/${k.slug}`);
+
   const sitemapEntries: MetadataRoute.Sitemap = [];
 
   for (const path of calculatorRoutes) {
@@ -102,6 +108,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: engineUpdated,
       ...(clusterPaths.has(path) ? { alternates: { languages: languageCluster } } : {}),
     });
+  }
+
+  for (const path of krankenkassenRoutes) {
+    sitemapEntries.push({ url: `${base}${path}`, lastModified: engineUpdated });
   }
 
   for (const path of infoRoutes) {

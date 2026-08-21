@@ -18,9 +18,14 @@ import {
  * (calculateNetto), nur mit dem Zusatzbeitrag der gewählten Kasse statt des
  * amtlichen Durchschnittswerts von 2,9 %.
  */
-export default function KrankenkassenRechner() {
+export default function KrankenkassenRechner({
+  initialSlug = "tk",
+}: {
+  /** Vorausgewählte Kasse — die Kassen-Detailseiten starten mit ihrer eigenen. */
+  initialSlug?: string;
+} = {}) {
   const [bruttoStr, setBruttoStr] = useState("4000");
-  const [kasseSlug, setKasseSlug] = useState("tk");
+  const [kasseSlug, setKasseSlug] = useState(initialSlug);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kinderlos, setKinderlos] = useState(true);
 

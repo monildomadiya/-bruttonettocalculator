@@ -265,7 +265,9 @@ export default function KrankenkassePage() {
               {kassenTabelle.map((k) => (
                 <tr key={k.slug} className="border-t border-black/[0.06]">
                   <th scope="row" className="px-4 py-3 font-semibold text-[#16181D] text-left">
-                    {k.name}
+                    <Link href={`/krankenkasse/${k.slug}`} className="hover:text-[#E60A1C] hover:underline transition-colors">
+                      {k.name}
+                    </Link>
                     {!k.bundesweit && k.region && (
                       <span className="block text-xs font-normal text-black/50">nur {k.region}</span>
                     )}
