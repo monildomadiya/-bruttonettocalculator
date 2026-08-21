@@ -39,6 +39,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/brutto-netto-rechner-beamte", label: "Beamten-Rechner", icon: Landmark, description: "Netto für Beamte — ohne Sozialabgaben" },
       { href: "/steuerfreibetrag-2026", label: "Steuerfreibetrag 2026", icon: Scale, description: "Grundfreibetrag & alle Freibeträge" },
       { href: "/beitragsbemessungsgrenze-2026", label: "Beitragsbemessungsgrenze 2026", icon: Scale, description: "69.750 € & 101.400 € · alle Grenzwerte" },
+      { href: "/tvoed-rechner", label: "TVöD-Rechner 2026", icon: Landmark, description: "Entgelttabelle mit Netto je Gruppe" },
       { href: "/brutto-netto-rechner-krankenkasse", label: "Rechner mit Krankenkasse", icon: HeartPulse, description: "AOK, TK & Co. · Zusatzbeitrag 2026" },
       { href: "/durchschnittsgehalt-deutschland", label: "Durchschnittsgehalt Deutschland", icon: BarChart3, description: "Wo steht Ihr Gehalt im Vergleich?" },
       { href: "/brutto-netto-rechner-2026", label: "Rechner 2026", icon: Calendar, description: "Amtliche Werte 2026" },

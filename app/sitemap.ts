@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { KRANKENKASSEN_2026 } from "@/data/krankenkassen";
+import { TVOED_VKA_2026 } from "@/data/tvoed";
 import { dbQuery, Article } from "@/lib/db";
 import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts } from "@/data/wage-stats";
 import { BUNDESLAENDER } from "@/data/bundeslaender";
@@ -60,6 +61,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/steuerfreibetrag-2026",
     "/brutto-netto-rechner-krankenkasse",
     "/beitragsbemessungsgrenze-2026",
+    "/tvoed-rechner",
     "/durchschnittsgehalt-deutschland",
     "/private-krankenversicherung-vs-gesetzlich",
     "/witwenrente-rechner",
@@ -100,6 +102,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // eine neue Kasse in data/krankenkassen.ts automatisch in der Sitemap landet.
   const krankenkassenRoutes: string[] = KRANKENKASSEN_2026.map((k) => `/krankenkasse/${k.slug}`);
 
+  // TVöD-Entgeltgruppen (/tvoed/<slug>) — ebenfalls aus den Daten erzeugt.
+  const tvoedRoutes: string[] = TVOED_VKA_2026.map((g) => `/tvoed/${g.slug}`);
+
   const sitemapEntries: MetadataRoute.Sitemap = [];
 
   for (const path of calculatorRoutes) {
@@ -111,6 +116,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   for (const path of krankenkassenRoutes) {
+    sitemapEntries.push({ url: `${base}${path}`, lastModified: engineUpdated });
+  }
+
+  for (const path of tvoedRoutes) {
     sitemapEntries.push({ url: `${base}${path}`, lastModified: engineUpdated });
   }
 

@@ -59,6 +59,7 @@ export default function SiteFooter() {
               <li><Link href="/steuerrueckerstattung-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerrückerstattung-Rechner</Link></li>
               <li><Link href="/bav-rechner"               className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">bAV-Rechner (Entgeltumwandlung)</Link></li>
               <li><Link href="/beitragsbemessungsgrenze-2026" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Beitragsbemessungsgrenze 2026</Link></li>
+              <li><Link href="/tvoed-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">TVöD-Rechner 2026</Link></li>
               <li><Link href="/immobilienkredit-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Immobilienkredit-Rechner</Link></li>
               <li><Link href="/steuerklassenwechsel-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerklassenwechsel</Link></li>
               <li><Link href="/gehaltserhoehung-rechner"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Gehaltserhöhung-Rechner</Link></li>
