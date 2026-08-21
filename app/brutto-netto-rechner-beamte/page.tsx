@@ -159,7 +159,7 @@ export default function BeamteRechnerPage() {
             {
               icon: ShieldCheck,
               title: "Keine Sozialabgaben",
-              text: "Keine Renten- (9,3 %), Arbeitslosen- (1,3 %), Kranken- (~8,75 %) und Pflegeversicherung (~2,5 %) — zusammen rund 21 % Ersparnis gegenüber Angestellten (bis zu den Bemessungsgrenzen).",
+              text: "Keine Renten- (9,3 %), Arbeitslosen- (1,3 %), Kranken- (~8,75 %) und Pflegeversicherung (~1,8 %) — zusammen rund 21 % Ersparnis gegenüber Angestellten (bis zu den Bemessungsgrenzen).",
             },
             {
               icon: HeartPulse,

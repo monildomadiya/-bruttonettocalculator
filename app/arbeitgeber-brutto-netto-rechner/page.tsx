@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "Was ist der Arbeitgeberanteil und wie hoch ist er?",
-    a: "Der Arbeitgeberanteil ist der Teil der Sozialversicherungsbeiträge, den der Arbeitgeber zusätzlich zum Bruttogehalt trägt: rund 9,3 % Rentenversicherung, 1,3 % Arbeitslosenversicherung, ca. 8,75 % Krankenversicherung und 1,7 % Pflegeversicherung — in Summe etwa 21 % des Bruttogehalts, zzgl. Umlagen U1/U2/U3.",
+    a: "Der Arbeitgeberanteil ist der Teil der Sozialversicherungsbeiträge, den der Arbeitgeber zusätzlich zum Bruttogehalt trägt: rund 9,3 % Rentenversicherung, 1,3 % Arbeitslosenversicherung, ca. 8,75 % Krankenversicherung und 1,8 % Pflegeversicherung — in Summe etwa 21 % des Bruttogehalts, zzgl. Umlagen U1/U2/U3.",
   },
   {
     q: "Was bedeutet Arbeitgeberbrutto?",

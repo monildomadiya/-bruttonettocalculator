@@ -33,7 +33,7 @@ const steuerBegriffe: Begriff[] = [
   },
   {
     titel: "Solidaritätszuschlag",
-    kurz: "5,5 % der Einkommensteuer, umgangssprachlich „Soli”. Seit 2021 zahlen ihn nur noch Besserverdienende in voller Höhe — bei Ledigen entfällt er komplett bis zu einer Einkommensteuer von 18.130 € im Jahr, bei Verheirateten bis 36.260 €.",
+    kurz: "5,5 % der Einkommensteuer, umgangssprachlich „Soli”. Seit 2021 zahlen ihn nur noch Besserverdienende in voller Höhe — bei Ledigen entfällt er komplett bis zu einer Einkommensteuer von 20.350 € im Jahr, bei Verheirateten bis 40.700 €.",
   },
   {
     titel: "Spitzensteuersatz",
@@ -100,7 +100,7 @@ const sozialBegriffe: Begriff[] = [
   },
   {
     titel: "Pflegeversicherung",
-    kurz: "Beitragssatz von 3,6 % des Bruttogehalts, für kinderlose Versicherte ab 23 Jahren zusätzlich um 0,6 Prozentpunkte erhöht. Der Arbeitgeberanteil ist gesetzlich auf 1,7 % fixiert, den Rest zahlt der Arbeitnehmer.",
+    kurz: "Beitragssatz von 3,6 % des Bruttogehalts, für kinderlose Versicherte ab 23 Jahren zusätzlich um 0,6 Prozentpunkte erhöht. Den Grundbeitrag tragen Arbeitgeber und Arbeitnehmer je zur Hälfte (1,8 %); den Kinderlosenzuschlag zahlt der Arbeitnehmer allein.",
   },
   {
     titel: "Arbeitslosenversicherung",

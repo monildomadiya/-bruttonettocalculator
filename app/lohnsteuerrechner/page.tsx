@@ -60,7 +60,7 @@ const faqs = [
   },
   {
     q: "Wann fällt der Solidaritätszuschlag an?",
-    a: "Der Solidaritätszuschlag (5,5 % der Lohnsteuer) wird 2026 erst oberhalb einer Freigrenze von 19.950 € Jahres-Lohnsteuer (Einzelveranlagung) fällig und steigt in einer Milderungszone langsam an. Die allermeisten Arbeitnehmer zahlen daher keinen Soli mehr.",
+    a: "Der Solidaritätszuschlag (5,5 % der Lohnsteuer) wird 2026 erst oberhalb einer Freigrenze von 20.350 € Jahres-Lohnsteuer (Einzelveranlagung) fällig und steigt in einer Milderungszone langsam an. Die allermeisten Arbeitnehmer zahlen daher keinen Soli mehr.",
   },
   {
     q: "Welche Steuerklasse zahlt die niedrigste Lohnsteuer?",

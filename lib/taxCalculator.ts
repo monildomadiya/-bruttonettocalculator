@@ -104,6 +104,11 @@ const RECHENGROESSEN_2026 = {
   kvZusatzbeitragDurchschnitt: 0.029,
   pvSatzBasis: 0.036,
   pvZuschlagKinderlos: 0.006, // ab 23 Jahre ohne Kinder: 3.6% -> 4.2%
+  // § 58 SGB XI: Grundbeitrag paritätisch, also je 1,8 % bei 3,6 %. In Sachsen
+  // trägt der AN einen Prozentpunkt allein → AG 1,3 % / AN 2,3 %. Der
+  // Kinderlosenzuschlag geht immer allein zulasten des Arbeitnehmers.
+  pvAgAnteil: 0.018,
+  pvAgAnteilSachsen: 0.013,
   rvSatz: 0.186,
   alvSatz: 0.026,
   werbungskostenPauschale: 1230,
@@ -353,10 +358,11 @@ export function resolveSteuerkontext(jahr: Steuerjahr, szenario: Szenario = "stu
 }
 
 // Solidaritätszuschlag mit Milderungszone (20%-Abschmelzung)
-// Freigrenze 2026: 18.130 € ESt (Einzelveranlagung) / 36.260 € (Splitting).
+// Freigrenze 2026: 20.350 € ESt (Einzelveranlagung) / 40.700 € (Splitting)
+// — § 3 Abs. 3 SolZG, angehoben von 19.950 €/39.900 € (2025).
 // `faktor` verschiebt die Freigrenze in den 2027-Szenarien mit den Tarifeckwerten.
 export function soliBerechnen(estJahr: number, verheiratet: boolean, faktor = 1): number {
-  const freigrenze = (verheiratet ? 36260 : 18130) * faktor;
+  const freigrenze = (verheiratet ? 40700 : 20350) * faktor;
   if (estJahr <= freigrenze) return 0;
   const voll = estJahr * 0.055;
   const abschmelzung = (estJahr - freigrenze) * 0.2;
@@ -400,9 +406,10 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   const zusatzbeitrag = input.kvZusatzbeitrag ?? r.kvZusatzbeitragDurchschnitt;
   const kvSatzAn = (r.kvSatz + zusatzbeitrag) / 2;
   const pvSatzGesamt = r.pvSatzBasis + (input.kinderlosUeber23 ? r.pvZuschlagKinderlos : 0);
-  // Arbeitgeberanteil PV ist regulär 1,7 % fix; AN trägt den Rest.
-  // Sachsen-Sonderfall: AG trägt nur 1,2 %, AN daher 0,5 % mehr.
-  const pvAgAnteil = input.sachsen ? 0.012 : 0.017;
+  // Arbeitgeberanteil PV: die Hälfte des Grundbeitrags (1,8 % bei 3,6 %); den
+  // Kinderlosenzuschlag trägt der AN allein. Sachsen-Sonderfall: der AN trägt
+  // einen Prozentpunkt allein, AG daher nur 1,3 %.
+  const pvAgAnteil = input.sachsen ? r.pvAgAnteilSachsen : r.pvAgAnteil;
   const pvSatzAn = pvSatzGesamt - pvAgAnteil;
 
   const kranken = kvPvBemessung * kvSatzAn;
@@ -644,7 +651,7 @@ export function formatEUR(value: number): string {
 //  - RV:  9,3 % (halber Satz), bis RV/ALV-BBG
 //  - ALV: 1,3 % (halber Satz), bis RV/ALV-BBG
 //  - KV:  8,75 % (halber Satz inkl. hälftigem Zusatzbeitrag), bis KV/PV-BBG
-//  - PV:  1,7 % fix (AG-Anteil), bis KV/PV-BBG (Sachsen-Sonderfall unberücksichtigt)
+//  - PV:  1,8 % (halber Grundbeitrag), bis KV/PV-BBG (Sachsen-Sonderfall unberücksichtigt)
 // Nicht enthalten sind die Umlagen U1/U2/U3 (Insolvenzgeldumlage), die je nach
 // Krankenkasse/Betrieb ~1,5–2 % ausmachen — im Rechner separat ausgewiesen.
 export interface ArbeitgeberkostenResult {
@@ -687,7 +694,7 @@ export function calculateArbeitgeberkosten(
   const renteJahr = rvAlvBemessung * (r.rvSatz / 2);
   const arbeitslosenJahr = rvAlvBemessung * (r.alvSatz / 2);
   const krankenJahr = kvPvBemessung * kvSatzAg;
-  const pflegeJahr = kvPvBemessung * 0.017; // AG-Anteil PV fix 1,7 %
+  const pflegeJahr = kvPvBemessung * r.pvAgAnteil; // AG-Anteil PV: halber Grundbeitrag, 1,8 %
 
   const agSummeJahr = renteJahr + arbeitslosenJahr + krankenJahr + pflegeJahr;
   const umlagenJahr = mitUmlagen ? kvPvBemessung * UMLAGEN_SATZ_SCHAETZUNG : 0;

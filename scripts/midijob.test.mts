@@ -45,7 +45,7 @@ assert("€1200 employee SV < full-rate (Midijob relief applies)", at1200.sv.sum
 assert("€1200 net is below gross and positive", at1200.nettoMonat > 900 && at1200.nettoMonat < 1200);
 
 // The reduced employee base (854.69) times the total AN SV rate should match the SV sum.
-const anRate = (0.146 + 0.029) / 2 + (0.036 + 0.006 - 0.017) + 0.186 / 2 + 0.026 / 2; // KV/2 + PV(AN,kinderlos) + RV/2 + ALV/2
+const anRate = (0.146 + 0.029) / 2 + (0.036 + 0.006 - 0.018) + 0.186 / 2 + 0.026 / 2; // KV/2 + PV(AN,kinderlos) + RV/2 + ALV/2
 approx("€1200 SV sum = 854,69 × AN-Satz", at1200.sv.summeMonat, 854.6886185 * anRate, 0.02);
 
 // --- Continuity at the top boundary: €2,000 equals the normal (non-reduced) calc ---

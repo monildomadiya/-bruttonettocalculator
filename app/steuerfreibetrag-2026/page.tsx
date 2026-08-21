@@ -107,8 +107,8 @@ const freibetraege = [
   },
   {
     name: "Solidaritätszuschlag-Freigrenze",
-    wert: "18.130 € ESt",
-    paar: "36.260 € (Splitting)",
+    wert: "20.350 € ESt",
+    paar: "40.700 € (Splitting)",
     desc: "Erst wenn die festgesetzte Einkommensteuer diese Freigrenze übersteigt, fällt (abgeschmolzen) Soli an — rund 90 % der Steuerzahler zahlen keinen.",
     link: null,
   },

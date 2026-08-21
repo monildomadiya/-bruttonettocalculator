@@ -23,7 +23,7 @@ const STEUERKLASSE_INFO: Record<Steuerklasse, string> = {
 const faqs = [
   {
     q: "Was ist der Arbeitgeberanteil und wie hoch ist er?",
-    a: "Der Arbeitgeberanteil ist der Teil der Sozialversicherungsbeiträge, den der Arbeitgeber zusätzlich zum Bruttogehalt trägt. Er umfasst rund 9,3 % Rentenversicherung, 1,3 % Arbeitslosenversicherung, ca. 8,75 % Krankenversicherung (inkl. halbem Zusatzbeitrag) und 1,7 % Pflegeversicherung. In Summe rund 21 % des Bruttogehalts — hinzu kommen die Umlagen U1/U2/U3.",
+    a: "Der Arbeitgeberanteil ist der Teil der Sozialversicherungsbeiträge, den der Arbeitgeber zusätzlich zum Bruttogehalt trägt. Er umfasst rund 9,3 % Rentenversicherung, 1,3 % Arbeitslosenversicherung, ca. 8,75 % Krankenversicherung (inkl. halbem Zusatzbeitrag) und 1,8 % Pflegeversicherung. In Summe rund 21 % des Bruttogehalts — hinzu kommen die Umlagen U1/U2/U3.",
   },
   {
     q: "Was bedeutet Arbeitgeberbrutto?",
@@ -161,7 +161,7 @@ export default function ArbeitgeberRechner({ content }: { content?: React.ReactN
                 <Row label="Rentenversicherung (9,3 %)" value={formatEUR(ag.ag.rente)} />
                 <Row label="Arbeitslosenvers. (1,3 %)" value={formatEUR(ag.ag.arbeitslosen)} />
                 <Row label="Krankenversicherung (≈ 8,75 %)" value={formatEUR(ag.ag.kranken)} />
-                <Row label="Pflegeversicherung (1,7 %)" value={formatEUR(ag.ag.pflege)} />
+                <Row label="Pflegeversicherung (1,8 %)" value={formatEUR(ag.ag.pflege)} />
                 {mitUmlagen && <Row label="Umlagen U1/U2/U3 (ca.)" value={formatEUR(ag.umlagenMonat)} />}
               </div>
             </div>
@@ -246,7 +246,7 @@ export default function ArbeitgeberRechner({ content }: { content?: React.ReactN
             <strong className="text-[#16181D]">Arbeitslosenversicherung</strong> (1,3 %) und{" "}
             <strong className="text-[#16181D]">Krankenversicherung</strong> (ca. 8,75 % inkl. hälftigem
             Zusatzbeitrag). Bei der <strong className="text-[#16181D]">Pflegeversicherung</strong> zahlt der
-            Arbeitgeber fix 1,7 % (Ausnahme Sachsen). Hinzu kommen die Umlagen U1 (Entgeltfortzahlung im
+            Arbeitgeber 1,8 % (halber Grundbeitrag; Ausnahme Sachsen). Hinzu kommen die Umlagen U1 (Entgeltfortzahlung im
             Krankheitsfall), U2 (Mutterschaft) und U3 (Insolvenzgeldumlage). In Summe liegt der Aufschlag bei
             rund <strong className="text-[#16181D]">21–23 %</strong> des Bruttogehalts.
           </p>

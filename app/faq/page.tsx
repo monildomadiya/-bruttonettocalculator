@@ -55,7 +55,7 @@ const faqJsonLd = {
       name: "Welche Abzüge hat man vom Brutto zum Netto?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Die Hauptabzüge sind: Lohnsteuer (Einkommensteuer), Solidaritätszuschlag, ggf. Kirchensteuer sowie die Arbeitnehmeranteile zur Renten- (9,3 %), Kranken- (ca. 8,75 %), Pflege- (1,9 % oder 2,5 %) und Arbeitslosenversicherung (1,3 %).",
+        text: "Die Hauptabzüge sind: Lohnsteuer (Einkommensteuer), Solidaritätszuschlag, ggf. Kirchensteuer sowie die Arbeitnehmeranteile zur Renten- (9,3 %), Kranken- (ca. 8,75 %), Pflege- (1,8 % oder 2,4 % ohne Kinder) und Arbeitslosenversicherung (1,3 %).",
       },
     },
     {
@@ -88,7 +88,7 @@ const faqs = [
   },
   {
     q: "Welche Abzüge hat man vom Brutto zum Netto?",
-    a: "Die Hauptabzüge sind: Lohnsteuer (Einkommensteuer), Solidaritätszuschlag, ggf. Kirchensteuer sowie die Arbeitnehmeranteile zur Renten- (9,3 %), Kranken- (ca. 8,75 %), Pflege- (1,9 % oder 2,5 %) und Arbeitslosenversicherung (1,3 %).",
+    a: "Die Hauptabzüge sind: Lohnsteuer (Einkommensteuer), Solidaritätszuschlag, ggf. Kirchensteuer sowie die Arbeitnehmeranteile zur Renten- (9,3 %), Kranken- (ca. 8,75 %), Pflege- (1,8 % oder 2,4 % ohne Kinder) und Arbeitslosenversicherung (1,3 %).",
   },
   {
     q: "Was ist der Unterschied zwischen den Steuerklassen?",

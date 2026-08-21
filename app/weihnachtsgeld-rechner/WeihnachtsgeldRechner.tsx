@@ -79,8 +79,8 @@ export default function WeihnachtsgeldRechner({ content }: { content?: React.Rea
 
     const restKvPv = Math.max(0, kvPvBbgJahr - bruttoJahrRegulaer);
     const restRvAlv = Math.max(0, rvAlvBbgJahr - bruttoJahrRegulaer);
-    // AN-Sätze: KV ≈ 8,75 %, PV 1,9 %, RV 9,3 %, ALV 1,3 %
-    const svKvPv = Math.min(weihnachtsgeld, restKvPv) * (0.0875 + 0.019);
+    // AN-Sätze: KV ≈ 8,75 %, PV 1,8 %, RV 9,3 %, ALV 1,3 %
+    const svKvPv = Math.min(weihnachtsgeld, restKvPv) * (0.0875 + 0.018);
     const svRvAlv = Math.min(weihnachtsgeld, restRvAlv) * (0.093 + 0.013);
     const svAufWeihnachtsgeld = svKvPv + svRvAlv;
 

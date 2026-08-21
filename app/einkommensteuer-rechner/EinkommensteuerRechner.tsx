@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: "Muss ich Solidaritätszuschlag zahlen?",
-    a: "Seit 2021 zahlen rund 90 % der Steuerpflichtigen keinen Soli mehr. Er fällt 2026 erst ab einer Einkommensteuer von 19.950 € (Einzelveranlagung) bzw. 39.900 € (Splitting) an und steigt in einer Milderungszone gleitend auf 5,5 % an.",
+    a: "Seit 2021 zahlen rund 90 % der Steuerpflichtigen keinen Soli mehr. Er fällt 2026 erst ab einer Einkommensteuer von 20.350 € (Einzelveranlagung) bzw. 40.700 € (Splitting) an und steigt in einer Milderungszone gleitend auf 5,5 % an.",
   },
 ];
 

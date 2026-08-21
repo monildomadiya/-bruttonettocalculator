@@ -54,7 +54,7 @@ const werte2026: { label: string; value: string }[] = [
   { label: "Pflegeversicherung", value: "3,6 % (+0,6 % für Kinderlose ab 23 J.)" },
   { label: "Werbungskostenpauschale", value: "1.230 € / Jahr" },
   { label: "Spitzensteuersatz", value: "42 % ab 69.878 € zvE (45 % ab 277.825 €)" },
-  { label: "Soli-Freigrenze (ledig)", value: "18.130 € Einkommensteuer" },
+  { label: "Soli-Freigrenze (ledig)", value: "20.350 € Einkommensteuer" },
 ];
 
 // `links` are rendered as visible "Mehr dazu" anchors under the answer; the
@@ -223,7 +223,7 @@ export default function Rechner2026Page() {
             </li>
             <li className="flex gap-3">
               <CheckCircle2 size={20} className="text-[#E60A1C] flex-shrink-0 mt-0.5" />
-              <span><strong className="text-[#16181D]">Solidaritätszuschlag:</strong> Fällt 2026 erst oberhalb der Freigrenze von 18.130 € Einkommensteuer (Ledige) an — für die meisten Arbeitnehmer also 0 €.</span>
+              <span><strong className="text-[#16181D]">Solidaritätszuschlag:</strong> Fällt 2026 erst oberhalb der Freigrenze von 20.350 € Einkommensteuer (Ledige) an — für die meisten Arbeitnehmer also 0 €.</span>
             </li>
             <li className="flex gap-3">
               <CheckCircle2 size={20} className="text-[#E60A1C] flex-shrink-0 mt-0.5" />
