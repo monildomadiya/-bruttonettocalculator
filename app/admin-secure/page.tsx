@@ -514,6 +514,26 @@ export default function AdminDashboard() {
           {/* ── Page Body ────────────────────────────────────────────── */}
           <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 max-w-[1400px] w-full mx-auto">
 
+            {/* ── Hinweis: Der Ratgeber liegt nicht mehr in der Datenbank ──
+                Ohne diesen Banner wäre der Editor eine stille Falle: Man legt
+                einen Artikel an, speichert ihn, und auf der Website passiert
+                nichts — weil /blog seine Beiträge aus content/blog/ liest.
+                Die CRUD-Oberfläche bleibt bestehen (die Daten sind intakt),
+                sie steuert aber nicht mehr, was Besucher sehen. */}
+            <div className="rounded-2xl border border-amber-500/30 bg-amber-50 px-5 py-4">
+              <p className="text-sm font-bold text-amber-900 mb-1">
+                Der Ratgeber wird nicht mehr hier gepflegt
+              </p>
+              <p className="text-sm text-amber-900/80 leading-relaxed">
+                Die Beiträge unter <code className="font-mono text-[13px]">/blog</code> kommen
+                jetzt aus Dateien im Repository (<code className="font-mono text-[13px]">content/blog/</code>)
+                und werden zur Buildzeit statisch erzeugt — schneller, ausfallsicher und
+                versioniert. Artikel, die Sie hier anlegen oder ändern, erscheinen{" "}
+                <strong>nicht</strong> auf der Website. Neue Beiträge entstehen über die
+                Ratgeber-Pipeline (Keyword-Recherche → Artikel → Commit).
+              </p>
+            </div>
+
             {/* Mobile search */}
             <div className="relative sm:hidden">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-black/30" size={14} />

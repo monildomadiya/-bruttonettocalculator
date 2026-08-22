@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { KRANKENKASSEN_2026 } from "@/data/krankenkassen";
 import { TVOED_VKA_2026 } from "@/data/tvoed";
-import { dbQuery, Article } from "@/lib/db";
+import { getAllPosts } from "@/lib/blog";
 import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts } from "@/data/wage-stats";
 import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { siteConfig } from "@/lib/authors";
@@ -157,31 +157,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Dynamically fetch all published blog articles for Google indexing
-  try {
-    const articles = await dbQuery<Article[]>("SELECT slug, updated_at, created_at FROM articles WHERE status = 'Published'");
-    if (articles && articles.length > 0) {
-      let newestArticle: Date | undefined;
-      for (const art of articles) {
-        const articleDate = art.updated_at ? new Date(art.updated_at) : (art.created_at ? new Date(art.created_at) : undefined);
-        if (articleDate && (!newestArticle || articleDate > newestArticle)) newestArticle = articleDate;
-        sitemapEntries.push({
-          url: `${base}/blog/${art.slug}`,
-          ...(articleDate ? { lastModified: articleDate } : {}),
-        });
-      }
-      // The /blog listing genuinely changes when its newest article does
-      sitemapEntries.push({
-        url: `${base}/blog`,
-        ...(newestArticle ? { lastModified: newestArticle } : {}),
-      });
-    } else {
-      sitemapEntries.push({ url: `${base}/blog` });
-    }
-  } catch (err) {
-    console.error("❌ Sitemap article fetch error:", err);
-    sitemapEntries.push({ url: `${base}/blog` });
+  // Ratgeber-Beiträge — aus der Datei-Registry (content/blog/), nicht mehr aus
+  // der DB. Ein neuer Artikel landet damit automatisch in der Sitemap, und ein
+  // DB-Ausfall kann die Beiträge nicht mehr aus dem Index kippen.
+  const posts = getAllPosts();
+  let newestArticle: Date | undefined;
+  for (const post of posts) {
+    const articleDate = new Date(post.updatedISO);
+    if (!newestArticle || articleDate > newestArticle) newestArticle = articleDate;
+    sitemapEntries.push({
+      url: `${base}/blog/${post.slug}`,
+      lastModified: articleDate,
+    });
   }
+  // Die /blog-Übersicht ändert sich tatsächlich, wenn ihr neuester Beitrag es tut
+  sitemapEntries.push({
+    url: `${base}/blog`,
+    ...(newestArticle ? { lastModified: newestArticle } : {}),
+  });
 
   return sitemapEntries;
 }

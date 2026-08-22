@@ -7,8 +7,17 @@ import { formatEUR } from "@/lib/taxCalculator";
 
 const WK_PAUSCHALE = 1230; // Arbeitnehmer-Pauschbetrag 2026
 
+/**
+ * Entfernungspauschale ab dem 1.1.2026: einheitlich 0,38 € ab dem ERSTEN
+ * Kilometer (§ 9 Abs. 1 Satz 3 EStG i. d. F. des Steueränderungsgesetzes 2025,
+ * Bundesrat vom 19.12.2025). Bis 2025 galt die Staffelung 0,30 € für die
+ * ersten 20 km und 0,38 € ab dem 21. km — die ist entfallen.
+ */
+const SATZ_PRO_KM = 0.38;
+const SATZ_BIS_2025 = { erste20: 0.30, ab21: 0.38 } as const;
+
 const faqs = [
-  { q: "Wie hoch ist die Pendlerpauschale 2026?", a: "Die Entfernungspauschale beträgt 0,30 € pro Entfernungskilometer für die ersten 20 km und 0,38 € ab dem 21. Kilometer — jeweils für die einfache Strecke (nicht Hin- und Rückweg) und pro Arbeitstag." },
+  { q: "Wie hoch ist die Pendlerpauschale 2026?", a: "Seit dem 1. Januar 2026 beträgt die Entfernungspauschale einheitlich 0,38 € pro Entfernungskilometer — und zwar ab dem ersten Kilometer. Die frühere Staffelung mit 0,30 € für die ersten 20 km ist entfallen. Angesetzt wird die einfache Strecke (nicht Hin- und Rückweg) pro Arbeitstag." },
   { q: "Zählt die einfache Strecke oder Hin- und Rückfahrt?", a: "Es zählt nur die einfache Entfernung zwischen Wohnung und erster Tätigkeitsstätte. Auch wer mit dem eigenen Auto fährt, rechnet nur eine Strecke pro Arbeitstag an." },
   { q: "Wirkt sich die Pendlerpauschale immer steuermindernd aus?", a: "Nur der Teil Ihrer Werbungskosten, der über dem Arbeitnehmer-Pauschbetrag von 1.230 € liegt, senkt zusätzlich die Steuer. Die ersten 1.230 € werden automatisch berücksichtigt, auch ohne Nachweis." },
   { q: "Welche Entfernung darf ich ansetzen?", a: "Grundsätzlich die kürzeste Straßenverbindung. Eine längere Strecke ist nur zulässig, wenn sie offensichtlich verkehrsgünstiger ist und regelmäßig genutzt wird." },
@@ -20,11 +29,14 @@ export default function PendlerpauschaleRechner() {
   const [satz, setSatz] = useState(30);
 
   const r = useMemo(() => {
-    const proTag = Math.min(km, 20) * 0.30 + Math.max(0, km - 20) * 0.38;
+    const proTag = km * SATZ_PRO_KM;
     const pauschale = proTag * tage;
+    // Vergleichswert nach altem Recht — macht den Reformgewinn sichtbar.
+    const proTagAlt = Math.min(km, 20) * SATZ_BIS_2025.erste20 + Math.max(0, km - 20) * SATZ_BIS_2025.ab21;
+    const mehrGegenueber2025 = (proTag - proTagAlt) * tage;
     const ueberPauschbetrag = Math.max(0, pauschale - WK_PAUSCHALE);
     const ersparnisJahr = ueberPauschbetrag * (satz / 100);
-    return { proTag, pauschale, ueberPauschbetrag, ersparnisJahr, ersparnisMonat: ersparnisJahr / 12 };
+    return { proTag, pauschale, ueberPauschbetrag, ersparnisJahr, ersparnisMonat: ersparnisJahr / 12, mehrGegenueber2025 };
   }, [km, tage, satz]);
 
   return (
@@ -42,8 +54,8 @@ export default function PendlerpauschaleRechner() {
           </h1>
           <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie Ihre <strong className="text-[#16181D]">Entfernungspauschale</strong> und die
-            mögliche <strong className="text-[#16181D]">Steuerersparnis</strong> — 0,30 € pro km, ab dem
-            21. Kilometer 0,38 €.
+            mögliche <strong className="text-[#16181D]">Steuerersparnis</strong> — seit 2026 einheitlich
+            0,38 € pro km ab dem ersten Kilometer.
           </p>
         </div>
       </section>
@@ -121,9 +133,10 @@ export default function PendlerpauschaleRechner() {
           <p>
             Die <strong className="text-[#16181D]">Pendlerpauschale</strong> (offiziell Entfernungspauschale)
             senkt als <strong className="text-[#16181D]">Werbungskosten</strong> Ihr zu versteuerndes Einkommen.
-            Sie beträgt <strong className="text-[#16181D]">0,30 € je Entfernungskilometer</strong> für die ersten
-            20 km und <strong className="text-[#16181D]">0,38 € ab dem 21. Kilometer</strong> — pro Arbeitstag und
-            nur für die einfache Strecke.
+            Sie beträgt seit dem 1. Januar 2026 einheitlich
+            <strong className="text-[#16181D]"> 0,38 € je Entfernungskilometer ab dem ersten Kilometer</strong>{" "}
+            — pro Arbeitstag und nur für die einfache Strecke. Die bis 2025 geltende Staffelung
+            (0,30 € für die ersten 20 km) wurde mit dem Steueränderungsgesetz 2025 abgeschafft.
           </p>
           <p>
             Wichtig: Der <strong className="text-[#16181D]">Arbeitnehmer-Pauschbetrag von 1.230 €</strong> wird

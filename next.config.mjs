@@ -20,12 +20,52 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Broken legacy blog URL (missing the /blog/ segment) → correct article.
-      // Was a hard 404 and the source of the broken canonical Semrush reported.
+      // ── Abgelöste Ratgeber-Beiträge ──────────────────────────────────────
+      // Der Ratgeber wurde neu aufgebaut: Die alten, dünnen Datenbank-Beiträge
+      // sind entfernt und durch recherchierte Artikel unter content/blog/
+      // ersetzt. Jede alte URL wird per 301 auf den thematisch nächsten neuen
+      // Beitrag bzw. die passende Rechner-Seite geleitet — löschen ohne
+      // Weiterleitung würde indexierte URLs zu 404 machen und die dort
+      // aufgelaufenen Signale verschenken.
+      //
+      // `/minijob-grenze-2026` fehlt hier bewusst: Der Slug bleibt bestehen und
+      // trägt jetzt den neu geschriebenen Beitrag — die URL bleibt gültig.
       {
+        // Legacy-URL ohne /blog/-Segment. Zeigte auf einen Beitrag, den es
+        // nicht mehr gibt; führt jetzt direkt auf die Reform-Seite 2027.
         source: "/brutto-netto-rechner-2026-mindestlohn-2027",
-        destination: "/blog/brutto-netto-rechner-2026-mindestlohn-2027",
+        destination: "/brutto-netto-rechner-2027",
         permanent: true,
+      },
+      {
+        source: "/blog/brutto-netto-rechner-2026-mindestlohn-2027",
+        destination: "/brutto-netto-rechner-2027",
+        statusCode: 301,
+      },
+      {
+        source: "/blog/teilzeit-und-steuerklasse-was-bleibt-vom-brutto",
+        destination: "/blog/steuerklasse-3-5-oder-4-4",
+        statusCode: 301,
+      },
+      {
+        source: "/blog/mindestlohn-deutschland-2023-5-fakten-die-sie-kennen-muessen",
+        destination: "/mindestlohn",
+        statusCode: 301,
+      },
+      {
+        source: "/blog/entgelttransparenzgesetz-2026-gehaltsauskunft",
+        destination: "/gehaltsrechner",
+        statusCode: 301,
+      },
+      {
+        source: "/blog/lohnrechner-mit-firmenwagen-geldwerter-vorteil-2026",
+        destination: "/blog/geldwerter-vorteil-firmenwagen",
+        statusCode: 301,
+      },
+      {
+        source: "/blog/steuererklaerung-2025-frist-31-juli-2026",
+        destination: "/blog/werbungskosten-2026",
+        statusCode: 301,
       },
       // Salary hub moved to the keyword-aligned top-level route.
       {

@@ -1,54 +1,25 @@
 import Link from "next/link";
 import { ArrowRight, BookOpen, Calculator } from "lucide-react";
-import { dbQuery, Article } from "@/lib/db";
+import { getRelatedPosts, readTime } from "@/lib/blog";
 
 /**
- * Reusable "Ähnliche Artikel" block for blog articles.
+ * "Ähnliche Artikel"-Block unter jedem Ratgeber-Beitrag.
  *
- * Fixes the Semrush "only one internal link" warning: every article now links
- * out to 2–3 genuinely related, *published* posts plus the most relevant
- * calculator, using descriptive German anchor text (the article headline), not
- * generic "mehr"/"weiterlesen" anchors. Rendered once per page.
+ * Quelle ist die Datei-Registry (content/blog/), nicht mehr die Datenbank —
+ * dadurch ist der Block Teil des statischen Builds und kann nicht mehr leer
+ * ausfallen, wenn MySQL wackelt. Die Auswahl erfolgt über getRelatedPosts:
+ * gleiche Kategorie zuerst, dann Tag-Überschneidungen, dann gemeinsame
+ * Rechner-Ziele. Das erzeugt echte Themen-Cluster statt beliebiger Links —
+ * und beschreibende Ankertexte (die Artikelüberschrift) statt "mehr".
  */
-export default async function RelatedArticles({
+export default function RelatedArticles({
   currentSlug,
-  category,
 }: {
   currentSlug: string;
+  /** Nicht mehr genutzt — die Kategorie kommt jetzt aus der Registry. */
   category?: string;
 }) {
-  let related: Article[] = [];
-
-  try {
-    // Prefer same-category articles, then backfill with the newest others.
-    if (category) {
-      const sameCat = await dbQuery<Article[]>(
-        "SELECT slug, headline, excerpt, category, read_time FROM articles WHERE status = 'Published' AND slug != ? AND category = ? ORDER BY created_at DESC LIMIT 3",
-        [currentSlug, category]
-      );
-      related = Array.isArray(sameCat) ? sameCat : [];
-    }
-    if (related.length < 3) {
-      const backfill = await dbQuery<Article[]>(
-        "SELECT slug, headline, excerpt, category, read_time FROM articles WHERE status = 'Published' AND slug != ? ORDER BY created_at DESC LIMIT 6",
-        [currentSlug]
-      );
-      const seen = new Set([currentSlug, ...related.map((r) => r.slug)]);
-      for (const art of Array.isArray(backfill) ? backfill : []) {
-        if (related.length >= 3) break;
-        if (!seen.has(art.slug)) {
-          related.push(art);
-          seen.add(art.slug);
-        }
-      }
-    }
-  } catch (err) {
-    console.error("❌ RelatedArticles fetch error:", err);
-  }
-
-  // Defensive filter (the offline fallback store may return the current post).
-  related = related.filter((r) => r.slug && r.slug !== currentSlug).slice(0, 3);
-
+  const related = getRelatedPosts(currentSlug, 3);
   if (related.length === 0) return null;
 
   return (
@@ -68,20 +39,19 @@ export default async function RelatedArticles({
             className="group flex flex-col justify-between bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-black/[0.08] hover:border-[#E60A1C]/40 rounded-2xl p-5 shadow-sm transition-all"
           >
             <div>
-              {art.category && (
-                <span className="inline-block mb-2 text-[10px] font-bold uppercase tracking-wider text-[#FF2E44]">
-                  {art.category}
-                </span>
-              )}
+              <span className="inline-block mb-2 text-[10px] font-bold uppercase tracking-wider text-[#FF2E44]">
+                {art.category}
+              </span>
               <h3 className="font-bold text-base text-[#16181D] leading-snug mb-2 line-clamp-3 group-hover:text-[#FF2E44] transition-colors">
                 {art.headline}
               </h3>
-              {art.excerpt && (
-                <p className="text-xs text-black/55 leading-relaxed line-clamp-2">{art.excerpt}</p>
-              )}
+              <p className="text-xs text-black/55 leading-relaxed line-clamp-2">{art.excerpt}</p>
             </div>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-[#E60A1C]">
-              Artikel lesen <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+            <span className="mt-4 inline-flex items-center justify-between gap-1.5 text-xs font-bold text-[#E60A1C]">
+              <span className="inline-flex items-center gap-1.5">
+                Artikel lesen <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+              </span>
+              <span className="font-medium text-black/35">{readTime(art)}</span>
             </span>
           </Link>
         ))}
