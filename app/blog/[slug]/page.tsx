@@ -10,60 +10,65 @@ import {
   Share2,
   ExternalLink,
 } from "lucide-react";
-import { dbQuery, Article } from "@/lib/db";
 import { Metadata } from "next";
 import { blogCanonical } from "@/lib/seo";
 import { primaryReviewer } from "@/lib/authors";
 import ReviewerByline from "@/components/ReviewerByline";
 import RelatedArticles from "@/components/RelatedArticles";
+import {
+  getPostBySlug,
+  getAllSlugs,
+  readTime,
+  extractToc,
+  injectHeadingIds,
+  type BlogPost,
+} from "@/lib/blog";
+import { allCalculatorLinks } from "@/lib/navigation";
 
 /** Social-Vorschaubild für Beiträge ohne eigenes Bild. */
 const FALLBACK_OG_IMAGE = "https://bruttonettocalculator.com/og-image.png";
 
-export const revalidate = 0;
+/**
+ * Beiträge liegen als Dateien im Repo (content/blog/), nicht mehr in MySQL.
+ * Damit kann Next die Seiten zur Buildzeit vollständig statisch erzeugen —
+ * kein `revalidate = 0`, keine DB-Abfrage pro Request, kein Ausfallrisiko.
+ */
+export const dynamic = "force-static";
 
 interface FAQItem {
   question: string;
   answer: string;
 }
 
-async function getArticle(slug: string): Promise<Article | null> {
-  try {
-    const rows = await dbQuery<Article[]>(
-      "SELECT * FROM articles WHERE slug = ? LIMIT 1",
-      [slug]
-    );
-    if (!rows || rows.length === 0) return null;
-    const art = rows[0];
-    return {
-      ...art,
-      faqs:
-        typeof art.faqs === "string" ? tryParseJson(art.faqs) : art.faqs || [],
-      enable_toc: Boolean(art.enable_toc),
-    };
-  } catch (err) {
-    console.error(`❌ getArticle(${slug}) error:`, err);
-    return null;
-  }
+/**
+ * Die JSX unten stammt aus der DB-Zeit und erwartet snake_case-Felder. Statt
+ * ~600 Zeilen Markup anzufassen, wird der typisierte BlogPost hier einmal auf
+ * genau diese Form abgebildet — weniger Änderungsfläche, gleiches Ergebnis.
+ */
+function toViewModel(post: BlogPost) {
+  return {
+    ...post,
+    headline: post.headline,
+    slug: post.slug,
+    category: post.category,
+    excerpt: post.excerpt,
+    content: post.content,
+    faqs: post.faqs,
+    focus_keyword: post.focusKeyword,
+    meta_title: post.metaTitle,
+    meta_description: post.metaDescription,
+    created_at: post.publishedISO,
+    updated_at: post.updatedISO,
+    read_time: readTime(post),
+    featured_image: "",
+    featured_image_alt: "",
+    featured_image_caption: "",
+    enable_toc: true,
+  };
 }
 
-function tryParseJson(str: string) {
-  try {
-    return JSON.parse(str);
-  } catch {
-    return [];
-  }
-}
-
-export async function generateStaticParams() {
-  try {
-    const articles = await dbQuery<Article[]>(
-      "SELECT slug FROM articles WHERE status = 'Published'"
-    );
-    return articles.map((art) => ({ slug: art.slug }));
-  } catch {
-    return [];
-  }
+export function generateStaticParams() {
+  return getAllSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -71,10 +76,11 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const art = await getArticle(params.slug);
-  if (!art) {
+  const post = getPostBySlug(params.slug);
+  if (!post) {
     return { title: "Artikel nicht gefunden" };
   }
+  const art = toViewModel(post);
 
   // A blog post always lives at /blog/<slug>. We derive the canonical from the
   // slug rather than trusting the stored canonical_url — an editor value that
@@ -86,9 +92,7 @@ export async function generateMetadata({
   return {
     title: art.meta_title || art.headline,
     description: art.meta_description || art.excerpt || "",
-    keywords: art.focus_keyword
-      ? [art.focus_keyword, art.tags || ""].join(", ")
-      : art.tags || "",
+    keywords: [post.focusKeyword, ...post.secondaryKeywords, ...post.tags].join(", "),
     alternates: {
       canonical: canonicalUrl,
     },
@@ -104,65 +108,23 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: art.og_title || art.meta_title || art.headline,
-      description:
-        art.og_description || art.meta_description || art.excerpt || "",
+      title: art.meta_title || art.headline,
+      description: art.meta_description || art.excerpt || "",
       url: canonicalUrl,
       type: "article",
+      publishedTime: post.publishedISO,
+      modifiedTime: post.updatedISO,
       // Ohne Bild greift das Site-Default — eine leere Liste würde bedeuten,
       // dass der Beitrag beim Teilen und in sozialen Vorschauen gar kein Bild hat.
-      images: [{ url: art.og_image || art.featured_image || FALLBACK_OG_IMAGE }],
+      images: [{ url: art.featured_image || FALLBACK_OG_IMAGE }],
     },
     twitter: {
       card: "summary_large_image",
-      title: art.og_title || art.meta_title || art.headline,
-      description:
-        art.og_description || art.meta_description || art.excerpt || "",
-      images: [art.og_image || art.featured_image || FALLBACK_OG_IMAGE],
+      title: art.meta_title || art.headline,
+      description: art.meta_description || art.excerpt || "",
+      images: [art.featured_image || FALLBACK_OG_IMAGE],
     },
   };
-}
-
-/**
- * Die Seite rendert die Überschrift des Beitrags bereits als <h1>. Bringt der
- * Beitragstext aus dem CMS eine eigene <h1> mit, hätte die Seite zwei — deshalb
- * werden H1 im Fließtext auf H2 herabgestuft (behält die Semantik, vermeidet
- * die doppelte Hauptüberschrift).
- */
-function demoteContentH1(html: string = "") {
-  return html.replace(/<(\/?)h1(\s[^>]*)?>/gi, (_m, slash, attrs) => `<${slash}h2${attrs || ""}>`);
-}
-
-/* Extract H2 headings + slugified IDs for the TOC */
-function extractToc(html: string = "") {
-  const regex = /<h2[^>]*>(.*?)<\/h2>/gi;
-  const headings: { text: string; id: string }[] = [];
-  let match;
-  while ((match = regex.exec(html)) !== null) {
-    const text = match[1].replace(/<[^>]+>/g, "").trim();
-    if (text) {
-      const id = text
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, "")
-        .trim()
-        .replace(/\s+/g, "-");
-      headings.push({ text, id });
-    }
-  }
-  return headings;
-}
-
-/* Inject id attributes into H2 tags so anchor links work */
-function injectHeadingIds(html: string): string {
-  return html.replace(/<h2([^>]*)>(.*?)<\/h2>/gi, (_, attrs, inner) => {
-    const text = inner.replace(/<[^>]+>/g, "").trim();
-    const id = text
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .trim()
-      .replace(/\s+/g, "-");
-    return `<h2${attrs} id="${id}">${inner}</h2>`;
-  });
 }
 
 function formatDate(dateStr?: string) {
@@ -174,21 +136,25 @@ function formatDate(dateStr?: string) {
   });
 }
 
-export default async function ArticleReaderPage({
+/** Nav-Eintrag zu einer Rechner-Route — für die "Passende Rechner"-Box. */
+function calculatorLink(href: string) {
+  return allCalculatorLinks.find((l) => l.href === href);
+}
+
+export default function ArticleReaderPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const article = await getArticle(params.slug);
-  if (!article) notFound();
+  const post = getPostBySlug(params.slug);
+  if (!post) notFound();
 
-  const faqs: FAQItem[] = Array.isArray(article.faqs) ? article.faqs : [];
-  const body = demoteContentH1(article.content || "");
-  const toc = article.enable_toc ? extractToc(body) : [];
-  const contentWithIds = injectHeadingIds(body);
-  // Self-referencing /blog/<slug> URL — see generateMetadata for why we don't
-  // trust article.canonical_url here.
-  const articleUrl = blogCanonical(article.slug);
+  const article = toViewModel(post);
+  const faqs: FAQItem[] = post.faqs;
+  const toc = extractToc(post.content);
+  const contentWithIds = injectHeadingIds(post.content);
+  // Self-referencing /blog/<slug> URL — siehe generateMetadata.
+  const articleUrl = blogCanonical(post.slug);
 
   /* ── JSON-LD Schemas ────────────────────────────────────────────── */
   const blogPostingSchema = {
@@ -463,6 +429,54 @@ export default async function ArticleReaderPage({
                 </details>
               )}
 
+              {/* ── Direktantwort ────────────────────────────────────
+                  Die Hauptfrage vollständig in 40–60 Wörtern beantwortet,
+                  bewusst eigenständig lesbar: Genau solche geschlossenen
+                  Passagen zitieren Google-Snippets und KI-Antwortsysteme. */}
+              <section
+                aria-labelledby="direktantwort"
+                className="mb-10 rounded-2xl border border-[#E60A1C]/20 bg-[#FFF6F7] p-6 sm:p-7"
+              >
+                <h2
+                  id="direktantwort"
+                  className="flex items-center gap-2 text-xs font-black tracking-widest uppercase text-[#FF2E44] mb-3"
+                >
+                  <span className="w-1 h-4 rounded-full bg-[#E60A1C] inline-block" />
+                  Kurz beantwortet
+                </h2>
+                <p className="text-[#16181D] text-base sm:text-lg leading-relaxed font-medium">
+                  {post.answer}
+                </p>
+              </section>
+
+              {/* ── Kernzahlen ─────────────────────────────────────── */}
+              {post.keyFacts && post.keyFacts.length > 0 && (
+                <section
+                  aria-labelledby="kernzahlen"
+                  className="mb-10 rounded-2xl border border-black/[0.08] bg-[#FFFFFF] overflow-hidden"
+                >
+                  <h2
+                    id="kernzahlen"
+                    className="px-6 py-4 border-b border-black/[0.08] text-xs font-black tracking-widest uppercase text-black/60"
+                  >
+                    Die wichtigsten Zahlen auf einen Blick
+                  </h2>
+                  <dl className="divide-y divide-black/[0.06]">
+                    {post.keyFacts.map((f, i) => (
+                      <div
+                        key={i}
+                        className="flex items-baseline justify-between gap-4 px-6 py-3.5"
+                      >
+                        <dt className="text-sm text-black/60">{f.label}</dt>
+                        <dd className="text-sm font-bold text-[#16181D] text-right">
+                          {f.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              )}
+
               {/* ── Article Body ─────────────────────────────────── */}
               <article
                 className="article-content"
@@ -470,19 +484,19 @@ export default async function ArticleReaderPage({
               />
 
               {/* Tags */}
-              {article.tags && (
+              {post.tags.length > 0 && (
                 <div className="mt-10 pt-6 border-t border-black/[8%] flex flex-wrap items-center gap-2">
                   <Tag
                     size={14}
                     className="text-black/30 mr-1 flex-shrink-0"
                     aria-hidden="true"
                   />
-                  {article.tags.split(",").map((t, idx) => (
+                  {post.tags.map((t, idx) => (
                     <span
                       key={idx}
                       className="px-3 py-1 rounded-full bg-black/[0.04] border border-black/[0.08] text-xs font-semibold text-black/65 hover:border-black/[0.12] hover:text-black/85 transition-colors"
                     >
-                      #{t.trim()}
+                      #{t}
                     </span>
                   ))}
                 </div>
@@ -542,6 +556,98 @@ export default async function ArticleReaderPage({
                       </details>
                     ))}
                   </div>
+                </section>
+              )}
+
+              {/* ── Passende Rechner ────────────────────────────────
+                  Interne Verlinkung mit beschreibendem Ankertext auf die
+                  Tool-Seiten. Der Ratgeber beantwortet die Frage, der Rechner
+                  liefert die Zahl — dieser Übergang ist der eigentliche Zweck
+                  des Beitrags und zugleich das stärkste interne Linksignal. */}
+              {post.relatedCalculators.length > 0 && (
+                <section
+                  className="mt-14 pt-10 border-t border-black/[0.08]"
+                  aria-labelledby="rechner-heading"
+                >
+                  <div className="flex items-center gap-2 mb-6">
+                    <Calculator size={18} className="text-[#E60A1C]" />
+                    <h2
+                      id="rechner-heading"
+                      className="font-display font-black text-2xl sm:text-3xl tracking-tight text-[#16181D]"
+                    >
+                      Passende Rechner zum Thema
+                    </h2>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {post.relatedCalculators.map((href) => {
+                      const link = calculatorLink(href);
+                      if (!link) return null;
+                      return (
+                        <Link
+                          key={href}
+                          href={href}
+                          className="group flex items-start gap-3 rounded-xl border border-black/[0.08] bg-[#FFFFFF] p-4 hover:border-[#E60A1C]/30 hover:bg-[#FFF6F7] transition-all duration-200"
+                        >
+                          <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#E60A1C]/[0.10] flex items-center justify-center">
+                            <link.icon size={17} className="text-[#E60A1C]" />
+                          </span>
+                          <span className="min-w-0">
+                            <span className="block font-bold text-sm text-[#16181D] group-hover:text-[#FF2E44] transition-colors">
+                              {link.label}
+                            </span>
+                            {link.description && (
+                              <span className="block text-xs text-black/50 mt-0.5 leading-snug">
+                                {link.description}
+                              </span>
+                            )}
+                          </span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+
+              {/* ── Quellen ─────────────────────────────────────────
+                  Belegt jede genannte Zahl mit ihrer Rechtsgrundlage. Für
+                  YMYL-Themen (Geld, Steuern) erwartet Google nachprüfbare
+                  Quellen — ohne sie bleibt der Beitrag Behauptung. */}
+              {post.sources.length > 0 && (
+                <section
+                  className="mt-14 pt-10 border-t border-black/[0.08]"
+                  aria-labelledby="quellen-heading"
+                >
+                  <h2
+                    id="quellen-heading"
+                    className="text-xs font-black tracking-widest uppercase text-black/60 mb-4"
+                  >
+                    Quellen &amp; Rechtsgrundlagen
+                  </h2>
+                  <ul className="space-y-2">
+                    {post.sources.map((s, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm">
+                        <ExternalLink
+                          size={13}
+                          className="text-black/25 mt-1 flex-shrink-0"
+                          aria-hidden="true"
+                        />
+                        <a
+                          href={s.url}
+                          target="_blank"
+                          rel="noopener noreferrer nofollow"
+                          className="text-black/60 hover:text-[#FF2E44] underline decoration-black/15 underline-offset-2 transition-colors"
+                        >
+                          {s.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-5 text-xs text-black/45 leading-relaxed">
+                    Stand: {formatDate(post.updatedISO)}. Alle Angaben wurden
+                    nach bestem Wissen recherchiert und beziehen sich auf die
+                    Rechtslage in Deutschland. Der Beitrag dient der Information
+                    und ersetzt keine individuelle Steuerberatung.
+                  </p>
                 </section>
               )}
 
