@@ -19,25 +19,17 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-static";
 
-export default function EmbedBruttoNettoPage({
-  searchParams,
-}: {
-  searchParams?: { accent?: string; brutto?: string };
-}) {
-  // Nur Hex-Farben akzeptieren — ein ungeprüfter Query-Wert landet sonst
-  // direkt in einer CSS-Custom-Property auf einer fremden Seite.
-  const accentParam = searchParams?.accent ? `#${searchParams.accent.replace(/^#/, "")}` : "";
-  const accent = /^#[0-9a-fA-F]{6}$/.test(accentParam) ? accentParam : "#E60A1C";
-
-  const bruttoParam = Number(searchParams?.brutto);
-  const defaultBrutto =
-    Number.isFinite(bruttoParam) && bruttoParam > 0 && bruttoParam < 1_000_000
-      ? Math.round(bruttoParam)
-      : 3500;
-
+/**
+ * `accent` und `brutto` kommen als Query-Parameter der Einbettung, werden aber
+ * NICHT hier ausgewertet: Eine statisch vorgerenderte Seite kennt zur Buildzeit
+ * keine Anfrage und sieht `searchParams` deshalb nie. Die Auswertung passiert
+ * im Client (siehe readEmbedParams in EmbedCalculator) — so bleibt die Seite
+ * CDN-cachebar und die Anpassung funktioniert trotzdem.
+ */
+export default function EmbedBruttoNettoPage() {
   return (
     <main style={{ margin: 0, padding: 8, background: "transparent" }}>
-      <EmbedCalculator accent={accent} defaultBrutto={defaultBrutto} />
+      <EmbedCalculator />
     </main>
   );
 }

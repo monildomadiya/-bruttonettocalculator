@@ -34,6 +34,18 @@ import { post as werbungskosten2026 } from "./werbungskosten-2026";
 import { post as weihnachtsgeldUrlaubsgeld } from "./weihnachtsgeld-urlaubsgeld-unterschied";
 import { post as geldwerterVorteil } from "./geldwerter-vorteil-firmenwagen";
 
+// Zweiter Recherche-Durchlauf (08/2026) — Cluster ohne eigene Seite
+import { post as arbeitslosengeldHoehe } from "./arbeitslosengeld-hoehe-dauer";
+import { post as steuerklasse2 } from "./steuerklasse-2-alleinerziehende";
+import { post as elterngeldHoehe } from "./elterngeld-hoehe-berechnen";
+import { post as gehaltserhoehungNetto } from "./gehaltserhoehung-netto";
+import { post as steuererklaerungFristen } from "./steuererklaerung-pflicht-fristen";
+import { post as midijobUebergangsbereich } from "./midijob-uebergangsbereich";
+import { post as bavLohntSich } from "./betriebliche-altersvorsorge-lohnt-sich";
+import { post as witwenrenteHoehe } from "./witwenrente-hoehe-anrechnung";
+import { post as sozialabgaben2026 } from "./sozialabgaben-2026";
+import { post as krankengeldHoehe } from "./krankengeld-hoehe-dauer";
+
 export const BLOG_POSTS: BlogPost[] = [
   kinderfreibetrag2026,
   kinderfreibetragZaehler,
@@ -49,4 +61,14 @@ export const BLOG_POSTS: BlogPost[] = [
   werbungskosten2026,
   weihnachtsgeldUrlaubsgeld,
   geldwerterVorteil,
+  arbeitslosengeldHoehe,
+  steuerklasse2,
+  elterngeldHoehe,
+  gehaltserhoehungNetto,
+  steuererklaerungFristen,
+  midijobUebergangsbereich,
+  bavLohntSich,
+  witwenrenteHoehe,
+  sozialabgaben2026,
+  krankengeldHoehe,
 ];

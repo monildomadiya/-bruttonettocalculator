@@ -214,3 +214,51 @@ for (let b = 900; b <= 3000; b += 5) {
 }
 line(`\n  Steuerpflicht beginnt ab ca. ${formatEUR(ersteSteuerRente)} Bruttorente/Monat (Rentenbeginn 2026).`);
 line();
+
+/* ── 8. Steuerklasse II — was der Entlastungsbetrag bringt ─────────── */
+h("Steuerklasse I vs. II (Entlastungsbetrag 4.260 €)");
+line("  Brutto/Mon | Netto StKl I | Netto StKl II | Vorteil/Mon | Vorteil/Jahr");
+for (const b of [2000, 2500, 3000, 3500, 4000, 5000]) {
+  const i = calculateNetto({ bruttoMonat: b, jahr: 2026, verheiratet: false, kinderlosUeber23: false, kirche: false, steuerklasse: 1 }).nettoMonat;
+  const ii = calculateNetto({ bruttoMonat: b, jahr: 2026, verheiratet: false, kinderlosUeber23: false, kirche: false, steuerklasse: 2 }).nettoMonat;
+  line(`  ${String(b).padStart(6)} €  | ${formatEUR(i).padStart(11)} | ${formatEUR(ii).padStart(12)} | ${formatEUR(ii - i).padStart(10)} | ${formatEUR((ii - i) * 12)}`);
+}
+
+/* ── 9. Gehaltserhöhung — was netto ankommt ────────────────────────── */
+h("Gehaltserhöhung 2026 — Brutto-Plus vs. Netto-Plus (StKl I, kinderlos)");
+line("  Ausgangsbrutto | Erhöhung | Netto-Plus | davon bleibt | Grenzbelastung");
+for (const [start, plus] of [[2500, 100], [3000, 150], [3500, 200], [4000, 200], [5000, 300], [6000, 500]] as [number, number][]) {
+  const a = calculateNetto({ bruttoMonat: start, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 }).nettoMonat;
+  const b = calculateNetto({ bruttoMonat: start + plus, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 }).nettoMonat;
+  const netPlus = b - a;
+  line(
+    `  ${String(start).padStart(9)} €  | ${String(plus).padStart(5)} €  | ${formatEUR(netPlus).padStart(9)}` +
+      ` | ${((netPlus / plus) * 100).toFixed(1).padStart(5)} % | ${(100 - (netPlus / plus) * 100).toFixed(1)} %`
+  );
+}
+
+/* ── 10. Sozialabgaben 2026 — Arbeitnehmeranteil im Detail ─────────── */
+h("Sozialabgaben 2026 — Arbeitnehmeranteil (StKl I, kinderlos)");
+line("  Brutto/Mon | RV      | ALV    | KV      | PV     | Summe    | in %");
+for (const b of [2000, 3000, 4000, 5000, 6000, 8000]) {
+  const r = calculateNetto({ bruttoMonat: b, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });
+  line(
+    `  ${String(b).padStart(6)} €  | ${formatEUR(r.sv.rente).padStart(8)} | ${formatEUR(r.sv.arbeitslosen).padStart(7)}` +
+      ` | ${formatEUR(r.sv.kranken).padStart(8)} | ${formatEUR(r.sv.pflege).padStart(7)}` +
+      ` | ${formatEUR(r.sv.summeMonat).padStart(9)} | ${((r.sv.summeMonat / b) * 100).toFixed(1)} %`
+  );
+}
+
+/* ── 11. Midijob-Übergangsbereich — AN-Entlastung ──────────────────── */
+h("Midijob 2026 — Übergangsbereich 603,01 € bis 2.000 €");
+line("  Brutto/Mon | SV-Anteil AN | reguläre 21,8 % | Ersparnis");
+for (const b of [620, 800, 1000, 1200, 1500, 1800, 2000, 2100]) {
+  const r = calculateNetto({ bruttoMonat: b, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });
+  const regulaer = b * 0.218;
+  const im = b > 603 && b <= 2000 ? "  (Übergangsbereich)" : "";
+  line(
+    `  ${String(b).padStart(6)} €  | ${formatEUR(r.sv.summeMonat).padStart(12)} | ${formatEUR(regulaer).padStart(15)}` +
+      ` | ${formatEUR(Math.max(0, regulaer - r.sv.summeMonat)).padStart(9)}${im}`
+  );
+}
+line();
