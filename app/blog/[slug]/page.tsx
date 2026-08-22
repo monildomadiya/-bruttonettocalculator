@@ -631,10 +631,15 @@ export default function ArticleReaderPage({
                           className="text-black/25 mt-1 flex-shrink-0"
                           aria-hidden="true"
                         />
+                        {/* Bewusst ohne nofollow: Das sind Primärquellen
+                            (Gesetzestexte, BMF, BMAS). Eine Verlinkung dorthin
+                            ist ein Relevanz- und Vertrauenssignal — es zeigt,
+                            woran der Beitrag hängt. nofollow gehört auf
+                            Wettbewerber- und Werbelinks, nicht auf Belege. */}
                         <a
                           href={s.url}
                           target="_blank"
-                          rel="noopener noreferrer nofollow"
+                          rel="noopener noreferrer"
                           className="text-black/60 hover:text-[#FF2E44] underline decoration-black/15 underline-offset-2 transition-colors"
                         >
                           {s.label}

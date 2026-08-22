@@ -11,6 +11,7 @@ import GoogleAdSense from "@/components/GoogleAdSense";
 import AdsProvider from "@/components/AdsProvider";
 import SiteWideAd from "@/components/SiteWideAd";
 import { AD_CLIENT, ADSENSE_LOADER_SRC } from "@/lib/adsConfig";
+import { postalAddressSchema } from "@/lib/company";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bruttonettocalculator.com"),
@@ -71,8 +72,10 @@ export const metadata: Metadata = {
     title: "Brutto Netto Rechner 2026/2027 — kostenlos & aktuell",
     description:
       "Nettogehalt berechnen — Lohnsteuer, Soli, alle Steuerklassen, Mindestlohn 2027, BKK Zusatzbeitrag 2026, Firmenwagenrechner & Düsseldorfer Tabelle.",
-    creator: "@bruttonetto_de",
-    site: "@bruttonetto_de",
+    // `creator`/`site` verwiesen auf @bruttonetto_de — ein Konto, das es nicht
+    // gibt. Ein twitter:site-Tag auf ein totes Handle bringt keine Attribution,
+    // sondern nur eine widerlegbare Angabe. Wieder eintragen, sobald ein echtes
+    // Profil existiert.
     images: ["https://bruttonettocalculator.com/og-image.png"],
   },
   alternates: {
@@ -148,7 +151,29 @@ const orgSchema = {
     "Mindestlohn",
     "Pfändungstabelle",
   ],
-  sameAs: ["https://twitter.com/bruttonetto_de"],
+  email: "info@bruttonettocalculator.com",
+  // Nur gesetzt, wenn in lib/company.ts echte Anbieterdaten hinterlegt sind.
+  ...(postalAddressSchema() ? { address: postalAddressSchema() } : {}),
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    email: "info@bruttonettocalculator.com",
+    url: "https://bruttonettocalculator.com/kontakt",
+    availableLanguage: ["de", "en", "pl"],
+  },
+  // Von Google für redaktionelle Angebote ausdrücklich ausgewertete Signale:
+  // Wer steht dahinter, nach welchen Regeln wird publiziert, wie meldet man
+  // Fehler. Alle drei zeigen auf echte, existierende Seiten.
+  publishingPrinciples: "https://bruttonettocalculator.com/ueber-uns",
+  ownershipFundingInfo: "https://bruttonettocalculator.com/impressum",
+  actionableFeedbackPolicy: "https://bruttonettocalculator.com/kontakt",
+  // `sameAs` verweist auf Profile, die dieselbe Entität belegen. Der Eintrag
+  // enthielt bis 08/2026 https://twitter.com/bruttonetto_de — ein Konto, das
+  // es nicht gibt (404). Google ruft sameAs-Ziele ab; ein toter Link ist damit
+  // keine Bestätigung, sondern eine widerlegbare Behauptung — dieselbe Klasse
+  // Fehler wie der frühere erfundene Prüfer und die erfundene aggregateRating.
+  // Wieder aufnehmen, sobald echte Profile existieren, dann aber nur solche,
+  // die die Domain im Profiltext verlinken (sonst fehlt die Gegenbestätigung).
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
