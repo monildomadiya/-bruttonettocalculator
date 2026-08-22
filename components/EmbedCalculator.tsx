@@ -25,14 +25,42 @@ const STEUERKLASSEN: { value: Steuerklasse; label: string }[] = [
   { value: 6, label: "VI — Zweitjob" },
 ];
 
+/**
+ * Query-Parameter der Einbettung auslesen — bewusst im Client.
+ *
+ * Die iframe-Seite ist statisch vorgerendert (`force-static`), damit sie vom
+ * CDN ausgeliefert wird und in fremden Seiten sofort erscheint. Statische
+ * Seiten sehen `searchParams` auf dem Server aber gar nicht: Es gibt zur
+ * Buildzeit keine Anfrage. Farbe und Startbetrag müssen deshalb hier aus
+ * window.location gelesen werden — sonst zeigt jede Einbettung dieselben
+ * Standardwerte, egal was im Generator eingestellt wurde.
+ */
+function readEmbedParams(fallbackAccent: string, fallbackBrutto: number) {
+  if (typeof window === "undefined") return { accent: fallbackAccent, brutto: fallbackBrutto };
+  const q = new URLSearchParams(window.location.search);
+
+  const raw = (q.get("accent") || "").replace(/^#/, "");
+  const accent = /^[0-9a-fA-F]{6}$/.test(raw) ? `#${raw}` : fallbackAccent;
+
+  const n = Number(q.get("brutto"));
+  const brutto = Number.isFinite(n) && n > 0 && n < 1_000_000 ? Math.round(n) : fallbackBrutto;
+
+  return { accent, brutto };
+}
+
 export default function EmbedCalculator({
-  accent = "#E60A1C",
+  accent: accentProp = "#E60A1C",
   defaultBrutto = 3500,
 }: {
   accent?: string;
   defaultBrutto?: number;
 }) {
-  const [brutto, setBrutto] = useState(defaultBrutto);
+  // Lazy-Initializer: läuft einmal beim ersten Client-Render, nicht bei jedem.
+  const [{ accent, brutto: initialBrutto }] = useState(() =>
+    readEmbedParams(accentProp, defaultBrutto)
+  );
+
+  const [brutto, setBrutto] = useState(initialBrutto);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kirche, setKirche] = useState(false);
   const [kinderlos, setKinderlos] = useState(true);
@@ -66,14 +94,18 @@ export default function EmbedCalculator({
     return () => ro.disconnect();
   }, []);
 
+  // ACHTUNG: sv.rente / arbeitslosen / kranken / pflege sind JAHRESwerte
+  // (nur sv.summeMonat und steuer.summeMonat sind monatlich). Ohne die
+  // Division durch 12 stünden hier Jahresbeträge in einer Monatsaufstellung —
+  // die Einzelzeilen ergäben dann nicht die ausgewiesene Summe.
   const rows = [
     { label: "Lohnsteuer", value: r.steuer.einkommensteuerJahr / 12 },
     ...(r.steuer.soliJahr > 0 ? [{ label: "Solidaritätszuschlag", value: r.steuer.soliJahr / 12 }] : []),
     ...(kirche ? [{ label: "Kirchensteuer", value: r.steuer.kirchensteuerJahr / 12 }] : []),
-    { label: "Rentenversicherung", value: r.sv.rente },
-    { label: "Arbeitslosenversicherung", value: r.sv.arbeitslosen },
-    { label: `Krankenversicherung (${r.sv.krankenSatzAnPct.toFixed(2)} %)`, value: r.sv.kranken },
-    { label: `Pflegeversicherung (${r.sv.pflegeSatzAnPct.toFixed(2)} %)`, value: r.sv.pflege },
+    { label: "Rentenversicherung", value: r.sv.rente / 12 },
+    { label: "Arbeitslosenversicherung", value: r.sv.arbeitslosen / 12 },
+    { label: `Krankenversicherung (${r.sv.krankenSatzAnPct.toFixed(2)} %)`, value: r.sv.kranken / 12 },
+    { label: `Pflegeversicherung (${r.sv.pflegeSatzAnPct.toFixed(2)} %)`, value: r.sv.pflege / 12 },
   ];
 
   return (
