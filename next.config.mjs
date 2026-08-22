@@ -154,8 +154,28 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Apply baseline security headers to every route.
-        source: "/:path*",
+        // Das einbettbare Widget MUSS von fremden Domains geframt werden dürfen
+        // — sonst zeigt jede Einbettung nur eine leere Box. Deshalb ist /embed
+        // aus der globalen Regel unten ausgenommen (negativer Lookahead) und
+        // bekommt hier eine eigene, bewusst permissive Frame-Policy.
+        //
+        // Ausdrücklich KEIN X-Frame-Options hier: Der Header kennt kein
+        // "erlaube allen" und würde in älteren Browsern trotzdem blocken.
+        // `frame-ancestors *` ist die moderne, korrekte Entsprechung. Die Seite
+        // enthält keine Formulare mit Nutzerdaten, keine Session und keine
+        // Aktionen — Clickjacking hat hier nichts zu holen.
+        source: "/embed/:path*",
+        headers: [
+          { key: "Content-Security-Policy", value: "frame-ancestors *" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          // Einbettungen sollen von Caches bedient werden, nicht von uns.
+          { key: "Cache-Control", value: "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800" },
+        ],
+      },
+      {
+        // Apply baseline security headers to every route except the widget.
+        source: "/((?!embed/).*)",
         headers: [
           {
             // HSTS: force HTTPS for a year, including subdomains. No `preload`

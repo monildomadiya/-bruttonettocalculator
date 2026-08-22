@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Landmark } from "lucide-react";
+import { company, addressLine } from "@/lib/company";
 
 export const metadata: Metadata = {
   title: "Impressum — Brutto Netto Rechner 2026",
@@ -37,29 +38,79 @@ export default function ImpressumPage() {
       </div>
 
       <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 sm:p-12 text-black/80 leading-relaxed space-y-8 shadow-xl w-full max-w-6xl">
+        {company.isPlaceholder && (
+          /* Sichtbar, solange lib/company.ts noch Platzhalter enthält. Besser
+             ein ehrlicher Hinweis als eine Anschrift, die es nicht gibt —
+             und ein Hinweis, den man nicht übersehen kann, wird auch behoben. */
+          <div className="rounded-2xl border border-amber-500/40 bg-amber-50 px-5 py-4">
+            <p className="text-sm font-bold text-amber-900 mb-1">
+              Hinweis: Diese Angaben werden derzeit vervollständigt
+            </p>
+            <p className="text-sm text-amber-900/80">
+              Die vollständige Anbieterkennzeichnung nach § 5 DDG wird kurzfristig
+              ergänzt. Bis dahin erreichen Sie uns jederzeit unter{" "}
+              <a href={`mailto:${company.email}`} className="underline font-semibold">
+                {company.email}
+              </a>
+              .
+            </p>
+          </div>
+        )}
+
         <div>
-          <h2 className="font-display font-bold text-[#16181D] text-xl mb-3">Angaben gemäß § 5 TMG</h2>
+          <h2 className="font-display font-bold text-[#16181D] text-xl mb-3">Angaben gemäß § 5 DDG</h2>
           <p className="text-black/70">
-            BruttoNettoCalculator.com<br />
-            Redaktion & Online-Entwicklungsdienstleistungen<br />
-            Musterstraße 10<br />
-            10115 Berlin, Deutschland
+            {company.legalName}<br />
+            {company.businessDescription}<br />
+            {company.streetAddress}<br />
+            {company.postalCode} {company.city}, {company.country}
           </p>
         </div>
 
         <div>
           <h2 className="font-display font-bold text-[#16181D] text-xl mb-3">Kontakt</h2>
           <p className="text-black/70">
-            E-Mail: info@bruttonettocalculator.com<br />
+            E-Mail:{" "}
+            <a href={`mailto:${company.email}`} className="hover:underline">
+              {company.email}
+            </a>
+            <br />
+            {company.phone && (
+              <>
+                Telefon: {company.phone}
+                <br />
+              </>
+            )}
             Website: https://bruttonettocalculator.com
           </p>
         </div>
 
+        {company.vatId && (
+          <div>
+            <h2 className="font-display font-bold text-[#16181D] text-xl mb-3">
+              Umsatzsteuer-Identifikationsnummer
+            </h2>
+            <p className="text-black/70">
+              Gemäß § 27a Umsatzsteuergesetz: {company.vatId}
+            </p>
+          </div>
+        )}
+
         <div>
-          <h2 className="font-display font-bold text-[#16181D] text-xl mb-3">Redaktionell verantwortlich</h2>
+          <h2 className="font-display font-bold text-[#16181D] text-xl mb-3">
+            Redaktionell verantwortlich gemäß § 18 Abs. 2 MStV
+          </h2>
           <p className="text-black/70">
-            Redaktionsleitung BruttoNettoCalculator<br />
-            Musterstraße 10, 10115 Berlin
+            {company.editoriallyResponsible}<br />
+            {addressLine()}
+          </p>
+        </div>
+
+        <div>
+          <h2 className="font-display font-bold text-[#16181D] text-xl mb-3">Streitschlichtung</h2>
+          <p className="text-black/70">
+            Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren
+            vor einer Verbraucherschlichtungsstelle teilzunehmen.
           </p>
         </div>
 

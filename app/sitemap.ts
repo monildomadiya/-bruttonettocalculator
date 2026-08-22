@@ -90,6 +90,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Informational/legal pages with no known change date → no lastmod
   const infoRoutes: string[] = [
+    "/widget",
     "/lexikon",
     "/faq",
     "/ueber-uns",

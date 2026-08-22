@@ -116,7 +116,13 @@ export default function SiteFooter() {
               <li><Link href="/datenschutz" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Datenschutz</Link></li>
               <li><Link href="/kontakt"     className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kontakt</Link></li>
               <li><Link href="/ueber-uns"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Über uns</Link></li>
-              <li><Link href="/blog"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Blog</Link></li>
+              <li><Link href="/blog"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Ratgeber</Link></li>
+              {/* Die Widget-Seite ist der einzige Grund, aus dem ein fremder
+                  Seitenbetreiber freiwillig auf uns verlinkt — sie braucht
+                  einen Platz in der site-weiten Navigation, sonst findet sie
+                  niemand. Der Footer ist hier die belastbare Fläche: Die
+                  Desktop-Menüs bauen ihre Links per JavaScript auf. */}
+              <li><Link href="/widget"      className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner einbetten</Link></li>
               <li><Link href="/faq"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">FAQ</Link></li>
               <li><Link href="/en/tax-calculator-germany" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Tax Calculator (EN)</Link></li>
               <li><Link href="/pl/kalkulator-brutto-netto-niemcy" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kalkulator (PL)</Link></li>
