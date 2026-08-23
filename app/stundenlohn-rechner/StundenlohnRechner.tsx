@@ -7,6 +7,13 @@ import { calculateNetto } from "@/lib/taxCalculator";
 
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
 
+/**
+ * Richtung der Umrechnung. Beide Intents sind eigenständige Suchanfragen:
+ * "Stundenlohn berechnen" (Gehalt → Stundenlohn) und "Stundenlohn in
+ * Monatslohn umrechnen" (Stundenlohn → Gehalt).
+ */
+type Modus = "zuGehalt" | "zuStundenlohn";
+
 const STEUERKLASSE_INFO: Record<Steuerklasse, string> = {
   1: "Klasse I — Ledig",
   2: "Klasse II — Alleinerziehend",
@@ -33,18 +40,36 @@ const faqs = [
     q: "Ändert sich mein Netto-Stundenlohn mit der Stundenzahl?",
     a: "Der Netto-Stundenlohn kann bei mehr Wochenstunden leicht sinken, da ein höheres Monatsgehalt in eine höhere Steuerprogression rutschen kann. Bei geringen Stundenzahlen bleibt er wegen des Grundfreibetrags oft nahezu konstant zum Brutto-Stundenlohn.",
   },
+  {
+    q: "Wie berechne ich meinen Stundenlohn aus dem Gehalt?",
+    a: "Stundenlohn = Monatsgehalt × 12 ÷ (Wochenstunden × 52). Bei 3.500 € Brutto und einer 40-Stunden-Woche sind das 3.500 × 12 ÷ 2.080 = 20,19 € pro Stunde. Stellen Sie den Rechner oben auf „Gehalt → Stundenlohn“, um Brutto- und Netto-Stundenlohn direkt zu sehen.",
+  },
+  {
+    q: "Was ist der Unterschied zwischen Stundenlohn und Stundengehalt?",
+    a: "Die Begriffe meinen dasselbe: den Betrag, den Sie pro geleisteter Arbeitsstunde verdienen. „Stundenlohn“ ist im gewerblichen Bereich üblich, „Stundengehalt“ wird häufiger verwendet, wenn ein festes Monatsgehalt auf die Stunde heruntergerechnet wird.",
+  },
+  {
+    q: "Wie viele Arbeitsstunden hat ein Monat?",
+    a: "Rechnerisch hat ein Monat bei einer 40-Stunden-Woche rund 173,33 Stunden (40 × 52 ÷ 12). Bei 38,5 Stunden sind es 166,83, bei 35 Stunden 151,67 und bei 30 Stunden 130 Stunden. Der Wert ist ein Durchschnitt über das Jahr — einzelne Monate haben je nach Kalender mehr oder weniger Arbeitstage.",
+  },
 ];
 
 export default function StundenlohnRechner({ content }: { content?: React.ReactNode }) {
+  const [modus, setModus] = useState<Modus>("zuGehalt");
   const [stundenlohn, setStundenlohn] = useState(18);
+  const [monatsgehalt, setMonatsgehalt] = useState(3500);
   const [wochenstunden, setWochenstunden] = useState(40);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kirche, setKirche] = useState(false);
 
   const result = useMemo(() => {
     const monatsStunden = (wochenstunden * 52) / 12;
-    const bruttoMonat = stundenlohn * monatsStunden;
-    const bruttoJahr = stundenlohn * wochenstunden * 52;
+
+    // Beide Richtungen laufen über dasselbe Monatsbrutto — nur die Eingabe
+    // unterscheidet sich, die Steuerberechnung ist identisch.
+    const bruttoMonat = modus === "zuGehalt" ? stundenlohn * monatsStunden : monatsgehalt;
+    const bruttoStundenlohn = monatsStunden > 0 ? bruttoMonat / monatsStunden : 0;
+    const bruttoJahr = bruttoMonat * 12;
 
     const netto = calculateNetto({
       bruttoMonat,
@@ -57,8 +82,15 @@ export default function StundenlohnRechner({ content }: { content?: React.ReactN
 
     const nettoStundenlohn = monatsStunden > 0 ? netto.nettoMonat / monatsStunden : 0;
 
-    return { monatsStunden, bruttoMonat, bruttoJahr, nettoMonat: netto.nettoMonat, nettoStundenlohn };
-  }, [stundenlohn, wochenstunden, steuerklasse, kirche]);
+    return {
+      monatsStunden,
+      bruttoMonat,
+      bruttoJahr,
+      bruttoStundenlohn,
+      nettoMonat: netto.nettoMonat,
+      nettoStundenlohn,
+    };
+  }, [modus, stundenlohn, monatsgehalt, wochenstunden, steuerklasse, kirche]);
 
   return (
     <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
@@ -72,14 +104,15 @@ export default function StundenlohnRechner({ content }: { content?: React.ReactN
             Stundenlohn ↔ Monatsgehalt
           </div>
           <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
-            Stundenlohnrechner:{" "}
+            Stundenlohn berechnen:{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              Monatslohn und Stundenlohn berechnen
+              Stundenlohn und Monatslohn umrechnen
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Rechnen Sie Ihren Stundenlohn in Monats- und Jahresgehalt um – und sehen Sie sofort Ihren
-            Netto-Stundenlohn nach Steuern und Sozialabgaben (2026).
+            Der Stundenlohnrechner rechnet in <strong className="text-[#16181D]">beide Richtungen</strong>:
+            Stundenlohn in Monats- und Jahresgehalt umrechnen — oder Ihr Stundengehalt aus dem
+            Monatsgehalt berechnen. Inklusive Netto-Stundenlohn nach Steuern und Sozialabgaben (2026).
           </p>
         </div>
       </section>
@@ -91,20 +124,71 @@ export default function StundenlohnRechner({ content }: { content?: React.ReactN
           <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
               <Calculator size={22} className="text-[#E60A1C]" />
-              Ihr Stundenlohn
+              Ihre Angaben
             </h2>
 
+            {/* Richtung der Umrechnung */}
+            <div
+              role="group"
+              aria-label="Richtung der Umrechnung"
+              className="grid grid-cols-2 gap-2 bg-black/[0.04] border border-black/[0.08] rounded-2xl p-1.5 mb-6"
+            >
+              <button
+                type="button"
+                onClick={() => setModus("zuGehalt")}
+                aria-pressed={modus === "zuGehalt"}
+                className={`rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold transition-all ${
+                  modus === "zuGehalt"
+                    ? "bg-[#E60A1C] text-white shadow-sm"
+                    : "text-black/60 hover:text-[#16181D] hover:bg-black/[0.04]"
+                }`}
+              >
+                Stundenlohn → Gehalt
+              </button>
+              <button
+                type="button"
+                onClick={() => setModus("zuStundenlohn")}
+                aria-pressed={modus === "zuStundenlohn"}
+                className={`rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold transition-all ${
+                  modus === "zuStundenlohn"
+                    ? "bg-[#E60A1C] text-white shadow-sm"
+                    : "text-black/60 hover:text-[#16181D] hover:bg-black/[0.04]"
+                }`}
+              >
+                Gehalt → Stundenlohn
+              </button>
+            </div>
+
             <div className="space-y-5">
-              <div>
-                <label className="block text-sm font-semibold text-black/70 mb-2">Brutto-Stundenlohn (€)</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  value={stundenlohn}
-                  onChange={(e) => setStundenlohn(Number(e.target.value))}
-                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
-                />
-              </div>
+              {modus === "zuGehalt" ? (
+                <div>
+                  <label htmlFor="sl-stundenlohn" className="block text-sm font-semibold text-black/70 mb-2">
+                    Brutto-Stundenlohn (€)
+                  </label>
+                  <input
+                    id="sl-stundenlohn"
+                    type="number"
+                    step="0.01"
+                    value={stundenlohn}
+                    onChange={(e) => setStundenlohn(Number(e.target.value))}
+                    className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
+                  />
+                </div>
+              ) : (
+                <div>
+                  <label htmlFor="sl-monatsgehalt" className="block text-sm font-semibold text-black/70 mb-2">
+                    Brutto-Monatsgehalt (€)
+                  </label>
+                  <input
+                    id="sl-monatsgehalt"
+                    type="number"
+                    step="50"
+                    value={monatsgehalt}
+                    onChange={(e) => setMonatsgehalt(Number(e.target.value))}
+                    className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
+                  />
+                </div>
+              )}
 
               <div>
                 <label htmlFor="wochenstunden-slider" className="block text-sm font-semibold text-black/70 mb-2">
@@ -153,7 +237,7 @@ export default function StundenlohnRechner({ content }: { content?: React.ReactN
           <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-2 flex items-center gap-2">
               <Clock3 size={22} className="text-[#E60A1C]" />
-              Ihr Gehalt
+              {modus === "zuGehalt" ? "Ihr Gehalt" : "Ihr Stundenlohn"}
             </h2>
             <div className="flex items-center gap-2 mb-6 text-xs text-amber-600/80 bg-amber-50 border border-amber-500/20 rounded-xl px-3 py-2">
               <Info size={13} className="flex-shrink-0" />
@@ -161,9 +245,19 @@ export default function StundenlohnRechner({ content }: { content?: React.ReactN
             </div>
 
             <div className="space-y-3">
+              {modus === "zuStundenlohn" && (
+                <div className="flex items-center justify-between bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-xl px-5 py-4">
+                  <span className="text-black/80 text-sm font-semibold">Brutto-Stundenlohn</span>
+                  <span className="text-2xl font-extrabold text-[#16181D]">{formatEuro(result.bruttoStundenlohn)}</span>
+                </div>
+              )}
               <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
                 <span className="text-black/70 text-sm font-medium">Bruttogehalt / Monat</span>
                 <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.bruttoMonat)}</span>
+              </div>
+              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
+                <span className="text-black/70 text-sm font-medium">Bruttogehalt / Jahr</span>
+                <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.bruttoJahr)}</span>
               </div>
               <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
                 <span className="text-black/70 text-sm font-medium">Nettogehalt / Monat</span>
@@ -173,6 +267,10 @@ export default function StundenlohnRechner({ content }: { content?: React.ReactN
                 <span className="text-black/80 text-sm font-semibold">Netto-Stundenlohn</span>
                 <span className="text-2xl font-extrabold text-emerald-600">{formatEuro(result.nettoStundenlohn)}</span>
               </div>
+              <p className="text-xs text-black/50 pt-1">
+                Basis: {result.monatsStunden.toFixed(2).replace(".", ",")} bezahlte Stunden pro Monat
+                ({wochenstunden} Std./Woche × 52 ÷ 12).
+              </p>
             </div>
 
             <Link

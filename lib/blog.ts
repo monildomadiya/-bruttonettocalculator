@@ -62,6 +62,18 @@ export interface BlogPost {
   /** Artikeltext als HTML (H2/H3, p, ul, table). Keine H1 — die rendert die Seite. */
   content: string;
   faqs: BlogFaq[];
+  /**
+   * Optionales eigenes Titelbild (absolute URL oder Pfad ab /).
+   *
+   * Ohne Angabe greift das automatisch erzeugte Cover unter
+   * /blog-cover/<slug>.png (siehe scripts/generate-blog-covers.mjs). Ein echtes
+   * Foto schlägt das generierte Textbild im Discover-Feed deutlich — sobald
+   * eines vorliegt, hier eintragen. Es muss mindestens 1200 px breit sein,
+   * sonst entfällt die große Bilddarstellung in Discover.
+   */
+  heroImage?: string;
+  /** Alt-Text zum eigenen Titelbild. Ohne Angabe wird die Headline verwendet. */
+  heroImageAlt?: string;
   /** Rechner-Routen, auf die der Beitrag verlinkt (interne Verlinkung). */
   relatedCalculators: string[];
   /** Quellenangaben — E-E-A-T-Signal und Beleg für die genannten Zahlen. */
@@ -78,6 +90,25 @@ export const BLOG_CATEGORIES = [
 ] as const;
 
 export type BlogCategory = (typeof BLOG_CATEGORIES)[number];
+
+export const SITE_ORIGIN = "https://bruttonettocalculator.com";
+
+/** Maße der generierten Titelbilder — Discover verlangt mindestens 1200 px Breite. */
+export const COVER_WIDTH = 1200;
+export const COVER_HEIGHT = 630;
+
+/**
+ * Absolute URL des Titelbilds eines Beitrags.
+ *
+ * Reihenfolge: eigenes `heroImage`, sonst das generierte Cover unter
+ * /blog-cover/<slug>.png. Ein Beitrag ist damit nie ohne Bild — genau das war
+ * der Grund, warum der Ratgeber für Google Discover nicht in Frage kam.
+ */
+export function getCoverImage(post: BlogPost): string {
+  const raw = post.heroImage?.trim();
+  if (raw) return raw.startsWith("http") ? raw : `${SITE_ORIGIN}${raw}`;
+  return `${SITE_ORIGIN}/blog-cover/${post.slug}.png`;
+}
 
 /* ────────────────────────── Abfragen ────────────────────────── */
 
