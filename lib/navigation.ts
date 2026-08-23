@@ -3,7 +3,7 @@ import {
   Car, PiggyBank, Umbrella, Wallet2, Baby, Banknote, Gift, Clock3,
   Coins, Receipt, Landmark, HandCoins, GraduationCap, HeartHandshake, Timer, Globe,
   Building2, Snowflake, Users, TrendingUp, CalendarRange, HeartPulse, TrendingDown, Route, Gauge, Receipt as ReceiptIcon, Home,
-  HelpCircle, BarChart3,
+  HelpCircle, BarChart3, Sun, Palmtree,
 } from "lucide-react";
 
 export interface NavLink {
@@ -74,11 +74,18 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/riester-rechner", label: "Riester-Rechner", icon: Landmark, description: "Zulagen & Eigenbeitrag" },
       { href: "/bav-rechner", label: "bAV-Rechner", icon: PiggyBank, description: "Entgeltumwandlung netto berechnen" },
       { href: "/immobilienkredit-rechner", label: "Immobilienkredit-Rechner", icon: Home, description: "Wie viel Haus kann ich mir leisten?" },
+      { href: "/mieteinnahmen-versteuern", label: "Mieteinnahmen versteuern", icon: Coins, description: "Steuer auf Mieteinnahmen (§ 21 EStG)" },
       { href: "/private-krankenversicherung-vs-gesetzlich", label: "PKV vs GKV", icon: HeartPulse, description: "Ab welchem Brutto lohnt sich die PKV?" },
       { href: "/witwenrente-rechner", label: "Witwenrente-Rechner", icon: HeartHandshake, description: "55 % / 25 % berechnen" },
       { href: "/abfindungsrechner", label: "Abfindungsrechner", icon: Banknote, description: "Fünftelregelung" },
       { href: "/weihnachtsgeld-rechner", label: "Weihnachtsgeld-Rechner", icon: Snowflake, description: "Netto vom Weihnachtsgeld" },
-      { href: "/bonus-steuerrechner", label: "Bonus-Steuerrechner", icon: Gift, description: "Weihnachts- & Urlaubsgeld" },
+      { href: "/urlaubsgeld-rechner", label: "Urlaubsgeld-Rechner", icon: Sun, description: "Netto vom Urlaubsgeld" },
+      { href: "/urlaubsanspruch-rechner", label: "Urlaubsanspruch-Rechner", icon: Palmtree, description: "Wie viele Urlaubstage stehen mir zu?" },
+      { href: "/ueberstunden-rechner", label: "Überstunden-Rechner", icon: Timer, description: "Netto von ausgezahlten Überstunden" },
+      { href: "/erbschaftssteuer-rechner", label: "Erbschaftssteuer-Rechner", icon: Landmark, description: "Freibeträge & Tarif nach ErbStG" },
+      { href: "/schenkungssteuer-rechner", label: "Schenkungssteuer-Rechner", icon: Landmark, description: "Freibetrag alle 10 Jahre neu" },
+      { href: "/abgeltungssteuer-rechner", label: "Abgeltungssteuer-Rechner", icon: TrendingUp, description: "Kapitalerträge · 26,375 %" },
+      { href: "/bonus-steuerrechner", label: "Bonus-Steuerrechner", icon: Gift, description: "Bonus & Sonderzahlungen" },
       { href: "/mehrwertsteuer-rechner", label: "MwSt-Rechner", icon: Receipt, description: "19 % / 7 % auf- & herausrechnen" },
       { href: "/stundenlohn-rechner", label: "Stundenlohn-Rechner", icon: Clock3, description: "Netto pro Stunde" },
       { href: "/teilzeitrechner", label: "Teilzeitrechner", icon: Timer, description: "Netto bei Teilzeit" },

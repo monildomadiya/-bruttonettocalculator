@@ -22,6 +22,9 @@ import {
   extractToc,
   injectHeadingIds,
   type BlogPost,
+  getCoverImage,
+  COVER_WIDTH,
+  COVER_HEIGHT,
 } from "@/lib/blog";
 import { allCalculatorLinks } from "@/lib/navigation";
 
@@ -60,8 +63,8 @@ function toViewModel(post: BlogPost) {
     created_at: post.publishedISO,
     updated_at: post.updatedISO,
     read_time: readTime(post),
-    featured_image: "",
-    featured_image_alt: "",
+    featured_image: getCoverImage(post),
+    featured_image_alt: post.heroImageAlt || post.headline,
     featured_image_caption: "",
     enable_toc: true,
   };
@@ -116,7 +119,14 @@ export async function generateMetadata({
       modifiedTime: post.updatedISO,
       // Ohne Bild greift das Site-Default — eine leere Liste würde bedeuten,
       // dass der Beitrag beim Teilen und in sozialen Vorschauen gar kein Bild hat.
-      images: [{ url: art.featured_image || FALLBACK_OG_IMAGE }],
+      images: [
+        {
+          url: art.featured_image || FALLBACK_OG_IMAGE,
+          width: COVER_WIDTH,
+          height: COVER_HEIGHT,
+          alt: art.featured_image_alt || art.headline,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
@@ -162,7 +172,16 @@ export default function ArticleReaderPage({
     "@type": "BlogPosting",
     headline: article.headline,
     description: article.meta_description || article.excerpt,
-    image: article.featured_image ? [article.featured_image] : [],
+    image: article.featured_image
+      ? [
+          {
+            "@type": "ImageObject",
+            url: article.featured_image,
+            width: COVER_WIDTH,
+            height: COVER_HEIGHT,
+          },
+        ]
+      : [],
     datePublished: article.created_at || new Date().toISOString(),
     dateModified:
       article.updated_at || article.created_at || new Date().toISOString(),

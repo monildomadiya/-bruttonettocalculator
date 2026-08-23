@@ -136,6 +136,24 @@ export const KV_2026 = {
 } as const;
 
 /**
+ * Beitragsbemessungsgrenzen 2026 (§ 159 SGB VI, § 6 SGB V) und die daraus
+ * folgenden Arbeitnehmer-Beitragssätze. Wird u. a. für Einmalzahlungen
+ * (sonstige Bezüge) gebraucht: Sozialabgaben fallen nur an, soweit das
+ * Jahresentgelt die jeweilige Grenze noch nicht ausgeschöpft hat.
+ *
+ * AN-Anteile: KV 7,3 % + halber Zusatzbeitrag 1,45 % = 8,75 %,
+ * PV 1,8 %, RV 9,3 %, ALV 1,3 % → zusammen 21,15 %.
+ */
+export const BBG_2026 = {
+  kvPvJahr: RECHENGROESSEN_2026.kvPvBbgJahr, // 69.750 €
+  rvAlvJahr: RECHENGROESSEN_2026.rvAlvBbgJahr, // 101.400 €
+  anSatzKv: RECHENGROESSEN_2026.kvSatz / 2 + RECHENGROESSEN_2026.kvZusatzbeitragDurchschnitt / 2,
+  anSatzPv: RECHENGROESSEN_2026.pvAgAnteil, // paritätisch, ohne Kinderlosenzuschlag
+  anSatzRv: RECHENGROESSEN_2026.rvSatz / 2,
+  anSatzAlv: RECHENGROESSEN_2026.alvSatz / 2,
+} as const;
+
+/**
  * Betriebliche Altersvorsorge (bAV) / Entgeltumwandlung 2026
  * (§ 3 Nr. 63 EStG, § 1 Abs. 1 Nr. 9 SvEV). Beiträge sind bis 8 % der
  * Beitragsbemessungsgrenze RV (West) steuerfrei und bis 4 % sozialabgabenfrei.

@@ -46,6 +46,14 @@ import { post as witwenrenteHoehe } from "./witwenrente-hoehe-anrechnung";
 import { post as sozialabgaben2026 } from "./sozialabgaben-2026";
 import { post as krankengeldHoehe } from "./krankengeld-hoehe-dauer";
 
+// Dritter Durchlauf (08/2026) — Discover-orientierte Beiträge:
+// aktuelle Änderungen, Fristen und Vergleichsfragen statt reiner Nachschlagethemen.
+import { post as gehalt2027 } from "./gehalt-2027-was-sich-aendert";
+import { post as gleichesBruttoAnderesNetto } from "./gleiches-brutto-anderes-netto";
+import { post as rentenpunkteEinJahr } from "./rentenpunkte-ein-jahr-arbeit";
+import { post as steuerklasseWechselnFrist } from "./steuerklasse-wechseln-frist-november";
+import { post as mieteinnahmenAfa } from "./mieteinnahmen-versteuern-afa";
+
 export const BLOG_POSTS: BlogPost[] = [
   kinderfreibetrag2026,
   kinderfreibetragZaehler,
@@ -71,4 +79,9 @@ export const BLOG_POSTS: BlogPost[] = [
   witwenrenteHoehe,
   sozialabgaben2026,
   krankengeldHoehe,
+  gehalt2027,
+  gleichesBruttoAnderesNetto,
+  rentenpunkteEinJahr,
+  steuerklasseWechselnFrist,
+  mieteinnahmenAfa,
 ];
