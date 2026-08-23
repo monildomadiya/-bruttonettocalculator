@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, BookOpen, HelpCircle, Newspaper } from "lucide-react";
+import SupportButton, { isEmbedRoute, langFromPath } from "@/components/SupportButton";
 import { calculatorGroups } from "@/lib/navigation";
 
 const directLinks = [
@@ -12,6 +14,9 @@ const directLinks = [
 ];
 
 export default function MobileMenu() {
+  const pathname = usePathname();
+  const lang = langFromPath(pathname);
+  const isEmbed = isEmbedRoute(pathname);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -104,6 +109,22 @@ export default function MobileMenu() {
             </Link>
           </div>
         </div>
+
+        {/*
+          Second mobile touchpoint for the coffee link — the header circle is
+          only 36 px and easy to miss.
+
+          Deliberately OUTSIDE the scroll container above: inside it the button
+          landed 2148 px down the list of every calculator group, which nobody
+          scrolls to. Pinned here it is visible the moment the menu opens, and
+          the nav above keeps its own scroll. Tracked separately so the two
+          mobile placements can be compared in GA4.
+        */}
+        {!isEmbed && (
+          <div className="border-t border-black/[0.07] bg-black/[0.02] px-3 py-2.5 flex justify-center">
+            <SupportButton variant="inline" lang={lang} placement="mobile_menu" />
+          </div>
+        )}
       </div>
     </div>
   );
