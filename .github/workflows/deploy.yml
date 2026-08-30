@@ -1,12 +1,21 @@
-name: Deploy to DigitalOcean
+name: Deploy
 
 on:
   push:
     branches:
       - main
 
+# Two small servers, one build each. Never let two runs overlap.
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
 jobs:
-  deploy:
+  # ── DigitalOcean droplet ────────────────────────────────────────────
+  # Still the live site until the Cloudflare origin is pointed at Azure.
+  # Left exactly as it was: this is the path production depends on today.
+  digitalocean:
+    name: DigitalOcean (live)
     runs-on: ubuntu-latest
 
     steps:
@@ -40,3 +49,44 @@ jobs:
             pm2 save
             sleep 3
             pm2 status
+
+  # ── Azure VM ────────────────────────────────────────────────────────
+  # Kept in step with the droplet so the cutover is a Cloudflare
+  # origin-IP edit and nothing else. Once the droplet stops serving this
+  # site, delete the job above and this becomes the only one.
+  azure:
+    name: Azure VM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AZURE_HOST }}
+          username: ${{ secrets.AZURE_USERNAME }}
+          key: ${{ secrets.AZURE_SSH_KEY }}
+          port: 22
+          script: |
+            set -e
+            cd /var/www/bruttonetto
+
+            # This checkout was created with a shallow fetch, so pull the
+            # same way rather than assuming a tracking branch exists.
+            # .env is gitignored, so a hard reset never touches it.
+            git fetch --depth=1 origin main
+            git reset --hard FETCH_HEAD
+
+            npm ci --no-audit --no-fund
+
+            # 2 vCPU / 4 GB, with 4 GB of swap behind it.
+            NODE_OPTIONS="--max-old-space-size=3072" npm run build
+
+            # Restart in place rather than delete+start, so the port never
+            # goes unbound and a deploy is not a visible outage.
+            pm2 restart bruttonetto_live --update-env \
+              || pm2 start node_modules/.bin/next --name "bruttonetto_live" -- start -p 3007
+            pm2 save
+
+            sleep 5
+            pm2 status
+            curl -fsS -o /dev/null -w 'local check: %{http_code}\n' http://127.0.0.1:3007/
