@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import EinkommensteuerRechner from "./EinkommensteuerRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Einkommensteuer-Rechner 2026 — Steuer nach § 32a EStG",
@@ -79,6 +81,7 @@ export default function EinkommensteuerRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <EinkommensteuerRechner />
+      <ToolContent config={TOOL_CONTENT["/einkommensteuer-rechner"]} />
     </>
   );
 }

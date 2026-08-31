@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import RentenpunkteRechner from "./RentenpunkteRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Rentenpunkte-Rechner 2026 — Entgeltpunkte & Rente berechnen",
@@ -85,6 +87,7 @@ export default function RentenpunkteRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <RentenpunkteRechner />
+      <ToolContent config={TOOL_CONTENT["/rentenpunkte-rechner"]} />
     </>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import SchonvermoegenRechner from "./SchonvermoegenRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Schonvermögen-Rechner 2026 — Bürgergeld Vermögensfreibetrag",
@@ -85,6 +87,7 @@ export default function SchonvermoegenRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <SchonvermoegenRechner />
+      <ToolContent config={TOOL_CONTENT["/schonvermoegen-rechner"]} />
     </>
   );
 }

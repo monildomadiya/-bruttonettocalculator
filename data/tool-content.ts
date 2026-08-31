@@ -1,8 +1,7 @@
-import {
-  calculateNetto,
-  type CalculatorInput,
-  type Steuerklasse,
-} from "@/lib/taxCalculator";
+import { eur, eur2, pct, netto, LADDER } from "@/data/tool-content-shared";
+import { TOOL_CONTENT_EXTRA } from "@/data/tool-content-extra";
+import { TOOL_CONTENT_MORE } from "@/data/tool-content-more";
+import { TOOL_CONTENT_FINAL } from "@/data/tool-content-final";
 import type { ToolContentConfig } from "@/components/ToolContent";
 
 /**
@@ -24,41 +23,7 @@ import type { ToolContentConfig } from "@/components/ToolContent";
  * `components/ToolContent.tsx` for why these blocks exist at all.
  */
 
-/* ── formatting ──────────────────────────────────────────────────────── */
-
-const eur = (n: number) =>
-  new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 }).format(Math.round(n)) + " €";
-
-const eur2 = (n: number) =>
-  new Intl.NumberFormat("de-DE", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(n) + " €";
-
-const pct = (n: number, digits = 1) =>
-  new Intl.NumberFormat("de-DE", {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
-  }).format(n) + " %";
-
-/* ── engine helpers ──────────────────────────────────────────────────── */
-
-/** One 2026 net calculation with the site's default assumptions. */
-function netto(bruttoMonat: number, opts: Partial<CalculatorInput> = {}) {
-  const steuerklasse = (opts.steuerklasse ?? 1) as Steuerklasse;
-  return calculateNetto({
-    bruttoMonat,
-    jahr: 2026,
-    verheiratet: steuerklasse === 3 || steuerklasse === 5,
-    kinderlosUeber23: true,
-    kirche: false,
-    steuerklasse,
-    ...opts,
-  });
-}
-
-/** Monthly gross levels used across the example tables. */
-const LADDER = [2000, 3000, 4000, 5000, 6000, 8000];
+/* ── shared helpers ──────────────────────────────────────────────────── */
 
 /* ── /gehaltserhoehung-rechner ───────────────────────────────────────── */
 
@@ -790,8 +755,16 @@ const steuerklassenwechsel: ToolContentConfig = {
 
 /* ── registry ────────────────────────────────────────────────────────── */
 
-/** Route → long-form content block. Add an entry to give a page its section. */
+/**
+ * Route → long-form content block. Add an entry to give a page its section.
+ * Split across four modules purely for file size; `tool-content-extra.ts`,
+ * `tool-content-more.ts` and `tool-content-final.ts` hold the later batches and
+ * are merged in here so there stays exactly one registry.
+ */
 export const TOOL_CONTENT: Record<string, ToolContentConfig> = {
+  ...TOOL_CONTENT_EXTRA,
+  ...TOOL_CONTENT_MORE,
+  ...TOOL_CONTENT_FINAL,
   "/gehaltserhoehung-rechner": gehaltserhoehung,
   "/minijob-rechner": minijob,
   "/midijob-rechner": midijob,

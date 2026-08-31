@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import SteuerrueckerstattungRechner from "./SteuerrueckerstattungRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Steuerrückerstattung-Rechner 2026 — was kommt zurück?",
@@ -93,6 +95,7 @@ export default function SteuerrueckerstattungRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <SteuerrueckerstattungRechner />
+      <ToolContent config={TOOL_CONTENT["/steuerrueckerstattung-rechner"]} />
     </>
   );
 }

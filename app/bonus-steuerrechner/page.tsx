@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import BonusSteuerrechner from "./BonusSteuerrechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Bonus-Steuerrechner 2026 — Bonus & Urlaubsgeld versteuern",
@@ -54,6 +56,7 @@ export default function BonusSteuerrechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <BonusSteuerrechner />
+      <ToolContent config={TOOL_CONTENT["/bonus-steuerrechner"]} />
     </>
   );
 }

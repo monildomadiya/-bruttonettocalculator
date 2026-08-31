@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import AbfindungsRechner from "./AbfindungsRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Abfindungsrechner 2026 — Fünftelregelung berechnen",
@@ -54,6 +56,7 @@ export default function AbfindungsrechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <AbfindungsRechner />
+      <ToolContent config={TOOL_CONTENT["/abfindungsrechner"]} />
     </>
   );
 }

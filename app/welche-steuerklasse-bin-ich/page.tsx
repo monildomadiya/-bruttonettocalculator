@@ -6,6 +6,8 @@ import {
 } from "lucide-react";
 import SteuerklassenFinder from "@/components/SteuerklassenFinder";
 import ReviewerByline from "@/components/ReviewerByline";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const CANONICAL = "https://bruttonettocalculator.com/welche-steuerklasse-bin-ich";
 
@@ -254,6 +256,7 @@ export default function WelcheSteuerklassePage() {
           ))}
         </div>
       </div>
+      <ToolContent config={TOOL_CONTENT["/welche-steuerklasse-bin-ich"]} />
     </main>
   );
 }

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import AbgeltungssteuerRechner from "./AbgeltungssteuerRechner";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Abgeltungssteuer-Rechner 2026: Kapitalertragsteuer berechnen",
@@ -221,6 +223,7 @@ export default function AbgeltungssteuerRechnerPage() {
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Vollständiges Nettogehalt 2026" },
         ]}
       />
+      <ToolContent config={TOOL_CONTENT["/abgeltungssteuer-rechner"]} />
     </>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import BuergergeldRechner from "./BuergergeldRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Bürgergeld-Rechner 2026 — Anspruch & Regelsatz berechnen",
@@ -78,6 +80,7 @@ export default function BuergergeldRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <BuergergeldRechner />
+      <ToolContent config={TOOL_CONTENT["/buergergeld-rechner"]} />
     </>
   );
 }

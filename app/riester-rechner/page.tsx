@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import RiesterRechner from "./RiesterRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Riester-Rechner 2026 — Zulagen & Eigenbeitrag berechnen",
@@ -85,6 +87,7 @@ export default function RiesterRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <RiesterRechner />
+      <ToolContent config={TOOL_CONTENT["/riester-rechner"]} />
     </>
   );
 }

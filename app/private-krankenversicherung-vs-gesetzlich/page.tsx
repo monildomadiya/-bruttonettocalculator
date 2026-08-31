@@ -4,6 +4,8 @@ import { Sparkles, AlertCircle, Check, X, HeartPulse } from "lucide-react";
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "PKV vs GKV 2026: Ab welchem Brutto lohnt sich die PKV?",
@@ -280,6 +282,7 @@ export default function PkvVsGkvPage() {
       </section>
 
       <RelatedCalculators title="Passende Rechner &amp; Ratgeber" links={relatedLinks} className="pb-16" />
+      <ToolContent config={TOOL_CONTENT["/private-krankenversicherung-vs-gesetzlich"]} />
     </>
   );
 }

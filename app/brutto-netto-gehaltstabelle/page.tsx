@@ -5,6 +5,8 @@ import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import { getCommonGrossSalaryAmounts } from "@/data/wage-stats";
 import { SITE_URL, WEBSITE_ID, ORG_ID } from "@/lib/seo";
 import { siteConfig } from "@/lib/authors";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const revalidate = 0;
 
@@ -175,6 +177,7 @@ export default function SalaryHubPage() {
         keine Steuerberatung. Für ein individuelles Ergebnis nutzen Sie den{" "}
         <Link href="/#rechner" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner</Link>.
       </p>
+      <ToolContent config={TOOL_CONTENT["/brutto-netto-gehaltstabelle"]} />
     </main>
   );
 }

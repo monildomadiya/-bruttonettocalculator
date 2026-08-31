@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import ArbeitslosengeldRechner from "./ArbeitslosengeldRechner";
 import ArbeitslosengeldContent from "./ArbeitslosengeldContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "ALG-1-Rechner 2026: Arbeitslosengeld berechnen",
@@ -63,6 +65,7 @@ export default function ArbeitslosengeldRechnerPage() {
           { href: "/kurzarbeitergeld-rechner", label: "Kurzarbeitergeld-Rechner", desc: "KUG bei Kurzarbeit" },
         ]}
       />
+      <ToolContent config={TOOL_CONTENT["/arbeitslosengeld-rechner"]} />
     </>
   );
 }
