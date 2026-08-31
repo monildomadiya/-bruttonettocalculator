@@ -5,6 +5,8 @@ import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 import ReviewerByline from "@/components/ReviewerByline";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Lohnsteuerrechner 2026 — Lohnsteuer & Nettolohn berechnen",
@@ -236,6 +238,7 @@ export default function LohnsteuerrechnerPage() {
         </h2>
         <AccordionFaq faqs={faqs} />
       </section>
+      <ToolContent config={TOOL_CONTENT["/lohnsteuerrechner"]} />
     </main>
   );
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import KurzarbeitergeldRechner from "./KurzarbeitergeldRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const URL = "https://bruttonettocalculator.com/kurzarbeitergeld-rechner";
 
@@ -42,6 +44,7 @@ export default function Page() {
         description="Kostenloser Kurzarbeitergeld-Rechner — KUG (60 %/67 % der Nettoentgeltdifferenz) und Gesamteinkommen bei Kurzarbeit berechnen (2026)."
         faqs={faqs} />
       <KurzarbeitergeldRechner />
+      <ToolContent config={TOOL_CONTENT["/kurzarbeitergeld-rechner"]} />
     </>
   );
 }

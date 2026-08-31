@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import GehaltserhoehungRechner from "./GehaltserhoehungRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const URL = "https://bruttonettocalculator.com/gehaltserhoehung-rechner";
 
@@ -42,6 +44,7 @@ export default function Page() {
         description="Kostenloser Rechner, der zeigt, wie viel einer Gehaltserhöhung nach Steuern und Sozialabgaben netto übrig bleibt (2026)."
         faqs={faqs} />
       <GehaltserhoehungRechner />
+      <ToolContent config={TOOL_CONTENT["/gehaltserhoehung-rechner"]} />
     </>
   );
 }
