@@ -216,7 +216,7 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero (Inspired by Dark Tech Reference) ──────────────────── */}
-      <section className="hero-bg pt-14 sm:pt-20 pb-24 sm:pb-32 px-4 sm:px-5 relative">
+      <section className="hero-bg pb-24 sm:pb-32 px-4 sm:px-5 relative">
         <div className="w-full max-w-6xl mx-auto relative z-10 text-center flex flex-col items-center">
 
           {/* Glowing Pill Badge */}
