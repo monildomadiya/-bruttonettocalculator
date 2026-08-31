@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import SteuerklassenwechselRechner from "./SteuerklassenwechselRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const URL = "https://bruttonettocalculator.com/steuerklassenwechsel-rechner";
 
@@ -43,6 +45,7 @@ export default function Page() {
         description="Kostenloser Steuerklassenwechsel-Rechner für Ehepaare — III/V, IV/IV und IV/IV mit Faktor im Netto-Vergleich (2026)."
         faqs={faqs} />
       <SteuerklassenwechselRechner />
+      <ToolContent config={TOOL_CONTENT["/steuerklassenwechsel-rechner"]} />
     </>
   );
 }

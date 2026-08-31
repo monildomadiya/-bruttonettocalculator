@@ -10,6 +10,8 @@ import {
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 import ReviewerByline from "@/components/ReviewerByline";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Midijob-Rechner 2026 — Übergangsbereich 603–2.000 € netto",
@@ -228,6 +230,7 @@ export default function MidijobRechnerPage() {
         </h2>
         <AccordionFaq faqs={faqs} />
       </section>
+      <ToolContent config={TOOL_CONTENT["/midijob-rechner"]} />
     </main>
   );
 }

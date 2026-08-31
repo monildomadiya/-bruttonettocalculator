@@ -72,6 +72,12 @@ export default function SiteFooter() {
               <li><Link href="/brutto-netto-rechner-2026" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner 2026</Link></li>
               <li><Link href="/brutto-netto-rechner-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner 2027</Link></li>
               <li><Link href="/pfaendungstabelle"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Pfändungstabelle 2026</Link></li>
+              <li><Link href="/welche-steuerklasse-bin-ich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Welche Steuerklasse bin ich?</Link></li>
+              <li><Link href="/brutto-netto-rechner-krankenkasse" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner mit Krankenkasse</Link></li>
+              <li><Link href="/brutto-netto-rechner-beamte" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Beamten-Rechner</Link></li>
+              <li><Link href="/steuerfreibetrag-2026" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerfreibetrag 2026</Link></li>
+              <li><Link href="/durchschnittsgehalt-deutschland" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Durchschnittsgehalt Deutschland</Link></li>
+              <li><Link href="/brutto-netto-rechner-vergleich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner im Vergleich</Link></li>
             </ul>
           </div>
 
@@ -102,6 +108,19 @@ export default function SiteFooter() {
               <li><Link href="/abfindungsrechner"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Abfindungsrechner</Link></li>
               <li><Link href="/bonus-steuerrechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Bonus-Steuerrechner</Link></li>
               <li><Link href="/stundenlohn-rechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Stundenlohn-Rechner</Link></li>
+              <li><Link href="/ueberstunden-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Überstunden-Rechner</Link></li>
+              <li><Link href="/urlaubsgeld-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Urlaubsgeld-Rechner</Link></li>
+              <li><Link href="/urlaubsanspruch-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Urlaubsanspruch-Rechner</Link></li>
+              <li><Link href="/mehrwertsteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">MwSt-Rechner</Link></li>
+              <li><Link href="/erbschaftssteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Erbschaftssteuer-Rechner</Link></li>
+              <li><Link href="/schenkungssteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Schenkungssteuer-Rechner</Link></li>
+              <li><Link href="/abgeltungssteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Abgeltungssteuer-Rechner</Link></li>
+              <li><Link href="/mieteinnahmen-versteuern" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Mieteinnahmen versteuern</Link></li>
+              <li><Link href="/riester-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Riester-Rechner</Link></li>
+              <li><Link href="/rentenpunkte-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rentenpunkte-Rechner</Link></li>
+              <li><Link href="/grundsicherung-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Grundsicherung-Rechner</Link></li>
+              <li><Link href="/schonvermoegen-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Schonvermögen-Rechner</Link></li>
+              <li><Link href="/bafoeg-rueckzahlung-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">BAföG-Rückzahlung</Link></li>
               <li><Link href="/lexikon"                   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuer-Lexikon</Link></li>
             </ul>
           </div>

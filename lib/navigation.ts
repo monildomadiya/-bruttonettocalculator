@@ -106,11 +106,51 @@ export const allCalculatorLinks: NavLink[] = calculatorGroups.flatMap((g) => g.i
 const EVERGREEN_HREFS = ["/", "/gehaltsrechner", "/steuerklassen", "/brutto-netto-rechner-2026"];
 
 /**
+ * Tools whose topic sits in a high-value advertising vertical.
+ *
+ * Ad revenue on this site is not evenly spread across the ~70 calculators. A
+ * generic salary query is bid on at cents; private health insurance, property
+ * finance, retirement products, capital-gains tax and inheritance tax are among
+ * the most expensive keyword sets in the German market, because a single
+ * conversion is worth hundreds of euros to the advertiser. Two visits to
+ * `/private-krankenversicherung-vs-gesetzlich` can be worth more than a hundred
+ * to a plain brutto-netto page.
+ *
+ * These pages already exist — they were simply buried. Reserving a couple of
+ * slots in every related-tools block for them shifts the session mix toward the
+ * inventory that actually earns, without displacing the topically closest
+ * siblings, which still fill the block first.
+ *
+ * Order matters: earlier entries are offered first.
+ */
+const HIGH_VALUE_HREFS = [
+  "/private-krankenversicherung-vs-gesetzlich",
+  "/immobilienkredit-rechner",
+  "/bav-rechner",
+  "/riester-rechner",
+  "/abgeltungssteuer-rechner",
+  "/erbschaftssteuer-rechner",
+  "/mieteinnahmen-versteuern",
+  "/firmenwagenrechner",
+  "/rentenrechner",
+];
+
+/** How many slots of a related-tools block are reserved for high-value tools. */
+const HIGH_VALUE_SLOTS = 2;
+
+/**
  * Returns topically-related tools for a given page, for the "Ähnliche Rechner"
- * internal-linking block. Prioritises siblings from the same category (most
- * relevant), then fills with evergreen hub pages, then anything else — always
- * excluding the current page and de-duplicating. Pages that aren't in the nav
- * (e.g. amount pages) still get a sensible evergreen-led set.
+ * internal-linking block.
+ *
+ * Fill order: siblings from the same category (most relevant), then evergreen
+ * hub pages, then anything else — always excluding the current page and
+ * de-duplicating. Pages that aren't in the nav (e.g. amount pages) still get a
+ * sensible evergreen-led set.
+ *
+ * The last `HIGH_VALUE_SLOTS` positions are then reserved for
+ * `HIGH_VALUE_HREFS` (see above), unless the topical picks already cover them.
+ * Relevance keeps the first and largest share of the block, so this trades a
+ * little breadth for revenue rather than swapping out the useful links.
  */
 export function getRelatedCalculators(
   currentHref: string,
@@ -132,5 +172,25 @@ export function getRelatedCalculators(
   // 3) fall back to filling from everything else
   allCalculatorLinks.forEach(add);
 
-  return picked.slice(0, count).map((i) => ({ href: i.href, label: i.label, desc: i.description }));
+  const result = picked.slice(0, count);
+
+  // 4) reserve the tail for high-value tools that did not already make the cut
+  const reserved = Math.min(HIGH_VALUE_SLOTS, Math.max(0, count - 1));
+  if (reserved > 0) {
+    const candidates = HIGH_VALUE_HREFS.filter(
+      (href) => href !== currentHref && !result.some((r) => r.href === href)
+    )
+      .map((href) => allCalculatorLinks.find((l) => l.href === href))
+      .filter((l): l is NavLink => Boolean(l))
+      .slice(0, reserved);
+
+    // Replace from the end, so the closest topical matches at the top survive.
+    candidates.forEach((c, i) => {
+      const slot = result.length - candidates.length + i;
+      if (slot >= 0) result[slot] = c;
+      else result.push(c);
+    });
+  }
+
+  return result.map((i) => ({ href: i.href, label: i.label, desc: i.description }));
 }

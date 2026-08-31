@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import WerkstudentRechner from "./WerkstudentRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const URL = "https://bruttonettocalculator.com/werkstudent-rechner";
 
@@ -42,6 +44,7 @@ export default function Page() {
         description="Kostenloser Werkstudent-Rechner — Nettogehalt mit Werkstudentenprivileg (nur 9,3 % Rentenbeitrag) berechnen (2026)."
         faqs={faqs} />
       <WerkstudentRechner />
+      <ToolContent config={TOOL_CONTENT["/werkstudent-rechner"]} />
     </>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import MinijobRechner from "./MinijobRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Minijob-Rechner 2026 — Verdienstgrenze 603 € berechnen",
@@ -53,6 +55,7 @@ export default function MinijobRechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <MinijobRechner />
+      <ToolContent config={TOOL_CONTENT["/minijob-rechner"]} />
     </>
   );
 }

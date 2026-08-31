@@ -10,6 +10,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import AdsProvider from "@/components/AdsProvider";
 import SiteWideAd from "@/components/SiteWideAd";
+import ConsentMode from "@/components/ConsentMode";
 import { AD_CLIENT, ADSENSE_LOADER_SRC } from "@/lib/adsConfig";
 import { postalAddressSchema } from "@/lib/company";
 
@@ -200,6 +201,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           (the homepage is ~14.7 viewports) and Auto Ads was placing almost
           nothing on them.
         */}
+        {/* Consent Mode v2 defaults — must precede every Google tag. */}
+        <ConsentMode />
+
         <script
           async
           src={ADSENSE_LOADER_SRC}
@@ -218,6 +222,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* ── Auto "Ähnliche Rechner" internal-linking block (per-page) ── */}
         <RelatedToolsAuto />
+
+        {/* ── End-of-session unit, below the related tools ────────────── */}
+        <SiteWideAd slot="afterRelated" />
 
         {/* ── Ultra-Luxury Fintech Footer (conditional) ───────────────── */}
         <SiteFooter />
