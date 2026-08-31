@@ -4,6 +4,8 @@ import ErbschaftsteuerRechner from "./ErbschaftsteuerRechner";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import { VERWANDTSCHAFT, TARIF } from "@/lib/erbschaftsteuer";
 import { formatEUR } from "@/lib/taxCalculator";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Erbschaftssteuer-Rechner 2026: Freibetrag & Steuer berechnen",
@@ -255,6 +257,7 @@ export default function ErbschaftssteuerRechnerPage() {
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Vollständiges Nettogehalt 2026" },
         ]}
       />
+      <ToolContent config={TOOL_CONTENT["/erbschaftssteuer-rechner"]} />
     </>
   );
 }

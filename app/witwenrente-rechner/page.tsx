@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import WitwenrenteRechner from "./WitwenrenteRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Witwenrente-Rechner 2026 — Höhe berechnen (55 % / 25 %)",
@@ -78,6 +80,7 @@ export default function WitwenrenteRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <WitwenrenteRechner />
+      <ToolContent config={TOOL_CONTENT["/witwenrente-rechner"]} />
     </>
   );
 }

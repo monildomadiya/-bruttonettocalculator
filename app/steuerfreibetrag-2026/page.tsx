@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ChevronRight, Landmark, ArrowRight, Wallet2, Info } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const CANONICAL = "https://bruttonettocalculator.com/steuerfreibetrag-2026";
 
@@ -300,6 +302,7 @@ export default function SteuerfreibetragPage() {
           ))}
         </div>
       </div>
+      <ToolContent config={TOOL_CONTENT["/steuerfreibetrag-2026"]} />
     </main>
   );
 }

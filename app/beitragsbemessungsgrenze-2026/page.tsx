@@ -4,6 +4,8 @@ import { ChevronRight, Info, TrendingUp, ShieldCheck, Wallet2, ArrowRight } from
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import { siteConfig } from "@/lib/authors";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 /**
  * Beitragsbemessungsgrenze 2026.
@@ -351,6 +353,7 @@ export default function BeitragsbemessungsgrenzePage() {
           </div>
         </section>
       </div>
+      <ToolContent config={TOOL_CONTENT["/beitragsbemessungsgrenze-2026"]} />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import ImmobilienkreditRechner from "./ImmobilienkreditRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Immobilienkredit-Rechner 2026 — Baufinanzierung berechnen",
@@ -93,6 +95,7 @@ export default function ImmobilienkreditRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <ImmobilienkreditRechner />
+      <ToolContent config={TOOL_CONTENT["/immobilienkredit-rechner"]} />
     </>
   );
 }

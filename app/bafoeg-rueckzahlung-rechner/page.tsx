@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import BafoegRueckzahlungRechner from "./BafoegRueckzahlungRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "BAföG-Rückzahlung-Rechner 2026 — Raten & Dauer berechnen",
@@ -85,6 +87,7 @@ export default function BafoegRueckzahlungRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <BafoegRueckzahlungRechner />
+      <ToolContent config={TOOL_CONTENT["/bafoeg-rueckzahlung-rechner"]} />
     </>
   );
 }

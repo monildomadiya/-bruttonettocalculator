@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import BafoegRechner from "./BafoegRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "BAföG-Rechner 2026 — Anspruch & Höhe berechnen (Studium)",
@@ -77,6 +79,7 @@ export default function BafoegRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <BafoegRechner />
+      <ToolContent config={TOOL_CONTENT["/bafoeg-rechner"]} />
     </>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import GrundsicherungRechner from "./GrundsicherungRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Grundsicherung-Rechner 2026 — Anspruch im Alter berechnen",
@@ -85,6 +87,7 @@ export default function GrundsicherungRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <GrundsicherungRechner />
+      <ToolContent config={TOOL_CONTENT["/grundsicherung-rechner"]} />
     </>
   );
 }

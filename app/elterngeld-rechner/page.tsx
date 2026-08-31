@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import ElterngeldRechner from "./ElterngeldRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Elterngeld-Rechner 2026 — Basiselterngeld & ElterngeldPlus",
@@ -53,6 +55,7 @@ export default function ElterngeldRechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ElterngeldRechner />
+      <ToolContent config={TOOL_CONTENT["/elterngeld-rechner"]} />
     </>
   );
 }

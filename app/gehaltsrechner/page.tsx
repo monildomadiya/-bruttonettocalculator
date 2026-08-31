@@ -8,6 +8,8 @@ import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 import ReviewerByline from "@/components/ReviewerByline";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Gehaltsrechner 2026/2027 — Brutto Netto Gehalt berechnen",
@@ -259,6 +261,7 @@ export default function GehaltsrechnerPage() {
         </h2>
         <AccordionFaq faqs={faqs} />
       </section>
+      <ToolContent config={TOOL_CONTENT["/gehaltsrechner"]} />
     </main>
   );
 }

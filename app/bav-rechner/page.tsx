@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import BavRechner from "./BavRechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "bAV-Rechner 2026 — Entgeltumwandlung & Netto-Aufwand",
@@ -93,6 +95,7 @@ export default function BavRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <BavRechner />
+      <ToolContent config={TOOL_CONTENT["/bav-rechner"]} />
     </>
   );
 }

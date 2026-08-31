@@ -5,6 +5,8 @@ import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import { DESTATIS_JAHR_2025, BRANCHEN_MEDIAN_2025, WAGE_STATS_2026 } from "@/data/wage-stats";
 import GehaltsvergleichRechner from "@/components/GehaltsvergleichRechner";
 import ReviewerByline from "@/components/ReviewerByline";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const CANONICAL = "https://bruttonettocalculator.com/durchschnittsgehalt-deutschland";
 
@@ -387,6 +389,7 @@ export default function DurchschnittsgehaltPage() {
           ))}
         </div>
       </div>
+      <ToolContent config={TOOL_CONTENT["/durchschnittsgehalt-deutschland"]} />
     </main>
   );
 }

@@ -4,6 +4,8 @@ import { ChevronRight, Landmark, ShieldCheck, HeartPulse, CheckCircle2, ArrowRig
 import { calculateBeamtenNetto, calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import BeamtenRechner from "@/components/BeamtenRechner";
 import ReviewerByline from "@/components/ReviewerByline";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const CANONICAL = "https://bruttonettocalculator.com/brutto-netto-rechner-beamte";
 
@@ -262,6 +264,7 @@ export default function BeamteRechnerPage() {
           Brutto-Netto-Rechner für Angestellte <ArrowRight size={14} />
         </Link>
       </div>
+      <ToolContent config={TOOL_CONTENT["/brutto-netto-rechner-beamte"]} />
     </main>
   );
 }

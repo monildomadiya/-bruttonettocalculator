@@ -14,6 +14,8 @@ import {
 } from "@/data/krankenkassen";
 import KrankenkassenRechner from "@/components/KrankenkassenRechner";
 import ReviewerByline from "@/components/ReviewerByline";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const CANONICAL = "https://bruttonettocalculator.com/brutto-netto-rechner-krankenkasse";
 
@@ -364,6 +366,7 @@ export default function KrankenkassePage() {
           ))}
         </div>
       </div>
+      <ToolContent config={TOOL_CONTENT["/brutto-netto-rechner-krankenkasse"]} />
     </main>
   );
 }

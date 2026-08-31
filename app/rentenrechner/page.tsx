@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Rentenrechner from "./Rentenrechner";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 export const metadata: Metadata = {
   title: "Rentenrechner 2026 — Brutto Netto Rente berechnen",
@@ -53,6 +55,7 @@ export default function RentenrechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Rentenrechner />
+      <ToolContent config={TOOL_CONTENT["/rentenrechner"]} />
     </>
   );
 }

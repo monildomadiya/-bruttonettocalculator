@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ChevronRight, Receipt, CheckCircle2, ArrowRight, Percent } from "lucide-react";
 import MwstRechner from "@/components/MwstRechner";
 import ReviewerByline from "@/components/ReviewerByline";
+import ToolContent from "@/components/ToolContent";
+import { TOOL_CONTENT } from "@/data/tool-content";
 
 const CANONICAL = "https://bruttonettocalculator.com/mehrwertsteuer-rechner";
 
@@ -229,6 +231,7 @@ export default function MehrwertsteuerRechnerPage() {
           Einkommensteuer-Rechner <ArrowRight size={14} />
         </Link>
       </div>
+      <ToolContent config={TOOL_CONTENT["/mehrwertsteuer-rechner"]} />
     </main>
   );
 }
