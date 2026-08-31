@@ -65,11 +65,16 @@ export default function AdUnit({
       }
     }
 
-    // AdSense sets data-ad-status="filled" | "unfilled" once it resolves the slot.
+    // AdSense stamps `data-ad-status` once it resolves the slot. The value set is
+    // wider than the documented "filled" / "unfilled": production also returns
+    // **"unfill-optimized"**, which AdSense uses when it deliberately declines a
+    // slot rather than serve low-value inventory into it. Anything that is not
+    // "filled" therefore counts as empty — matching only the exact string
+    // "unfilled" left a resolved-but-empty unit holding ~250 px of blank layout.
     const read = () => {
       const st = el.getAttribute("data-ad-status");
-      if (st === "filled") setStatus("filled");
-      else if (st === "unfilled") setStatus("unfilled");
+      if (!st) return; // not resolved yet
+      setStatus(st === "filled" ? "filled" : "unfilled");
     };
     read();
 
@@ -86,9 +91,8 @@ export default function AdUnit({
     // destroyed impression rather than a tidied gap.
     const timer = setTimeout(() => {
       const st = el.getAttribute("data-ad-status");
-      if (st === "filled") setStatus("filled");
-      else if (st === "unfilled") setStatus("unfilled");
-      else if (!st && el.offsetHeight === 0) setStatus("unfilled");
+      if (st) setStatus(st === "filled" ? "filled" : "unfilled");
+      else if (el.offsetHeight === 0) setStatus("unfilled");
     }, 12000);
 
     return () => {
