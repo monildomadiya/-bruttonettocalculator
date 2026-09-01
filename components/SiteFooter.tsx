@@ -77,6 +77,7 @@ export default function SiteFooter() {
               <li><Link href="/brutto-netto-rechner-beamte" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Beamten-Rechner</Link></li>
               <li><Link href="/steuerfreibetrag-2026" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerfreibetrag 2026</Link></li>
               <li><Link href="/durchschnittsgehalt-deutschland" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Durchschnittsgehalt Deutschland</Link></li>
+              <li><Link href="/brutto-netto" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Gehalt nach Branche</Link></li>
               <li><Link href="/brutto-netto-rechner-vergleich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner im Vergleich</Link></li>
             </ul>
           </div>

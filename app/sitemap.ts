@@ -4,6 +4,7 @@ import { TVOED_VKA_2026 } from "@/data/tvoed";
 import { getAllPosts } from "@/lib/blog";
 import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts } from "@/data/wage-stats";
 import { BUNDESLAENDER } from "@/data/bundeslaender";
+import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
 
 export const revalidate = 0; // Dynamic sitemap generation
@@ -133,6 +134,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const path of infoRoutes) {
     sitemapEntries.push({ url: `${base}${path}` });
+  }
+
+  // Branchen-Cluster: Hub + eine Seite je Branche. Aus den Daten erzeugt,
+  // damit eine neue Branche in data/branchen.ts automatisch in der Sitemap
+  // landet.
+  sitemapEntries.push({ url: `${base}/brutto-netto`, lastModified: engineUpdated });
+  for (const br of BRANCHEN) {
+    sitemapEntries.push({
+      url: `${base}/brutto-netto/${br.slug}`,
+      lastModified: engineUpdated,
+    });
   }
 
   // Add all 16 Bundesland pages (brutto netto rechner <bundesland>)
