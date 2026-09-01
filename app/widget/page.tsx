@@ -94,7 +94,7 @@ export default function WidgetPage() {
 
       <main className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
         {/* ── Hero ── */}
-        <section className="relative overflow-hidden border-b border-black/[0.08]">
+        <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
           <div className="relative max-w-6xl mx-auto px-5 py-16 sm:py-24 text-center">
             <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-6">

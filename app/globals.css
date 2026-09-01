@@ -102,14 +102,16 @@ body {
 /* keep old alias */
 .text-gradient-gold { @apply text-gradient-accent; }
 
-/* ─── Animated hero background ──────────────────────────────────────── */
+/* ─── Header offset ─────────────────────────────────────────────────── */
 /* Height the sticky header occupies in normal flow: the wrapper's top padding
    plus the header row itself. Mirrors components/SiteHeader.tsx
-   (pt-3 + h-[64px] → pt-4 + h-[68px] → pt-4 + h-[72px]) — change both together. */
+   (pt-3 + h-[64px] → pt-4 + h-[68px] → pt-4 + h-[72px]) — change both together.
+   Used by both heroes that bleed up behind it: .hero-bg and .tool-hero. */
 :root { --header-offset: 76px; }
 @media (min-width: 640px) { :root { --header-offset: 84px; } }
 @media (min-width: 768px) { :root { --header-offset: 88px; } }
 
+/* ─── Animated hero background (homepage) ───────────────────────────── */
 .hero-bg {
   position: relative;
   overflow: hidden;
@@ -164,6 +166,23 @@ body {
 @keyframes meshPulse {
   0%   { opacity: 0.7; transform: scale(1); }
   100% { opacity: 1;   transform: scale(1.03); }
+}
+
+/* ─── Tool-page hero ────────────────────────────────────────────────── */
+/* The shared calculator/table hero anchors both of its light sources to its own
+   top edge: a `from-[#E60A1C]/[8%]` wash on an `inset-0` layer, and a blurred
+   blob at `top-0`. While the section began *below* the sticky header,
+   `overflow-hidden` clipped both there, so the red read as a hard horizontal
+   seam beginning under the header bar rather than as a glow behind it.
+
+   Same remedy as .hero-bg: pull the section up to the top of the document so
+   the light starts behind the translucent header, which then blurs it — the
+   point of the glass treatment. The padding re-adds exactly what the margin
+   removed, so the hero's own `py-*` content spacing, its bottom border and
+   everything below it stay where they were. */
+.tool-hero {
+  margin-top: calc(-1 * var(--header-offset));
+  padding-top: var(--header-offset);
 }
 
 /* ─── Calculator perforation ticket ────────────────────────────────── */

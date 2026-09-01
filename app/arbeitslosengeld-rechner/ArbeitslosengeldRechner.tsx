@@ -74,7 +74,7 @@ export default function ArbeitslosengeldRechner({ content }: { content?: React.R
   return (
     <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-black/[0.08]">
+      <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-5 py-20 sm:py-28 text-center">
