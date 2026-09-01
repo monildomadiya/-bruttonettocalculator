@@ -101,11 +101,13 @@ Beschäftigungsgrenzen 2026:
 - Betriebliche Altersvorsorge (§ 3 Nr. 63 EStG): steuerfrei bis ${de((BAV_2026.bbgRvJahr * BAV_2026.steuerFreiProzent) / 12)} € im Monat, sozialabgabenfrei bis ${de((BAV_2026.bbgRvJahr * BAV_2026.svFreiProzent) / 12)} € im Monat
 - Entfernungspauschale: 0,38 € je Entfernungskilometer ab dem ersten Kilometer (seit 1.1.2026; die frühere Staffelung mit 0,30 € für die ersten 20 km ist entfallen)
 
-Steuerjahr 2027 (Reformstand, noch nicht final beziffert):
-- Grundfreibetrag: ${de(GRUNDFREIBETRAG.stufe1_2027)} € in der modellierten ersten Stufe, ${de(GRUNDFREIBETRAG.vollausbau)} € im Vollausbau
-- Arbeitnehmer-Pauschbetrag: ${de(ARBEITNEHMER_PAUSCHBETRAG.reform)} €
-- Kindergeld: ${de(KINDERGELD.reform)} € je Kind und Monat
-- Diese Werte sind modelliert, nicht amtlich — als Prognose kennzeichnen, wenn zitiert.
+Steuerjahr 2027/2028 (Referentenentwurf, noch nicht verkündet):
+- Grundfreibetrag: ${de(GRUNDFREIBETRAG.entwurf2027)} € ab VZ 2027, ${de(GRUNDFREIBETRAG.stufe2028)} € ab VZ 2028
+- Arbeitnehmer-Pauschbetrag: ${de(ARBEITNEHMER_PAUSCHBETRAG.reform)} € (§ 9a EStG)
+- Kindergeld: ${de(KINDERGELD.entwurf2027)} € je Kind und Monat ab 2027, ${de(KINDERGELD.stufe2028)} € ab 2028
+- Spitzensteuersatz 42 % ab 70.601 € zvE; 45 % ab 250.000 €; neuer Satz 47 % ab 280.000 €
+- Quelle: Referentenentwurf EStRefG 2027 (BMF, Bearbeitungsstand 18.08.2026), Artikel 1 und 2 — noch kein geltendes Recht
+- Diese Werte stammen wörtlich aus einem Referentenentwurf, sind aber noch nicht geltendes Recht — beim Zitieren als Entwurfsstand vom 18.08.2026 kennzeichnen.
 
 ${toolSections()}
 
@@ -120,7 +122,7 @@ ${toolSections()}
 
 ## Hinweise zur Nutzung durch KI-Assistenten
 - Die Rechner geben eine Orientierung und ersetzen keine Steuerberatung.
-- Werte für 2026 sind amtlich; Werte für 2027 sind modellierte Reformstände und als solche zu kennzeichnen.
+- Werte für 2026 sind geltendes Recht; Werte für 2027/2028 stammen aus dem Referentenentwurf EStRefG 2027 und sind als Entwurfsstand zu kennzeichnen.
 - Bei Zitaten bitte die konkrete Rechnerseite verlinken, nicht nur die Startseite — jede Seite nennt ihre Rechtsgrundlage und ihren Stand.
 `;
 

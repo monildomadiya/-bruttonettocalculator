@@ -59,11 +59,11 @@ const T: Record<Lang, Record<string, string>> = {
     year2027Note: "Für 2027 gibt es noch kein Gesetz — nur den Koalitionsbeschluss vom 1.7.2026. Wählen Sie ein Szenario; die Sozialabgaben bleiben auf dem amtlichen Stand 2026.",
     scenarioLabel: "Reformszenario 2027",
     scenarioOhne: "Ohne Reform",
-    scenarioStufe1: "Stufe 1 (2027)",
-    scenarioVoll: "Vollausbau",
+    scenarioStufe1: "Entwurf 2027",
+    scenarioVoll: "Stufe 2028",
     scenarioOhneHint: "Tarif 2026 unverändert fortgeschrieben — falls die Reform scheitert.",
-    scenarioStufe1Hint: `Modellierte erste Stufe zum 1.1.2027: Grundfreibetrag ${GRUNDFREIBETRAG.stufe1_2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag 1.430 €.`,
-    scenarioVollHint: `Endstufe der Reform: Grundfreibetrag ${GRUNDFREIBETRAG.vollausbau.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag 1.430 €.`,
+    scenarioStufe1Hint: `Referentenentwurf EStRefG 2027, Artikel 1 (ab 1.1.2027): Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag 1.430 €.`,
+    scenarioVollHint: `Zweite Stufe desselben Entwurfs, Artikel 2 (ab 1.1.2028): Grundfreibetrag ${GRUNDFREIBETRAG.stufe2028.toLocaleString("de-DE")} €.`,
     taxClass: "Steuerklasse",
     moreOptions: "Weitere Optionen",
     childlessLabel: "Kinderlos & über 23 Jahre",
@@ -139,11 +139,11 @@ const T: Record<Lang, Record<string, string>> = {
     year2027Note: "There is no 2027 law yet — only the coalition agreement of 1 July 2026. Pick a scenario; social contributions stay at official 2026 levels.",
     scenarioLabel: "2027 reform scenario",
     scenarioOhne: "No reform",
-    scenarioStufe1: "Stage 1 (2027)",
-    scenarioVoll: "Full rollout",
+    scenarioStufe1: "Draft 2027",
+    scenarioVoll: "Stage 2028",
     scenarioOhneHint: "2026 tariff carried forward unchanged — if the reform fails.",
-    scenarioStufe1Hint: `Modelled first stage from 1 Jan 2027: basic allowance €${GRUNDFREIBETRAG.stufe1_2027.toLocaleString("de-DE")}, employee lump sum €1,430.`,
-    scenarioVollHint: `Final stage of the reform: basic allowance €${GRUNDFREIBETRAG.vollausbau.toLocaleString("de-DE")}, employee lump sum €1,430.`,
+    scenarioStufe1Hint: `Draft bill EStRefG 2027, article 1 (from 1 Jan 2027): basic allowance €${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")}, employee lump sum €1,430.`,
+    scenarioVollHint: `Second stage of the same draft, article 2 (from 1 Jan 2028): basic allowance €${GRUNDFREIBETRAG.stufe2028.toLocaleString("de-DE")}.`,
     taxClass: "Tax class",
     moreOptions: "More options",
     childlessLabel: "Childless & aged 23+",
@@ -219,11 +219,11 @@ const T: Record<Lang, Record<string, string>> = {
     year2027Note: "Na 2027 r. nie ma jeszcze ustawy — tylko porozumienie koalicyjne z 1.7.2026. Wybierz scenariusz; składki socjalne pozostają na urzędowym poziomie 2026 r.",
     scenarioLabel: "Scenariusz reformy 2027",
     scenarioOhne: "Bez reformy",
-    scenarioStufe1: "Etap 1 (2027)",
-    scenarioVoll: "Pełne wdrożenie",
+    scenarioStufe1: "Projekt 2027",
+    scenarioVoll: "Etap 2028",
     scenarioOhneHint: "Taryfa 2026 bez zmian — jeśli reforma nie dojdzie do skutku.",
-    scenarioStufe1Hint: `Modelowany pierwszy etap od 1.1.2027: kwota wolna ${GRUNDFREIBETRAG.stufe1_2027.toLocaleString("de-DE")} €, ryczałt pracowniczy 1.430 €.`,
-    scenarioVollHint: `Etap końcowy reformy: kwota wolna ${GRUNDFREIBETRAG.vollausbau.toLocaleString("de-DE")} €, ryczałt pracowniczy 1.430 €.`,
+    scenarioStufe1Hint: `Projekt ustawy EStRefG 2027, artykuł 1 (od 1.1.2027): kwota wolna ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, ryczałt pracowniczy 1.430 €.`,
+    scenarioVollHint: `Drugi etap tego samego projektu, artykuł 2 (od 1.1.2028): kwota wolna ${GRUNDFREIBETRAG.stufe2028.toLocaleString("de-DE")} €.`,
     taxClass: "Klasa podatkowa",
     moreOptions: "Więcej opcji",
     childlessLabel: "Bezdzietny/a i powyżej 23 lat",
@@ -390,7 +390,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   const [copied,       setCopied]       = useState(false);
   const [showBundesland, setShowBundesland] = useState(false);
   const [showYearCompare, setShowYearCompare] = useState(false);
-  const [szenario,     setSzenario]     = useState<Szenario>("stufe1");
+  const [szenario,     setSzenario]     = useState<Szenario>("entwurf2027");
 
   const verheiratet = steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5;
 
@@ -629,8 +629,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     <div className="grid grid-cols-3 gap-2 sm:gap-2.5 w-full">
                       {([
                         { key: "ohneReform" as Szenario, label: t.scenarioOhne,   hint: t.scenarioOhneHint },
-                        { key: "stufe1"     as Szenario, label: t.scenarioStufe1, hint: t.scenarioStufe1Hint },
-                        { key: "vollausbau" as Szenario, label: t.scenarioVoll,   hint: t.scenarioVollHint },
+                        { key: "entwurf2027" as Szenario, label: t.scenarioStufe1, hint: t.scenarioStufe1Hint },
+                        { key: "stufe2028"   as Szenario, label: t.scenarioVoll,   hint: t.scenarioVollHint },
                       ]).map((s) => (
                         <button
                           key={s.key}
@@ -650,7 +650,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                       ))}
                     </div>
                     <p className="text-xs text-black/55 mt-2.5 leading-relaxed">
-                      {szenario === "ohneReform" ? t.scenarioOhneHint : szenario === "vollausbau" ? t.scenarioVollHint : t.scenarioStufe1Hint}
+                      {szenario === "ohneReform" ? t.scenarioOhneHint : szenario === "stufe2028" ? t.scenarioVollHint : t.scenarioStufe1Hint}
                     </p>
                   </div>
                 </>

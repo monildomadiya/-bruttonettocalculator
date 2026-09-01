@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "blog:covers": "node --experimental-strip-types --no-warnings scripts/generate-blog-covers.mjs"
+    "blog:covers": "node --experimental-strip-types --no-warnings scripts/generate-blog-covers.mjs",
+    "verify:tarif": "node --experimental-strip-types --no-warnings scripts/verify-tarif.mts"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",

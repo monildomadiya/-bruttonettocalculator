@@ -10,25 +10,25 @@
  * Freibeträge). Sie ersetzt keine Steuerberatung und keine verbindliche
  * Lohnabrechnung.
  *
- * ── Steuerjahr 2027: Szenario-Modell ──────────────────────────────────────
- * Für 2027 gibt es noch kein Gesetz. Der Koalitionsausschuss hat sich am
- * 1. Juli 2026 politisch auf eine Einkommensteuerreform zum 1.1.2027
- * verständigt (Grundfreibetrag schrittweise auf 12.900 €, Arbeitnehmer-
- * Pauschbetrag auf 1.430 €, Kindergeld auf 272 €); das BMF beziffert den
- * Grundfreibetrag ausdrücklich nur als "voraussichtlich". Ein Referenten-
- * entwurf liegt (Stand: August 2026) noch nicht vor.
+ * ── Steuerjahr 2027/2028: Referentenentwurf EStRefG 2027 ──────────────────
+ * Seit dem 18.08.2026 liegt der Referentenentwurf eines Einkommensteuer-
+ * reformgesetzes 2027 (EStRefG 2027) vor. Er fasst § 32a Absatz 1 EStG für
+ * die Veranlagungszeiträume 2027 (Artikel 1) und 2028 (Artikel 2) jeweils neu.
+ * Die Tarife in `TARIF_2027_ENTWURF` und `TARIF_2028_ENTWURF` sind die
+ * wörtlichen Zahlenwerte dieses Entwurfs — nicht modelliert, nicht abgeleitet.
  *
- * Statt diese Unsicherheit zu verstecken, rechnet dieses Modul 2027 in drei
- * ausgewiesenen Szenarien (siehe `Szenario`):
- *   - "ohneReform"  → geltender Tarif 2026 fortgeschrieben (Status quo)
- *   - "stufe1"      → modellierte erste Reformstufe zum 1.1.2027
- *   - "vollausbau"  → Endstufe der Reform (Grundfreibetrag 12.900 €)
+ * Der Entwurf ändert dabei die *Form* des Tarifs: neben der 45-%-Zone gibt es
+ * erstmals eine dritte Spitzenzone mit 47 % ab 280.000 € zvE. Der Tarif lässt
+ * sich deshalb nicht mehr über `makeTarif()` aus drei Eckwerten ableiten.
  *
- * Die Tarifeckwerte der Szenarien werden über `makeTarif()` aus dem
- * Grundfreibetrag abgeleitet — nach der üblichen "Rechtsverschiebung" der
- * Eckwerte, bei der die Grenzsteuersätze an den Tarifecken (14 %, 23,97 %,
- * 42 %, 45 %) unverändert bleiben. Die Faktorisierung ist gegen den
- * amtlichen Tarif 2026 verifiziert (siehe `makeTarif`-Doc).
+ * Gerechnet wird weiterhin in drei ausgewiesenen Szenarien (siehe `Szenario`),
+ * weil ein Referentenentwurf noch kein geltendes Recht ist:
+ *   - "ohneReform"  → geltender Tarif 2026 fortgeschrieben (Untergrenze,
+ *                     falls das Verfahren scheitert)
+ *   - "entwurf2027" → Artikel 1 EStRefG 2027, wirksam ab VZ 2027
+ *   - "stufe2028"   → Artikel 2 EStRefG 2027, wirksam ab VZ 2028
+ *
+ * Stand des Verfahrens siehe `components/Reform2027Status.tsx`.
  *
  * WICHTIG: Die Sozialversicherungs-Rechengrößen 2027 (Beitragsbemessungs-
  * grenzen, durchschnittlicher Zusatzbeitrag) werden erst im Herbst 2026 per
@@ -42,7 +42,7 @@ export type Steuerjahr = 2026 | 2027;
  * Reformszenario für das Steuerjahr 2027. Für `jahr: 2026` ohne Wirkung —
  * dort gilt immer der amtliche Tarif 2026.
  */
-export type Szenario = "ohneReform" | "stufe1" | "vollausbau";
+export type Szenario = "ohneReform" | "entwurf2027" | "stufe2028";
 
 export type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -64,9 +64,9 @@ export interface CalculatorInput {
    */
   kvZusatzbeitrag?: number;
   /**
-   * Reformszenario für `jahr: 2027`. Ohne Angabe wird "stufe1" verwendet —
-   * die modellierte erste Reformstufe zum 1.1.2027. Für `jahr: 2026`
-   * wirkungslos.
+   * Reformszenario für `jahr: 2027`. Ohne Angabe wird "entwurf2027"
+   * verwendet — der Tarif nach Artikel 1 des Referentenentwurfs. Für
+   * `jahr: 2026` wirkungslos.
    */
   szenario?: Szenario;
 }
@@ -226,7 +226,7 @@ export function estFormel2026(zvE: number): number {
   return 0.45 * x - 19470.38;
 }
 
-function grenzsteuersatz2026(zvE: number): number {
+export function grenzsteuersatz2026(zvE: number): number {
   const x = Math.floor(zvE);
   if (x <= 12348) return 0;
   if (x <= 17799) {
@@ -258,6 +258,14 @@ export interface Tarif {
   c: number;  // ESt bei e1 (Stetigkeit Zone 1 → 2)
   c3: number; // Abzugsbetrag 42 %-Zone
   c4: number; // Abzugsbetrag 45 %-Zone
+  /**
+   * Letzter Euro der 45 %-Zone. Nur gesetzt, wenn der Tarif eine dritte
+   * Spitzenzone hat (47 % ab `top2Start` + 1) — das ist erst im
+   * Referentenentwurf EStRefG 2027 der Fall. Ohne diesen Wert gilt die
+   * 45 %-Zone wie bisher nach oben offen.
+   */
+  top2Start?: number;
+  c5?: number; // Abzugsbetrag 47 %-Zone
 }
 
 /**
@@ -299,6 +307,7 @@ export function estFuerTarif(t: Tarif, zvE: number): number {
     return (t.a2 * z + t.b2) * z + t.c;
   }
   if (x <= t.topStart) return 0.42 * x - t.c3;
+  if (t.top2Start !== undefined && x > t.top2Start) return 0.47 * x - t.c5!;
   return 0.45 * x - t.c4;
 }
 
@@ -315,50 +324,115 @@ export function grenzsteuersatzFuerTarif(t: Tarif, zvE: number): number {
     return (2 * t.a2 * z + t.b2) / 10000;
   }
   if (x <= t.topStart) return 0.42;
+  if (t.top2Start !== undefined && x > t.top2Start) return 0.47;
   return 0.45;
 }
 
 /**
- * Grundfreibeträge der 2027-Szenarien.
+ * Quelle aller 2027/2028-Werte in diesem Modul.
  *
- * Das BMF nennt 12.900 € als Endstufe einer zweistufigen Anhebung bis 2028
- * (von 12.348 € in 2026). Die Aufteilung auf die beiden Stufen ist noch nicht
- * beziffert; "stufe1" modelliert daher die hälftige Zwischenstufe. Sobald der
- * Referentenentwurf vorliegt, wird hier der amtliche Wert eingesetzt.
+ * Referentenentwurf eines Einkommensteuerreformgesetzes 2027 (EStRefG 2027),
+ * Bundesministerium der Finanzen, Bearbeitungsstand 18.08.2026 07:19.
+ * Artikel 1 wirkt ab dem Veranlagungszeitraum 2027, Artikel 2 ab 2028.
+ */
+export const ENTWURF = {
+  kurzname: "EStRefG 2027",
+  langname: "Referentenentwurf eines Einkommensteuerreformgesetzes 2027",
+  stand: "2026-08-18",
+  quelle:
+    "https://www.bundesfinanzministerium.de/Content/DE/Gesetzestexte/Gesetze_Gesetzesvorhaben/Abteilungen/Abteilung_IV/21_Legislaturperiode/2026-08-18-EStReformG-2027/1-Referentenentwurf.pdf",
+} as const;
+
+/**
+ * Grundfreibetrag nach § 32a Absatz 1 Nummer 1 EStG.
+ * 2027/2028 wörtlich aus dem Entwurf (Art. 1 Nr. 4 bzw. Art. 2 Nr. 2) —
+ * nicht geschätzt und nicht aus dem Tarif 2026 fortgeschrieben.
  */
 export const GRUNDFREIBETRAG = {
   amtlich2026: 12348,
-  stufe1_2027: 12624, // modelliert: Hälfte des Weges 12.348 € → 12.900 €
-  vollausbau: 12900,  // BMF, Koalitionsbeschluss vom 1.7.2026 ("voraussichtlich")
+  entwurf2027: 12564,
+  stufe2028: 12900,
 } as const;
 
-/** Arbeitnehmer-Pauschbetrag: 1.230 € (2026) → 1.430 € (Reform ab 2027). */
+/**
+ * Arbeitnehmer-Pauschbetrag, § 9a Satz 1 Nummer 1 Buchstabe a EStG.
+ * 1.230 € → 1.430 € ab VZ 2027 (Art. 1 Nr. 2 des Entwurfs).
+ */
 export const ARBEITNEHMER_PAUSCHBETRAG = { amtlich2026: 1230, reform: 1430 } as const;
 
-/** Kindergeld je Kind und Monat: 259 € (2026) → 272 € (Reform ab 2027). */
-export const KINDERGELD = { amtlich2026: 259, reform: 272 } as const;
+/**
+ * Kindergeld je Kind und Monat, § 66 Absatz 1 EStG
+ * (Art. 1 Nr. 9 bzw. Art. 2 Nr. 5 des Entwurfs).
+ */
+export const KINDERGELD = { amtlich2026: 259, entwurf2027: 267, stufe2028: 272 } as const;
 
-// Eckwerte der Szenarien: Rechtsverschiebung proportional zum Grundfreibetrag.
-const SHIFT_STUFE1 = GRUNDFREIBETRAG.stufe1_2027 / GRUNDFREIBETRAG.amtlich2026;
-const SHIFT_VOLL = GRUNDFREIBETRAG.vollausbau / GRUNDFREIBETRAG.amtlich2026;
+/**
+ * Kinderfreibetrag je Elternteil für das sächliche Existenzminimum,
+ * § 32 Absatz 6 Satz 1 EStG (Art. 1 Nr. 3 bzw. Art. 2 Nr. 1 des Entwurfs).
+ * Der Freibetrag für Betreuung, Erziehung und Ausbildung bleibt unverändert.
+ */
+export const KINDERFREIBETRAG = { amtlich2026: 3414, entwurf2027: 3564, stufe2028: 3654 } as const;
+export const BETREUUNGSFREIBETRAG = 1464;
 
-export const TARIF_2027_STUFE1 = makeTarif(
-  GRUNDFREIBETRAG.stufe1_2027,
-  Math.round(17799 * SHIFT_STUFE1), // 18.197 €
-  Math.round(69878 * SHIFT_STUFE1)  // 71.440 €
-);
+/**
+ * § 32a Absatz 1 EStG in der Fassung des Artikels 1 EStRefG 2027 (ab VZ 2027).
+ * Wörtliche Zahlenwerte des Entwurfs:
+ *
+ *   bis 12.564 €            → 0
+ *   12.565 € – 17.799 €     → (952,24 · y + 1.400) · y
+ *   17.800 € – 70.600 €     → (170,74 · z + 2.397) · z + 993,86
+ *   70.601 € – 249.999 €    → 0,42 · x − 11.241,73
+ *   250.000 € – 279.999 €   → 0,45 · x − 18.741,73
+ *   ab 280.000 €            → 0,47 · x − 24.341,73
+ *
+ * mit y = (x − 12.564)/10.000 und z = (x − 17.799)/10.000.
+ *
+ * Neu gegenüber 2026 ist die dritte Spitzenzone: die Reichensteuer greift
+ * schon ab 250.000 € statt ab 277.826 €, darüber kommt ein Satz von 47 %.
+ * Dieser Tarif ist deshalb als Literal hinterlegt und nicht über `makeTarif`
+ * abgeleitet — die Ableitung kennt nur zwei Spitzenzonen.
+ */
+export const TARIF_2027_ENTWURF: Tarif = {
+  gfb: 12564,
+  e1: 17799,
+  e2: 70600,
+  a1: 952.24,
+  b2: 2397,
+  a2: 170.74,
+  c: 993.86,
+  topStart: 249999,
+  c3: 11241.73,
+  c4: 18741.73,
+  top2Start: 279999,
+  c5: 24341.73,
+};
 
-export const TARIF_2027_VOLLAUSBAU = makeTarif(
-  GRUNDFREIBETRAG.vollausbau,
-  Math.round(17799 * SHIFT_VOLL), // 18.595 €
-  Math.round(69878 * SHIFT_VOLL)  // 73.002 €
-);
+/**
+ * § 32a Absatz 1 EStG in der Fassung des Artikels 2 EStRefG 2027 (ab VZ 2028).
+ * Zweite Stufe: nur der Grundfreibetrag und die davon abhängigen
+ * Anschlusskonstanten ändern sich; die Eckwerte 17.799 / 70.600 / 250.000 /
+ * 280.000 € bleiben gegenüber 2027 unverändert.
+ */
+export const TARIF_2028_ENTWURF: Tarif = {
+  gfb: 12900,
+  e1: 17799,
+  e2: 70600,
+  a1: 1017.55,
+  b2: 2397,
+  a2: 170.74,
+  c: 930.08,
+  topStart: 249999,
+  c3: 11305.52,
+  c4: 18805.52,
+  top2Start: 279999,
+  c5: 24405.52,
+};
 
 /**
  * Auflösung von Steuerjahr + Szenario zu den steuerlich wirksamen Parametern.
  * Für 2026 gilt immer der amtliche Tarif (unveränderte Gesetzesformel).
  */
-export function resolveSteuerkontext(jahr: Steuerjahr, szenario: Szenario = "stufe1") {
+export function resolveSteuerkontext(jahr: Steuerjahr, szenario: Szenario = "entwurf2027") {
   const amtlich = {
     est: estFormel2026,
     grenz: grenzsteuersatz2026,
@@ -366,28 +440,36 @@ export function resolveSteuerkontext(jahr: Steuerjahr, szenario: Szenario = "stu
     soliFaktor: 1,
     grundfreibetrag: GRUNDFREIBETRAG.amtlich2026,
     kindergeld: KINDERGELD.amtlich2026,
-    istModelliert: false,
+    istEntwurf: false,
   };
 
   if (jahr === 2026 || szenario === "ohneReform") return amtlich;
 
-  const tarif = szenario === "vollausbau" ? TARIF_2027_VOLLAUSBAU : TARIF_2027_STUFE1;
+  const zweiteStufe = szenario === "stufe2028";
+  const tarif = zweiteStufe ? TARIF_2028_ENTWURF : TARIF_2027_ENTWURF;
   return {
     est: (zvE: number) => estFuerTarif(tarif, zvE),
     grenz: (zvE: number) => grenzsteuersatzFuerTarif(tarif, zvE),
     werbungskostenPauschale: ARBEITNEHMER_PAUSCHBETRAG.reform,
-    // Die Soli-Freigrenze wird traditionell mit den Tarifeckwerten verschoben.
-    soliFaktor: tarif.gfb / GRUNDFREIBETRAG.amtlich2026,
+    /*
+     * Der Entwurf ändert das Solidaritätszuschlaggesetz nicht — es steht in
+     * seiner Artikelliste schlicht nicht drin. Die Freigrenze bleibt hier
+     * deshalb auf dem Stand 2026. (Eine frühere Fassung dieses Moduls hat sie
+     * proportional mit dem Grundfreibetrag verschoben; das war eine Annahme,
+     * die der Entwurf nicht deckt.)
+     */
+    soliFaktor: 1,
     grundfreibetrag: tarif.gfb,
-    kindergeld: KINDERGELD.reform,
-    istModelliert: true,
+    kindergeld: zweiteStufe ? KINDERGELD.stufe2028 : KINDERGELD.entwurf2027,
+    istEntwurf: true,
   };
 }
 
 // Solidaritätszuschlag mit Milderungszone (20%-Abschmelzung)
 // Freigrenze 2026: 20.350 € ESt (Einzelveranlagung) / 40.700 € (Splitting)
 // — § 3 Abs. 3 SolZG, angehoben von 19.950 €/39.900 € (2025).
-// `faktor` verschiebt die Freigrenze in den 2027-Szenarien mit den Tarifeckwerten.
+// `faktor` skaliert die Freigrenze; der Entwurf EStRefG 2027 ändert das SolzG
+// nicht, dort bleibt es deshalb bei 1.
 export function soliBerechnen(estJahr: number, verheiratet: boolean, faktor = 1): number {
   const freigrenze = (verheiratet ? 40700 : 20350) * faktor;
   if (estJahr <= freigrenze) return 0;

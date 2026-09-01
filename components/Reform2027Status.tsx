@@ -8,13 +8,15 @@ import { CheckCircle2, Clock, Gavel, ShieldCheck } from "lucide-react";
  * erreicht, wird hier `status` umgestellt und `STAND` aktualisiert — das ist
  * zugleich die Quelle für `dateModified` im Schema der Seite.
  *
- * Quellenlage (Stand August 2026): Der Koalitionsausschuss hat am 1.7.2026 ein
- * Reformpaket beschlossen. Das BMF beziffert den Grundfreibetrag 2027/2028
- * ausdrücklich nur als "voraussichtlich"; ein Referentenentwurf liegt nicht vor.
+ * Quellenlage: Seit dem 18.08.2026 liegt der Referentenentwurf eines
+ * Einkommensteuerreformgesetzes 2027 (EStRefG 2027) vor. Er enthält die
+ * konkreten Tarifeckwerte nach § 32a EStG für 2027 und 2028 — die Zahlen auf
+ * dieser Seite sind seitdem keine Modellierung mehr, sondern Entwurfsrecht.
+ * Bindend werden sie erst mit der Verkündung im Bundesgesetzblatt.
  */
 
 /** Letzter redaktioneller Stand — auch als `dateModified` verwendet. */
-export const REFORM_STAND = "2026-08-05";
+export const REFORM_STAND = "2026-09-01";
 
 type Status = "erledigt" | "offen";
 
@@ -35,16 +37,24 @@ const gesetzgebung: Schritt[] = [
   },
   {
     titel: "Referentenentwurf (BMF)",
-    status: "offen",
-    datum: "ausstehend",
+    status: "erledigt",
+    datum: "18. August 2026",
     detail:
-      "Erst der Referentenentwurf enthält die konkreten Tarifeckwerte nach § 32a EStG. Bis dahin sind alle 2027-Zahlen — auch die auf dieser Seite — modelliert.",
+      "Das Bundesfinanzministerium legt den Referentenentwurf eines Einkommensteuerreformgesetzes 2027 vor (Bearbeitungsstand 18.08.2026). Er fasst § 32a Absatz 1 EStG für 2027 und 2028 vollständig neu — damit stehen erstmals konkrete Tarifeckwerte im Raum. Dieser Rechner verwendet seitdem genau diese Zahlen.",
+  },
+  {
+    titel: "Verbändeanhörung",
+    status: "erledigt",
+    datum: "bis 21. August 2026",
+    detail:
+      "Verbände und Fachkreise konnten zum Entwurf Stellung nehmen. Aus dieser Runde stammen die ersten Änderungsvorschläge, insbesondere zur Gegenfinanzierung.",
   },
   {
     titel: "Kabinettsbeschluss",
     status: "offen",
-    datum: "ausstehend",
-    detail: "Beschluss der Bundesregierung über den Gesetzentwurf und Zuleitung an den Bundesrat.",
+    datum: "angekündigt für September 2026",
+    detail:
+      "Beschluss der Bundesregierung über den Gesetzentwurf und Zuleitung an den Bundesrat. Bis dahin kann das BMF den Entwurf noch selbst ändern.",
   },
   {
     titel: "Bundestag (2./3. Lesung)",
@@ -81,7 +91,7 @@ const bereitsBeschlossen = [
     status: "offen" as Status,
     datum: "erwartet Herbst 2026",
     detail:
-      "Beitragsbemessungsgrenzen und durchschnittlicher Zusatzbeitrag werden jährlich per Verordnung festgelegt — üblicherweise im Herbst, also deutlich vor der Steuerreform. Bis dahin rechnet dieser Rechner in allen 2027-Szenarien mit den amtlichen SV-Werten 2026.",
+      "Beitragsbemessungsgrenzen und durchschnittlicher Zusatzbeitrag werden jährlich per Verordnung festgelegt — üblicherweise im Herbst, also deutlich vor der Steuerreform. Der Referentenentwurf ändert daran nichts — er betrifft nur das Steuerrecht. Bis zur Verordnung rechnet dieser Rechner in allen 2027-Szenarien mit den amtlichen SV-Werten 2026.",
   },
 ];
 
@@ -135,8 +145,9 @@ export default function Reform2027Status() {
       <p className="text-sm sm:text-base text-black/70 leading-relaxed mb-8">
         Viele Rechner zeigen für 2027 einfach die 2026-Zahlen. Wir legen stattdessen offen, wie weit
         die Reform tatsächlich ist — <strong className="text-[#16181D]">{erledigteSchritte} von {gesetzgebung.length} Schritten</strong>{" "}
-        des Gesetzgebungsverfahrens sind abgeschlossen. Solange das Verfahren läuft, sind alle
-        2027-Nettobeträge Szenarien, keine Zusagen.
+        des Gesetzgebungsverfahrens sind abgeschlossen. Seit dem Referentenentwurf rechnet diese
+        Seite mit den amtlichen Entwurfszahlen statt mit Schätzungen. Verbindlich werden sie aber
+        erst mit der Verkündung — bis dahin bleibt „Ohne Reform“ als Untergrenze im Rechner stehen.
       </p>
 
       <ol className="mb-10">
@@ -166,9 +177,10 @@ export default function Reform2027Status() {
         <time dateTime={REFORM_STAND}>
           {new Date(REFORM_STAND).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}
         </time>
-        . Quellen: Beschluss des Koalitionsausschusses vom 1.7.2026; Bundesministerium der Finanzen
-        (Grundfreibetrag 2027/2028 „voraussichtlich“ 12.900 €); Mindestlohnanpassungsverordnung.
-        Diese Seite wird bei jedem Verfahrensschritt aktualisiert.
+        . Quellen: Referentenentwurf eines Einkommensteuerreformgesetzes 2027, Bundesministerium
+        der Finanzen, Bearbeitungsstand 18.08.2026 (Artikel 1 für den Veranlagungszeitraum 2027,
+        Artikel 2 für 2028); Beschluss des Koalitionsausschusses vom 1.7.2026;
+        Mindestlohnanpassungsverordnung. Diese Seite wird bei jedem Verfahrensschritt aktualisiert.
       </p>
     </section>
   );
