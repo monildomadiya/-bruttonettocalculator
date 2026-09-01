@@ -39,7 +39,6 @@ export default function AdUnit({
   const slotId = AD_SLOTS[slot];
   const pathname = usePathname() || "/";
   const insRef = useRef<HTMLModElement | null>(null);
-  const pushed = useRef(false);
   const [status, setStatus] = useState<"idle" | "filled" | "unfilled">("idle");
 
   useEffect(() => {
@@ -49,17 +48,35 @@ export default function AdUnit({
 
     // A fresh <ins> arrived (first mount or a route change remount) — reset the
     // per-element state before pushing it.
-    pushed.current = false;
     setStatus("idle");
 
-    // Push the unit to AdSense once. React 18 StrictMode runs effects twice in
-    // dev, and AdSense stamps `data-adsbygoogle-status` on a slot it has already
-    // claimed — checking it prevents the "already have ads in it" error.
-    if (!el.getAttribute("data-adsbygoogle-status")) {
+    /*
+     * Push this unit to AdSense exactly once per <ins> element.
+     *
+     * `adsbygoogle.push({})` does not name an element: it means "claim the next
+     * unclaimed <ins> in the DOM". Pushing more often than there are unclaimed
+     * <ins> elements is therefore an error, and it produces two of them —
+     * `All 'ins' elements ... already have ads in them`, and, once AdSense
+     * reaches for Google's own zero-width auto-ads anchor <ins> in <body>,
+     * `No slot size for availableWidth=0`.
+     *
+     * Over-pushing is easy to do here. `reactStrictMode` is on, so in
+     * development React invokes this effect twice against the *same* element.
+     * AdSense's own `data-adsbygoogle-status` marker cannot prevent that: it is
+     * stamped asynchronously, when the loader drains the queue, which has not
+     * happened yet on the second run. So the marker has to be ours and it has
+     * to be set synchronously, before the push.
+     *
+     * It lives on the element rather than in a ref because it must be tied to
+     * the element's identity: `<ins>` is keyed on the pathname, so a route
+     * change mounts a genuinely new, unmarked element that should be pushed
+     * again — while a StrictMode re-run sees the same marked one and skips.
+     */
+    if (!el.dataset.adPushed && !el.getAttribute("data-adsbygoogle-status")) {
+      el.dataset.adPushed = "1";
       try {
         // @ts-expect-error adsbygoogle is injected by the AdSense loader script.
         (window.adsbygoogle = window.adsbygoogle || []).push({});
-        pushed.current = true;
       } catch {
         /* loader not ready yet — AdSense drains the queue once it loads */
       }
