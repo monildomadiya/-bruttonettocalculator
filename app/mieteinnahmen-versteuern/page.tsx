@@ -4,7 +4,7 @@ import MieteinnahmenContent from "./MieteinnahmenContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
 
 export const metadata: Metadata = {
-  title: "Mieteinnahmen versteuern 2026: Steuer auf Mieteinnahmen berechnen",
+  title: "Mieteinnahmen versteuern 2026 — Steuer berechnen",
   description:
     "Wie viel Steuer fällt auf Mieteinnahmen an? Rechner für Überschuss, AfA und Werbungskosten nach § 21 EStG — inklusive Verlustverrechnung mit dem Gehalt.",
   keywords: [

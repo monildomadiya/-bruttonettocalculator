@@ -5,7 +5,7 @@ export const post: BlogPost = {
   headline: "Werbungskosten 2026: Was Arbeitnehmer wirklich absetzen können",
   metaTitle: "Werbungskosten 2026: Pauschbetrag 1.230 € & Liste",
   metaDescription:
-    "Werbungskosten 2026: 1.230 € Pauschbetrag bekommt jeder automatisch. Welche Kosten darüber hinaus zählen, welche Beträge ohne Beleg akzeptiert werden — mit Checkliste.",
+    "Werbungskosten 2026: 1.230 € Pauschbetrag bekommt jeder automatisch. Welche Kosten darüber hinaus zählen und was ohne Beleg akzeptiert wird.",
   excerpt:
     "1.230 € Arbeitnehmer-Pauschbetrag bekommt jeder ohne Nachweis. Wer mehr absetzen will, muss die Schwelle knacken — mit den richtigen Posten geht das schneller als gedacht. Die vollständige Liste.",
   focusKeyword: "werbungskosten 2026",

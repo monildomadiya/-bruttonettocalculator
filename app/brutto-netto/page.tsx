@@ -12,7 +12,22 @@ import ReviewerByline from "@/components/ReviewerByline";
 import AccordionFaq from "@/components/AccordionFaq";
 import { siteConfig } from "@/lib/authors";
 
-export const revalidate = 0;
+/*
+ * Statisch — kein `revalidate = 0`.
+ *
+ * Der Inhalt dieser Seite stammt vollständig aus der reinen Tax-Engine
+ * (`lib/taxCalculator`) und statischen Datenmodulen. Keine Datenbank, kein
+ * `headers()`/`cookies()`/`searchParams` — zwei gleiche Anfragen können gar
+ * kein unterschiedliches Ergebnis liefern.
+ *
+ * `revalidate = 0` hat die Seite trotzdem bei jedem Aufruf neu gerendert und
+ * `Cache-Control: private, no-store` gesendet: nicht am CDN-Edge cachebar,
+ * obwohl der Origin auf einem anderen Kontinent als das deutsche Publikum
+ * steht, und für Googlebot ein voller Server-Render pro Abruf. Siehe die
+ * ausführliche Begründung in app/rechner/[betrag]/page.tsx.
+ *
+ * Aktualisierte Steuerwerte kommen mit dem nächsten Deploy — jeder Deploy baut neu.
+ */
 
 const BASE = "https://bruttonettocalculator.com";
 const URL = `${BASE}/brutto-netto`;
@@ -32,8 +47,11 @@ const nettoMonat = (bruttoJahr: number) =>
 
 export const metadata: Metadata = {
   title: "Gehalt nach Branche 2026 – Brutto Netto im Vergleich",
+  // 211 Zeichen waren es vorher — Google schneidet bei ~155–160 ab, der
+  // Quellenhinweis am Ende war im Snippet also nie zu sehen. Er steht weiterhin
+  // sichtbar auf der Seite selbst, wo er hingehört.
   description:
-    "Durchschnittsgehalt nach Branche: Pflege, Gastronomie, Handwerk, IT, Logistik, Handel, Industrie und öffentlicher Dienst im Brutto-Netto-Vergleich. Amtliche Destatis-Zahlen 2025, Netto engine-berechnet für 2026.",
+    "Durchschnittsgehalt nach Branche 2026: Pflege, Gastronomie, Handwerk, IT, Logistik, Handel, Industrie und öffentlicher Dienst im Brutto-Netto-Vergleich.",
   keywords: [
     "gehalt nach branche",
     "durchschnittsgehalt branche",

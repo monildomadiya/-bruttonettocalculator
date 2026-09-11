@@ -5,7 +5,7 @@ export const post: BlogPost = {
   headline: "Steuerklasse wechseln: Warum der 30. November die wichtigste Frist des Jahres ist",
   metaTitle: "Steuerklasse wechseln: Frist 30. November — so geht's",
   metaDescription:
-    "Ein Steuerklassenwechsel wirkt nur dann noch fürs laufende Jahr, wenn der Antrag bis zum 30. November vorliegt. Wer profitiert, wie der Antrag läuft und was er bringt.",
+    "Ein Steuerklassenwechsel wirkt nur fürs laufende Jahr, wenn der Antrag bis zum 30. November vorliegt. Wer profitiert und wie der Antrag läuft.",
   excerpt:
     "Der Steuerklassenwechsel ist mehrfach im Jahr möglich — aber nur bis zum 30. November wirkt er noch für das laufende Jahr. Wer jetzt handelt, kann sich mehrere Hundert Euro monatlich verschieben.",
   focusKeyword: "steuerklasse wechseln frist",

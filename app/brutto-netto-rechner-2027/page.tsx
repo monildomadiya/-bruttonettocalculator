@@ -18,7 +18,7 @@ const eur = (n: number) => n.toLocaleString("de-DE");
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2027 – Steuerreform nach BMF-Entwurf",
   description:
-    "Brutto Netto Rechner 2027 mit den Zahlen des BMF-Referentenentwurfs vom 18.08.2026: Grundfreibetrag 12.564 €, neuer Spitzensatz 47 %. Mit Status des Gesetzgebungsverfahrens.",
+    "Brutto Netto Rechner 2027 nach dem BMF-Referentenentwurf: Grundfreibetrag 12.564 €, neuer Spitzensatz 47 %. Mit Stand des Gesetzgebungsverfahrens.",
   keywords: [
     "steuerreform 2027 rechner",
     "steuerreform rechner 2027",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     images: ["https://bruttonettocalculator.com/og-image.png"],
     title: "Brutto Netto Rechner 2027 – Steuerreform nach BMF-Entwurf",
     description:
-      "Brutto Netto Rechner 2027 mit den Zahlen des BMF-Referentenentwurfs vom 18.08.2026: Grundfreibetrag 12.564 €, neuer Spitzensatz 47 %. Mit Status des Gesetzgebungsverfahrens.",
+      "Brutto Netto Rechner 2027 nach dem BMF-Referentenentwurf: Grundfreibetrag 12.564 €, neuer Spitzensatz 47 %. Mit Stand des Gesetzgebungsverfahrens.",
     url: "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
     locale: "de_DE",
     type: "website",
@@ -128,7 +128,7 @@ const appJsonLd = {
   inLanguage: "de-DE",
   dateModified: REFORM_STAND,
   description:
-    "Brutto Netto Rechner 2027 mit den Zahlen des BMF-Referentenentwurfs vom 18.08.2026: Grundfreibetrag 12.564 €, neuer Spitzensatz 47 %. Mit Status des Gesetzgebungsverfahrens.",
+    "Brutto Netto Rechner 2027 nach dem BMF-Referentenentwurf: Grundfreibetrag 12.564 €, neuer Spitzensatz 47 %. Mit Stand des Gesetzgebungsverfahrens.",
   about: { "@type": "Thing", name: "Einkommensteuerreform 2027 (Deutschland)" },
   citation: {
     "@type": "Legislation",

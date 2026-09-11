@@ -8,11 +8,45 @@ import {
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse, isMidijob2026, midijobArbeitnehmerBemessungMonat } from "@/lib/taxCalculator";
 import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
+import { getPostBySlug } from "@/lib/blog";
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import JahresgehaltPage from "./JahresgehaltPage";
 
-export const revalidate = 0; // Always generate fresh or static
+/*
+ * Kein `revalidate = 0` — diese Route ist vollständig statisch.
+ *
+ * Die Zeile stand hier mit dem Kommentar "Always generate fresh or static".
+ * Tatsächlich bewirkte sie das Gegenteil von "static": Next hat jede der ~250
+ * Beträge-Seiten bei *jedem* Aufruf neu gerendert und dazu
+ *
+ *   Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate
+ *
+ * ausgeliefert (gemessen live am 2026-09-11 auf /rechner/3000-euro-brutto-netto).
+ * `no-store` heißt: weder Browser noch CDN noch irgendein Proxy darf die Seite
+ * behalten. Das ist teuer gleich dreifach:
+ *
+ *  1. CRAWL-BUDGET. Googlebot muss für jede der ~250 Seiten einen vollen
+ *     Server-Render abwarten. Genau diese Seiten sind der Long Tail, der
+ *     aktuell kaum Traffic bekommt — je langsamer die Antwort, desto weniger
+ *     URLs holt Google pro Tag.
+ *  2. CDN. Die Seite kann am Edge nicht gecacht werden, obwohl der Origin auf
+ *     einem anderen Kontinent als das (deutsche) Publikum steht. Jeder Besucher
+ *     zahlt die volle Interkontinental-Latenz.
+ *  3. BROWSER. `no-store` verhindert sogar den Zurück-Button-Cache.
+ *
+ * Dabei ist an dieser Seite nichts dynamisch: Der Inhalt kommt ausschließlich
+ * aus `lib/taxCalculator` (reine Funktion) und `data/wage-stats` (statisches
+ * Modul). Keine Datenbank, kein `headers()`, kein `cookies()`, kein
+ * `searchParams`. Zwei identische Anfragen können gar kein unterschiedliches
+ * Ergebnis haben.
+ *
+ * Ohne die Zeile werden die Whitelist-Beträge aus `generateStaticParams` zur
+ * Buildzeit vorgerendert; nicht gelistete, aber formal gültige Beträge rendert
+ * Next weiterhin on demand — nur eben cachebar statt jedes Mal neu. Neue
+ * Steuerwerte landen mit dem nächsten Deploy auf der Seite, denn jeder Deploy
+ * baut neu.
+ */
 
 interface PageProps {
   params: { betrag: string };
@@ -265,10 +299,32 @@ export default function LongTailSalaryPage({ params }: PageProps) {
   const nextAmount = wlIndex >= 0 && wlIndex < whitelist.length - 1 ? whitelist[wlIndex + 1] : null;
   const isMidijobAmount = isMidijob2026(amount);
 
-  // Relevant blog post recommendation (published article — verified slug).
-  const blogLink = amount >= 5800
-    ? { slug: "brutto-netto-rechner-2026-mindestlohn-2027", title: "Beitragsbemessungsgrenzen, Steuerklassen & Netto-Beispiele 2026/2027" }
-    : { slug: "brutto-netto-rechner-2026-mindestlohn-2027", title: "Mindestlohn 2027, Steuerklassen & konkrete Brutto-Netto-Beispiele" };
+  /*
+   * Empfohlener Ratgeber-Artikel, passend zur Gehaltshöhe.
+   *
+   * Vorher zeigten **beide** Zweige des Ternärs auf denselben Slug
+   * `brutto-netto-rechner-2026-mindestlohn-2027` — einen Beitrag, den es seit
+   * der Umstellung des Ratgebers von MySQL auf `content/blog/` nicht mehr gibt.
+   * Die URL wird in next.config.mjs auf /brutto-netto-rechner-2027
+   * weitergeleitet, der Link war also nicht sichtbar kaputt. Der Audit vom
+   * 2026-09-11 hat ihn trotzdem gefunden: **177 interne Links** auf eine
+   * 301-Weiterleitung. Für Google heißt das ein zusätzlicher Abruf pro Link,
+   * bevor das eigentliche Ziel überhaupt gesehen wird — bezahlt aus demselben
+   * Crawl-Budget, das dem Long Tail ohnehin fehlt.
+   *
+   * Der Slug wird jetzt über `getPostBySlug` gegen die Registry aufgelöst und
+   * der Titel aus dem Beitrag selbst genommen. Ein toter Slug kann damit nicht
+   * mehr still ausgeliefert werden: Er rendert den Block gar nicht erst, und
+   * eine Umbenennung kann Link-Text und Ziel nicht mehr auseinanderlaufen
+   * lassen.
+   */
+  const blogSlug =
+    amount <= 2000
+      ? "midijob-uebergangsbereich"   // Übergangsbereich 603–2.000 €
+      : amount >= 5800
+      ? "sozialabgaben-2026"          // oberhalb der Beitragsbemessungsgrenzen
+      : "wie-viel-prozent-brutto-netto";
+  const blogPost = getPostBySlug(blogSlug);
 
   // Related salary pages for internal linking — nearby amounts (±100 / ±500 /
   // ±1000) within the generated 1.500–10.000 € range, excluding the current one.
@@ -747,24 +803,26 @@ export default function LongTailSalaryPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Blog link */}
-        <div className="mt-6 pt-6 border-t border-black/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#E60A1C]/15 border border-[#E60A1C]/30 flex items-center justify-center text-[#E60A1C] font-bold shrink-0">
-              <HelpCircle size={20} />
+        {/* Blog link — nur, wenn der Beitrag wirklich in der Registry steht. */}
+        {blogPost && (
+          <div className="mt-6 pt-6 border-t border-black/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-[#E60A1C]/15 border border-[#E60A1C]/30 flex items-center justify-center text-[#E60A1C] font-bold shrink-0">
+                <HelpCircle size={20} />
+              </div>
+              <div>
+                <div className="text-sm font-bold text-[#16181D]">Empfohlener Ratgeber-Artikel</div>
+                <div className="text-xs text-black/60">{blogPost.headline}</div>
+              </div>
             </div>
-            <div>
-              <div className="text-sm font-bold text-[#16181D]">Empfohlener Ratgeber-Artikel</div>
-              <div className="text-xs text-black/60">{blogLink.title}</div>
-            </div>
+            <Link
+              href={`/blog/${blogPost.slug}`}
+              className="text-xs font-mono uppercase tracking-wider bg-black/[0.05] hover:bg-black/[0.08] text-[#16181D] px-4 py-2.5 rounded-xl transition-colors shrink-0"
+            >
+              Artikel lesen &rarr;
+            </Link>
           </div>
-          <Link
-            href={`/blog/${blogLink.slug}`}
-            className="text-xs font-mono uppercase tracking-wider bg-black/[0.05] hover:bg-black/[0.08] text-[#16181D] px-4 py-2.5 rounded-xl transition-colors shrink-0"
-          >
-            Artikel lesen &rarr;
-          </Link>
-        </div>
+        )}
 
         {/* Related salary pages + salary-hub link */}
         <div className="mt-6 pt-6 border-t border-black/[0.08]">

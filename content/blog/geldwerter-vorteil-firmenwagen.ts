@@ -5,7 +5,7 @@ export const post: BlogPost = {
   headline: "Geldwerter Vorteil 2026: Firmenwagen, 1-%-Regel und Fahrtenbuch im Vergleich",
   metaTitle: "Geldwerter Vorteil Firmenwagen 2026: 1 % oder 0,25 %",
   metaDescription:
-    "Geldwerter Vorteil beim Dienstwagen: 1 % vom Listenpreis, bei E-Autos nur 0,25 %. Plus 0,03 % je Entfernungskilometer. Wann sich das Fahrtenbuch lohnt — mit Beispielrechnung.",
+    "Geldwerter Vorteil beim Dienstwagen: 1 % vom Listenpreis, bei E-Autos nur 0,25 %, plus 0,03 % je Entfernungskilometer. Wann das Fahrtenbuch lohnt.",
   excerpt:
     "Ein Firmenwagen zur Privatnutzung ist steuerpflichtiger Arbeitslohn. Was die 1-%-Regel wirklich kostet, warum E-Autos nur ein Viertel davon zahlen und ab wann sich das Fahrtenbuch rechnet.",
   focusKeyword: "geldwerter vorteil firmenwagen 2026",

@@ -5,7 +5,7 @@ export const post: BlogPost = {
   headline: "Ein Jahr arbeiten — wie viel Rente bringt das wirklich?",
   metaTitle: "Rentenpunkte 2026: Was ein Jahr Arbeit für die Rente bringt",
   metaDescription:
-    "Ein Entgeltpunkt ist 42,52 € Monatsrente wert. Was ein Jahr Arbeit bei Ihrem Gehalt einbringt, wie viele Punkte maximal möglich sind — und warum brutto nicht netto ist.",
+    "Ein Entgeltpunkt ist 42,52 € Monatsrente wert. Was ein Jahr Arbeit bei Ihrem Gehalt einbringt und wie viele Punkte maximal möglich sind.",
   excerpt:
     "Für ein Jahr Arbeit zum Durchschnittsgehalt gibt es genau einen Rentenpunkt — aktuell 42,52 € Monatsrente. Was das bei Ihrem Gehalt bedeutet und warum von der Bruttorente noch einmal spürbar etwas abgeht.",
   focusKeyword: "wie viel rente pro jahr arbeit",

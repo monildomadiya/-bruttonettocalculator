@@ -5,7 +5,7 @@ export const post: BlogPost = {
   headline: "Homeoffice-Pauschale 2026: 6 € pro Tag, maximal 1.260 € — lohnt sich das?",
   metaTitle: "Homeoffice-Pauschale 2026: 6 €/Tag, max. 1.260 €",
   metaDescription:
-    "Homeoffice-Pauschale 2026: 6 € pro Tag für bis zu 210 Tage = 1.260 €. Wann sie sich wirklich lohnt, wie sie zur Pendlerpauschale steht und was nachgewiesen werden muss.",
+    "Homeoffice-Pauschale 2026: 6 € pro Tag für bis zu 210 Tage = 1.260 €. Wann sie sich lohnt und wie sie zur Pendlerpauschale steht.",
   excerpt:
     "6 € pro Homeoffice-Tag, höchstens 210 Tage im Jahr. Klingt gut — wirkt aber nur, wenn Ihre Werbungskosten insgesamt über 1.230 € liegen. Wann sich die Pauschale rechnet und wann die Fahrt ins Büro mehr bringt.",
   focusKeyword: "homeoffice pauschale 2026",

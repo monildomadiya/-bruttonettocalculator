@@ -5,7 +5,7 @@ export const post: BlogPost = {
   headline: "Mieteinnahmen versteuern: Warum die Steuer meist niedriger ausfällt als gedacht",
   metaTitle: "Mieteinnahmen versteuern: Steuer, AfA & Werbungskosten",
   metaDescription:
-    "Auf Mieteinnahmen zahlen Sie nicht auf die Miete Steuer, sondern auf den Überschuss. Wie AfA und Werbungskosten ihn drücken — und wann ein Verlust die Lohnsteuer senkt.",
+    "Versteuert wird nicht die Miete, sondern der Überschuss. Wie AfA und Werbungskosten ihn drücken — und wann ein Verlust die Lohnsteuer senkt.",
   excerpt:
     "12.000 € Miete im Jahr heißt nicht 12.000 € zu versteuern. Abschreibung, Zinsen und laufende Kosten senken den steuerpflichtigen Betrag oft auf einen Bruchteil — in den ersten Jahren sogar unter null.",
   focusKeyword: "mieteinnahmen versteuern",

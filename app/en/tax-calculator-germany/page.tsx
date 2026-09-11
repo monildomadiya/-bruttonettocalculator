@@ -30,7 +30,7 @@ const CANONICAL = `${BASE}/en/tax-calculator-germany`;
 export const metadata: Metadata = {
   title: "Brutto Netto Calculator Germany 2026 – Gross to Net Salary",
   description:
-    "Free brutto netto calculator for Germany 2026: turn your gross salary into net pay — income tax, solidarity surcharge, health, pension and care contributions for all 6 tax classes.",
+    "Free brutto netto calculator for Germany 2026: turn gross salary into net pay — income tax, solidarity surcharge and social contributions, all 6 tax classes.",
   keywords: [
     "brutto netto calculator",
     "brutto netto calculator english",

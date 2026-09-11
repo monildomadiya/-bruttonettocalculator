@@ -78,7 +78,9 @@ export default function MindestlohnPage() {
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Vollständiges Nettogehalt 2026/2027" },
           { href: "/minijob-rechner", label: "Minijob-Rechner", desc: "Verdienstgrenze 603 €" },
           { href: "/stundenlohn-rechner", label: "Stundenlohnrechner", desc: "Stundenlohn & Monatslohn" },
-          { href: "/blog/brutto-netto-rechner-2026-mindestlohn-2027", label: "Ratgeber: Mindestlohn 2027", desc: "Alle Werte & Beispiele" },
+          // War /blog/brutto-netto-rechner-2026-mindestlohn-2027 — ein Slug aus
+          // der MySQL-Ära des Ratgebers, der heute nur noch per 301 weiterleitet.
+          { href: "/blog/gehalt-2027-was-sich-aendert", label: "Ratgeber: Gehalt 2027", desc: "Was sich zum 1. Januar ändert" },
         ]}
       />
       <ToolContent config={TOOL_CONTENT["/mindestlohn"]} />

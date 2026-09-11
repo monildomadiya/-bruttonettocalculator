@@ -15,7 +15,22 @@ import ReviewerByline from "@/components/ReviewerByline";
 import AccordionFaq from "@/components/AccordionFaq";
 import { siteConfig } from "@/lib/authors";
 
-export const revalidate = 0;
+/*
+ * Statisch — kein `revalidate = 0`.
+ *
+ * Der Inhalt dieser Seite stammt vollständig aus der reinen Tax-Engine
+ * (`lib/taxCalculator`) und statischen Datenmodulen. Keine Datenbank, kein
+ * `headers()`/`cookies()`/`searchParams` — zwei gleiche Anfragen können gar
+ * kein unterschiedliches Ergebnis liefern.
+ *
+ * `revalidate = 0` hat die Seite trotzdem bei jedem Aufruf neu gerendert und
+ * `Cache-Control: private, no-store` gesendet: nicht am CDN-Edge cachebar,
+ * obwohl der Origin auf einem anderen Kontinent als das deutsche Publikum
+ * steht, und für Googlebot ein voller Server-Render pro Abruf. Siehe die
+ * ausführliche Begründung in app/rechner/[betrag]/page.tsx.
+ *
+ * Aktualisierte Steuerwerte kommen mit dem nächsten Deploy — jeder Deploy baut neu.
+ */
 
 interface PageProps {
   params: { branche: string };
@@ -62,7 +77,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const nameLower = br.name.toLowerCase();
 
   const title = `Brutto Netto ${br.name} 2026 – Gehalt & Nettolohn`;
-  const description = `Was bleibt ${br.praep} netto? Durchschnittsgehalt ${eur0(br.durchschnittJahr)} brutto im Jahr — das sind rund ${eur0(netto)} netto im Monat (Steuerklasse I). Mit ${br.besonderheit.titel.split("(")[0].trim()}.`;
+  /*
+   * Description bewusst kurz gehalten.
+   *
+   * Die Vorlage endete auf "… Mit ${br.besonderheit.titel}." und kam damit je
+   * nach Branche auf 186–217 Zeichen (Audit 2026-09-11, längster Fall:
+   * /brutto-netto/oeffentlicher-dienst mit 217). Google schneidet das Snippet
+   * bei rund 155–160 Zeichen ab — der angehängte Satz war also nie sichtbar,
+   * hat aber den Teil verdrängt, der es sein soll: die konkrete Netto-Zahl und
+   * ein Grund zu klicken. Ergebnis unten: ~150 Zeichen im längsten Fall.
+   */
+  const description = `Was bleibt ${br.praep} netto? Ø ${eur0(br.durchschnittJahr)} brutto im Jahr sind rund ${eur0(netto)} netto im Monat (Steuerklasse I). Jetzt eigenes Gehalt berechnen.`;
 
   return {
     title,

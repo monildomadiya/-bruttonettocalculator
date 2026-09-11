@@ -5,7 +5,7 @@ export const post: BlogPost = {
   headline: "Weihnachtsgeld oder Urlaubsgeld: Unterschied, Anspruch und was netto bleibt",
   metaTitle: "Weihnachtsgeld & Urlaubsgeld: Unterschied und Netto",
   metaDescription:
-    "Weihnachtsgeld und Urlaubsgeld im Vergleich: Wo der rechtliche Unterschied liegt, wann ein Anspruch entsteht und warum vom Sonderzahlungs-Brutto oft nur die Hälfte netto bleibt.",
+    "Weihnachtsgeld und Urlaubsgeld im Vergleich: der rechtliche Unterschied, wann ein Anspruch entsteht und warum oft nur die Hälfte netto bleibt.",
   excerpt:
     "Beide sind Sonderzahlungen — aber rechtlich nicht dasselbe. Warum Weihnachtsgeld zurückgefordert werden kann und Urlaubsgeld meist nicht, wann betriebliche Übung einen Anspruch schafft und was netto übrig bleibt.",
   focusKeyword: "weihnachtsgeld urlaubsgeld unterschied",

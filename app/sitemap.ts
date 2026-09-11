@@ -7,7 +7,26 @@ import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
 
-export const revalidate = 0; // Dynamic sitemap generation
+/*
+ * Statisch, nicht dynamisch — bewusst kein `revalidate = 0` mehr.
+ *
+ * Der Wert stammte aus der Zeit, als die Ratgeber-Beiträge aus MySQL kamen und
+ * die Sitemap deshalb bei jedem Abruf eine DB-Runde brauchte. Seit der
+ * Umstellung auf `content/blog/` (dateibasiert) ist *keine* Quelle dieser
+ * Sitemap mehr dynamisch: KRANKENKASSEN_2026, TVOED_VKA_2026, wage-stats,
+ * BUNDESLAENDER, BRANCHEN, siteConfig und BLOG_POSTS sind allesamt statische
+ * Imports, die zur Buildzeit feststehen.
+ *
+ * `revalidate = 0` hat die Route trotzdem weiter als ƒ (Dynamic) gebaut und
+ * damit jeden Abruf auf den Origin gezwungen — gemessen am 2026-09-11:
+ * **1,14 s TTFB für 57 KB**, bei 413 URLs. Googlebot holt die Sitemap
+ * regelmäßig; eine Sitemap, die eine Sekunde braucht, kostet Crawl-Budget, das
+ * dem Long Tail fehlt. Ohne die Zeile wird die Datei zur Buildzeit erzeugt, vom
+ * Dateisystem ausgeliefert und ist am CDN-Edge cachebar.
+ *
+ * Neue Beiträge/Rechner landen weiterhin automatisch darin — sie sind Teil des
+ * Builds, und jeder Deploy baut neu.
+ */
 
 // <lastmod> policy — Google only honors lastmod when it tracks real content
 // changes, so a date is emitted only where one is actually known:

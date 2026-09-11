@@ -5,7 +5,7 @@ export const post: BlogPost = {
   headline: "Gleiches Brutto, 600 € Unterschied im Netto — woran das liegt",
   metaTitle: "Gleiches Brutto, anderes Netto: Die 7 Gründe",
   metaDescription:
-    "Zwei Kollegen, dasselbe Bruttogehalt, hunderte Euro Unterschied auf dem Konto. Die sieben Faktoren, die Ihr Netto bestimmen — und welche davon Sie selbst ändern können.",
+    "Zwei Kollegen, gleiches Brutto, hunderte Euro Unterschied auf dem Konto. Die sieben Faktoren, die Ihr Netto bestimmen — und welche Sie selbst ändern können.",
   excerpt:
     "Zwei Kollegen verdienen 4.000 € brutto — und bekommen 600 € unterschiedlich viel ausgezahlt. Kein Fehler der Lohnbuchhaltung, sondern sieben Stellschrauben. Vier davon können Sie selbst beeinflussen.",
   focusKeyword: "gleiches brutto unterschiedliches netto",

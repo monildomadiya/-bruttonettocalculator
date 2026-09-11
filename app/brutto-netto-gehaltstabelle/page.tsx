@@ -8,7 +8,22 @@ import { siteConfig } from "@/lib/authors";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 
-export const revalidate = 0;
+/*
+ * Statisch — kein `revalidate = 0`.
+ *
+ * Der Inhalt dieser Seite stammt vollständig aus der reinen Tax-Engine
+ * (`lib/taxCalculator`) und statischen Datenmodulen. Keine Datenbank, kein
+ * `headers()`/`cookies()`/`searchParams` — zwei gleiche Anfragen können gar
+ * kein unterschiedliches Ergebnis liefern.
+ *
+ * `revalidate = 0` hat die Seite trotzdem bei jedem Aufruf neu gerendert und
+ * `Cache-Control: private, no-store` gesendet: nicht am CDN-Edge cachebar,
+ * obwohl der Origin auf einem anderen Kontinent als das deutsche Publikum
+ * steht, und für Googlebot ein voller Server-Render pro Abruf. Siehe die
+ * ausführliche Begründung in app/rechner/[betrag]/page.tsx.
+ *
+ * Aktualisierte Steuerwerte kommen mit dem nächsten Deploy — jeder Deploy baut neu.
+ */
 
 const CANONICAL = `${SITE_URL}/brutto-netto-gehaltstabelle`;
 
