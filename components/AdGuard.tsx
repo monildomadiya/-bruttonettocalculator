@@ -1,4 +1,4 @@
-import { ADS_OFF_STORAGE_KEY, ADSENSE_LOADER_SRC } from "@/lib/adsConfig";
+import { ADS_OFF_STORAGE_KEY, ADSENSE_LOADER_SRC, AD_FREQUENCY_HINT } from "@/lib/adsConfig";
 
 /**
  * Ad-serving guard — decides whether this page may request ads, and, if it may,
@@ -69,7 +69,7 @@ export default function AdGuard() {
   const js = `
 (function(){
 try{
-var w=window,d=document,K=${JSON.stringify(ADS_OFF_STORAGE_KEY)},SRC=${JSON.stringify(ADSENSE_LOADER_SRC)};
+var w=window,d=document,K=${JSON.stringify(ADS_OFF_STORAGE_KEY)},SRC=${JSON.stringify(ADSENSE_LOADER_SRC)},FH=${JSON.stringify(AD_FREQUENCY_HINT)};
 w.adsbygoogle=w.adsbygoogle||[];
 w.__bncAdsOff=function(){
 var p=location.pathname||"/";
@@ -84,6 +84,7 @@ if(d.querySelector("script[data-bnc-adsense]"))return;
 var el=d.createElement("script");
 el.async=true;el.src=SRC;el.crossOrigin="anonymous";
 el.setAttribute("data-bnc-adsense","1");
+if(FH)el.setAttribute("data-ad-frequency-hint",FH);
 (d.head||d.documentElement).appendChild(el);
 };
 var f=null;try{f=new URLSearchParams(location.search).get("noads")}catch(e){}

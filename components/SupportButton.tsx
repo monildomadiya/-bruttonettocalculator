@@ -167,11 +167,20 @@ export default function SupportButton({
   }
 
   return (
-    /* `data-no-auto-ads` keeps Auto Ads from injecting a unit inside this block.
-       A bright yellow "Kaffee spendieren" button with an ad wedged in beside it
-       is indistinguishable, at a glance, from an ad that *is* the donation —
-       and an accidental click on it is what the invalid-traffic notice is
-       about. The attribute is an AdSense placement exclusion, not a CSS hook. */
+    /* `data-no-auto-ads` is an attempt to keep Auto Ads from injecting a unit
+       inside this block: a bright yellow "Kaffee spendieren" button with an ad
+       wedged in beside it is indistinguishable, at a glance, from an ad that
+       *is* the donation, and an accidental click on it is what the
+       invalid-traffic notice is about.
+
+       BUT: this attribute is not in Google's documentation (checked 2026-09-11 —
+       it circulates in forum answers, nothing more). It is left in place because
+       it costs nothing, NOT because it is known to work. The documented control
+       is AdSense → Ads → **Excluded areas**, which stops Auto Ads requesting an
+       ad for a region at all. Do not reach for the other common workaround,
+       `.google-auto-placed { display: none }`: the ad is still requested and
+       still counts an impression nobody can see, which is the same class of
+       signal that got the account limited. */
     <div
       data-no-auto-ads="true"
       className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-lg flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6"

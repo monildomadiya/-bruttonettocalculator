@@ -164,6 +164,41 @@ export const CMP_ACTIVE = false;
 export const AD_DENSITY: "recovery" | "normal" = "recovery";
 
 /**
+ * Value for the loader's `data-ad-frequency-hint`, or `null` for Google's default.
+ *
+ * ── What the attribute actually does (checked against Google's docs 2026-09-11,
+ *    because the earlier comment in this file had the scale wrong) ─────────────
+ * It sets the **minimum average reading time between Auto Ads placements**.
+ * Google's default is **120s**, and the fastest rate it will accept is **30s**.
+ * So the `30s` that sat on the loader until 2026-09-11 was not "a bit denser" —
+ * it was the densest setting the attribute can express, four times the default.
+ *
+ * Larger values mean fewer ads. 240s is deliberately below default density while
+ * the account is under an ad serving limit.
+ *
+ * ── What this does NOT control ───────────────────────────────────────────────
+ * The hint is exactly that: a hint, and Google says it may be overridden
+ * server-side. The decisive controls over Auto Ads live in the AdSense UI, not
+ * here:
+ *   • Ads → By site → the **ad load** slider (the dominant density control),
+ *   • Ads → **Excluded areas**, which stops Auto Ads *requesting* an ad for a
+ *     region of the page (this is the only correct way to keep ads out of the
+ *     header/hero — see the CSS warning below),
+ *   • the per-format switches for **Anchor** and **Vignette**, which no page
+ *     attribute can reach.
+ *
+ * ── Do not "fix" placement with CSS ──────────────────────────────────────────
+ * The widely-copied workaround is `.google-auto-placed { display: none }` inside
+ * whatever container you want ad-free. Do not do it here. The ad is still
+ * requested and still records an impression — it is merely invisible. That is an
+ * unviewable impression, which is the *same* class of signal that caused the
+ * invalid-traffic limit in the first place. Exclude the area in the AdSense UI so
+ * the request is never made.
+ */
+export const AD_FREQUENCY_HINT: string | null =
+  AD_DENSITY === "recovery" ? "240s" : null;
+
+/**
  * Slots switched off while `AD_DENSITY === "recovery"`.
  *
  * `afterRelated` goes first: it sits immediately below the related-tools link

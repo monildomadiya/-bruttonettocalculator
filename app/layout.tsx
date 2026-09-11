@@ -210,12 +210,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
              requesting ads before anything could stop them. <AdGuard> now owns
              the decision and injects the script itself.
 
-          2. `data-ad-frequency-hint="30s"` is gone. It was the most aggressive
-             Auto Ads density setting there is, added while Auto Ads was
-             under-filling; combined with four manual units per page it is what
-             took the site from "under-monetised" to an ad serving limit in
-             about a week. Do not put it back without watching the invalid-
-             traffic rate in the AdSense report.
+          2. `data-ad-frequency-hint` is set from `AD_FREQUENCY_HINT` rather than
+             hard-coded here. It used to read "30s" — which, contrary to the
+             comment that accompanied it, is not "denser than default" but the
+             densest value the attribute accepts: Google's default is 120s and
+             30s is the floor. Combined with four manual units per page, that is
+             what took the site from "under-monetised" to an ad serving limit in
+             about a week. Recovery mode now sends 240s. See lib/adsConfig.ts for
+             what this attribute can and cannot control — most of Auto Ads
+             placement is an AdSense UI setting, not a page attribute.
         */}
         {/* Consent Mode v2 defaults — must precede every Google tag. */}
         <ConsentMode />
