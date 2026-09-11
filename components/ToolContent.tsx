@@ -149,8 +149,13 @@ export default function ToolContent({ config }: { config: ToolContentConfig }) {
         {/* Mid-content ad. Placed after the key figures rather than before
             them: the reader gets what they came for first, and the unit then
             sits between two text blocks, which is where a square renders best
-            and where AdSense's own placement guidance puts in-content units. */}
-        <AdUnit slot="midContent" className="!my-2" />
+            and where AdSense's own placement guidance puts in-content units.
+
+            The `!my-2` override that used to be here is gone: 8 px of margin put
+            the unit right up against a scrollable data table, which is a tap
+            target on mobile. AdUnit's own spacing (my-8 + py-8) is the separation
+            the placement policy asks for — don't shrink it back. */}
+        <AdUnit slot="midContent" />
 
         {/* Engine-computed example table. */}
         {table && (

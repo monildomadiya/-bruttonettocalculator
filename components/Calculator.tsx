@@ -923,11 +923,21 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
           {/* ── In-content ad, placed at the result ───────────────────────
               The user has just read their Nettogehalt and the full breakdown:
               this is the highest-attention point on the page, and it sits below
-              the fold so it never delays or covers the calculator itself. ── */}
-          <AdUnit slot="result" format="in-article" className="!my-6" />
+              the fold so it never delays or covers the calculator itself.
+
+              No margin override any more. `!my-6` left 24 px between this unit
+              and the Bundesland accordion button directly beneath it — close
+              enough on a phone that a tap aimed at the accordion lands on a
+              fluid ad that grew into the gap a frame earlier. AdUnit now
+              reserves its own height and carries a 32 px click buffer; the
+              accordion below gets extra top margin to match. ── */}
+          <AdUnit slot="result" format="in-article" />
 
           {/* ── Expandable: Bundesland Comparison ──────────────────────── */}
-          <div className="mt-4 bg-[#F1F3F5] border border-black/[0.10] rounded-2xl overflow-hidden transition-all shadow-lg">
+          {/* mt-8, not mt-4: this accordion's header is a full-width button and
+              it is the first tap target below the result ad. Extra separation
+              on top of AdUnit's own buffer. */}
+          <div className="mt-8 bg-[#F1F3F5] border border-black/[0.10] rounded-2xl overflow-hidden transition-all shadow-lg">
             <button
               type="button"
               onClick={() => setShowBundesland(!showBundesland)}

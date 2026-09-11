@@ -2,9 +2,34 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { AD_CLIENT, AD_SLOTS, type AdSlotName } from "@/lib/adsConfig";
+import { AD_CLIENT, AD_SLOTS, isSlotEnabled, type AdSlotName } from "@/lib/adsConfig";
 
 type AdFormat = "display" | "in-article";
+
+/**
+ * Reserved height per format, in pixels.
+ *
+ * ── Why space is reserved at all ─────────────────────────────────────────────
+ * This is accidental-click prevention, not a CLS score exercise. Without a
+ * reservation the unit occupies 0 px until AdSense paints, and then suddenly
+ * occupies 250–300 px — pushing everything below it *down*. On a calculator page
+ * that "everything below" is the Bundesland accordion, the year-comparison
+ * toggle, the related-tools grid: things a visitor taps. A finger already
+ * travelling toward a button lands on an ad that arrived under it a frame
+ * earlier. Those clicks are real taps by real people, and they are exactly what
+ * AdSense counts as invalid traffic.
+ *
+ * Reserving the space up front means a filling ad expands into room that was
+ * already empty, and nothing below it moves.
+ *
+ * The values are the common AdSense responsive heights for these positions, not
+ * guesses at what a given auction returns — an ad taller than the reservation
+ * still pushes, but the reservation absorbs the overwhelming majority.
+ */
+const RESERVED_HEIGHT: Record<AdFormat, number> = {
+  display: 280,
+  "in-article": 240,
+};
 
 /**
  * A single manual AdSense unit.
@@ -14,12 +39,15 @@ type AdFormat = "display" | "in-article";
  * server-rendered HTML and AdSense sees the slot on its first DOM scan instead
  * of after hydration + a DB round-trip.
  *
- * Renders nothing unless a slot ID is configured for this position, so an
- * unconfigured position is invisible rather than a permanently empty box.
+ * Renders nothing when the position is unconfigured **or** switched off by the
+ * current `AD_DENSITY` mode, and nothing at all on a page the `<AdGuard>` has
+ * marked `data-ads-off` (admin, embed, or a browser that opted out via
+ * `?noads=1`) — a suppressed page should emit no ad containers either, not empty
+ * ones.
  *
  * Once pushed, `data-ad-status` is watched: if the slot comes back **unfilled**
- * (or never renders), the whole unit — label and spacing included — is removed
- * so an empty ad never leaves a gap in the layout.
+ * (or never renders), the whole unit — label, reserved space and spacing
+ * included — is removed so an empty ad never leaves a gap in the layout.
  *
  * `pathname` is part of the `<ins>` key: on client-side navigation React then
  * discards the old element and mounts a fresh one, which gets its own
@@ -36,15 +64,30 @@ export default function AdUnit({
   format?: AdFormat;
   className?: string;
 }) {
+  const enabled = isSlotEnabled(slot);
   const slotId = AD_SLOTS[slot];
   const pathname = usePathname() || "/";
   const insRef = useRef<HTMLModElement | null>(null);
   const [status, setStatus] = useState<"idle" | "filled" | "unfilled">("idle");
 
   useEffect(() => {
-    if (!slotId) return;
+    if (!enabled) return;
     const el = insRef.current;
     if (!el) return;
+
+    /*
+     * Never request an ad on a suppressed page.
+     *
+     * `<AdGuard>` sets this synchronously during HTML parsing (and
+     * `<NoAdsOnPage>` sets it on the 404), so by the time this effect runs the
+     * answer is already final. `pauseAdRequests` alone would stop the *request*
+     * but still leave a claimed, permanently empty <ins> holding reserved space,
+     * so the unit removes itself instead.
+     */
+    if (document.documentElement.hasAttribute("data-ads-off")) {
+      setStatus("unfilled");
+      return;
+    }
 
     // A fresh <ins> arrived (first mount or a route change remount) — reset the
     // per-element state before pushing it.
@@ -116,9 +159,9 @@ export default function AdUnit({
       observer.disconnect();
       clearTimeout(timer);
     };
-  }, [slotId, pathname]);
+  }, [enabled, slotId, pathname]);
 
-  if (!slotId || status === "unfilled") return null;
+  if (!enabled || status === "unfilled") return null;
 
   // Shared attributes. `key` is passed explicitly on each <ins> rather than
   // spread: React warns when a props object carrying `key` is spread into JSX.
@@ -131,14 +174,34 @@ export default function AdUnit({
   } as const;
 
   return (
-    <div className={`w-full max-w-6xl mx-auto my-10 px-4 sm:px-5 ${className}`}>
+    /*
+     * `py-8` is the click buffer, and it is load-bearing.
+     *
+     * Google's placement policy asks for clear separation between ads and
+     * anything tappable. Before this, the result unit sat 24 px above the
+     * Bundesland accordion button and the mid-content unit 8 px from a table —
+     * close enough that a mistimed tap on a phone hits the ad. 32 px of dead
+     * space on each side turns those near-misses into misses.
+     */
+    <div
+      className={`w-full max-w-6xl mx-auto my-8 px-4 sm:px-5 py-8 ${className}`}
+      // Reserve the slot's height from first paint so a late-filling ad expands
+      // into empty space instead of shoving the content below it under a finger.
+      // Dropped once the slot resolves: filled units size themselves, and
+      // unfilled ones have already unmounted above.
+      style={status === "idle" ? { minHeight: RESERVED_HEIGHT[format] } : undefined}
+    >
       {/* Label kept in the DOM (so the <ins> position never shifts and React
           never remounts a filled ad) but only visible once the slot fills.
+          `invisible` rather than `hidden` on purpose: `hidden` removes the
+          label's ~18 px from the flow, so the ad jumped down by that much at the
+          exact moment it appeared — a miniature version of the shift this
+          component now exists to prevent.
           AdSense requires ad blocks to be distinguishable from content; the
           wrapper is deliberately not aria-hidden so the label is announced. */}
       <div
         className={`text-[10px] font-mono uppercase tracking-widest text-black/25 text-center mb-1.5 ${
-          status === "filled" ? "" : "hidden"
+          status === "filled" ? "" : "invisible"
         }`}
       >
         Anzeige

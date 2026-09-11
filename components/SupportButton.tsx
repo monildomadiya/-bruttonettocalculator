@@ -13,6 +13,23 @@ import { Coffee } from "lucide-react";
  *
  * Also kept out of any floating/overlay position so it can never sit on top of
  * an AdSense unit (accidental-click policy).
+ *
+ * ── The copy may not mention advertising ─────────────────────────────────────
+ * Until 2026-09-11 the body text read "Dieser Rechner ist kostenlos und
+ * **werbefinanziert**. Wenn er dir Zeit gespart hat, freue ich mich über einen
+ * Kaffee" (and the same in EN/PL). That is a support solicitation sitting in the
+ * same sentence as the fact that the site lives off ads — and the AdSense
+ * invalid-traffic notice names precisely that pattern:
+ *
+ *   "Publishers may not ask users to support your site, offering rewards to
+ *    users for viewing ads, and promising to raise money for third parties for
+ *    such behavior."
+ *
+ * Google's classifier does not weigh the intent, it reads the adjacency. Asking
+ * for a donation is fine; telling the reader in the same breath that ads pay for
+ * the site is what reads as encouraging ad clicks. Keep the two apart — no
+ * "werbefinanziert" / "ad-supported" / "z reklam" anywhere near a support ask,
+ * and no support CTA rendered adjacent to an ad unit.
  */
 
 const BMC_URL = "https://buymeacoffee.com/finnweber";
@@ -44,21 +61,21 @@ export function isEmbedRoute(pathname?: string | null): boolean {
 const COPY: Record<Lang, { heading: string; body: string; cta: string; short: string; tiny: string }> = {
   de: {
     heading: "Hat dir der Rechner geholfen?",
-    body: "Dieser Rechner ist kostenlos und werbefinanziert. Wenn er dir Zeit gespart hat, freue ich mich über einen Kaffee.",
+    body: "Dieser Rechner ist und bleibt kostenlos. Wenn er dir Zeit gespart hat, freue ich mich über einen Kaffee.",
     cta: "Kaffee spendieren",
     short: "Kaffee spendieren",
     tiny: "Kaffee",
   },
   en: {
     heading: "Did this calculator help you?",
-    body: "This calculator is free and ad-supported. If it saved you time, a coffee is always appreciated.",
+    body: "This calculator is free and always will be. If it saved you time, a coffee is always appreciated.",
     cta: "Buy me a coffee",
     short: "Buy me a coffee",
     tiny: "Coffee",
   },
   pl: {
     heading: "Kalkulator okazał się pomocny?",
-    body: "Ten kalkulator jest darmowy i utrzymywany z reklam. Jeśli oszczędził Ci czasu, postaw kawę.",
+    body: "Ten kalkulator jest i pozostanie darmowy. Jeśli oszczędził Ci czasu, postaw kawę.",
     cta: "Postaw kawę",
     short: "Postaw kawę",
     tiny: "Kawa",
@@ -150,7 +167,15 @@ export default function SupportButton({
   }
 
   return (
-    <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-lg flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+    /* `data-no-auto-ads` keeps Auto Ads from injecting a unit inside this block.
+       A bright yellow "Kaffee spendieren" button with an ad wedged in beside it
+       is indistinguishable, at a glance, from an ad that *is* the donation —
+       and an accidental click on it is what the invalid-traffic notice is
+       about. The attribute is an AdSense placement exclusion, not a CSS hook. */
+    <div
+      data-no-auto-ads="true"
+      className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-lg flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6"
+    >
       <div className="flex items-start gap-3.5 min-w-0 flex-1">
         <span className="w-11 h-11 rounded-2xl bg-[#FFDD00] border border-black/[0.10] flex items-center justify-center flex-shrink-0 shadow-sm">
           <Coffee size={20} className="text-[#16181D]" />

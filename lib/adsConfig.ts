@@ -128,3 +128,65 @@ export type AdSlotName = keyof typeof AD_SLOTS;
  * updates actually arrive.
  */
 export const CMP_ACTIVE = false;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Invalid-traffic recovery (ad serving limit, 09/2026)
+   ═══════════════════════════════════════════════════════════════════════════
+
+   AdSense placed an ad serving limit on the account for "potentially invalid
+   traffic". The three code-side contributors, in order of likelihood:
+
+   1. AD DENSITY. Between 2026-08-31 and 2026-09-01 the site went from Auto-Ads-
+      only to four manual units per page *plus* `data-ad-frequency-hint="30s"`
+      — the most aggressive Auto Ads density setting there is. A calculator page
+      carrying ToolContent ended up with result + midContent + contentEnd +
+      afterRelated on top of whatever Auto Ads injected. Ad requests multiplied
+      overnight while sessions stayed flat, which is exactly the shape of an
+      invalid-traffic signal.
+
+   2. ACCIDENTAL CLICKS. `<AdUnit>` reserved no space, so a slot that filled late
+      pushed the content below it down — under a finger that was already moving
+      toward a button. The result unit sat 24 px above the Bundesland accordion
+      button, the mid-content unit 8 px from a table.
+
+   3. OWN TRAFFIC. The publisher has been testing ad behaviour on production
+      repeatedly (see the measurement notes above — they were taken on the live
+      site). Every one of those page loads was a real ad request from the
+      account owner.
+
+   `AD_DENSITY` is the switch for (1). Leave it on "recovery" until AdSense
+   lifts the limit and the Policy center is clean for a full reporting cycle,
+   then flip to "normal" and watch the invalid-traffic rate in the AdSense
+   report before adding anything else back.
+*/
+
+/** Ad-density mode. "recovery" suppresses the lowest-value duplicate slots. */
+export const AD_DENSITY: "recovery" | "normal" = "recovery";
+
+/**
+ * Slots switched off while `AD_DENSITY === "recovery"`.
+ *
+ * `afterRelated` goes first: it sits immediately below the related-tools link
+ * grid, with `contentEnd` immediately above it. Two ad units sandwiching a grid
+ * of ~8 tappable internal links is the single worst accidental-click geometry
+ * on the site, and it is also the lowest-earning of the four (end of session,
+ * after the reader has already been offered an exit).
+ */
+const RECOVERY_SUPPRESSED_SLOTS: readonly AdSlotName[] = ["afterRelated"];
+
+/** Whether a position should render at all right now. */
+export function isSlotEnabled(slot: AdSlotName): boolean {
+  if (!AD_SLOTS[slot]) return false;
+  if (AD_DENSITY === "recovery" && RECOVERY_SUPPRESSED_SLOTS.includes(slot)) return false;
+  return true;
+}
+
+/**
+ * localStorage key for the per-device "never request ads on this browser" flag.
+ *
+ * Set by visiting any page with `?noads=1`, cleared with `?noads=0`. This is the
+ * publisher's own-traffic opt-out: AdSense has no IP-exclusion feature any more,
+ * so the only reliable way to keep the owner's own browsing out of the account
+ * is to stop the ad request client-side. See `components/AdGuard.tsx`.
+ */
+export const ADS_OFF_STORAGE_KEY = "bnc_ads_off";

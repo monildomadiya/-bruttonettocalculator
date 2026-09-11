@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Calculator, BookOpen, HelpCircle } from "lucide-react";
+import NoAdsOnPage from "@/components/NoAdsOnPage";
 import "./globals.css";
 export const metadata: Metadata = {
   title: "Seite nicht gefunden (404)",
@@ -14,6 +15,11 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main className="min-h-[80vh] bg-[#F4F5F7] text-[#16181D] flex items-center justify-center px-6 py-20 relative overflow-hidden">
+      {/* Google Publisher Policies: no ads on screens without publisher content.
+          The two site-wide units live in the root layout, which this page
+          inherits like any other route — this switches them off. */}
+      <NoAdsOnPage />
+
       <div className="max-w-2xl w-full text-center space-y-8 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-14 relative overflow-hidden">
         
         {/* Subtle Background Glow */}

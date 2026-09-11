@@ -11,7 +11,8 @@ import GoogleAdSense from "@/components/GoogleAdSense";
 import AdsProvider from "@/components/AdsProvider";
 import SiteWideAd from "@/components/SiteWideAd";
 import ConsentMode from "@/components/ConsentMode";
-import { AD_CLIENT, ADSENSE_LOADER_SRC } from "@/lib/adsConfig";
+import AdGuard from "@/components/AdGuard";
+import { AD_CLIENT } from "@/lib/adsConfig";
 import { postalAddressSchema } from "@/lib/company";
 
 export const metadata: Metadata = {
@@ -179,37 +180,57 @@ const orgSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de">
+    /* `suppressHydrationWarning` because <AdGuard> stamps `data-ads-off` on this
+       element before React hydrates — the standard pattern for a pre-hydration
+       inline script that has to mark the document root. Scoped to <html>'s own
+       attributes; it does not silence anything in the subtree. */
+    <html lang="de" suppressHydrationWarning>
       <body className="font-body bg-[#F4F5F7] text-[#16181D] antialiased">
         {/*
-          AdSense loader — first thing in <body>, so the browser starts it while
-          it is still parsing the document (~0.1 s).
+          ── Ad serving: first thing in <body> ───────────────────────────────
 
-          It used to be injected by a client component that first hydrated, then
-          fetched /api/settings/ads, which hit MySQL. On production that pushed the
-          ad script to ~3.0 s and the Funding-Choices consent prompt to ~3.8 s on
-          desktop — far worse on mobile — so short calculator sessions regularly
-          ended before a single ad, or the consent prompt, was ever requested.
+          The AdSense loader starts while the browser is still parsing the
+          document (~0.1 s). It used to be injected by a client component that
+          first hydrated, then fetched /api/settings/ads, which hit MySQL. On
+          production that pushed the ad script to ~3.0 s and the Funding-Choices
+          consent prompt to ~3.8 s on desktop — far worse on mobile — so short
+          calculator sessions regularly ended before a single ad, or the consent
+          prompt, was ever requested.
 
-          Deliberately a plain <script> rather than next/script: `beforeInteractive`
-          renders into <html>, which is invalid markup for a script and made React
-          throw away the server HTML and re-render the whole document on hydration.
-          A raw async tag in <body> gets the same early start with none of that.
-          On/off control and the admin-page exclusion live in <GoogleAdSense>.
+          Deliberately not next/script: `beforeInteractive` renders into <html>,
+          which is invalid markup for a script and made React throw away the
+          server HTML and re-render the whole document on hydration.
 
-          data-ad-frequency-hint raises Auto Ads density: these are long pages
-          (the homepage is ~14.7 viewports) and Auto Ads was placing almost
-          nothing on them.
+          Two things changed here on 2026-09-11, after AdSense placed an ad
+          serving limit on the account for invalid traffic:
+
+          1. The loader is no longer a static tag. React hoists <script async
+             src> into <head>, which put it *ahead* of any inline guard in
+             <body> — so admin pages and the publisher's own test loads were
+             requesting ads before anything could stop them. <AdGuard> now owns
+             the decision and injects the script itself.
+
+          2. `data-ad-frequency-hint="30s"` is gone. It was the most aggressive
+             Auto Ads density setting there is, added while Auto Ads was
+             under-filling; combined with four manual units per page it is what
+             took the site from "under-monetised" to an ad serving limit in
+             about a week. Do not put it back without watching the invalid-
+             traffic rate in the AdSense report.
         */}
         {/* Consent Mode v2 defaults — must precede every Google tag. */}
         <ConsentMode />
 
-        <script
-          async
-          src={ADSENSE_LOADER_SRC}
-          crossOrigin="anonymous"
-          data-ad-frequency-hint="30s"
-        />
+        {/* Warms DNS + TLS to the ad host so the guard-injected loader starts
+            almost as fast as a static tag would have. React hoists this into
+            <head>; a preconnect costs nothing on pages that never load ads. */}
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
+
+        {/* The AdSense loader is injected by <AdGuard>, not written here.
+            A static <script async src> is hoisted into <head> by React and would
+            therefore run *before* any inline guard in <body> — see AdGuard for
+            the measurement. Pages that may not serve ads now make no request to
+            Google at all. */}
+        <AdGuard />
        <AdsProvider>
 
         {/* ── Sticky glass header (conditional) ───────────────────────── */}
@@ -223,7 +244,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* ── Auto "Ähnliche Rechner" internal-linking block (per-page) ── */}
         <RelatedToolsAuto />
 
-        {/* ── End-of-session unit, below the related tools ────────────── */}
+        {/* ── End-of-session unit, below the related tools ──────────────
+             Currently renders nothing: `afterRelated` is suppressed while
+             AD_DENSITY is "recovery" (see lib/adsConfig.ts). Left wired up so
+             restoring it is a one-line change in one file. */}
         <SiteWideAd slot="afterRelated" />
 
         {/* ── Ultra-Luxury Fintech Footer (conditional) ───────────────── */}
