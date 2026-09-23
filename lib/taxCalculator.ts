@@ -156,6 +156,38 @@ export const BBG_2026 = {
 } as const;
 
 /**
+ * Rechengrößen der Sozialversicherung 2027 — Referentenentwurf des BMAS zur
+ * Sozialversicherungsrechengrößen-Verordnung 2027 vom 21.09.2026.
+ *
+ * Zugrunde liegt die Lohnentwicklung 2025 von 4,38 %. Die Grenzen für Kranken-
+ * und Pflegeversicherung steigen zusätzlich um 300 € monatlich über die
+ * Lohnentwicklung hinaus.
+ *
+ * NICHT im Rechner verwendet: Die Verordnung ist weder von der Bundesregierung
+ * beschlossen noch vom Bundesrat gebilligt. Alle 2027-Szenarien rechnen weiter
+ * mit den amtlichen Werten 2026 (siehe `RECHENGROESSEN_2026`); diese Konstante
+ * versorgt ausschließlich die Informationsseiten.
+ */
+export const SV_RECHENGROESSEN_2027_ENTWURF = {
+  stand: "2026-09-21",
+  quelle:
+    "https://www.bmas.de/DE/Service/Presse/Meldungen/2026/referentenentwurf-zur-sozialversicherungsrechengroessen-verordnung-2027.html",
+  lohnentwicklung2025: 0.0438,
+  bezugsgroesseMonat: 4130,
+  bezugsgroesseJahr: 49560,
+  rvAlvBbgMonat: 8850,
+  rvAlvBbgJahr: 106200,
+  knappschaftBbgMonat: 10900,
+  knappschaftBbgJahr: 130800,
+  kvPvBbgMonat: 6375,
+  kvPvBbgJahr: 76500,
+  versicherungspflichtgrenzeMonat: 7012.5,
+  versicherungspflichtgrenzeJahr: 84150,
+  durchschnittsentgeltVorlaeufig2027: 53452,
+  durchschnittsentgeltEndgueltig2025: 49147,
+} as const;
+
+/**
  * Betriebliche Altersvorsorge (bAV) / Entgeltumwandlung 2026
  * (§ 3 Nr. 63 EStG, § 1 Abs. 1 Nr. 9 SvEV). Beiträge sind bis 8 % der
  * Beitragsbemessungsgrenze RV (West) steuerfrei und bis 4 % sozialabgabenfrei.

@@ -81,6 +81,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/steuerfreibetrag-2026",
     "/brutto-netto-rechner-krankenkasse",
     "/beitragsbemessungsgrenze-2026",
+    "/beitragsbemessungsgrenze-2027",
     "/tvoed-rechner",
     "/durchschnittsgehalt-deutschland",
     "/private-krankenversicherung-vs-gesetzlich",

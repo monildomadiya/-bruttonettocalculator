@@ -85,7 +85,7 @@ const faqs = [
   },
   {
     q: "Sind die Sozialabgaben 2027 schon berücksichtigt?",
-    a: "Nein — und das ist bewusst so. Die Beitragsbemessungsgrenzen und der durchschnittliche Zusatzbeitrag für 2027 werden erst im Herbst 2026 per Verordnung festgelegt. Alle 2027-Szenarien rechnen daher mit den amtlichen SV-Werten 2026; nur der Steuerteil variiert. Sobald die Verordnung vorliegt, wird der Rechner aktualisiert.",
+    a: "Nein — und das ist bewusst so. Für die Rechengrößen 2027 liegt seit dem 21. September 2026 zwar ein Referentenentwurf des BMAS vor (Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat, Kranken- und Pflegeversicherung 6.375 € im Monat, Versicherungspflichtgrenze 7.012,50 €), beschlossen ist die Verordnung aber weder von der Bundesregierung noch vom Bundesrat. Alle 2027-Szenarien rechnen daher mit den amtlichen SV-Werten 2026; nur der Steuerteil variiert. Sobald die Verordnung in Kraft ist, wird der Rechner umgestellt. Alle Entwurfswerte im Detail stehen auf der Seite zur Beitragsbemessungsgrenze 2027.",
   },
   {
     q: "Welche 2027-Werte stehen bereits fest?",
@@ -215,6 +215,17 @@ export default function Rechner2027Page() {
       </div>
 
       <Reform2027Status />
+
+      <p className="w-full max-w-6xl mx-auto text-sm sm:text-base text-black/70 leading-relaxed mb-8">
+        Zum zweiten Baustein des Jahres 2027 — den Sozialabgaben — liegt seit dem 21. September 2026
+        ebenfalls ein Entwurf vor:{" "}
+        <Link href="/beitragsbemessungsgrenze-2027" className="text-[#E60A1C] font-semibold hover:underline">
+          die Beitragsbemessungsgrenzen 2027
+        </Link>{" "}
+        sollen auf 6.375 € (Kranken- und Pflegeversicherung) und 8.850 € im Monat (Rente und
+        Arbeitslosenversicherung) steigen. Dieser Rechner verwendet sie noch nicht — beschlossen ist
+        auch diese Verordnung nicht.
+      </p>
 
       {/* Steuerreform 2027 content section — targets "steuerreform 2027 rechner" cluster */}
       <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 mb-8">
