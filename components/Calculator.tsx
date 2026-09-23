@@ -8,6 +8,7 @@ import {
   CircleDollarSign, Sparkles, MapPin, Calendar, ChevronDown, ChevronUp,
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr, Szenario, GRUNDFREIBETRAG } from "@/lib/taxCalculator";
+import { siteConfig } from "@/lib/authors";
 import ReviewerByline from "@/components/ReviewerByline";
 import SupportButton from "@/components/SupportButton";
 import AdUnit from "@/components/AdUnit";
@@ -43,6 +44,26 @@ const STEUERKLASSE_INFO: Record<Lang, Record<Steuerklasse, string>> = {
   },
 };
 
+/*
+ * Monat/Jahr des redaktionellen Stands als Chip am Ergebnis.
+ *
+ * Bewusst aus `siteConfig.lastUpdatedISO` abgeleitet statt fest eingetragen:
+ * die drei Sprachvarianten standen zuletzt monatelang auf "Juli 2026", während
+ * der Rest der Seite längst weiter war. Die Ableitung zerlegt den ISO-String
+ * selbst, statt `Date`/`Intl` zu bemühen — beides wäre zeitzonenabhängig und
+ * damit eine Quelle für Hydration-Mismatches zwischen Server und Client.
+ */
+const MONATSNAMEN: Record<Lang, readonly string[]> = {
+  de: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  pl: ["styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"],
+};
+
+function standChip(lang: Lang): string {
+  const [jahr, monat] = siteConfig.lastUpdatedISO.split("-");
+  return `${MONATSNAMEN[lang][Number(monat) - 1]} ${jahr}`;
+}
+
 /* ─── UI strings (de / en) ─────────────────────────────────────────── */
 const T: Record<Lang, Record<string, string>> = {
   de: {
@@ -72,7 +93,7 @@ const T: Record<Lang, Record<string, string>> = {
     churchHint: "9 % auf die Einkommensteuer",
     disclaimer: "Vereinfachte Berechnung nach § 32a EStG 2026. Keine Steuerberatung.",
     result: "Ergebnis",
-    dateChip: "Juli 2026",
+    dateChip: standChip("de"),
     copyAria: "Ergebnis-Link kopieren",
     copyTitle: "Link für dieses Ergebnis kopieren",
     copied: "Kopiert!",
@@ -152,7 +173,7 @@ const T: Record<Lang, Record<string, string>> = {
     churchHint: "9% of income tax",
     disclaimer: "Simplified calculation under § 32a EStG 2026. Not tax advice.",
     result: "Result",
-    dateChip: "July 2026",
+    dateChip: standChip("en"),
     copyAria: "Copy result link",
     copyTitle: "Copy a link to this result",
     copied: "Copied!",
@@ -232,7 +253,7 @@ const T: Record<Lang, Record<string, string>> = {
     churchHint: "9% od podatku dochodowego",
     disclaimer: "Uproszczone obliczenie niemieckiego wynagrodzenia wg § 32a EStG 2026. Nie stanowi porady podatkowej.",
     result: "Wynik",
-    dateChip: "lipiec 2026",
+    dateChip: standChip("pl"),
     copyAria: "Kopiuj link do wyniku",
     copyTitle: "Skopiuj link do tego wyniku",
     copied: "Skopiowano!",
