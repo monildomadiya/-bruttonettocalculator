@@ -10,7 +10,7 @@ import { skala, linie, kurzEuro, prozent, type Punkt } from "./chartUtils";
 
 /**
  * Grenzsteuersatz nach § 32a EStG über dem zu versteuernden Einkommen —
- * geltender Tarif 2026 gegen den Referentenentwurf EStRefG 2027.
+ * geltender Tarif 2026 gegen den Regierungsentwurf EStRefG 2027.
  *
  * Der Grenzsteuersatz, nicht der Durchschnittssteuersatz: Der Entwurf ändert
  * die *Form* des Tarifs (die Reichensteuer greift ab 250.000 € statt ab
@@ -103,7 +103,7 @@ export default function TarifKurve() {
           aria-labelledby={`${titelId} ${beschreibungId}`}
         >
           <title id={titelId}>
-            Grenzsteuersatz nach zu versteuerndem Einkommen: Tarif 2026 gegen Referentenentwurf 2027
+            Grenzsteuersatz nach zu versteuerndem Einkommen: Tarif 2026 gegen Regierungsentwurf 2027
           </title>
           <desc id={beschreibungId}>
             Beide Tarife steigen vom Grundfreibetrag aus von 14 auf 42 Prozent. Der geltende Tarif
@@ -198,7 +198,7 @@ export default function TarifKurve() {
         <ul className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm text-black/70">
           <li className="flex items-center gap-2">
             <span className="w-6 h-[3px] rounded bg-[#E60A1C]" aria-hidden="true" />
-            Referentenentwurf 2027
+            Regierungsentwurf 2027
           </li>
           <li className="flex items-center gap-2">
             <span className="w-6 h-0 border-t-2 border-dashed border-black/45" aria-hidden="true" />

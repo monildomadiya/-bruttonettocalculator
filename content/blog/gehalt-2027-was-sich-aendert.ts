@@ -20,9 +20,9 @@ export const post: BlogPost = {
   category: "Steuerklassen & Gehalt",
   tags: ["2027", "Mindestlohn", "Minijob", "Sozialversicherung", "Steuertarif"],
   publishedISO: "2026-08-23",
-  updatedISO: "2026-08-23",
+  updatedISO: "2026-09-23",
   answer:
-    "Zum 1. Januar 2027 steigt der gesetzliche Mindestlohn von 13,90 € auf 14,60 € pro Stunde. Die Minijob-Grenze klettert dadurch automatisch von 603 € auf 633 € im Monat. Beim Einkommensteuertarif ist die genaue Höhe des Grundfreibetrags 2027 noch nicht beziffert — hier gilt bislang nur eine politische Absichtserklärung, kein Gesetz.",
+    "Zum 1. Januar 2027 steigt der gesetzliche Mindestlohn von 13,90 € auf 14,60 € pro Stunde. Die Minijob-Grenze klettert dadurch automatisch von 603 € auf 633 € im Monat. Beim Einkommensteuertarif liegt seit dem Kabinettsbeschluss vom 2. September 2026 ein Regierungsentwurf vor: Grundfreibetrag 12.564 € ab 2027 — verkündet ist das Gesetz aber noch nicht.",
   keyFacts: [
     { label: "Mindestlohn ab 2027", value: "14,60 €/Stunde" },
     { label: "Erhöhung gegenüber 2026", value: "+0,70 € (+5,0 %)" },
@@ -64,16 +64,18 @@ export const post: BlogPost = {
 <h3>Der Übergangsbereich bleibt bei 2.000 €</h3>
 <p>Die Obergrenze des Midijob-Bereichs ist <em>nicht</em> an den Mindestlohn gekoppelt und bleibt bei 2.000 €. Der Korridor mit reduzierten Arbeitnehmerbeiträgen verschiebt sich 2027 also nur an seiner Untergrenze nach oben — von 603,01 € auf 633,01 €. Wie die Beitragsentlastung darin funktioniert, erklärt der Beitrag zum <a href="/blog/midijob-uebergangsbereich">Übergangsbereich</a>.</p>
 
-<h2>Noch offen: Der Einkommensteuertarif</h2>
-<p>Hier ist Vorsicht geboten, weil im Netz bereits konkrete Zahlen kursieren, die so nicht beschlossen sind. Der Stand:</p>
+<h2>Der Einkommensteuertarif: Zahlen liegen vor, Gesetz noch nicht</h2>
+<p>Hier hat sich der Stand im Spätsommer 2026 deutlich verändert. Inzwischen sind die Beträge beziffert — beschlossenes Recht sind sie aber weiterhin nicht. Der Stand:</p>
 
 <ul>
   <li>Der Grundfreibetrag liegt 2026 bei <strong>12.348 €</strong>. Das ist geltendes Recht.</li>
-  <li>Für die Folgejahre nennt das Bundesfinanzministerium <strong>12.900 €</strong> als Endstufe einer zweistufigen Anhebung bis 2028.</li>
-  <li><strong>Wie sich diese Anhebung auf 2027 und 2028 verteilt, ist nicht beziffert.</strong> Ein Gesetz gibt es noch nicht.</li>
+  <li>Das Bundesfinanzministerium hat am <strong>18. August 2026</strong> den Referentenentwurf eines Einkommensteuerreformgesetzes 2027 vorgelegt und darin § 32a EStG für 2027 und 2028 vollständig neu gefasst.</li>
+  <li>Das <strong>Bundeskabinett hat den Regierungsentwurf am 2. September 2026 beschlossen</strong> — mit unveränderten Tarifwerten: Grundfreibetrag <strong>12.564 €</strong> ab 2027 und <strong>12.900 €</strong> ab 2028, Arbeitnehmer-Pauschbetrag <strong>1.430 €</strong>, Kindergeld <strong>267 €</strong> (2027) bzw. <strong>272 €</strong> (2028).</li>
+  <li>Zur Gegenfinanzierung steigt unter anderem die <strong>Minijob-Pauschsteuer von 2 % auf 5 %</strong>, und der Steuerabzug für Handwerkerleistungen sinkt von 20 % auf 15 % (höchstens 900 € statt 1.200 €).</li>
+  <li><strong>Bundestag und Bundesrat stehen noch aus.</strong> Bis zur Verkündung im Bundesgesetzblatt können sich die Beträge ändern.</li>
 </ul>
 
-<p>Solange der Referentenentwurf fehlt, ist jede exakte Netto-Angabe für 2027 eine Schätzung. Wer trotzdem planen möchte, kann im <a href="/brutto-netto-rechner-2027">Rechner für 2027</a> verschiedene Reformszenarien durchspielen — dort ist offen ausgewiesen, welche Werte modelliert und welche amtlich sind.</p>
+<p>Die Zahlen sind also keine Schätzung mehr, sondern Entwurfsrecht — verbindlich sind sie trotzdem erst nach der Verkündung. Im <a href="/brutto-netto-rechner-2027">Rechner für 2027</a> lässt sich beides gegenüberstellen: der Entwurf und der Tarif ohne Reform als Untergrenze, falls das Verfahren scheitert.</p>
 
 <h3>Was das für Gehaltsverhandlungen bedeutet</h3>
 <p>Wenn Sie im Herbst über Ihr Gehalt für 2027 verhandeln, rechnen Sie besser mit dem geltenden Tarif 2026. Eine mögliche Tarifentlastung ist ein Bonus, keine Verhandlungsgrundlage. Umgekehrt gilt: Eine Erhöhung, die nur die Inflation ausgleicht, ist real keine Erhöhung — was von einem Aufschlag tatsächlich ankommt, zeigt der <a href="/gehaltserhoehung-rechner">Gehaltserhöhungs-Rechner</a>.</p>
@@ -119,7 +121,7 @@ export const post: BlogPost = {
     {
       question: "Wie hoch ist der Grundfreibetrag 2027?",
       answer:
-        "Das steht noch nicht fest. 2026 liegt er bei 12.348 €. Das Bundesfinanzministerium nennt 12.900 € als Endstufe einer zweistufigen Anhebung bis 2028, hat die Verteilung auf die Jahre 2027 und 2028 aber nicht beziffert. Ein Gesetz gibt es bislang nicht — konkrete Netto-Angaben für 2027 sind daher Schätzungen.",
+        "Nach dem Regierungsentwurf, den das Bundeskabinett am 2. September 2026 beschlossen hat: 12.564 € ab dem Veranlagungszeitraum 2027 und 12.900 € ab 2028. 2026 liegt der Grundfreibetrag bei 12.348 €. Diese Werte stehen wörtlich im Entwurf — verbindlich werden sie aber erst mit der Verkündung im Bundesgesetzblatt, Bundestag und Bundesrat stehen noch aus.",
     },
     {
       question: "Ändert sich der Übergangsbereich für Midijobs 2027?",

@@ -3,7 +3,7 @@ import { skala, linie, flaeche, kurzEuro, euro, type Punkt } from "./chartUtils"
 
 /**
  * Netto-Differenz pro Monat zwischen dem geltenden Tarif 2026 und dem
- * Referentenentwurf EStRefG 2027, aufgetragen über dem Bruttomonatsgehalt.
+ * Regierungsentwurf EStRefG 2027, aufgetragen über dem Bruttomonatsgehalt.
  *
  * Warum genau diese Größe: Ein Vergleich der beiden Durchschnittssteuersätze
  * ergäbe zwei fast deckungsgleiche Kurven (bei 3.000 € brutto 12,49 % gegen
@@ -99,7 +99,7 @@ export default function EntlastungsKurve() {
           aria-labelledby={`${titelId} ${beschreibungId}`}
         >
           <title id={titelId}>
-            Netto-Differenz pro Monat zwischen Tarif 2026 und dem Referentenentwurf 2027
+            Netto-Differenz pro Monat zwischen Tarif 2026 und dem Regierungsentwurf 2027
           </title>
           <desc id={beschreibungId}>
             Die Entlastung steigt von rund {euro(daten2027[0].y)} Euro bei {kurzEuro(VON)} Euro

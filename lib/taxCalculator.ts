@@ -10,19 +10,21 @@
  * Freibeträge). Sie ersetzt keine Steuerberatung und keine verbindliche
  * Lohnabrechnung.
  *
- * ── Steuerjahr 2027/2028: Referentenentwurf EStRefG 2027 ──────────────────
- * Seit dem 18.08.2026 liegt der Referentenentwurf eines Einkommensteuer-
- * reformgesetzes 2027 (EStRefG 2027) vor. Er fasst § 32a Absatz 1 EStG für
- * die Veranlagungszeiträume 2027 (Artikel 1) und 2028 (Artikel 2) jeweils neu.
- * Die Tarife in `TARIF_2027_ENTWURF` und `TARIF_2028_ENTWURF` sind die
- * wörtlichen Zahlenwerte dieses Entwurfs — nicht modelliert, nicht abgeleitet.
+ * ── Steuerjahr 2027/2028: Regierungsentwurf EStRefG 2027 ──────────────────
+ * Am 02.09.2026 hat das Bundeskabinett den Regierungsentwurf eines Einkommen-
+ * steuerreformgesetzes 2027 (EStRefG 2027) beschlossen. Er fasst § 32a Absatz 1
+ * EStG für die Veranlagungszeiträume 2027 (Artikel 1) und 2028 (Artikel 2)
+ * jeweils neu. Die Tarife in `TARIF_2027_ENTWURF` und `TARIF_2028_ENTWURF` sind
+ * die wörtlichen Zahlenwerte dieses Entwurfs — nicht modelliert, nicht
+ * abgeleitet; der Kabinettsbeschluss hat sie gegenüber dem Referentenentwurf
+ * vom 18.08.2026 nicht verändert.
  *
  * Der Entwurf ändert dabei die *Form* des Tarifs: neben der 45-%-Zone gibt es
  * erstmals eine dritte Spitzenzone mit 47 % ab 280.000 € zvE. Der Tarif lässt
  * sich deshalb nicht mehr über `makeTarif()` aus drei Eckwerten ableiten.
  *
  * Gerechnet wird weiterhin in drei ausgewiesenen Szenarien (siehe `Szenario`),
- * weil ein Referentenentwurf noch kein geltendes Recht ist:
+ * weil ein Regierungsentwurf noch kein geltendes Recht ist:
  *   - "ohneReform"  → geltender Tarif 2026 fortgeschrieben (Untergrenze,
  *                     falls das Verfahren scheitert)
  *   - "entwurf2027" → Artikel 1 EStRefG 2027, wirksam ab VZ 2027
@@ -65,7 +67,7 @@ export interface CalculatorInput {
   kvZusatzbeitrag?: number;
   /**
    * Reformszenario für `jahr: 2027`. Ohne Angabe wird "entwurf2027"
-   * verwendet — der Tarif nach Artikel 1 des Referentenentwurfs. Für
+   * verwendet — der Tarif nach Artikel 1 des Regierungsentwurfs. Für
    * `jahr: 2026` wirkungslos.
    */
   szenario?: Szenario;
@@ -261,7 +263,7 @@ export interface Tarif {
   /**
    * Letzter Euro der 45 %-Zone. Nur gesetzt, wenn der Tarif eine dritte
    * Spitzenzone hat (47 % ab `top2Start` + 1) — das ist erst im
-   * Referentenentwurf EStRefG 2027 der Fall. Ohne diesen Wert gilt die
+   * Entwurf des EStRefG 2027 der Fall. Ohne diesen Wert gilt die
    * 45 %-Zone wie bisher nach oben offen.
    */
   top2Start?: number;
@@ -331,15 +333,17 @@ export function grenzsteuersatzFuerTarif(t: Tarif, zvE: number): number {
 /**
  * Quelle aller 2027/2028-Werte in diesem Modul.
  *
- * Referentenentwurf eines Einkommensteuerreformgesetzes 2027 (EStRefG 2027),
- * Bundesministerium der Finanzen, Bearbeitungsstand 18.08.2026 07:19.
+ * Regierungsentwurf eines Einkommensteuerreformgesetzes 2027 (EStRefG 2027),
+ * vom Bundeskabinett beschlossen am 02.09.2026. Er übernimmt die Tarifeckwerte
+ * des Referentenentwurfs (BMF, Bearbeitungsstand 18.08.2026 07:19) unverändert.
  * Artikel 1 wirkt ab dem Veranlagungszeitraum 2027, Artikel 2 ab 2028.
  */
 export const ENTWURF = {
   kurzname: "EStRefG 2027",
-  langname: "Referentenentwurf eines Einkommensteuerreformgesetzes 2027",
-  stand: "2026-08-18",
-  quelle:
+  langname: "Regierungsentwurf eines Einkommensteuerreformgesetzes 2027",
+  stand: "2026-09-02",
+  quelle: "https://www.bundesregierung.de/breg-de/aktuelles/einkommensteuerreform-2027-2451192",
+  referentenentwurf:
     "https://www.bundesfinanzministerium.de/Content/DE/Gesetzestexte/Gesetze_Gesetzesvorhaben/Abteilungen/Abteilung_IV/21_Legislaturperiode/2026-08-18-EStReformG-2027/1-Referentenentwurf.pdf",
 } as const;
 

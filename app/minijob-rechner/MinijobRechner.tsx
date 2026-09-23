@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: "Zahlt ein Minijobber Lohnsteuer?",
-    a: "Nein, in der Regel nicht. Der Arbeitgeber zahlt eine Pauschsteuer von 2 % (inkl. Soli und Kirchensteuer), die er in der Regel nicht auf den Arbeitnehmer abwälzt. Für den Minijobber bleibt der Verdienst dadurch lohnsteuerfrei.",
+    a: "Nein, in der Regel nicht. Der Arbeitgeber zahlt eine Pauschsteuer von 2 % (inkl. Soli und Kirchensteuer), die er in der Regel nicht auf den Arbeitnehmer abwälzt. Für den Minijobber bleibt der Verdienst dadurch lohnsteuerfrei. Geplant ist eine Anhebung dieser Pauschsteuer auf 5 % ab 2027: Sie ist Teil der Gegenfinanzierung im Regierungsentwurf des Einkommensteuerreformgesetzes 2027 (Kabinettsbeschluss vom 2. September 2026) und trifft den Arbeitgeber, nicht den Minijobber — verkündet ist das Gesetz allerdings noch nicht.",
   },
   {
     q: "Muss ich als Minijobber Rentenversicherungsbeiträge zahlen?",

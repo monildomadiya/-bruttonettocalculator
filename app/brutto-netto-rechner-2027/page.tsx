@@ -16,9 +16,9 @@ import {
 const eur = (n: number) => n.toLocaleString("de-DE");
 
 export const metadata: Metadata = {
-  title: "Brutto Netto Rechner 2027 – Steuerreform nach BMF-Entwurf",
+  title: "Brutto Netto Rechner 2027 – Kabinettsentwurf vom 2.9.2026",
   description:
-    "Brutto Netto Rechner 2027 nach dem BMF-Referentenentwurf: Grundfreibetrag 12.564 €, neuer Spitzensatz 47 %. Mit Stand des Gesetzgebungsverfahrens.",
+    "Brutto Netto Rechner 2027 nach dem Kabinettsbeschluss vom 2.9.2026: Grundfreibetrag 12.564 €, Pauschbetrag 1.430 €, neuer Spitzensatz 47 %. Mit Gesetzgebungs-Status.",
   keywords: [
     "steuerreform 2027 rechner",
     "steuerreform rechner 2027",
@@ -57,9 +57,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/brutto-netto-rechner-2027" },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],
-    title: "Brutto Netto Rechner 2027 – Steuerreform nach BMF-Entwurf",
+    title: "Brutto Netto Rechner 2027 – Kabinettsentwurf vom 2.9.2026",
     description:
-      "Brutto Netto Rechner 2027 nach dem BMF-Referentenentwurf: Grundfreibetrag 12.564 €, neuer Spitzensatz 47 %. Mit Stand des Gesetzgebungsverfahrens.",
+      "Brutto Netto Rechner 2027 nach dem Kabinettsbeschluss vom 2.9.2026: Grundfreibetrag 12.564 €, Pauschbetrag 1.430 €, neuer Spitzensatz 47 %. Mit Gesetzgebungs-Status.",
     url: "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
     locale: "de_DE",
     type: "website",
@@ -69,15 +69,15 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "Was bringt die Steuerreform 2027 netto?",
-    a: `Nach dem Referentenentwurf vom 18. August 2026 sind es weniger, als die Debatte vermuten lässt: In Steuerklasse I bleiben bei 3.000 € brutto rund 8 € mehr Netto pro Monat, bei 5.000 € gut 10 € — das Maximum von etwa 19 € pro Monat wird bei knapp 8.100 € brutto erreicht. Kernstück sind der höhere Grundfreibetrag und der Arbeitnehmer-Pauschbetrag von ${eur(ARBEITNEHMER_PAUSCHBETRAG.amtlich2026)} € auf ${eur(ARBEITNEHMER_PAUSCHBETRAG.reform)} €. Ab rund 23.000 € brutto im Monat kehrt sich der Effekt um, weil der Entwurf oben einen neuen Steuersatz von 47 % einführt.`,
+    a: `Nach dem Regierungsentwurf, den das Kabinett am 2. September 2026 beschlossen hat, sind es weniger, als die Debatte vermuten lässt: In Steuerklasse I bleiben bei 3.000 € brutto rund 8 € mehr Netto pro Monat, bei 5.000 € gut 10 € — das Maximum von etwa 19 € pro Monat wird bei knapp 8.100 € brutto erreicht. Kernstück sind der höhere Grundfreibetrag und der Arbeitnehmer-Pauschbetrag von ${eur(ARBEITNEHMER_PAUSCHBETRAG.amtlich2026)} € auf ${eur(ARBEITNEHMER_PAUSCHBETRAG.reform)} €. Ab rund 23.000 € brutto im Monat kehrt sich der Effekt um, weil der Entwurf oben einen neuen Steuersatz von 47 % einführt.`,
   },
   {
     q: "Wie hoch ist der Grundfreibetrag 2027?",
-    a: `Der Referentenentwurf eines Einkommensteuerreformgesetzes 2027 sieht ${eur(GRUNDFREIBETRAG.entwurf2027)} € vor (§ 32a Absatz 1 Nummer 1 EStG), gegenüber ${eur(GRUNDFREIBETRAG.amtlich2026)} € im Jahr 2026. Ab dem Veranlagungszeitraum 2028 sollen es ${eur(GRUNDFREIBETRAG.stufe2028)} € sein. Beide Werte stehen wörtlich im Entwurf vom 18.08.2026 — sie sind aber noch nicht verkündet und können sich im weiteren Verfahren ändern.`,
+    a: `Der Regierungsentwurf eines Einkommensteuerreformgesetzes 2027 sieht ${eur(GRUNDFREIBETRAG.entwurf2027)} € vor (§ 32a Absatz 1 Nummer 1 EStG), gegenüber ${eur(GRUNDFREIBETRAG.amtlich2026)} € im Jahr 2026. Ab dem Veranlagungszeitraum 2028 sollen es ${eur(GRUNDFREIBETRAG.stufe2028)} € sein. Beide Werte hat das Bundeskabinett am 2. September 2026 unverändert aus dem Referentenentwurf übernommen — sie sind aber noch nicht verkündet und können sich im parlamentarischen Verfahren ändern.`,
   },
   {
     q: "Warum rechnet dieser Rechner in Szenarien statt mit festen Werten?",
-    a: "Weil ein Referentenentwurf noch kein Gesetz ist. Die Zahlen für 2027 und 2028 stehen seit dem 18.08.2026 wörtlich im Entwurf — dieser Rechner verwendet sie deshalb direkt und schätzt nichts mehr. Bis zur Verkündung im Bundesgesetzblatt können sie sich im Kabinett, im Bundestag oder im Bundesrat aber noch ändern. Deshalb steht „Ohne Reform“ als Untergrenze daneben: Sie sehen damit, wie viel im laufenden Verfahren überhaupt auf dem Spiel steht.",
+    a: "Weil auch ein Kabinettsbeschluss noch kein Gesetz ist. Die Zahlen für 2027 und 2028 stehen seit dem 2.09.2026 wörtlich im Regierungsentwurf — dieser Rechner verwendet sie deshalb direkt und schätzt nichts mehr. Bis zur Verkündung im Bundesgesetzblatt können sie sich im Bundestag oder im Bundesrat aber noch ändern. Deshalb steht „Ohne Reform“ als Untergrenze daneben: Sie sehen damit, wie viel im laufenden Verfahren überhaupt auf dem Spiel steht.",
   },
   {
     q: "Wie viel mehr Netto habe ich durch die Steuerreform 2027?",
@@ -89,7 +89,7 @@ const faqs = [
   },
   {
     q: "Welche 2027-Werte stehen bereits fest?",
-    a: "Der gesetzliche Mindestlohn: Die zweistufige Erhöhung auf 14,60 € brutto pro Stunde zum 1. Januar 2027 ist per Verordnung bereits beschlossen und damit geltendes Recht. Die Steuerreform ist weiter — seit dem 18.08.2026 liegt ein ausformulierter Referentenentwurf mit konkreten Tarifwerten vor —, aber noch nicht verkündet und damit noch nicht bindend.",
+    a: "Der gesetzliche Mindestlohn: Die zweistufige Erhöhung auf 14,60 € brutto pro Stunde zum 1. Januar 2027 ist per Verordnung bereits beschlossen und damit geltendes Recht. Die Steuerreform ist weiter — seit dem 2.09.2026 liegt ein vom Kabinett beschlossener Regierungsentwurf mit konkreten Tarifwerten vor —, aber noch nicht verkündet und damit noch nicht bindend.",
   },
   {
     q: "Wie funktioniert der Netto Brutto Rechner 2027?",
@@ -101,7 +101,7 @@ const faqs = [
   },
   {
     q: "Was ist das EStRefG 2027?",
-    a: "Das Einkommensteuerreformgesetz 2027 ist das Gesetzesvorhaben, mit dem die Bundesregierung den Einkommensteuertarif reformieren will. Das Bundesfinanzministerium hat den Referentenentwurf am 18. August 2026 vorgelegt. Artikel 1 fasst § 32a Absatz 1 EStG für den Veranlagungszeitraum 2027 neu, Artikel 2 für 2028. Enthalten sind außerdem ein höherer Arbeitnehmer-Pauschbetrag, höheres Kindergeld, höhere Kinderfreibeträge sowie Gegenfinanzierungsmaßnahmen.",
+    a: "Das Einkommensteuerreformgesetz 2027 ist das Gesetzesvorhaben, mit dem die Bundesregierung den Einkommensteuertarif reformieren will. Das Bundesfinanzministerium hat den Referentenentwurf am 18. August 2026 vorgelegt; das Bundeskabinett hat den Regierungsentwurf am 2. September 2026 beschlossen und damit ins parlamentarische Verfahren gegeben. Artikel 1 fasst § 32a Absatz 1 EStG für den Veranlagungszeitraum 2027 neu, Artikel 2 für 2028. Enthalten sind außerdem ein höherer Arbeitnehmer-Pauschbetrag, höheres Kindergeld, höhere Kinderfreibeträge sowie Gegenfinanzierungsmaßnahmen.",
   },
   {
     q: "Gilt dieser Rechner auch für Österreich?",
@@ -123,16 +123,16 @@ const appJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
-  name: "Brutto Netto Rechner 2027 – Steuerreform nach BMF-Entwurf",
+  name: "Brutto Netto Rechner 2027 – Kabinettsentwurf vom 2.9.2026",
   url: "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
   inLanguage: "de-DE",
   dateModified: REFORM_STAND,
   description:
-    "Brutto Netto Rechner 2027 nach dem BMF-Referentenentwurf: Grundfreibetrag 12.564 €, neuer Spitzensatz 47 %. Mit Stand des Gesetzgebungsverfahrens.",
+    "Brutto Netto Rechner 2027 nach dem Kabinettsbeschluss vom 2.9.2026: Grundfreibetrag 12.564 €, Pauschbetrag 1.430 €, neuer Spitzensatz 47 %. Mit Gesetzgebungs-Status.",
   about: { "@type": "Thing", name: "Einkommensteuerreform 2027 (Deutschland)" },
   citation: {
     "@type": "Legislation",
-    name: "Referentenentwurf eines Einkommensteuerreformgesetzes 2027 (EStRefG 2027)",
+    name: "Regierungsentwurf eines Einkommensteuerreformgesetzes 2027 (EStRefG 2027)",
     legislationJurisdiction: "Deutschland",
     legislationDate: ENTWURF.stand,
     url: ENTWURF.quelle,
@@ -159,7 +159,7 @@ export default function Rechner2027Page() {
       <div className="mb-14">
         <div className="flex flex-wrap items-center gap-2 mb-4">
           <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full">
-            <Sparkles size={14} /> Referentenentwurf vom 18.08.2026
+            <Sparkles size={14} /> Kabinettsbeschluss vom 02.09.2026
           </span>
           <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-black/60 font-bold bg-black/[0.05] border border-black/10 px-4 py-1.5 rounded-full">
             <span aria-hidden="true">🇩🇪</span> Gilt für Deutschland
@@ -170,15 +170,15 @@ export default function Rechner2027Page() {
           Netto bringt der Entwurf
         </h1>
         <p className="text-lg sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
-          Seit dem 18. August 2026 liegt der{" "}
-          <strong className="text-[#16181D] font-semibold">Referentenentwurf eines Einkommensteuerreformgesetzes 2027</strong>{" "}
-          vor. Er fasst § 32a EStG für 2027 und 2028 komplett neu — dieser{" "}
+          Am 2. September 2026 hat das Bundeskabinett den{" "}
+          <strong className="text-[#16181D] font-semibold">Regierungsentwurf eines Einkommensteuerreformgesetzes 2027</strong>{" "}
+          beschlossen. Er fasst § 32a EStG für 2027 und 2028 komplett neu — dieser{" "}
           <strong className="text-[#16181D] font-semibold">Brutto Netto Rechner für 2027</strong> rechnet
-          seitdem mit genau diesen Zahlen statt mit Schätzungen: Grundfreibetrag{" "}
+          mit genau diesen Zahlen statt mit Schätzungen: Grundfreibetrag{" "}
           {eur(GRUNDFREIBETRAG.entwurf2027)} €, Arbeitnehmer-Pauschbetrag{" "}
           {eur(ARBEITNEHMER_PAUSCHBETRAG.reform)} € und oben ein neuer Spitzensatz von 47 %.
-          Verkündet ist das Gesetz noch nicht, deshalb steht „Ohne Reform“ weiter als Untergrenze
-          daneben. Als <strong className="text-[#16181D] font-semibold">Netto Brutto Rechner 2027</strong> und{" "}
+          Verkündet ist das Gesetz noch nicht — Bundestag und Bundesrat stehen aus, deshalb steht
+          „Ohne Reform“ weiter als Untergrenze daneben. Als <strong className="text-[#16181D] font-semibold">Netto Brutto Rechner 2027</strong> und{" "}
           <strong className="text-[#16181D] font-semibold">Lohnrechner 2027</strong> zeigt das Tool den
           Unterschied im echten Jahresvergleich.
         </p>
@@ -192,11 +192,11 @@ export default function Rechner2027Page() {
         <SlidersHorizontal size={22} className="text-[#E60A1C] flex-shrink-0 mt-0.5" />
         <p>
           <strong className="text-[#16181D] font-bold">So lesen Sie die Szenarien:</strong>{" "}
-          „Entwurf 2027“ rechnet mit Artikel 1 des Referentenentwurfs — Grundfreibetrag{" "}
+          „Entwurf 2027“ rechnet mit Artikel 1 des Regierungsentwurfs — Grundfreibetrag{" "}
           {eur(GRUNDFREIBETRAG.entwurf2027)} €, wirksam ab dem 1.1.2027. „Stufe 2028“ ist die
           zweite Stufe desselben Entwurfs (Artikel 2, Grundfreibetrag{" "}
           {eur(GRUNDFREIBETRAG.stufe2028)} €). „Ohne Reform“ bleibt Ihre Untergrenze für den Fall,
-          dass das Verfahren scheitert — ein Referentenentwurf ist noch kein Gesetz. Der Abstand
+          dass das Verfahren scheitert — auch ein Kabinettsbeschluss ist noch kein Gesetz. Der Abstand
           zwischen „Ohne Reform“ und „Entwurf 2027“ ist genau das, was im laufenden Verfahren auf
           dem Spiel steht; der Status dazu steht direkt darunter.
         </p>
