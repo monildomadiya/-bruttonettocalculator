@@ -38,19 +38,23 @@ const EXCLUDED = new Set([
   "/ueber-uns",
 ]);
 
+/**
+ * Whether the auto related-tools block renders on this path. Shared with
+ * <SupportStory>, which only shows where this block sits between it and the
+ * end-of-content ad (a donation ask must never be directly next to an ad).
+ */
+export function hasRelatedTools(pathname: string): boolean {
+  if (pathname.startsWith("/admin") || EXCLUDED.has(pathname) || HAS_OWN_BLOCK.has(pathname)) {
+    return false;
+  }
+  return getRelatedCalculators(pathname, 6).length > 0;
+}
+
 export default function RelatedToolsAuto() {
   const pathname = usePathname() || "/";
-
-  if (
-    pathname.startsWith("/admin") ||
-    EXCLUDED.has(pathname) ||
-    HAS_OWN_BLOCK.has(pathname)
-  ) {
-    return null;
-  }
+  if (!hasRelatedTools(pathname)) return null;
 
   const links = getRelatedCalculators(pathname, 6);
-  if (!links.length) return null;
 
   return (
     <RelatedCalculators

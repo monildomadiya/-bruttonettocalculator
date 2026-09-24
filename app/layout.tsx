@@ -6,6 +6,7 @@ import MobileMenu from "@/components/MobileMenu";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import RelatedToolsAuto from "@/components/RelatedToolsAuto";
+import SupportStory from "@/components/SupportStory";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import SiteWideAd from "@/components/SiteWideAd";
@@ -245,6 +246,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* ── Auto "Ähnliche Rechner" internal-linking block (per-page) ── */}
         <RelatedToolsAuto />
+
+        {/* ── "Support this site" closing section (honest, no persona) ── */}
+        <SupportStory />
 
         {/* ── End-of-session unit, below the related tools ──────────────
              Currently renders nothing: `afterRelated` is suppressed while
