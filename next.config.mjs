@@ -6,6 +6,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Don't advertise the framework in every response header.
+  poweredByHeader: false,
   experimental: {
     outputFileTracingRoot: __dirname,
   },
@@ -125,10 +127,11 @@ const nextConfig = {
       { source: "/weihnachtsgeld",    destination: "/weihnachtsgeld-rechner",           statusCode: 301 },
       { source: "/elterngeld",        destination: "/elterngeld-rechner",               statusCode: 301 },
       { source: "/rente",             destination: "/rentenrechner",                    statusCode: 301 },
-      { source: "/rentenpunkte",      destination: "/rentenrechner",                    statusCode: 301 },
-      // No current equivalent — 301 to the closest relevant page rather than 404.
-      { source: "/urlaubsgeld",       destination: "/bonus-steuerrechner",              statusCode: 301 },
-      { source: "/schenkungssteuer",  destination: "/lexikon",                          statusCode: 301 },
+      // These three used to point at the closest fallback page; dedicated
+      // calculators exist now, so the legacy URL passes its signals there.
+      { source: "/rentenpunkte",      destination: "/rentenpunkte-rechner",             statusCode: 301 },
+      { source: "/urlaubsgeld",       destination: "/urlaubsgeld-rechner",              statusCode: 301 },
+      { source: "/schenkungssteuer",  destination: "/schenkungssteuer-rechner",         statusCode: 301 },
       {
         source: "/pfandungstabelle",
         destination: "/pfaendungstabelle",

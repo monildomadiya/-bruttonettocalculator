@@ -216,7 +216,7 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero (Inspired by Dark Tech Reference) ──────────────────── */}
-      <section className="hero-bg pb-24 sm:pb-32 px-4 sm:px-5 relative">
+      <section className="hero-bg pb-8 sm:pb-28 px-4 sm:px-5 relative">
         <div className="w-full max-w-6xl mx-auto relative z-10 text-center flex flex-col items-center">
 
           {/* Glowing Pill Badge */}
@@ -237,24 +237,22 @@ export default function HomePage() {
             <span className="text-[#16181D]"> Rechner für Deutschland</span>
           </h1>
 
-          {/* Sub-headline */}
+          {/* Sub-headline — kurz halten: Der Rechner soll auf dem Handy möglichst
+              ohne Scrollen sichtbar sein. Die frühere Aufzählung fett gesetzter
+              Keywords ("auch als Lohnrechner 2027, Firmenwagenrechner, …") schob
+              ihn unter den Falz und las sich wie Keyword-Stuffing. */}
           <p
-            className="text-base sm:text-xl md:text-2xl text-black/85 w-full max-w-5xl leading-relaxed mb-8 sm:mb-10 animate-fade-up font-normal px-2"
+            className="text-base sm:text-lg md:text-xl text-black/80 w-full max-w-3xl leading-relaxed mb-6 sm:mb-8 animate-fade-up font-normal px-2"
             style={{ animationDelay: "160ms" }}
           >
-            Ermitteln Sie in Sekundenschnelle Ihr voraussichtliches Nettogehalt — inklusive Lohnsteuer,
-            Solidaritätszuschlag und allen Sozialabgaben. Nutzen Sie unser Tool auch als{" "}
-            <strong className="text-[#16181D] font-semibold">Brutto Netto Rechner 2027</strong>,{" "}
-            <strong className="text-[#16181D] font-semibold">Lohnrechner 2027</strong>,{" "}
-            <strong className="text-[#16181D] font-semibold">Firmenwagenrechner (1%-Regelung)</strong>,{" "}
-            <strong className="text-[#16181D] font-semibold">Brutto Netto Rentenrechner</strong>,{" "}
-            <strong className="text-[#16181D] font-semibold">Arbeitslosengeld Rechner</strong> oder für Berechnungen nach{" "}
-            <strong className="text-[#16181D] font-semibold">Steuerklasse 1, 3, 4 & 6</strong>. BKK, TK & HKK Zusatzbeitrag 2026 bereits eingerechnet.
+            Nettogehalt in Sekunden berechnen — mit Lohnsteuer, Solidaritätszuschlag, Kirchensteuer
+            und allen Sozialabgaben für alle sechs Steuerklassen. Offizielle Werte 2026,
+            Krankenkassen-Zusatzbeitrag bereits eingerechnet.
           </p>
 
           {/* CTA buttons */}
           <div
-            className="flex flex-col sm:flex-row justify-center gap-3.5 sm:gap-4 mb-12 sm:mb-16 animate-fade-up w-full sm:w-auto px-4 sm:px-0"
+            className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-4 sm:mb-10 animate-fade-up w-full sm:w-auto px-4 sm:px-0"
             style={{ animationDelay: "240ms" }}
           >
             <a

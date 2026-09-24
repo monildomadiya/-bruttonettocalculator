@@ -337,9 +337,12 @@ export default function ArticleReaderPage({
 
                 {/* Author / Meta bar */}
                 <div className="flex flex-wrap items-center gap-4 py-5 border-t border-b border-black/[8%]">
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                  {/* min-w: the author block must not shrink below its name, or
+                      "BruttoNettoCalculator" (one unbreakable word) overflows
+                      into the chips on phones. With a floor, the chips wrap. */}
+                  <div className="flex items-center gap-3 flex-1 min-w-[260px]">
                     <div
-                      className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-[#16181D] font-black text-sm"
+                      className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-sm"
                       style={{
                         background:
                           "linear-gradient(135deg,#E60A1C,#FF2436)",
@@ -374,7 +377,7 @@ export default function ArticleReaderPage({
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.08] text-xs font-semibold text-black/60">
                       <Clock size={12} className="text-[#E60A1C]" />
-                      <span>{article.read_time || "5 min read"}</span>
+                      <span>{article.read_time || "5 Min. Lesezeit"}</span>
                     </div>
                     <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.08] text-xs font-semibold text-black/60">
                       <BookOpen size={12} className="text-black/40" />
@@ -395,8 +398,13 @@ export default function ArticleReaderPage({
                   <img
                     src={article.featured_image}
                     alt={article.featured_image_alt || article.headline}
+                    // Titelbilder sind immer 1200×630 (scripts/generate-blog-covers.mjs).
+                    // Feste Maße reservieren den Platz vor dem Laden — kein Layout-Shift.
+                    width={1200}
+                    height={630}
                     className="w-full h-auto max-h-[480px] object-cover"
                     loading="eager"
+                    fetchPriority="high"
                     decoding="async"
                   />
                   {article.featured_image_caption && (

@@ -68,9 +68,11 @@ const config: Config = {
         danger:  "#E60A1C",
       },
       fontFamily: {
-        display: ["'Outfit'", "sans-serif"],
-        body:    ["'Inter'", "sans-serif"],
-        mono:    ["'JetBrains Mono'", "monospace"],
+        // Variablen kommen von next/font (lib/fonts.ts) und enthalten bereits
+        // die metrisch angepasste Fallback-Schrift.
+        display: ["var(--font-display)", "sans-serif"],
+        body:    ["var(--font-body)", "sans-serif"],
+        mono:    ["var(--font-mono)", "monospace"],
       },
       backgroundImage: {
         "grain":      "radial-gradient(rgba(0,0,0,0.035) 1px, transparent 1px)",

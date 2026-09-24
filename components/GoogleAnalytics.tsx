@@ -7,8 +7,13 @@ import { usePathname } from "next/navigation";
 export default function GoogleAnalytics({ gaId = "G-FY0K5KT32H" }: { gaId?: string }) {
   const pathname = usePathname();
   
-  // Do NOT render or execute Google Analytics on admin dashboard or API routes!
-  const isAdminOrApi = pathname?.startsWith("/admin") || pathname?.startsWith("/api");
+  // No Analytics on internal routes, and none inside the embeddable widget:
+  // /widget promises embedders "keine Werbe- oder Tracking-Skripte" — the
+  // iframe runs on third-party sites whose visitors never consented to us.
+  const isAdminOrApi =
+    pathname?.startsWith("/admin") ||
+    pathname?.startsWith("/api") ||
+    pathname?.startsWith("/embed");
 
   useEffect(() => {
     if (!isAdminOrApi && typeof window !== "undefined" && (window as any).gtag) {

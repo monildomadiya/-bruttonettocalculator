@@ -36,7 +36,6 @@ const STEUERKLASSEN: { value: Steuerklasse; label: string }[] = [
  * Standardwerte, egal was im Generator eingestellt wurde.
  */
 function readEmbedParams(fallbackAccent: string, fallbackBrutto: number) {
-  if (typeof window === "undefined") return { accent: fallbackAccent, brutto: fallbackBrutto };
   const q = new URLSearchParams(window.location.search);
 
   const raw = (q.get("accent") || "").replace(/^#/, "");
@@ -55,12 +54,19 @@ export default function EmbedCalculator({
   accent?: string;
   defaultBrutto?: number;
 }) {
-  // Lazy-Initializer: läuft einmal beim ersten Client-Render, nicht bei jedem.
-  const [{ accent, brutto: initialBrutto }] = useState(() =>
-    readEmbedParams(accentProp, defaultBrutto)
-  );
+  // Erst mit den Standardwerten rendern, die Query-Parameter danach anwenden.
+  // Ein Lazy-Initializer, der window.location liest, lieferte beim ersten
+  // Client-Render andere Werte als das statische Server-HTML — React warf dann
+  // Hydration-Fehler (#418/#425) und rendert die ganze Seite neu.
+  const [accent, setAccent] = useState(accentProp);
+  const [brutto, setBrutto] = useState(defaultBrutto);
 
-  const [brutto, setBrutto] = useState(initialBrutto);
+  useEffect(() => {
+    const params = readEmbedParams(accentProp, defaultBrutto);
+    setAccent(params.accent);
+    setBrutto(params.brutto);
+  }, [accentProp, defaultBrutto]);
+
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kirche, setKirche] = useState(false);
   const [kinderlos, setKinderlos] = useState(true);
@@ -193,7 +199,11 @@ export default function EmbedCalculator({
         </a>
       </p>
 
-      <style>{`
+      {/* Raw CSS via dangerouslySetInnerHTML: as a text child, React escapes the
+          quotes in "Segoe UI" to &quot; on the server, but <style> is raw text
+          in the browser — the mismatch threw hydration errors #418/#425 and
+          re-rendered the whole widget. `accent` is a validated hex colour. */}
+      <style dangerouslySetInnerHTML={{ __html: `
         .bnc-embed {
           --bnc-accent: ${accent};
           font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -267,7 +277,7 @@ export default function EmbedCalculator({
         }
         .bnc-credit a { color: var(--bnc-accent); font-weight: 700; text-decoration: none; }
         .bnc-credit a:hover { text-decoration: underline; }
-      `}</style>
+      ` }} />
     </div>
   );
 }

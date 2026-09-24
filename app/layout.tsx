@@ -14,6 +14,7 @@ import ConsentMode from "@/components/ConsentMode";
 import AdGuard from "@/components/AdGuard";
 import { AD_CLIENT } from "@/lib/adsConfig";
 import { postalAddressSchema } from "@/lib/company";
+import { fontVariables } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bruttonettocalculator.com"),
@@ -184,7 +185,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
        element before React hydrates — the standard pattern for a pre-hydration
        inline script that has to mark the document root. Scoped to <html>'s own
        attributes; it does not silence anything in the subtree. */
-    <html lang="de" suppressHydrationWarning>
+    <html lang="de" className={fontVariables} suppressHydrationWarning>
       <body className="font-body bg-[#F4F5F7] text-[#16181D] antialiased">
         {/*
           ── Ad serving: first thing in <body> ───────────────────────────────
