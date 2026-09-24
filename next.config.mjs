@@ -137,21 +137,6 @@ const nextConfig = {
         destination: "/pfaendungstabelle",
         permanent: true,
       },
-      {
-        source: "/admin",
-        destination: "/admin-secure",
-        permanent: false,
-      },
-      {
-        source: "/login",
-        destination: "/admin-secure",
-        permanent: false,
-      },
-      {
-        source: "/wp-admin",
-        destination: "/admin-secure",
-        permanent: false,
-      },
     ];
   },
   async headers() {

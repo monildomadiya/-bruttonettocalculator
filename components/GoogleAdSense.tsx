@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useAds } from "./AdsProvider";
 import { ADS_OFF_STORAGE_KEY } from "@/lib/adsConfig";
 
 /**
@@ -16,7 +15,7 @@ import { ADS_OFF_STORAGE_KEY } from "@/lib/adsConfig";
  * again. A visitor who lands on a calculator and then clicks into `/admin`
  * would otherwise keep requesting ads.
  *
- * So this re-evaluates the same three conditions on every pathname change:
+ * So this re-evaluates the same two conditions on every pathname change:
  *
  *  - internal routes (`/admin`, `/api`, `/embed`) must never request ads —
  *    own-traffic / invalid-traffic hygiene for the first two, no consent basis
@@ -24,25 +23,21 @@ import { ADS_OFF_STORAGE_KEY } from "@/lib/adsConfig";
  *  - a browser that opted out via `?noads=1` stays opted out (this is the
  *    publisher's own-traffic switch — missing it here was a real hole: the old
  *    version set `pauseAdRequests = 0` on every route change, which re-enabled
- *    ads for the opted-out browser as soon as it navigated anywhere);
- *  - the admin "ads on/off" switch must still be able to stop ad serving.
+ *    ads for the opted-out browser as soon as it navigated anywhere).
+ *
+ * The former admin "ads on/off" switch (a MySQL setting fetched on every page
+ * view) is gone; ad serving is controlled in code via lib/adsConfig.ts.
  *
  * `data-ads-off` is kept in sync with the decision so `<AdUnit>` can skip
  * rendering its `<ins>` entirely rather than leaving claimed-but-empty slots.
  */
 export default function GoogleAdSense() {
   const pathname = usePathname();
-  const ads = useAds();
 
   const isInternal =
     pathname?.startsWith("/admin") ||
     pathname?.startsWith("/api") ||
     pathname?.startsWith("/embed");
-
-  // `ads` is null until the settings request resolves; only an explicit
-  // `enabled: false` counts as "off", so a slow or failing settings lookup
-  // never silently switches ads off.
-  const disabledByAdmin = ads !== null && !ads.enabled;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -58,8 +53,6 @@ export default function GoogleAdSense() {
       ? "internal"
       : optedOut
       ? "own-traffic"
-      : disabledByAdmin
-      ? "admin-off"
       : "";
 
     const w = window as any;
@@ -82,7 +75,7 @@ export default function GoogleAdSense() {
        */
       w.__bncLoadAds?.();
     }
-  }, [isInternal, disabledByAdmin, pathname]);
+  }, [isInternal, pathname]);
 
   return null;
 }

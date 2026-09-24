@@ -21,7 +21,7 @@
  * from ~3.0 s to ~0.1 s.
  */
 
-/** AdSense publisher ID, "pub-" form (as stored in the admin settings table). */
+/** AdSense publisher ID, "pub-" form. */
 export const PUBLISHER_ID = "pub-5005860402493815";
 
 /** AdSense client ID, "ca-pub-" form (as required by the loader and ad units). */

@@ -4,7 +4,7 @@
  * Warum nicht mehr MySQL:
  *   - Die Artikel wurden bisher aus der `articles`-Tabelle gelesen. Fällt die
  *     DB aus, ist der komplette Ratgeber weg (genau das ist in Produktion
- *     schon passiert, siehe Kommentar in lib/db.ts). Google sieht dann leere
+ *     schon passiert). Google sieht dann leere
  *     Seiten bzw. 404 — der teuerste denkbare Fehler für die Indexierung.
  *   - `revalidate = 0` erzwang bei jedem Aufruf eine DB-Runde. Jetzt sind die
  *     Beiträge Teil des Builds → statisches HTML, kein TTFB durch SQL.

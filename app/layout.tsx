@@ -8,7 +8,6 @@ import SiteFooter from "@/components/SiteFooter";
 import RelatedToolsAuto from "@/components/RelatedToolsAuto";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleAdSense from "@/components/GoogleAdSense";
-import AdsProvider from "@/components/AdsProvider";
 import SiteWideAd from "@/components/SiteWideAd";
 import ConsentMode from "@/components/ConsentMode";
 import AdGuard from "@/components/AdGuard";
@@ -235,7 +234,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             the measurement. Pages that may not serve ads now make no request to
             Google at all. */}
         <AdGuard />
-       <AdsProvider>
 
         {/* ── Sticky glass header (conditional) ───────────────────────── */}
         <SiteHeader />
@@ -266,7 +264,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* ── Google AdSense ──────────────────────────────────────────── */}
         <GoogleAdSense />
-       </AdsProvider>
       </body>
     </html>
   );
