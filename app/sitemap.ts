@@ -82,6 +82,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/brutto-netto-rechner-krankenkasse",
     "/beitragsbemessungsgrenze-2026",
     "/beitragsbemessungsgrenze-2027",
+    "/sozialabgaben-rechner-2027",
+    "/brutto-netto-rechner-oesterreich",
     "/tvoed-rechner",
     "/durchschnittsgehalt-deutschland",
     "/private-krankenversicherung-vs-gesetzlich",

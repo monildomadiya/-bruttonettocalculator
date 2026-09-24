@@ -224,7 +224,11 @@ export default function Rechner2027Page() {
         </Link>{" "}
         sollen auf 6.375 € (Kranken- und Pflegeversicherung) und 8.850 € im Monat (Rente und
         Arbeitslosenversicherung) steigen. Dieser Rechner verwendet sie noch nicht — beschlossen ist
-        auch diese Verordnung nicht.
+        auch diese Verordnung nicht. Was die höheren Grenzen und Beitragssätze Sie kosten, zeigt der{" "}
+        <Link href="/sozialabgaben-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
+          Sozialabgaben-Rechner 2027
+        </Link>
+        .
       </p>
 
       {/* Steuerreform 2027 content section — targets "steuerreform 2027 rechner" cluster */}
