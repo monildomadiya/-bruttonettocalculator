@@ -5,6 +5,7 @@ import RelatedCalculators from "@/components/RelatedCalculators";
 import { webPageSchema } from "@/lib/seo";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import SupportButton from "@/components/SupportButton";
 
 const URL = "https://bruttonettocalculator.com/mindestlohn";
 
@@ -73,6 +74,9 @@ export default function MindestlohnPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <MindestlohnCalculator content={<MindestlohnContent />} />
+      {/* Coffee section before the curated related block: that block keeps it
+          apart from the end-of-content ad (see components/SupportStory.tsx). */}
+      <SupportButton variant="story" lang="de" placement="page_inline" />
       <RelatedCalculators
         links={[
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Vollständiges Nettogehalt 2026/2027" },

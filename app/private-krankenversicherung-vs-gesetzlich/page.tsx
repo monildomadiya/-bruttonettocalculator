@@ -6,6 +6,7 @@ import ReviewerByline from "@/components/ReviewerByline";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import SupportButton from "@/components/SupportButton";
 
 export const metadata: Metadata = {
   title: "PKV vs GKV 2026: Ab welchem Brutto lohnt sich die PKV?",
@@ -281,6 +282,9 @@ export default function PkvVsGkvPage() {
         </div>
       </section>
 
+      {/* Coffee section before the curated related block: that block keeps it
+          apart from the end-of-content ad (see components/SupportStory.tsx). */}
+      <SupportButton variant="story" lang="de" placement="page_inline" />
       <RelatedCalculators title="Passende Rechner &amp; Ratgeber" links={relatedLinks} className="pb-16" />
       <ToolContent config={TOOL_CONTENT["/private-krankenversicherung-vs-gesetzlich"]} />
     </>

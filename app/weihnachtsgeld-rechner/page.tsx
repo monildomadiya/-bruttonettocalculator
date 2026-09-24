@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import WeihnachtsgeldRechner from "./WeihnachtsgeldRechner";
 import WeihnachtsgeldContent from "./WeihnachtsgeldContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import SupportButton from "@/components/SupportButton";
 
 export const metadata: Metadata = {
   title: "Weihnachtsgeld-Rechner 2026: Brutto & Netto",
@@ -103,6 +104,9 @@ export default function WeihnachtsgeldRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <WeihnachtsgeldRechner content={<WeihnachtsgeldContent />} />
+      {/* Coffee section before the curated related block: that block keeps it
+          apart from the end-of-content ad (see components/SupportStory.tsx). */}
+      <SupportButton variant="story" lang="de" placement="page_inline" />
       <RelatedCalculators
         links={[
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Reguläres Nettogehalt 2026/2027 berechnen" },

@@ -10,6 +10,7 @@ import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 import { siteConfig } from "@/lib/authors";
 import { ORG_ID } from "@/lib/seo";
+import SupportButton from "@/components/SupportButton";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
@@ -444,6 +445,11 @@ export default function HomePage() {
         </div>
         <AccordionFaq faqs={faqs} />
       </section>
+
+      {/* ── Coffee section — the layout-level one is skipped on "/" (no
+           related-tools block there); here the hub, CTA and disclaimer below
+           keep it apart from the end-of-content ad. ─────────────────────── */}
+      <SupportButton variant="story" lang="de" placement="page_inline" />
 
       {/* ── Alle Rechner (internal-link hub / HTML-sitemap for crawlers) ─ */}
       <section className="max-w-6xl mx-auto px-5 pt-8 pb-16 sm:pb-20 border-t border-black/[0.10]">

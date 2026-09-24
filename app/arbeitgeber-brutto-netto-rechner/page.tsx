@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ArbeitgeberRechner from "./ArbeitgeberRechner";
 import ArbeitgeberContent from "./ArbeitgeberContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import SupportButton from "@/components/SupportButton";
 
 export const metadata: Metadata = {
   title: "Arbeitgeberrechner 2026: Lohnkosten berechnen",
@@ -96,6 +97,9 @@ export default function ArbeitgeberRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <ArbeitgeberRechner content={<ArbeitgeberContent />} />
+      {/* Coffee section before the curated related block: that block keeps it
+          apart from the end-of-content ad (see components/SupportStory.tsx). */}
+      <SupportButton variant="story" lang="de" placement="page_inline" />
       <RelatedCalculators
         links={[
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Nettogehalt des Arbeitnehmers 2026" },
