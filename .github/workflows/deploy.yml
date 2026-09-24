@@ -5,55 +5,16 @@ on:
     branches:
       - main
 
-# Two small servers, one build each. Never let two runs overlap.
+# Single target: the Azure VM. Never let two runs overlap.
 concurrency:
   group: deploy-main
   cancel-in-progress: false
 
 jobs:
-  # ── DigitalOcean droplet ────────────────────────────────────────────
-  # Still the live site until the Cloudflare origin is pointed at Azure.
-  # Left exactly as it was: this is the path production depends on today.
-  digitalocean:
-    name: DigitalOcean (live)
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Deploy to Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          port: 22
-          script: |
-            set -e
-            mkdir -p /var/www/bruttonetto
-            cd /var/www/bruttonetto
-            if [ ! -d ".git" ]; then
-              echo "Git repo not found. Cloning..."
-              git clone https://github.com/monildomadiya/-bruttonettocalculator.git .
-            else
-              echo "Pulling latest changes..."
-              git fetch origin
-              git reset --hard origin/main
-            fi
-            npm install
-            npm run build
-            pm2 delete bruttonetto_live || true
-            fuser -k 3007/tcp || true
-            pm2 start node_modules/.bin/next --name "bruttonetto_live" -- start -p 3007
-            pm2 save
-            sleep 3
-            pm2 status
-
   # ── Azure VM ────────────────────────────────────────────────────────
-  # Kept in step with the droplet so the cutover is a Cloudflare
-  # origin-IP edit and nothing else. Once the droplet stops serving this
-  # site, delete the job above and this becomes the only one.
+  # The only deploy target. The DigitalOcean droplet job was removed on
+  # 2026-09-24: the droplet had stopped accepting SSH (timeouts on every
+  # run since 2026-09-23) and no longer serves this site.
   azure:
     name: Azure VM
     runs-on: ubuntu-latest
