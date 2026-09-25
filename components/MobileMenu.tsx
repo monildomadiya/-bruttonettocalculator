@@ -3,12 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowRight, BookOpen, HelpCircle, Newspaper } from "lucide-react";
+import { Menu, X, ArrowRight, BookOpen, HelpCircle, Newspaper, Images } from "lucide-react";
 import SupportButton, { isEmbedRoute, langFromPath } from "@/components/SupportButton";
 import { calculatorGroups } from "@/lib/navigation";
 
 const directLinks = [
   { href: "/blog", label: "Blog", icon: Newspaper },
+  { href: "/infografiken", label: "Infografiken", icon: Images },
   { href: "/lexikon", label: "Lexikon", icon: BookOpen },
   { href: "/faq", label: "FAQ", icon: HelpCircle },
 ];

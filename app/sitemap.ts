@@ -6,6 +6,7 @@ import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts } from "@/dat
 import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
+import { getPublishedPosts } from "@/lib/postsStore";
 
 /*
  * Statisch, nicht dynamisch — bewusst kein `revalidate = 0` mehr.
@@ -26,6 +27,11 @@ import { siteConfig } from "@/lib/authors";
  *
  * Neue Beiträge/Rechner landen weiterhin automatisch darin — sie sind Teil des
  * Builds, und jeder Deploy baut neu.
+ *
+ * Einzige Ausnahme sind die Infografiken (/infografiken/…): Sie kommen aus
+ * Cloudinary, nicht aus dem Repo. Ihr Abruf ist gecacht und macht die Sitemap
+ * zu ISR — weiterhin aus dem Cache ausgeliefert, nicht pro Abruf berechnet —,
+ * und jedes Speichern im Admin erneuert sie über revalidateTag("posts").
  */
 
 // <lastmod> policy — Google only honors lastmod when it tracks real content
@@ -217,6 +223,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${base}/blog`,
     ...(newestArticle ? { lastModified: newestArticle } : {}),
   });
+
+  // Infografiken — aus Cloudinary; leer, solange es keine gibt. Die Galerie
+  // selbst steht erst in der Sitemap, wenn sie Inhalt hat (vorher noindex).
+  const infografiken = await getPublishedPosts();
+  for (const p of infografiken) {
+    sitemapEntries.push({ url: `${base}/infografiken/${p.slug}`, lastModified: new Date(p.updatedAt) });
+  }
+  if (infografiken.length) {
+    sitemapEntries.push({
+      url: `${base}/infografiken`,
+      lastModified: new Date(Math.max(...infografiken.map((p) => Date.parse(p.updatedAt)))),
+    });
+  }
 
   return sitemapEntries;
 }

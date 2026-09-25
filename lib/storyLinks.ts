@@ -4,6 +4,7 @@
  */
 import { getAllPosts, getCoverImage, getPostBySlug, SITE_ORIGIN } from "@/lib/blog";
 import { allCalculatorLinks, calculatorGroups } from "@/lib/navigation";
+import { postImagePath, type Post } from "@/lib/posts";
 import type { StoryLinkKind } from "@/lib/stories";
 
 export interface StoryLinkOption {
@@ -12,8 +13,13 @@ export interface StoryLinkOption {
   group: string;
 }
 
-/** Link targets offered in the admin form: every article, then every tool. */
-export function storyLinkOptions(): StoryLinkOption[] {
+/** Link targets offered in the admin form: infographics, articles, then every tool. */
+export function storyLinkOptions(posts: Post[] = []): StoryLinkOption[] {
+  const infographics = posts.map((p) => ({
+    href: `/infografiken/${p.slug}`,
+    label: p.title,
+    group: "Infografiken",
+  }));
   const articles = getAllPosts().map((p) => ({
     href: `/blog/${p.slug}`,
     label: p.headline,
@@ -22,7 +28,7 @@ export function storyLinkOptions(): StoryLinkOption[] {
   const tools = calculatorGroups.flatMap((g) =>
     g.items.map((item) => ({ href: item.href, label: item.label, group: g.label }))
   );
-  return [...articles, ...tools];
+  return [...infographics, ...articles, ...tools];
 }
 
 export interface ResolvedStoryLink {
@@ -33,10 +39,21 @@ export interface ResolvedStoryLink {
   defaultLabel?: string;
 }
 
-export function resolveStoryLink(link: string): ResolvedStoryLink {
+export function resolveStoryLink(link: string, posts: Post[] = []): ResolvedStoryLink {
   if (!link.startsWith("/")) return { linkKind: "external" };
 
   const path = link.split(/[?#]/)[0].replace(/\/$/, "") || "/";
+
+  const info = path.match(/^\/infografiken\/([^/]+)$/);
+  const infoPost = info ? posts.find((p) => p.slug === info[1]) : undefined;
+  if (infoPost) {
+    return {
+      linkKind: "article",
+      linkExcerpt: infoPost.description,
+      linkImage: postImagePath(infoPost, "thumb"),
+      defaultLabel: infoPost.title,
+    };
+  }
 
   const blog = path.match(/^\/blog\/([^/]+)$/);
   const post = blog ? getPostBySlug(blog[1]) : undefined;

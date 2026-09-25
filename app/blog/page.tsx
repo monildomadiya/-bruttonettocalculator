@@ -3,6 +3,7 @@ import { Clock, ArrowRight, BookOpen, Sparkles, Calculator } from "lucide-react"
 import { Metadata } from "next";
 import { getAllPosts, getUsedCategories, readTime } from "@/lib/blog";
 import { SITE_URL } from "@/lib/seo";
+import LatestPosts from "@/components/LatestPosts";
 
 export const metadata: Metadata = {
   title: "Ratgeber: Steuern, Gehalt & Sozialabgaben",
@@ -202,6 +203,9 @@ export default function BlogOverviewPage() {
           )}
         </div>
       </main>
+
+      {/* Infografiken-Teaser — leer, solange es keine Beiträge gibt */}
+      <LatestPosts />
     </>
   );
 }
