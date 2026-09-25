@@ -108,6 +108,14 @@ body {
 @media (min-width: 640px) { :root { --header-offset: 84px; } }
 @media (min-width: 768px) { :root { --header-offset: 88px; } }
 
+/* The story tray (components/StoriesTray.tsx) sits between header and <main>
+   with a fixed height, so the heroes bleed up behind it as well. 0 whenever
+   the tray isn't rendered (no stories, EN/PL pages, embed). */
+:root { --stories-offset: 0px; }
+:root:has(.stories-tray) { --stories-offset: 110px; }
+@media (min-width: 640px) { :root:has(.stories-tray) { --stories-offset: 120px; } }
+.stories-tray { height: var(--stories-offset); }
+
 /* ─── Animated hero background (homepage) ───────────────────────────── */
 .hero-bg {
   position: relative;
@@ -131,12 +139,12 @@ body {
      is owned here rather than by Tailwind's `pt-*` because this rule and the
      utilities have equal specificity; keeping both would make the result depend
      on stylesheet order. */
-  margin-top: calc(-1 * var(--header-offset));
-  padding-top: calc(var(--header-offset) + 1.75rem);
+  margin-top: calc(-1 * (var(--header-offset) + var(--stories-offset)));
+  padding-top: calc(var(--header-offset) + var(--stories-offset) + 1.75rem);
 }
 
 @media (min-width: 640px) {
-  .hero-bg { padding-top: calc(var(--header-offset) + 3rem); }
+  .hero-bg { padding-top: calc(var(--header-offset) + var(--stories-offset) + 3rem); }
 }
 
 .hero-bg::before {
@@ -178,8 +186,8 @@ body {
    removed, so the hero's own `py-*` content spacing, its bottom border and
    everything below it stay where they were. */
 .tool-hero {
-  margin-top: calc(-1 * var(--header-offset));
-  padding-top: var(--header-offset);
+  margin-top: calc(-1 * (var(--header-offset) + var(--stories-offset)));
+  padding-top: calc(var(--header-offset) + var(--stories-offset));
 }
 
 /* ─── Calculator perforation ticket ────────────────────────────────── */
@@ -917,4 +925,13 @@ input:-webkit-autofill:active {
 
 @media (prefers-reduced-motion: reduce) {
   .coffee-steam path, .coffee-nudge { animation: none; }
+}
+
+/* ─── Story tray: horizontally scrollable, no visible scrollbar ─────── */
+.stories-scroll {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.stories-scroll::-webkit-scrollbar {
+  display: none;
 }
