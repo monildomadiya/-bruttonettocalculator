@@ -1,16 +1,6 @@
-import type { Metadata } from "next";
-import PostsAdmin from "@/components/PostsAdmin";
-import { calculatorGroups } from "@/lib/navigation";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Infografiken verwalten",
-  robots: { index: false, follow: false },
-};
-
-/** Infografiken admin. Same password as /admin/stories, checked by the API on every call. */
-export default function PostsAdminPage() {
-  const calculators = calculatorGroups.flatMap((g) =>
-    g.items.map((i) => ({ href: i.href, label: i.label, group: g.label }))
-  );
-  return <PostsAdmin calculators={calculators} />;
+/** Moved into the combined admin; keeps old bookmarks working. */
+export default function PostsAdminRedirect() {
+  redirect("/admin?tab=posts");
 }

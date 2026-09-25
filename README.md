@@ -31,7 +31,8 @@ Ringe unter dem Menü auf jeder deutschen Seite; Tippen öffnet einen Vollbild-P
 mit Link-Karte zum verknüpften Beitrag. Bilder und Texte liegen in Cloudinary
 (Tag `site_story`), es gibt keine Datenbank.
 
-- Verwalten: `/admin/stories` (Bild hochladen, Beitrag verknüpfen, Laufzeit wählen, löschen)
+- Verwalten: `/admin` — ein Admin für alles (Übersicht, Stories, Infografiken, Tools),
+  mobil bedienbar. `/admin/stories` und `/admin/posts` leiten dorthin weiter.
 - Einrichten: Variablen aus `.env.example` in die `.env` auf dem Server eintragen, dann
   `pm2 restart bruttonetto_live --update-env`. Ohne die Variablen bleibt die Leiste unsichtbar.
 - Bilder laufen über `/api/stories/image` (eigene Domain) — Besucher kontaktieren Cloudinary nie.
