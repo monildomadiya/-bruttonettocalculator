@@ -36,7 +36,7 @@ export const STORY_TRANSFORMS = {
 /** Applied on upload: caps the stored original so phone photos don't eat storage. */
 const INCOMING_TRANSFORM = "c_limit,w_2160,h_3840";
 
-interface CloudinaryConfig {
+export interface CloudinaryConfig {
   cloudName: string;
   apiKey: string;
   apiSecret: string;
@@ -51,7 +51,7 @@ export function getCloudinaryConfig(): CloudinaryConfig | null {
 }
 
 /** https://cloudinary.com/documentation/authentication_signatures */
-function sign(params: Record<string, string | number>, secret: string): string {
+export function sign(params: Record<string, string | number>, secret: string): string {
   const payload = Object.keys(params)
     .filter((k) => params[k] !== "")
     .sort()
@@ -153,18 +153,21 @@ export async function getActiveStories(): Promise<Story[]> {
   }
 
   const now = Date.now();
-  return records
-    .filter((r) => !isExpired(r, now))
-    .slice(0, MAX_STORIES)
-    .map((r) => {
-      const { defaultLabel, ...resolved } = resolveStoryLink(r.link);
-      return {
-        ...r,
-        ...resolved,
-        linkLabel: r.linkLabel || defaultLabel || "",
-        isNew: now - Date.parse(r.createdAt) < 24 * 3600 * 1000,
-      };
-    });
+  const active = records.filter((r) => !isExpired(r, now)).slice(0, MAX_STORIES);
+  // Infographic links need the post (title, image). Imported lazily: postsStore
+  // itself depends on this module.
+  const posts = active.some((r) => r.link.startsWith("/infografiken/"))
+    ? await (await import("@/lib/postsStore")).getPublishedPosts()
+    : [];
+  return active.map((r) => {
+    const { defaultLabel, ...resolved } = resolveStoryLink(r.link, posts);
+    return {
+      ...r,
+      ...resolved,
+      linkLabel: r.linkLabel || defaultLabel || "",
+      isNew: now - Date.parse(r.createdAt) < 24 * 3600 * 1000,
+    };
+  });
 }
 
 /* ─────────────────────────── Writing ─────────────────────────── */
@@ -206,13 +209,22 @@ export function signStoryUpload(cfg: CloudinaryConfig, input: StoryUploadInput) 
 }
 
 export async function destroyStory(cfg: CloudinaryConfig, id: string): Promise<void> {
+  return destroyAsset(cfg, "image", id);
+}
+
+/** Deletes an asset and purges it from the CDN. "not found" counts as success. */
+export async function destroyAsset(
+  cfg: CloudinaryConfig,
+  resourceType: "image" | "raw",
+  id: string
+): Promise<void> {
   const params = { invalidate: "true", public_id: id, timestamp: Math.floor(Date.now() / 1000) };
   const body = new URLSearchParams({
     ...Object.fromEntries(Object.entries(params).map(([k, v]) => [k, String(v)])),
     api_key: cfg.apiKey,
     signature: sign(params, cfg.apiSecret),
   });
-  const res = await fetch(`https://api.cloudinary.com/v1_1/${cfg.cloudName}/image/destroy`, {
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cfg.cloudName}/${resourceType}/destroy`, {
     method: "POST",
     body,
     cache: "no-store",

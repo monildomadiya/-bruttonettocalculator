@@ -11,6 +11,7 @@ import AccordionFaq from "@/components/AccordionFaq";
 import { siteConfig } from "@/lib/authors";
 import { ORG_ID } from "@/lib/seo";
 import SupportButton from "@/components/SupportButton";
+import LatestPosts from "@/components/LatestPosts";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
@@ -345,6 +346,9 @@ export default function HomePage() {
           </Link>
         </p>
       </section>
+
+      {/* ── Neueste Infografiken (renders nothing until the first post) ── */}
+      <LatestPosts />
 
       {/* ── How it works (3 Steps Dark Tech) ─────────────────────────── */}
       <section className="py-24 bg-[#F4F5F7] border-y border-black/[0.10] relative overflow-hidden">

@@ -140,6 +140,7 @@ export default function SiteFooter() {
               <li><Link href="/kontakt"     className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kontakt</Link></li>
               <li><Link href="/ueber-uns"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Über uns</Link></li>
               <li><Link href="/blog"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Ratgeber</Link></li>
+              <li><Link href="/infografiken" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Infografiken</Link></li>
               {/* Die Widget-Seite ist der einzige Grund, aus dem ein fremder
                   Seitenbetreiber freiwillig auf uns verlinkt — sie braucht
                   einen Platz in der site-weiten Navigation, sonst findet sie

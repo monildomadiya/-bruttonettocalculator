@@ -242,13 +242,18 @@ export default function StoriesAdmin({ linkOptions }: { linkOptions: StoryLinkOp
             Bild hochladen, Beitrag verknüpfen — die Story erscheint als Ring unter dem Menü auf jeder Seite.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={logout}
-          className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold text-black/60 transition hover:bg-white"
-        >
-          <LogOut size={16} /> Abmelden
-        </button>
+        <div className="flex items-center gap-2">
+          <a href="/admin/posts" className="rounded-xl px-3 py-2 text-sm font-semibold text-black/60 transition hover:bg-white">
+            Infografiken →
+          </a>
+          <button
+            type="button"
+            onClick={logout}
+            className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold text-black/60 transition hover:bg-white"
+          >
+            <LogOut size={16} /> Abmelden
+          </button>
+        </div>
       </div>
 
       <form
