@@ -9,7 +9,6 @@ import {
 } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
-import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 
@@ -134,7 +133,6 @@ export default function MidijobRechnerPage() {
           <strong className="text-[#16181D]"> reduzierte Sozialabgaben</strong>, bleiben aber voll versichert und behalten
           den vollen Rentenanspruch. Geben Sie Ihr Bruttogehalt ein und sehen Sie sofort Ihr Netto für 2026.
         </p>
-        <ReviewerByline />
       </div>
 
       <section id="rechner" className="mb-14 scroll-mt-24">

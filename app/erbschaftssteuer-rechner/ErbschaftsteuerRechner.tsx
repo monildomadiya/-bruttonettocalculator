@@ -77,7 +77,7 @@ export default function ErbschaftsteuerRechner({
 
       {/* Calculator */}
       <section className="max-w-6xl mx-auto px-5 py-12">
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Inputs */}
           <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
@@ -204,7 +204,7 @@ export default function ErbschaftsteuerRechner({
                     {result.steuersatz > 0 && ` · ${(result.steuersatz * 100).toFixed(0)} %`}
                   </span>
                 </div>
-                <span className="text-3xl font-extrabold text-[#16181D]">{formatEUR(result.steuer)}</span>
+                <span className="whitespace-nowrap text-2xl sm:text-3xl font-extrabold text-[#16181D]">{formatEUR(result.steuer)}</span>
               </div>
 
               <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">

@@ -156,7 +156,7 @@ export default function BeamteRechnerPage() {
         <p className="text-sm sm:text-base text-black/70 mb-6 max-w-3xl">
           Drei strukturelle Unterschiede machen die Beamten-Abrechnung aus:
         </p>
-        <div className="grid sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             {
               icon: ShieldCheck,

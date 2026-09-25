@@ -213,7 +213,7 @@ export default function DurchschnittsgehaltPage() {
       </div>
 
       {/* Kernzahlen */}
-      <div className="mb-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="mb-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: "Durchschnitt (Jahr)", wert: formatEUR(d.durchschnittJahr), sub: "arithmetisches Mittel, Vollzeit" },
           { label: "Median (Jahr)", wert: formatEUR(d.medianJahr), sub: "die Mitte aller Vollzeitgehälter" },
@@ -283,7 +283,7 @@ export default function DurchschnittsgehaltPage() {
           Mehr als 35 Jahre nach der Wiedervereinigung besteht die Verdienstlücke fort — hier im Median, also beim
           typischen Gehalt, nicht beim verzerrungsanfälligen Mittelwert:
         </p>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             { name: "Westdeutsche Bundesländer", brutto: d.medianWest, netto: nettoWest.nettoMonat },
             { name: "Ostdeutsche Bundesländer (ohne Berlin)", brutto: d.medianOst, netto: nettoOst.nettoMonat },

@@ -313,7 +313,7 @@ export default function JahresgehaltPage({ amount }: { amount: number }) {
         <h3 className="font-display font-bold text-xl text-[#16181D] mb-6 flex items-center gap-2">
           <Sparkles className="text-[#E60A1C]" size={20} /> Weitere Jahresgehälter im Vergleich
         </h3>
-        <div className="grid sm:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
           <div className="bg-[#F1F3F5] border border-black/[0.08] rounded-2xl p-5 flex flex-col justify-between">
             <span className="text-xs font-mono text-black/40 uppercase block mb-1">Nächstkleineres Jahresgehalt</span>
             {prevAmount ? (

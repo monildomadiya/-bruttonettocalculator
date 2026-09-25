@@ -256,7 +256,7 @@ export default function SteuerklassenPage() {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
             Die 6 Steuerklassen im Detail
           </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {steuerklassen.map((sk) => (
               <div
                 key={sk.nr}
@@ -364,7 +364,7 @@ export default function SteuerklassenPage() {
                 wird — die tatsächliche Jahressteuer wird erst über die gemeinsame Steuererklärung ermittelt und ist
                 bei allen Kombinationen gleich hoch.
               </p>
-              <div className="grid sm:grid-cols-3 gap-4 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                 <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-2xl p-5">
                   <div className="font-bold text-[#16181D] mb-1.5">IV / IV</div>
                   <p className="text-xs sm:text-sm text-black/65">Beide verdienen ähnlich viel. Ausgewogene monatliche Abzüge, meist keine Nachzahlung.</p>
@@ -413,7 +413,7 @@ export default function SteuerklassenPage() {
                 </p>
               </div>
             </div>
-            <div className="grid sm:grid-cols-2 gap-6 text-sm text-black/70 leading-relaxed">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-black/70 leading-relaxed">
               <div className="space-y-3">
                 <p>
                   Seit 2023 können Ehepaare und eingetragene Lebenspartner die Steuerklasse
@@ -444,7 +444,7 @@ export default function SteuerklassenPage() {
             </div>
 
             {/* When to choose which */}
-            <div className="mt-8 grid sm:grid-cols-3 gap-4">
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-black/[0.04] border border-black/[0.08] rounded-2xl p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <Users size={16} className="text-[#E60A1C]" />

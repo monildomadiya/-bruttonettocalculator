@@ -4,7 +4,6 @@ import { Receipt, ChevronRight, Sparkles, Percent } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
-import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 
@@ -136,7 +135,6 @@ export default function LohnsteuerrechnerPage() {
           ihn auch als <strong className="text-[#16181D]">Lohnrechner</strong> und <strong className="text-[#16181D]">Nettolohnrechner</strong>{" "}
           für 2026 und 2027 — in allen 6 Steuerklassen.
         </p>
-        <ReviewerByline />
       </div>
 
       <section id="rechner" className="mb-14 scroll-mt-24">
@@ -215,7 +213,7 @@ export default function LohnsteuerrechnerPage() {
         <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
           <Sparkles className="text-[#E60A1C]" size={20} /> Weitere Rechner
         </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             { href: "/gehaltsrechner", label: "Gehaltsrechner", desc: "Brutto Netto Gehalt berechnen" },
             { href: "/einkommensteuer-rechner", label: "Einkommensteuer-Rechner", desc: "Jahressteuer nach § 32a EStG" },

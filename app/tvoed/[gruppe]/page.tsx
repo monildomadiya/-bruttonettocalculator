@@ -281,7 +281,7 @@ export default function TvoedGruppenSeite({ params }: { params: { gruppe: string
         {/* ── Nachbargruppen ────────────────────────────────────────── */}
         <section className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-4">Benachbarte Entgeltgruppen</h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {nachbarn.map((n) => {
               const ns = belegteStufen(n);
               return (

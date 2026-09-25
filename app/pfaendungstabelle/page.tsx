@@ -199,7 +199,7 @@ export default function PfaendungstabellePage() {
               Was ist die{" "}
               <span className="text-[#E60A1C]">Pfändungstabelle 2026</span>?
             </h2>
-            <div className="grid sm:grid-cols-2 gap-6 text-black/70 text-sm sm:text-base leading-relaxed">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-black/70 text-sm sm:text-base leading-relaxed">
               <div className="space-y-3">
                 <p>
                   Die <strong className="text-[#16181D]">Pfändungstabelle</strong> legt nach{" "}

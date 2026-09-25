@@ -52,7 +52,7 @@ export default function BeamtenRechner() {
       </div>
 
       {/* Inputs */}
-      <div className="grid sm:grid-cols-2 gap-4 mb-6 relative">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 relative">
         <label className="block">
           <span className="text-xs font-mono uppercase tracking-wider text-black/50 block mb-1.5">Dienstbezüge (Brutto) / Monat</span>
           <div className="relative">
@@ -130,7 +130,7 @@ export default function BeamtenRechner() {
             <div className="flex items-center gap-2 text-sm font-bold text-[#16181D] mb-4">
               <TrendingUp size={16} className="text-[#E60A1C]" /> Vergleich: Beamter vs. Angestellter bei {formatEUR(brutto)} brutto
             </div>
-            <div className="grid sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="bg-[#F1F3F5] border border-black/[0.08] rounded-xl p-4">
                 <div className="text-xs font-mono uppercase tracking-wider text-black/50 mb-1 flex items-center gap-1.5">
                   <ShieldCheck size={12} className="text-[#E60A1C]" /> Beamter (nach PKV)

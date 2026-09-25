@@ -324,7 +324,7 @@ export default function BundeslandPage({ params }: PageProps) {
         <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
           <Sparkles className="text-[#E60A1C]" size={20} /> Weitere Rechner
         </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             { href: "/gehaltsrechner", label: "Gehaltsrechner", desc: "Brutto Netto Gehalt 2026" },
             { href: "/lohnsteuerrechner", label: "Lohnsteuerrechner", desc: "Lohnsteuer & Nettolohn" },

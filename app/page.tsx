@@ -310,7 +310,7 @@ export default function HomePage() {
           </div>
           <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Das sollten Sie wissen</h2>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {infoCards.map((card) => (
             <InfoCard key={card.title} {...card} />
           ))}
@@ -360,7 +360,7 @@ export default function HomePage() {
             </div>
             <h2 className="font-display text-display-md font-extrabold text-[#16181D]">In 3 Schritten zum Nettogehalt</h2>
           </div>
-          <div className="grid sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {steps.map(({ Icon, step, title, desc }) => (
               <div key={step} className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 hover:border-[#E60A1C]/50 hover:bg-[#F1F3F5] transition-all duration-300 relative group shadow-lg">
                 <div className="flex items-center justify-between mb-6">

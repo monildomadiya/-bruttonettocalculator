@@ -74,7 +74,7 @@ export default function EinkommensteuerRechner() {
 
       {/* Calculator */}
       <section className="max-w-6xl mx-auto px-5 py-12">
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Inputs */}
           <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-7 sm:p-9 shadow-lg">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">

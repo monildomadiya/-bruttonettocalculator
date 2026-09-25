@@ -47,7 +47,7 @@ export default function ArbeitgeberContent() {
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
           Vier Begriffe, die oft verwechselt werden – hier die klare Abgrenzung:
         </p>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             { t: "Bruttogehalt", d: "Der vereinbarte Lohn des Arbeitnehmers vor Abzügen – Basis für Steuern und Sozialabgaben." },
             { t: "Nettogehalt", d: "Das, was beim Arbeitnehmer nach Lohnsteuer, Soli, ggf. Kirchensteuer und dem Arbeitnehmeranteil zur Sozialversicherung auf dem Konto ankommt." },

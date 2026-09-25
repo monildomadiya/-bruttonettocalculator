@@ -236,7 +236,7 @@ export default function BranchePage({ params }: PageProps) {
 
       {/* ── Kennzahlen ── */}
       <section className="max-w-6xl mx-auto px-5 py-12">
-        <div className="grid sm:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div className="bg-white border border-black/[0.10] rounded-3xl p-7">
             <div className="text-sm text-black/55 mb-2">Ø Brutto pro Jahr</div>
             <div className="text-3xl font-extrabold text-[#16181D]">{eur0(br.durchschnittJahr)}</div>
@@ -275,7 +275,7 @@ export default function BranchePage({ params }: PageProps) {
         <div className="bg-white border border-black/[0.10] rounded-3xl p-8 sm:p-10 shadow-lg">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <ScrollText size={22} className="text-[#E60A1C]" aria-hidden="true" />
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+            <h2 className="min-w-0 text-2xl sm:text-3xl font-extrabold text-[#16181D]">
               {br.besonderheit.titel}
             </h2>
           </div>
@@ -386,7 +386,7 @@ export default function BranchePage({ params }: PageProps) {
         <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-5">
           Rechner, die {br.praep} besonders relevant sind
         </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {br.verwandteRechner.map((r) => (
             <Link
               key={r.href}
@@ -407,7 +407,7 @@ export default function BranchePage({ params }: PageProps) {
         <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-5">
           Gehalt in anderen Branchen
         </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {andere.map((b) => (
             <Link
               key={b.slug}

@@ -168,7 +168,7 @@ export default function WelcheSteuerklassePage() {
         <p className="text-sm sm:text-base text-black/70 mb-6 max-w-3xl">
           Sie müssen nicht raten — an diesen drei Stellen können Sie Ihre aktuelle Steuerklasse direkt nachsehen:
         </p>
-        <div className="grid sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             {
               icon: FileText,
@@ -206,7 +206,7 @@ export default function WelcheSteuerklassePage() {
           Die Zuordnung folgt § 38b EStG. Nur Verheiratete haben eine echte Wahlmöglichkeit — alle anderen Klassen
           ergeben sich aus der Lebenssituation.
         </p>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {classOverview.map((c) => (
             <div key={c.nr} className="flex items-start gap-4 bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-5 shadow-sm">
               <span className="w-11 h-11 rounded-xl bg-[#16181D] text-white flex items-center justify-center font-display font-black text-lg shrink-0">

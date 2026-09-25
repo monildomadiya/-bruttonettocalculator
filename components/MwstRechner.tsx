@@ -67,7 +67,7 @@ export default function MwstRechner() {
       </div>
 
       {/* Inputs */}
-      <div className="grid sm:grid-cols-2 gap-4 mb-6 relative">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 relative">
         <label className="block">
           <span className="text-xs font-mono uppercase tracking-wider text-black/50 block mb-1.5">
             {richtung === "netto-zu-brutto" ? "Nettobetrag" : "Bruttobetrag"}

@@ -50,7 +50,7 @@ export default function StundenlohnContent() {
         <h2 id="sl-formeln" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
           Stundenlohn und Monatslohn umrechnen
         </h2>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-5 shadow-sm">
             <div className="font-bold text-[#16181D] mb-2">Stundenlohn → Monatslohn</div>
             <p className="font-mono text-sm text-black/80 bg-black/[0.04] rounded-lg px-3 py-2">

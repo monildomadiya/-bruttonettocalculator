@@ -169,7 +169,7 @@ export default function UrlaubsgeldContent() {
         <h2 id="ug-abgrenzung" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
           Urlaubsgeld oder Urlaubsentgelt?
         </h2>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-5 shadow-sm">
             <div className="font-bold text-[#16181D] mb-2">Urlaubsentgelt</div>
             <p className="text-sm text-black/70">

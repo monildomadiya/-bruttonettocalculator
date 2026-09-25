@@ -674,7 +674,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {comparisonYears.map(({ yr, resSK1, resSK3, resSK5 }) => (
             <div key={yr} className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-8 shadow-xl">
               <div className="flex items-center justify-between border-b border-black/[0.08] pb-4 mb-5">
@@ -741,7 +741,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
           <Sparkles className="text-[#E60A1C]" size={20} /> Weiterführende Gehaltsrechner & Ratgeber
         </h3>
 
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {/* Neighboring 1 */}
           <div className="bg-[#F1F3F5] border border-black/[0.08] rounded-2xl p-5 hover:border-[#E60A1C]/50 transition-all flex flex-col justify-between">
             <div>

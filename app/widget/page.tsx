@@ -115,7 +115,7 @@ export default function WidgetPage() {
 
         {/* ── Vorteile ── */}
         <section className="max-w-6xl mx-auto px-5 py-12">
-          <div className="grid sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {VORTEILE.map((v) => (
               <div key={v.title} className="bg-white border border-black/[0.08] rounded-2xl p-6">
                 <v.icon size={22} className="text-[#E60A1C] mb-3" />
@@ -137,7 +137,7 @@ export default function WidgetPage() {
             <h2 className="font-display font-black text-2xl sm:text-3xl tracking-tight mb-5">
               Für wen sich das Widget eignet
             </h2>
-            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3">
               {[
                 "Personalabteilungen und Karriereseiten — Gehaltsangebote nachvollziehbar machen",
                 "Stellenbörsen und Jobportale — Netto zum ausgeschriebenen Brutto zeigen",
