@@ -25,6 +25,18 @@ npm run dev
 - `components/Calculator.tsx` — Interaktiver Rechner (Client Component)
 - `db/schema.sql` — MySQL-Schema für zukünftige DB-gestützte Jahreswerte
 
+## Stories (Instagram-Stil)
+
+Ringe unter dem Menü auf jeder deutschen Seite; Tippen öffnet einen Vollbild-Player
+mit Link-Karte zum verknüpften Beitrag. Bilder und Texte liegen in Cloudinary
+(Tag `site_story`), es gibt keine Datenbank.
+
+- Verwalten: `/admin/stories` (Bild hochladen, Beitrag verknüpfen, Laufzeit wählen, löschen)
+- Einrichten: Variablen aus `.env.example` in die `.env` auf dem Server eintragen, dann
+  `pm2 restart bruttonetto_live --update-env`. Ohne die Variablen bleibt die Leiste unsichtbar.
+- Bilder laufen über `/api/stories/image` (eigene Domain) — Besucher kontaktieren Cloudinary nie.
+- GA4-Events: `story_open`, `story_view`, `story_cta_click`, `story_share`, `story_close`.
+
 ## Vor dem Live-Gang — Checkliste
 
 1. **Impressum ausfüllen** (`app/impressum/page.tsx`) — gesetzlich Pflicht (§ 5 TMG)

@@ -7,6 +7,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import RelatedToolsAuto from "@/components/RelatedToolsAuto";
 import SupportStory from "@/components/SupportStory";
+import StoriesBar from "@/components/StoriesBar";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import SiteWideAd from "@/components/SiteWideAd";
@@ -102,6 +103,14 @@ export const metadata: Metadata = {
     "google-adsense-account": AD_CLIENT,
   },
 };
+
+/**
+ * Every page re-renders at most hourly so the story tray (<StoriesBar>) picks up
+ * new and expired stories. Uploads and deletions in /admin/stories refresh all
+ * pages immediately via revalidatePath, so this is only the expiry fallback.
+ * Must be a literal — Next reads segment config statically.
+ */
+export const revalidate = 3600;
 
 /* ── Structured data ──────────────────────────────────────────────── */
 const ORG_ID = "https://bruttonettocalculator.com/#organization";
@@ -238,6 +247,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* ── Sticky glass header (conditional) ───────────────────────── */}
         <SiteHeader />
+
+        {/* ── Instagram-style story rings (renders nothing without stories) ── */}
+        <StoriesBar />
 
         <main>{children}</main>
 
