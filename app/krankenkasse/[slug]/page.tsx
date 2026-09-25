@@ -379,12 +379,14 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
           </div>
           <p className="text-xs text-black/45 mt-3 flex items-start gap-1.5">
             <Info size={13} className="flex-shrink-0 mt-0.5" />
-            Beiträge werden nur bis zur Beitragsbemessungsgrenze von 69.750 € im Jahr erhoben — oberhalb
-            davon steigt der Beitrag nicht weiter. Mehr dazu:{" "}
-            <Link href="/beitragsbemessungsgrenze-2026" className="text-[#E60A1C] font-semibold hover:underline">
-              Beitragsbemessungsgrenze 2026
-            </Link>
-            .
+            <span className="min-w-0">
+              Beiträge werden nur bis zur Beitragsbemessungsgrenze von 69.750 € im Jahr erhoben — oberhalb
+              davon steigt der Beitrag nicht weiter. Mehr dazu:{" "}
+              <Link href="/beitragsbemessungsgrenze-2026" className="text-[#E60A1C] font-semibold hover:underline">
+                Beitragsbemessungsgrenze 2026
+              </Link>
+              .
+            </span>
           </p>
         </section>
 
@@ -406,7 +408,7 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
           <p className="text-sm text-black/60 mb-5">
             Sortiert nach Zusatzbeitrag 2026 — Stand {ZUSATZBEITRAG_STAND}.
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {nachbarn.map((n) => (
               <Link
                 key={n.slug}

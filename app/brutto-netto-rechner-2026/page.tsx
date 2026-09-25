@@ -254,7 +254,7 @@ export default function Rechner2026Page() {
         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
           Häufige Fragen zum Brutto Netto Rechner 2026
         </h2>
-        <div className="grid md:grid-cols-2 gap-8 text-sm sm:text-base">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm sm:text-base">
           {faqs.map((faq) => (
             <div key={faq.q}>
               <h3 className="font-bold text-[#16181D] text-base sm:text-lg mb-2">{faq.q}</h3>

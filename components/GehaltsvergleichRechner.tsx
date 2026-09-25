@@ -58,7 +58,7 @@ export default function GehaltsvergleichRechner() {
         <span>Wo steht Ihr Gehalt im deutschen Vergleich?</span>
       </div>
 
-      <div className="grid sm:grid-cols-3 gap-4 mb-6 relative">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 relative">
         <label className="block sm:col-span-1">
           <span className="text-xs font-mono uppercase tracking-wider text-black/50 block mb-1.5">Ihr Bruttogehalt</span>
           <div className="relative">

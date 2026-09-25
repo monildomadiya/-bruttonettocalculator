@@ -175,7 +175,7 @@ export default function LexikonPage() {
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 pb-3 border-b border-black/[0.08]">
               {gruppe.label}
             </h2>
-            <div className="grid sm:grid-cols-2 gap-6 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
               {gruppe.items.map((b) => (
                 <div
                   key={b.titel}

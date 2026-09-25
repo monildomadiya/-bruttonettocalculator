@@ -80,7 +80,7 @@ export default function BafoegRechner() {
       </section>
 
       <section className="max-w-6xl mx-auto px-5 py-12">
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-7 sm:p-9 shadow-lg space-y-6">
             <div>
               <h2 className="text-lg font-extrabold text-[#16181D] mb-3 flex items-center gap-2"><Home size={19} className="text-[#E60A1C]" /> Wohnsituation</h2>

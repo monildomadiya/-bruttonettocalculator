@@ -109,7 +109,7 @@ export default async function InfografikPage({ params }: { params: { slug: strin
         <span className="truncate font-medium text-[#16181D]">{post.title}</span>
       </nav>
 
-      <article className="grid gap-8 lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)] lg:gap-12">
+      <article className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)] lg:gap-12">
         {/* ── Instagram-style card ── */}
         <div className="lg:sticky lg:top-28 lg:self-start">
           <figure className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
@@ -166,7 +166,7 @@ export default async function InfografikPage({ params }: { params: { slug: strin
           <p className="mt-5 text-lg leading-relaxed text-black/75">{post.description}</p>
 
           {post.facts.length > 0 && (
-            <dl className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.08] sm:grid-cols-2">
+            <dl className="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.08] sm:grid-cols-2">
               {post.facts.map((f) => (
                 <div key={f.label} className="bg-white px-4 py-3">
                   <dt className="text-xs font-medium text-black/55">{f.label}</dt>
@@ -200,7 +200,7 @@ export default async function InfografikPage({ params }: { params: { slug: strin
           </div>
 
           {(newer || older) && (
-            <nav aria-label="Weitere Infografiken" className="mt-10 grid gap-3 sm:grid-cols-2">
+            <nav aria-label="Weitere Infografiken" className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {older ? (
                 <Link
                   href={`/infografiken/${older.slug}`}

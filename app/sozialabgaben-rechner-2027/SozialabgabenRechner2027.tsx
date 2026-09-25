@@ -218,7 +218,7 @@ export default function SozialabgabenRechner2027() {
             </div>
           ) : (
             <>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="rounded-3xl p-6 text-white shadow-card" style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)" }}>
                   <div className="text-xs font-mono uppercase tracking-wider opacity-90 font-bold flex items-center gap-1.5">
                     <TrendingUp size={14} /> Mehrbelastung 2027 · Sie
@@ -289,7 +289,7 @@ export default function SozialabgabenRechner2027() {
                   </table>
                 </div>
 
-                <div className="grid sm:grid-cols-2 gap-3 mt-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
                   <div className="bg-black/[0.03] rounded-2xl p-4">
                     <div className="text-xs text-black/50 mb-1">davon durch höhere Beitragsbemessungsgrenzen</div>
                     <div className="text-lg font-extrabold tabular-nums">{formatEUR(r.grenzEffekt / 12)} / Monat</div>

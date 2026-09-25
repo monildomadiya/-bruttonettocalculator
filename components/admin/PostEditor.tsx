@@ -203,7 +203,7 @@ export default function PostEditor({ state, onClose }: { state: PostEditorState;
         </div>
       }
     >
-      <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[300px_1fr]">
         {/* Left: image + Google preview + SEO check */}
         <div className="space-y-5">
           <label className="relative mx-auto flex aspect-[4/5] w-full max-w-[300px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-black/15 bg-white text-center text-sm text-black/50 transition hover:border-[#E60A1C]">
@@ -286,7 +286,7 @@ export default function PostEditor({ state, onClose }: { state: PostEditorState;
             />
           </Field>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Kategorie" htmlFor="p-cat">
               <select id="p-cat" className={inputClass} value={d.category} onChange={(e) => set("category", e.target.value as PostCategory)}>
                 {POST_CATEGORIES.map((c) => (

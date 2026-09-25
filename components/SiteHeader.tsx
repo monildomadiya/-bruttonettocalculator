@@ -63,7 +63,7 @@ export default function SiteHeader() {
   return (
     <div className="sticky top-0 z-40 w-full px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 pointer-events-none">
       <header
-        className="pointer-events-auto max-w-6xl mx-auto transition-all duration-500"
+        className="pointer-events-auto relative max-w-6xl mx-auto transition-all duration-500"
         style={{
           borderRadius: "15px",
           background: scrolled
@@ -95,8 +95,10 @@ export default function SiteHeader() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1 lg:gap-1.5" aria-label="Hauptnavigation" ref={ref}>
-            {/* Rechner mega-menu */}
-            <div className="relative">
+            {/* Rechner mega-menu. The panel is positioned against the whole
+                header (below), not this button: centred on the button it ran
+                off the left edge at ~1024 px once the nav row got longer. */}
+            <div>
               <button
                 type="button"
                 onClick={() => setMenuOpen((o) => !o)}

@@ -208,7 +208,7 @@ export default function BeitragsbemessungsgrenzePage() {
         </header>
 
         {/* ── Die beiden Grenzen ────────────────────────────────────── */}
-        <section className="grid md:grid-cols-2 gap-4 mb-10">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
           {grenzen.map((g) => (
             <div key={g.titel} className="bg-white border border-black/[0.08] rounded-2xl p-5 shadow-sm">
               <div className="text-[10px] font-mono uppercase tracking-widest text-black/45 mb-2">
@@ -240,7 +240,7 @@ export default function BeitragsbemessungsgrenzePage() {
               entscheidet dagegen, <strong className="text-[#16181D]">ob Sie die GKV verlassen
               dürfen</strong> — beide Zahlen sind unterschiedlich.
             </p>
-            <div className="grid sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-white border border-black/[0.08] rounded-xl p-4">
                 <div className="text-xs text-black/50 mb-1">Versicherungspflichtgrenze 2026</div>
                 <div className="text-xl font-extrabold text-[#16181D] tabular-nums">{eur(JAEG_JAHR)}</div>
@@ -314,7 +314,7 @@ export default function BeitragsbemessungsgrenzePage() {
         {/* ── Weiterführend ─────────────────────────────────────────── */}
         <section className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-4">Passende Rechner</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
               { href: "/", label: "Brutto-Netto-Rechner 2026", desc: "Nettogehalt mit allen Grenzen" },
               { href: "/brutto-netto-rechner-krankenkasse", label: "Krankenkassen-Vergleich", desc: "Zusatzbeiträge 2026" },

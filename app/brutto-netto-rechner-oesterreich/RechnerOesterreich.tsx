@@ -176,7 +176,7 @@ export default function RechnerOesterreich() {
 
         {/* ── Ergebnis ── */}
         <div className="space-y-5" aria-live="polite">
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="rounded-3xl p-6 text-white shadow-card" style={{ background: "linear-gradient(135deg,#E60A1C,#FF2436)" }}>
               <div className="text-xs font-mono uppercase tracking-wider opacity-90 font-bold">Netto pro Monat</div>
               <div className="text-4xl font-display font-extrabold mt-2 tabular-nums">{eur(r.laufend.netto)}</div>
@@ -261,7 +261,7 @@ export default function RechnerOesterreich() {
             </div>
           )}
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white border border-black/[0.08] rounded-3xl p-5 shadow-card">
               <h3 className="font-display font-extrabold text-sm mb-3 flex items-center gap-1.5">
                 <Percent size={15} className="text-[#E60A1C]" /> Lohnsteuer im Detail (Jahr)

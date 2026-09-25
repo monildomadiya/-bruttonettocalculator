@@ -130,14 +130,14 @@ export default function ToolContent({ config }: { config: ToolContentConfig }) {
             <h3 className="text-lg sm:text-xl font-extrabold text-[#16181D] mb-4">
               Die wichtigsten Werte auf einen Blick
             </h3>
-            <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-0">
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
               {facts.map((f, i) => (
                 <div
                   key={i}
                   className="flex items-baseline justify-between gap-4 border-b border-black/[0.07] py-3"
                 >
-                  <dt className="text-sm text-black/65 font-medium">{f.label}</dt>
-                  <dd className="text-sm font-mono font-extrabold text-[#16181D] text-right whitespace-nowrap">
+                  <dt className="min-w-0 text-sm text-black/65 font-medium">{f.label}</dt>
+                  <dd className="max-w-[55%] text-sm font-mono font-extrabold text-[#16181D] text-right">
                     {f.value}
                   </dd>
                 </div>

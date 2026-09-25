@@ -535,10 +535,10 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
         <ReviewerByline lang={lang} />
       </div>
       <div className="rounded-3xl overflow-hidden border border-black/[0.12] bg-[#FFFFFF] shadow-sm w-full max-w-full">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.15fr] w-full max-w-full min-w-0">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] w-full max-w-full min-w-0">
 
         {/* ═══ LEFT — Inputs ════════════════════════════════════════ */}
-        <div className="p-4 sm:p-10 bg-[#FFFFFF] border-b md:border-b-0 md:border-r border-black/[0.10] flex flex-col justify-between w-full max-w-full min-w-0">
+        <div className="p-4 sm:p-10 bg-[#FFFFFF] border-b lg:border-b-0 lg:border-r border-black/[0.10] flex flex-col justify-between w-full max-w-full min-w-0">
 
           <div className="w-full max-w-full min-w-0">
             {/* Header */}
@@ -773,7 +773,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     <Sparkles size={14} className="text-[#E60A1C] flex-shrink-0" />
                     <span>{isJahresansicht ? t.annualNet : t.monthlyNet}</span>
                   </div>
-                  <p className="font-display font-black tabular-nums leading-none tracking-tight text-[#16181D] text-3xl sm:text-5xl md:text-6xl number-animate break-all sm:break-normal">
+                  <p className="font-display font-black tabular-nums leading-none tracking-tight text-[#16181D] text-3xl sm:text-5xl lg:text-6xl number-animate break-all sm:break-normal">
                     {formatEUR(animatedNetto)}
                   </p>
                   {isJahresansicht && (
@@ -819,7 +819,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-lg">
               <p className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-black/60 font-bold mb-5">{t.distribution}</p>
 
-              <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-8 mb-5">
+              <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-center gap-5 sm:gap-8 mb-5">
                 {/* LARGE Donut */}
                 <div className="relative flex-shrink-0">
                   <DonutChart netto={nm} steuer={tm} sv={sm} total={bm} />
@@ -834,7 +834,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 </div>
 
                 {/* Clear Legend */}
-                <div className="flex-1 w-full sm:w-auto min-w-0 space-y-3">
+                <div className="flex-1 w-full sm:w-auto lg:w-full xl:w-auto min-w-0 space-y-3">
                   {[
                     { color: "#0E9F6E", label: t.legendNet, val: showVal(nm), icon: CircleDollarSign },
                     { color: "#E60A1C", label: t.legendTax, val: showVal(tm), icon: Landmark },

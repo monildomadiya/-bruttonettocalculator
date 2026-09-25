@@ -146,7 +146,7 @@ export default function MehrwertsteuerRechnerPage() {
           Der ermäßigte Satz nach § 12 Abs. 2 UStG deckt Güter des Grundbedarfs und Kultur ab — mit teils kuriosen
           Grenzfällen:
         </p>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-5 sm:p-6 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
               <span className="w-10 h-10 rounded-xl bg-[#E60A1C]/10 border border-[#E60A1C]/25 flex items-center justify-center text-[#E60A1C] font-mono font-extrabold">7%</span>

@@ -4,7 +4,6 @@ import { Clock3, ChevronRight, Sparkles, BarChart3 } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
-import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 
@@ -112,7 +111,6 @@ export default function TeilzeitrechnerPage() {
           reduzierter Arbeitszeit. Geben Sie Ihr Teilzeit-Bruttogehalt in den Rechner ein und sehen Sie sofort, wie
           viel netto bleibt — inklusive aller Sozialabgaben und Steuern für 2026.
         </p>
-        <ReviewerByline />
       </div>
 
       <section id="rechner" className="mb-14 scroll-mt-24">

@@ -57,7 +57,7 @@ export default function ToolsPanel() {
 
       <section className="rounded-2xl bg-white p-4 shadow-sm shadow-black/5 sm:p-5 lg:col-span-2">
         <h2 className="font-display text-base font-bold text-[#16181D]">Schnellzugriff</h2>
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {LINKS.map(({ href, label, icon: Icon }) => (
             <li key={href}>
               <a

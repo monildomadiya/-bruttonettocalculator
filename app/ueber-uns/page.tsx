@@ -120,7 +120,7 @@ export default function UeberUnsPage() {
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#16181D] mb-6 flex items-center gap-3">
           <BookOpen className="text-[#E60A1C]" size={28} /> Unsere Redaktions- und Berechnungsstandards
         </h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-2xl p-6 shadow-lg flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4 text-blue-600 font-bold text-lg">
@@ -169,7 +169,7 @@ export default function UeberUnsPage() {
       </div>
 
       {/* Mission & Technology */}
-      <div className="grid sm:grid-cols-2 gap-8 w-full max-w-6xl mx-auto mb-14">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-6xl mx-auto mb-14">
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col justify-between">
           <div>
             <div className="w-14 h-14 rounded-2xl bg-[#E60A1C]/15 border border-[#E60A1C]/30 flex items-center justify-center mb-6">

@@ -62,7 +62,7 @@ export default function WidgetBuilder() {
   }
 
   return (
-    <div className="grid lg:grid-cols-[340px_1fr] gap-8 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-8 items-start">
       {/* ── Einstellungen ── */}
       <div className="bg-white border border-black/[0.08] rounded-2xl p-6 space-y-5">
         <h2 className="font-display font-black text-lg text-[#16181D]">Anpassen</h2>

@@ -204,7 +204,7 @@ export default function GermanyTaxCalculatorPage() {
           The gap between them in Germany is large, typically 35–45% of gross for a single employee, because both taxes
           and social security come out of the same pay slip.
         </p>
-        <div className="grid sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
             { label: "Brutto (gross)", value: formatEUR(example.bruttoMonat), note: "your contract figure" },
             { label: "Deductions", value: `− ${formatEUR(example.sv.summeMonat + example.steuer.summeMonat)}`, note: "tax + social security" },

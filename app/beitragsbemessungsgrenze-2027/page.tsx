@@ -234,7 +234,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
           </div>
         </header>
 
-        <section className="grid md:grid-cols-2 gap-4 mb-10">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
           {grenzen.map((g) => (
             <div key={g.titel} className="bg-white border border-black/[0.08] rounded-2xl p-5 shadow-sm">
               <div className="text-[10px] font-mono uppercase tracking-widest text-black/45 mb-2">
@@ -299,7 +299,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
               {eur(deltaKvPv)} bei Kranken- und Pflegeversicherung und um {eur(deltaRvAlv)} bei Rente
               und Arbeitslosenversicherung.
             </p>
-            <div className="grid sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="bg-white border border-black/[0.08] rounded-xl p-4">
                 <div className="text-xs text-black/50 mb-1">Mehrbeitrag KV/PV</div>
                 <div className="text-xl font-extrabold text-[#16181D] tabular-nums">{formatEUR(mehrKvPv)}</div>
@@ -327,7 +327,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
 
         <section className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-4">Passende Rechner</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
               { href: "/sozialabgaben-rechner-2027", label: "Sozialabgaben-Rechner 2027", desc: "Ihre Mehrbelastung mit eigenem Gehalt" },
               { href: "/brutto-netto-rechner-2027", label: "Brutto-Netto-Rechner 2027", desc: "Steuerreform-Szenarien im Vergleich" },

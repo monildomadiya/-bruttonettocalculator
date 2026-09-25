@@ -104,7 +104,7 @@ export default function StoryEditor({ state, onClose }: { state: StoryEditorStat
         </Button>
       }
     >
-      <div className="grid gap-5 sm:grid-cols-[180px_1fr]">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-[180px_1fr]">
         {/* 9:16 image */}
         <div className="mx-auto w-40 sm:w-full">
           {state.mode === "create" ? (

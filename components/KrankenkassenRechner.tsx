@@ -79,7 +79,7 @@ export default function KrankenkassenRechner({
         <span>Netto mit dem Zusatzbeitrag Ihrer Krankenkasse</span>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-4 mb-5 relative">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5 relative">
         <label className="block">
           <span className="text-xs font-mono uppercase tracking-wider text-black/50 block mb-1.5">
             Bruttogehalt pro Monat
@@ -116,7 +116,7 @@ export default function KrankenkassenRechner({
         </label>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-4 mb-6 relative">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 relative">
         <label className="block">
           <span className="text-xs font-mono uppercase tracking-wider text-black/50 block mb-1.5">Steuerklasse</span>
           <select
@@ -146,7 +146,7 @@ export default function KrankenkassenRechner({
       </div>
 
       {/* Ergebnis */}
-      <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 relative">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 relative">
         <div className="rounded-2xl border bg-[#E60A1C]/10 border-[#E60A1C]/40 p-4 sm:p-5">
           <div className="text-xs font-mono uppercase tracking-wider text-black/50 mb-1.5">Ihr Netto / Monat</div>
           <div className="font-mono font-extrabold text-xl sm:text-2xl text-[#E60A1C] break-all">

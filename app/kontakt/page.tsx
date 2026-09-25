@@ -30,7 +30,7 @@ export default function KontaktPage() {
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-8 w-full max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-6xl mx-auto">
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col justify-between">
           <div>
             <div className="w-14 h-14 rounded-2xl bg-[#E60A1C]/15 border border-[#E60A1C]/30 flex items-center justify-center mb-6">
@@ -44,7 +44,7 @@ export default function KontaktPage() {
           </div>
           <a
             href="mailto:info@bruttonettocalculator.com"
-            className="inline-flex items-center gap-3 text-[#E60A1C] font-mono text-lg font-bold hover:underline"
+            className="inline-flex items-center gap-3 text-[#E60A1C] font-mono text-base sm:text-lg font-bold hover:underline break-all"
           >
             info@bruttonettocalculator.com
           </a>

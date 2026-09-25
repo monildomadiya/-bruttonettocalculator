@@ -24,7 +24,7 @@ export default function DatenschutzPage() {
           <ShieldAlert size={14} /> DSGVO-Konform
         </div>
         <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
-          Datenschutz<span className="text-gradient-accent">erklärung</span>
+          Datenschutz&shy;<span className="text-gradient-accent">erklärung</span>
         </h1>
         <p className="text-lg sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
           Schutz und Vertraulichkeit Ihrer persönlichen Daten stehen bei uns an oberster Stelle.

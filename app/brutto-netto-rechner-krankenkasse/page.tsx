@@ -301,7 +301,7 @@ export default function KrankenkassePage() {
       </div>
 
       {/* Erklärung */}
-      <div className="mb-16 grid md:grid-cols-2 gap-5">
+      <div className="mb-16 grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-2 mb-3">
             <ShieldCheck size={18} className="text-[#E60A1C]" />

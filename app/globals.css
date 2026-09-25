@@ -49,6 +49,16 @@ body {
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* German compounds ("Beitragsbemessungsgrenze", "Verpflegungsmehraufwand")
+   are wider than a phone at heading sizes. html/body clip overflow-x, so an
+   unbreakable word was silently cut off instead of scrolling. Break it rather
+   than lose it — and on phones let headings hyphenate (lang="de" on <html>
+   selects the German dictionary). */
+body { overflow-wrap: break-word; }
+@media (max-width: 639px) {
+  h1, h2, h3 { -webkit-hyphens: auto; hyphens: auto; }
+}
+
 ::selection {
   background-color: #E60A1C;
   color: #FFFFFF;

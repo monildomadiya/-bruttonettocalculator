@@ -298,7 +298,7 @@ export default function SupportButton({
       >
         <div className="relative overflow-hidden rounded-3xl border border-black/[0.08] bg-gradient-to-br from-[#FFF8D6] via-white to-white p-6 sm:p-10 shadow-card">
           <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-[#FFDD00]/25 blur-3xl pointer-events-none" />
-          <div className="relative grid md:grid-cols-[auto_minmax(0,1fr)_auto] gap-6 md:gap-10 items-center">
+          <div className="relative grid grid-cols-1 md:grid-cols-[auto_minmax(0,1fr)_auto] gap-6 md:gap-10 items-center">
             <CoffeeCup size={88} />
             <div className="min-w-0">
               <p className="text-[11px] sm:text-xs font-mono uppercase tracking-widest font-bold text-black/50 mb-2">{t.eyebrow}</p>

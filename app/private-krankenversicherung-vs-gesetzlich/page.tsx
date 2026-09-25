@@ -235,7 +235,7 @@ export default function PkvVsGkvPage() {
         {/* ── When does each make sense ────────────────────────── */}
         <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 mb-8">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">Für wen lohnt sich die PKV — und für wen die GKV?</h2>
-          <div className="grid md:grid-cols-2 gap-8 text-sm sm:text-base text-black/75 leading-relaxed">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm sm:text-base text-black/75 leading-relaxed">
             <div>
               <h3 className="font-bold text-[#16181D] text-lg mb-3 flex items-center gap-2"><Check size={18} className="text-emerald-600" />PKV kann sich lohnen für …</h3>
               <ul className="space-y-2">
@@ -271,7 +271,7 @@ export default function PkvVsGkvPage() {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
             Häufige Fragen zu PKV, GKV &amp; Beitragsgrenzen 2026
           </h2>
-          <div className="grid md:grid-cols-2 gap-8 text-sm sm:text-base">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm sm:text-base">
             {faqs.map((faq) => (
               <div key={faq.q}>
                 <h3 className="font-bold text-[#16181D] text-base sm:text-lg mb-2">{faq.q}</h3>

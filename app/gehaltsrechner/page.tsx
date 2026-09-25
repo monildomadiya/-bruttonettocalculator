@@ -7,7 +7,6 @@ import {
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
-import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 
@@ -136,7 +135,6 @@ export default function GehaltsrechnerPage() {
           Solidaritätszuschlag und aller Sozialabgaben. Der <strong className="text-[#16181D]">Netto-Gehaltsrechner</strong>{" "}
           rechnet nach den amtlichen Werten für 2026 und 2027, in allen 6 Steuerklassen.
         </p>
-        <ReviewerByline />
       </div>
 
       {/* Calculator */}
@@ -188,7 +186,7 @@ export default function GehaltsrechnerPage() {
       </section>
 
       {/* SEO content */}
-      <section className="mb-16 grid md:grid-cols-3 gap-6">
+      <section className="mb-16 grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
           { Icon: Wallet, title: "Netto aus Brutto", text: "Der Gehaltsrechner zieht Sozialabgaben und Lohnsteuer vom Bruttogehalt ab und zeigt Ihr Netto pro Monat und Jahr — exakt nach § 32a EStG 2026." },
           { Icon: TrendingUp, title: "Alle 6 Steuerklassen", text: "Vergleichen Sie das Nettogehalt in Steuerklasse I bis VI. Besonders für Verheiratete lohnt der Wechsel zwischen III/V und IV/IV." },
@@ -237,7 +235,7 @@ export default function GehaltsrechnerPage() {
         <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
           <Sparkles className="text-[#E60A1C]" size={20} /> Weitere Rechner
         </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
             { href: "/lohnsteuerrechner", label: "Lohnsteuerrechner", desc: "Lohnsteuer & Nettolohn berechnen" },
             { href: "/einkommensteuer-rechner", label: "Einkommensteuer-Rechner", desc: "Jahressteuer nach § 32a EStG" },

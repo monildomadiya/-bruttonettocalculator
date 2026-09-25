@@ -492,10 +492,10 @@ export default function ArticleReaderPage({
                     {post.keyFacts.map((f, i) => (
                       <div
                         key={i}
-                        className="flex items-baseline justify-between gap-4 px-6 py-3.5"
+                        className="flex items-baseline justify-between gap-4 px-4 sm:px-6 py-3.5"
                       >
-                        <dt className="text-sm text-black/60">{f.label}</dt>
-                        <dd className="text-sm font-bold text-[#16181D] text-right">
+                        <dt className="min-w-0 text-sm text-black/60">{f.label}</dt>
+                        <dd className="min-w-0 max-w-[60%] text-sm font-bold text-[#16181D] text-right">
                           {f.value}
                         </dd>
                       </div>
@@ -605,7 +605,7 @@ export default function ArticleReaderPage({
                       Passende Rechner zum Thema
                     </h2>
                   </div>
-                  <div className="grid sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {post.relatedCalculators.map((href) => {
                       const link = calculatorLink(href);
                       if (!link) return null;

@@ -92,7 +92,7 @@ export default function MieteinnahmenContent() {
           Werbungskosten sind alle Aufwendungen, die durch die Vermietung veranlasst sind. Sie mindern den
           steuerpflichtigen Überschuss unmittelbar.
         </p>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {WERBUNGSKOSTEN.map((w) => (
             <div key={w.titel} className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-5 shadow-sm">
               <div className="font-bold text-[#16181D] mb-1.5">{w.titel}</div>

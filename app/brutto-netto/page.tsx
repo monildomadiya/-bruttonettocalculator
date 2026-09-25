@@ -314,7 +314,7 @@ export default function BranchenHubPage() {
           Der Unterschied beim Netto entsteht nicht nur durch die Höhe des Gehalts. Steuerfreie
           Zuschläge, Pauschalen und Freibeträge wirken je nach Branche völlig verschieden.
         </p>
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {branchen.map((b) => (
             <Link
               key={b.slug}

@@ -68,7 +68,7 @@ export default function WitwenrenteRechner() {
       </section>
 
       <section className="max-w-6xl mx-auto px-5 py-12">
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-7 sm:p-9 shadow-lg space-y-6">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] flex items-center gap-2"><HeartHandshake size={22} className="text-[#E60A1C]" /> Ihre Angaben</h2>
 
