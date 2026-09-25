@@ -180,6 +180,28 @@ export interface StoryUploadInput {
   expiresAt: string | null;
 }
 
+function storyContext(input: StoryUploadInput): string {
+  return buildContext({
+    title: input.title,
+    caption: input.caption,
+    link: input.link,
+    label: input.linkLabel,
+    expires: input.expiresAt ?? "",
+  });
+}
+
+function storyUploadParams(input: StoryUploadInput): Record<string, string | number> {
+  return {
+    allowed_formats: "jpg,jpeg,png,webp,avif,heic,heif",
+    context: storyContext(input),
+    eager: `${STORY_TRANSFORMS.thumb}|${STORY_TRANSFORMS.full}`,
+    public_id: `stories/${crypto.randomBytes(12).toString("base64url")}`,
+    tags: STORY_TAG,
+    timestamp: Math.floor(Date.now() / 1000),
+    transformation: INCOMING_TRANSFORM,
+  };
+}
+
 /**
  * Parameters for a signed upload straight from the admin's browser to
  * Cloudinary. The image never passes through our server (no body-size limit in
@@ -187,25 +209,67 @@ export interface StoryUploadInput {
  * folder, tag, metadata and transformations are all covered by the signature.
  */
 export function signStoryUpload(cfg: CloudinaryConfig, input: StoryUploadInput) {
-  const params: Record<string, string | number> = {
-    allowed_formats: "jpg,jpeg,png,webp,avif,heic,heif",
-    context: buildContext({
-      title: input.title,
-      caption: input.caption,
-      link: input.link,
-      label: input.linkLabel,
-      expires: input.expiresAt ?? "",
-    }),
-    eager: `${STORY_TRANSFORMS.thumb}|${STORY_TRANSFORMS.full}`,
-    public_id: `stories/${crypto.randomBytes(12).toString("base64url")}`,
-    tags: STORY_TAG,
-    timestamp: Math.floor(Date.now() / 1000),
-    transformation: INCOMING_TRANSFORM,
-  };
+  const params = storyUploadParams(input);
   return {
     uploadUrl: `https://api.cloudinary.com/v1_1/${cfg.cloudName}/image/upload`,
     fields: { ...params, api_key: cfg.apiKey, signature: sign(params, cfg.apiSecret) },
   };
+}
+
+/**
+ * Creates a story from an image that is already in this Cloudinary account (an
+ * infographic): Cloudinary fetches it by URL, so nothing is uploaded from the
+ * admin's phone.
+ */
+export async function createStoryFromImage(
+  cfg: CloudinaryConfig,
+  source: { id: string; version: number },
+  input: StoryUploadInput
+): Promise<void> {
+  const params = storyUploadParams(input);
+  const body = new URLSearchParams({
+    ...Object.fromEntries(Object.entries(params).map(([k, v]) => [k, String(v)])),
+    api_key: cfg.apiKey,
+    signature: sign(params, cfg.apiSecret),
+    file: `https://res.cloudinary.com/${cfg.cloudName}/image/upload/v${source.version}/${source.id}`,
+  });
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cfg.cloudName}/image/upload`, {
+    method: "POST",
+    body,
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const data = (await res.json().catch(() => ({}))) as { error?: { message?: string } };
+    throw new Error(`Cloudinary upload failed: ${res.status} ${data.error?.message ?? ""}`);
+  }
+}
+
+/** Rewrites a story's text, link and expiry in place (the image stays). */
+export async function updateStoryContext(
+  cfg: CloudinaryConfig,
+  id: string,
+  input: StoryUploadInput
+): Promise<void> {
+  const params = {
+    context: storyContext(input),
+    public_id: id,
+    timestamp: Math.floor(Date.now() / 1000),
+    type: "upload",
+  };
+  const body = new URLSearchParams({
+    ...Object.fromEntries(Object.entries(params).map(([k, v]) => [k, String(v)])),
+    api_key: cfg.apiKey,
+    signature: sign(params, cfg.apiSecret),
+  });
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cfg.cloudName}/image/explicit`, {
+    method: "POST",
+    body,
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const data = (await res.json().catch(() => ({}))) as { error?: { message?: string } };
+    throw new Error(`Cloudinary update failed: ${res.status} ${data.error?.message ?? ""}`);
+  }
 }
 
 export async function destroyStory(cfg: CloudinaryConfig, id: string): Promise<void> {

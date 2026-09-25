@@ -165,3 +165,42 @@ export function parsePostBody(body: string): PostBlock[] {
 export function formatPostDate(iso: string): string {
   return new Date(iso).toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" });
 }
+
+/* ─────────────────────────── SEO check ─────────────────────────── */
+
+export interface SeoCheck {
+  ok: boolean;
+  label: string;
+}
+
+/** The checklist shown in the admin editor and summarised as a score on the dashboard. */
+export function postSeoChecks(p: {
+  hasImage: boolean;
+  title: string;
+  description: string;
+  alt: string;
+  body: string;
+  facts: PostFact[];
+  calculator: string;
+}): SeoCheck[] {
+  return [
+    { ok: p.hasImage, label: "Bild ausgewählt (ideal 1080 × 1350, Hochformat 4:5)" },
+    { ok: p.title.length >= 10 && p.title.length <= POST_LIMITS.titleIdeal, label: `Titel 10–${POST_LIMITS.titleIdeal} Zeichen, Hauptkeyword vorne` },
+    { ok: p.description.length >= 120 && p.description.length <= POST_LIMITS.description, label: "Beschreibung 120–160 Zeichen" },
+    { ok: p.alt.length >= 20, label: "Alt-Text beschreibt das Bild (für Google Bilder)" },
+    { ok: countWords(p.body) >= GOOD_BODY_WORDS, label: `Text ab ${GOOD_BODY_WORDS} Wörtern (Pflicht: ${MIN_BODY_WORDS})` },
+    { ok: /^## /m.test(p.body), label: "Mindestens eine Zwischenüberschrift (## …)" },
+    { ok: p.facts.some((f) => f.label && f.value), label: "Mindestens ein Kernfakt" },
+    { ok: Boolean(p.calculator), label: "Passender Rechner verlinkt (mehr Seitenaufrufe)" },
+  ];
+}
+
+/** 0–100 from postSeoChecks. */
+export function postSeoScore(post: Post): { score: number; missing: string[] } {
+  const checks = postSeoChecks({ ...post, hasImage: true, alt: post.image.alt });
+  const passed = checks.filter((c) => c.ok).length;
+  return {
+    score: Math.round((passed / checks.length) * 100),
+    missing: checks.filter((c) => !c.ok).map((c) => c.label),
+  };
+}

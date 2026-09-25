@@ -17,6 +17,7 @@ import {
   savePostFile,
   signPostImageUpload,
 } from "@/lib/postsStore";
+import { pingIndexNow } from "@/lib/indexnow";
 import { checkStoriesAdmin } from "@/lib/storiesAuth";
 
 /**
@@ -154,6 +155,8 @@ export async function POST(req: Request) {
   }
 
   refresh(slug);
+  // Tell Bing & co. right away; the new page is live once revalidated.
+  await pingIndexNow([`/infografiken/${slug}`, "/infografiken"]);
   return Response.json({ ok: true, post });
 }
 
@@ -173,5 +176,7 @@ export async function DELETE(req: Request) {
     return fail("Löschen fehlgeschlagen.", 502);
   }
   refresh(slug);
+  // A 404 is a change too: lets Bing drop the URL instead of waiting a recrawl.
+  await pingIndexNow([`/infografiken/${slug}`, "/infografiken"]);
   return Response.json({ ok: true });
 }
