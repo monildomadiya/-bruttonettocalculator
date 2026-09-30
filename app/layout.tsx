@@ -263,9 +263,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SupportStory />
 
         {/* ── End-of-session unit, below the related tools ──────────────
-             Currently renders nothing: `afterRelated` is suppressed while
-             AD_DENSITY is "recovery" (see lib/adsConfig.ts). Left wired up so
-             restoring it is a one-line change in one file. */}
+             Renders only while AD_DENSITY is "normal" (lib/adsConfig.ts).
+             <SupportStory> sits between it and the link grid, so it no longer
+             sandwiches the related tools with `contentEnd`. */}
         <SiteWideAd slot="afterRelated" />
 
         {/* ── Ultra-Luxury Fintech Footer (conditional) ───────────────── */}

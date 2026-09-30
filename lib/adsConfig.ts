@@ -158,10 +158,14 @@ export const CMP_ACTIVE = false;
    lifts the limit and the Policy center is clean for a full reporting cycle,
    then flip to "normal" and watch the invalid-traffic rate in the AdSense
    report before adding anything else back.
+
+   2026-09-30: flipped to "normal" after the owner confirmed the limit is gone
+   from the Policy center. If a new limit appears, flip back first and diagnose
+   second. Nothing else was added back with this flip.
 */
 
 /** Ad-density mode. "recovery" suppresses the lowest-value duplicate slots. */
-export const AD_DENSITY: "recovery" | "normal" = "recovery";
+export const AD_DENSITY = "normal" as "recovery" | "normal";
 
 /**
  * Value for the loader's `data-ad-frequency-hint`, or `null` for Google's default.
