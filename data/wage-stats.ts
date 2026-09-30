@@ -180,12 +180,13 @@ export function getWagePercentileContext(grossMonthly: number): {
 /**
  * Whitelisted, indexable exact-salary amounts.
  *
- * 1.500–10.000 € in steps of 100, plus the validated Midijob amount 1.200 €
+ * 1.500–10.000 € in steps of 100, plus the validated Midijob amounts 1.000, 1.200 and 1.300 €
  * (only enabled once the 2026 Übergangsbereich logic in the engine passes its
  * checkpoints — see scripts/midijob.test.mts). New amounts are added here
  * deliberately, never auto-generated for every possible value.
  */
-const APPROVED_MIDIJOB_AMOUNTS = [1200, 1300];
+// 1.000 €: added 2026-09-30 after "1000 brutto in netto" rose +150 % in Google Trends (DE, 24 h).
+const APPROVED_MIDIJOB_AMOUNTS = [1000, 1200, 1300];
 
 export function getCommonGrossSalaryAmounts(): number[] {
   const amounts: number[] = [...APPROVED_MIDIJOB_AMOUNTS];

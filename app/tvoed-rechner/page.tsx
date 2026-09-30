@@ -27,12 +27,15 @@ const BASE = "https://bruttonettocalculator.com";
 const CANONICAL = `${BASE}/tvoed-rechner`;
 
 export const metadata: Metadata = {
-  title: "TVöD Entgelttabelle 2026: alle Gruppen, Stufen & Netto",
+  title: "TVöD-VKA Entgelttabelle 2026: alle Gruppen, Stufen & Netto",
   description:
     `TVöD-VKA Entgelttabelle ab ${GUELTIG_AB} (+${TARIFERHOEHUNG_PROZENT.toString().replace(".", ",")} %): alle Entgeltgruppen E 1 bis E 15Ü mit allen Stufen — und was davon netto bleibt.`,
   keywords: [
     "tvöd tabelle 2026",
     "tvöd entgelttabelle 2026",
+    "tvöd vka entgelttabelle 2026",
+    "tvöd vka tabelle 2026",
+    "tvöd vka",
     "tvöd rechner",
     "tvöd netto rechner",
     "tvöd gehalt 2026",
@@ -40,7 +43,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
-    title: "TVöD Entgelttabelle 2026 — mit Netto je Entgeltgruppe",
+    title: "TVöD-VKA Entgelttabelle 2026 — mit Netto je Entgeltgruppe",
     description:
       "Alle TVöD-VKA Entgeltgruppen und Stufen ab 1. Mai 2026, jeweils mit dem Netto in Steuerklasse I und III.",
     url: CANONICAL,
@@ -141,7 +144,7 @@ export default function TvoedHubPage() {
             TVöD-VKA · +{TARIFERHOEHUNG_PROZENT.toString().replace(".", ",")} % ab {GUELTIG_AB}
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#16181D] leading-tight mb-3">
-            TVöD Entgelttabelle 2026 — mit Netto je Entgeltgruppe
+            TVöD-VKA Entgelttabelle 2026 — mit Netto je Entgeltgruppe
           </h1>
           <p className="text-base sm:text-lg text-black/70 leading-relaxed max-w-3xl">
             Alle Entgeltgruppen von E 1 bis E 15Ü, gültig vom {GUELTIG_AB} bis {GUELTIG_BIS}. Bruttotabellen gibt es
