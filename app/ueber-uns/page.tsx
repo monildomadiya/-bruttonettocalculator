@@ -198,6 +198,30 @@ export default function UeberUnsPage() {
         </div>
       </div>
 
+      {/* Weitere Projekte — offen als eigenes Projekt gekennzeichnet, bewusst nur
+          hier und nicht im Footer: ein themenfremder Sitewide-Link würde wie ein
+          Linktausch wirken. Markenname als Anchor, kein Keyword-Anchor. */}
+      <div className="w-full max-w-6xl mx-auto border-t border-black/[0.08] pt-10">
+        <h2 className="font-display text-xl sm:text-2xl font-bold text-[#16181D] mb-3">
+          Weitere Projekte unseres Teams
+        </h2>
+        <p className="text-base text-black/70 leading-relaxed max-w-4xl">
+          Abseits von Steuern und Gehalt betreiben wir{" "}
+          <a
+            href="https://iphoneduowallpaper.com/"
+            target="_blank"
+            rel="noopener"
+            hrefLang="en"
+            className="font-semibold text-[#E60A1C] underline underline-offset-2 hover:text-[#B8081A]"
+          >
+            iPhone Duo Wallpapers
+          </a>{" "}
+          — eine kostenlose Sammlung hochauflösender Hintergrundbilder für das iPhone Duo und das
+          iPhone 18 Pro (englischsprachig). Ein kleines Nebenprojekt, das mit demselben Anspruch
+          an Sorgfalt entsteht wie dieser Rechner.
+        </p>
+      </div>
+
     </section>
   );
 }
