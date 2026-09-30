@@ -159,13 +159,16 @@ const breadcrumbJsonLd = {
 
 export default function Rechner2027Page() {
   return (
-    <section className="w-full max-w-6xl mx-auto px-5 pt-20 pb-16 min-h-[80vh]">
+    <section className="w-full max-w-6xl mx-auto px-5 pt-6 sm:pt-20 pb-16 min-h-[80vh]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <div className="mb-14">
-        <div className="flex flex-wrap items-center gap-2 mb-4">
+      {/* Mobil muss der Rechner im ersten Bildschirm beginnen: Über dem Rechner
+          steht deshalb nur ein kurzer Lead, die ausführliche Einordnung folgt
+          direkt unter dem Rechner (gleicher Text, nur tiefer). */}
+      <div className="mb-6 sm:mb-10">
+        <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4">
           <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full">
             <Sparkles size={14} /> Im Bundestag · Drucksache 21/8235
           </span>
@@ -173,11 +176,26 @@ export default function Rechner2027Page() {
             <span aria-hidden="true">🇩🇪</span> Gilt für Deutschland
           </span>
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
+        <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-[#16181D] mb-3 sm:mb-4 tracking-tight">
           Brutto Netto Rechner <span className="text-gradient-accent">2027</span> — so viel mehr
           Netto bringt der Entwurf
         </h1>
-        <p className="text-lg sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
+        <p className="text-base sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed">
+          Rechnet mit dem Gesetzentwurf im Bundestag (Drucksache 21/8235): Grundfreibetrag{" "}
+          {eur(GRUNDFREIBETRAG.entwurf2027)} €, Arbeitnehmer-Pauschbetrag{" "}
+          {eur(ARBEITNEHMER_PAUSCHBETRAG.reform)} €. Brutto eingeben und „Entwurf 2027“, „Stufe 2028“ und
+          „Ohne Reform“ direkt vergleichen.
+        </p>
+      </div>
+
+      <div className="w-full max-w-6xl mx-auto mb-10 sm:mb-14">
+        <Calculator
+          initialJahr={2027}
+          standDisplay={new Date(REFORM_STAND).toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" })}
+        />
+      </div>
+
+      <p className="w-full max-w-6xl mx-auto text-base sm:text-lg text-black/80 leading-relaxed mb-8">
           Am 2. September 2026 hat das Bundeskabinett den{" "}
           <strong className="text-[#16181D] font-semibold">Regierungsentwurf eines Einkommensteuerreformgesetzes 2027</strong>{" "}
           beschlossen. Er fasst § 32a EStG für 2027 und 2028 komplett neu — dieser{" "}
@@ -192,14 +210,6 @@ export default function Rechner2027Page() {
           <strong className="text-[#16181D] font-semibold">Lohnrechner 2027</strong> zeigt das Tool den
           Unterschied im echten Jahresvergleich.
         </p>
-      </div>
-
-      <div className="w-full max-w-6xl mx-auto mb-14">
-        <Calculator
-          initialJahr={2027}
-          standDisplay={new Date(REFORM_STAND).toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" })}
-        />
-      </div>
 
       <div className="w-full max-w-6xl mx-auto bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-8 flex items-start gap-4 text-sm sm:text-base text-black/80 leading-relaxed shadow-lg mb-12">
         <SlidersHorizontal size={22} className="text-[#E60A1C] flex-shrink-0 mt-0.5" />

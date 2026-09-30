@@ -222,7 +222,7 @@ export default function HomePage() {
         <div className="w-full max-w-6xl mx-auto relative z-10 text-center flex flex-col items-center">
 
           {/* Glowing Pill Badge */}
-          <div className="inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-[#FFFFFF] border border-black/[0.12] rounded-full px-4 sm:px-6 py-2 sm:py-2.5 mb-6 sm:mb-8 animate-fade-up max-w-[95vw]">
+          <div className="inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-[#FFFFFF] border border-black/[0.12] rounded-full px-4 sm:px-6 py-2 sm:py-2.5 mb-4 sm:mb-8 animate-fade-up max-w-[95vw]">
             <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#E60A1C] animate-pulse flex-shrink-0" />
             <span className="font-mono text-[11px] sm:text-sm uppercase tracking-wider sm:tracking-widest text-black/90 font-bold leading-tight">
               AUF BASIS OFFIZIELLER WERTE · § 32A ESTG · 2026/2027
@@ -252,9 +252,10 @@ export default function HomePage() {
             Krankenkassen-Zusatzbeitrag bereits eingerechnet.
           </p>
 
-          {/* CTA buttons */}
+          {/* CTA buttons — nur ab sm: Mobil steht der Rechner direkt darunter, ein
+              "Jetzt berechnen"-Sprungknopf schob ihn nur unter den Falz. */}
           <div
-            className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-4 sm:mb-10 animate-fade-up w-full sm:w-auto px-4 sm:px-0"
+            className="hidden sm:flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-4 sm:mb-10 animate-fade-up w-full sm:w-auto px-4 sm:px-0"
             style={{ animationDelay: "240ms" }}
           >
             <a

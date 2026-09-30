@@ -130,19 +130,19 @@ const breadcrumbJsonLd = {
 
 export default function Rechner2026Page() {
   return (
-    <section className="w-full max-w-6xl mx-auto px-5 pt-20 pb-16 min-h-[80vh]">
+    <section className="w-full max-w-6xl mx-auto px-5 pt-6 sm:pt-20 pb-16 min-h-[80vh]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
-      <div className="mb-14">
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
+      <div className="mb-6 sm:mb-14">
+        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-4">
           <Sparkles size={14} /> Amtliche Werte 2026
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
+        <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-[#16181D] mb-3 sm:mb-4 tracking-tight">
           Brutto Netto Rechner <span className="text-gradient-accent">2026</span>
         </h1>
-        <p className="text-lg sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
+        <p className="text-base sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
           Berechnen Sie Ihr Nettogehalt für das Steuerjahr 2026 — sekundenschnell und kostenlos.
           Dieser <strong className="text-[#16181D] font-semibold">Brutto Netto Rechner 2026</strong> nutzt die
           amtliche Einkommensteuer-Formel nach § 32a EStG 2026, den Grundfreibetrag von 12.348 € sowie
