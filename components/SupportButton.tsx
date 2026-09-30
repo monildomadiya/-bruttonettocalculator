@@ -367,10 +367,16 @@ export default function SupportButton({
        `.google-auto-placed { display: none }`: the ad is still requested and
        still counts an impression nobody can see, which is the same class of
        signal that got the account limited. */
+    // Layout über eine Container Query (.support-card in globals.css), nicht über
+    // sm:-Breakpoints: Die Karte steht in der Ergebnisspalte, die bei 1.024 px
+    // Viewport nur ~430 px breit ist — mit sm:flex-row blieben dem Text dort
+    // 133 px, er brach Silbe für Silbe um. Jetzt nebeneinander erst, wenn die
+    // KARTE selbst breit genug ist.
     <div
       data-no-auto-ads="true"
-      className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-lg flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6"
+      className="support-card bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-lg"
     >
+      <div className="support-card__layout flex flex-col gap-4">
       <div className="flex items-start gap-3.5 min-w-0 flex-1">
         <CoffeeCup size={48} />
         <div className="min-w-0">
@@ -388,11 +394,12 @@ export default function SupportButton({
         target="_blank"
         rel="nofollow noopener noreferrer"
         onClick={() => trackDonateClick(placement)}
-        className="flex items-center justify-center gap-2 rounded-full bg-[#FFDD00] hover:bg-[#FFE94D] text-[#16181D] text-sm sm:text-base font-bold px-6 py-3 border border-black/[0.10] shadow-md hover:shadow-lg transition-all flex-shrink-0 whitespace-nowrap"
+        className="support-card__cta flex items-center justify-center gap-2 rounded-full bg-[#FFDD00] hover:bg-[#FFE94D] text-[#16181D] text-sm sm:text-base font-bold px-6 py-3 border border-black/[0.10] shadow-md hover:shadow-lg transition-all flex-shrink-0 whitespace-nowrap"
       >
         <Coffee size={17} className="flex-shrink-0" />
         <span>{t.cta}</span>
       </a>
+      </div>
     </div>
   );
 }

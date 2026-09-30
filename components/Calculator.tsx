@@ -1004,7 +1004,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     <div className="text-xs font-mono text-amber-600 font-bold mb-1">{t.bl8}</div>
                     <div className="font-bold text-[#16181D] text-sm sm:text-base mb-1">{t.bl8States}</div>
                     <div className="text-xs text-black/60 mb-2">{t.blChurchIn} {jahr}:</div>
-                    <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2 rounded border border-black/[0.08] flex justify-between items-center">
+                    <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2 rounded border border-black/[0.08] flex flex-col items-start gap-0.5 [&>span:first-child]:text-xs [&>span:first-child]:font-semibold [&>span:first-child]:text-black/55 [&>span:last-child]:whitespace-nowrap">
                       <span>{t.netLabelShort} ({isJahresansicht ? t.yearWord : t.monthShort}):</span>
                       <span className="text-emerald-600">{formatEUR(showVal(resBW_BY.nettoMonat))}</span>
                     </div>
@@ -1014,7 +1014,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     <div className="text-xs font-mono text-rose-600 font-bold mb-1">{t.bl9}</div>
                     <div className="font-bold text-[#16181D] text-sm sm:text-base mb-1">{t.bl9States}</div>
                     <div className="text-xs text-black/60 mb-2">{t.blChurchIn} {jahr}:</div>
-                    <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2 rounded border border-black/[0.08] flex justify-between items-center">
+                    <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2 rounded border border-black/[0.08] flex flex-col items-start gap-0.5 [&>span:first-child]:text-xs [&>span:first-child]:font-semibold [&>span:first-child]:text-black/55 [&>span:last-child]:whitespace-nowrap">
                       <span>{t.netLabelShort} ({isJahresansicht ? t.yearWord : t.monthShort}):</span>
                       <span className="text-emerald-600">{formatEUR(showVal(resOtherStates.nettoMonat))}</span>
                     </div>
@@ -1067,7 +1067,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                   <div className="bg-black/[0.04] p-3.5 rounded-xl border border-black/[0.08]">
                     <div className="text-xs font-mono text-black/50 uppercase mb-1">{t.selectedYear}</div>
                     <div className="font-bold text-[#16181D] text-base mb-2">{t.taxYearWord} {jahr}</div>
-                    <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2.5 rounded border border-black/[0.08] flex justify-between items-center">
+                    <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2.5 rounded border border-black/[0.08] flex flex-col items-start gap-0.5 [&>span:first-child]:text-xs [&>span:first-child]:font-semibold [&>span:first-child]:text-black/55 [&>span:last-child]:whitespace-nowrap">
                       <span>{t.netLabelShort} ({isJahresansicht ? t.yearWord : t.monthShort}):</span>
                       <span className="text-[#16181D] font-bold">{formatEUR(showVal(result.nettoMonat))}</span>
                     </div>
@@ -1076,7 +1076,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                   <div className="bg-black/[0.04] p-3.5 rounded-xl border border-black/[0.08]">
                     <div className="text-xs font-mono text-black/50 uppercase mb-1">{t.compareYear}</div>
                     <div className="font-bold text-[#16181D] text-base mb-2">{t.taxYearWord} {otherYear}</div>
-                    <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2.5 rounded border border-black/[0.08] flex justify-between items-center">
+                    <div className="font-mono font-extrabold text-[#16181D] text-base sm:text-lg bg-black/[0.04] p-2.5 rounded border border-black/[0.08] flex flex-col items-start gap-0.5 [&>span:first-child]:text-xs [&>span:first-child]:font-semibold [&>span:first-child]:text-black/55 [&>span:last-child]:whitespace-nowrap">
                       <span>{t.netLabelShort} ({isJahresansicht ? t.yearWord : t.monthShort}):</span>
                       <span className="text-emerald-600 font-bold">{formatEUR(showVal(resOtherYear.nettoMonat))}</span>
                     </div>
@@ -1092,11 +1092,18 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
               </div>
             )}
 
-            {/* ── Support / Buy-me-a-coffee ──────────────────────────
-                Placed at the END of the result column on purpose: the
-                deep-link "Vollständige Analyse" CTA above drives pageviews
-                (ad revenue) and must not compete with a donation ask. Readers
-                who got this far are the ones most likely to give. */}
+          </div>
+
+          {/* ── Support / Buy-me-a-coffee ──────────────────────────
+              Placed at the END of the result column on purpose: the
+              deep-link "Vollständige Analyse" CTA above drives pageviews
+              (ad revenue) and must not compete with a donation ask. Readers
+              who got this far are the ones most likely to give.
+              Must stay OUTSIDE the year-comparison accordion above — it used
+              to be its last child, so the accordion's grey box and border
+              wrapped around the card. The card's own bottom margin is zeroed
+              here so it doesn't leave a gap at the end of the column. */}
+          <div className="mt-4 [&>div]:mb-0">
             <SupportButton variant="card" lang={lang} placement="calculator_result" />
           </div>
 

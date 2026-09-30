@@ -946,3 +946,12 @@ input:-webkit-autofill:active {
 .stories-scroll::-webkit-scrollbar {
   display: none;
 }
+
+/* Buy-me-a-coffee-Karte (SupportButton variant="card"): Layout nach der Breite
+   der Karte, nicht des Viewports — sie steht in der schmalen Ergebnisspalte. */
+.support-card { container-type: inline-size; }
+.support-card__cta { width: 100%; }
+@container (min-width: 520px) {
+  .support-card__layout { flex-direction: row; align-items: center; gap: 1.5rem; }
+  .support-card__cta { width: auto; }
+}
