@@ -5,20 +5,30 @@ import {
   calculateNetto,
   formatEUR,
   midijobArbeitnehmerBemessungMonat,
+  isMidijob,
   UEBERGANGSBEREICH_2026,
+  UEBERGANGSBEREICH_2027,
 } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 
+const PAGE_TITLE = "Midijob-Rechner 2026/2027 — Übergangsbereich bis 2.000 €";
+const PAGE_DESCRIPTION =
+  "Midijob-Rechner 2026/2027: Netto im Übergangsbereich berechnen — 2026 ab 603,01 €, 2027 ab 633,01 € bis 2.000 €. Reduzierte Abgaben, voller Rentenanspruch.";
+
 export const metadata: Metadata = {
-  title: "Midijob-Rechner 2026 — Übergangsbereich 603–2.000 € netto",
-  description:
-    "Midijob-Rechner 2026: Nettogehalt im Übergangsbereich (603,01–2.000 €) berechnen. Reduzierte Sozialabgaben nach Faktor F, voller Rentenanspruch.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   keywords: [
     "Midijob Rechner",
     "Midijob Rechner 2026",
+    "Midijob Rechner 2027",
+    "Midijob 2027",
+    "Midijob Grenze 2027",
+    "Midijob Untergrenze 2027",
+    "Übergangsbereich 2027",
     "Übergangsbereich Rechner",
     "Gleitzone Rechner",
     "Midijob netto",
@@ -29,9 +39,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/midijob-rechner" },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],
-    title: "Midijob-Rechner 2026 — Übergangsbereich 603–2.000 € netto berechnen",
-    description:
-      "Nettogehalt im Midijob-Übergangsbereich berechnen — reduzierte Sozialabgaben, voller Rentenanspruch. Kostenloser Midijob-Rechner 2026.",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     url: "https://bruttonettocalculator.com/midijob-rechner",
     locale: "de_DE",
     type: "website",
@@ -42,7 +51,18 @@ export const metadata: Metadata = {
 // Beispielhafte Monatsentgelte im Übergangsbereich (603,01 €–2.000 €).
 const MIDIJOB_STUFEN = [700, 900, 1100, 1300, 1500, 1700, 1900, 2000];
 
+// Vergleichsbeträge 2026 ↔ 2027 — 620 € liegt bewusst zwischen den beiden Untergrenzen.
+const VERGLEICH_STUFEN = [620, 650, 800, 1000, 1200, 1500, 1800, 2000];
+
 const faqs = [
+  {
+    q: "Wie hoch ist die Midijob-Grenze 2027?",
+    a: "2027 reicht der Midijob-Übergangsbereich von 633,01 € bis 2.000 € im Monat. Die Obergrenze bleibt gleich, die Untergrenze steigt mit der Minijob-Grenze von 603 € auf 633 €. Diese folgt automatisch dem Mindestlohn, der zum 1. Januar 2027 per Verordnung auf 14,60 € steigt (14,60 € × 130 ÷ 3 = 632,67 €, aufgerundet 633 €). Beide Grenzen stehen damit fest.",
+  },
+  {
+    q: "Was ändert sich beim Midijob 2027?",
+    a: "Zwei Dinge. Erstens: Wer zwischen 603,01 € und 633 € verdient, ist 2027 kein Midijobber mehr, sondern Minijobber — und damit über diesen Job nicht mehr selbst kranken-, pflege- und arbeitslosenversichert. Zweitens: Weil der Übergangsbereich jetzt höher beginnt, sinkt die beitragspflichtige Einnahme bei gleichem Brutto etwas; bei 1.200 € etwa von 854,69 € auf 829,55 €. Allein dadurch zahlen Midijobber 2027 bei gleichem Lohn etwas weniger Sozialabgaben. Wie viel am Ende bleibt, hängt aber auch an den Beitragssätzen 2027 — die stehen noch nicht alle fest.",
+  },
   {
     q: "Was ist ein Midijob 2026?",
     a: "Ein Midijob ist eine Beschäftigung im sogenannten Übergangsbereich (früher Gleitzone). 2026 umfasst er Monatsentgelte von 603,01 € bis 2.000 €. In diesem Bereich zahlen Arbeitnehmer reduzierte Sozialversicherungsbeiträge, sind aber voll sozialversichert (Kranken-, Pflege-, Renten- und Arbeitslosenversicherung).",
@@ -83,10 +103,10 @@ const appSchema = {
   "@type": "WebPage",
   inLanguage: "de-DE",
   isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
-  name: "Midijob-Rechner 2026 Deutschland",
+  name: "Midijob-Rechner 2026/2027 Deutschland",
   url: "https://bruttonettocalculator.com/midijob-rechner",
   description:
-    "Kostenloser Midijob-Rechner — Nettogehalt im Übergangsbereich (603,01–2.000 €) mit reduzierten Sozialabgaben nach § 20 Abs. 2a SGB IV berechnen.",
+    "Kostenloser Midijob-Rechner — Nettogehalt im Übergangsbereich (2026: 603,01–2.000 €, 2027: 633,01–2.000 €) mit reduzierten Sozialabgaben nach § 20 Abs. 2a SGB IV berechnen.",
 };
 
 export default function MidijobRechnerPage() {
@@ -108,6 +128,27 @@ export default function MidijobRechnerPage() {
     };
   });
 
+  // 2026 ↔ 2027 bei gleichem Brutto. Isoliert den Effekt der neuen Untergrenze:
+  // Die SV-Sätze 2027 stehen noch nicht fest, die Engine rechnet 2027 mit den
+  // amtlichen Sätzen 2026. Bis 633 € ist man 2027 Minijobber — dort fällt nur
+  // der (befreibare) RV-Eigenanteil von 3,6 % an, keine Engine-Rechnung.
+  const svAn = (brutto: number, jahr: 2026 | 2027) =>
+    calculateNetto({ bruttoMonat: brutto, jahr, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 }).sv
+      .summeMonat;
+  const vergleich = VERGLEICH_STUFEN.map((brutto) => {
+    const minijob2027 = brutto <= UEBERGANGSBEREICH_2027.untergrenze;
+    const be2026 = isMidijob(brutto, 2026) ? Math.max(0, midijobArbeitnehmerBemessungMonat(brutto, 2026)) : brutto;
+    const be2027 = minijob2027
+      ? null
+      : isMidijob(brutto, 2027)
+        ? Math.max(0, midijobArbeitnehmerBemessungMonat(brutto, 2027))
+        : brutto;
+    const sv2026 = svAn(brutto, 2026);
+    const sv2027 = minijob2027 ? brutto * 0.036 : svAn(brutto, 2027);
+    return { brutto, minijob2027, be2026, be2027, sv2026, sv2027, diff: sv2027 - sv2026 };
+  });
+  const at1200 = vergleich.find((v) => v.brutto === 1200)!;
+
   return (
     <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-24 text-[#16181D]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
@@ -122,16 +163,17 @@ export default function MidijobRechnerPage() {
 
       <div className="mb-10 text-center flex flex-col items-center">
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-5">
-          <Wallet2 size={14} /> Übergangsbereich · 603–2.000 € · 2026
+          <Wallet2 size={14} /> Übergangsbereich · 2026 ab 603,01 € · 2027 ab 633,01 €
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-5 max-w-4xl">
-          <span className="text-gradient-accent">Midijob-Rechner</span> 2026: Netto im Übergangsbereich
+          <span className="text-gradient-accent">Midijob-Rechner</span> 2026/2027: Netto im Übergangsbereich
         </h1>
         <p className="text-lg sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-6">
           Mit dem <strong className="text-[#16181D]">Midijob-Rechner</strong> berechnen Sie Ihr Nettogehalt im
           Übergangsbereich (<strong className="text-[#16181D]">603,01 € bis 2.000 €</strong> im Monat). Hier zahlen Sie
           <strong className="text-[#16181D]"> reduzierte Sozialabgaben</strong>, bleiben aber voll versichert und behalten
-          den vollen Rentenanspruch. Geben Sie Ihr Bruttogehalt ein und sehen Sie sofort Ihr Netto für 2026.
+          den vollen Rentenanspruch. Ab dem 1. Januar 2027 beginnt der Übergangsbereich erst bei{" "}
+          <strong className="text-[#16181D]">633,01 €</strong> — im Rechner können Sie auf 2027 umschalten.
         </p>
       </div>
 
@@ -194,6 +236,65 @@ export default function MidijobRechnerPage() {
         <p className="text-xs text-black/45 mt-3">
           Vereinfachte Berechnung (Steuerklasse I, kinderlos, ohne Kirchensteuer) nach § 32a EStG und § 20 Abs. 2a SGB IV,
           Stand 2026. Keine Steuer- oder Sozialversicherungsberatung.
+        </p>
+      </section>
+
+      <section className="mb-16">
+        <div className="mb-6">
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
+            <BarChart3 size={13} /> Midijob 2027
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+            Midijob 2027: Übergangsbereich ab 633,01 €
+          </h2>
+          <p className="text-sm sm:text-base text-black/70 mt-2 leading-relaxed">
+            Zum 1. Januar 2027 steigt die Minijob-Grenze mit dem Mindestlohn (14,60 €) auf 633 € — und damit die
+            Untergrenze des Übergangsbereichs. Die Obergrenze bleibt bei 2.000 €. Zwei Folgen: Wer bisher knapp
+            über 603 € verdient hat, wird 2027 zum{" "}
+            <Link href="/minijob-rechner" className="text-[#E60A1C] font-semibold hover:underline">Minijobber</Link>.
+            Und weil der Bereich höher beginnt, sinkt die beitragspflichtige Einnahme bei gleichem Brutto — bei{" "}
+            {formatEUR(1200)} von {formatEUR(at1200.be2026)} auf {formatEUR(at1200.be2027 ?? 0)}.
+          </p>
+        </div>
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-xl overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[680px]">
+            <thead>
+              <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
+                <th className="py-4 px-4">Brutto / Monat</th>
+                <th className="py-4 px-4 text-right">Beitragspfl. Einnahme 2026</th>
+                <th className="py-4 px-4 text-right">Beitragspfl. Einnahme 2027</th>
+                <th className="py-4 px-4 text-right">SV-Abzug 2026</th>
+                <th className="py-4 px-4 text-right">SV-Abzug 2027*</th>
+                <th className="py-4 px-4 text-right">Differenz</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-black/10 text-sm sm:text-base">
+              {vergleich.map((v) => (
+                <tr key={v.brutto} className="hover:bg-black/[0.04] transition-colors">
+                  <td className="py-3 px-4 font-bold text-[#16181D]">{formatEUR(v.brutto)}</td>
+                  <td className="py-3 px-4 text-right font-mono text-black/80">{formatEUR(v.be2026)}</td>
+                  <td className="py-3 px-4 text-right font-mono text-black/80">
+                    {v.be2027 === null ? <span className="text-black/55">Minijob</span> : formatEUR(v.be2027)}
+                  </td>
+                  <td className="py-3 px-4 text-right font-mono">{formatEUR(v.sv2026)}</td>
+                  <td className="py-3 px-4 text-right font-mono font-bold text-[#16181D]">
+                    {formatEUR(v.sv2027)}
+                    {v.minijob2027 && <span className="block text-xs font-normal text-black/50">nur RV 3,6 %</span>}
+                  </td>
+                  <td className={`py-3 px-4 text-right font-mono ${v.diff < 0 ? "text-emerald-600" : "text-[#E60A1C]"}`}>
+                    {v.diff > 0 ? "+" : ""}
+                    {formatEUR(v.diff)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-black/45 mt-3 leading-relaxed">
+          Arbeitnehmer-Sozialabgaben pro Monat, kinderlos, durchschnittlicher Zusatzbeitrag. * Die Grenzen 2027 stehen
+          fest, die Beitragssätze 2027 noch nicht — beide Spalten rechnen deshalb mit den amtlichen Sätzen 2026 und
+          zeigen allein den Effekt der neuen Untergrenze. Bis 633 € ist man 2027 Minijobber: kein eigener Kranken-,
+          Pflege- und Arbeitslosenschutz über den Job, nur der befreibare Rentenversicherungs-Eigenanteil.
         </p>
       </section>
 

@@ -223,21 +223,52 @@ export const UEBERGANGSBEREICH_2026 = {
   faktorF: 0.6619,
 } as const;
 
+/**
+ * Übergangsbereich 2027: Die Untergrenze ist die Geringfügigkeitsgrenze, und die
+ * ist seit 2024 dynamisch an den Mindestlohn gekoppelt (§ 8 Abs. 1a SGB IV:
+ * Mindestlohn × 130 ÷ 3, aufgerundet). Mit dem bereits verordneten Mindestlohn
+ * 2027 von 14,60 € ergibt das 632,67 → 633 €. Die Obergrenze bleibt 2.000 €.
+ *
+ * Faktor F 2027 steht noch nicht fest: Er hängt am Gesamtsozialversicherungs-
+ * beitragssatz 2027 (u. a. am durchschnittlichen Zusatzbeitrag, den das BMG erst
+ * im Herbst bekannt gibt). F wirkt aber nur auf die *Gesamt*-Bemessung (AG-Seite);
+ * die Arbeitnehmer-Bemessung unten braucht nur die beiden Grenzen und ist damit
+ * für 2027 schon exakt bestimmbar.
+ */
+export const UEBERGANGSBEREICH_2027 = {
+  untergrenze: 633,
+  obergrenze: 2000,
+  faktorF: null,
+} as const;
+
+export function uebergangsbereich(jahr: Steuerjahr = 2026) {
+  return jahr === 2027 ? UEBERGANGSBEREICH_2027 : UEBERGANGSBEREICH_2026;
+}
+
+/** Ist das Monatsbrutto im Übergangsbereich (Midijob) des jeweiligen Jahres? */
+export function isMidijob(bruttoMonat: number, jahr: Steuerjahr = 2026): boolean {
+  const { untergrenze, obergrenze } = uebergangsbereich(jahr);
+  return bruttoMonat > untergrenze && bruttoMonat <= obergrenze;
+}
+
 /** Ist das Monatsbrutto im Übergangsbereich (Midijob) 2026? */
 export function isMidijob2026(bruttoMonat: number): boolean {
-  return (
-    bruttoMonat > UEBERGANGSBEREICH_2026.untergrenze &&
-    bruttoMonat <= UEBERGANGSBEREICH_2026.obergrenze
-  );
+  return isMidijob(bruttoMonat, 2026);
 }
 
 /**
  * Beitragspflichtige Einnahme des Arbeitnehmers (Bemessungsgrundlage für die
- * AN-Beiträge) im Übergangsbereich 2026.
- * Formel: 1,43163922691 × Entgelt − 863,2784538207. Bei 1.200 € = 854,69 €.
+ * AN-Beiträge) im Übergangsbereich, § 20 Abs. 2a Satz 6 SGB IV:
+ *
+ *   OG ÷ (OG − G) × AE − G ÷ (OG − G) × OG
+ *
+ * mit G = Geringfügigkeitsgrenze, OG = 2.000 €, AE = Arbeitsentgelt.
+ * 2026 (G = 603): 1,43163922691 × AE − 863,2784538207 → bei 1.200 € = 854,69 €.
+ * 2027 (G = 633): 1,46305779079 × AE − 926,1155815655 → bei 1.200 € = 829,55 €.
  */
-export function midijobArbeitnehmerBemessungMonat(bruttoMonat: number): number {
-  return 1.43163922691 * bruttoMonat - 863.2784538207;
+export function midijobArbeitnehmerBemessungMonat(bruttoMonat: number, jahr: Steuerjahr = 2026): number {
+  const { untergrenze: g, obergrenze: og } = uebergangsbereich(jahr);
+  return (og / (og - g)) * bruttoMonat - (g / (og - g)) * og;
 }
 
 /**
@@ -546,10 +577,12 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   const r = RECHENGROESSEN_2026; // 2026-Parameter (auch als 2027-Platzhalter verwendet)
 
   // Sozialversicherung (Arbeitnehmeranteil).
-  // Im Midijob-Übergangsbereich (603,01–2.000 €/Monat) werden die AN-Beiträge
-  // von der reduzierten beitragspflichtigen Einnahme berechnet, sonst vom Brutto.
-  const svBemessungMonat = isMidijob2026(input.bruttoMonat)
-    ? Math.max(0, midijobArbeitnehmerBemessungMonat(input.bruttoMonat))
+  // Im Midijob-Übergangsbereich (2026: 603,01–2.000 €, 2027: 633,01–2.000 €)
+  // werden die AN-Beiträge von der reduzierten beitragspflichtigen Einnahme
+  // berechnet, sonst vom Brutto.
+  const jahr = input.jahr ?? 2026;
+  const svBemessungMonat = isMidijob(input.bruttoMonat, jahr)
+    ? Math.max(0, midijobArbeitnehmerBemessungMonat(input.bruttoMonat, jahr))
     : input.bruttoMonat;
   const svBemessungJahr = svBemessungMonat * 12;
 

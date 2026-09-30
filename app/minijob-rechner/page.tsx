@@ -1,17 +1,26 @@
 import type { Metadata } from "next";
 import MinijobRechner from "./MinijobRechner";
+import { MINIJOB_FAQS } from "./minijobData";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 
+const PAGE_TITLE = "Minijob-Rechner 2026/2027: Grenze 603 € und 633 € ab 2027";
+const PAGE_DESCRIPTION =
+  "Minijob-Rechner 2026/2027: Verdienstgrenze 603 €, ab 1.1.2027 633 €. Netto, Rentenversicherungs-Eigenanteil 3,6 % und Stunden mit Mindestlohn berechnen.";
+
 export const metadata: Metadata = {
-  title: "Minijob-Rechner 2026 — Verdienstgrenze 603 € berechnen",
-  description:
-    "Minijob-Rechner 2026: Verdienstgrenze 603 € pro Monat, Rentenversicherungs-Eigenanteil 3,6 % und Netto-Verdienst berechnen. Kostenlos & aktuell für 2026/2027.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   keywords: [
     "Minijob Rechner",
     "Minijob Rechner 2026",
+    "Minijob Rechner 2027",
     "Minijob Grenze 2026",
+    "Minijob Grenze 2027",
     "Minijob 603 Euro",
+    "Minijob 633 Euro",
+    "Minijob 2027 Stunden",
+    "Minijob 2027 Änderungen",
     "geringfügige Beschäftigung Rechner",
     "Minijob Rentenversicherung",
     "Minijob netto",
@@ -19,35 +28,23 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/minijob-rechner" },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],
-    title: "Minijob-Rechner 2026 — Verdienstgrenze 603 € berechnen",
-    description: "Verdienstgrenze 603 €, Rentenversicherungs-Eigenanteil und Netto-Verdienst im Minijob berechnen.",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     url: "https://bruttonettocalculator.com/minijob-rechner",
     locale: "de_DE",
     type: "website",
   },
 };
 
+// Aus denselben Fragen wie im Rechner — Schema und sichtbare FAQ laufen nicht auseinander.
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Wie hoch ist die Minijob-Grenze 2026?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Die Minijob-Grenze liegt seit dem 1. Januar 2026 bei 603 € monatlich und steigt zum 1. Januar 2027 auf 633 €.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Muss ich als Minijobber Rentenversicherungsbeiträge zahlen?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Minijobber sind grundsätzlich rentenversicherungspflichtig und zahlen einen Eigenanteil von 3,6 % ihres Verdienstes, können sich aber davon befreien lassen.",
-      },
-    },
-  ],
+  mainEntity: MINIJOB_FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
 };
 
 export default function MinijobRechnerPage() {

@@ -9,6 +9,7 @@ import {
   midijobArbeitnehmerBemessungMonat,
   midijobGesamtBemessungMonat,
   isMidijob2026,
+  isMidijob,
   calculateNetto,
 } from "../lib/taxCalculator.ts";
 
@@ -26,6 +27,10 @@ function assert(name: string, cond: boolean) {
 // --- Official DRV checkpoint at €1,200 ---
 approx("AN-Bemessung @1200 = 854,69 €", midijobArbeitnehmerBemessungMonat(1200), 854.69);
 approx("Gesamt-Bemessung @1200 = 1.083,25 €", midijobGesamtBemessungMonat(1200), 1083.25);
+
+// --- €1,000 page (whitelisted 2026-09-30): same closed form, § 20 Abs. 2a SGB IV ---
+approx("AN-Bemessung @1000 = 568,36 €", midijobArbeitnehmerBemessungMonat(1000), 568.36);
+assert("1.000 € IS Midijob (2026 and 2027)", isMidijob2026(1000) && isMidijob(1000, 2027));
 
 // --- Range boundaries: at €2,000 both bases collapse to the actual pay ---
 approx("AN-Bemessung @2000 = 2000 €", midijobArbeitnehmerBemessungMonat(2000), 2000);
@@ -52,6 +57,23 @@ approx("€1200 SV sum = 854,69 × AN-Satz", at1200.sv.summeMonat, 854.6886185 *
 const at2000 = calculateNetto({ bruttoMonat: 2000, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });
 const naive2000Sv = 2000 * anRate;
 approx("€2000 SV sum equals full-rate (base = pay)", at2000.sv.summeMonat, naive2000Sv, 0.05);
+
+// --- 2027: Untergrenze = Minijob-Grenze 633 € (Mindestlohn 14,60 × 130 ÷ 3, aufgerundet) ---
+approx("Minijob-Grenze 2027 = ceil(14,60 × 130 / 3)", Math.ceil((14.6 * 130) / 3), 633, 0);
+approx("2027 AN-Bemessung @1200 = 829,55 €", midijobArbeitnehmerBemessungMonat(1200, 2027), 829.55);
+approx("2027 AN-Bemessung @2000 = 2000 €", midijobArbeitnehmerBemessungMonat(2000, 2027), 2000);
+approx("2027 AN-Bemessung @633 = 0 €", midijobArbeitnehmerBemessungMonat(633, 2027), 0);
+assert("2027: 620 € is NOT Midijob (Minijob)", isMidijob(620, 2027) === false);
+assert("2027: 633,00 € is NOT Midijob", isMidijob(633, 2027) === false);
+assert("2027: 633,01 € IS Midijob", isMidijob(633.01, 2027) === true);
+assert("2026 still: 620 € IS Midijob", isMidijob(620, 2026) === true);
+const at1200in2027 = calculateNetto({ bruttoMonat: 1200, jahr: 2027, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });
+approx(
+  "2027 €1200 SV sum = 829,55 × AN-Satz (SV-Sätze 2026 als Platzhalter)",
+  at1200in2027.sv.summeMonat,
+  midijobArbeitnehmerBemessungMonat(1200, 2027) * anRate,
+  0.02
+);
 
 console.log(failed === 0 ? "\nALL MIDIJOB CHECKS PASSED" : `\n${failed} CHECK(S) FAILED`);
 process.exit(failed === 0 ? 0 : 1);

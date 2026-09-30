@@ -96,7 +96,7 @@ Sozialversicherung 2026 (Arbeitnehmeranteil):
 Beschäftigungsgrenzen 2026:
 - Gesetzlicher Mindestlohn: 13,90 €/Stunde ab 1.1.2026, 14,60 €/Stunde ab 1.1.2027
 - Minijob-Grenze: ${de(UEBERGANGSBEREICH_2026.untergrenze)} € im Monat (${de(UEBERGANGSBEREICH_2026.untergrenze * 12)} € im Jahr), ab 1.1.2027 633 €; Rentenversicherungs-Eigenanteil 3,6 %
-- Übergangsbereich (Midijob): ${de(UEBERGANGSBEREICH_2026.untergrenze + 0.01, 2)} € bis ${de(UEBERGANGSBEREICH_2026.obergrenze)} € im Monat, Faktor F ${String(UEBERGANGSBEREICH_2026.faktorF).replace(".", ",")}
+- Übergangsbereich (Midijob): ${de(UEBERGANGSBEREICH_2026.untergrenze + 0.01, 2)} € bis ${de(UEBERGANGSBEREICH_2026.obergrenze)} € im Monat, Faktor F ${String(UEBERGANGSBEREICH_2026.faktorF).replace(".", ",")}; ab 1.1.2027 633,01 € bis 2.000 €
 - Werkstudenten: nur Rentenversicherung ${pct(BBG_2026.anSatzRv)}, höchstens 20 Wochenstunden während der Vorlesungszeit
 - Betriebliche Altersvorsorge (§ 3 Nr. 63 EStG): steuerfrei bis ${de((BAV_2026.bbgRvJahr * BAV_2026.steuerFreiProzent) / 12)} € im Monat, sozialabgabenfrei bis ${de((BAV_2026.bbgRvJahr * BAV_2026.svFreiProzent) / 12)} € im Monat
 - Entfernungspauschale: 0,38 € je Entfernungskilometer ab dem ersten Kilometer (seit 1.1.2026; die frühere Staffelung mit 0,30 € für die ersten 20 km ist entfallen)
