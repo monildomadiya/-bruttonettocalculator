@@ -31,7 +31,8 @@
 }
 
 /* ─── Base resets ───────────────────────────────────────────────────── */
-html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; max-width: 100%; }
+/* scroll-padding-top: Sprunglinks (#id) landen unter dem 78 px hohen Sticky-Header, nicht dahinter. */
+html { scroll-behavior: smooth; scroll-padding-top: 96px; font-size: 16px; overflow-x: hidden; max-width: 100%; }
 
 body {
   background-color: #F4F5F7;

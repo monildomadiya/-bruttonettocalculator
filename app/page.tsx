@@ -12,6 +12,7 @@ import { siteConfig } from "@/lib/authors";
 import { ORG_ID } from "@/lib/seo";
 import SupportButton from "@/components/SupportButton";
 import LatestPosts from "@/components/LatestPosts";
+import TableOfContents from "@/components/TableOfContents";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
@@ -252,10 +253,23 @@ export default function HomePage() {
             Krankenkassen-Zusatzbeitrag bereits eingerechnet.
           </p>
 
+          <TableOfContents
+            centered
+            className="mb-4 sm:mb-6 text-left"
+            items={[
+              { id: "wissen", label: "Das sollten Sie wissen" },
+              { id: "gehaelter", label: "Beliebte Gehälter" },
+              { id: "schritte", label: "In 3 Schritten" },
+              { id: "steuerklassen-kombi", label: "III/V oder IV/IV?" },
+              { id: "faq", label: "Häufige Fragen" },
+              { id: "alle-rechner", label: "Alle Rechner" },
+            ]}
+          />
+
           {/* CTA buttons — nur ab sm: Mobil steht der Rechner direkt darunter, ein
               "Jetzt berechnen"-Sprungknopf schob ihn nur unter den Falz. */}
           <div
-            className="hidden sm:flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-4 sm:mb-10 animate-fade-up w-full sm:w-auto px-4 sm:px-0"
+            className="hidden sm:flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-4 sm:mb-8 animate-fade-up w-full sm:w-auto px-4 sm:px-0"
             style={{ animationDelay: "240ms" }}
           >
             <a
@@ -318,7 +332,7 @@ export default function HomePage() {
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             <Sparkles size={14} /> Wichtige Fakten
           </div>
-          <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Das sollten Sie wissen</h2>
+          <h2 id="wissen" className="font-display text-display-md font-extrabold text-[#16181D]">Das sollten Sie wissen</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {infoCards.map((card) => (
@@ -333,7 +347,7 @@ export default function HomePage() {
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             <Wallet size={14} /> Beliebte Gehälter
           </div>
-          <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Beliebte Gehälter berechnen</h2>
+          <h2 id="gehaelter" className="font-display text-display-md font-extrabold text-[#16181D]">Beliebte Gehälter berechnen</h2>
           <p className="text-black/70 text-base sm:text-lg mt-3 max-w-2xl mx-auto">
             Direkt zum fertig berechneten Nettogehalt für ein konkretes Bruttogehalt — mit allen 6 Steuerklassen für 2026.
           </p>
@@ -368,7 +382,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
               Anleitung
             </div>
-            <h2 className="font-display text-display-md font-extrabold text-[#16181D]">In 3 Schritten zum Nettogehalt</h2>
+            <h2 id="schritte" className="font-display text-display-md font-extrabold text-[#16181D]">In 3 Schritten zum Nettogehalt</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {steps.map(({ Icon, step, title, desc }) => (
@@ -393,7 +407,7 @@ export default function HomePage() {
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             <Scale size={14} /> Für Ehepaare
           </div>
-          <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Steuerklassen-Kombination: III/V oder IV/IV?</h2>
+          <h2 id="steuerklassen-kombi" className="font-display text-display-md font-extrabold text-[#16181D]">Steuerklassen-Kombination: III/V oder IV/IV?</h2>
           <p className="text-black/70 text-base sm:text-lg mt-3 max-w-2xl mx-auto">
             Verheiratete können zwischen drei Kombinationen wählen. Sie ändert nur die{" "}
             <strong className="text-[#16181D]">monatliche Verteilung</strong> — nicht die endgültige Jahressteuer.
@@ -455,7 +469,7 @@ export default function HomePage() {
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             Häufige Fragen
           </div>
-          <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Alles über Brutto & Netto</h2>
+          <h2 id="faq" className="font-display text-display-md font-extrabold text-[#16181D]">Alles über Brutto & Netto</h2>
         </div>
         <AccordionFaq faqs={faqs} />
       </section>
@@ -471,7 +485,7 @@ export default function HomePage() {
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             <Sparkles size={14} /> Alle Rechner
           </div>
-          <h2 className="font-display text-display-md font-extrabold text-[#16181D]">Alle Rechner im Überblick</h2>
+          <h2 id="alle-rechner" className="font-display text-display-md font-extrabold text-[#16181D]">Alle Rechner im Überblick</h2>
           <p className="text-black/70 text-base sm:text-lg mt-3 max-w-2xl mx-auto">
             Über 30 kostenlose Rechner für Gehalt, Steuern und Sozialleistungen — alle aktuell für das Steuerjahr 2026/2027.
           </p>

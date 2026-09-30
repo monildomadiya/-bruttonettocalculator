@@ -7,6 +7,7 @@ import {
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
+import TableOfContents from "@/components/TableOfContents";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 
@@ -122,20 +123,31 @@ export default function GehaltsrechnerPage() {
       </div>
 
       {/* Hero */}
-      <div className="mb-6 sm:mb-10 text-center flex flex-col items-center">
+      <div className="mb-4 sm:mb-6 text-center flex flex-col items-center">
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-5">
           <CalcIcon size={14} /> Gehaltsrechner · Steuerjahr 2026/2027
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-5 max-w-4xl">
           <span className="text-gradient-accent">Gehaltsrechner</span> 2026: Brutto Netto Gehalt berechnen
         </h1>
-        <p className="text-base sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-2 sm:mb-6">
+        <p className="text-base sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-2 sm:mb-4">
           Mit unserem kostenlosen <strong className="text-[#16181D]">Gehaltsrechner</strong> ermitteln Sie in Sekunden Ihr
           exaktes <strong className="text-[#16181D]">Nettogehalt</strong> aus dem Bruttogehalt — inklusive Lohnsteuer,
           Solidaritätszuschlag und aller Sozialabgaben. Der <strong className="text-[#16181D]">Netto-Gehaltsrechner</strong>{" "}
           rechnet nach den amtlichen Werten für 2026 und 2027, in allen 6 Steuerklassen.
         </p>
       </div>
+
+      <TableOfContents
+        centered
+        className="mb-4 sm:mb-6"
+        items={[
+          { id: "ueberblick", label: "Netto-Tabelle" },
+          { id: "so-funktioniert", label: "So wird gerechnet" },
+          { id: "faq", label: "Häufige Fragen" },
+          { id: "tool-content-heading", label: "Ratgeber" },
+        ]}
+      />
 
       {/* Calculator */}
       <section id="rechner" className="mb-14 scroll-mt-24">
@@ -148,7 +160,7 @@ export default function GehaltsrechnerPage() {
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
             <BarChart3 size={13} /> Gehaltstabelle 2026
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+          <h2 id="ueberblick" className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
             Brutto-Netto-Gehalt im Überblick
           </h2>
           <p className="text-sm sm:text-base text-black/70 mt-1">
@@ -203,7 +215,7 @@ export default function GehaltsrechnerPage() {
       </section>
 
       <section className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="so-funktioniert" className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
           Gehaltsrechner 2026: So funktioniert die Netto-Berechnung
         </h2>
         <p>
@@ -254,7 +266,7 @@ export default function GehaltsrechnerPage() {
 
       {/* FAQ */}
       <section className="mb-4">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 text-center">
+        <h2 id="faq" className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 text-center">
           Häufige Fragen zum Gehaltsrechner
         </h2>
         <AccordionFaq faqs={faqs} />

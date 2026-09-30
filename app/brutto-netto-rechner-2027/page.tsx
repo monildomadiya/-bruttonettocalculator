@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Sparkles, AlertCircle, SlidersHorizontal } from "lucide-react";
 import Calculator from "@/components/Calculator";
 import Reform2027Status, { REFORM_STAND } from "@/components/Reform2027Status";
+import TableOfContents from "@/components/TableOfContents";
 import EntlastungsKurve from "@/components/charts/EntlastungsKurve";
 import TarifKurve from "@/components/charts/TarifKurve";
 import {
@@ -167,7 +168,7 @@ export default function Rechner2027Page() {
       {/* Mobil muss der Rechner im ersten Bildschirm beginnen: Über dem Rechner
           steht deshalb nur ein kurzer Lead, die ausführliche Einordnung folgt
           direkt unter dem Rechner (gleicher Text, nur tiefer). */}
-      <div className="mb-6 sm:mb-10">
+      <div className="mb-4 sm:mb-8">
         <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4">
           <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full">
             <Sparkles size={14} /> Im Bundestag · Drucksache 21/8235
@@ -187,6 +188,18 @@ export default function Rechner2027Page() {
           „Ohne Reform“ direkt vergleichen.
         </p>
       </div>
+
+      <TableOfContents
+        className="mb-4 sm:mb-8"
+        items={[
+          { id: "entlastung", label: "Mehr Netto nach Gehalt" },
+          { id: "tarif", label: "Was sich am Tarif ändert" },
+          { id: "reform-status-heading", label: "Stand der Reform" },
+          { id: "bereits-fest", label: "Was 2027 schon feststeht" },
+          { id: "aenderungen", label: "Die Änderungen im Überblick" },
+          { id: "faq", label: "Häufige Fragen" },
+        ]}
+      />
 
       <div className="w-full max-w-6xl mx-auto mb-10 sm:mb-14">
         <Calculator
@@ -233,8 +246,12 @@ export default function Rechner2027Page() {
         Rechen-Engine erzeugt.
       */}
       <div className="w-full max-w-6xl mx-auto mb-4">
-        <EntlastungsKurve />
-        <TarifKurve />
+        <div id="entlastung">
+          <EntlastungsKurve />
+        </div>
+        <div id="tarif">
+          <TarifKurve />
+        </div>
       </div>
 
       <Reform2027Status />
@@ -256,7 +273,7 @@ export default function Rechner2027Page() {
 
       {/* Steuerreform 2027 content section — targets "steuerreform 2027 rechner" cluster */}
       <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 mb-8">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 id="aenderungen" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
           Steuerreform 2027: Das ändert sich beim Netto
         </h2>
         <div className="text-sm sm:text-base text-black/70 leading-relaxed space-y-4">
@@ -315,7 +332,7 @@ export default function Rechner2027Page() {
 
       {/* SEO Q&A section for 2027 long-tail queries */}
       <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 id="faq" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
           Häufige Fragen zum Brutto Netto Rechner 2027
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm sm:text-base">

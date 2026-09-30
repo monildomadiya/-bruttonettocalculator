@@ -181,7 +181,7 @@ export default function Reform2027Status() {
 
       <div className="flex flex-wrap items-center gap-3 mb-2 pt-2 border-t border-black/[0.08]">
         <ShieldCheck size={22} className="text-emerald-600" aria-hidden="true" />
-        <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mt-6">
+        <h2 id="bereits-fest" className="text-xl sm:text-2xl font-extrabold text-[#16181D] mt-6">
           Was für 2027 bereits feststeht
         </h2>
       </div>
