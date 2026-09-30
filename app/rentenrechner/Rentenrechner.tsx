@@ -41,8 +41,11 @@ export default function Rentenrechner() {
   const [kirche, setKirche] = useState(false);
 
   const [beitragsjahre, setBeitragsjahre] = useState(35);
-  const [durchschnittsentgelt, setDurchschnittsentgelt] = useState(50493);
-  const [rentenwert, setRentenwert] = useState(39.32);
+  // Vorläufiges Durchschnittsentgelt 2026 (SV-Rechengrößen 2026) und aktueller
+  // Rentenwert seit 1.7.2026 (+4,24 %). Vorher standen hier 50.493 € und 39,32 €
+  // (Werte von 2025 bzw. 2024/25) — der Rest der Site nannte längst 51.944 € / 42,52 €.
+  const [durchschnittsentgelt, setDurchschnittsentgelt] = useState(51944);
+  const [rentenwert, setRentenwert] = useState(42.52);
 
   const result = useMemo(() => {
     const netto = calculateNetto({
@@ -200,6 +203,14 @@ export default function Rentenrechner() {
                 <span className="text-2xl font-extrabold text-emerald-600">{formatEuro(result.bruttoRenteMonat)}</span>
               </div>
             </div>
+
+            <Link
+              href="/rente-brutto-netto-rechner"
+              className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[#E60A1C] hover:underline"
+            >
+              Wie viel bleibt davon netto? Zum Rente-Brutto-Netto-Rechner
+              <ArrowRight size={14} />
+            </Link>
 
             <Link
               href="/"

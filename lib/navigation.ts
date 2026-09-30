@@ -74,6 +74,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/firmenwagenrechner", label: "Firmenwagenrechner", icon: Car, description: "1%-Regelung & Dienstwagen" },
       { href: "/rentenrechner", label: "Rentenrechner", icon: PiggyBank, description: "Rentenbeitrag & Prognose" },
       { href: "/rentenpunkte-rechner", label: "Rentenpunkte-Rechner", icon: TrendingUp, description: "Entgeltpunkte & Rente · 42,52 €" },
+      { href: "/rente-brutto-netto-rechner", label: "Rente Brutto Netto", icon: PiggyBank, description: "Nettorente 2026/2027" },
       { href: "/riester-rechner", label: "Riester-Rechner", icon: Landmark, description: "Zulagen & Eigenbeitrag" },
       { href: "/bav-rechner", label: "bAV-Rechner", icon: PiggyBank, description: "Entgeltumwandlung netto berechnen" },
       { href: "/immobilienkredit-rechner", label: "Immobilienkredit-Rechner", icon: Home, description: "Wie viel Haus kann ich mir leisten?" },
