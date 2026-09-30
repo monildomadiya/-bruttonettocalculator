@@ -43,7 +43,7 @@ export default function MindestlohnContent() {
 
       {/* Minijob */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="ml-minijob">
-        <h2 id="ml-minijob" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ml-minijob" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Mindestlohn und Minijob
         </h2>
         <p>
@@ -61,7 +61,7 @@ export default function MindestlohnContent() {
 
       {/* Arbeitgeberkosten */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="ml-ag">
-        <h2 id="ml-ag" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ml-ag" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Mindestlohn aus Arbeitgebersicht
         </h2>
         <p>

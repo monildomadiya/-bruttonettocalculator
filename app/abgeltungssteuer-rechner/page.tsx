@@ -108,7 +108,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ab-belastung"
       >
-        <h2 id="ab-belastung" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ab-belastung" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Warum die Belastung nicht einfach 25 % ist
         </h2>
         <p>
@@ -134,7 +134,7 @@ function Content() {
       </section>
 
       <section className="py-6" aria-labelledby="ab-tabelle">
-        <h2 id="ab-tabelle" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="ab-tabelle" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Gesamtbelastung im Überblick
         </h2>
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-sm overflow-x-auto">
@@ -174,7 +174,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ab-sparen"
       >
-        <h2 id="ab-sparen" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ab-sparen" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Drei Wege, legal weniger zu zahlen
         </h2>
         <ol>

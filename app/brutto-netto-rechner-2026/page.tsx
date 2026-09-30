@@ -158,7 +158,7 @@ export default function Rechner2026Page() {
 
       {/* Amtliche Rechengrößen 2026 — unique, engine-backed reference table */}
       <div className="w-full max-w-6xl mx-auto bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-10 shadow-lg mb-8">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Alle amtlichen Werte 2026 auf einen Blick
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6">
@@ -206,8 +206,8 @@ export default function Rechner2026Page() {
       </div>
 
       {/* Content section — targets "brutto netto rechner 2026" / "netto 2026" cluster */}
-      <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 mb-8">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+      <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 mb-8">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Was bleibt 2026 vom Brutto? So funktioniert die Berechnung
         </h2>
         <div className="text-sm sm:text-base text-black/70 leading-relaxed space-y-4">
@@ -250,8 +250,8 @@ export default function Rechner2026Page() {
       </div>
 
       {/* SEO Q&A section for 2026 long-tail queries */}
-      <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+      <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Häufige Fragen zum Brutto Netto Rechner 2026
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm sm:text-base">

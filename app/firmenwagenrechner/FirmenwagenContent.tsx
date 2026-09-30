@@ -49,7 +49,7 @@ export default function FirmenwagenContent() {
 
       {/* Worked example */}
       <section className="py-6" aria-labelledby="fw-beispiel">
-        <h2 id="fw-beispiel" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="fw-beispiel" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Beispiel: Was kostet mich ein Firmenwagen?
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -86,7 +86,7 @@ export default function FirmenwagenContent() {
 
       {/* Erklärungen */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="fw-details">
-        <h2 id="fw-details" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="fw-details" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Listenpreis vs. Kaufpreis
         </h2>
         <p>

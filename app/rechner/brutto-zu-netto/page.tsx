@@ -84,11 +84,11 @@ export default function BruttoZuNettoPage() {
 
       {/* Erklärung: So wird gerechnet */}
       <div className="w-full max-w-6xl mx-auto mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6 flex items-center gap-2">
           <ListChecks size={24} className="text-[#E60A1C]" />
           So wird Ihr Brutto zu Netto berechnet
         </h2>
-        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 space-y-4 text-black/80 text-base sm:text-lg leading-relaxed">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 space-y-4 text-black/80 text-base sm:text-lg leading-relaxed">
           <p>
             Anders als viele denken, wird die Lohnsteuer nicht direkt vom Bruttogehalt berechnet.
             Zuerst zieht Ihr Arbeitgeber die Sozialversicherungsbeiträge ab — für die Rentenversicherung
@@ -113,7 +113,7 @@ export default function BruttoZuNettoPage() {
 
       {/* FAQ */}
       <div className="w-full max-w-6xl mx-auto pb-10">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
           Häufige Fragen zur Brutto-Netto-Berechnung
         </h2>
         <div className="space-y-3">

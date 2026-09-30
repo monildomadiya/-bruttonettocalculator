@@ -182,7 +182,7 @@ export default function MidijobRechnerPage() {
       </section>
 
       {/* Answer-first quotable box */}
-      <section className="mb-16 bg-[#E60A1C]/[0.05] border border-[#E60A1C]/25 rounded-3xl p-6 sm:p-8 flex items-start gap-4">
+      <section data-section="" className="mb-16 bg-[#E60A1C]/[0.05] border border-[#E60A1C]/25 rounded-3xl p-6 sm:p-8 flex items-start gap-4">
         <Info size={22} className="text-[#E60A1C] flex-shrink-0 mt-1" />
         <p className="text-sm sm:text-base text-black/80 leading-relaxed">
           <strong className="text-[#16181D]">Kurz erklärt:</strong> Im Midijob-Übergangsbereich 2026
@@ -193,12 +193,12 @@ export default function MidijobRechnerPage() {
         </p>
       </section>
 
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
             <BarChart3 size={13} /> Midijob-Tabelle 2026
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Netto im Übergangsbereich (Steuerklasse I, 2026)
           </h2>
           <p className="text-sm sm:text-base text-black/70 mt-1">
@@ -239,12 +239,12 @@ export default function MidijobRechnerPage() {
         </p>
       </section>
 
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
             <BarChart3 size={13} /> Midijob 2027
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Midijob 2027: Übergangsbereich ab 633,01 €
           </h2>
           <p className="text-sm sm:text-base text-black/70 mt-2 leading-relaxed">
@@ -298,8 +298,8 @@ export default function MidijobRechnerPage() {
         </p>
       </section>
 
-      <section className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">Midijob 2026: Was Sie wissen sollten</h2>
+      <section data-section="" className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Midijob 2026: Was Sie wissen sollten</h2>
         <p>
           Ein <strong className="text-[#16181D]">Midijob</strong> liegt im sogenannten Übergangsbereich zwischen dem
           <Link href="/minijob-rechner" className="text-[#E60A1C] font-semibold hover:underline"> Minijob (bis 603 €)</Link> und
@@ -324,7 +324,7 @@ export default function MidijobRechnerPage() {
       </section>
 
       <section>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 text-center flex items-center justify-center gap-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8 text-center flex items-center justify-center gap-2">
           <Sparkles className="text-[#E60A1C]" size={22} /> Häufige Fragen zum Midijob
         </h2>
         <AccordionFaq faqs={faqs} />

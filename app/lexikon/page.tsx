@@ -172,7 +172,7 @@ export default function LexikonPage() {
       <div className="space-y-16">
         {gruppen.map((gruppe) => (
           <div key={gruppe.label}>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 pb-3 border-b border-black/[0.08]">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8 pb-3 border-b border-black/[0.08]">
               {gruppe.label}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">

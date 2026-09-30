@@ -41,7 +41,7 @@ export default function ArbeitgeberContent() {
 
       {/* Vier Begriffe */}
       <section className="py-6" aria-labelledby="ag-begriffe">
-        <h2 id="ag-begriffe" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="ag-begriffe" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Bruttogehalt, Nettogehalt, Arbeitgeberbrutto und Personalkosten
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -64,7 +64,7 @@ export default function ArbeitgeberContent() {
 
       {/* Beispielrechnung */}
       <section className="py-6" aria-labelledby="ag-beispiele">
-        <h2 id="ag-beispiele" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="ag-beispiele" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Beispielrechnung: Arbeitgeberkosten pro Monat
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -104,7 +104,7 @@ export default function ArbeitgeberContent() {
 
       {/* Erklärungen */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="ag-anteile">
-        <h2 id="ag-anteile" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ag-anteile" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Arbeitgeberanteile zur Sozialversicherung
         </h2>
         <p>

@@ -62,7 +62,7 @@ export default function WeihnachtsgeldContent() {
 
       {/* Beispielrechnungen */}
       <section className="py-6" aria-labelledby="beispiele">
-        <h2 id="beispiele" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="beispiele" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Beispielrechnungen: Weihnachtsgeld netto
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -103,7 +103,7 @@ export default function WeihnachtsgeldContent() {
 
       {/* Wie wird Weihnachtsgeld versteuert? */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="versteuerung">
-        <h2 id="versteuerung" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="versteuerung" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Wie wird Weihnachtsgeld versteuert?
         </h2>
         <p>
@@ -125,7 +125,7 @@ export default function WeihnachtsgeldContent() {
 
       {/* Einfluss der Steuerklasse */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="steuerklasse">
-        <h2 id="steuerklasse" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="steuerklasse" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Einfluss der Steuerklasse
         </h2>
         <p>

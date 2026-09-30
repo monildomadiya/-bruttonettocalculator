@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Sparkles, AlertCircle, SlidersHorizontal } from "lucide-react";
+import { Sparkles, AlertCircle, SlidersHorizontal, Calculator as CalculatorIcon, LineChart, BookOpen, HelpCircle } from "lucide-react";
 import Calculator from "@/components/Calculator";
 import Reform2027Status, { REFORM_STAND } from "@/components/Reform2027Status";
 import TableOfContents from "@/components/TableOfContents";
+import Section from "@/components/ui/Section";
 import EntlastungsKurve from "@/components/charts/EntlastungsKurve";
 import TarifKurve from "@/components/charts/TarifKurve";
 import {
@@ -208,7 +209,8 @@ export default function Rechner2027Page() {
         />
       </div>
 
-      <p className="w-full max-w-6xl mx-auto text-base sm:text-lg text-black/80 leading-relaxed mb-8">
+      <Section eyebrow="So wird gerechnet" eyebrowIcon={CalculatorIcon} title="Worauf dieser Rechner 2027 basiert" prose>
+        <p>
           Am 2. September 2026 hat das Bundeskabinett den{" "}
           <strong className="text-[#16181D] font-semibold">Regierungsentwurf eines Einkommensteuerreformgesetzes 2027</strong>{" "}
           beschlossen. Er fasst § 32a EStG für 2027 und 2028 komplett neu — dieser{" "}
@@ -223,8 +225,7 @@ export default function Rechner2027Page() {
           <strong className="text-[#16181D] font-semibold">Lohnrechner 2027</strong> zeigt das Tool den
           Unterschied im echten Jahresvergleich.
         </p>
-
-      <div className="w-full max-w-6xl mx-auto bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-8 flex items-start gap-4 text-sm sm:text-base text-black/80 leading-relaxed shadow-lg mb-12">
+        <div className="flex items-start gap-3 sm:gap-4 bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-4 sm:p-6">
         <SlidersHorizontal size={22} className="text-[#E60A1C] flex-shrink-0 mt-0.5" />
         <p>
           <strong className="text-[#16181D] font-bold">So lesen Sie die Szenarien:</strong>{" "}
@@ -236,7 +237,8 @@ export default function Rechner2027Page() {
           zwischen „Ohne Reform“ und „Entwurf 2027“ ist genau das, was im laufenden Verfahren auf
           dem Spiel steht; der Status dazu steht direkt darunter.
         </p>
-      </div>
+        </div>
+      </Section>
 
       {/*
         Zwei Diagramme statt einer weiteren Zahlenkolonne: Die erste Kurve
@@ -245,18 +247,24 @@ export default function Rechner2027Page() {
         die Tarifänderung, aus der sie folgt. Beide werden serverseitig aus der
         Rechen-Engine erzeugt.
       */}
-      <div className="w-full max-w-6xl mx-auto mb-4">
+      <Section
+        eyebrow="Grafik"
+        eyebrowIcon={LineChart}
+        title="Was der Entwurf für Ihr Netto bedeutet"
+        intro="Beide Kurven rechnet die Engine dieses Rechners aus dem Gesetzentwurf — über den gesamten Gehaltsbereich statt nur für einen Beispielwert."
+      >
         <div id="entlastung">
           <EntlastungsKurve />
         </div>
         <div id="tarif">
           <TarifKurve />
         </div>
-      </div>
+      </Section>
 
       <Reform2027Status />
 
-      <p className="w-full max-w-6xl mx-auto text-sm sm:text-base text-black/70 leading-relaxed mb-8">
+      <Section prose>
+      <p>
         Zum zweiten Baustein des Jahres 2027 — den Sozialabgaben — liegt seit dem 21. September 2026
         ebenfalls ein Entwurf vor:{" "}
         <Link href="/beitragsbemessungsgrenze-2027" className="text-[#E60A1C] font-semibold hover:underline">
@@ -270,13 +278,10 @@ export default function Rechner2027Page() {
         </Link>
         .
       </p>
+      </Section>
 
       {/* Steuerreform 2027 content section — targets "steuerreform 2027 rechner" cluster */}
-      <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 mb-8">
-        <h2 id="aenderungen" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
-          Steuerreform 2027: Das ändert sich beim Netto
-        </h2>
-        <div className="text-sm sm:text-base text-black/70 leading-relaxed space-y-4">
+      <Section id="aenderungen" variant="muted" eyebrow="Überblick" eyebrowIcon={BookOpen} title="Steuerreform 2027: Das ändert sich beim Netto" prose>
           <p>
             Die <strong className="text-[#16181D] font-semibold">Steuerreform 2027</strong> soll die
             sogenannte kalte Progression ausgleichen — also die schleichende Mehrbelastung, wenn
@@ -322,20 +327,16 @@ export default function Rechner2027Page() {
             .
           </p>
           <p className="text-xs text-black/50">
-            Hinweis: Die genannten Werte beruhen auf dem Beschluss des Koalitionsausschusses vom
-            1. Juli 2026. Das BMF beziffert den Grundfreibetrag ausdrücklich nur als
-            „voraussichtlich“; die endgültigen Beträge werden erst im Gesetzgebungsverfahren
-            festgelegt. Die volle Entlastungswirkung entfaltet sich schrittweise bis 2028.
+            Hinweis: Die genannten Werte stammen aus dem Gesetzentwurf der Bundesregierung
+            (BT-Drucksache 21/8235 vom 28.09.2026). Verbindlich werden sie erst mit der Verkündung —
+            im parlamentarischen Verfahren können sie sich noch ändern. Die volle Entlastung wirkt
+            ab 2028.
           </p>
-        </div>
-      </div>
+      </Section>
 
       {/* SEO Q&A section for 2027 long-tail queries */}
-      <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">
-        <h2 id="faq" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
-          Häufige Fragen zum Brutto Netto Rechner 2027
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm sm:text-base">
+      <Section id="faq" variant="muted" eyebrow="FAQ" eyebrowIcon={HelpCircle} title="Häufige Fragen zum Brutto Netto Rechner 2027">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 text-sm sm:text-base">
           {faqs.map((faq) => (
             <div key={faq.q}>
               <h3 className="font-bold text-[#16181D] text-base sm:text-lg mb-2">{faq.q}</h3>
@@ -343,7 +344,7 @@ export default function Rechner2027Page() {
             </div>
           ))}
         </div>
-      </div>
+      </Section>
     </section>
   );
 }

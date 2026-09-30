@@ -324,7 +324,7 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
         </div>
 
         {/* ── Kostentabelle ─────────────────────────────────────────── */}
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-2">
             Was der Zusatzbeitrag der {kasse.name} netto kostet
           </h2>
@@ -391,7 +391,7 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
         </section>
 
         {/* ── Interaktiver Rechner ──────────────────────────────────── */}
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-2">
             Mit dem Satz der {kasse.name} rechnen
           </h2>
@@ -403,7 +403,7 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
         </section>
 
         {/* ── Nachbarkassen ─────────────────────────────────────────── */}
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-2">Kassen mit ähnlichem Beitrag</h2>
           <p className="text-sm text-black/60 mb-5">
             Sortiert nach Zusatzbeitrag 2026 — Stand {ZUSATZBEITRAG_STAND}.

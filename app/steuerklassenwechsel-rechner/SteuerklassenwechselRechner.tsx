@@ -139,9 +139,9 @@ export default function SteuerklassenwechselRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">Steuerklassenwechsel: III/V, IV/IV oder Faktor?</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Steuerklassenwechsel: III/V, IV/IV oder Faktor?</h2>
           <p>
             Verheiratete und eingetragene Lebenspartner können zwischen den Kombinationen{" "}
             <strong className="text-[#16181D]">III/V</strong>, <strong className="text-[#16181D]">IV/IV</strong> und{" "}
@@ -161,8 +161,8 @@ export default function SteuerklassenwechselRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">Häufige Fragen zum Steuerklassenwechsel</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">Häufige Fragen zum Steuerklassenwechsel</h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
@@ -179,7 +179,7 @@ export default function SteuerklassenwechselRechner() {
       <section className="max-w-6xl mx-auto px-5 pb-20">
         <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
           <div className="relative">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">Weitere Rechner</h2>
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">Weitere Rechner</h2>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <Link href="/steuerklassen" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">Steuerklassen erklärt</Link>
               <Link href="/gehaltsrechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">Gehaltsrechner</Link>

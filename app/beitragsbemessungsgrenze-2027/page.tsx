@@ -254,7 +254,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
           ))}
         </section>
 
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-3">Alle Rechengrößen 2027 im Überblick</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
@@ -288,7 +288,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
           </p>
         </section>
 
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-3">
             Was die höheren Grenzen kosten
           </h2>
@@ -325,7 +325,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
           </div>
         </section>
 
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-4">Passende Rechner</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[

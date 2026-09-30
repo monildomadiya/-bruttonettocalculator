@@ -194,8 +194,8 @@ export default function PfaendungstabellePage() {
 
         {/* What is Pfändungstabelle */}
         <section className="max-w-6xl mx-auto px-5 py-8">
-          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-5">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-5">
               Was ist die{" "}
               <span className="text-[#E60A1C]">Pfändungstabelle 2026</span>?
             </h2>
@@ -229,8 +229,8 @@ export default function PfaendungstabellePage() {
         </section>
 
         {/* Freibetraege table */}
-        <section className="max-w-6xl mx-auto px-5 py-6">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
             Pfändungsfreigrenzen 2026 — Übersicht
           </h2>
           <div className="overflow-x-auto rounded-2xl border border-black/[0.08]">
@@ -262,7 +262,7 @@ export default function PfaendungstabellePage() {
 
         {/* Full data table */}
         <section className="max-w-6xl mx-auto px-5 py-8">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
             Vollständige Pfändungstabelle 2026
           </h2>
           <p className="text-black/60 mb-6 text-sm sm:text-base">
@@ -331,7 +331,7 @@ export default function PfaendungstabellePage() {
 
         {/* FAQ */}
         <section className="max-w-6xl mx-auto px-5 py-10">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
             Häufige Fragen zur Pfändungstabelle
           </h2>
           <div className="space-y-3">
@@ -362,7 +362,7 @@ export default function PfaendungstabellePage() {
           <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
             <div className="relative">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+              <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
                 Nettogehalt exakt berechnen
               </h2>
               <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">

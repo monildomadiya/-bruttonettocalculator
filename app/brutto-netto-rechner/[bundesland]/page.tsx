@@ -205,7 +205,7 @@ export default function BundeslandPage({ params }: PageProps) {
           Rechner bereits. */}
       <section id="rechner" className="mb-16 scroll-mt-24">
         <div className="hidden sm:block text-center mb-8">
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
             Interaktiver Brutto-Netto-Rechner {bl.name}
           </h2>
           <p className="text-black/70 text-sm sm:text-base">
@@ -225,12 +225,12 @@ export default function BundeslandPage({ params }: PageProps) {
       </section>
 
       {/* Reference table */}
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
             <BarChart3 size={13} /> Netto-Tabelle {bl.name} 2026
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Brutto-Netto-Tabelle für {bl.name}
           </h2>
           <p className="text-sm sm:text-base text-black/70 mt-1">
@@ -272,8 +272,8 @@ export default function BundeslandPage({ params }: PageProps) {
       </section>
 
       {/* SEO explainer */}
-      <section className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+      <section data-section="" className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Nettogehalt {bl.praep}: Was das Bundesland beeinflusst
         </h2>
         <p>
@@ -305,7 +305,7 @@ export default function BundeslandPage({ params }: PageProps) {
       </section>
 
       {/* Other Bundesländer — internal link mesh */}
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
           <MapPin className="text-[#E60A1C]" size={20} /> Brutto-Netto-Rechner für andere Bundesländer
         </h2>
@@ -324,7 +324,7 @@ export default function BundeslandPage({ params }: PageProps) {
       </section>
 
       {/* Related tools */}
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
           <Sparkles className="text-[#E60A1C]" size={20} /> Weitere Rechner
         </h2>
@@ -347,7 +347,7 @@ export default function BundeslandPage({ params }: PageProps) {
 
       {/* FAQ */}
       <section>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 text-center flex items-center justify-center gap-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8 text-center flex items-center justify-center gap-2">
           <ShieldCheck className="text-[#E60A1C]" size={22} /> Häufige Fragen — Nettogehalt {bl.name}
         </h2>
         <AccordionFaq faqs={faqs} />

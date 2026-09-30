@@ -206,7 +206,7 @@ export default function KrankenkassePage() {
         <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-3 py-1 rounded-full mb-4">
           <Wallet2 size={13} /> Mit unserem Rechenkern ermittelt
         </div>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Die Kassenwahl ist {formatEUR(spreadJahr)} netto im Jahr wert
         </h2>
         <p className="text-base sm:text-lg text-black/80 leading-relaxed mb-6 max-w-4xl">
@@ -237,7 +237,7 @@ export default function KrankenkassePage() {
 
       {/* Vergleichstabelle */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Zusatzbeitrag 2026: Krankenkassen im Vergleich
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6 max-w-3xl">
@@ -349,7 +349,7 @@ export default function KrankenkassePage() {
 
       {/* FAQ */}
       <div className="mb-4">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Häufige Fragen zum Zusatzbeitrag 2026
         </h2>
         <div className="space-y-3">

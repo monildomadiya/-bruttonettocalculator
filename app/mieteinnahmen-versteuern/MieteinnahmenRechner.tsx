@@ -379,8 +379,8 @@ export default function MieteinnahmenRechner({ content }: { content?: React.Reac
       {content}
 
       {/* FAQ */}
-      <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
           Häufige Fragen zur Steuer auf Mieteinnahmen
         </h2>
         <div className="space-y-3">

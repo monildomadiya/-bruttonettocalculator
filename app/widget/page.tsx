@@ -133,7 +133,7 @@ export default function WidgetPage() {
 
         {/* ── Für wen ── */}
         <section className="max-w-6xl mx-auto px-5 pb-12">
-          <div className="bg-white border border-black/[0.08] rounded-3xl p-8 sm:p-10">
+          <div className="bg-white border border-black/[0.08] rounded-3xl p-5 sm:p-10">
             <h2 className="font-display font-black text-2xl sm:text-3xl tracking-tight mb-5">
               Für wen sich das Widget eignet
             </h2>

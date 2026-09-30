@@ -132,9 +132,9 @@ export default function WitwenrenteRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5 shadow-lg">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">Witwenrente 2026: So wird sie berechnet</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5 shadow-lg">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Witwenrente 2026: So wird sie berechnet</h2>
           <p>
             Die <strong className="text-[#16181D]">Witwenrente</strong> (bzw. Witwerrente) ist eine Hinterbliebenenrente
             der gesetzlichen Rentenversicherung. Grundlage ist die Rente, die der verstorbene Ehe- oder
@@ -152,8 +152,8 @@ export default function WitwenrenteRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">Häufige Fragen zur Witwenrente</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">Häufige Fragen zur Witwenrente</h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <details key={i} className="group bg-[#FFFFFF] border border-black/[0.08] rounded-2xl overflow-hidden shadow-sm">
@@ -169,7 +169,7 @@ export default function WitwenrenteRechner() {
 
       <section className="max-w-6xl mx-auto px-5 pb-20">
         <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">Weitere Renten- & Gehaltsrechner</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">Weitere Renten- & Gehaltsrechner</h2>
           <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">Rentenrechner, Gehaltsrechner & mehr — kostenlos für 2026.</p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link href="/rentenrechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.08] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">Rentenrechner</Link>

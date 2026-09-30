@@ -103,7 +103,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ss-zehnjahre"
       >
-        <h2 id="ss-zehnjahre" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ss-zehnjahre" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Die 10-Jahres-Frist — der ganze Trick
         </h2>
         <p>
@@ -157,7 +157,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ss-niessbrauch"
       >
-        <h2 id="ss-niessbrauch" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ss-niessbrauch" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Immobilie schenken, Nutzung behalten
         </h2>
         <p>
@@ -184,7 +184,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ss-fehler"
       >
-        <h2 id="ss-fehler" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ss-fehler" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Drei Fehler, die teuer werden
         </h2>
         <ol>

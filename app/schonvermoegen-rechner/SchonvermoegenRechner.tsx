@@ -139,9 +139,9 @@ export default function SchonvermoegenRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">Schonvermögen beim Bürgergeld 2026</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Schonvermögen beim Bürgergeld 2026</h2>
           <p>
             Als <strong className="text-[#16181D]">Schonvermögen</strong> bezeichnet man das Vermögen, das beim Bürgergeld
             anrechnungsfrei bleibt. Nach den <strong className="text-[#16181D]">Karenzzeit-Regeln</strong> (erstes Bezugsjahr,
@@ -163,8 +163,8 @@ export default function SchonvermoegenRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">Häufige Fragen zum Schonvermögen</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">Häufige Fragen zum Schonvermögen</h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">

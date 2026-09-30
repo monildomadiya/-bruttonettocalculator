@@ -142,12 +142,12 @@ export default function LohnsteuerrechnerPage() {
       </section>
 
       {/* Lohnsteuer breakdown per Steuerklasse */}
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
             <Percent size={13} /> Lohnsteuer-Vergleich
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Lohnsteuer & Nettolohn bei {formatEUR(REF_BRUTTO)} brutto
           </h2>
           <p className="text-sm sm:text-base text-black/70 mt-1">
@@ -179,8 +179,8 @@ export default function LohnsteuerrechnerPage() {
       </section>
 
       {/* SEO content */}
-      <section className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+      <section data-section="" className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Lohnrechner 2026: Vom Bruttolohn zum Nettolohn
         </h2>
         <p>
@@ -209,7 +209,7 @@ export default function LohnsteuerrechnerPage() {
       </section>
 
       {/* Related */}
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
           <Sparkles className="text-[#E60A1C]" size={20} /> Weitere Rechner
         </h2>
@@ -231,7 +231,7 @@ export default function LohnsteuerrechnerPage() {
       </section>
 
       <section>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 text-center">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8 text-center">
           Häufige Fragen zur Lohnsteuer
         </h2>
         <AccordionFaq faqs={faqs} />

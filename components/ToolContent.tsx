@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { type ReactNode } from "react";
-import { CheckCircle2, Info } from "lucide-react";
+import { BookOpen, CheckCircle2, Info } from "lucide-react";
+import Section from "@/components/ui/Section";
 import { siteConfig } from "@/lib/authors";
 import AdUnit from "@/components/AdUnit";
 
@@ -108,14 +109,19 @@ export default function ToolContent({ config }: { config: ToolContentConfig }) {
   const { heading, answer, facts, steps, table, sections, source } = config;
 
   return (
-    <section className="max-w-6xl mx-auto px-5 py-6" aria-labelledby="tool-content-heading">
-      <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-10 space-y-8">
-        <h2
-          id="tool-content-heading"
-          className="text-2xl sm:text-3xl font-extrabold text-[#16181D] leading-tight"
-        >
-          {heading}
-        </h2>
+    // Äußerer Wrapper nur für den Seitenrand: Auf den tool-hero-Seiten gibt es
+    // keinen umgebenden Container mit Padding. Kopf, Fläche und Abstände kommen
+    // aus <Section> (components/ui/Section.tsx), wie auf allen Inhaltsabschnitten.
+    <div className="max-w-6xl mx-auto px-5 py-6">
+      <Section
+        variant="muted"
+        eyebrow="Ratgeber"
+        eyebrowIcon={BookOpen}
+        title={heading}
+        titleId="tool-content-heading"
+        className="!mb-0"
+        bodyClassName="space-y-8"
+      >
 
         {/* Direct answer — the passage built to be quoted verbatim. */}
         <div className="bg-white border-l-4 border-[#E60A1C] border-y border-r border-black/[0.08] rounded-r-2xl px-5 py-4 sm:px-6 sm:py-5">
@@ -255,7 +261,7 @@ export default function ToolContent({ config }: { config: ToolContentConfig }) {
             Steuerberatung.
           </span>
         </p>
-      </div>
-    </section>
+      </Section>
+    </div>
   );
 }

@@ -76,7 +76,7 @@ export default function UrlaubsgeldContent() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ug-berechnung"
       >
-        <h2 id="ug-berechnung" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ug-berechnung" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Urlaubsgeld berechnen: So funktioniert die Jahresmethode
         </h2>
         <p>
@@ -119,7 +119,7 @@ export default function UrlaubsgeldContent() {
 
       {/* Referenztabelle */}
       <section className="py-6" aria-labelledby="ug-tabelle">
-        <h2 id="ug-tabelle" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="ug-tabelle" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Urlaubsgeld netto: Beispiele 2026
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -166,7 +166,7 @@ export default function UrlaubsgeldContent() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ug-abgrenzung"
       >
-        <h2 id="ug-abgrenzung" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ug-abgrenzung" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Urlaubsgeld oder Urlaubsentgelt?
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -200,7 +200,7 @@ export default function UrlaubsgeldContent() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-3"
         aria-labelledby="ug-links"
       >
-        <h2 id="ug-links" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ug-links" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Passende Rechner
         </h2>
         <p>

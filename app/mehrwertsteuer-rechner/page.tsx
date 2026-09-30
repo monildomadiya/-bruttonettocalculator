@@ -139,7 +139,7 @@ export default function MehrwertsteuerRechnerPage() {
 
       {/* 19 vs 7 table */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           19 % oder 7 %? Die wichtigsten Kategorien
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6 max-w-3xl">
@@ -192,7 +192,7 @@ export default function MehrwertsteuerRechnerPage() {
 
       {/* FAQ */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Häufige Fragen zur Mehrwertsteuer
         </h2>
         <div className="space-y-3">

@@ -166,9 +166,9 @@ export default function MinijobRechner() {
       </section>
 
       {/* Explainer / SEO content */}
-      <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Minijob 2027: Was sich gegenüber 2026 ändert
           </h2>
           <p>
@@ -178,44 +178,44 @@ export default function MinijobRechner() {
             Jahre nebeneinander:
           </p>
           <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[480px] text-sm sm:text-base">
+            <table className="w-full text-left border-collapse text-sm sm:text-base">
               <thead>
                 <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
-                  <th className="py-3 px-4">Wert</th>
-                  <th className="py-3 px-4 text-right">2026</th>
-                  <th className="py-3 px-4 text-right">2027</th>
+                  <th className="py-3 px-2 sm:px-4">Wert</th>
+                  <th className="py-3 px-2 sm:px-4 text-right">2026</th>
+                  <th className="py-3 px-2 sm:px-4 text-right">2027</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-black/10">
                 <tr>
-                  <td className="py-3 px-4">Minijob-Grenze pro Monat</td>
-                  <td className="py-3 px-4 text-right font-mono">{formatEuro(MINIJOB_WERTE[2026].grenze)}</td>
-                  <td className="py-3 px-4 text-right font-mono font-bold text-[#16181D]">{formatEuro(MINIJOB_WERTE[2027].grenze)}</td>
+                  <td className="py-3 px-2 sm:px-4">Minijob-Grenze pro Monat</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono">{formatEuro(MINIJOB_WERTE[2026].grenze)}</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D]">{formatEuro(MINIJOB_WERTE[2027].grenze)}</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4">Minijob-Grenze pro Jahr</td>
-                  <td className="py-3 px-4 text-right font-mono">{formatEuro(MINIJOB_WERTE[2026].grenze * 12)}</td>
-                  <td className="py-3 px-4 text-right font-mono font-bold text-[#16181D]">{formatEuro(MINIJOB_WERTE[2027].grenze * 12)}</td>
+                  <td className="py-3 px-2 sm:px-4">Minijob-Grenze pro Jahr</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono">{formatEuro(MINIJOB_WERTE[2026].grenze * 12)}</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D]">{formatEuro(MINIJOB_WERTE[2027].grenze * 12)}</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4">Mindestlohn pro Stunde</td>
-                  <td className="py-3 px-4 text-right font-mono">{formatEuro(MINIJOB_WERTE[2026].mindestlohn)}</td>
-                  <td className="py-3 px-4 text-right font-mono font-bold text-[#16181D]">{formatEuro(MINIJOB_WERTE[2027].mindestlohn)}</td>
+                  <td className="py-3 px-2 sm:px-4">Mindestlohn pro Stunde</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono">{formatEuro(MINIJOB_WERTE[2026].mindestlohn)}</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D]">{formatEuro(MINIJOB_WERTE[2027].mindestlohn)}</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4">Max. Stunden/Monat mit Mindestlohn</td>
-                  <td className="py-3 px-4 text-right font-mono">≈ {fmtStd(MINIJOB_WERTE[2026].grenze / MINIJOB_WERTE[2026].mindestlohn)}</td>
-                  <td className="py-3 px-4 text-right font-mono font-bold text-[#16181D]">≈ {fmtStd(MINIJOB_WERTE[2027].grenze / MINIJOB_WERTE[2027].mindestlohn)}</td>
+                  <td className="py-3 px-2 sm:px-4">Max. Stunden/Monat mit Mindestlohn</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono">≈ {fmtStd(MINIJOB_WERTE[2026].grenze / MINIJOB_WERTE[2026].mindestlohn)}</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D]">≈ {fmtStd(MINIJOB_WERTE[2027].grenze / MINIJOB_WERTE[2027].mindestlohn)}</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4">Midijob (Übergangsbereich) ab</td>
-                  <td className="py-3 px-4 text-right font-mono">{formatEuro(MINIJOB_WERTE[2026].grenze + 0.01)}</td>
-                  <td className="py-3 px-4 text-right font-mono font-bold text-[#16181D]">{formatEuro(MINIJOB_WERTE[2027].grenze + 0.01)}</td>
+                  <td className="py-3 px-2 sm:px-4">Midijob ab</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono">{formatEuro(MINIJOB_WERTE[2026].grenze + 0.01)}</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D]">{formatEuro(MINIJOB_WERTE[2027].grenze + 0.01)}</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4">Lohnsteuer-Pauschale (Arbeitgeber)</td>
-                  <td className="py-3 px-4 text-right font-mono">{MINIJOB_WERTE[2026].pauschsteuerPct} %</td>
-                  <td className="py-3 px-4 text-right font-mono font-bold text-[#16181D]">{MINIJOB_WERTE[2027].pauschsteuerPct} %*</td>
+                  <td className="py-3 px-2 sm:px-4">Lohnsteuer-Pauschale (Arbeitgeber)</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono">{MINIJOB_WERTE[2026].pauschsteuerPct} %</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D]">{MINIJOB_WERTE[2027].pauschsteuerPct} %*</td>
                 </tr>
               </tbody>
             </table>
@@ -226,7 +226,7 @@ export default function MinijobRechner() {
             ändert sie dann nichts. Grenze und Mindestlohn 2027 sind dagegen bereits geltendes Recht.
           </p>
 
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] pt-4">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] pt-4">
             Minijob 2026: Wie viel bleibt netto vom 603-Euro-Job?
           </h2>
           <p>
@@ -262,8 +262,8 @@ export default function MinijobRechner() {
       </section>
 
       {/* FAQ */}
-      <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
           Häufige Fragen zum Minijob
         </h2>
         <div className="space-y-3">
@@ -286,7 +286,7 @@ export default function MinijobRechner() {
         <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
           <div className="relative">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
               Weitere Gehaltsrechner entdecken
             </h2>
             <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">

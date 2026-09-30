@@ -100,7 +100,7 @@ function Content() {
 
       {/* Freibeträge */}
       <section className="py-6" aria-labelledby="es-freibetraege">
-        <h2 id="es-freibetraege" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="es-freibetraege" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Freibeträge nach Verwandtschaftsgrad
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -141,7 +141,7 @@ function Content() {
 
       {/* Steuersätze */}
       <section className="py-6" aria-labelledby="es-saetze">
-        <h2 id="es-saetze" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="es-saetze" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Steuersätze nach § 19 ErbStG
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -186,7 +186,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="es-familienheim"
       >
-        <h2 id="es-familienheim" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="es-familienheim" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Das Familienheim bleibt oft steuerfrei
         </h2>
         <p>
@@ -218,7 +218,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="es-gestaltung"
       >
-        <h2 id="es-gestaltung" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="es-gestaltung" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Der stärkste Hebel: früh schenken
         </h2>
         <p>

@@ -164,7 +164,7 @@ export default function PkvVsGkvPage() {
 
         {/* ── Comparison table ─────────────────────────────────── */}
         <div className="w-full max-w-6xl mx-auto mb-12">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">PKV vs GKV 2026 im direkten Vergleich</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">PKV vs GKV 2026 im direkten Vergleich</h2>
           <div className="overflow-x-auto rounded-3xl border border-black/[0.10] shadow-lg">
             <table className="w-full text-sm sm:text-base bg-[#FFFFFF] border-collapse">
               <thead>
@@ -222,7 +222,7 @@ export default function PkvVsGkvPage() {
 
         {/* ── Embedded calculator ──────────────────────────────── */}
         <div className="w-full max-w-6xl mx-auto mb-6">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">Ihr GKV-Beitrag im Netto berechnen</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">Ihr GKV-Beitrag im Netto berechnen</h2>
           <p className="text-black/70 mb-6">
             Geben Sie Ihr Bruttogehalt ein und sehen Sie den exakten Kranken- und Pflegeversicherungsabzug (GKV) sowie
             Ihr Nettogehalt 2026. So erkennen Sie sofort, wie viel Sie aktuell für die gesetzliche Krankenkasse zahlen.
@@ -233,8 +233,8 @@ export default function PkvVsGkvPage() {
         </div>
 
         {/* ── When does each make sense ────────────────────────── */}
-        <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 mb-8">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">Für wen lohnt sich die PKV — und für wen die GKV?</h2>
+        <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 mb-8">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">Für wen lohnt sich die PKV — und für wen die GKV?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm sm:text-base text-black/75 leading-relaxed">
             <div>
               <h3 className="font-bold text-[#16181D] text-lg mb-3 flex items-center gap-2"><Check size={18} className="text-emerald-600" />PKV kann sich lohnen für …</h3>
@@ -267,8 +267,8 @@ export default function PkvVsGkvPage() {
         </div>
 
         {/* ── FAQ (visible + JSON-LD above) ────────────────────── */}
-        <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <div className="w-full max-w-6xl mx-auto bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
             Häufige Fragen zu PKV, GKV &amp; Beitragsgrenzen 2026
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm sm:text-base">

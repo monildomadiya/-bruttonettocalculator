@@ -222,7 +222,7 @@ export default function SteuerfreibetragPage() {
         <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-3 py-1 rounded-full mb-4">
           <Wallet2 size={13} /> Mit unserem Rechenkern ermittelt
         </div>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Bis ca. {formatEUR(lohnsteuerfreiBrutto)} brutto im Monat: 0 € Lohnsteuer
         </h2>
         <p className="text-base sm:text-lg text-black/80 leading-relaxed mb-6 max-w-4xl">
@@ -249,7 +249,7 @@ export default function SteuerfreibetragPage() {
 
       {/* Freibeträge table */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Alle Steuerfreibeträge 2026 in der Übersicht
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6 max-w-3xl">
@@ -285,7 +285,7 @@ export default function SteuerfreibetragPage() {
 
       {/* FAQ */}
       <div className="mb-4">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Häufige Fragen zum Steuerfreibetrag 2026
         </h2>
         <div className="space-y-3">

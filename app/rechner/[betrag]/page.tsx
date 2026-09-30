@@ -518,7 +518,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
 
       {/* Amount-specific figures — unique per page */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           {formattedBrutto} Brutto in Zahlen
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6">
@@ -555,7 +555,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
       <div className="mb-16">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
               {formattedBrutto}: Alle 6 Steuerklassen im Vergleich
             </h2>
             <p className="text-sm sm:text-base text-black/70 mt-1">
@@ -619,7 +619,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-3 py-1 rounded-full mb-4">
           <CheckCircle2 size={13} /> Steuerklasse {SK_ROMAN[focusSk]} im Detail
         </div>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           {formattedBrutto} Brutto in Netto in Steuerklasse {focusSk}
         </h2>
         <p className="text-base sm:text-lg text-black/80 leading-relaxed mb-6">
@@ -666,7 +666,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
             <Calendar size={13} /> Jahresvergleich
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Vergleich Steuerjahr 2026 vs. 2027 (Vorschau)
           </h2>
           <p className="text-sm sm:text-base text-black/70 mt-1">
@@ -705,7 +705,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
       {/* Interactive Calculator Pre-filled */}
       <div className="mb-16">
         <div className="text-center mb-8">
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
             Interaktiver Gehaltsrechner für {formattedBrutto}
           </h2>
           <p className="text-black/70 text-sm sm:text-base">
@@ -717,7 +717,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
 
       {/* FAQ — amount-specific (visible + FAQPage schema) */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Häufige Fragen zu {formattedBrutto} brutto
         </h2>
         <div className="space-y-3">

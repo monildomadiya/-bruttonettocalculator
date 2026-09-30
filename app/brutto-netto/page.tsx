@@ -184,7 +184,7 @@ export default function BranchenHubPage() {
       {/* ── Vergleich: CSS-Balken statt SVG, damit die Darstellung auf dem
              Handy umbricht statt seitlich zu scrollen ── */}
       <section className="max-w-6xl mx-auto px-5 pt-2 pb-12 sm:py-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Durchschnittliches Bruttojahresgehalt im Vergleich
         </h2>
         <p className="text-sm sm:text-base text-black/70 leading-relaxed mb-7">
@@ -231,7 +231,7 @@ export default function BranchenHubPage() {
       </section>
 
       {/* ── Tabelle ── */}
-      <section className="max-w-6xl mx-auto px-5 py-6">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
         <div className="bg-white border border-black/[0.10] rounded-3xl p-5 sm:p-7 overflow-x-auto">
           <table className="w-full text-sm border-collapse min-w-[520px]">
             <caption className="text-left text-base font-bold text-[#16181D] mb-4">
@@ -307,7 +307,7 @@ export default function BranchenHubPage() {
 
       {/* ── Branchen-Karten mit dem jeweiligen Steuerthema ── */}
       <section className="max-w-6xl mx-auto px-5 py-10">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Jede Branche hat ihre eigene Steuerregel
         </h2>
         <p className="text-sm sm:text-base text-black/70 leading-relaxed mb-7">
@@ -340,7 +340,7 @@ export default function BranchenHubPage() {
       </section>
 
       <section className="max-w-6xl mx-auto px-5 py-10 pb-20">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">Häufige Fragen</h2>
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">Häufige Fragen</h2>
         <AccordionFaq faqs={faqs} />
       </section>
     </div>

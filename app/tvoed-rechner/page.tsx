@@ -155,7 +155,7 @@ export default function TvoedHubPage() {
           </div>
         </header>
 
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-2">Alle Entgeltgruppen im Überblick</h2>
           <p className="text-sm text-black/60 mb-5 max-w-3xl">
             Von der niedrigsten bis zur höchsten Stufe der jeweiligen Gruppe. Netto in Steuerklasse I, ohne
@@ -200,7 +200,7 @@ export default function TvoedHubPage() {
           </div>
         </section>
 
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-4">Eigenes Gehalt durchrechnen</h2>
           <p className="text-sm text-black/70 mb-5 max-w-3xl">
             Ihr Tabellenentgelt weicht ab, weil Zulagen, Teilzeit oder eine andere Steuerklasse dazukommen? Tragen Sie

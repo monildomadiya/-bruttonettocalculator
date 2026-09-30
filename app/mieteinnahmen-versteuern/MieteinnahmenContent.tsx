@@ -61,7 +61,7 @@ export default function MieteinnahmenContent() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="mv-rechenweg"
       >
-        <h2 id="mv-rechenweg" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="mv-rechenweg" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Steuer auf Mieteinnahmen: der Rechenweg
         </h2>
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-5 shadow-sm space-y-2">
@@ -85,7 +85,7 @@ export default function MieteinnahmenContent() {
 
       {/* Werbungskosten */}
       <section className="py-6" aria-labelledby="mv-werbungskosten">
-        <h2 id="mv-werbungskosten" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="mv-werbungskosten" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Was Sie von den Mieteinnahmen absetzen können
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -104,7 +104,7 @@ export default function MieteinnahmenContent() {
 
       {/* AfA */}
       <section className="py-6" aria-labelledby="mv-afa">
-        <h2 id="mv-afa" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="mv-afa" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Abschreibung: welcher AfA-Satz gilt?
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -151,7 +151,7 @@ export default function MieteinnahmenContent() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="mv-verluste"
       >
-        <h2 id="mv-verluste" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="mv-verluste" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Wenn die Vermietung Verlust macht
         </h2>
         <p>
@@ -173,7 +173,7 @@ export default function MieteinnahmenContent() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-3"
         aria-labelledby="mv-links"
       >
-        <h2 id="mv-links" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="mv-links" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Passende Rechner
         </h2>
         <p>

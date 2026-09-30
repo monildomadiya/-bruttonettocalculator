@@ -253,7 +253,7 @@ export default function SteuerklassenPage() {
 
         {/* Steuerklassen cards */}
         <section className="max-w-6xl mx-auto px-5 pt-2 pb-12 sm:py-12">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
             Die 6 Steuerklassen im Detail
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -293,8 +293,8 @@ export default function SteuerklassenPage() {
         </section>
 
         {/* Comparison table */}
-        <section className="max-w-6xl mx-auto px-5 py-6">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
             Steuerklassen III vs. IV vs. V — Nettogehalt 2026
           </h2>
           <p className="text-black/55 mb-6 text-sm sm:text-base">
@@ -349,11 +349,11 @@ export default function SteuerklassenPage() {
 
         {/* Verheiratet: welche Steuerklasse? (married-intent cluster) */}
         <section className="max-w-6xl mx-auto px-5 py-8">
-          <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-7 sm:p-10 shadow-sm">
+          <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-10 shadow-sm">
             <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-3 py-1 rounded-full mb-4">
               <Users size={13} /> Für Verheiratete
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-4">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-4">
               Welche Steuerklasse gilt nach der Heirat?
             </h2>
             <div className="space-y-4 text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl">
@@ -399,7 +399,7 @@ export default function SteuerklassenPage() {
 
         {/* Steuerklassenwechsel */}
         <section className="max-w-6xl mx-auto px-5 py-8">
-          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-10">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10">
             <div className="flex items-start gap-4 mb-6">
               <div className="w-10 h-10 rounded-xl bg-[#E60A1C]/20 border border-[#E60A1C]/30 flex items-center justify-center flex-shrink-0">
                 <RefreshCw size={18} className="text-[#E60A1C]" />
@@ -481,7 +481,7 @@ export default function SteuerklassenPage() {
 
         {/* FAQ */}
         <section className="max-w-6xl mx-auto px-5 py-8">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
             Häufige Fragen zu Steuerklassen
           </h2>
           <div className="space-y-3">
@@ -512,7 +512,7 @@ export default function SteuerklassenPage() {
           <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
             <div className="relative">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+              <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
                 Netto für Ihre Steuerklasse berechnen
               </h2>
               <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">

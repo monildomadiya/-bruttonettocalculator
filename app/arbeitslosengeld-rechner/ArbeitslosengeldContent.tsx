@@ -58,7 +58,7 @@ export default function ArbeitslosengeldContent() {
 
       {/* Wie berechnet */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="alg-methode">
-        <h2 id="alg-methode" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="alg-methode" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Wie wird Arbeitslosengeld berechnet?
         </h2>
         <ol className="list-decimal pl-5 space-y-2">
@@ -77,7 +77,7 @@ export default function ArbeitslosengeldContent() {
 
       {/* Beispielrechnungen */}
       <section className="py-6" aria-labelledby="alg-beispiele">
-        <h2 id="alg-beispiele" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="alg-beispiele" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Beispielrechnungen: ALG I nach Bruttogehalt
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -111,7 +111,7 @@ export default function ArbeitslosengeldContent() {
 
       {/* Anspruchsdauer + Kinder/Steuerklasse */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="alg-dauer">
-        <h2 id="alg-dauer" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">Anspruchsdauer</h2>
+        <h2 id="alg-dauer" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Anspruchsdauer</h2>
         <p>
           Wie lange Sie ALG&nbsp;I beziehen, hängt von Ihrem Alter und der Dauer der versicherungspflichtigen
           Beschäftigung ab – von <strong className="text-[#16181D]">6 Monaten</strong> (mindestens 12 Monate

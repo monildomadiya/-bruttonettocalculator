@@ -130,12 +130,12 @@ export default function KalkulatorNiemcyPage() {
         <Calculator initialBrutto={3500} lang="pl" deepLink={false} />
       </section>
 
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
             <BarChart3 size={13} /> Brutto na netto · 2026
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Przykłady wynagrodzenia netto (miesięcznie)
           </h2>
           <p className="text-sm sm:text-base text-black/70 mt-1">
@@ -164,8 +164,8 @@ export default function KalkulatorNiemcyPage() {
         </div>
       </section>
 
-      <section className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">Jak działa niemiecki podatek dochodowy</h2>
+      <section data-section="" className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Jak działa niemiecki podatek dochodowy</h2>
         <p>
           Niemcy stosują <strong className="text-[#16181D]">progresywny podatek dochodowy</strong> określony w § 32a
           niemieckiej ustawy o podatku dochodowym (EStG). Dochód do podstawowej kwoty wolnej 12 348 € (2026) jest
@@ -181,7 +181,7 @@ export default function KalkulatorNiemcyPage() {
       </section>
 
       <section>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 text-center flex items-center justify-center gap-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8 text-center flex items-center justify-center gap-2">
           <CalcIcon className="text-[#E60A1C]" size={22} /> Najczęściej zadawane pytania
         </h2>
         <div className="space-y-3 max-w-4xl mx-auto">

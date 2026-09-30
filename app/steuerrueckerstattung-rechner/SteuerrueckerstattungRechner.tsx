@@ -167,9 +167,9 @@ export default function SteuerrueckerstattungRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">Steuererklärung 2025/2026: So holen Sie Ihre Erstattung</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Steuererklärung 2025/2026: So holen Sie Ihre Erstattung</h2>
           <p>
             Die meisten Arbeitnehmer bekommen mit der <strong className="text-[#16181D]">Steuererklärung</strong> Geld
             zurück — im Schnitt rund <strong className="text-[#16181D]">1.100 €</strong> (Statistisches Bundesamt). Der
@@ -195,8 +195,8 @@ export default function SteuerrueckerstattungRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">Häufige Fragen zur Steuerrückerstattung</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">Häufige Fragen zur Steuerrückerstattung</h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">

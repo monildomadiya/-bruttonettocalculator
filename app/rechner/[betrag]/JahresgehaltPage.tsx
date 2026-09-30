@@ -169,7 +169,7 @@ export default function JahresgehaltPage({ amount }: { amount: number }) {
 
       {/* Key figures */}
       <div className="mb-14">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           {formattedJahr} Jahresgehalt in Zahlen
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6">
@@ -236,7 +236,7 @@ export default function JahresgehaltPage({ amount }: { amount: number }) {
 
       {/* All 6 Steuerklassen — annual + monthly netto */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-1">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-1">
           {formattedJahr} Jahresgehalt: Alle 6 Steuerklassen
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6">
@@ -278,7 +278,7 @@ export default function JahresgehaltPage({ amount }: { amount: number }) {
       {/* Interactive Calculator (prefilled with monthly equivalent) */}
       <div className="mb-16">
         <div className="text-center mb-8">
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
             Interaktiver Gehaltsrechner für {formattedJahr} im Jahr
           </h2>
           <p className="text-black/70 text-sm sm:text-base">
@@ -290,7 +290,7 @@ export default function JahresgehaltPage({ amount }: { amount: number }) {
 
       {/* FAQ */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Häufige Fragen zu {formattedJahr} Jahresgehalt
         </h2>
         <div className="space-y-3">

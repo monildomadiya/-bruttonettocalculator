@@ -208,7 +208,7 @@ export default function TvoedGruppenSeite({ params }: { params: { gruppe: string
         </header>
 
         {/* ── Brutto + Netto je Stufe ───────────────────────────────── */}
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-2">
             TVöD {g.label} — Brutto und Netto je Stufe
           </h2>
@@ -257,7 +257,7 @@ export default function TvoedGruppenSeite({ params }: { params: { gruppe: string
         </section>
 
         {/* ── Stufenaufstieg ────────────────────────────────────────── */}
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-3">Was der Stufenaufstieg bringt</h2>
           <div className="bg-black/[0.03] border border-black/[0.10] rounded-2xl p-5">
             <div className="flex items-center gap-2 text-[#0E9F6E] font-bold mb-2">
@@ -279,7 +279,7 @@ export default function TvoedGruppenSeite({ params }: { params: { gruppe: string
         </section>
 
         {/* ── Nachbargruppen ────────────────────────────────────────── */}
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-4">Benachbarte Entgeltgruppen</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {nachbarn.map((n) => {

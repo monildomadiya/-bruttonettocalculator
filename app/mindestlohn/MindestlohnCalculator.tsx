@@ -226,7 +226,7 @@ export default function MindestlohnCalculator({ content }: { content?: React.Rea
 
       {/* History */}
       <section className="max-w-6xl mx-auto px-5 py-10">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Mindestlohn-Historie 2020–2027
         </h2>
         <div className="overflow-x-auto rounded-2xl border border-black/[0.08]">
@@ -259,8 +259,8 @@ export default function MindestlohnCalculator({ content }: { content?: React.Rea
       </section>
 
       {/* FAQ */}
-      <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
           Häufige Fragen zum Mindestlohn
         </h2>
         <div className="space-y-3">
@@ -289,7 +289,7 @@ export default function MindestlohnCalculator({ content }: { content?: React.Rea
         <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
           <div className="relative">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
               Genaues Nettogehalt berechnen
             </h2>
             <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">

@@ -140,9 +140,9 @@ export default function ImmobilienkreditRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">Baufinanzierung 2026: So viel Immobilie ist drin</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Baufinanzierung 2026: So viel Immobilie ist drin</h2>
           <p>
             Wie viel Haus oder Wohnung Sie sich leisten können, hängt vor allem von Ihrem
             <strong className="text-[#16181D]"> Nettoeinkommen</strong>, Ihrem <strong className="text-[#16181D]">Eigenkapital</strong>
@@ -166,8 +166,8 @@ export default function ImmobilienkreditRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">Häufige Fragen zur Baufinanzierung</h2>
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">Häufige Fragen zur Baufinanzierung</h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">

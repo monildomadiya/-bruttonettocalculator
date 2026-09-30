@@ -150,7 +150,7 @@ export default function BeamteRechnerPage() {
 
       {/* Why Beamte differ */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Warum Beamte mehr netto haben
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6 max-w-3xl">
@@ -187,7 +187,7 @@ export default function BeamteRechnerPage() {
 
       {/* Example table */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-1">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-1">
           Beamter vs. Angestellter: Netto-Beispiele 2026
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6">
@@ -225,7 +225,7 @@ export default function BeamteRechnerPage() {
 
       {/* FAQ */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Häufige Fragen zum Beamten-Netto
         </h2>
         <div className="space-y-3">

@@ -31,7 +31,7 @@ export default function KontaktPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-6xl mx-auto">
-        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col justify-between">
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-10 shadow-xl flex flex-col justify-between">
           <div>
             <div className="w-14 h-14 rounded-2xl bg-[#E60A1C]/15 border border-[#E60A1C]/30 flex items-center justify-center mb-6">
               <Mail size={26} className="text-[#E60A1C]" />
@@ -50,7 +50,7 @@ export default function KontaktPage() {
           </a>
         </div>
 
-        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col justify-between">
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-10 shadow-xl flex flex-col justify-between">
           <div>
             <div className="w-14 h-14 rounded-2xl bg-black/[0.05] border border-black/[0.12] flex items-center justify-center mb-6">
               <Clock size={26} className="text-[#16181D]" />

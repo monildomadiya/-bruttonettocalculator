@@ -271,8 +271,8 @@ export default function BranchePage({ params }: PageProps) {
       </section>
 
       {/* ── Der branchenspezifische Steuerteil: der eigentliche Mehrwert ── */}
-      <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-white border border-black/[0.10] rounded-3xl p-8 sm:p-10 shadow-lg">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-white border border-black/[0.10] rounded-3xl p-5 sm:p-10 shadow-lg">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <ScrollText size={22} className="text-[#E60A1C]" aria-hidden="true" />
             <h2 className="min-w-0 text-2xl sm:text-3xl font-extrabold text-[#16181D]">
@@ -288,7 +288,7 @@ export default function BranchePage({ params }: PageProps) {
 
       {/* ── Engine-berechnete Tabelle ── */}
       <section className="max-w-6xl mx-auto px-5 py-10">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Brutto-Netto-Tabelle für typische Gehälter {br.praep}
         </h2>
         <p className="text-sm sm:text-base text-black/70 leading-relaxed mb-6">
@@ -350,7 +350,7 @@ export default function BranchePage({ params }: PageProps) {
       </section>
 
       {/* ── Typische Berufe ── */}
-      <section className="max-w-6xl mx-auto px-5 py-6">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
         <div className="bg-white border border-black/[0.10] rounded-3xl p-8">
           <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-4">
             Typische Berufe {br.praep}
@@ -375,7 +375,7 @@ export default function BranchePage({ params }: PageProps) {
 
       {/* ── Rechner ── */}
       <section className="max-w-6xl mx-auto px-5 py-8">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Ihr eigenes Nettogehalt berechnen
         </h2>
         <Calculator />
@@ -433,7 +433,7 @@ export default function BranchePage({ params }: PageProps) {
 
       {/* ── FAQ ── */}
       <section className="max-w-6xl mx-auto px-5 py-10 pb-20">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Häufige Fragen zum Gehalt {br.praep}
         </h2>
         <AccordionFaq faqs={faqs} />

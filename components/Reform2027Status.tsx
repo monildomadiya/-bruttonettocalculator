@@ -1,4 +1,5 @@
 import { CheckCircle2, Clock, Gavel, ShieldCheck } from "lucide-react";
+import Section from "@/components/ui/Section";
 
 /**
  * Gesetzgebungs-Status der Steuerreform 2027.
@@ -154,17 +155,14 @@ export default function Reform2027Status() {
   const erledigteSchritte = gesetzgebung.filter((s) => s.status === "erledigt").length;
 
   return (
-    <section
-      aria-labelledby="reform-status-heading"
-      className="w-full max-w-6xl mx-auto bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-8 sm:p-10 shadow-lg mb-8"
+    <Section
+      variant="card"
+      eyebrow="Gesetzgebung"
+      eyebrowIcon={Gavel}
+      title="Gesetzgebungs-Status der Steuerreform 2027"
+      titleId="reform-status-heading"
     >
-      <div className="flex flex-wrap items-center gap-3 mb-2">
-        <Gavel size={22} className="text-[#E60A1C]" aria-hidden="true" />
-        <h2 id="reform-status-heading" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
-          Gesetzgebungs-Status der Steuerreform 2027
-        </h2>
-      </div>
-      <p className="text-sm sm:text-base text-black/70 leading-relaxed mb-8">
+      <p className="text-sm sm:text-base text-black/70 leading-relaxed mb-6 sm:mb-8">
         Viele Rechner zeigen für 2027 einfach die 2026-Zahlen. Wir legen stattdessen offen, wie weit
         die Reform tatsächlich ist — <strong className="text-[#16181D]">{erledigteSchritte} von {gesetzgebung.length} Schritten</strong>{" "}
         des Gesetzgebungsverfahrens sind abgeschlossen. Seit dem Kabinettsbeschluss vom 2. September
@@ -206,6 +204,6 @@ export default function Reform2027Status() {
         18.08.2026; Beschluss des Koalitionsausschusses vom 1.7.2026;
         Mindestlohnanpassungsverordnung. Diese Seite wird bei jedem Verfahrensschritt aktualisiert.
       </p>
-    </section>
+    </Section>
   );
 }

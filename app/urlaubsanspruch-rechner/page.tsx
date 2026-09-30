@@ -115,7 +115,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ua-formel"
       >
-        <h2 id="ua-formel" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ua-formel" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Die Formel — und der häufigste Denkfehler
         </h2>
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-5 shadow-sm">
@@ -141,7 +141,7 @@ function Content() {
       </section>
 
       <section className="py-6" aria-labelledby="ua-tabelle">
-        <h2 id="ua-tabelle" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="ua-tabelle" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Urlaubstage nach Arbeitstagen pro Woche
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -188,7 +188,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ua-verfall"
       >
-        <h2 id="ua-verfall" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ua-verfall" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Verfall: Was das BAG geändert hat
         </h2>
         <p>
@@ -214,7 +214,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-3"
         aria-labelledby="ua-links"
       >
-        <h2 id="ua-links" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">Passende Rechner</h2>
+        <h2 id="ua-links" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Passende Rechner</h2>
         <p>
           Was während des Urlaubs weitergezahlt wird, ist Ihr normales Gehalt — berechnen Sie es mit dem{" "}
           <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">

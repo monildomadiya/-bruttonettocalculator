@@ -193,8 +193,8 @@ export default function GermanyTaxCalculatorPage() {
       </section>
 
       {/* ── Brutto vs Netto — the "what does it mean" query ─────────────── */}
-      <section className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+      <section data-section="" className="mb-16">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Brutto vs. Netto — what the two words mean
         </h2>
         <p className="text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl mb-6">
@@ -223,11 +223,11 @@ export default function GermanyTaxCalculatorPage() {
       </section>
 
       {/* ── What comes off ──────────────────────────────────────────────── */}
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
           <Layers size={13} /> Social security · 2026
         </div>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           What is deducted from your gross salary
         </h2>
         <p className="text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl mb-6">
@@ -274,11 +274,11 @@ export default function GermanyTaxCalculatorPage() {
       </section>
 
       {/* ── Health insurer choice — genuinely useful for newcomers ──────── */}
-      <section className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10">
+      <section data-section="" className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10">
         <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-white border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-3">
           <HeartPulse size={13} /> Choosing a health insurer
         </div>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Your health insurer changes your net pay
         </h2>
         <p className="text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl mb-5">
@@ -307,12 +307,12 @@ export default function GermanyTaxCalculatorPage() {
       </section>
 
       {/* ── Net salary examples ─────────────────────────────────────────── */}
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
             <BarChart3 size={13} /> Gross to net · 2026
           </div>
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Net salary examples (per month)
           </h2>
           <p className="text-sm sm:text-base text-black/70 mt-1">
@@ -341,8 +341,8 @@ export default function GermanyTaxCalculatorPage() {
         </div>
       </section>
 
-      <section className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">How income tax works in Germany</h2>
+      <section data-section="" className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">How income tax works in Germany</h2>
         <p>
           Germany uses a <strong className="text-[#16181D]">progressive income tax</strong> system defined by § 32a of
           the Income Tax Act (EStG). Earnings up to the basic allowance of €{GRUNDFREIBETRAG.toLocaleString("en-US")}{" "}
@@ -357,7 +357,7 @@ export default function GermanyTaxCalculatorPage() {
       </section>
 
       <section>
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 text-center flex items-center justify-center gap-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8 text-center flex items-center justify-center gap-2">
           <CalcIcon className="text-[#E60A1C]" size={22} /> Frequently asked questions
         </h2>
         <AccordionFaq faqs={faqs} />

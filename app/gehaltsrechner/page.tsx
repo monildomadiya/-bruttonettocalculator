@@ -155,12 +155,12 @@ export default function GehaltsrechnerPage() {
       </section>
 
       {/* Reference salary table */}
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
             <BarChart3 size={13} /> Gehaltstabelle 2026
           </div>
-          <h2 id="ueberblick" className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+          <h2 id="ueberblick" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Brutto-Netto-Gehalt im Überblick
           </h2>
           <p className="text-sm sm:text-base text-black/70 mt-1">
@@ -198,7 +198,7 @@ export default function GehaltsrechnerPage() {
       </section>
 
       {/* SEO content */}
-      <section className="mb-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <section data-section="" className="mb-16 grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
           { Icon: Wallet, title: "Netto aus Brutto", text: "Der Gehaltsrechner zieht Sozialabgaben und Lohnsteuer vom Bruttogehalt ab und zeigt Ihr Netto pro Monat und Jahr — exakt nach § 32a EStG 2026." },
           { Icon: TrendingUp, title: "Alle 6 Steuerklassen", text: "Vergleichen Sie das Nettogehalt in Steuerklasse I bis VI. Besonders für Verheiratete lohnt der Wechsel zwischen III/V und IV/IV." },
@@ -214,8 +214,8 @@ export default function GehaltsrechnerPage() {
         ))}
       </section>
 
-      <section className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
-        <h2 id="so-funktioniert" className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+      <section data-section="" className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/75 text-sm sm:text-base leading-relaxed space-y-5">
+        <h2 id="so-funktioniert" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Gehaltsrechner 2026: So funktioniert die Netto-Berechnung
         </h2>
         <p>
@@ -243,7 +243,7 @@ export default function GehaltsrechnerPage() {
       </section>
 
       {/* Related tools */}
-      <section className="mb-16">
+      <section data-section="" className="mb-16">
         <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
           <Sparkles className="text-[#E60A1C]" size={20} /> Weitere Rechner
         </h2>
@@ -266,7 +266,7 @@ export default function GehaltsrechnerPage() {
 
       {/* FAQ */}
       <section className="mb-4">
-        <h2 id="faq" className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8 text-center">
+        <h2 id="faq" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8 text-center">
           Häufige Fragen zum Gehaltsrechner
         </h2>
         <AccordionFaq faqs={faqs} />

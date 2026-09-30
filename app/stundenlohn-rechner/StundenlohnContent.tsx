@@ -47,7 +47,7 @@ export default function StundenlohnContent() {
 
       {/* Formeln */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="sl-formeln">
-        <h2 id="sl-formeln" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="sl-formeln" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Stundenlohn und Monatslohn umrechnen
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -74,7 +74,7 @@ export default function StundenlohnContent() {
 
       {/* Reverse table */}
       <section className="py-6" aria-labelledby="sl-tabelle">
-        <h2 id="sl-tabelle" className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 id="sl-tabelle" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Monatsgehalt in Stundenlohn: Beispiele
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
@@ -108,7 +108,7 @@ export default function StundenlohnContent() {
 
       {/* Links */}
       <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-3" aria-labelledby="sl-links">
-        <h2 id="sl-links" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">Brutto oder netto?</h2>
+        <h2 id="sl-links" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Brutto oder netto?</h2>
         <p>
           Der <strong className="text-[#16181D]">Brutto-Stundenlohn</strong> ist die Basis für Ihren Arbeitsvertrag,
           der <strong className="text-[#16181D]">Netto-Stundenlohn</strong> zeigt, was tatsächlich pro Stunde übrig

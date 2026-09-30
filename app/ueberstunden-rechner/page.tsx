@@ -107,7 +107,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ue-zuschlaege"
       >
-        <h2 id="ue-zuschlaege" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ue-zuschlaege" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Die steuerfreien Zuschläge nach § 3b EStG
         </h2>
         <p>
@@ -172,7 +172,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4"
         aria-labelledby="ue-freizeit"
       >
-        <h2 id="ue-freizeit" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+        <h2 id="ue-freizeit" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Auszahlen oder abfeiern?
         </h2>
         <p>
@@ -193,7 +193,7 @@ function Content() {
         className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-3"
         aria-labelledby="ue-links"
       >
-        <h2 id="ue-links" className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">Passende Rechner</h2>
+        <h2 id="ue-links" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Passende Rechner</h2>
         <p>
           Ihren Stundenlohn und den Netto-Wert einer Arbeitsstunde ermitteln Sie mit dem{" "}
           <Link href="/stundenlohn-rechner" className="text-[#E60A1C] font-semibold hover:underline">

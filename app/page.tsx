@@ -327,7 +327,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Info Cards (Dark Tech Grid) ─────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-5 py-20 border-t border-black/[0.10]">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-20 border-t border-black/[0.10]">
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             <Sparkles size={14} /> Wichtige Fakten
@@ -342,7 +342,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Beliebte Gehälter (exact-salary internal links) ──────────── */}
-      <section className="max-w-6xl mx-auto px-5 pt-4 pb-16 sm:pb-20">
+      <section data-section="" className="max-w-6xl mx-auto px-5 pt-4 pb-16 sm:pb-20">
         <div className="text-center mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             <Wallet size={14} /> Beliebte Gehälter
@@ -375,7 +375,7 @@ export default function HomePage() {
       <LatestPosts />
 
       {/* ── How it works (3 Steps Dark Tech) ─────────────────────────── */}
-      <section className="py-24 bg-[#F4F5F7] border-y border-black/[0.10] relative overflow-hidden">
+      <section data-section="" className="py-24 bg-[#F4F5F7] border-y border-black/[0.10] relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#E60A1C]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-6xl mx-auto px-5 relative z-10">
           <div className="text-center mb-16">
@@ -402,7 +402,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Steuerklassen-Kombination (comparison table for married couples) ── */}
-      <section className="max-w-6xl mx-auto px-5 pt-24 pb-8 sm:pb-10">
+      <section data-section="" className="max-w-6xl mx-auto px-5 pt-24 pb-8 sm:pb-10">
         <div className="text-center mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             <Scale size={14} /> Für Ehepaare
@@ -464,7 +464,7 @@ export default function HomePage() {
       </section>
 
       {/* ── FAQ Section ──────────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-5 pt-24 pb-12 sm:pb-16">
+      <section data-section="" className="max-w-6xl mx-auto px-5 pt-24 pb-12 sm:pb-16">
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             Häufige Fragen
@@ -480,7 +480,7 @@ export default function HomePage() {
       <SupportButton variant="story" lang="de" placement="page_inline" />
 
       {/* ── Alle Rechner (internal-link hub / HTML-sitemap for crawlers) ─ */}
-      <section className="max-w-6xl mx-auto px-5 pt-8 pb-16 sm:pb-20 border-t border-black/[0.10]">
+      <section data-section="" className="max-w-6xl mx-auto px-5 pt-8 pb-16 sm:pb-20 border-t border-black/[0.10]">
         <div className="text-center mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
             <Sparkles size={14} /> Alle Rechner
@@ -545,7 +545,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Ready CTA Banner ──────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-5 pb-8 sm:pb-10">
+      <section data-section="" className="max-w-6xl mx-auto px-5 pb-8 sm:pb-10">
         <div className="relative rounded-3xl bg-gradient-to-r from-[#FFFFFF] via-[#F1F3F5] to-[#FFFFFF] p-8 sm:p-14 border border-black/[0.12] overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-8 shadow-sm">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#E60A1C]/15 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10 text-center sm:text-left max-w-xl">
@@ -569,7 +569,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Disclaimer ───────────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-5 pb-8 sm:pb-10">
+      <section data-section="" className="max-w-6xl mx-auto px-5 pb-8 sm:pb-10">
         <div className="flex items-start gap-4 bg-[#F4F5F7] rounded-3xl p-6 sm:p-8 border border-black/[0.10] text-sm sm:text-base text-black/80 leading-relaxed shadow-lg">
           <AlertTriangle size={22} className="flex-shrink-0 mt-0.5 text-[#E60A1C]" />
           <p>

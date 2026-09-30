@@ -299,7 +299,7 @@ export default function VergleichPage() {
 
       {/* Feature-Matrix */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
           Funktionen im direkten Vergleich
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6 max-w-3xl">
@@ -357,7 +357,7 @@ export default function VergleichPage() {
 
       {/* Was der Vergleich praktisch bedeutet */}
       <div className="mb-16 bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-6 sm:p-10">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Was die Unterschiede praktisch bedeuten
         </h2>
         <div className="space-y-6 text-sm sm:text-base text-black/70 leading-relaxed">
@@ -419,7 +419,7 @@ export default function VergleichPage() {
 
       {/* Beispielrechnung mit Chart */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Beispiel: Was passiert eigentlich mit dem Brutto?
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-2 max-w-3xl">
@@ -432,7 +432,7 @@ export default function VergleichPage() {
 
       {/* Checkliste — bedient "welcher brutto netto rechner stimmt" */}
       <div className="mb-16">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Woran Sie einen verlässlichen Brutto-Netto-Rechner erkennen
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6 max-w-3xl">
@@ -476,7 +476,7 @@ export default function VergleichPage() {
 
       {/* Methodik */}
       <div className="mb-16 bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-10 shadow-sm">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-4">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-4">
           Methodik: So wurde verglichen
         </h2>
         <ul className="space-y-2.5 text-sm sm:text-base text-black/70 leading-relaxed">
@@ -501,7 +501,7 @@ export default function VergleichPage() {
 
       {/* FAQ */}
       <div className="mb-12">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
           Häufige Fragen zum Rechner-Vergleich
         </h2>
         <div className="space-y-3">
@@ -521,7 +521,7 @@ export default function VergleichPage() {
 
       {/* Abschluss-CTA */}
       <div className="bg-gradient-to-br from-[#E60A1C]/10 via-[#FFFFFF] to-[#FFFFFF] border border-[#E60A1C]/30 rounded-3xl p-6 sm:p-10 shadow-xl">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
           Fazit: Rechnen Sie mit Ihren eigenen Zahlen
         </h2>
         <p className="text-base sm:text-lg text-black/80 leading-relaxed mb-6 max-w-4xl">

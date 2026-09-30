@@ -242,9 +242,9 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
       {content}
 
       {/* Explainer / SEO content */}
-      <section className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-8 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D]">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
+        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Firmenwagen versteuern: 1%-Regelung &amp; geldwerter Vorteil
           </h2>
           <p>
@@ -279,8 +279,8 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
       </section>
 
       {/* FAQ */}
-      <section className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
           Häufige Fragen zum Firmenwagenrechner
         </h2>
         <div className="space-y-3">
@@ -303,7 +303,7 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
         <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
           <div className="relative">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-3">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
               Weitere Gehaltsrechner entdecken
             </h2>
             <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">

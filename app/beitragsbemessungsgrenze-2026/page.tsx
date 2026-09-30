@@ -229,7 +229,7 @@ export default function BeitragsbemessungsgrenzePage() {
         </section>
 
         {/* ── Abgrenzung JAEG ───────────────────────────────────────── */}
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-3">
             Nicht verwechseln: Versicherungspflichtgrenze
           </h2>
@@ -263,7 +263,7 @@ export default function BeitragsbemessungsgrenzePage() {
         </section>
 
         {/* ── Netto-Wirkung ─────────────────────────────────────────── */}
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-2">
             Was die Grenzen konkret bedeuten
           </h2>
@@ -312,7 +312,7 @@ export default function BeitragsbemessungsgrenzePage() {
         </section>
 
         {/* ── Weiterführend ─────────────────────────────────────────── */}
-        <section className="mb-12">
+        <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-4">Passende Rechner</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
