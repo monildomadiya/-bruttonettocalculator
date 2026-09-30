@@ -129,7 +129,7 @@ export default function WelcheSteuerklassePage() {
       />
 
       {/* Breadcrumb Nav */}
-      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-8 font-medium">
+      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-4 sm:mb-8 font-medium">
         <Link href="/" className="hover:text-[#16181D] transition-colors">Startseite</Link>
         <ChevronRight size={14} className="text-black/30" />
         <Link href="/steuerklassen" className="hover:text-[#16181D] transition-colors">Steuerklassen</Link>

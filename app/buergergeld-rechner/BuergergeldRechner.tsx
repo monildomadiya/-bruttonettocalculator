@@ -92,14 +92,14 @@ export default function BuergergeldRechner() {
     <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
       <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
-        <div className="relative max-w-6xl mx-auto px-5 py-16 sm:py-24 text-center">
-          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-6">
+        <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-24 text-center">
+          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
             <HandCoins size={14} /> Regelsatz 563 € · SGB II · 2026
           </div>
-          <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
+          <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">Bürgergeld-Rechner</span> 2026
           </h1>
-          <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie Ihren voraussichtlichen <strong className="text-[#16181D]">Bürgergeld-Anspruch 2026</strong> —
             aus dem Regelbedarf Ihrer Bedarfsgemeinschaft, den Kosten für Unterkunft & Heizung und dem angerechneten
             Erwerbseinkommen inklusive Freibeträgen.
@@ -107,10 +107,10 @@ export default function BuergergeldRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-12">
+      <section className="max-w-6xl mx-auto px-5 pt-2 pb-12 sm:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Inputs */}
-          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-7 sm:p-9 shadow-lg space-y-6">
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-5 sm:p-9 shadow-lg space-y-6">
             <div>
               <h2 className="text-xl font-extrabold text-[#16181D] mb-4 flex items-center gap-2"><Users size={20} className="text-[#E60A1C]" /> Bedarfsgemeinschaft</h2>
               <div className="grid grid-cols-2 gap-2 mb-3">

@@ -115,8 +115,10 @@ export default function ReverseCalculator() {
   }, [nettoZiel, jahr, steuerklasse]);
 
   return (
-    <div className="w-full">
-      <div className="flex justify-center mb-6">
+    // Wie im Calculator: Byline mobil unter der Karte (sonst schiebt sie das
+    // Eingabefeld unter den Falz), ab sm darüber.
+    <div className="w-full flex flex-col">
+      <div className="order-last sm:order-first flex justify-center mt-4 sm:mt-0 sm:mb-6">
         <ReviewerByline />
       </div>
       <div className="rounded-3xl overflow-hidden border border-black/[0.12] bg-[#FFFFFF] shadow-sm w-full max-w-full">
@@ -125,12 +127,12 @@ export default function ReverseCalculator() {
           {/* ═══ LEFT — Inputs ════════════════════════════════════════ */}
           <div className="p-4 sm:p-10 bg-[#FFFFFF] border-b md:border-b-0 md:border-r border-black/[0.10] flex flex-col justify-between w-full max-w-full min-w-0">
             <div className="w-full max-w-full min-w-0">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+              <div className="flex flex-row items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-8">
                 <div>
-                  <p className="font-mono text-xs uppercase tracking-widest text-black/50 mb-1 font-bold">Eingabe · Wunsch-Netto</p>
-                  <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#16181D]">Gewünschtes Nettogehalt</h2>
+                  <p className="hidden sm:block font-mono text-xs uppercase tracking-widest text-black/50 mb-1 font-bold">Eingabe · Wunsch-Netto</p>
+                  <h2 className="font-display text-lg sm:text-2xl font-extrabold text-[#16181D]">Gewünschtes Nettogehalt</h2>
                 </div>
-                <div className="flex items-center self-start sm:self-auto gap-1 bg-black/[0.04] border border-black/[0.10] rounded-2xl p-1.5 text-sm font-semibold flex-shrink-0">
+                <div className="flex items-center gap-1 bg-black/[0.04] border border-black/[0.10] rounded-2xl p-1 sm:p-1.5 text-sm font-semibold flex-shrink-0">
                   {[{ label: "/Monat", val: false }, { label: "/Jahr", val: true }].map(({ label, val }) => (
                     <button
                       key={label}

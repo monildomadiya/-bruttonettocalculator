@@ -88,25 +88,25 @@ export default function TeilzeitrechnerPage() {
   });
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-24 text-[#16181D]">
+    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-16 pb-24 text-[#16181D]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-8 font-medium">
+      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-4 sm:mb-8 font-medium">
         <Link href="/" className="hover:text-[#16181D] transition-colors">Startseite</Link>
         <ChevronRight size={14} className="text-black/30" />
         <span className="text-black/80">Teilzeitrechner</span>
       </div>
 
-      <div className="mb-10 text-center flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-5">
+      <div className="mb-6 sm:mb-10 text-center flex flex-col items-center">
+        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-5">
           <Clock3 size={14} /> Teilzeit · Netto berechnen · 2026
         </div>
-        <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-5 max-w-4xl">
+        <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-5 max-w-4xl">
           <span className="text-gradient-accent">Teilzeitrechner</span> 2026: Netto-Gehalt bei Teilzeit
         </h1>
-        <p className="text-lg sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-6">
+        <p className="text-base sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-2 sm:mb-6">
           Mit dem <strong className="text-[#16181D]">Teilzeitrechner</strong> berechnen Sie Ihr Nettogehalt bei
           reduzierter Arbeitszeit. Geben Sie Ihr Teilzeit-Bruttogehalt in den Rechner ein und sehen Sie sofort, wie
           viel netto bleibt — inklusive aller Sozialabgaben und Steuern für 2026.

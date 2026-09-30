@@ -111,14 +111,14 @@ export default function BeamteRechnerPage() {
   };
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
+    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJsonLd) }}
       />
 
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-8 font-medium">
+      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-4 sm:mb-8 font-medium">
         <Link href="/" className="hover:text-[#16181D] transition-colors">Startseite</Link>
         <ChevronRight size={14} className="text-black/30" />
         <Link href="/#rechner" className="hover:text-[#16181D] transition-colors">Rechner</Link>
@@ -127,14 +127,14 @@ export default function BeamteRechnerPage() {
       </div>
 
       {/* Hero */}
-      <div className="mb-12">
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
+      <div className="mb-6 sm:mb-12">
+        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-4">
           <Landmark size={14} /> Beamte · § 39b EStG
         </div>
-        <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-4 tracking-tight leading-tight">
+        <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-3 sm:mb-4 tracking-tight leading-tight">
           <span className="text-gradient-accent">Brutto Netto Rechner</span> für Beamte 2026
         </h1>
-        <p className="text-lg sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-6">
+        <p className="text-base sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-2 sm:mb-6">
           Beamte zahlen <strong className="text-[#16181D]">keine Sozialversicherungsbeiträge</strong> — von den
           Dienstbezügen gehen nur Lohnsteuer, ggf. Soli und Kirchensteuer ab. Dieser Rechner berechnet Ihr Netto
           nach der Mindestvorsorgepauschale (§ 39b EStG), zieht auf Wunsch Ihren PKV-Eigenanteil ab und zeigt den

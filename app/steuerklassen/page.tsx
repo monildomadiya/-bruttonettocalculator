@@ -233,18 +233,18 @@ export default function SteuerklassenPage() {
         <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
           <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
-          <div className="relative max-w-6xl mx-auto px-5 py-20 sm:py-28 text-center">
-            <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-6">
+          <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-28 text-center">
+            <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
               <BarChart3 size={14} />
               Alle 6 Steuerklassen · 2026
             </div>
-            <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
+            <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
               Steuerklassen 2026{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
                 im Vergleich
               </span>
             </h1>
-            <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
               Alle 6 deutschen Steuerklassen erklärt — und für Verheiratete die Kombinationen III/V,
               IV/IV und IV/IV mit Faktor. Mit Nettogehalt-Beispielen 2026, Steuerklassenwechsel und FAQ.
             </p>
@@ -252,7 +252,7 @@ export default function SteuerklassenPage() {
         </section>
 
         {/* Steuerklassen cards */}
-        <section className="max-w-6xl mx-auto px-5 py-12">
+        <section className="max-w-6xl mx-auto px-5 pt-2 pb-12 sm:py-12">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-8">
             Die 6 Steuerklassen im Detail
           </h2>

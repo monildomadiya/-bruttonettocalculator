@@ -36,15 +36,15 @@ export default function RentenpunkteRechner() {
       <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
-        <div className="relative max-w-6xl mx-auto px-5 py-20 sm:py-28 text-center">
-          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-6">
+        <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-28 text-center">
+          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
             <PiggyBank size={14} /> Rentenpunkte · Entgeltpunkte · 2026
           </div>
-          <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
+          <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
             Rentenpunkte-Rechner{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">2026</span>
           </h1>
-          <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie, wie viele <strong className="text-[#16181D]">Entgeltpunkte</strong> Sie mit Ihrem Gehalt sammeln
             und welche <strong className="text-[#16181D]">monatliche Rente</strong> daraus entsteht — mit dem aktuellen
             Rentenwert von <strong className="text-[#16181D]">42,52 €</strong> (ab Juli 2026).
@@ -52,10 +52,10 @@ export default function RentenpunkteRechner() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 py-12">
+      <section className="max-w-6xl mx-auto px-5 pt-2 pb-12 sm:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Inputs */}
-          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
+          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-9">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
               <Calculator size={22} className="text-[#E60A1C]" /> Ihre Angaben
             </h2>

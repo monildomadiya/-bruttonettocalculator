@@ -110,25 +110,25 @@ export default function LohnsteuerrechnerPage() {
   });
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-24 text-[#16181D]">
+    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-16 pb-24 text-[#16181D]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-8 font-medium">
+      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-4 sm:mb-8 font-medium">
         <Link href="/" className="hover:text-[#16181D] transition-colors">Startseite</Link>
         <ChevronRight size={14} className="text-black/30" />
         <span className="text-black/80">Lohnsteuerrechner</span>
       </div>
 
-      <div className="mb-10 text-center flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-5">
+      <div className="mb-6 sm:mb-10 text-center flex flex-col items-center">
+        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-5">
           <Receipt size={14} /> Lohnsteuer · Nettolohn · 2026/2027
         </div>
-        <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-5 max-w-4xl">
+        <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-5 max-w-4xl">
           <span className="text-gradient-accent">Lohnsteuerrechner</span> 2026: Lohnsteuer & Nettolohn berechnen
         </h1>
-        <p className="text-lg sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-6">
+        <p className="text-base sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-2 sm:mb-6">
           Der kostenlose <strong className="text-[#16181D]">Lohnsteuerrechner</strong> zeigt Ihnen, wie viel{" "}
           <strong className="text-[#16181D]">Lohnsteuer</strong>, Solidaritätszuschlag und Sozialabgaben von Ihrem
           Bruttolohn abgehen — und welcher <strong className="text-[#16181D]">Nettolohn</strong> übrig bleibt. Nutzen Sie

@@ -94,25 +94,25 @@ export default function KalkulatorNiemcyPage() {
   });
 
   return (
-    <main lang="pl" className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-24 text-[#16181D]">
+    <main lang="pl" className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-16 pb-24 text-[#16181D]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-8 font-medium">
+      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-4 sm:mb-8 font-medium">
         <Link href="/" className="hover:text-[#16181D] transition-colors">Start</Link>
         <ChevronRight size={14} className="text-black/30" />
         <span className="text-black/80">Kalkulator brutto netto Niemcy</span>
       </div>
 
-      <div className="mb-10 text-center flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-5">
+      <div className="mb-6 sm:mb-10 text-center flex flex-col items-center">
+        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-5">
           <Globe size={14} /> Niemcy · Rok podatkowy 2026 · Polski
         </div>
-        <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-5 max-w-4xl">
+        <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-5 max-w-4xl">
           Kalkulator brutto netto <span className="text-gradient-accent">Niemcy</span> 2026
         </h1>
-        <p className="text-lg sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-4">
+        <p className="text-base sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-4">
           Oblicz swoje <strong className="text-[#16181D]">wynagrodzenie netto</strong> w Niemczech z kwoty brutto.
           Ten darmowy kalkulator uwzględnia <strong className="text-[#16181D]">niemiecki podatek dochodowy</strong>{" "}
           (Lohnsteuer), dodatek solidarnościowy, podatek kościelny oraz wszystkie składki społeczne — dla wszystkich

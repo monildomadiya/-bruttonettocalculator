@@ -146,18 +146,18 @@ export default function PfaendungstabellePage() {
         <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
           <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
-          <div className="relative max-w-6xl mx-auto px-5 py-20 sm:py-28 text-center">
-            <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-6">
+          <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-28 text-center">
+            <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
               <Scale size={14} />
               § 850c ZPO · Gültig ab 01.07.2025
             </div>
-            <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
+            <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
               Pfändungstabelle{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
                 2026
               </span>
             </h1>
-            <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
               Aktuelle Pfändungsfreigrenzen nach § 850c ZPO. Pfändungsfreies Einkommen für
               0–5&nbsp;Unterhaltspflichten auf einen Blick — kostenlos &amp; aktuell.
             </p>

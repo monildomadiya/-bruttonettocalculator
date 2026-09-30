@@ -100,14 +100,14 @@ export default function MehrwertsteuerRechnerPage() {
   };
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
+    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJsonLd) }}
       />
 
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-8 font-medium">
+      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-4 sm:mb-8 font-medium">
         <Link href="/" className="hover:text-[#16181D] transition-colors">Startseite</Link>
         <ChevronRight size={14} className="text-black/30" />
         <Link href="/#rechner" className="hover:text-[#16181D] transition-colors">Rechner</Link>
@@ -116,14 +116,14 @@ export default function MehrwertsteuerRechnerPage() {
       </div>
 
       {/* Hero */}
-      <div className="mb-12">
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
+      <div className="mb-6 sm:mb-12">
+        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-4">
           <Receipt size={14} /> Umsatzsteuer · § 12 UStG
         </div>
-        <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-4 tracking-tight leading-tight">
+        <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-3 sm:mb-4 tracking-tight leading-tight">
           <span className="text-gradient-accent">MwSt-Rechner:</span> Mehrwertsteuer berechnen
         </h1>
-        <p className="text-lg sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-6">
+        <p className="text-base sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-2 sm:mb-6">
           Mehrwertsteuer <strong className="text-[#16181D]">aufschlagen oder herausrechnen</strong> — mit dem
           Regelsatz von <strong className="text-[#16181D]">19 %</strong> oder dem ermäßigten Satz von{" "}
           <strong className="text-[#16181D]">7 %</strong>. Die Formel: Brutto = Netto × 1,19 (bzw. × 1,07);

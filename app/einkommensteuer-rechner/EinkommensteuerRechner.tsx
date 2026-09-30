@@ -56,14 +56,14 @@ export default function EinkommensteuerRechner() {
       {/* Hero */}
       <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
-        <div className="relative max-w-6xl mx-auto px-5 py-16 sm:py-24 text-center">
-          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-6">
+        <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-24 text-center">
+          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
             <Landmark size={14} /> § 32a EStG · Steuerjahr 2026
           </div>
-          <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-6 leading-tight">
+          <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">Einkommensteuer-Rechner</span> 2026
           </h1>
-          <p className="text-lg sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie Ihre <strong className="text-[#16181D]">Einkommensteuer</strong> für 2026 aus dem zu
             versteuernden Einkommen — mit Grund- oder Splittingtarif, Solidaritätszuschlag, Kirchensteuer sowie
             Grenz- und Durchschnittssteuersatz. Der kostenlose <strong className="text-[#16181D]">Steuerrechner</strong>{" "}
@@ -73,10 +73,10 @@ export default function EinkommensteuerRechner() {
       </section>
 
       {/* Calculator */}
-      <section className="max-w-6xl mx-auto px-5 py-12">
+      <section className="max-w-6xl mx-auto px-5 pt-2 pb-12 sm:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Inputs */}
-          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-7 sm:p-9 shadow-lg">
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-5 sm:p-9 shadow-lg">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
               <Landmark size={22} className="text-[#E60A1C]" /> Ihre Angaben
             </h2>

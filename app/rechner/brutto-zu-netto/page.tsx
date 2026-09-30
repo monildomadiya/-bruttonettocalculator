@@ -61,17 +61,17 @@ const faqJsonLd = {
 
 export default function BruttoZuNettoPage() {
   return (
-    <section className="w-full max-w-6xl mx-auto px-5 pt-20 pb-10 min-h-[80vh]">
+    <section className="w-full max-w-6xl mx-auto px-5 pt-6 sm:pt-20 pb-10 min-h-[80vh]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
-      <div className="mb-14">
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
+      <div className="mb-6 sm:mb-14">
+        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-4">
           <CalcIcon size={14} /> Berechnung nach § 32a EStG
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-[#16181D] mb-4 tracking-tight">
+        <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-[#16181D] mb-3 sm:mb-4 tracking-tight">
           Brutto zu <span className="text-gradient-accent">Netto</span> Rechner
         </h1>
-        <p className="text-lg sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
+        <p className="text-base sm:text-xl text-black/80 w-full max-w-6xl leading-relaxed">
           Geben Sie Ihr Bruttogehalt ein und sehen Sie in Echtzeit und präzise auf den Cent, wie viel davon
           als Nettogehalt auf Ihrem Konto übrig bleibt — inklusive Lohnsteuer, Solidaritätszuschlag und allen
           Sozialabgaben nach § 32a EStG 2026.

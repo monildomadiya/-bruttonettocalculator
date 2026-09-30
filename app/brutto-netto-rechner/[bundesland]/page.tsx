@@ -8,7 +8,6 @@ import {
 import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
 import { BUNDESLAENDER, getBundeslandBySlug, Bundesland } from "@/data/bundeslaender";
 import Calculator from "@/components/Calculator";
-import ReviewerByline from "@/components/ReviewerByline";
 import AccordionFaq from "@/components/AccordionFaq";
 
 /*
@@ -168,13 +167,13 @@ export default function BundeslandPage({ params }: PageProps) {
   };
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-24 text-[#16181D]">
+    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-16 pb-24 text-[#16181D]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-8 font-medium flex-wrap">
+      <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-4 sm:mb-8 font-medium flex-wrap">
         <Link href="/" className="hover:text-[#16181D] transition-colors">Startseite</Link>
         <ChevronRight size={14} className="text-black/30" />
         <span className="text-black/50">Bundesland</span>
@@ -183,20 +182,38 @@ export default function BundeslandPage({ params }: PageProps) {
       </div>
 
       {/* Hero */}
-      <div className="mb-10 text-center flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-5">
+      <div className="mb-6 sm:mb-10 text-center flex flex-col items-center">
+        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-5">
           <MapPin size={14} /> {bl.name} · Steuerjahr 2026
         </div>
-        <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-5 max-w-4xl">
+        <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-5 max-w-4xl">
           <span className="text-gradient-accent">Brutto-Netto-Rechner</span> {bl.name}
         </h1>
-        <p className="text-lg sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-6">
+        <p className="text-base sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-2 sm:mb-6">
           Berechnen Sie Ihr <strong className="text-[#16181D]">Nettogehalt {bl.praep}</strong> für 2026 —
           mit dem regional gültigen <strong className="text-[#16181D]">Kirchensteuersatz von {kirchePct} %</strong>.
           Lohnsteuer, Soli und Sozialabgaben werden nach den amtlichen Werten (§ 32a EStG) berechnet.
         </p>
-        <ReviewerByline />
+        {/* Keine eigene Byline mehr: <Calculator> direkt darunter zeigt sie bereits
+            (mobil unter, ab sm über der Karte) — hier stand sie doppelt. */}
       </div>
+
+      {/* Interactive calculator — direkt unter dem Hero: Die Suchanfrage lautet
+          "brutto netto rechner <land>", der Rechner gehört in den ersten
+          Bildschirm (mobil lag er hinter Landeskontext und Tabelle bei 1.950 px).
+          Die Zwischenüberschrift ist mobil ausgeblendet, die H1 nennt Land und
+          Rechner bereits. */}
+      <section id="rechner" className="mb-16 scroll-mt-24">
+        <div className="hidden sm:block text-center mb-8">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
+            Interaktiver Brutto-Netto-Rechner {bl.name}
+          </h2>
+          <p className="text-black/70 text-sm sm:text-base">
+            Geben Sie Ihr Bruttogehalt ein und passen Sie Steuerklasse, Kirchensteuer und Kinderfreibeträge an:
+          </p>
+        </div>
+        <Calculator initialBrutto={4000} initialJahr={2026} initialSk={1} />
+      </section>
 
       {/* State context */}
       <section className="mb-14 bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-9 shadow-xl relative overflow-hidden">
@@ -252,19 +269,6 @@ export default function BundeslandPage({ params }: PageProps) {
           <Info size={13} className="flex-shrink-0 mt-0.5" />
           Vereinfachte Berechnung für einen ersten Überblick (Steuerklasse I, kinderlos ab 23, GKV-Zusatzbeitrag Ø 2,9 %). Keine Steuerberatung.
         </p>
-      </section>
-
-      {/* Interactive calculator */}
-      <section id="rechner" className="mb-16 scroll-mt-24">
-        <div className="text-center mb-8">
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#16181D] mb-2">
-            Interaktiver Brutto-Netto-Rechner {bl.name}
-          </h2>
-          <p className="text-black/70 text-sm sm:text-base">
-            Geben Sie Ihr Bruttogehalt ein und passen Sie Steuerklasse, Kirchensteuer und Kinderfreibeträge an:
-          </p>
-        </div>
-        <Calculator initialBrutto={4000} initialJahr={2026} initialSk={1} />
       </section>
 
       {/* SEO explainer */}

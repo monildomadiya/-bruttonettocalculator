@@ -71,10 +71,10 @@ export default function KrankenkassenRechner({
   const teurerAlsDurchschnitt = kasse.zusatzbeitrag > DURCHSCHNITT_ZUSATZBEITRAG_2026;
 
   return (
-    <div className="bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+    <div className="bg-gradient-to-br from-[#F1F3F5] via-[#FFFFFF] to-[#FFFFFF] border border-black/[0.10] rounded-3xl p-5 sm:p-10 shadow-2xl relative overflow-hidden">
       <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#E60A1C]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="flex items-center gap-2 text-[#E60A1C] font-bold text-sm sm:text-base mb-6 relative">
+      <div className="flex items-center gap-2 text-[#E60A1C] font-bold text-sm sm:text-base mb-4 sm:mb-6 relative">
         <HeartPulse size={18} />
         <span>Netto mit dem Zusatzbeitrag Ihrer Krankenkasse</span>
       </div>
