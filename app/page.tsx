@@ -280,6 +280,15 @@ export default function HomePage() {
 
         {/* Quick-intent links: surface adjacent tools at the moment of intent (SXO) */}
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+          {/* Erster Chip bewusst 2027: Die Startseite rankt selbst für
+              "brutto netto rechner 2027", die Fachseite mit Reform-Szenarien und
+              Gesetzgebungs-Status bekommt so den stärksten internen Link. */}
+          <Link
+            href="/brutto-netto-rechner-2027"
+            className="group inline-flex items-center gap-2 bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-[#E60A1C]/40 hover:border-[#E60A1C]/70 rounded-full px-5 py-2.5 text-sm font-bold text-[#16181D] shadow-sm transition-all"
+          >
+            <Sparkles size={16} className="text-[#E60A1C]" /> Brutto Netto Rechner 2027
+          </Link>
           <Link
             href="/rechner/netto-zu-brutto"
             className="group inline-flex items-center gap-2 bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-black/[0.12] hover:border-[#E60A1C]/50 rounded-full px-5 py-2.5 text-sm font-bold text-[#16181D] shadow-sm transition-all"

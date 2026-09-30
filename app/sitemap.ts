@@ -6,6 +6,7 @@ import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts } from "@/dat
 import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
+import { REFORM_STAND } from "@/components/Reform2027Status";
 import { getPublishedPosts } from "@/lib/postsStore";
 
 /*
@@ -144,10 +145,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const sitemapEntries: MetadataRoute.Sitemap = [];
 
+  // Die 2027-Seite ändert sich mit jedem Gesetzgebungsschritt, nicht mit der
+  // Engine — ihr lastmod folgt deshalb dem Redaktionsstand der Reform.
+  const reformUpdated = new Date(REFORM_STAND);
+
   for (const path of calculatorRoutes) {
     sitemapEntries.push({
       url: `${base}${path}`,
-      lastModified: engineUpdated,
+      lastModified: path === "/brutto-netto-rechner-2027" ? reformUpdated : engineUpdated,
       ...(clusterPaths.has(path) ? { alternates: { languages: languageCluster } } : {}),
     });
   }

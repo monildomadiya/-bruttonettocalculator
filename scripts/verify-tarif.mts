@@ -50,13 +50,16 @@ function pruefeTarif(name: string, t: Tarif) {
   // Formel denselben Betrag liefern wie die lineare 42-%-Formel.
   check(`Naht ${t.e2} € → 42-%-Zone`, estFuerTarif(t, t.e2), 0.42 * t.e2 - t.c3, 0.35);
 
-  // Zone 4 → 5 und 5 → 6: rein lineare Nahtstellen, hier muss es exakt passen.
+  // Zone 4 → 5 und 5 → 6: rein lineare Nahtstellen. Exakt auf den Cent passen
+  // sie nicht: Die Abzugsbeträge stehen im Gesetz auf Cent gerundet, und der
+  // Regierungsentwurf (BT-Drs. 21/8235) lässt dort 2–3 Cent Lücke — wie der
+  // geltende Tarif 2026 an seiner 45-%-Naht. Ein Zahlendreher fällt trotzdem auf.
   const reichensteuerAb = t.topStart + 1;
   check(
     `Naht ${reichensteuerAb} € → 45-%-Zone`,
     0.42 * reichensteuerAb - t.c3,
     0.45 * reichensteuerAb - t.c4,
-    0.005
+    0.05
   );
   if (t.top2Start !== undefined) {
     const top2Ab = t.top2Start + 1;
@@ -64,7 +67,7 @@ function pruefeTarif(name: string, t: Tarif) {
       `Naht ${top2Ab} € → 47-%-Zone`,
       0.45 * top2Ab - t.c4,
       0.47 * top2Ab - t.c5!,
-      0.005
+      0.05
     );
   }
 
@@ -79,6 +82,15 @@ function pruefeTarif(name: string, t: Tarif) {
 
 pruefeTarif("§ 32a EStG i. d. F. Art. 1 EStRefG 2027 (ab VZ 2027)", TARIF_2027_ENTWURF);
 pruefeTarif("§ 32a EStG i. d. F. Art. 2 EStRefG 2027 (ab VZ 2028)", TARIF_2028_ENTWURF);
+
+// Wörtlich aus BT-Drs. 21/8235 (28.09.2026). Der Referentenentwurf hatte hier
+// jeweils andere Cent-Beträge (…,73 bzw. …,52) — die Nahtprüfung oben würde
+// einen Rückfall auf diese Werte nicht bemerken, deshalb fest verdrahtet.
+console.log("\n── Anschlusskonstanten der Spitzenzonen (BT-Drs. 21/8235) ──");
+check("2027: 45-%-Zone − 18.741,70", TARIF_2027_ENTWURF.c4, 18741.7, 0);
+check("2027: 47-%-Zone − 24.341,68", TARIF_2027_ENTWURF.c5!, 24341.68, 0);
+check("2028: 45-%-Zone − 18.805,49", TARIF_2028_ENTWURF.c4, 18805.49, 0);
+check("2028: 47-%-Zone − 24.405,47", TARIF_2028_ENTWURF.c5!, 24405.47, 0);
 
 // Regressionsschutz: der geltende Tarif 2026 darf sich durch Reformarbeiten
 // nicht verändern. Die Werte stammen aus der Gesetzesformel selbst.

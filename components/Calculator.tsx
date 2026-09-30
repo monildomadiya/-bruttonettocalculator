@@ -395,9 +395,11 @@ interface CalculatorProps {
   deepLink?: boolean;
   /** UI language. Defaults to German; pass "en" on the English landing page. */
   lang?: Lang;
+  /** Overrides the byline's "zuletzt aktualisiert" date (the 2027 page follows the reform, not the engine). */
+  standDisplay?: string;
 }
 
-export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1, deepLink = true, lang = "de" }: CalculatorProps = {}) {
+export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1, deepLink = true, lang = "de", standDisplay }: CalculatorProps = {}) {
   const t = T[lang];
   const skInfo = STEUERKLASSE_INFO[lang];
   const [bruttoMonat,  setBruttoMonat]  = useState<number>(initialBrutto);
@@ -532,7 +534,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   return (
     <div className="w-full">
       <div className="flex justify-center mb-6">
-        <ReviewerByline lang={lang} />
+        <ReviewerByline lang={lang} updatedDisplay={standDisplay} />
       </div>
       <div className="rounded-3xl overflow-hidden border border-black/[0.12] bg-[#FFFFFF] shadow-sm w-full max-w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] w-full max-w-full min-w-0">

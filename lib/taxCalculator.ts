@@ -15,9 +15,14 @@
  * steuerreformgesetzes 2027 (EStRefG 2027) beschlossen. Er fasst § 32a Absatz 1
  * EStG für die Veranlagungszeiträume 2027 (Artikel 1) und 2028 (Artikel 2)
  * jeweils neu. Die Tarife in `TARIF_2027_ENTWURF` und `TARIF_2028_ENTWURF` sind
- * die wörtlichen Zahlenwerte dieses Entwurfs — nicht modelliert, nicht
- * abgeleitet; der Kabinettsbeschluss hat sie gegenüber dem Referentenentwurf
- * vom 18.08.2026 nicht verändert.
+ * die wörtlichen Zahlenwerte dieses Entwurfs in der Fassung der Bundestags-
+ * Drucksache 21/8235 vom 28.09.2026 — nicht modelliert, nicht abgeleitet.
+ * Gegenüber dem Referentenentwurf vom 18.08.2026 sind die Tarifeckwerte gleich
+ * geblieben; geändert hat der Regierungsentwurf nur die Anschlusskonstanten der
+ * 45-%- und 47-%-Zone um wenige Cent (2027: 18.741,73 → 18.741,70 und
+ * 24.341,73 → 24.341,68; 2028: 18.805,52 → 18.805,49 und 24.405,52 → 24.405,47).
+ * Wer diese Werte anfasst: gegen die aktuelle Drucksache prüfen, nicht gegen
+ * den Referentenentwurf.
  *
  * Der Entwurf ändert dabei die *Form* des Tarifs: neben der 45-%-Zone gibt es
  * erstmals eine dritte Spitzenzone mit 47 % ab 280.000 € zvE. Der Tarif lässt
@@ -366,15 +371,18 @@ export function grenzsteuersatzFuerTarif(t: Tarif, zvE: number): number {
  * Quelle aller 2027/2028-Werte in diesem Modul.
  *
  * Regierungsentwurf eines Einkommensteuerreformgesetzes 2027 (EStRefG 2027),
- * vom Bundeskabinett beschlossen am 02.09.2026. Er übernimmt die Tarifeckwerte
- * des Referentenentwurfs (BMF, Bearbeitungsstand 18.08.2026 07:19) unverändert.
+ * vom Bundeskabinett beschlossen am 02.09.2026, dem Bundestag zugeleitet als
+ * Drucksache 21/8235 vom 28.09.2026. Er übernimmt die Tarifeckwerte des
+ * Referentenentwurfs (BMF, Bearbeitungsstand 18.08.2026 07:19) unverändert.
  * Artikel 1 wirkt ab dem Veranlagungszeitraum 2027, Artikel 2 ab 2028.
  */
 export const ENTWURF = {
   kurzname: "EStRefG 2027",
   langname: "Regierungsentwurf eines Einkommensteuerreformgesetzes 2027",
   stand: "2026-09-02",
-  quelle: "https://www.bundesregierung.de/breg-de/aktuelles/einkommensteuerreform-2027-2451192",
+  quelle: "https://dserver.bundestag.de/btd/21/082/2108235.pdf",
+  drucksache: "BT-Drucksache 21/8235",
+  pressemitteilung: "https://www.bundesregierung.de/breg-de/aktuelles/einkommensteuerreform-2027-2451192",
   referentenentwurf:
     "https://www.bundesfinanzministerium.de/Content/DE/Gesetzestexte/Gesetze_Gesetzesvorhaben/Abteilungen/Abteilung_IV/21_Legislaturperiode/2026-08-18-EStReformG-2027/1-Referentenentwurf.pdf",
 } as const;
@@ -418,8 +426,8 @@ export const BETREUUNGSFREIBETRAG = 1464;
  *   12.565 € – 17.799 €     → (952,24 · y + 1.400) · y
  *   17.800 € – 70.600 €     → (170,74 · z + 2.397) · z + 993,86
  *   70.601 € – 249.999 €    → 0,42 · x − 11.241,73
- *   250.000 € – 279.999 €   → 0,45 · x − 18.741,73
- *   ab 280.000 €            → 0,47 · x − 24.341,73
+ *   250.000 € – 279.999 €   → 0,45 · x − 18.741,70
+ *   ab 280.000 €            → 0,47 · x − 24.341,68
  *
  * mit y = (x − 12.564)/10.000 und z = (x − 17.799)/10.000.
  *
@@ -438,9 +446,9 @@ export const TARIF_2027_ENTWURF: Tarif = {
   c: 993.86,
   topStart: 249999,
   c3: 11241.73,
-  c4: 18741.73,
+  c4: 18741.7,
   top2Start: 279999,
-  c5: 24341.73,
+  c5: 24341.68,
 };
 
 /**
@@ -459,9 +467,9 @@ export const TARIF_2028_ENTWURF: Tarif = {
   c: 930.08,
   topStart: 249999,
   c3: 11305.52,
-  c4: 18805.52,
+  c4: 18805.49,
   top2Start: 279999,
-  c5: 24405.52,
+  c5: 24405.47,
 };
 
 /**

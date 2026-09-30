@@ -7,6 +7,8 @@ interface ReviewerBylineProps {
   className?: string;
   variant?: "compact" | "banner";
   lang?: "de" | "en" | "pl";
+  /** Eigener Stand für Seiten, die sich unabhängig von der Engine ändern (2027-Reform). */
+  updatedDisplay?: string;
 }
 
 const BYLINE_T = {
@@ -36,7 +38,8 @@ const BYLINE_T = {
   },
 } as const;
 
-export default function ReviewerByline({ className = "", variant = "compact", lang = "de" }: ReviewerBylineProps) {
+export default function ReviewerByline({ className = "", variant = "compact", lang = "de", updatedDisplay }: ReviewerBylineProps) {
+  const stand = updatedDisplay ?? siteConfig.lastUpdatedDisplay;
   const bt = BYLINE_T[lang];
   const credentials = lang === "en" ? bt.credentials : primaryReviewer.credentials;
   if (variant === "banner") {
@@ -66,7 +69,7 @@ export default function ReviewerByline({ className = "", variant = "compact", la
               <span className="text-black/70 font-normal">{credentials}</span>
             </div>
             <p className="text-xs text-black/50 mt-0.5">
-              {bt.basis} {siteConfig.lastUpdatedDisplay}
+              {bt.basis} {stand}
             </p>
           </div>
         </div>
@@ -98,7 +101,7 @@ export default function ReviewerByline({ className = "", variant = "compact", la
       </Link>
       <span className="text-black/40">({credentials})</span>
       <span className="text-black/30">•</span>
-      <span>{bt.updated} <strong className="text-black/90 font-normal">{siteConfig.lastUpdatedDisplay}</strong></span>
+      <span>{bt.updated} <strong className="text-black/90 font-normal">{stand}</strong></span>
     </div>
   );
 }

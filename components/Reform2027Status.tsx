@@ -17,7 +17,7 @@ import { CheckCircle2, Clock, Gavel, ShieldCheck } from "lucide-react";
  */
 
 /** Letzter redaktioneller Stand — auch als `dateModified` verwendet. */
-export const REFORM_STAND = "2026-09-23";
+export const REFORM_STAND = "2026-09-30";
 
 type Status = "erledigt" | "offen";
 
@@ -58,10 +58,31 @@ const gesetzgebung: Schritt[] = [
       "Das Bundeskabinett hat den Regierungsentwurf des Einkommensteuerreformgesetzes 2027 beschlossen. Die Tarifeckwerte des Referentenentwurfs bleiben darin unverändert — Grundfreibetrag, Kindergeld, Kinderfreibetrag und Arbeitnehmer-Pauschbetrag stehen damit so im Regierungsentwurf, wie dieser Rechner sie verwendet. Neu beschlossen wurde die Gegenfinanzierung. Der Entwurf geht nun ins parlamentarische Verfahren.",
   },
   {
+    titel: "Zuleitung an den Bundesrat",
+    status: "erledigt",
+    datum: "4. September 2026",
+    detail:
+      "Die Bundesregierung hat den Entwurf dem Bundesrat als „besonders eilbedürftig“ zugeleitet. Damit kann er parallel zur Stellungnahme der Länder in den Bundestag gehen; die Stellungnahme des Bundesrates wird nachgereicht.",
+  },
+  {
+    titel: "Einbringung in den Bundestag",
+    status: "erledigt",
+    datum: "28. September 2026",
+    detail:
+      "Der Gesetzentwurf liegt dem Bundestag als Drucksache 21/8235 vor. Beim Abgleich mit dieser Fassung zeigte sich eine Detailänderung gegenüber dem Referentenentwurf: Die Abzugsbeträge der 45-%- und der 47-%-Zone wurden um wenige Cent angepasst (2027: 18.741,70 € und 24.341,68 €). Das betrifft nur zu versteuernde Einkommen ab 250.000 € — dieser Rechner verwendet seit dem 30. September 2026 die Werte der Drucksache.",
+  },
+  {
+    titel: "Bundestag, 1. Lesung",
+    status: "offen",
+    datum: "angesetzt: 8. Oktober 2026",
+    detail:
+      "Erste Beratung im Plenum mit einstündiger Debatte; anschließend soll der Entwurf an die Ausschüsse überwiesen werden, federführend der Finanzausschuss. Dort können sich die Beträge noch verändern.",
+  },
+  {
     titel: "Bundestag (2./3. Lesung)",
     status: "offen",
     datum: "ausstehend",
-    detail: "Im parlamentarischen Verfahren können sich die Beträge noch verändern.",
+    detail: "Abstimmung über die im Finanzausschuss beratene Fassung. Erst dann steht fest, mit welchen Beträgen das Gesetz den Bundestag verlässt.",
   },
   {
     titel: "Bundesrat",
@@ -179,8 +200,8 @@ export default function Reform2027Status() {
         <time dateTime={REFORM_STAND}>
           {new Date(REFORM_STAND).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}
         </time>
-        . Quellen: Regierungsentwurf eines Einkommensteuerreformgesetzes 2027, Kabinettsbeschluss
-        vom 2.9.2026 (Artikel 1 für den Veranlagungszeitraum 2027, Artikel 2 für 2028); zugrunde
+        . Quellen: Gesetzentwurf der Bundesregierung, Entwurf eines Einkommensteuerreformgesetzes
+        2027, BT-Drucksache 21/8235 vom 28.9.2026 (Artikel 1 für den Veranlagungszeitraum 2027, Artikel 2 für 2028); zugrunde
         liegender Referentenentwurf des Bundesministeriums der Finanzen, Bearbeitungsstand
         18.08.2026; Beschluss des Koalitionsausschusses vom 1.7.2026;
         Mindestlohnanpassungsverordnung. Diese Seite wird bei jedem Verfahrensschritt aktualisiert.

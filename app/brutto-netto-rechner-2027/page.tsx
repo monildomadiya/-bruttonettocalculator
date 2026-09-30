@@ -15,10 +15,18 @@ import {
 
 const eur = (n: number) => n.toLocaleString("de-DE");
 
+// Titel und Beschreibung nennen den aktuellen Verfahrensschritt: Das Thema ist
+// query-deserves-freshness, ein veralteter Stand im Snippet kostet Rankings
+// (Absturz im September 2026). Bei jedem Verfahrensschritt mit REFORM_STAND
+// in components/Reform2027Status.tsx zusammen aktualisieren.
+const PAGE_TITLE = "Brutto Netto Rechner 2027 – Gesetzentwurf im Bundestag";
+const PAGE_DESCRIPTION =
+  "Brutto Netto Rechner 2027 nach dem Gesetzentwurf im Bundestag (Drs. 21/8235): Grundfreibetrag 12.564 €, Pauschbetrag 1.430 €, 47 % ab 280.000 €. Stand 30.9.2026.";
+
 export const metadata: Metadata = {
-  title: "Brutto Netto Rechner 2027 – Kabinettsentwurf vom 2.9.2026",
+  title: PAGE_TITLE,
   description:
-    "Brutto Netto Rechner 2027 nach dem Kabinettsbeschluss vom 2.9.2026: Grundfreibetrag 12.564 €, Pauschbetrag 1.430 €, neuer Spitzensatz 47 %. Mit Gesetzgebungs-Status.",
+    PAGE_DESCRIPTION,
   keywords: [
     "steuerreform 2027 rechner",
     "steuerreform rechner 2027",
@@ -57,9 +65,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/brutto-netto-rechner-2027" },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],
-    title: "Brutto Netto Rechner 2027 – Kabinettsentwurf vom 2.9.2026",
+    title: PAGE_TITLE,
     description:
-      "Brutto Netto Rechner 2027 nach dem Kabinettsbeschluss vom 2.9.2026: Grundfreibetrag 12.564 €, Pauschbetrag 1.430 €, neuer Spitzensatz 47 %. Mit Gesetzgebungs-Status.",
+      PAGE_DESCRIPTION,
     url: "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
     locale: "de_DE",
     type: "website",
@@ -101,7 +109,7 @@ const faqs = [
   },
   {
     q: "Was ist das EStRefG 2027?",
-    a: "Das Einkommensteuerreformgesetz 2027 ist das Gesetzesvorhaben, mit dem die Bundesregierung den Einkommensteuertarif reformieren will. Das Bundesfinanzministerium hat den Referentenentwurf am 18. August 2026 vorgelegt; das Bundeskabinett hat den Regierungsentwurf am 2. September 2026 beschlossen und damit ins parlamentarische Verfahren gegeben. Artikel 1 fasst § 32a Absatz 1 EStG für den Veranlagungszeitraum 2027 neu, Artikel 2 für 2028. Enthalten sind außerdem ein höherer Arbeitnehmer-Pauschbetrag, höheres Kindergeld, höhere Kinderfreibeträge sowie Gegenfinanzierungsmaßnahmen.",
+    a: "Das Einkommensteuerreformgesetz 2027 ist das Gesetzesvorhaben, mit dem die Bundesregierung den Einkommensteuertarif reformieren will. Das Bundesfinanzministerium hat den Referentenentwurf am 18. August 2026 vorgelegt; das Bundeskabinett hat den Regierungsentwurf am 2. September 2026 beschlossen. Seit dem 28. September 2026 liegt er dem Bundestag als Drucksache 21/8235 vor; die erste Lesung ist für den 8. Oktober 2026 angesetzt. Artikel 1 fasst § 32a Absatz 1 EStG für den Veranlagungszeitraum 2027 neu, Artikel 2 für 2028. Enthalten sind außerdem ein höherer Arbeitnehmer-Pauschbetrag, höheres Kindergeld, höhere Kinderfreibeträge sowie Gegenfinanzierungsmaßnahmen.",
   },
   {
     q: "Gilt dieser Rechner auch für Österreich?",
@@ -123,12 +131,12 @@ const appJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
-  name: "Brutto Netto Rechner 2027 – Kabinettsentwurf vom 2.9.2026",
+  name: PAGE_TITLE,
   url: "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
   inLanguage: "de-DE",
   dateModified: REFORM_STAND,
   description:
-    "Brutto Netto Rechner 2027 nach dem Kabinettsbeschluss vom 2.9.2026: Grundfreibetrag 12.564 €, Pauschbetrag 1.430 €, neuer Spitzensatz 47 %. Mit Gesetzgebungs-Status.",
+    PAGE_DESCRIPTION,
   about: { "@type": "Thing", name: "Einkommensteuerreform 2027 (Deutschland)" },
   citation: {
     "@type": "Legislation",
@@ -159,7 +167,7 @@ export default function Rechner2027Page() {
       <div className="mb-14">
         <div className="flex flex-wrap items-center gap-2 mb-4">
           <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full">
-            <Sparkles size={14} /> Kabinettsbeschluss vom 02.09.2026
+            <Sparkles size={14} /> Im Bundestag · Drucksache 21/8235
           </span>
           <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-black/60 font-bold bg-black/[0.05] border border-black/10 px-4 py-1.5 rounded-full">
             <span aria-hidden="true">🇩🇪</span> Gilt für Deutschland
@@ -177,15 +185,20 @@ export default function Rechner2027Page() {
           mit genau diesen Zahlen statt mit Schätzungen: Grundfreibetrag{" "}
           {eur(GRUNDFREIBETRAG.entwurf2027)} €, Arbeitnehmer-Pauschbetrag{" "}
           {eur(ARBEITNEHMER_PAUSCHBETRAG.reform)} € und oben ein neuer Spitzensatz von 47 %.
-          Verkündet ist das Gesetz noch nicht — Bundestag und Bundesrat stehen aus, deshalb steht
-          „Ohne Reform“ weiter als Untergrenze daneben. Als <strong className="text-[#16181D] font-semibold">Netto Brutto Rechner 2027</strong> und{" "}
+          Seit dem 28. September 2026 liegt der Entwurf dem Bundestag als Drucksache 21/8235 vor, die
+          erste Lesung ist für den 8. Oktober 2026 angesetzt. Verkündet ist das Gesetz noch nicht —
+          Bundestag und Bundesrat müssen noch zustimmen, deshalb steht „Ohne Reform“ weiter als
+          Untergrenze daneben. Als <strong className="text-[#16181D] font-semibold">Netto Brutto Rechner 2027</strong> und{" "}
           <strong className="text-[#16181D] font-semibold">Lohnrechner 2027</strong> zeigt das Tool den
           Unterschied im echten Jahresvergleich.
         </p>
       </div>
 
       <div className="w-full max-w-6xl mx-auto mb-14">
-        <Calculator initialJahr={2027} />
+        <Calculator
+          initialJahr={2027}
+          standDisplay={new Date(REFORM_STAND).toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" })}
+        />
       </div>
 
       <div className="w-full max-w-6xl mx-auto bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-6 sm:p-8 flex items-start gap-4 text-sm sm:text-base text-black/80 leading-relaxed shadow-lg mb-12">
