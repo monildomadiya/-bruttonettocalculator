@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { HeartPulse, Calculator, Info, ChevronDown, ArrowRight } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
+import { krankengeldTag } from "@/lib/krankengeld";
+import { KRANKENGELD_FAQS } from "./krankengeldData";
 
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
 const SK: Record<Steuerklasse, string> = {
@@ -11,12 +13,7 @@ const SK: Record<Steuerklasse, string> = {
   4: "Klasse IV — Verheiratet", 5: "Klasse V — Verheiratet", 6: "Klasse VI — Zweiter Job",
 };
 
-const faqs = [
-  { q: "Wie hoch ist das Krankengeld?", a: "Das Krankengeld beträgt 70 % des Bruttoarbeitsentgelts, höchstens jedoch 90 % des Nettoarbeitsentgelts. Von diesem Betrag gehen noch die Arbeitnehmeranteile zur Renten-, Arbeitslosen- und Pflegeversicherung ab (rund 12,5 %)." },
-  { q: "Ab wann zahlt die Krankenkasse Krankengeld?", a: "In den ersten sechs Wochen (42 Tage) einer Arbeitsunfähigkeit zahlt der Arbeitgeber die Entgeltfortzahlung (100 % des Nettolohns). Erst danach übernimmt die Krankenkasse das Krankengeld." },
-  { q: "Wie lange wird Krankengeld gezahlt?", a: "Bei derselben Erkrankung wird Krankengeld für maximal 78 Wochen innerhalb von drei Jahren gezahlt — abzüglich der sechs Wochen Entgeltfortzahlung also längstens 72 Wochen." },
-  { q: "Muss man Krankengeld versteuern?", a: "Krankengeld ist steuerfrei, unterliegt aber dem Progressionsvorbehalt: Es erhöht den Steuersatz auf Ihr übriges Einkommen und kann so bei der Steuererklärung zu einer Nachzahlung führen." },
-];
+const faqs = KRANKENGELD_FAQS;
 
 export default function KrankengeldRechner() {
   const [brutto, setBrutto] = useState(3500);
@@ -26,11 +23,9 @@ export default function KrankengeldRechner() {
 
   const r = useMemo(() => {
     const netto = calculateNetto({ bruttoMonat: brutto, jahr: 2026, verheiratet: steuerklasse === 3 || steuerklasse === 5, kinderlosUeber23: kinderlos, kirche, steuerklasse }).nettoMonat;
-    const bruttoTag = brutto / 30;
-    const nettoTag = netto / 30;
-    const kgBruttoTag = Math.min(bruttoTag * 0.70, nettoTag * 0.90);
-    const svSatz = 0.093 + 0.013 + (kinderlos ? 0.025 : 0.019); // RV + ALV + PV(AN)
-    const kgNettoTag = kgBruttoTag * (1 - svSatz);
+    // Gemeinsame Logik mit dem 2027-Abschnitt (lib/krankengeld.ts): Kappung des
+    // Regelentgelts an der KV-BBG, PV-Anteil 1,8 % bzw. 2,4 % kinderlos.
+    const { bruttoKg: kgBruttoTag, nettoKg: kgNettoTag } = krankengeldTag(brutto, netto, kinderlos);
     return {
       netto,
       kgBruttoMonat: kgBruttoTag * 30,

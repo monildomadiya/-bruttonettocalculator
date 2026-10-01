@@ -1,4 +1,5 @@
 import { eur, eur2, pct, netto, LADDER } from "@/data/tool-content-shared";
+import { krankengeldTag } from "@/lib/krankengeld";
 import { TOOL_CONTENT_EXTRA } from "@/data/tool-content-extra";
 import { TOOL_CONTENT_MORE } from "@/data/tool-content-more";
 import { TOOL_CONTENT_FINAL } from "@/data/tool-content-final";
@@ -373,11 +374,12 @@ const pendlerpauschale: ToolContentConfig = {
 const krankengeld: ToolContentConfig = {
   heading: "Krankengeld 2026: Höhe, Dauer und Abzüge",
   answer:
-    "Das Krankengeld beträgt 70 % des Bruttoarbeitsentgelts, höchstens jedoch 90 % des Nettoarbeitsentgelts. Von diesem Betrag gehen noch die Arbeitnehmeranteile zur Renten-, Arbeitslosen- und Pflegeversicherung ab — zusammen rund 12,5 %. Gezahlt wird es ab der siebten Woche der Arbeitsunfähigkeit, wenn die Entgeltfortzahlung des Arbeitgebers endet.",
+    "Das Krankengeld beträgt 70 % des Bruttoarbeitsentgelts, höchstens jedoch 90 % des Nettoarbeitsentgelts. Berücksichtigt wird das Brutto nur bis zur Beitragsbemessungsgrenze der Krankenversicherung, 2026 also höchstens 135,63 € Krankengeld am Tag. Davon gehen noch die Arbeitnehmeranteile zur Renten-, Arbeitslosen- und Pflegeversicherung ab — zusammen rund 12,4 %, kinderlos 13 %. Gezahlt wird es ab der siebten Woche der Arbeitsunfähigkeit, wenn die Entgeltfortzahlung des Arbeitgebers endet.",
   facts: [
     { label: "Krankengeld", value: "70 % vom Brutto" },
     { label: "Obergrenze", value: "90 % vom Netto" },
-    { label: "Abzüge vom Krankengeld", value: "rund 12,5 %" },
+    { label: "Höchstkrankengeld 2026", value: "135,63 € pro Tag" },
+    { label: "Abzüge vom Krankengeld", value: "12,4 % (kinderlos 13 %)" },
     { label: "Entgeltfortzahlung Arbeitgeber", value: "6 Wochen" },
     { label: "Höchstdauer je Krankheit", value: "78 Wochen in 3 Jahren" },
     { label: "Steuerpflicht", value: "steuerfrei, Progressionsvorbehalt" },
@@ -405,13 +407,11 @@ const krankengeld: ToolContentConfig = {
     head: ["Brutto / Monat", "Netto / Monat", "Krankengeld brutto", "Auszahlung / Monat"],
     rows: [2000, 3000, 4000, 5000].map((b) => {
       const n = netto(b).nettoMonat;
-      const bruttoTag = b / 30;
-      const nettoTag = n / 30;
-      const kgTag = Math.min(bruttoTag * 0.7, nettoTag * 0.9);
-      const kgMonat = kgTag * 30;
-      return [eur(b), eur(n), eur(kgMonat), eur(kgMonat * 0.875)];
+      // Dieselbe Logik wie der Rechner (BBG-Kappung, PV-Anteil kinderlos 2,4 %).
+      const kg = krankengeldTag(b, n, true);
+      return [eur(b), eur(n), eur(kg.bruttoKg * 30), eur(kg.nettoKg * 30)];
     }),
-    note: "Die Auszahlung ist das Brutto-Krankengeld abzüglich rund 12,5 % Arbeitnehmeranteile zur Renten-, Arbeitslosen- und Pflegeversicherung.",
+    note: "Die Auszahlung ist das Brutto-Krankengeld abzüglich der Arbeitnehmeranteile zur Renten-, Arbeitslosen- und Pflegeversicherung (kinderlos 13 %).",
   },
   sections: [
     {
