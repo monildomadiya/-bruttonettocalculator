@@ -1,6 +1,6 @@
 import { getCloudinaryConfig } from "@/lib/cloudinary";
 import { isPostImageId, isPostSlug, type PostImageSize } from "@/lib/posts";
-import { POST_TRANSFORMS } from "@/lib/postsStore";
+import { generatePostImageSize, POST_TRANSFORMS } from "@/lib/postsStore";
 
 /**
  * Infografik images: /bilder/<size>/<version>/<key>/<post-slug>.<ext>
@@ -13,7 +13,7 @@ import { POST_TRANSFORMS } from "@/lib/postsStore";
  */
 export const dynamic = "force-dynamic";
 
-const EXT: Record<PostImageSize, string> = { thumb: "webp", full: "webp", og: "jpg" };
+const EXT: Record<PostImageSize, string> = { thumb: "webp", tile: "webp", full: "webp", og: "jpg" };
 
 export async function GET(
   _req: Request,
@@ -35,10 +35,13 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
 
-  const upstream = await fetch(
-    `https://res.cloudinary.com/${cfg.cloudName}/image/upload/${POST_TRANSFORMS[size]}/v${params.version}/${id}`,
-    { cache: "no-store" }
-  ).catch(() => null);
+  const src = `https://res.cloudinary.com/${cfg.cloudName}/image/upload/${POST_TRANSFORMS[size]}/v${params.version}/${id}`;
+  let upstream = await fetch(src, { cache: "no-store" }).catch(() => null);
+
+  // A size added after the image was uploaded doesn't exist yet: create it once, then retry.
+  if (upstream && !upstream.ok && (await generatePostImageSize(cfg, id, size))) {
+    upstream = await fetch(src, { cache: "no-store" }).catch(() => null);
+  }
 
   if (!upstream?.ok || !upstream.body) {
     return new Response("Not found", { status: 404, headers: { "Cache-Control": "no-store" } });

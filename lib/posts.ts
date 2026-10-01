@@ -102,7 +102,7 @@ export function countWords(text: string): number {
 
 /* ─────────────────────────── Images ─────────────────────────── */
 
-export type PostImageSize = "thumb" | "full" | "og";
+export type PostImageSize = "thumb" | "tile" | "full" | "og";
 
 /** Longest edges of the delivered sizes — must match POST_TRANSFORMS in lib/postsStore.ts. */
 const FULL_MAX = { w: 1200, h: 1800 };

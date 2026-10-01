@@ -33,6 +33,8 @@ export const POSTS_CACHE_TAG = "posts";
 /** Delivery sizes; also generated eagerly at upload. Keep in sync with lib/posts.ts. */
 export const POST_TRANSFORMS: Record<PostImageSize, string> = {
   thumb: "c_fill,g_auto,w_600,h_600,q_auto,f_webp",
+  /** Gallery tile, 4:5 like the uploads. Padded, never cropped — infographic text runs to the edges. */
+  tile: "c_pad,b_auto,w_600,h_750,q_auto,f_webp",
   full: "c_limit,w_1200,h_1800,q_auto,f_webp",
   og: "c_limit,w_1200,h_1200,q_auto,f_jpg",
 };
@@ -161,7 +163,7 @@ export function relatedPosts(all: Post[], current: Post, count = 6): Post[] {
 export function signPostImageUpload(cfg: CloudinaryConfig) {
   const params: Record<string, string | number> = {
     allowed_formats: "jpg,jpeg,png,webp,avif,heic,heif",
-    eager: `${POST_TRANSFORMS.thumb}|${POST_TRANSFORMS.full}|${POST_TRANSFORMS.og}`,
+    eager: `${POST_TRANSFORMS.thumb}|${POST_TRANSFORMS.tile}|${POST_TRANSFORMS.full}|${POST_TRANSFORMS.og}`,
     public_id: `posts/img-${crypto.randomBytes(12).toString("base64url")}`,
     tags: "site_post_image",
     timestamp: Math.floor(Date.now() / 1000),
@@ -171,6 +173,31 @@ export function signPostImageUpload(cfg: CloudinaryConfig) {
     uploadUrl: `https://api.cloudinary.com/v1_1/${cfg.cloudName}/image/upload`,
     fields: { ...params, api_key: cfg.apiKey, signature: sign(params, cfg.apiSecret) },
   };
+}
+
+/**
+ * Creates a delivery size for an image uploaded before that size existed. With
+ * strict transformations on, Cloudinary refuses unknown derived sizes, so a new
+ * entry in POST_TRANSFORMS would otherwise 404 for every older post.
+ * Returns false when the image doesn't exist.
+ */
+export async function generatePostImageSize(
+  cfg: CloudinaryConfig,
+  id: string,
+  size: PostImageSize
+): Promise<boolean> {
+  const params = { eager: POST_TRANSFORMS[size], public_id: id, timestamp: Math.floor(Date.now() / 1000), type: "upload" };
+  const body = new URLSearchParams({
+    ...Object.fromEntries(Object.entries(params).map(([k, v]) => [k, String(v)])),
+    api_key: cfg.apiKey,
+    signature: sign(params, cfg.apiSecret),
+  });
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cfg.cloudName}/image/explicit`, {
+    method: "POST",
+    body,
+    cache: "no-store",
+  }).catch(() => null);
+  return Boolean(res?.ok);
 }
 
 /** Writes (or overwrites) `posts/<slug>.json`. Runs on our server, never in the browser. */
