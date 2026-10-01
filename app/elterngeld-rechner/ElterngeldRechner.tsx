@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Baby, Calculator, ArrowRight, Info, ChevronDown } from "lucide-react";
 import { calculateNetto } from "@/lib/taxCalculator";
+import { ELTERNGELD_FAQS } from "./elterngeldData";
 
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -38,24 +39,7 @@ function ersatzRate(nettoEinkommen: number): number {
   return 0.65;
 }
 
-const faqs = [
-  {
-    q: "Wie hoch ist das Elterngeld 2026?",
-    a: "Das Basiselterngeld beträgt 65–100 % des durchschnittlichen Nettoeinkommens der letzten 12 Monate vor der Geburt — je niedriger das Einkommen, desto höher der Prozentsatz. Mindestens 300 € und höchstens 1.800 € im Monat.",
-  },
-  {
-    q: "Wie wird der Elterngeld-Prozentsatz berechnet?",
-    a: "Bei einem Nettoeinkommen zwischen 1.000 € und 1.200 € gilt die Standardrate von 67 %. Darunter steigt der Satz um 0,1 Prozentpunkt je 2 € niedrigerem Einkommen (bis max. 100 %), darüber sinkt er um 0,1 Prozentpunkt je 2 € höherem Einkommen (bis min. 65 %).",
-  },
-  {
-    q: "Gibt es eine Einkommensgrenze für Elterngeld?",
-    a: "Ja. Seit 2024 besteht kein Anspruch mehr, wenn das zu versteuernde Einkommen beider Elternteile im letzten abgeschlossenen Kalenderjahr vor der Geburt 175.000 € übersteigt.",
-  },
-  {
-    q: "Was ist der Unterschied zwischen Basiselterngeld und ElterngeldPlus?",
-    a: "Beim ElterngeldPlus erhalten Sie monatlich nur die Hälfte des Basiselterngeldbetrags, dafür aber über die doppelte Anzahl an Monaten — das lohnt sich besonders, wenn Sie während des Bezugs bereits in Teilzeit arbeiten.",
-  },
-];
+const faqs = ELTERNGELD_FAQS;
 
 export default function ElterngeldRechner() {
   const [brutto, setBrutto] = useState(3200);

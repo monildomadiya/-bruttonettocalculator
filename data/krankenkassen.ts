@@ -14,9 +14,12 @@
  * (auch dieser, bis zu diesem Datenstand) beim eigenen Gehaltszettel
  * danebenliegen.
  *
- * DATENSTAND: 3. August 2026. Quellen: öffentliche Satzungsangaben der Kassen,
- * gegengeprüft über zwei unabhängige Vergleichsübersichten
- * (gesetzlichekrankenkassen.de, krankenkasseninfo.de).
+ * DATENSTAND: 3. August 2026, erneut geprüft am 1. Oktober 2026 — alle 19 Sätze
+ * unverändert. Quellen: öffentliche Satzungsangaben der Kassen, gegengeprüft
+ * über zwei unabhängige Vergleichsübersichten (krankenkasseninfo.de mit
+ * unterjährigen Änderungen bis 1.10.2026, covago.de). Unterjährige Erhöhungen
+ * 2026 gab es nur bei Kassen außerhalb dieser Auswahl (u. a. IKK classic
+ * 1.8., IKK Südwest 1.4., BKK Herkules 1.10.).
  *
  * WARTUNG: Zusatzbeiträge können unterjährig geändert werden (die Kasse muss
  * dann ein Sonderkündigungsrecht einräumen). Diese Tabelle daher mindestens
@@ -24,8 +27,8 @@
  * mitziehen — die Seite weist den Datenstand sichtbar aus.
  */
 
-export const ZUSATZBEITRAG_STAND = "3. August 2026";
-export const ZUSATZBEITRAG_STAND_ISO = "2026-08-03";
+export const ZUSATZBEITRAG_STAND = "1. Oktober 2026";
+export const ZUSATZBEITRAG_STAND_ISO = "2026-10-01";
 
 /** Amtlicher durchschnittlicher Zusatzbeitrag 2026 (§ 242a SGB V). */
 export const DURCHSCHNITT_ZUSATZBEITRAG_2026 = 2.9;

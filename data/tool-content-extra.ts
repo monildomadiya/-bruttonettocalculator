@@ -537,7 +537,7 @@ const elterngeld: ToolContentConfig = {
       h3: "Progressionsvorbehalt und Einkommensgrenze",
       body: [
         "Elterngeld ist **steuerfrei**, unterliegt aber dem Progressionsvorbehalt: Es erhöht den Steuersatz auf das übrige Jahreseinkommen. Wer im Bezugsjahr noch anderes Einkommen hatte, muss deshalb häufig mit einer Nachzahlung rechnen — und ist ab 410 € Lohnersatzleistungen zur Steuererklärung verpflichtet. Die Größenordnung liefert der [Einkommensteuer-Rechner](/einkommensteuer-rechner).",
-        "Seit 2024 entfällt der Anspruch vollständig, wenn das zu versteuernde Einkommen beider Elternteile im letzten abgeschlossenen Kalenderjahr vor der Geburt 175.000 € übersteigt. Dieselbe Logik des Progressionsvorbehalts gilt für [Krankengeld](/krankengeld-rechner), [Arbeitslosengeld](/arbeitslosengeld-rechner) und [Kurzarbeitergeld](/kurzarbeitergeld-rechner).",
+        "Für Geburten ab dem 1. April 2025 entfällt der Anspruch vollständig, wenn das zu versteuernde Einkommen der Eltern im Kalenderjahr vor der Geburt 175.000 € übersteigt (vom 1. April 2024 bis 31. März 2025: 200.000 €). Dieselbe Logik des Progressionsvorbehalts gilt für [Krankengeld](/krankengeld-rechner), [Arbeitslosengeld](/arbeitslosengeld-rechner) und [Kurzarbeitergeld](/kurzarbeitergeld-rechner).",
       ],
     },
   ],
