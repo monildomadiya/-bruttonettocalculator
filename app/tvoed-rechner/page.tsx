@@ -11,8 +11,11 @@ import {
   GUELTIG_AB,
   GUELTIG_BIS,
   TARIFERHOEHUNG_PROZENT,
+  JAHRESSONDERZAHLUNG_VKA_PROZENT,
+  URLAUBSTAGE_AB_2027,
 } from "@/data/tvoed";
 import ReviewerByline from "@/components/ReviewerByline";
+import Tvoed2027Ausblick from "@/components/Tvoed2027Ausblick";
 
 /**
  * TVöD-Hub: komplette Entgelttabelle 2026 plus Netto.
@@ -27,7 +30,7 @@ const BASE = "https://bruttonettocalculator.com";
 const CANONICAL = `${BASE}/tvoed-rechner`;
 
 export const metadata: Metadata = {
-  title: "TVöD-VKA Entgelttabelle 2026: alle Gruppen, Stufen & Netto",
+  title: "TVöD-VKA Entgelttabelle 2026/2027: Gruppen, Stufen & Netto",
   description:
     `TVöD-VKA Entgelttabelle ab ${GUELTIG_AB} (+${TARIFERHOEHUNG_PROZENT.toString().replace(".", ",")} %): alle Entgeltgruppen E 1 bis E 15Ü mit allen Stufen — und was davon netto bleibt.`,
   keywords: [
@@ -87,6 +90,18 @@ export default function TvoedHubPage() {
       a: `Zum ${GUELTIG_AB} steigen die Tabellenentgelte um ${TARIFERHOEHUNG_PROZENT.toString().replace(".", ",")} %. Das ist die zweite Stufe eines zweistufigen Tarifabschlusses — zum 1. April 2025 hatte bereits eine Erhöhung um 3,0 % (mindestens 110 €) gewirkt. Die neue Tabelle gilt bis zum ${GUELTIG_BIS}.`,
     },
     {
+      q: "Gibt es 2027 eine Gehaltserhöhung im TVöD?",
+      a: `Noch nicht vereinbart. Die laufende Entgeltrunde endet frühestens am ${GUELTIG_BIS}; die Tarifrunde beginnt am 9. April 2027 in Potsdam, weitere Runden folgen am 3./4. Mai und vom 24. bis 26. Mai 2027. Bis zu einem neuen Abschluss gilt die Tabelle vom ${GUELTIG_AB} weiter.`,
+    },
+    {
+      q: "Wie viele Urlaubstage gibt es im TVöD 2027?",
+      a: `${URLAUBSTAGE_AB_2027} Tage bei einer 5-Tage-Woche — ab dem Kalenderjahr 2027 ein Tag mehr als bisher. Das wurde im Tarifabschluss vom April 2025 vereinbart.`,
+    },
+    {
+      q: "Wie hoch ist das Weihnachtsgeld im TVöD 2027?",
+      a: `Die Jahressonderzahlung beträgt bei den Kommunen seit 2026 einheitlich ${JAHRESSONDERZAHLUNG_VKA_PROZENT} % des Monatsentgelts, ausgezahlt mit dem Novembergehalt. Grundlage ist der Durchschnitt der Monate Juli bis September; ein Teil lässt sich in bis zu drei freie Tage umwandeln.`,
+    },
+    {
       q: "Was verdient man im TVöD 2026?",
       a: `Die Spanne der TVöD-VKA-Tabelle reicht von ${formatEUR(min)} in der untersten Gruppe und Stufe bis ${formatEUR(max)} in der höchsten. Innerhalb einer Entgeltgruppe steigt das Entgelt mit den Stufen, die sich nach der Zeit ununterbrochener Tätigkeit richten.`,
     },
@@ -144,7 +159,7 @@ export default function TvoedHubPage() {
             TVöD-VKA · +{TARIFERHOEHUNG_PROZENT.toString().replace(".", ",")} % ab {GUELTIG_AB}
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#16181D] leading-tight mb-3">
-            TVöD-VKA Entgelttabelle 2026 — mit Netto je Entgeltgruppe
+            TVöD-VKA Entgelttabelle 2026/2027 — mit Netto je Entgeltgruppe
           </h1>
           <p className="text-base sm:text-lg text-black/70 leading-relaxed max-w-3xl">
             Alle Entgeltgruppen von E 1 bis E 15Ü, gültig vom {GUELTIG_AB} bis {GUELTIG_BIS}. Bruttotabellen gibt es
@@ -220,8 +235,10 @@ export default function TvoedHubPage() {
           </div>
         </section>
 
+        <Tvoed2027Ausblick />
+
         <section>
-          <h2 className="text-2xl font-extrabold text-[#16181D] mb-5">Häufige Fragen zum TVöD 2026</h2>
+          <h2 className="text-2xl font-extrabold text-[#16181D] mb-5">Häufige Fragen zum TVöD 2026/2027</h2>
           <div className="space-y-3">
             {faqs.map((f) => (
               <details key={f.q} className="group bg-white border border-black/[0.08] rounded-2xl overflow-hidden">

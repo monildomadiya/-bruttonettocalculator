@@ -26,6 +26,28 @@ export const GUELTIG_AB = "1. Mai 2026";
 export const GUELTIG_BIS = "31. März 2027";
 export const TARIFERHOEHUNG_PROZENT = 2.8;
 
+/*
+ * ── 2027 (Stand 1. Oktober 2026) ─────────────────────────────────────────
+ * Quellen: Einigungspapier TVöD vom 06.04.2025 (dbb) / BMI-Meldung zur
+ * Tarifeinigung; Termine laut KAV Hessen "Tarifrunde 2027 zum TVöD / TV-V".
+ * Eine Entgelterhöhung für 2027 ist NICHT vereinbart — die Laufzeit endet
+ * frühestens am 31.03.2027. Nach der Tarifrunde (Mai 2027) neue Tabelle
+ * erheben und diese Konstanten nachziehen.
+ */
+
+/** Jahressonderzahlung bei den Kommunen (VKA) ab 2026, einheitlich für alle Entgeltgruppen. */
+export const JAHRESSONDERZAHLUNG_VKA_PROZENT = 85;
+
+/** Urlaubsanspruch ab dem Kalenderjahr 2027 (5-Tage-Woche), +1 Tag aus der Einigung 2025. */
+export const URLAUBSTAGE_AB_2027 = 31;
+
+/** Verhandlungstermine Tarifrunde 2027 (Bund und VKA mit ver.di/dbb), Kongresshotel Potsdam. */
+export const TARIFRUNDE_2027 = [
+  { datum: "9. April 2027", text: "Auftakt und erste Verhandlungsrunde in Potsdam." },
+  { datum: "3./4. Mai 2027", text: "Zweite Verhandlungsrunde." },
+  { datum: "24.–26. Mai 2027", text: "Dritte Verhandlungsrunde." },
+] as const;
+
 export interface TvoedGruppe {
   /** URL-tauglicher Schlüssel, z. B. "e9b". */
   slug: string;

@@ -13,6 +13,7 @@ import {
   GUELTIG_BIS,
   TARIFERHOEHUNG_PROZENT,
 } from "@/data/tvoed";
+import Tvoed2027Ausblick from "@/components/Tvoed2027Ausblick";
 import ReviewerByline from "@/components/ReviewerByline";
 
 /**
@@ -277,6 +278,8 @@ export default function TvoedGruppenSeite({ params }: { params: { gruppe: string
             </p>
           </div>
         </section>
+
+        <Tvoed2027Ausblick gruppe={g} />
 
         {/* ── Nachbargruppen ────────────────────────────────────────── */}
         <section data-section="" className="mb-12">
