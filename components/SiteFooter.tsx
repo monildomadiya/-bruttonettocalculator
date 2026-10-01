@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/lib/authors";
 import { ArrowRight } from "lucide-react";
 import SupportButton from "@/components/SupportButton";
 
@@ -41,7 +42,7 @@ export default function SiteFooter() {
             </p>
             <div className="pt-1 flex items-center gap-3 text-xs font-mono text-black/40">
               <span className="inline-block w-2 h-2 rounded-full bg-[#E60A1C]" />
-              <span>Stand: Juli 2026 · § 32a EStG</span>
+              <span>Stand: {siteConfig.lastUpdatedDisplay} · § 32a EStG</span>
             </div>
           </div>
 

@@ -13,6 +13,7 @@ import { ORG_ID } from "@/lib/seo";
 import SupportButton from "@/components/SupportButton";
 import LatestPosts from "@/components/LatestPosts";
 import TableOfContents from "@/components/TableOfContents";
+import { calculateNetto, formatEUR, GRUNDFREIBETRAG, ARBEITNEHMER_PAUSCHBETRAG, KINDERGELD } from "@/lib/taxCalculator";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
@@ -57,7 +58,7 @@ const faqs = [
   },
   {
     q: "Sind die Werte für 2027 schon final?",
-    a: "Nein. Die Bundesregierung hat sich im Juni 2026 auf eine Steuerreform zum 1. Januar 2027 verständigt, die konkreten Eckwerte (u. a. der neue Grundfreibetrag) stehen aber erst nach dem Existenzminimumbericht im Herbst 2026 fest. Dieser Rechner zeigt für 2027 vorläufig die 2026-Werte an.",
+    a: `Noch nicht. Die Bundesregierung hat am 2. September 2026 den Gesetzentwurf zur Steuerreform 2027 beschlossen; seit dem 28. September liegt er dem Bundestag als Drucksache 21/8235 vor. Dieser Rechner verwendet für 2027 die Werte des Entwurfs — Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag ${ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €, Kindergeld ${KINDERGELD.entwurf2027} €. Verbindlich werden sie erst nach Bundestag und Bundesrat; die Sozialabgaben 2027 rechnet er bis zum Beschluss der Rechengrößen mit den Werten 2026.`,
   },
   {
     q: "Wie hoch ist der Spitzensteuersatz 2026?",
@@ -119,7 +120,7 @@ const infoCards = [
   {
     Icon:  Wallet,
     title: "Brutto Netto Rechner 2027",
-    text:  "Nutzen Sie unser Tool als Brutto Netto Rechner für 2027, Netto Brutto Rechner 2027 und Lohnrechner 2027, um voräufige Reformwerte, Mindestlohn 2027 und Entlastungen abzugleichen.",
+    text:  "Stellen Sie im Rechner das Steuerjahr auf 2027: Er rechnet dann mit dem Gesetzentwurf zur Steuerreform (Grundfreibetrag 12.564 €) und zeigt, was 2027 netto übrig bleibt.",
     accentColor: "#FFFFFF",
   },
   {
@@ -215,6 +216,17 @@ const breadcrumbSchema = {
   ],
 };
 
+// Ohne "€" in den Zellen (steht im Kopf/Fußtext): vier Spalten passen so auch bei 375 px ohne Querscrollen.
+const eurZahl = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+// Netto 2026 ↔ 2027 für den Antwortblock — direkt aus der Rechen-Engine.
+const netto2027Zeilen = [2500, 3800, 5000, 7000].map((brutto) => {
+  const basis = { bruttoMonat: brutto, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 as const };
+  const n2026 = calculateNetto({ ...basis, jahr: 2026 }).nettoMonat;
+  const n2027 = calculateNetto({ ...basis, jahr: 2027 }).nettoMonat;
+  return { brutto, n2026, n2027, plus: n2027 - n2026 };
+});
+
 export default function HomePage() {
   return (
     <>
@@ -257,6 +269,7 @@ export default function HomePage() {
             centered
             className="mb-4 sm:mb-6 text-left"
             items={[
+              { id: "netto-2027", label: "Netto 2027" },
               { id: "wissen", label: "Das sollten Sie wissen" },
               { id: "gehaelter", label: "Beliebte Gehälter" },
               { id: "schritte", label: "In 3 Schritten" },
@@ -324,6 +337,62 @@ export default function HomePage() {
           </Link>
         </div>
 
+      </section>
+
+      {/* ── Netto 2027 — Antwort auf "brutto netto rechner 2027" ──────────
+          Die Startseite rankt selbst für die 2027-Suche (nicht die Fachseite).
+          Dieser Block beantwortet sie direkt: ein zitierfähiger Satz plus eine
+          Engine-Tabelle 2026 ↔ 2027 — Antwortmaschinen zitieren Tabellen. */}
+      <section data-section="" id="netto-2027" className="max-w-6xl mx-auto px-5 pt-4 pb-12 sm:pb-16">
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl p-4 sm:p-10 shadow-sm">
+          <p className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-3">
+            <TrendingUp size={13} aria-hidden="true" /> Steuerjahr 2027
+          </p>
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] leading-tight">
+            Brutto Netto 2027: So viel bleibt mehr
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl">
+            Ihr Netto für 2027 berechnen Sie oben im Rechner: Bruttogehalt eingeben und das Steuerjahr auf{" "}
+            <strong className="text-[#16181D]">2027</strong> stellen. Gerechnet wird dann mit dem Gesetzentwurf zur
+            Steuerreform (BT-Drucksache 21/8235): Grundfreibetrag{" "}
+            {GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} € statt{" "}
+            {GRUNDFREIBETRAG.amtlich2026.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag{" "}
+            {ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €. Beschlossen ist das Gesetz noch nicht.
+          </p>
+          <div className="mt-5 bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs sm:text-base">
+              <thead>
+                <tr className="border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
+                  <th className="py-3 px-2 sm:px-4">Brutto (€)</th>
+                  <th className="py-3 px-2 sm:px-4 text-right">Netto 2026</th>
+                  <th className="py-3 px-2 sm:px-4 text-right">Netto 2027*</th>
+                  <th className="py-3 px-2 sm:px-4 text-right">Plus</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-black/10">
+                {netto2027Zeilen.map((z) => (
+                  <tr key={z.brutto}>
+                    <td className="py-3 px-2 sm:px-4 font-mono font-bold text-[#16181D] whitespace-nowrap">{eurZahl(z.brutto)}</td>
+                    <td className="py-3 px-2 sm:px-4 text-right font-mono whitespace-nowrap">{eurZahl(z.n2026)}</td>
+                    <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D] whitespace-nowrap">{eurZahl(z.n2027)}</td>
+                    <td className="py-3 px-2 sm:px-4 text-right font-mono text-emerald-700 whitespace-nowrap">
+                      {z.plus >= 0 ? "+" : ""}
+                      {eurZahl(z.plus)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-black/50 mt-3 leading-relaxed">
+            Beträge in Euro pro Monat, Steuerklasse I, kinderlos, ohne Kirchensteuer. * Steuer nach dem Gesetzentwurf, Sozialabgaben mit
+            den Werten 2026 (die Rechengrößen 2027 sind noch nicht beschlossen).{" "}
+            <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
+              Alle Szenarien und den Stand der Reform zeigt der Brutto Netto Rechner 2027
+            </Link>
+            .
+          </p>
+        </div>
       </section>
 
       {/* ── Info Cards (Dark Tech Grid) ─────────────────────────────── */}
@@ -573,7 +642,7 @@ export default function HomePage() {
         <div className="flex items-start gap-4 bg-[#F4F5F7] rounded-3xl p-6 sm:p-8 border border-black/[0.10] text-sm sm:text-base text-black/80 leading-relaxed shadow-lg">
           <AlertTriangle size={22} className="flex-shrink-0 mt-0.5 text-[#E60A1C]" />
           <p>
-            <strong className="text-[#16181D] font-bold">Stand: Juli 2026.</strong> Alle Berechnungen ohne Gewähr.
+            <strong className="text-[#16181D] font-bold">Stand: {siteConfig.lastUpdatedDisplay}.</strong> Alle Berechnungen ohne Gewähr.
             Dieser Rechner ersetzt keine Steuerberatung. Grundlage: § 32a EStG (Fassung ab
             Veranlagungszeitraum 2026) sowie die Sozialversicherungs-Rechengrößen-Verordnung 2026.
             Die Berechnungen für Steuerklasse V und VI sind Näherungswerte.
