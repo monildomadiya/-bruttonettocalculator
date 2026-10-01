@@ -62,6 +62,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "",
     "/gehaltsrechner",
     "/arbeitgeber-brutto-netto-rechner",
+    "/lohnabrechnung-rechner",
     "/steuerklassenwechsel-rechner",
     "/gehaltserhoehung-rechner",
     "/jahresgehalt-rechner",

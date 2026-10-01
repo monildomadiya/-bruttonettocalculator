@@ -3,7 +3,7 @@ import {
   Car, PiggyBank, Umbrella, Wallet2, Baby, Banknote, Gift, Clock3,
   Coins, Receipt, Landmark, HandCoins, GraduationCap, HeartHandshake, Timer, Globe,
   Building2, Snowflake, Users, TrendingUp, CalendarRange, HeartPulse, TrendingDown, Route, Gauge, Receipt as ReceiptIcon, Home,
-  HelpCircle, BarChart3, Sun, Palmtree,
+  HelpCircle, BarChart3, Sun, Palmtree, FileText,
 } from "lucide-react";
 
 export interface NavLink {
@@ -26,6 +26,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/", label: "Brutto Netto Rechner", icon: Calculator, description: "Der Hauptrechner für 2026/2027" },
       { href: "/gehaltsrechner", label: "Gehaltsrechner", icon: Coins, description: "Brutto Netto Gehalt 2026" },
       { href: "/arbeitgeber-brutto-netto-rechner", label: "Arbeitgeber-Rechner", icon: Building2, description: "Arbeitgeberkosten & -anteil" },
+      { href: "/lohnabrechnung-rechner", label: "Lohnabrechnung-Rechner", icon: FileText, description: "Abzüge Zeile für Zeile" },
       { href: "/lohnsteuerrechner", label: "Lohnsteuerrechner", icon: Receipt, description: "Lohnsteuer & Nettolohn" },
       { href: "/einkommensteuer-rechner", label: "Einkommensteuer-Rechner", icon: Landmark, description: "Jahressteuer § 32a EStG" },
       { href: "/steuerrueckerstattung-rechner", label: "Steuerrückerstattung-Rechner", icon: ReceiptIcon, description: "Wie viel Steuer bekomme ich zurück?" },
