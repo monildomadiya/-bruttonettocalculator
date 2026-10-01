@@ -211,6 +211,11 @@ export default function TvoedHubPage() {
             <span>
               Tabellenentgelte TVöD-VKA, Vollzeit, ohne Zulagen und Jahressonderzahlung. Stand {ENTGELTTABELLE_STAND},
               gegen zwei unabhängige Quellen geprüft. Keine verbindliche Eingruppierung — maßgeblich ist Ihr Arbeitsvertrag.
+              Für Kitas und Sozialarbeit gilt die{" "}
+              <Link href="/tvoed-sue-tabelle" className="text-[#E60A1C] font-semibold hover:underline">
+                TVöD SuE Tabelle (S 2 bis S 18)
+              </Link>
+              .
             </span>
           </div>
         </section>

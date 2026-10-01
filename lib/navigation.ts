@@ -44,6 +44,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/sozialabgaben-rechner-2027", label: "Sozialabgaben-Rechner 2027", icon: TrendingUp, description: "Wie viel mehr zahlen Sie 2027?" },
       { href: "/brutto-netto-rechner-oesterreich", label: "Brutto-Netto-Rechner Österreich", icon: Calculator, description: "Netto 2026 mit 13. & 14. Gehalt" },
       { href: "/tvoed-rechner", label: "TVöD-Rechner 2026", icon: Landmark, description: "Entgelttabelle mit Netto je Gruppe" },
+      { href: "/tvoed-sue-tabelle", label: "TVöD SuE Tabelle", icon: Baby, description: "S 2 bis S 18 mit Netto" },
       { href: "/brutto-netto-rechner-krankenkasse", label: "Rechner mit Krankenkasse", icon: HeartPulse, description: "AOK, TK & Co. · Zusatzbeitrag 2026" },
       { href: "/durchschnittsgehalt-deutschland", label: "Durchschnittsgehalt Deutschland", icon: BarChart3, description: "Wo steht Ihr Gehalt im Vergleich?" },
       { href: "/brutto-netto-rechner-2026", label: "Rechner 2026", icon: Calendar, description: "Amtliche Werte 2026" },

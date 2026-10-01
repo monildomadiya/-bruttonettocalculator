@@ -93,6 +93,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/sozialabgaben-rechner-2027",
     "/brutto-netto-rechner-oesterreich",
     "/tvoed-rechner",
+    "/tvoed-sue-tabelle",
     "/durchschnittsgehalt-deutschland",
     "/private-krankenversicherung-vs-gesetzlich",
     "/witwenrente-rechner",
