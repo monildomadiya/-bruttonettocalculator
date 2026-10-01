@@ -30,6 +30,14 @@ export const ZUSATZBEITRAG_STAND_ISO = "2026-08-03";
 /** Amtlicher durchschnittlicher Zusatzbeitrag 2026 (§ 242a SGB V). */
 export const DURCHSCHNITT_ZUSATZBEITRAG_2026 = 2.9;
 
+/**
+ * Durchschnittlicher Zusatzbeitrag 2027 — `null`, bis das BMG ihn nach dem
+ * GKV-Schätzerkreis (Mitte Oktober 2026) bekannt gibt (§ 242a SGB V: bis zum
+ * 1. November). Sobald er feststeht: hier eintragen — die Kassenseiten und der
+ * Hub zeigen ihn dann automatisch im Abschnitt "Zusatzbeitrag 2027".
+ */
+export const DURCHSCHNITT_ZUSATZBEITRAG_2027: number | null = null;
+
 /** Allgemeiner Beitragssatz der GKV (§ 241 SGB V) — für alle Kassen identisch. */
 export const ALLGEMEINER_BEITRAGSSATZ = 14.6;
 
@@ -39,6 +47,12 @@ export interface Krankenkasse {
   name: string;
   /** Zusatzbeitrag 2026 in Prozent (z. B. 2.69). */
   zusatzbeitrag: number;
+  /**
+   * Zusatzbeitrag ab 1.1.2027 in Prozent — erst eintragen, wenn die Kasse ihn
+   * beschlossen und veröffentlicht hat (in der Regel im Dezember). Ohne Wert
+   * zeigt die Seite "noch nicht festgelegt", nie eine Schätzung.
+   */
+  zusatzbeitrag2027?: number;
   /** Bundesweit wählbar oder nur in bestimmten Regionen geöffnet. */
   bundesweit: boolean;
   /** Kurzhinweis zur Region/Besonderheit, wenn nicht bundesweit. */

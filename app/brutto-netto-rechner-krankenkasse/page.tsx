@@ -13,6 +13,7 @@ import {
   gesamtbeitragssatz,
 } from "@/data/krankenkassen";
 import KrankenkassenRechner from "@/components/KrankenkassenRechner";
+import Zusatzbeitrag2027Ausblick from "@/components/Zusatzbeitrag2027Ausblick";
 import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
@@ -299,6 +300,9 @@ export default function KrankenkassePage() {
           </span>
         </div>
       </div>
+
+      {/* Zusatzbeitrag 2027 — füllt sich aus data/krankenkassen.ts */}
+      <Zusatzbeitrag2027Ausblick />
 
       {/* Erklärung */}
       <div className="mb-16 grid grid-cols-1 md:grid-cols-2 gap-5">

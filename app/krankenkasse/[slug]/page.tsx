@@ -18,6 +18,7 @@ import {
 } from "@/data/krankenkassen";
 import KrankenkassenRechner from "@/components/KrankenkassenRechner";
 import ReviewerByline from "@/components/ReviewerByline";
+import Zusatzbeitrag2027Ausblick from "@/components/Zusatzbeitrag2027Ausblick";
 
 /**
  * Detailseite je gesetzlicher Krankenkasse.
@@ -148,6 +149,17 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
         `${fmtPct(ALLGEMEINER_BEITRAGSSATZ)} (§ 241 SGB V) ergibt das einen Gesamtbeitrag von ` +
         `${fmtPct(gesamt)}. Arbeitgeber und Arbeitnehmer teilen sich diesen Satz paritätisch, ` +
         `auf den Arbeitnehmer entfallen also ${fmtPct(anAnteil)}. Stand: ${ZUSATZBEITRAG_STAND}.`,
+    },
+    {
+      q: `Wie hoch ist der Zusatzbeitrag der ${kasse.name} 2027?`,
+      a:
+        kasse.zusatzbeitrag2027 !== undefined
+          ? `Ab dem 1. Januar 2027 erhebt die ${kasse.name} einen Zusatzbeitrag von ${fmtPct(kasse.zusatzbeitrag2027)} ` +
+            `(2026: ${fmtPct(kasse.zusatzbeitrag)}). Bei einer Erhöhung können Sie bis Ende Januar 2027 kündigen.`
+          : `Das steht noch nicht fest. Die ${kasse.name} beschließt ihren Satz für 2027 in der Regel im Dezember 2026; ` +
+            `vorher gibt das Bundesgesundheitsministerium bis zum 1. November den durchschnittlichen Zusatzbeitrag 2027 bekannt. ` +
+            `2026 liegt der Satz der ${kasse.name} bei ${fmtPct(kasse.zusatzbeitrag)}. Erhöht die Kasse zum 1. Januar, ` +
+            `können Sie bis Ende Januar 2027 kündigen und wechseln.`,
     },
     {
       q: `Was kostet der Zusatzbeitrag der ${kasse.name} im Vergleich zum Durchschnitt?`,
@@ -401,6 +413,9 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
           </p>
           <KrankenkassenRechner initialSlug={kasse.slug} />
         </section>
+
+        {/* ── Zusatzbeitrag 2027 (füllt sich aus data/krankenkassen.ts) ── */}
+        <Zusatzbeitrag2027Ausblick kasse={kasse} />
 
         {/* ── Nachbarkassen ─────────────────────────────────────────── */}
         <section data-section="" className="mb-12">
