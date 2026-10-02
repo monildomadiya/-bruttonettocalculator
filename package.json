@@ -12,7 +12,8 @@
     "test:oesterreich": "node --experimental-strip-types --no-warnings scripts/oesterreich.test.mts",
     "test:midijob": "node --experimental-strip-types --no-warnings scripts/midijob.test.mts",
     "test:rente": "node --experimental-strip-types --no-warnings scripts/rente.test.mts",
-    "test:steuerklassen": "node --experimental-strip-types --no-warnings scripts/steuerklassen.test.mts"
+    "test:steuerklassen": "node --experimental-strip-types --no-warnings scripts/steuerklassen.test.mts",
+    "test:sv2027": "node --experimental-strip-types --no-warnings scripts/sv2027.test.mts"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",

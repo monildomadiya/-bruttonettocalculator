@@ -158,7 +158,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
     {
       q: "Rechnet der Brutto-Netto-Rechner schon mit den Werten 2027?",
       a:
-        "Nein. Solange die Verordnung nicht beschlossen ist, rechnen alle 2027-Szenarien im Rechner mit den amtlichen Sozialversicherungswerten 2026; nur der Steuerteil folgt dem Regierungsentwurf zur Einkommensteuerreform 2027. Sobald die Verordnung in Kraft ist, wird die Engine umgestellt.",
+        "Auf Wunsch. Voreingestellt rechnet der Brutto-Netto-Rechner 2027 mit den amtlichen Grenzen 2026, solange die Verordnung nicht beschlossen ist. Unter „Sozialabgaben 2027“ lässt sich auf den Entwurf umschalten — dann gelten die Grenzen von dieser Seite (6.375 € und 8.850 € im Monat) bei unveränderten Beitragssätzen. Der Steuerteil folgt in beiden Fällen dem Regierungsentwurf zur Einkommensteuerreform 2027. Sobald die Verordnung in Kraft ist, wird die Voreinstellung umgestellt.",
     },
   ];
 

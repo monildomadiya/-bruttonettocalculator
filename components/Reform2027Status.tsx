@@ -114,7 +114,7 @@ const bereitsBeschlossen = [
     status: "offen" as Status,
     datum: "Referentenentwurf vom 21. September 2026",
     detail:
-      "Das BMAS hat den Entwurf der Sozialversicherungsrechengrößen-Verordnung 2027 vorgelegt: Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat (106.200 € im Jahr), Kranken- und Pflegeversicherung 6.375 € im Monat (76.500 € im Jahr), Versicherungspflichtgrenze 7.012,50 € im Monat. Grundlage ist die Lohnentwicklung 2025 von 4,38 %; bei der Krankenversicherung kommen 300 € monatlich obendrauf. Beschlossen ist die Verordnung noch nicht — Bundesregierung und Bundesrat stehen aus. Dieser Rechner rechnet deshalb in allen 2027-Szenarien weiter mit den amtlichen SV-Werten 2026; nur der Steuerteil variiert.",
+      "Das BMAS hat den Entwurf der Sozialversicherungsrechengrößen-Verordnung 2027 vorgelegt: Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat (106.200 € im Jahr), Kranken- und Pflegeversicherung 6.375 € im Monat (76.500 € im Jahr), Versicherungspflichtgrenze 7.012,50 € im Monat. Grundlage ist die Lohnentwicklung 2025 von 4,38 %; bei der Krankenversicherung kommen 300 € monatlich obendrauf. Beschlossen ist die Verordnung noch nicht — Bundesregierung und Bundesrat stehen aus. Im Rechner bleibt deshalb der amtliche Stand 2026 voreingestellt; unter „Sozialabgaben 2027“ lassen sich die Entwurfsgrenzen zuschalten.",
   },
 ];
 

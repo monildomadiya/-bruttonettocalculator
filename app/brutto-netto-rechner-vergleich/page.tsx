@@ -83,7 +83,7 @@ const matrix: { feature: string; uns: Cell; gehalt: Cell; ft: Cell }[] = [
   },
   {
     feature: "Sozialabgaben 2027 mit neuen Beitragsbemessungsgrenzen",
-    uns: { state: "partial", note: "separater Rechner", fn: 20 },
+    uns: { state: "yes", note: "Umschalter, Entwurf wählbar", fn: 20 },
     gehalt: { state: "na", fn: 1 },
     ft: { state: "yes", note: "BMAS-Entwurf eingerechnet", fn: 11 },
   },
@@ -184,7 +184,7 @@ const fussnoten: Record<number, string> = {
   14: "Finanztip schreibt selbst, der Rechner sei für Beamte „meist nur eine erste Orientierung“, und verweist auf den Bezügerechner des Bundesverwaltungsamts.",
   15: "Finanztip schreibt selbst, man habe sich entschieden, „den Midijob nicht speziell zu berücksichtigen“, und verweist auf den Midijob-Rechner der Deutschen Rentenversicherung.",
   16: "Auf der geprüften Finanztip-Rechnerseite nicht angeboten; Finanztip kann andere Rechner an anderer Stelle führen.",
-  20: "Unser Hauptrechner rechnet 2027 bewusst mit den amtlichen Sozialabgaben 2026, solange die Rechengrößen-Verordnung 2027 nicht beschlossen ist; die Entwurfswerte zeigt der Sozialabgaben-Rechner 2027.",
+  20: "Im Hauptrechner wählbar unter „Sozialabgaben 2027“: Stand 2026 (Voreinstellung, solange die Rechengrößen-Verordnung 2027 nicht beschlossen ist) oder die Beitragsbemessungsgrenzen aus dem BMAS-Entwurf vom 21.09.2026, jeweils mit den Beitragssätzen 2026. Abweichende Sätze rechnet der Sozialabgaben-Rechner 2027.",
   21: "Im Hauptrechner gilt der durchschnittliche Zusatzbeitrag (2026: 2,9 %); den Satz der eigenen Kasse rechnet der Brutto-Netto-Rechner mit Krankenkasse.",
   23: "Der Netto-zu-Brutto-Rechner ist eine eigene Seite (nicht im Hauptrechner) und sucht das Brutto exakt mit derselben Engine, wahlweise für 2026 oder 2027.",
   22: "Ohne Sozialabgaben und mit privater Krankenversicherung rechnet der Beamten-Rechner; der Hauptrechner geht von gesetzlicher Versicherung aus.",
@@ -198,7 +198,7 @@ const faqs = [
   },
   {
     q: "Welcher Rechner kann das Steuerjahr 2027?",
-    a: "BruttoNettoCalculator und Finanztip rechnen beide den Steuertarif 2027 nach dem Regierungsentwurf vom 2. September 2026. Der Unterschied: Finanztip rechnet die geplanten Beitragsbemessungsgrenzen 2027 direkt ins Netto ein, unser Hauptrechner bleibt bei den Sozialabgaben auf dem beschlossenen Stand 2026 und zeigt die Entwurfswerte im separaten Sozialabgaben-Rechner 2027. Dafür bietet unser Rechner drei Szenarien — ohne Reform, Entwurf 2027 und Stufe 2028. Auf der geprüften gehalt.de-Seite war im Oktober 2026 keine 2027-Berechnung verfügbar.",
+    a: "BruttoNettoCalculator und Finanztip rechnen beide den Steuertarif 2027 nach dem Regierungsentwurf vom 2. September 2026. Beide können auch die geplanten Beitragsbemessungsgrenzen 2027 einrechnen — Finanztip immer, unser Rechner wahlweise über den Umschalter „Sozialabgaben 2027“ (Voreinstellung: beschlossener Stand 2026). Zusätzlich bietet unser Rechner drei Steuer-Szenarien — ohne Reform, Entwurf 2027 und Stufe 2028. Auf der geprüften gehalt.de-Seite war im Oktober 2026 keine 2027-Berechnung verfügbar.",
   },
   {
     q: "Was kann der Brutto-Netto-Rechner von Finanztip?",
@@ -214,7 +214,7 @@ const faqs = [
   },
   {
     q: "Warum zeigen zwei Rechner unterschiedliche Nettobeträge?",
-    a: "Meist wegen unterschiedlicher Voreinstellungen: Krankenkassen-Zusatzbeitrag, Kirchensteuerpflicht, Kinderfreibeträge, Bundesland und der Pflegeversicherungszuschlag für Kinderlose ab 23 Jahren. Für 2027 kommt eine weitere Ursache dazu: ob der Rechner die geplanten Beitragsbemessungsgrenzen schon einrechnet. Das wirkt erst ab rund 5.800 € brutto im Monat — darunter sind die Ergebnisse bei gleichen Eingaben nahezu gleich.",
+    a: "Meist wegen unterschiedlicher Voreinstellungen: Krankenkassen-Zusatzbeitrag, Kirchensteuerpflicht, Kinderfreibeträge, Bundesland und der Pflegeversicherungszuschlag für Kinderlose ab 23 Jahren. Für 2027 kommt eine weitere Ursache dazu: ob der Rechner die geplanten Beitragsbemessungsgrenzen schon einrechnet — bei uns lässt sich das umschalten. Das wirkt erst ab rund 5.800 € brutto im Monat — darunter sind die Ergebnisse bei gleichen Eingaben nahezu gleich.",
   },
   {
     q: "Ist dieser Vergleich neutral?",
@@ -416,22 +416,22 @@ export default function VergleichPage() {
         <div className="space-y-6 text-sm sm:text-base text-black/70 leading-relaxed">
           <div>
             <h3 className="font-bold text-[#16181D] text-base sm:text-lg mb-2">
-              2027: gleicher Steuerentwurf, unterschiedliche Sozialabgaben
+              2027: gleicher Steuerentwurf, Sozialabgaben wählbar
             </h3>
             <p>
               Für die Lohnsteuer 2027 nutzen BruttoNettoCalculator und Finanztip denselben Regierungsentwurf vom
-              2. September 2026 — bei gleichen Eingaben stimmt der Steueranteil überein. Unterschiedlich ist der
-              Umgang mit den Sozialabgaben: Finanztip rechnet die geplanten Beitragsbemessungsgrenzen schon ins
-              Netto ein, wir bleiben im{" "}
+              2. September 2026 — bei gleichen Eingaben stimmt der Steueranteil überein. Bei den Sozialabgaben
+              rechnet Finanztip die geplanten Beitragsbemessungsgrenzen immer ein; im{" "}
               <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
                 Rechner 2027
               </Link>{" "}
-              beim beschlossenen Stand 2026 und zeigen die Entwurfswerte getrennt im{" "}
+              wählen Sie selbst zwischen dem beschlossenen Stand 2026 und dem Entwurf 2027 — spürbar wird das erst
+              ab rund 5.800 € brutto im Monat. Höhere Beitragssätze spielt der{" "}
               <Link href="/sozialabgaben-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
                 Sozialabgaben-Rechner 2027
-              </Link>
-              . Spürbar wird das erst ab rund 5.800 € brutto im Monat. Dafür können Sie bei uns zwischen „ohne
-              Reform“, „Entwurf 2027“ und „Stufe 2028“ wechseln — falls der Entwurf im Bundestag noch geändert wird.
+              </Link>{" "}
+              durch. Beim Steuerteil können Sie zwischen „ohne Reform“, „Entwurf 2027“ und „Stufe 2028“ wechseln —
+              falls der Entwurf im Bundestag noch geändert wird.
             </p>
           </div>
           <div>
@@ -470,8 +470,7 @@ export default function VergleichPage() {
                 separater Rechner
               </Link>
               . Alter, Steuerfreibetrag und ein Verzicht auf Renten- oder Arbeitslosenversicherung lassen sich
-              direkt einstellen, und die verwendeten 2027-Entwürfe sind auf der Seite verlinkt. Wer 2027
-              vollständig mit allen Entwurfswerten rechnen will, ist dort gut aufgehoben.
+              direkt einstellen, und die verwendeten 2027-Entwürfe sind auf der Seite verlinkt.
             </p>
           </div>
           <div>
@@ -595,11 +594,11 @@ export default function VergleichPage() {
         </h2>
         <p className="text-base sm:text-lg text-black/80 leading-relaxed mb-6 max-w-4xl">
           Für das Netto 2026 nehmen sich die drei Rechner wenig — sie nutzen dieselbe gesetzliche Formel. Der
-          Unterschied liegt im Drumherum: Wer <strong className="text-[#16181D]">2027 in mehreren Szenarien</strong>,
+          Unterschied liegt im Drumherum: Wer <strong className="text-[#16181D]">2027 in mehreren Szenarien</strong> — Steuer und Sozialabgaben getrennt umschaltbar —,
           die <strong className="text-[#16181D]">exakte Netto-zu-Brutto-Rechnung</strong> oder einen Sonderfall
-          wie Beamte, Midijob oder Firmenwagen braucht, findet das hier. Wer 2027 mit{" "}
-          <strong className="text-[#16181D]">allen Entwurfswerten inklusive Sozialabgaben</strong> und seiner eigenen
-          Krankenkasse in einem Formular rechnen will, ist bei Finanztip gut aufgehoben; wer eine{" "}
+          wie Beamte, Midijob oder Firmenwagen braucht, findet das hier. Wer seine{" "}
+          <strong className="text-[#16181D]">eigene Krankenkasse, Alter und Freibetrag</strong> im selben Formular
+          eingeben will, ist bei Finanztip gut aufgehoben; wer eine{" "}
           <strong className="text-[#16181D]">alte Abrechnung nachrechnen</strong> will, bei gehalt.de.
         </p>
         <div className="flex flex-wrap gap-2.5">

@@ -2,10 +2,10 @@
  * Sozialabgaben 2026 vs. 2027 — Arbeitnehmer- und Arbeitgeberbeiträge im
  * direkten Vergleich.
  *
- * Bewusst getrennt von `calculateNetto`: Die Engine rechnet 2027 weiterhin mit
- * den amtlichen SV-Werten 2026, solange die Rechengrößen-Verordnung 2027 nicht
- * beschlossen ist. Diese Seite soll genau das Gegenteil zeigen — was sich
- * ändert, wenn die Entwurfswerte kommen. Jede 2027-Annahme ist deshalb ein
+ * Bewusst getrennt von `calculateNetto`: Die Engine rechnet 2027 standardmäßig
+ * mit den amtlichen SV-Werten 2026 und optional (`sv2027: "entwurf"`) nur mit
+ * den Entwurfs-BBG bei unveränderten Sätzen. Diese Seite geht weiter und
+ * lässt auch RV-Satz und Zusatzbeitrag 2027 variieren. Jede 2027-Annahme ist deshalb ein
  * Parameter, den die Oberfläche offenlegt und der Nutzer verstellen kann.
  *
  * Stand der 2027-Werte:

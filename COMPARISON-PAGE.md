@@ -28,7 +28,7 @@ die Nutzer im Herbst 2026 stellen („brutto netto rechner 2027“).
 | Steuerjahr 2026 | ✅ | ✅ | ✅ |
 | Steuertarif 2027 (Regierungsentwurf 2.9.2026) | ✅ | ❌ ¹ | ✅ ¹⁰ |
 | Reformszenarien (ohne Reform · Entwurf · 2028) | ✅ 3 | — | ⚠️ 1 Szenario ¹⁰ |
-| Sozialabgaben 2027 mit BBG-Entwurf | ⚠️ separater Rechner ²⁰ | — | ✅ ¹¹ |
+| Sozialabgaben 2027 mit BBG-Entwurf | ✅ Umschalter ²⁰ | — | ✅ ¹¹ |
 | Netto → Brutto (exakt) | ✅ eigener Rechner ²³ | ⚠️ Faustregel 1,3–1,4× ² | — ¹² |
 | Vergangene Steuerjahre | ❌ | ✅ 2024/2025 ³ | ❌ ¹⁰ |
 | Eigener KK-Zusatzbeitrag | ⚠️ separater Rechner ²¹ | ✅ ³ | ✅ Kassenauswahl ¹³ |
@@ -66,9 +66,8 @@ AN-Pauschbetrag, 47 % ab 280.000 €).
 
 ## Empfehlungen (priorisiert)
 
-1. **SV-Szenario „Entwurf 2027“ in den Hauptrechner** (Toggle, Default = beschlossen). Schließt die
-   größte Lücke zu Finanztip und macht die 2027-Seite konsistent. Werte liegen schon in
-   `SV_RECHENGROESSEN_2027_ENTWURF`. **Entscheidung des Owners nötig** (bewusste Altentscheidung).
+1. ✅ **Erledigt 02.10.2026:** Umschalter „Sozialabgaben 2027“ (Stand 2026 / Entwurf 2027) im Hauptrechner,
+   Engine-Option `sv2027`, Test `npm run test:sv2027`. Matrixzeile auf „Ja · Umschalter“ geändert.
 2. **Krankenkassen-Auswahl in den Hauptrechner** — Engine kann `kvZusatzbeitrag` bereits; die Daten
    (`data/krankenkassen`) existieren für den Krankenkassen-Rechner.
 3. **Block „Welche Werte verwendet dieser Rechner für 2027?“** oben auf `/brutto-netto-rechner-2027`,

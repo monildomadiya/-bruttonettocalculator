@@ -51,6 +51,16 @@ export type Steuerjahr = 2026 | 2027;
  */
 export type Szenario = "ohneReform" | "entwurf2027" | "stufe2028";
 
+/**
+ * Sozialabgaben im Steuerjahr 2027: "beschlossen" rechnet mit den amtlichen
+ * Rechengrößen 2026 weiter (Default, solange die Verordnung 2027 nicht
+ * verkündet ist), "entwurf" mit den Beitragsbemessungsgrenzen aus dem
+ * BMAS-Referentenentwurf vom 21.09.2026 (SV_RECHENGROESSEN_2027_ENTWURF).
+ * Die Beitragssätze bleiben in beiden Fällen auf dem Stand 2026 — für 2027
+ * ist noch keiner beschlossen.
+ */
+export type Sv2027 = "beschlossen" | "entwurf";
+
 export type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface CalculatorInput {
@@ -76,6 +86,8 @@ export interface CalculatorInput {
    * `jahr: 2026` wirkungslos.
    */
   szenario?: Szenario;
+  /** Nur für `jahr: 2027` wirksam, Default "beschlossen". Siehe `Sv2027`. */
+  sv2027?: Sv2027;
 }
 
 export interface CalculatorResult {
@@ -621,8 +633,12 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
     : input.bruttoMonat;
   const svBemessungJahr = svBemessungMonat * 12;
 
-  const kvPvBemessung = Math.min(svBemessungJahr, r.kvPvBbgJahr);
-  const rvAlvBemessung = Math.min(svBemessungJahr, r.rvAlvBbgJahr);
+  // Beitragsbemessungsgrenzen: 2027 wahlweise aus dem BMAS-Referentenentwurf.
+  const svEntwurf = jahr === 2027 && input.sv2027 === "entwurf";
+  const kvPvBbgJahr = svEntwurf ? SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgJahr : r.kvPvBbgJahr;
+  const rvAlvBbgJahr = svEntwurf ? SV_RECHENGROESSEN_2027_ENTWURF.rvAlvBbgJahr : r.rvAlvBbgJahr;
+  const kvPvBemessung = Math.min(svBemessungJahr, kvPvBbgJahr);
+  const rvAlvBemessung = Math.min(svBemessungJahr, rvAlvBbgJahr);
 
   const zusatzbeitrag = input.kvZusatzbeitrag ?? r.kvZusatzbeitragDurchschnitt;
   const kvSatzAn = (r.kvSatz + zusatzbeitrag) / 2;

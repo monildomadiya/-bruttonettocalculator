@@ -95,7 +95,7 @@ const faqs = [
   },
   {
     q: "Sind die Sozialabgaben 2027 schon berücksichtigt?",
-    a: "Nein — und das ist bewusst so. Für die Rechengrößen 2027 liegt seit dem 21. September 2026 zwar ein Referentenentwurf des BMAS vor (Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat, Kranken- und Pflegeversicherung 6.375 € im Monat, Versicherungspflichtgrenze 7.012,50 €), beschlossen ist die Verordnung aber weder von der Bundesregierung noch vom Bundesrat. Alle 2027-Szenarien rechnen daher mit den amtlichen SV-Werten 2026; nur der Steuerteil variiert. Sobald die Verordnung in Kraft ist, wird der Rechner umgestellt. Alle Entwurfswerte im Detail stehen auf der Seite zur Beitragsbemessungsgrenze 2027.",
+    a: "Wahlweise. Für die Rechengrößen 2027 liegt seit dem 21. September 2026 ein Referentenentwurf des BMAS vor (Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat, Kranken- und Pflegeversicherung 6.375 € im Monat), beschlossen ist die Verordnung aber noch nicht. Im Rechner wählen Sie deshalb unter „Sozialabgaben 2027“: „Stand 2026“ rechnet mit den amtlichen Grenzen 2026 weiter (Voreinstellung), „Entwurf 2027“ mit den Entwurfsgrenzen. Die Beitragssätze bleiben in beiden Fällen auf dem Stand 2026, weil für 2027 noch keiner beschlossen ist. Der Unterschied zeigt sich erst ab 5.812,50 € brutto im Monat. Sobald die Verordnung in Kraft ist, wird der Rechner umgestellt.",
   },
   {
     q: "Welche 2027-Werte stehen bereits fest?",
@@ -271,8 +271,9 @@ export default function Rechner2027Page() {
           die Beitragsbemessungsgrenzen 2027
         </Link>{" "}
         sollen auf 6.375 € (Kranken- und Pflegeversicherung) und 8.850 € im Monat (Rente und
-        Arbeitslosenversicherung) steigen. Dieser Rechner verwendet sie noch nicht — beschlossen ist
-        auch diese Verordnung nicht. Was die höheren Grenzen und Beitragssätze Sie kosten, zeigt der{" "}
+        Arbeitslosenversicherung) steigen. Beschlossen ist auch diese Verordnung nicht — im Rechner oben
+        können Sie unter „Sozialabgaben 2027“ trotzdem schon mit den Entwurfsgrenzen rechnen
+        (Voreinstellung bleibt der Stand 2026). Was zusätzlich höhere Beitragssätze kosten würden, zeigt der{" "}
         <Link href="/sozialabgaben-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
           Sozialabgaben-Rechner 2027
         </Link>
