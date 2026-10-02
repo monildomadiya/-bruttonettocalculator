@@ -105,6 +105,29 @@ export const calculatorGroups: NavGroup[] = [
 export const allCalculatorLinks: NavLink[] = calculatorGroups.flatMap((g) => g.items);
 
 /**
+ * Länder-Cluster außerhalb des Mega-Menüs (das Menü hat drei Spalten; eine
+ * vierte Gruppe landete unter der 27 Einträge langen ersten Spalte). Diese
+ * Seiten rechnen fremdes Recht — ihr "Ähnliche Rechner"-Block soll nur auf
+ * Seiten desselben Landes zeigen, nicht auf deutsche PKV- oder Riester-Rechner.
+ * Verlinkt werden sie crawlbar über den Footer und den Block selbst.
+ */
+export const regionalGroups: NavGroup[] = [
+  {
+    label: "Österreich",
+    items: [
+      { href: "/brutto-netto-rechner-oesterreich", label: "Brutto-Netto-Rechner Österreich", icon: Calculator, description: "Netto 2026 mit 13. & 14. Gehalt" },
+      { href: "/brutto-netto-rechner-oesterreich-2027", label: "Brutto-Netto-Rechner Österreich 2027", icon: Calendar, description: "Neue Steuerstufen ab Jänner 2027" },
+      { href: "/pension-brutto-netto-rechner-oesterreich", label: "Pensionsrechner Österreich", icon: PiggyBank, description: "Nettopension 2026 & 2027" },
+      { href: "/lohnsteuer-oesterreich", label: "Lohnsteuer Österreich", icon: Receipt, description: "Steuerstufen & Lohnsteuertabelle" },
+      { href: "/teilzeit-rechner-oesterreich", label: "Teilzeit-Rechner Österreich", icon: Timer, description: "Netto bei 20, 25, 30 Stunden" },
+      { href: "/lehrer-gehalt-oesterreich", label: "Lehrer-Gehalt Österreich", icon: GraduationCap, description: "Schema pd mit Netto" },
+      { href: "/mindestlohn-oesterreich", label: "Mindestlohn Österreich", icon: Scale, description: "KV-Mindestgehälter & Netto" },
+      { href: "/durchschnittsgehalt-oesterreich", label: "Durchschnittsgehalt Österreich", icon: BarChart3, description: "Median brutto & netto" },
+    ],
+  },
+];
+
+/**
  * High-value "hub" pages every visitor is likely to want next. Used to fill up
  * a related-tools block once the topically-closest siblings are exhausted, so
  * we always funnel toward the main money pages.
@@ -162,6 +185,14 @@ export function getRelatedCalculators(
   currentHref: string,
   count = 6
 ): { href: string; label: string; desc?: string }[] {
+  const regional = regionalGroups.find((g) => g.items.some((i) => i.href === currentHref));
+  if (regional) {
+    return regional.items
+      .filter((i) => i.href !== currentHref)
+      .slice(0, count)
+      .map((i) => ({ href: i.href, label: i.label, desc: i.description }));
+  }
+
   const group = calculatorGroups.find((g) => g.items.some((i) => i.href === currentHref));
   const picked: NavLink[] = [];
   const add = (link?: NavLink) => {

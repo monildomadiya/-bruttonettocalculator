@@ -1,4 +1,5 @@
-import { calculatorGroups } from "@/lib/navigation";
+import { calculatorGroups, regionalGroups } from "@/lib/navigation";
+import { AT_2026, AT_2027 } from "@/lib/oesterreich";
 import {
   GRUNDFREIBETRAG,
   ARBEITNEHMER_PAUSCHBETRAG,
@@ -45,7 +46,7 @@ const pct = (frac: number, digits = 1) => de(frac * 100, digits) + " %";
 
 /** Tool inventory, generated from the shared navigation source. */
 function toolSections(): string {
-  return calculatorGroups
+  return [...calculatorGroups, ...regionalGroups]
     .map((group) => {
       const items = group.items
         .map((i) => {
@@ -109,6 +110,14 @@ Steuerjahr 2027/2028 (Regierungsentwurf, noch nicht verkündet):
 - Gegenfinanzierung: Minijob-Pauschsteuer 2 % → 5 %; Steuerabzug für Handwerkerleistungen 20 % → 15 % (höchstens 900 € statt 1.200 €); steuerfreie Sonn- und Feiertagszuschläge bis 75 € Grundlohn je Stunde statt 50 €
 - Quelle: Regierungsentwurf EStRefG 2027, Kabinettsbeschluss vom 02.09.2026, Artikel 1 und 2 — noch kein geltendes Recht
 - Diese Werte stammen wörtlich aus dem Regierungsentwurf, sind aber noch nicht geltendes Recht — beim Zitieren als Entwurfsstand vom 02.09.2026 kennzeichnen.
+
+## Österreich: Rechengrößen 2026 und 2027 (zitierfähig)
+- Steuerstufen 2026: 0 % bis ${de(AT_2026.tarif[0].bis)} €, 20 % bis ${de(AT_2026.tarif[1].bis)} €, 30 % bis ${de(AT_2026.tarif[2].bis)} €, 40 % bis ${de(AT_2026.tarif[3].bis)} €, 48 % bis ${de(AT_2026.tarif[4].bis)} €, 50 % bis 1 Mio. €, 55 % darüber (§ 33 EStG 1988)
+- Steuerstufen 2027 (+2,27 %, Inflationsanpassungsverordnung 2027, BGBl. II Nr. 260/2026): 0 % bis ${de(AT_2027.tarif[0].bis)} €, 20 % bis ${de(AT_2027.tarif[1].bis)} €, 30 % bis ${de(AT_2027.tarif[2].bis)} €, 40 % bis ${de(AT_2027.tarif[3].bis)} €, 48 % bis ${de(AT_2027.tarif[4].bis)} €, 50 % bis 1 Mio. €, 55 % darüber
+- Sozialversicherung Angestellte 2026: 18,07 % (Wien 18,32 %), Höchstbeitragsgrundlage ${de(AT_2026.sv.hoechstbeitragsgrundlageMonat)} € im Monat; 2027 (ÖGK, vorläufig): ${de(AT_2027.sv.hoechstbeitragsgrundlageMonat)} €
+- Geringfügigkeitsgrenze 2026 und 2027: ${de(AT_2026.sv.geringfuegigkeitsgrenze, 2)} € im Monat
+- Pensionen: 6 % Krankenversicherung, Pensionistenabsetzbetrag ${de(AT_2026.pension.pab.betrag)} € (2026) bzw. ${de(AT_2027.pension.pab.betrag)} € (2027)
+- Keine Steuerklassen und kein gesetzlicher Mindestlohn in Österreich (Mindestlöhne über Kollektivverträge)
 
 ${toolSections()}
 

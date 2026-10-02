@@ -4,6 +4,9 @@ import { ChevronRight, MapPin, ArrowRight } from "lucide-react";
 import RechnerOesterreich from "./RechnerOesterreich";
 import { siteConfig } from "@/lib/authors";
 import { AT_2026, berechneBruttoNettoAT, formatEURat as eur } from "@/lib/oesterreich";
+import { regionalGroups } from "@/lib/navigation";
+
+const AT_LINKS = regionalGroups[0].items.filter((i) => i.href !== "/brutto-netto-rechner-oesterreich");
 
 /**
  * Brutto-Netto-Rechner Österreich 2026.
@@ -226,6 +229,26 @@ export default function BruttoNettoRechnerOesterreichPage() {
               Weihnachtsgeld werden mit 6 % statt nach dem Tarif besteuert; 620 € im Jahr bleiben steuerfrei.
             </li>
           </ol>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-extrabold text-[#16181D] mb-4">Weitere Rechner für Österreich</h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {AT_LINKS.map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className="group flex items-start justify-between gap-3 bg-white border border-black/[0.08] rounded-2xl p-4 hover:border-[#E60A1C]/40 transition-colors"
+                >
+                  <span>
+                    <span className="block font-bold text-[#16181D] group-hover:text-[#E60A1C]">{l.label}</span>
+                    <span className="block text-sm text-black/55">{l.description}</span>
+                  </span>
+                  <ArrowRight size={16} className="flex-shrink-0 mt-1 text-black/30 group-hover:text-[#E60A1C]" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section className="bg-white border border-black/[0.08] rounded-2xl p-5 sm:p-6">

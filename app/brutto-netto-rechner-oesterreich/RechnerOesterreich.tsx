@@ -6,7 +6,9 @@ import {
   berechneBruttoNettoAT,
   formatEURat as eur,
   BUNDESLAENDER_AT,
+  AT_WERTE,
   type Bundesland,
+  type JahrAT,
   type PendlerArt,
 } from "@/lib/oesterreich";
 
@@ -16,32 +18,48 @@ const pct = (v: number) =>
 const inputCls =
   "w-full px-3 py-2.5 rounded-xl border border-black/[0.14] text-sm font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-[#E60A1C]/30";
 
-export default function RechnerOesterreich() {
-  const [brutto, setBrutto] = useState(3000);
+export default function RechnerOesterreich({
+  jahr = 2026,
+  startBrutto = 3000,
+}: {
+  /** Rechenjahr; 2027 zeigt zusätzlich die Differenz zu 2026. */
+  jahr?: JahrAT;
+  startBrutto?: number;
+}) {
+  const [brutto, setBrutto] = useState(startBrutto);
+  const [neuesDv, setNeuesDv] = useState(false);
   const [bundesland, setBundesland] = useState<Bundesland>("wien");
   const [gehaelter, setGehaelter] = useState<12 | 14>(14);
   const [kinderUnter18, setKinderUnter18] = useState(0);
   const [kinderAb18, setKinderAb18] = useState(0);
-  const [fbVoll, setFbVoll] = useState(true);
+  const [fbAnteil, setFbAnteil] = useState(1);
   const [avab, setAvab] = useState(false);
   const [pendler, setPendler] = useState<PendlerArt>("keine");
   const [km, setKm] = useState(25);
 
+  const eingabe = {
+    bruttoMonat: brutto,
+    bundesland,
+    gehaelter,
+    kinderUnter18,
+    kinderAb18,
+    familienbonusVoll: fbAnteil === 1,
+    familienbonusAnteil: fbAnteil,
+    avab,
+    pendler,
+    pendlerKm: km,
+  };
   const r = useMemo(
-    () =>
-      berechneBruttoNettoAT({
-        bruttoMonat: brutto,
-        bundesland,
-        gehaelter,
-        kinderUnter18,
-        kinderAb18,
-        familienbonusVoll: fbVoll,
-        avab,
-        pendler,
-        pendlerKm: km,
-      }),
-    [brutto, bundesland, gehaelter, kinderUnter18, kinderAb18, fbVoll, avab, pendler, km]
+    () => berechneBruttoNettoAT({ ...eingabe, jahr, neuesDienstverhaeltnis: neuesDv }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [brutto, bundesland, gehaelter, kinderUnter18, kinderAb18, fbAnteil, avab, pendler, km, jahr, neuesDv]
   );
+  const vorjahr = useMemo(
+    () => (jahr === 2027 ? berechneBruttoNettoAT({ ...eingabe, jahr: 2026 }) : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [brutto, bundesland, gehaelter, kinderUnter18, kinderAb18, fbAnteil, avab, pendler, km, jahr]
+  );
+  const K = AT_WERTE[jahr];
 
   const hatKinder = kinderUnter18 + kinderAb18 > 0;
   const st = r.laufend.steuer;
@@ -103,6 +121,17 @@ export default function RechnerOesterreich() {
               </select>
             </label>
           </div>
+          {jahr === 2027 && (
+            <label className="flex items-start gap-2.5 text-sm cursor-pointer">
+              <input type="checkbox" checked={neuesDv} onChange={(e) => setNeuesDv(e.target.checked)} className="mt-0.5 w-4 h-4 accent-[#E60A1C]" />
+              <span className="leading-snug">
+                <span className="font-semibold">Job beginnt erst ab 1.1.2027</span>
+                <span className="block text-[11px] text-black/50">
+                  Neue Dienstverhältnisse zahlen bei kleinem Gehalt mehr Arbeitslosenversicherung.
+                </span>
+              </span>
+            </label>
+          )}
 
           <div className="border-t border-black/[0.08] pt-5 space-y-3">
             <div className="text-xs font-mono uppercase tracking-wider text-black/50 font-bold">Familie</div>
@@ -128,9 +157,11 @@ export default function RechnerOesterreich() {
               <>
                 <label className="block">
                   <span className="block text-xs font-bold text-black/60 mb-1.5">Familienbonus Plus</span>
-                  <select value={fbVoll ? "voll" : "halb"} onChange={(e) => setFbVoll(e.target.value === "voll")} className={inputCls}>
-                    <option value="voll">zur Gänze</option>
-                    <option value="halb">je zur Hälfte mit dem anderen Elternteil</option>
+                  <select value={fbAnteil} onChange={(e) => setFbAnteil(Number(e.target.value))} className={inputCls}>
+                    <option value={1}>{jahr === 2027 ? "zur Gänze (Kind unter 4 / allein)" : "zur Gänze"}</option>
+                    {jahr === 2027 && <option value={0.75}>75 % (Aufteilung 75:25)</option>}
+                    <option value={0.5}>je zur Hälfte mit dem anderen Elternteil</option>
+                    {jahr === 2027 && <option value={0.25}>25 % (Aufteilung 75:25)</option>}
                   </select>
                 </label>
                 <label className="flex items-start gap-2.5 text-sm cursor-pointer">
@@ -183,6 +214,12 @@ export default function RechnerOesterreich() {
               <div className="text-sm opacity-90 mt-1">
                 von {eur(r.laufend.brutto)} brutto{r.geringfuegig ? " · geringfügig" : ""}
               </div>
+              {vorjahr && (
+                <div className="text-xs font-semibold mt-2 bg-white/20 rounded-lg px-2 py-1 inline-block">
+                  {r.laufend.netto - vorjahr.laufend.netto >= 0 ? "+" : "−"}
+                  {eur(Math.abs(r.laufend.netto - vorjahr.laufend.netto))} gegenüber 2026
+                </div>
+              )}
             </div>
             <div className="bg-white border border-black/[0.08] rounded-3xl p-6 shadow-card">
               <div className="text-xs font-mono uppercase tracking-wider text-black/50 font-bold">Netto pro Jahr</div>
@@ -254,8 +291,9 @@ export default function RechnerOesterreich() {
                 </table>
               </div>
               <p className="text-[11px] text-black/45 mt-3">
-                Begünstigt besteuert: 620 € steuerfrei, darüber 6 % — solange das Jahressechstel 2.615 € nicht
-                übersteigt, bleiben beide Sonderzahlungen ganz steuerfrei. Keine AK-Umlage und kein
+                Begünstigt besteuert: 620 € steuerfrei, darüber 6 % — solange das Jahressechstel{" "}
+                {K.sonstigeBezuege.freigrenze.toLocaleString("de-AT")} € nicht übersteigt, bleiben beide
+                Sonderzahlungen ganz steuerfrei. Keine AK-Umlage und kein
                 Wohnbauförderungsbeitrag.
               </p>
             </div>
@@ -302,7 +340,7 @@ export default function RechnerOesterreich() {
 
           <p className="text-[11px] text-black/45 flex items-start gap-1.5 px-1">
             <Info size={12} className="flex-shrink-0 mt-0.5" />
-            Angestellte, Werte 2026. Familienbonus Plus und AVAB wirken nur, wenn sie beim Arbeitgeber beantragt
+            Angestellte, Werte {jahr}. Familienbonus Plus und AVAB wirken nur, wenn sie beim Arbeitgeber beantragt
             sind (Formular E 30); Kindermehrbetrag und SV-Rückerstattung gibt es erst über die
             Arbeitnehmerveranlagung.
           </p>

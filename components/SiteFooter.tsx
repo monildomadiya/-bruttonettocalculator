@@ -63,6 +63,13 @@ export default function SiteFooter() {
               <li><Link href="/beitragsbemessungsgrenze-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Beitragsbemessungsgrenze 2027</Link></li>
               <li><Link href="/sozialabgaben-rechner-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Sozialabgaben-Rechner 2027</Link></li>
               <li><Link href="/brutto-netto-rechner-oesterreich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto-Netto-Rechner Österreich</Link></li>
+              <li><Link href="/brutto-netto-rechner-oesterreich-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto-Netto-Rechner Österreich 2027</Link></li>
+              <li><Link href="/pension-brutto-netto-rechner-oesterreich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Pensionsrechner Österreich</Link></li>
+              <li><Link href="/lohnsteuer-oesterreich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Lohnsteuer Österreich</Link></li>
+              <li><Link href="/teilzeit-rechner-oesterreich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Teilzeit-Rechner Österreich</Link></li>
+              <li><Link href="/lehrer-gehalt-oesterreich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Lehrer-Gehalt Österreich</Link></li>
+              <li><Link href="/mindestlohn-oesterreich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Mindestlohn Österreich</Link></li>
+              <li><Link href="/durchschnittsgehalt-oesterreich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Durchschnittsgehalt Österreich</Link></li>
               <li><Link href="/tvoed-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">TVöD-Rechner 2026</Link></li>
               <li><Link href="/immobilienkredit-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Immobilienkredit-Rechner</Link></li>
               <li><Link href="/steuerklassenwechsel-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerklassenwechsel</Link></li>
