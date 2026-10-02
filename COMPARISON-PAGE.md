@@ -1,89 +1,99 @@
-# Comparison Page Blueprint — BruttoNettoCalculator vs. gehalt.de
+# Comparison Page Blueprint — Brutto-Netto-Rechner im Vergleich (Roundup)
 
-_Erstellt: 2026-07-29 · Wettbewerber-Daten verifiziert von `https://www.gehalt.de/einkommen/brutto-netto-rechner` (Stand 29.07.2026)_
+_Erstellt 2026-07-29 (vs. gehalt.de) · erweitert 2026-10-02 um Finanztip und den 2027-Fokus_
+_Wettbewerber-Daten verifiziert am 02.10.2026 von:_
+- `https://www.gehalt.de/einkommen/brutto-netto-rechner` (2. Prüfung, unverändert)
+- `https://www.finanztip.de/brutto-netto-rechner/` (Seite „Stand: 02. Oktober 2026“, Autor Jörg Leine)
 
-## Konzept
+## Entscheidung: Roundup statt „vs. Finanztip“-Seite
 
-**Seitentyp:** "X vs Y"-Vergleich, erweiterbar zum Roundup ("Brutto-Netto-Rechner im Vergleich").
-**Vorgeschlagene URL:** `/brutto-netto-rechner-vergleich`
-**Title (≤ 60):** `Brutto-Netto-Rechner im Vergleich 2026 — was können die Tools?`
-**H1:** `Brutto-Netto-Rechner im Vergleich: BruttoNettoCalculator vs. gehalt.de`
-**Wortziel:** ≥ 1.500 Wörter (Vergleich + Methodik + FAQ).
+Finanztip ist eine stark vertraute Verbraucher-Marke (gemeinnützige Gesellschafterin, 184.969 Aufrufe der
+Rechnerseite laut Zähler). Eine eigene Seite „BruttoNettoCalculator vs. Finanztip“ würde als Markenköder
+wirken und hätte kaum Chance auf die Marken-SERP. Deshalb: Finanztip als **dritte Spalte** in die bestehende
+Vergleichsseite `/brutto-netto-rechner-vergleich`, mit 2027 als neuem Schwerpunkt — genau das ist die Frage,
+die Nutzer im Herbst 2026 stellen („brutto netto rechner 2027“).
 
-> ⚖️ **Rechtlicher Rahmen:** Vergleichende Werbung ist nach § 6 UWG zulässig, wenn sie
-> objektiv nachprüfbare Eigenschaften vergleicht. Jede Zeile der Matrix unten ist von der
-> öffentlichen Wettbewerber-Seite verifizierbar (Zitate/Quellen je Zeile). Kein Feature
-> raten — bei Unklarheit "auf der verglichenen Seite nicht angeboten" schreiben.
+- **URL:** `/brutto-netto-rechner-vergleich` (bestehend)
+- **Title:** `Brutto-Netto-Rechner Vergleich 2026/2027: wer kann was?` (55 Zeichen)
+- **H1:** `Brutto-Netto-Rechner im Vergleich 2026/2027`
+- **Umfang:** ≈ 1.900 Wörter, 17 Matrixzeilen, 20 Fußnoten, 7 FAQ
 
-## Feature-Matrix (verifiziert, Stand 29.07.2026)
+> ⚖️ **§ 6 UWG:** Jede Zelle mit Unterschied ist mit einer Fußnote belegt. „Nein“ nur, wo der Anbieter es
+> selbst schreibt oder die Seite es eindeutig zeigt; sonst „nicht auf dieser Seite“.
 
-| Merkmal | BruttoNettoCalculator | gehalt.de Brutto-Netto-Rechner |
-|---|:---:|:---:|
-| Steuerjahr 2026 (§ 32a EStG) | ✅ | ✅ |
-| **2027-Vorschau** (beschlossene Werte) | ✅ eigener Rechner + Toggle | ❌ ¹ |
-| **Netto → Brutto** im selben Rechner | ✅ Toggle | ⚠️ separates Tool ² |
-| Vergangene Steuerjahre | ❌ | ✅ ³ |
-| Individueller KK-Zusatzbeitrag | ⚠️ Ø 2,9 % fest | ✅ Detailmodus ³ |
-| Geburtsjahr-Berücksichtigung | ⚠️ nur "kinderlos ab 23" | ✅ ³ |
-| Beamten-Rechner (Besoldung) | ✅ `/brutto-netto-rechner-beamte` | — ⁴ |
-| Midijob-Übergangsbereich 2026 | ✅ validierte Engine | — ⁴ |
-| Firmenwagen (1 %-Regelung) | ✅ `/firmenwagenrechner` | — ⁴ |
-| Alle 16 Bundesländer-Seiten | ✅ | ❌ (Bundesland nur als Eingabefeld) |
-| Ohne Anmeldung/Konto nutzbar | ✅ | ✅ |
-| Quellenangabe mit Gesetzes-Links | ✅ § 32a EStG, SVBezGrV verlinkt | ⚠️ erklärt, nicht verlinkt |
-| Sprachen | DE / EN / PL | DE |
+## Feature-Matrix (Stand 02.10.2026)
 
-¹ Wettbewerber-Seite: 0 Erwähnungen von "2027"; eigenes Intro nennt "das Jahr 2026 sowie vergangene Jahre".
-² Eigene H2 "Gibt es auch einen Netto-Brutto-Rechner?" → verweist auf separates Tool.
-³ Laut Intro-Text der Wettbewerber-Seite (Detailmodus: Geburtsjahr, Krankenkassensatz, Rentenversicherung).
-⁴ Auf der verglichenen Rechner-Seite nicht vorhanden (0 Treffer); gehalt.de kann andere Tools an anderer URL anbieten — deshalb "—" statt "❌".
+| Merkmal | BruttoNettoCalculator | gehalt.de | Finanztip |
+|---|:---:|:---:|:---:|
+| Steuerjahr 2026 | ✅ | ✅ | ✅ |
+| Steuertarif 2027 (Regierungsentwurf 2.9.2026) | ✅ | ❌ ¹ | ✅ ¹⁰ |
+| Reformszenarien (ohne Reform · Entwurf · 2028) | ✅ 3 | — | ⚠️ 1 Szenario ¹⁰ |
+| Sozialabgaben 2027 mit BBG-Entwurf | ⚠️ separater Rechner ²⁰ | — | ✅ ¹¹ |
+| Netto → Brutto (exakt) | ✅ eigener Rechner ²³ | ⚠️ Faustregel 1,3–1,4× ² | — ¹² |
+| Vergangene Steuerjahre | ❌ | ✅ 2024/2025 ³ | ❌ ¹⁰ |
+| Eigener KK-Zusatzbeitrag | ⚠️ separater Rechner ²¹ | ✅ ³ | ✅ Kassenauswahl ¹³ |
+| Alter / Geburtsjahr | ⚠️ | ✅ ³ | ✅ ¹³ |
+| Privat versichert / ohne RV/ALV | ⚠️ Beamten-Rechner ²² | ✅ ³ | ✅ ¹³ |
+| Zusätzlicher Steuerfreibetrag | ❌ | ✅ ⁴ | ✅ ¹³ |
+| Beamte | ✅ | — ⁵ | ⚠️ „erste Orientierung“ ¹⁴ |
+| Midijob | ✅ | — ⁵ | ❌ (laut Finanztip) ¹⁵ |
+| Firmenwagen | ✅ | — ⁵ | — ¹⁶ |
+| Seite je Bundesland | ✅ 16 | ❌ ⁶ | ❌ ¹³ |
+| Kostenlos, ohne Konto | ✅ | ✅ Beruf & Wohnort Pflicht ⁷ | ✅ |
+| Quellen/Entwürfe verlinkt | ✅ | ⚠️ ⁸ | ✅ ¹¹ |
+| Sprachen | DE EN PL RO TR UK | DE | DE |
 
-**Ehrliche Stärken des Wettbewerbers (im Text anerkennen):** größere Markenbekanntheit
-(Stepstone-Gruppe), Gehaltsdatenbank als Kernprodukt, Berechnung vergangener Jahre,
-feinerer Detailmodus. Das schafft Vertrauen und ist § 6-UWG-sauber.
+## Wettbewerbsanalyse: unsere 2027-Seite vs. Finanztip
 
-## Seitenstruktur (Content-Outline)
+**Gleich:** Steuertarif 2027 aus demselben Regierungsentwurf (12.564 € Grundfreibetrag, 1.430 €
+AN-Pauschbetrag, 47 % ab 280.000 €).
 
-1. **Hero (150 W.):** Direkte Antwort — beide Rechner sind kostenlos & präzise; Unterschiede
-   liegen bei 2027-Vorschau, integrierter Umkehr-Rechnung und Spezialrechnern.
-   CTA: "Jetzt mit aktuellem Rechner 2026 starten" → `/brutto-netto-rechner-2026`.
-2. **Feature-Matrix** (Tabelle oben) + "Stand: 29.07.2026"-Hinweis.
-3. **Detail-Abschnitte (je 200–300 W.):** 2027-Vorschau · Netto→Brutto · Spezialrechner
-   (Beamte/Midijob/Firmenwagen) · Wo gehalt.de stärker ist (Detailmodus, vergangene Jahre).
-4. **Methodik (150 W.):** Wie verglichen wurde (öffentliche Seiten, Datum, keine Konten),
-   Offenlegung: "BruttoNettoCalculator ist unser eigenes Produkt."
-5. **FAQ (4–6 Fragen):** "Welcher Brutto-Netto-Rechner ist der genaueste?", "Ist der
-   Rechner von gehalt.de kostenlos?", "Welcher Rechner kann 2027?", …
-6. **Abschluss-CTA + Related:** Links auf `/brutto-netto-rechner-2026`, `/brutto-netto-rechner-2027`,
-   `/rechner/netto-zu-brutto`, `/brutto-netto-rechner-beamte`.
+**Finanztip vorn**
+1. **SV 2027 im Netto** — BBG-Entwurf (KV/PV 76.500 €, RV 106.200 €) + GKV-Beitragssatzstabilisierungsgesetz.
+   Unser Hauptrechner bleibt bewusst bei SV 2026 (Begründung in `lib/sozialabgaben2027.ts`). Aber: Für den
+   Steuerteil nutzen wir ebenfalls einen Entwurf — die Begründung ist inkonsistent. Wirkt ab ≈ 5.800 €/Monat.
+2. **Kassenauswahl im selben Formular** (Spar-Hook „lohnt ein Kassenwechsel?“).
+3. **Alter, Freibetrag, RV/ALV-/GKV-Schalter** direkt im Rechner.
+4. **Transparenz-Block** „Welche vorläufigen Werte hat Finanztip verwendet?“ mit verlinkten PDFs —
+   inklusive offen benannter Lücken (Kinderlosenzuschlag 0,9 % geplant, Aktivrente fehlt).
+5. **Marke & Reichweite** (Newsletter > 1 Mio. Leser) — nicht einholbar, nur flankierbar.
 
-**CTA-Regeln:** Kein CTA innerhalb der gehalt.de-Abschnitte (Trust). Reviewer-Byline
-(Redaktion) + "Zuletzt aktualisiert" sichtbar. KEIN erfundenes AggregateRating-Schema —
-keine echten Reviews vorhanden (E-E-A-T-Policy der Site).
+**Wir vorn**
+1. Drei Reformszenarien + Gesetzgebungs-Tracker (Finanztip: ein Szenario).
+2. Midijob (Finanztip schließt ihn ausdrücklich aus), Beamte, Firmenwagen, exaktes Netto→Brutto auch 2027.
+3. Tabellen (Entlastung je Gehalt, Tarifeckwerte) und ~5.500 Wörter Kontext auf der 2027-Seite.
+4. Sechs Sprachen, eigene Bundesland-Seiten.
 
-## Keyword-Strategie
+## Empfehlungen (priorisiert)
 
-| Keyword | Intent | Priorität |
-|---|---|---|
-| brutto netto rechner vergleich | commercial investigation | 1 |
-| bester brutto netto rechner (2026) | commercial investigation | 1 |
-| gehalt.de brutto netto rechner | navigational-hijack Longtail | 2 |
-| gehalt.de alternative | commercial | 2 |
-| welcher brutto netto rechner stimmt | informational | 2 |
-| brutto netto rechner 2027 | eigener USP-Funnel | 1 (bestehende Seite verlinken) |
-| brutto netto rechner ohne anmeldung | commercial | 3 |
+1. **SV-Szenario „Entwurf 2027“ in den Hauptrechner** (Toggle, Default = beschlossen). Schließt die
+   größte Lücke zu Finanztip und macht die 2027-Seite konsistent. Werte liegen schon in
+   `SV_RECHENGROESSEN_2027_ENTWURF`. **Entscheidung des Owners nötig** (bewusste Altentscheidung).
+2. **Krankenkassen-Auswahl in den Hauptrechner** — Engine kann `kvZusatzbeitrag` bereits; die Daten
+   (`data/krankenkassen`) existieren für den Krankenkassen-Rechner.
+3. **Block „Welche Werte verwendet dieser Rechner für 2027?“** oben auf `/brutto-netto-rechner-2027`,
+   als Liste mit Quelle je Wert (wie Finanztip) — stärkt E-E-A-T für die wichtigste Seite der Domain.
+4. **Aktivrente** (2.000 €/Monat steuerfrei ab Regelaltersgrenze): weder wir noch Finanztip — First-Mover-Chance,
+   nach Prüfung der Rechtslage.
+5. **Kinderlosenzuschlag 0,9 % ab 2027** (laut Finanztip geplant): verfolgen und als Szenario anbieten, sobald
+   ein Entwurf vorliegt.
+6. Vergleichsseite **quartalsweise** neu prüfen (nächster Termin Anfang Januar 2027) — sofort, wenn gehalt.de
+   2027 nachrüstet oder Finanztip Midijob/Netto→Brutto ergänzt.
 
-**Ausbau-Pfad:** Nach Indexierung um `nettolohn.de` und `brutto-netto-rechner.info`
-erweitern → Roundup "Die besten Brutto-Netto-Rechner 2026 im Vergleich" (ItemList-Schema),
-Cross-Links zwischen den Vergleichsseiten.
+## Bei der Prüfung gefundene eigene Falschaussage (korrigiert)
 
-## Schema (JSON-LD) — siehe `comparison-schema.json`
+Die Seiten `/brutto-netto-rechner-2026`, `/brutto-netto-rechner-2027` und die alte Vergleichstabelle
+behaupteten einen „Modus Netto zu Brutto“ bzw. „Umschalter“ im Hauptrechner. Den gibt es nicht —
+Netto→Brutto ist der eigene Rechner `/rechner/netto-zu-brutto` (2026 und 2027). Texte und Matrix sind
+korrigiert; in einer vergleichenden Werbung wäre die alte Aussage angreifbar gewesen.
 
-`WebPage` (mit Redaktions-Authorship wie sitewide) + `ItemList` (2 Rechner) + `FAQPage`.
-Bewusst OHNE Product/AggregateRating: keine echten Bewertungsdaten.
+## Keywords
 
-## Pflege
+- **Primär:** brutto netto rechner vergleich · brutto netto rechner 2027 vergleich
+- **Sekundär:** bester brutto netto rechner · welcher brutto netto rechner stimmt · brutto netto rechner test
+- **Marken (nur informativ, keine Köder-Seiten):** finanztip brutto netto rechner · gehalt.de brutto netto rechner
 
-- Quartalsweise Re-Check der Wettbewerber-Seite (Matrix-Fußnoten aktualisieren).
-- "Stand"-Datum bei jeder Prüfung bumpen — auch ohne Änderung ("geprüft am …").
-- Bei 2027-Launch von gehalt.de: Zeile sofort korrigieren (Fairness > Ranking).
+## Schema
+
+`comparison-schema.json`: BreadcrumbList · WebPage · ItemList (3 × SoftwareApplication, Preis 0 €) · FAQPage.
+Bewusst **ohne** Product/AggregateRating — keine echten Bewertungsdaten.

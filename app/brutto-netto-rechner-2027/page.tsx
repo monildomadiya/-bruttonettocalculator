@@ -313,9 +313,12 @@ export default function Rechner2027Page() {
           </ul>
           <p>
             Wie viel mehr Netto vom Brutto Sie 2027 konkret haben, hängt von Ihrem Gehalt und Ihrer
-            Steuerklasse ab. Nutzen Sie den Rechner im Modus <strong className="text-[#16181D] font-semibold">Brutto zu Netto</strong> oder{" "}
-            <strong className="text-[#16181D] font-semibold">Netto zu Brutto</strong>, schalten Sie auf das Steuerjahr 2027
-            und vergleichen Sie die Szenarien mit dem geltenden Recht 2026. Den aktuellen Vergleichswert
+            Steuerklasse ab. Schalten Sie im Rechner auf das Steuerjahr 2027 und vergleichen Sie die Szenarien mit dem
+            geltenden Recht 2026; den umgekehrten Weg rechnet der{" "}
+            <Link href="/rechner/netto-zu-brutto?jahr=2027" className="text-[#E60A1C] font-semibold hover:underline">
+              Netto-zu-Brutto-Rechner
+            </Link>{" "}
+            ebenfalls für 2027. Den aktuellen Vergleichswert
             für dieses Jahr finden Sie im{" "}
             <Link href="/brutto-netto-rechner-2026" className="text-[#E60A1C] font-semibold hover:underline">
               Brutto Netto Rechner 2026

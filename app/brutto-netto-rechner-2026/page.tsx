@@ -93,7 +93,7 @@ const faqs: { q: string; a: string; links?: { href: string; label: string }[] }[
   },
   {
     q: "Kann ich mit dem Rechner auch Netto zu Brutto 2026 berechnen?",
-    a: "Ja. Der Rechner beherrscht beide Richtungen: die klassische Brutto-zu-Netto-Rechnung und die umgekehrte Netto-zu-Brutto-Kalkulation für 2026. So finden Sie zum Beispiel heraus, welches Bruttogehalt Sie verhandeln müssen, um ein bestimmtes Wunsch-Netto zu erreichen.",
+    a: "Ja, mit dem eigenen Netto-zu-Brutto-Rechner: Er nutzt dieselbe Engine wie dieser Rechner und sucht das Bruttogehalt, das zu Ihrem Wunsch-Netto passt — für 2026 und für 2027. So finden Sie heraus, welches Bruttogehalt Sie verhandeln müssen, um ein bestimmtes Netto zu erreichen.",
     links: [{ href: "/rechner/netto-zu-brutto", label: "Netto-zu-Brutto-Rechner" }],
   },
   {
@@ -241,8 +241,8 @@ export default function Rechner2026Page() {
           <BruttoNettoBreakdownChart bruttoMonat={3000} jahr={2026} steuerklasse={1} />
 
           <p>
-            Wechseln Sie im Rechner bei Bedarf auf den Modus <strong className="text-[#16181D] font-semibold">Netto zu Brutto</strong>,
-            um aus einem gewünschten Nettobetrag das nötige Bruttogehalt 2026 zu ermitteln. Möchten Sie die geplante
+            Der umgekehrte Weg — aus einem gewünschten Nettobetrag das nötige Bruttogehalt 2026 — hat einen eigenen{" "}
+            <a href="/rechner/netto-zu-brutto" className="text-[#E60A1C] font-semibold hover:underline">Netto-zu-Brutto-Rechner</a>. Möchten Sie die geplante
             Entlastung durch die Steuerreform sehen, vergleichen Sie einfach mit dem{" "}
             <a href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Brutto Netto Rechner 2027</a>.
           </p>
