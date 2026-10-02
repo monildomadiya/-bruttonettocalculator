@@ -6,6 +6,7 @@ import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts } from "@/dat
 import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
+import { LANGUAGE_CLUSTER } from "@/lib/expat/cluster";
 import { REFORM_STAND } from "@/components/Reform2027Status";
 import { getPublishedPosts } from "@/lib/postsStore";
 
@@ -47,15 +48,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://bruttonettocalculator.com";
   const engineUpdated = new Date(siteConfig.lastUpdatedISO);
 
-  // 3-language cluster — must mirror the page-level hreflang tags exactly
-  // (app/page.tsx, app/en/tax-calculator-germany, app/pl/kalkulator-…)
-  const languageCluster = {
-    "de-DE": `${base}/`,
-    "en-DE": `${base}/en/tax-calculator-germany`,
-    "pl-DE": `${base}/pl/kalkulator-brutto-netto-niemcy`,
-    "x-default": `${base}/`,
-  };
-  const clusterPaths = new Set(["", "/en/tax-calculator-germany", "/pl/kalkulator-brutto-netto-niemcy"]);
+  // Language cluster — one shared source with the page-level hreflang tags
+  // (lib/expat/cluster.ts), so the two can no longer drift apart.
+  const languageCluster = LANGUAGE_CLUSTER;
+  const clusterPaths = new Set(
+    Object.entries(LANGUAGE_CLUSTER)
+      .filter(([k]) => k !== "x-default")
+      .map(([, url]) => url.replace(base, "").replace(/\/$/, ""))
+  );
 
   // Pages whose content is driven by the tax engine / 2026 parameters
   const calculatorRoutes: string[] = [
@@ -133,6 +133,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/stundenlohn-rechner",
     "/en/tax-calculator-germany",
     "/pl/kalkulator-brutto-netto-niemcy",
+    "/ro/calculator-salariu-germania",
+    "/ro/clase-de-impozitare-germania",
+    "/ro/salariu-minim-germania",
+    "/tr/almanya-maas-hesaplama",
+    "/tr/almanya-vergi-siniflari",
+    "/tr/almanya-asgari-ucret",
   ];
 
   // Informational/legal pages with no known change date → no lastmod

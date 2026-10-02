@@ -15,7 +15,9 @@ import AdUnit from "@/components/AdUnit";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
-type Lang = "de" | "en" | "pl";
+type Lang = "de" | "en" | "pl" | "ro" | "tr";
+
+const NUM_LOCALE: Record<Lang, string> = { de: "de-DE", en: "en-GB", pl: "pl-PL", ro: "ro-RO", tr: "tr-TR" };
 
 const STEUERKLASSE_INFO: Record<Lang, Record<Steuerklasse, string>> = {
   de: {
@@ -42,6 +44,22 @@ const STEUERKLASSE_INFO: Record<Lang, Record<Steuerklasse, string>> = {
     5: "Małżeństwo — niższy dochód (klasa V)",
     6: "Drugi etat (klasa VI)",
   },
+  ro: {
+    1: "Persoană singură (clasa I)",
+    2: "Părinte singur (clasa II)",
+    3: "Căsătorit — venit mai mare (clasa III)",
+    4: "Căsătorit — venituri egale (clasa IV)",
+    5: "Căsătorit — venit mai mic (clasa V)",
+    6: "Al doilea loc de muncă (clasa VI)",
+  },
+  tr: {
+    1: "Bekâr (I. sınıf)",
+    2: "Tek ebeveyn (II. sınıf)",
+    3: "Evli — yüksek gelirli (III. sınıf)",
+    4: "Evli — eşit gelirli (IV. sınıf)",
+    5: "Evli — düşük gelirli (V. sınıf)",
+    6: "İkinci iş (VI. sınıf)",
+  },
 };
 
 /*
@@ -57,6 +75,8 @@ const MONATSNAMEN: Record<Lang, readonly string[]> = {
   de: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
   en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
   pl: ["styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"],
+  ro: ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"],
+  tr: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
 };
 
 function standChip(lang: Lang): string {
@@ -157,7 +177,7 @@ const T: Record<Lang, Record<string, string>> = {
     errMax: "Maximum amount: €200,000",
     sliderAria: "Gross salary slider",
     taxYear: "Tax year",
-    year2027Note: "There is no 2027 law yet — only the coalition agreement of 1 July 2026. Pick a scenario; social contributions stay at official 2026 levels.",
+    year2027Note: "There is no enacted 2027 law yet — but since 2 Sep 2026 there is a cabinet-approved government draft with concrete tariff values. Pick a scenario; social contributions stay at official 2026 levels.",
     scenarioLabel: "2027 reform scenario",
     scenarioOhne: "No reform",
     scenarioStufe1: "Draft 2027",
@@ -237,7 +257,7 @@ const T: Record<Lang, Record<string, string>> = {
     errMax: "Maksymalna kwota: 200 000 €",
     sliderAria: "Suwak wynagrodzenia brutto",
     taxYear: "Rok podatkowy",
-    year2027Note: "Na 2027 r. nie ma jeszcze ustawy — tylko porozumienie koalicyjne z 1.7.2026. Wybierz scenariusz; składki socjalne pozostają na urzędowym poziomie 2026 r.",
+    year2027Note: "Na 2027 r. nie ma jeszcze uchwalonej ustawy — ale od 2.9.2026 istnieje przyjęty przez rząd projekt z konkretnymi wartościami taryfy. Wybierz scenariusz; składki socjalne pozostają na urzędowym poziomie 2026 r.",
     scenarioLabel: "Scenariusz reformy 2027",
     scenarioOhne: "Bez reformy",
     scenarioStufe1: "Projekt 2027",
@@ -305,6 +325,166 @@ const T: Record<Lang, Record<string, string>> = {
     perMonthWord2: "/ miesiąc",
     yearWord: "rok",
     monthShort: "mies.",
+  },
+  ro: {
+    inputParams: "Date · Parametri",
+    yourGross: "Salariul tău brut",
+    perMonth: "/lună",
+    perYear: "/an",
+    grossPerMonth: "Salariu brut pe lună",
+    errInvalid: "Introdu o sumă validă",
+    errPositive: "Suma trebuie să fie pozitivă",
+    errMax: "Suma maximă: 200.000 €",
+    sliderAria: "Glisor salariu brut",
+    taxYear: "An fiscal",
+    year2027Note: "Pentru 2027 nu există încă o lege promulgată — doar proiectul guvernului din 2.9.2026, cu valori concrete. Alege un scenariu; contribuțiile sociale rămân la nivelul oficial din 2026.",
+    scenarioLabel: "Scenariu reformă 2027",
+    scenarioOhne: "Fără reformă",
+    scenarioStufe1: "Proiect 2027",
+    scenarioVoll: "Etapa 2028",
+    scenarioOhneHint: "Tariful 2026 rămâne neschimbat — dacă reforma nu trece.",
+    scenarioStufe1Hint: `Proiectul de lege EStRefG 2027, articolul 1 (de la 1.1.2027): sumă scutită de bază ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, deducere forfetară pentru angajați 1.430 €.`,
+    scenarioVollHint: `A doua etapă a aceluiași proiect, articolul 2 (de la 1.1.2028): sumă scutită de bază ${GRUNDFREIBETRAG.stufe2028.toLocaleString("de-DE")} €.`,
+    taxClass: "Clasa de impozitare",
+    moreOptions: "Mai multe opțiuni",
+    childlessLabel: "Fără copii și peste 23 de ani",
+    childlessHint: "Asigurare de îngrijire +0,6 %",
+    churchLabel: "Plătesc impozit bisericesc",
+    churchHint: "9 % din impozitul pe venit",
+    disclaimer: "Calcul simplificat al salariului german conform § 32a EStG 2026. Nu constituie consultanță fiscală.",
+    result: "Rezultat",
+    dateChip: standChip("ro"),
+    copyAria: "Copiază linkul rezultatului",
+    copyTitle: "Copiază un link către acest rezultat",
+    copied: "Copiat!",
+    share: "Distribuie",
+    annualNet: "Salariu net anual",
+    monthlyNet: "Salariu net lunar",
+    equals: "Echivalent",
+    perMonthWord: "/ lună",
+    netShare: "Procent net",
+    fullAnalysisSub: "Toate cele 6 clase de impozitare, 2026 vs. 2027 și salariul net pe oră",
+    distribution: "Împărțirea brut – net",
+    legendNet: "Salariu net",
+    legendTax: "Impozit și Soli",
+    legendSv: "Asigurări sociale",
+    netWord: "Net",
+    detailed: "Detaliere completă",
+    grossSalary: "Salariu brut",
+    totalTaxes: "Impozite total",
+    incomeTax: "Impozit pe venit (Lohnsteuer)",
+    soli: "Contribuția de solidaritate (Soli)",
+    churchTax: "Impozit bisericesc",
+    totalSv: "Contribuții sociale total",
+    pension: "Asigurare de pensie (9,30 %)",
+    health: "Asigurare de sănătate",
+    care: "Asigurare de îngrijire",
+    unemployment: "Asigurare de șomaj (1,30 %)",
+    marginalRate: "Cota marginală",
+    avgRate: "Cota medie de impozitare",
+    blTitle: "Cum diferă salariul net în funcție de land",
+    blSub: "Impozit bisericesc (8 % vs. 9 %) și asigurarea de îngrijire regională",
+    bl8: "8 % imp. bisericesc",
+    bl8States: "Bavaria și Baden-Württemberg",
+    bl9: "9 % imp. bisericesc",
+    bl9States: "Celelalte 14 landuri",
+    blChurchIn: "Cu impozit bisericesc în",
+    netLabelShort: "Net",
+    yearCompareTitle: "Comparație",
+    yearCompareVs: "vs.",
+    yearCompareSuffix: "(reforma fiscală și tariful)",
+    diff: "Diferență",
+    net: "Net",
+    selectedYear: "Anul ales",
+    compareYear: "Anul de comparație",
+    taxYearWord: "An fiscal",
+    netDiff: "Diferența netă calculată",
+    monthlyAdj: "lunar",
+    annualAdj: "anual",
+    perYearWord: "/ an",
+    perMonthWord2: "/ lună",
+    yearWord: "an",
+    monthShort: "lună",
+  },
+  tr: {
+    inputParams: "Giriş · Parametreler",
+    yourGross: "Brüt maaşınız",
+    perMonth: "/ay",
+    perYear: "/yıl",
+    grossPerMonth: "Aylık brüt maaş",
+    errInvalid: "Lütfen geçerli bir tutar girin",
+    errPositive: "Tutar pozitif olmalıdır",
+    errMax: "Azami tutar: 200.000 €",
+    sliderAria: "Brüt maaş kaydırıcısı",
+    taxYear: "Vergi yılı",
+    year2027Note: "2027 için henüz yürürlüğe girmiş bir yasa yok — ancak hükümetin 2.9.2026'da kabul ettiği, somut değerler içeren bir tasarı var. Bir senaryo seçin; sosyal sigorta kesintileri 2026 resmî değerlerinde kalır.",
+    scenarioLabel: "2027 reform senaryosu",
+    scenarioOhne: "Reformsuz",
+    scenarioStufe1: "Tasarı 2027",
+    scenarioVoll: "2028 aşaması",
+    scenarioOhneHint: "2026 tarifesi aynen devam eder — reform geçmezse.",
+    scenarioStufe1Hint: `EStRefG 2027 tasarısı, madde 1 (1.1.2027'den itibaren): temel muafiyet ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, çalışan götürü gider indirimi 1.430 €.`,
+    scenarioVollHint: `Aynı tasarının ikinci aşaması, madde 2 (1.1.2028'den itibaren): temel muafiyet ${GRUNDFREIBETRAG.stufe2028.toLocaleString("de-DE")} €.`,
+    taxClass: "Vergi sınıfı (Steuerklasse)",
+    moreOptions: "Diğer seçenekler",
+    childlessLabel: "Çocuksuz ve 23 yaş üstü",
+    childlessHint: "Bakım sigortası +%0,6",
+    churchLabel: "Kilise vergisi ödüyorum",
+    churchHint: "Gelir vergisinin %9'u",
+    disclaimer: "§ 32a EStG 2026'ya göre basitleştirilmiş Alman maaş hesabı. Vergi danışmanlığı yerine geçmez.",
+    result: "Sonuç",
+    dateChip: standChip("tr"),
+    copyAria: "Sonuç bağlantısını kopyala",
+    copyTitle: "Bu sonucun bağlantısını kopyala",
+    copied: "Kopyalandı!",
+    share: "Paylaş",
+    annualNet: "Yıllık net maaş",
+    monthlyNet: "Aylık net maaş",
+    equals: "Karşılığı",
+    perMonthWord: "/ ay",
+    netShare: "Net oranı",
+    fullAnalysisSub: "6 vergi sınıfı, 2026–2027 karşılaştırması ve saatlik net ücret",
+    distribution: "Brütten nete dağılım",
+    legendNet: "Net maaş",
+    legendTax: "Gelir vergisi ve Soli",
+    legendSv: "Sosyal sigorta",
+    netWord: "Net",
+    detailed: "Ayrıntılı döküm",
+    grossSalary: "Brüt maaş",
+    totalTaxes: "Toplam vergiler",
+    incomeTax: "Gelir vergisi (Lohnsteuer)",
+    soli: "Dayanışma vergisi (Soli)",
+    churchTax: "Kilise vergisi",
+    totalSv: "Toplam sosyal sigorta",
+    pension: "Emeklilik sigortası (%9,30)",
+    health: "Sağlık sigortası",
+    care: "Bakım sigortası",
+    unemployment: "İşsizlik sigortası (%1,30)",
+    marginalRate: "Marjinal vergi oranı",
+    avgRate: "Ortalama vergi oranı",
+    blTitle: "Net maaşınız eyalete göre nasıl değişir",
+    blSub: "Kilise vergisi (%8 / %9) ve bölgesel bakım sigortası",
+    bl8: "%8 kilise vergisi",
+    bl8States: "Bavyera ve Baden-Württemberg",
+    bl9: "%9 kilise vergisi",
+    bl9States: "Diğer 14 eyalet",
+    blChurchIn: "Kilise vergisiyle,",
+    netLabelShort: "Net",
+    yearCompareTitle: "Karşılaştırma",
+    yearCompareVs: "–",
+    yearCompareSuffix: "(vergi reformu ve tarife)",
+    diff: "Fark",
+    net: "Net",
+    selectedYear: "Seçilen yıl",
+    compareYear: "Karşılaştırma yılı",
+    taxYearWord: "Vergi yılı",
+    netDiff: "Hesaplanan net fark",
+    monthlyAdj: "aylık",
+    annualAdj: "yıllık",
+    perYearWord: "/ yıl",
+    perMonthWord2: "/ ay",
+    yearWord: "yıl",
+    monthShort: "ay",
   },
 };
 
@@ -522,7 +702,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   // Kasse, die PV an Kinderlosigkeit und Sachsen. Der Satz wird daher aus dem
   // Ergebnis gelesen und lokalisiert formatiert, statt im Label festzustehen.
   const formatPct = (value: number) =>
-    new Intl.NumberFormat(lang === "en" ? "en-GB" : lang === "pl" ? "pl-PL" : "de-DE", {
+    new Intl.NumberFormat(NUM_LOCALE[lang], {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(value) + " %";
@@ -809,6 +989,10 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     <span className="block text-sm sm:text-base font-bold truncate">
                       {lang === "en"
                         ? `Full analysis for €${Math.round(bruttoMonat).toLocaleString("en-US")} gross`
+                        : lang === "ro"
+                        ? `Analiză completă pentru ${Math.round(bruttoMonat).toLocaleString("de-DE")} € brut (în germană)`
+                        : lang === "tr"
+                        ? `${Math.round(bruttoMonat).toLocaleString("de-DE")} € brüt için tam analiz (Almanca)`
                         : `Vollständige Analyse für ${Math.round(bruttoMonat).toLocaleString("de-DE")} € Brutto`}
                     </span>
                     <span className="block text-xs text-white/60 truncate">
@@ -992,6 +1176,10 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 <p className="leading-relaxed text-black/70">
                   {lang === "en" ? (
                     <>Deductions in Germany depend on your state of residence. With church-tax liability, Bavaria and Baden-Württemberg apply a reduced rate of <strong>8%</strong>, all other 14 states <strong>9%</strong>. Employees in Saxony also pay a 0.5% higher share of long-term care insurance.</>
+                  ) : lang === "ro" ? (
+                    <>Deducerile din Germania depind de landul în care locuiești. Cu impozit bisericesc, Bavaria și Baden-Württemberg aplică o cotă redusă de <strong>8 %</strong>, celelalte 14 landuri <strong>9 %</strong>. Angajații din Saxonia plătesc în plus o cotă cu 0,5 % mai mare la asigurarea de îngrijire.</>
+                  ) : lang === "tr" ? (
+                    <>Almanya&apos;da kesintiler oturduğunuz eyalete bağlıdır. Kilise vergisi ödeyenler için Bavyera ve Baden-Württemberg&apos;de indirimli oran <strong>%8</strong>, diğer 14 eyalette <strong>%9</strong>&apos;dur. Saksonya&apos;daki çalışanlar ayrıca bakım sigortasına %0,5 daha fazla pay öder.</>
                   ) : lang === "pl" ? (
                     <>Wysokość potrąceń w Niemczech zależy od landu zamieszkania. Przy podatku kościelnym Bawaria i Badenia-Wirtembergia stosują obniżoną stawkę <strong>8%</strong>, pozostałe 14 landów <strong>9%</strong>. Ponadto pracownicy w Saksonii płacą o 0,5% wyższy udział w ubezpieczeniu pielęgnacyjnym.</>
                   ) : (
@@ -1043,7 +1231,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     {diffYear !== 0 ? (
                       <span>{t.diff}: <strong className={diffYear > 0 ? "text-emerald-600" : "text-rose-600"}>{diffYear > 0 ? `+${formatEUR(showVal(diffYear))}` : formatEUR(showVal(diffYear))}</strong> {t.net} ({isJahresansicht ? t.perYearWord : t.perMonthWord2})</span>
                     ) : (
-                      <span>{lang === "en" ? `Compare your net pay between tax years 2026 and 2027` : lang === "pl" ? `Porównaj swoje netto między latami podatkowymi 2026 i 2027` : `Vergleichen Sie Ihr Netto zwischen Steuerjahr 2026 und 2027`}</span>
+                      <span>{lang === "en" ? `Compare your net pay between tax years 2026 and 2027` : lang === "pl" ? `Porównaj swoje netto między latami podatkowymi 2026 i 2027` : lang === "ro" ? `Compară salariul net între anii fiscali 2026 și 2027` : lang === "tr" ? `2026 ve 2027 vergi yılları arasında net maaşınızı karşılaştırın` : `Vergleichen Sie Ihr Netto zwischen Steuerjahr 2026 und 2027`}</span>
                     )}
                   </div>
                 </div>
@@ -1058,6 +1246,10 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 <p className="leading-relaxed text-black/70">
                   {lang === "en"
                     ? "Due to the adjusted § 32a EStG tax tariff and modified contribution ceilings, your net salary changes at the same gross pay as follows:"
+                    : lang === "ro"
+                    ? "Din cauza tarifului modificat conform § 32a EStG și a plafoanelor de contribuții ajustate, salariul tău net se schimbă, la același salariu brut, astfel:"
+                    : lang === "tr"
+                    ? "§ 32a EStG'ye göre değişen vergi tarifesi ve güncellenen prim tavanları nedeniyle, aynı brüt maaşta net maaşınız şöyle değişir:"
                     : lang === "pl"
                     ? "Ze względu na zmienioną taryfę podatkową wg § 32a EStG i zmodyfikowane limity składek, Twoje wynagrodzenie netto przy tym samym brutto zmienia się następująco:"
                     : "Durch den angepassten Steuertarif nach § 32a EStG und modifizierte Beitragsbemessungsgrenzen verändert sich Ihr Nettogehalt bei gleichem Bruttogehalt wie folgt:"}

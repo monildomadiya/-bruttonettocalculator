@@ -6,9 +6,25 @@ import { primaryReviewer, siteConfig } from "@/lib/authors";
 interface ReviewerBylineProps {
   className?: string;
   variant?: "compact" | "banner";
-  lang?: "de" | "en" | "pl";
+  lang?: "de" | "en" | "pl" | "ro" | "tr";
   /** Eigener Stand für Seiten, die sich unabhängig von der Engine ändern (2027-Reform). */
   updatedDisplay?: string;
+}
+
+/**
+ * Redaktionsdatum in der Seitensprache, aus dem ISO-String zerlegt (ohne
+ * Date/Intl → kein Hydration-Mismatch). Vorher stand auf den fremdsprachigen
+ * Seiten "1. Oktober 2026".
+ */
+const MONATE: Record<"en" | "pl" | "ro" | "tr", string[]> = {
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  pl: ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"],
+  ro: ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"],
+  tr: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+};
+function standLokal(lang: "en" | "pl" | "ro" | "tr"): string {
+  const [y, m, d] = siteConfig.lastUpdatedISO.split("-").map(Number);
+  return `${d} ${MONATE[lang][m - 1]} ${y}`;
 }
 
 const BYLINE_T = {
@@ -36,12 +52,28 @@ const BYLINE_T = {
     standards: "Standardy redakcyjne",
     credentials: "Redakcja ds. wynagrodzeń i podatków",
   },
+  ro: {
+    reviewedByTeam: "Verificat de",
+    reviewedBy: "Verificat de:",
+    basis: "Baza de calcul: § 32a EStG — Ultima actualizare:",
+    updated: "Ultima actualizare:",
+    standards: "Standarde editoriale",
+    credentials: "Redacția pentru salarii și impozite",
+  },
+  tr: {
+    reviewedByTeam: "Kontrol eden:",
+    reviewedBy: "Kontrol eden:",
+    basis: "Hesaplama esası: § 32a EStG — Son güncelleme:",
+    updated: "Son güncelleme:",
+    standards: "Editoryal ilkeler",
+    credentials: "Maaş ve vergi editör ekibi",
+  },
 } as const;
 
 export default function ReviewerByline({ className = "", variant = "compact", lang = "de", updatedDisplay }: ReviewerBylineProps) {
-  const stand = updatedDisplay ?? siteConfig.lastUpdatedDisplay;
+  const stand = updatedDisplay ?? (lang === "de" ? siteConfig.lastUpdatedDisplay : standLokal(lang));
   const bt = BYLINE_T[lang];
-  const credentials = lang === "en" ? bt.credentials : primaryReviewer.credentials;
+  const credentials = lang === "de" ? primaryReviewer.credentials : bt.credentials;
   if (variant === "banner") {
     return (
       <div className={`bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm ${className}`}>

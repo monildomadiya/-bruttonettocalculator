@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LANGUAGE_CLUSTER } from "@/lib/expat/cluster";
 import Link from "next/link";
 import { Calculator as CalcIcon, ChevronRight, Globe, BarChart3 } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
@@ -19,12 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://bruttonettocalculator.com/pl/kalkulator-brutto-netto-niemcy",
-    languages: {
-      "de-DE": "https://bruttonettocalculator.com/",
-      "en-DE": "https://bruttonettocalculator.com/en/tax-calculator-germany",
-      "pl-DE": "https://bruttonettocalculator.com/pl/kalkulator-brutto-netto-niemcy",
-      "x-default": "https://bruttonettocalculator.com/",
-    },
+    languages: LANGUAGE_CLUSTER,
   },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],

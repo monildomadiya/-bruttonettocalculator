@@ -158,6 +158,8 @@ export default function SiteFooter() {
               <li><Link href="/faq"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">FAQ</Link></li>
               <li><Link href="/en/tax-calculator-germany" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Tax Calculator (EN)</Link></li>
               <li><Link href="/pl/kalkulator-brutto-netto-niemcy" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kalkulator (PL)</Link></li>
+              <li><Link href="/ro/calculator-salariu-germania" hrefLang="ro" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Calculator salariu (RO)</Link></li>
+              <li><Link href="/tr/almanya-maas-hesaplama" hrefLang="tr" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Maaş hesaplama (TR)</Link></li>
             </ul>
           </div>
 

@@ -27,6 +27,13 @@ const HAS_OWN_BLOCK = new Set([
   "/private-krankenversicherung-vs-gesetzlich",
   "/stundenlohn-rechner",
   "/weihnachtsgeld-rechner",
+  // Expat-Seiten: eigener "Weitere"-Block in ihrer Sprache (components/expat).
+  "/ro/calculator-salariu-germania",
+  "/ro/clase-de-impozitare-germania",
+  "/ro/salariu-minim-germania",
+  "/tr/almanya-maas-hesaplama",
+  "/tr/almanya-vergi-siniflari",
+  "/tr/almanya-asgari-ucret",
 ]);
 
 // Pages where a related-tools block adds no value.

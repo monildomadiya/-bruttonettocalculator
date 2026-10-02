@@ -37,7 +37,7 @@ import { siteConfig } from "@/lib/authors";
 
 const BMC_URL = "https://buymeacoffee.com/finnweber";
 
-export type Lang = "de" | "en" | "pl";
+export type Lang = "de" | "en" | "pl" | "ro" | "tr";
 
 /**
  * Locale from the route. Segment-safe on purpose: a plain
@@ -49,6 +49,8 @@ export function langFromPath(pathname?: string | null): Lang {
   if (!pathname) return "de";
   if (pathname === "/en" || pathname.startsWith("/en/")) return "en";
   if (pathname === "/pl" || pathname.startsWith("/pl/")) return "pl";
+  if (pathname === "/ro" || pathname.startsWith("/ro/")) return "ro";
+  if (pathname === "/tr" || pathname.startsWith("/tr/")) return "tr";
   return "de";
 }
 
@@ -123,6 +125,32 @@ const COPY: Record<Lang, Copy> = {
     facts: (d) => ["Darmowy, bez rejestracji", `Aktualizacja: ${d}`, "Liczy bezpośrednio w przeglądarce"],
     note: "Jednorazowo od 5 € · bez zakładania konta",
   },
+  ro: {
+    heading: "Te-a ajutat calculatorul?",
+    body: "Gratuit, fără înregistrare, fără plată — și actualizat manual la fiecare schimbare de lege. O cafea ne ajută să rămână așa.",
+    cta: "Cumpără-mi o cafea",
+    short: "Cumpără-mi o cafea",
+    tiny: "Cafea",
+    eyebrow: "Independent · gratuit · actualizat",
+    storyHeading: "Fiecare cifră de aici e muncă făcută de mână.",
+    storyBody: (d) =>
+      `Noi trepte de impozitare, cote de contribuții, sume scutite: fiecare schimbare este introdusă manual și verificată — ultima dată pe ${d}. Fără corporație, fără înregistrare, fără plată. Dacă pagina ți-a economisit timp sau nervi, poți oferi o cafea.`,
+    facts: (d) => ["Gratuit, fără înregistrare", `Actualizat pe ${d}`, "Calculează direct în browser"],
+    note: "O singură dată, de la 5 € · fără cont",
+  },
+  tr: {
+    heading: "Hesaplayıcı işinize yaradı mı?",
+    body: "Ücretsiz, üyelik yok, ödeme duvarı yok — ve her yasa değişikliğinde elle güncelleniyor. Bir kahve bunun böyle kalmasına yardımcı olur.",
+    cta: "Bir kahve ısmarla",
+    short: "Bir kahve ısmarla",
+    tiny: "Kahve",
+    eyebrow: "Bağımsız · ücretsiz · güncel",
+    storyHeading: "Buradaki her rakam elle hazırlanıyor.",
+    storyBody: (d) =>
+      `Yeni vergi dilimleri, prim oranları, muafiyetler: her değişiklik elle işleniyor ve yeniden kontrol ediliyor — en son ${d} tarihinde. Şirket yok, üyelik yok, ödeme duvarı yok. Bu sayfa size zaman kazandırdıysa bir kahve ısmarlayabilirsiniz.`,
+    facts: (d) => ["Ücretsiz, üyelik gerektirmez", `Güncelleme: ${d}`, "Doğrudan tarayıcınızda hesaplar"],
+    note: "Tek seferlik, 5 €'dan itibaren · hesap gerekmez",
+  },
 };
 
 /**
@@ -134,6 +162,8 @@ const MONTHS: Record<Lang, string[]> = {
   de: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
   en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
   pl: ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"],
+  ro: ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"],
+  tr: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
 };
 function stand(lang: Lang): string {
   const [y, m, d] = siteConfig.lastUpdatedISO.split("-").map(Number);

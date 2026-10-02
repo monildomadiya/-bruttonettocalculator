@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LANGUAGE_CLUSTER } from "@/lib/expat/cluster";
 import Link from "next/link";
 import { Calculator as CalcIcon, ChevronRight, Globe, BarChart3, HeartPulse, Layers, ArrowRight } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
@@ -44,12 +45,7 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: CANONICAL,
-    languages: {
-      "de-DE": `${BASE}/`,
-      "en-DE": CANONICAL,
-      "pl-DE": `${BASE}/pl/kalkulator-brutto-netto-niemcy`,
-      "x-default": `${BASE}/`,
-    },
+    languages: LANGUAGE_CLUSTER,
   },
   openGraph: {
     images: [`${BASE}/og-image.png`],

@@ -13,6 +13,7 @@ import { ORG_ID } from "@/lib/seo";
 import SupportButton from "@/components/SupportButton";
 import LatestPosts from "@/components/LatestPosts";
 import TableOfContents from "@/components/TableOfContents";
+import { LANGUAGE_CLUSTER } from "@/lib/expat/cluster";
 import { calculateNetto, formatEUR, GRUNDFREIBETRAG, ARBEITNEHMER_PAUSCHBETRAG, KINDERGELD } from "@/lib/taxCalculator";
 
 export const metadata: Metadata = {
@@ -21,12 +22,7 @@ export const metadata: Metadata = {
     "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",
   alternates: {
     canonical: "https://bruttonettocalculator.com/",
-    languages: {
-      "de-DE": "https://bruttonettocalculator.com/",
-      "en-DE": "https://bruttonettocalculator.com/en/tax-calculator-germany",
-      "pl-DE": "https://bruttonettocalculator.com/pl/kalkulator-brutto-netto-niemcy",
-      "x-default": "https://bruttonettocalculator.com/",
-    },
+    languages: LANGUAGE_CLUSTER,
   },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],

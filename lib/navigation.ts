@@ -125,6 +125,22 @@ export const regionalGroups: NavGroup[] = [
       { href: "/durchschnittsgehalt-oesterreich", label: "Durchschnittsgehalt Österreich", icon: BarChart3, description: "Median brutto & netto" },
     ],
   },
+  {
+    label: "Română (Germania)",
+    items: [
+      { href: "/ro/calculator-salariu-germania", label: "Calculator salariu Germania", icon: Calculator, description: "Brut în net, în română" },
+      { href: "/ro/clase-de-impozitare-germania", label: "Clase de impozitare Germania", icon: LayoutList, description: "Steuerklasse I–VI explicat" },
+      { href: "/ro/salariu-minim-germania", label: "Salariu minim Germania", icon: Scale, description: "13,90 €/oră · net pe lună" },
+    ],
+  },
+  {
+    label: "Türkçe (Almanya)",
+    items: [
+      { href: "/tr/almanya-maas-hesaplama", label: "Almanya net maaş hesaplama", icon: Calculator, description: "Brütten nete, Türkçe" },
+      { href: "/tr/almanya-vergi-siniflari", label: "Almanya vergi sınıfları", icon: LayoutList, description: "Steuerklasse I–VI" },
+      { href: "/tr/almanya-asgari-ucret", label: "Almanya asgari ücret", icon: Scale, description: "13,90 €/saat · aylık net" },
+    ],
+  },
 ];
 
 /**
