@@ -6,7 +6,7 @@ import { primaryReviewer, siteConfig } from "@/lib/authors";
 interface ReviewerBylineProps {
   className?: string;
   variant?: "compact" | "banner";
-  lang?: "de" | "en" | "pl" | "ro" | "tr";
+  lang?: "de" | "en" | "pl" | "ro" | "tr" | "uk";
   /** Eigener Stand für Seiten, die sich unabhängig von der Engine ändern (2027-Reform). */
   updatedDisplay?: string;
 }
@@ -16,13 +16,14 @@ interface ReviewerBylineProps {
  * Date/Intl → kein Hydration-Mismatch). Vorher stand auf den fremdsprachigen
  * Seiten "1. Oktober 2026".
  */
-const MONATE: Record<"en" | "pl" | "ro" | "tr", string[]> = {
+const MONATE: Record<"en" | "pl" | "ro" | "tr" | "uk", string[]> = {
   en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
   pl: ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"],
   ro: ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"],
   tr: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+  uk: ["січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"],
 };
-function standLokal(lang: "en" | "pl" | "ro" | "tr"): string {
+function standLokal(lang: "en" | "pl" | "ro" | "tr" | "uk"): string {
   const [y, m, d] = siteConfig.lastUpdatedISO.split("-").map(Number);
   return `${d} ${MONATE[lang][m - 1]} ${y}`;
 }
@@ -67,6 +68,14 @@ const BYLINE_T = {
     updated: "Son güncelleme:",
     standards: "Editoryal ilkeler",
     credentials: "Maaş ve vergi editör ekibi",
+  },
+  uk: {
+    reviewedByTeam: "Перевірено:",
+    reviewedBy: "Перевірено:",
+    basis: "Основа розрахунку: § 32a EStG — Останнє оновлення:",
+    updated: "Останнє оновлення:",
+    standards: "Редакційні стандарти",
+    credentials: "Редакція з питань зарплат і податків",
   },
 } as const;
 

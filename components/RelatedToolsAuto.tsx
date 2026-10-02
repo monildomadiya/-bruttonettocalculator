@@ -34,6 +34,9 @@ const HAS_OWN_BLOCK = new Set([
   "/tr/almanya-maas-hesaplama",
   "/tr/almanya-vergi-siniflari",
   "/tr/almanya-asgari-ucret",
+  "/uk/kalkuliator-zarplaty-nimechchyna",
+  "/uk/podatky-nimechchyna",
+  "/uk/minimalna-zarplata-nimechchyna",
 ]);
 
 // Pages where a related-tools block adds no value.

@@ -139,6 +139,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/tr/almanya-maas-hesaplama",
     "/tr/almanya-vergi-siniflari",
     "/tr/almanya-asgari-ucret",
+    "/uk/kalkuliator-zarplaty-nimechchyna",
+    "/uk/podatky-nimechchyna",
+    "/uk/minimalna-zarplata-nimechchyna",
   ];
 
   // Informational/legal pages with no known change date → no lastmod

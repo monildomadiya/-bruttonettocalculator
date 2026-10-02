@@ -15,9 +15,9 @@ import AdUnit from "@/components/AdUnit";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
-type Lang = "de" | "en" | "pl" | "ro" | "tr";
+type Lang = "de" | "en" | "pl" | "ro" | "tr" | "uk";
 
-const NUM_LOCALE: Record<Lang, string> = { de: "de-DE", en: "en-GB", pl: "pl-PL", ro: "ro-RO", tr: "tr-TR" };
+const NUM_LOCALE: Record<Lang, string> = { de: "de-DE", en: "en-GB", pl: "pl-PL", ro: "ro-RO", tr: "tr-TR", uk: "uk-UA" };
 
 const STEUERKLASSE_INFO: Record<Lang, Record<Steuerklasse, string>> = {
   de: {
@@ -60,6 +60,14 @@ const STEUERKLASSE_INFO: Record<Lang, Record<Steuerklasse, string>> = {
     5: "Evli — düşük gelirli (V. sınıf)",
     6: "İkinci iş (VI. sınıf)",
   },
+  uk: {
+    1: "Неодружені (клас I)",
+    2: "Батьки-одинаки (клас II)",
+    3: "Одружені — вищий дохід (клас III)",
+    4: "Одружені — рівні доходи (клас IV)",
+    5: "Одружені — нижчий дохід (клас V)",
+    6: "Друга робота (клас VI)",
+  },
 };
 
 /*
@@ -77,6 +85,7 @@ const MONATSNAMEN: Record<Lang, readonly string[]> = {
   pl: ["styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"],
   ro: ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"],
   tr: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+  uk: ["січень", "лютий", "березень", "квітень", "травень", "червень", "липень", "серпень", "вересень", "жовтень", "листопад", "грудень"],
 };
 
 function standChip(lang: Lang): string {
@@ -485,6 +494,86 @@ const T: Record<Lang, Record<string, string>> = {
     perMonthWord2: "/ ay",
     yearWord: "yıl",
     monthShort: "ay",
+  },
+  uk: {
+    inputParams: "Дані · Параметри",
+    yourGross: "Ваша зарплата брутто",
+    perMonth: "/міс.",
+    perYear: "/рік",
+    grossPerMonth: "Зарплата брутто на місяць",
+    errInvalid: "Введіть коректну суму",
+    errPositive: "Сума має бути додатною",
+    errMax: "Максимальна сума: 200 000 €",
+    sliderAria: "Повзунок зарплати брутто",
+    taxYear: "Податковий рік",
+    year2027Note: "Закону на 2027 рік ще немає — лише схвалений урядом 2.9.2026 законопроєкт із конкретними значеннями тарифу. Оберіть сценарій; соціальні внески залишаються на офіційному рівні 2026 року.",
+    scenarioLabel: "Сценарій реформи 2027",
+    scenarioOhne: "Без реформи",
+    scenarioStufe1: "Проєкт 2027",
+    scenarioVoll: "Етап 2028",
+    scenarioOhneHint: "Тариф 2026 без змін — якщо реформа не пройде.",
+    scenarioStufe1Hint: `Законопроєкт EStRefG 2027, стаття 1 (з 1.1.2027): базова неоподатковувана сума ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, паушальна сума для працівників 1.430 €.`,
+    scenarioVollHint: `Другий етап того ж проєкту, стаття 2 (з 1.1.2028): базова неоподатковувана сума ${GRUNDFREIBETRAG.stufe2028.toLocaleString("de-DE")} €.`,
+    taxClass: "Податковий клас (Steuerklasse)",
+    moreOptions: "Інші параметри",
+    childlessLabel: "Без дітей і старше 23 років",
+    childlessHint: "Страхування догляду +0,6 %",
+    churchLabel: "Сплачую церковний податок",
+    churchHint: "9 % від податку на доходи",
+    disclaimer: "Спрощений розрахунок німецької зарплати за § 32a EStG 2026. Не є податковою консультацією.",
+    result: "Результат",
+    dateChip: standChip("uk"),
+    copyAria: "Копіювати посилання на результат",
+    copyTitle: "Скопіювати посилання на цей результат",
+    copied: "Скопійовано!",
+    share: "Поділитися",
+    annualNet: "Чиста зарплата за рік",
+    monthlyNet: "Чиста зарплата на місяць",
+    equals: "Відповідає",
+    perMonthWord: "/ місяць",
+    netShare: "Частка нетто",
+    fullAnalysisSub: "Усі 6 податкових класів, 2026 і 2027, погодинна оплата нетто",
+    distribution: "Розподіл брутто – нетто",
+    legendNet: "Зарплата нетто",
+    legendTax: "Податок і Soli",
+    legendSv: "Соціальне страхування",
+    netWord: "Нетто",
+    detailed: "Детальний розрахунок",
+    grossSalary: "Зарплата брутто",
+    totalTaxes: "Податки разом",
+    incomeTax: "Податок на доходи (Lohnsteuer)",
+    soli: "Збір солідарності (Soli)",
+    churchTax: "Церковний податок",
+    totalSv: "Соціальні внески разом",
+    pension: "Пенсійне страхування (9,30 %)",
+    health: "Медичне страхування",
+    care: "Страхування догляду",
+    unemployment: "Страхування на випадок безробіття (1,30 %)",
+    marginalRate: "Гранична ставка податку",
+    avgRate: "Середня ставка податку",
+    blTitle: "Як нетто залежить від федеральної землі",
+    blSub: "Церковний податок (8 % чи 9 %) і регіональне страхування догляду",
+    bl8: "8 % церк. податок",
+    bl8States: "Баварія та Баден-Вюртемберг",
+    bl9: "9 % церк. податок",
+    bl9States: "Інші 14 земель",
+    blChurchIn: "З церковним податком у",
+    netLabelShort: "Нетто",
+    yearCompareTitle: "Порівняння",
+    yearCompareVs: "і",
+    yearCompareSuffix: "(податкова реформа й тариф)",
+    diff: "Різниця",
+    net: "Нетто",
+    selectedYear: "Обраний рік",
+    compareYear: "Рік для порівняння",
+    taxYearWord: "Податковий рік",
+    netDiff: "Розрахована різниця нетто",
+    monthlyAdj: "щомісяця",
+    annualAdj: "щороку",
+    perYearWord: "/ рік",
+    perMonthWord2: "/ місяць",
+    yearWord: "рік",
+    monthShort: "міс.",
   },
 };
 
@@ -993,6 +1082,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                         ? `Analiză completă pentru ${Math.round(bruttoMonat).toLocaleString("de-DE")} € brut (în germană)`
                         : lang === "tr"
                         ? `${Math.round(bruttoMonat).toLocaleString("de-DE")} € brüt için tam analiz (Almanca)`
+                        : lang === "uk"
+                        ? `Повний аналіз для ${Math.round(bruttoMonat).toLocaleString("de-DE")} € брутто (німецькою)`
                         : `Vollständige Analyse für ${Math.round(bruttoMonat).toLocaleString("de-DE")} € Brutto`}
                     </span>
                     <span className="block text-xs text-white/60 truncate">
@@ -1180,6 +1271,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     <>Deducerile din Germania depind de landul în care locuiești. Cu impozit bisericesc, Bavaria și Baden-Württemberg aplică o cotă redusă de <strong>8 %</strong>, celelalte 14 landuri <strong>9 %</strong>. Angajații din Saxonia plătesc în plus o cotă cu 0,5 % mai mare la asigurarea de îngrijire.</>
                   ) : lang === "tr" ? (
                     <>Almanya&apos;da kesintiler oturduğunuz eyalete bağlıdır. Kilise vergisi ödeyenler için Bavyera ve Baden-Württemberg&apos;de indirimli oran <strong>%8</strong>, diğer 14 eyalette <strong>%9</strong>&apos;dur. Saksonya&apos;daki çalışanlar ayrıca bakım sigortasına %0,5 daha fazla pay öder.</>
+                  ) : lang === "uk" ? (
+                    <>Утримання в Німеччині залежать від федеральної землі проживання. Для платників церковного податку в Баварії та Баден-Вюртемберзі діє знижена ставка <strong>8 %</strong>, в інших 14 землях — <strong>9 %</strong>. Крім того, працівники в Саксонії сплачують на 0,5 % більшу частку внеску на страхування догляду.</>
                   ) : lang === "pl" ? (
                     <>Wysokość potrąceń w Niemczech zależy od landu zamieszkania. Przy podatku kościelnym Bawaria i Badenia-Wirtembergia stosują obniżoną stawkę <strong>8%</strong>, pozostałe 14 landów <strong>9%</strong>. Ponadto pracownicy w Saksonii płacą o 0,5% wyższy udział w ubezpieczeniu pielęgnacyjnym.</>
                   ) : (
@@ -1231,7 +1324,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     {diffYear !== 0 ? (
                       <span>{t.diff}: <strong className={diffYear > 0 ? "text-emerald-600" : "text-rose-600"}>{diffYear > 0 ? `+${formatEUR(showVal(diffYear))}` : formatEUR(showVal(diffYear))}</strong> {t.net} ({isJahresansicht ? t.perYearWord : t.perMonthWord2})</span>
                     ) : (
-                      <span>{lang === "en" ? `Compare your net pay between tax years 2026 and 2027` : lang === "pl" ? `Porównaj swoje netto między latami podatkowymi 2026 i 2027` : lang === "ro" ? `Compară salariul net între anii fiscali 2026 și 2027` : lang === "tr" ? `2026 ve 2027 vergi yılları arasında net maaşınızı karşılaştırın` : `Vergleichen Sie Ihr Netto zwischen Steuerjahr 2026 und 2027`}</span>
+                      <span>{lang === "en" ? `Compare your net pay between tax years 2026 and 2027` : lang === "pl" ? `Porównaj swoje netto między latami podatkowymi 2026 i 2027` : lang === "ro" ? `Compară salariul net între anii fiscali 2026 și 2027` : lang === "tr" ? `2026 ve 2027 vergi yılları arasında net maaşınızı karşılaştırın` : lang === "uk" ? `Порівняйте нетто між податковими роками 2026 і 2027` : `Vergleichen Sie Ihr Netto zwischen Steuerjahr 2026 und 2027`}</span>
                     )}
                   </div>
                 </div>
@@ -1250,6 +1343,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                     ? "Din cauza tarifului modificat conform § 32a EStG și a plafoanelor de contribuții ajustate, salariul tău net se schimbă, la același salariu brut, astfel:"
                     : lang === "tr"
                     ? "§ 32a EStG'ye göre değişen vergi tarifesi ve güncellenen prim tavanları nedeniyle, aynı brüt maaşta net maaşınız şöyle değişir:"
+                    : lang === "uk"
+                    ? "Через змінений тариф за § 32a EStG і скориговані граничні суми внесків ваша зарплата нетто за тієї ж суми брутто змінюється так:"
                     : lang === "pl"
                     ? "Ze względu na zmienioną taryfę podatkową wg § 32a EStG i zmodyfikowane limity składek, Twoje wynagrodzenie netto przy tym samym brutto zmienia się następująco:"
                     : "Durch den angepassten Steuertarif nach § 32a EStG und modifizierte Beitragsbemessungsgrenzen verändert sich Ihr Nettogehalt bei gleichem Bruttogehalt wie folgt:"}

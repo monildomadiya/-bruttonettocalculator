@@ -160,6 +160,7 @@ export default function SiteFooter() {
               <li><Link href="/pl/kalkulator-brutto-netto-niemcy" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kalkulator (PL)</Link></li>
               <li><Link href="/ro/calculator-salariu-germania" hrefLang="ro" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Calculator salariu (RO)</Link></li>
               <li><Link href="/tr/almanya-maas-hesaplama" hrefLang="tr" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Maaş hesaplama (TR)</Link></li>
+              <li><Link href="/uk/kalkuliator-zarplaty-nimechchyna" hrefLang="uk" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Калькулятор зарплати (UA)</Link></li>
             </ul>
           </div>
 

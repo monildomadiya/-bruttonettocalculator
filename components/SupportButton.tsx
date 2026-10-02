@@ -37,7 +37,7 @@ import { siteConfig } from "@/lib/authors";
 
 const BMC_URL = "https://buymeacoffee.com/finnweber";
 
-export type Lang = "de" | "en" | "pl" | "ro" | "tr";
+export type Lang = "de" | "en" | "pl" | "ro" | "tr" | "uk";
 
 /**
  * Locale from the route. Segment-safe on purpose: a plain
@@ -51,6 +51,7 @@ export function langFromPath(pathname?: string | null): Lang {
   if (pathname === "/pl" || pathname.startsWith("/pl/")) return "pl";
   if (pathname === "/ro" || pathname.startsWith("/ro/")) return "ro";
   if (pathname === "/tr" || pathname.startsWith("/tr/")) return "tr";
+  if (pathname === "/uk" || pathname.startsWith("/uk/")) return "uk";
   return "de";
 }
 
@@ -151,6 +152,19 @@ const COPY: Record<Lang, Copy> = {
     facts: (d) => ["Ücretsiz, üyelik gerektirmez", `Güncelleme: ${d}`, "Doğrudan tarayıcınızda hesaplar"],
     note: "Tek seferlik, 5 €'dan itibaren · hesap gerekmez",
   },
+  uk: {
+    heading: "Калькулятор вам допоміг?",
+    body: "Безкоштовно, без реєстрації та без платного доступу — і оновлюється вручну після кожної зміни законів. Кава допомагає, щоб так і залишалося.",
+    cta: "Пригостити кавою",
+    short: "Пригостити кавою",
+    tiny: "Кава",
+    eyebrow: "Незалежно · безкоштовно · актуально",
+    storyHeading: "За кожною цифрою тут — ручна робота.",
+    storyBody: (d) =>
+      `Нові податкові ставки, ставки внесків, неоподатковувані суми: кожну зміну вносимо вручну й перевіряємо — востаннє ${d}. Без корпорацій, без реєстрації, без платного доступу. Якщо ця сторінка зберегла вам час чи нерви, можете пригостити кавою.`,
+    facts: (d) => ["Безкоштовно, без реєстрації", `Оновлено ${d}`, "Рахує прямо у вашому браузері"],
+    note: "Одноразово від 5 € · без облікового запису",
+  },
 };
 
 /**
@@ -164,6 +178,7 @@ const MONTHS: Record<Lang, string[]> = {
   pl: ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"],
   ro: ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"],
   tr: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+  uk: ["січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"],
 };
 function stand(lang: Lang): string {
   const [y, m, d] = siteConfig.lastUpdatedISO.split("-").map(Number);

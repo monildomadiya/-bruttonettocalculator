@@ -141,6 +141,14 @@ export const regionalGroups: NavGroup[] = [
       { href: "/tr/almanya-asgari-ucret", label: "Almanya asgari ücret", icon: Scale, description: "13,90 €/saat · aylık net" },
     ],
   },
+  {
+    label: "Українська (Німеччина)",
+    items: [
+      { href: "/uk/kalkuliator-zarplaty-nimechchyna", label: "Калькулятор зарплати Німеччина", icon: Calculator, description: "Брутто в нетто українською" },
+      { href: "/uk/podatky-nimechchyna", label: "Податки й податкові класи", icon: LayoutList, description: "Steuerklasse I–VI" },
+      { href: "/uk/minimalna-zarplata-nimechchyna", label: "Мінімальна зарплата Німеччина", icon: Scale, description: "13,90 €/год · нетто на місяць" },
+    ],
+  },
 ];
 
 /**

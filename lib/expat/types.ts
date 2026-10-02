@@ -3,10 +3,10 @@
  * großen Zuwanderergruppen. Jede Sprache liefert drei Seiten (Rechner,
  * Steuerklassen, Mindestlohn) über dieselben Komponenten in
  * components/expat/. Eine neue Sprache = neue content-xx.ts + drei
- * winzige page.tsx + Eintrag in EXPAT_SPRACHEN.
+ * winzige page.tsx + Eintrag in LANGUAGE_CLUSTER (lib/expat/cluster.ts).
  */
 
-export type ExpatLang = "ro" | "tr";
+export type ExpatLang = "ro" | "tr" | "uk";
 
 export interface Faq {
   q: string;

@@ -12,5 +12,6 @@ export const LANGUAGE_CLUSTER: Record<string, string> = {
   "pl-DE": `${BASE}/pl/kalkulator-brutto-netto-niemcy`,
   "ro-DE": `${BASE}/ro/calculator-salariu-germania`,
   "tr-DE": `${BASE}/tr/almanya-maas-hesaplama`,
+  "uk-DE": `${BASE}/uk/kalkuliator-zarplaty-nimechchyna`,
   "x-default": `${BASE}/`,
 };
