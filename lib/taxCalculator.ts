@@ -507,6 +507,41 @@ export const TARIF_2028_ENTWURF: Tarif = {
  * Auflösung von Steuerjahr + Szenario zu den steuerlich wirksamen Parametern.
  * Für 2026 gilt immer der amtliche Tarif (unveränderte Gesetzesformel).
  */
+/**
+ * Lohnsteuer der Steuerklassen V und VI (§ 39b Abs. 2 Satz 7 EStG), exakt nach
+ * dem BMF-Programmablaufplan 2026 (MST5-6 / UP5-6): das Doppelte der
+ * Differenz zwischen der Tarifsteuer auf das 1,25-fache und das 0,75-fache des
+ * zvE, mindestens 14 %; über W1 höchstens 42 % Grenzbelastung, über W2 42 %,
+ * über W3 45 %. Ersetzt die frühere Näherung (×1,45 für V, ×1,1 für VI), die
+ * Klasse VI zeitweise GÜNSTIGER als Klasse V gerechnet hat.
+ *
+ * Die Grenzwerte 2026 (W1STKL5 14.071, W2STKL5 34.939, W3STKL5 222.260) gelten
+ * mangels 2027er-PAP auch für die 2027-Szenarien.
+ */
+const W_STKL5 = { w1: 14071, w2: 34939, w3: 222260 } as const;
+
+export function lohnsteuerKlasse56(zvE: number, est: (zvE: number) => number = estFormel2026): number {
+  const up56 = (zx: number) => {
+    const diff = (est(zx * 1.25) - est(zx * 0.75)) * 2;
+    const mist = zx * 0.14;
+    return Math.max(mist, diff);
+  };
+  const zzx = Math.max(0, zvE);
+  const { w1, w2, w3 } = W_STKL5;
+  if (zzx > w2) {
+    let st = up56(w2);
+    if (zzx > w3) st += (w3 - w2) * 0.42 + (zzx - w3) * 0.45;
+    else st += (zzx - w2) * 0.42;
+    return st;
+  }
+  const st = up56(zzx);
+  if (zzx > w1) {
+    const hoch = up56(w1) + (zzx - w1) * 0.42;
+    return Math.min(hoch, st);
+  }
+  return st;
+}
+
 export function resolveSteuerkontext(jahr: Steuerjahr, szenario: Szenario = "entwurf2027") {
   const amtlich = {
     est: estFormel2026,
@@ -621,15 +656,14 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
     // Steuerklasse III: Splittingverfahren
     estJahr = 2 * ctx.est(zvE / 2);
   } else if (sk === 5) {
-    // Steuerklasse V: Erhöhter Tarif — Näherung: 35 % Grenzbelastung auf gesamtes zvE
-    // (Vereinfachung für Überblick; korrekte Berechnung erfolgt im Lohnsteuerjahresausgleich)
-    const baseEst = ctx.est(zvE);
-    estJahr = Math.min(baseEst * 1.45, zvE * 0.40);
+    // Steuerklasse V: § 39b Abs. 2 Satz 7 EStG (PAP MST5-6), mit
+    // Arbeitnehmer- und Sonderausgaben-Pauschbetrag wie im zvE oben.
+    estJahr = lohnsteuerKlasse56(zvE, ctx.est);
   } else if (sk === 6) {
-    // Steuerklasse VI: Keine Freibeträge, ab erstem Euro Steuer
-    // Näherung: Standardformel ohne Grundfreibetrag
-    const zvE6 = Math.max(0, bruttoJahr - svSummeJahr); // keine Pauschalen
-    estJahr = ctx.est(zvE6) * 1.1;
+    // Steuerklasse VI: gleiche Formel, aber ohne Arbeitnehmer- und
+    // Sonderausgaben-Pauschbetrag (PAP MZTABFB: ANP und SAP nur bis Klasse V).
+    const zvE6 = Math.max(0, bruttoJahr - svSummeJahr);
+    estJahr = lohnsteuerKlasse56(zvE6, ctx.est);
   } else if (sk === 2) {
     // Steuerklasse II: Alleinerziehendenentlastungsbetrag 4.260 € (2026)
     const zvE2 = Math.max(0, zvE - 4260);
@@ -779,16 +813,15 @@ export function calculateBeamtenNetto(input: BeamtenInput): BeamtenResult {
     bruttoJahr - vorsorgepauschaleJahr - r.werbungskostenPauschale - r.sonderausgabenPauschale
   );
 
-  // Steuerklassen-Behandlung spiegelt calculateNetto (gleiche Näherungen für V/VI)
+  // Steuerklassen-Behandlung spiegelt calculateNetto (V/VI nach PAP MST5-6)
   let estJahr: number;
   if (sk === 3) {
     estJahr = 2 * estFormel2026(zvE / 2);
   } else if (sk === 5) {
-    const baseEst = estFormel2026(zvE);
-    estJahr = Math.min(baseEst * 1.45, zvE * 0.40);
+    estJahr = lohnsteuerKlasse56(zvE);
   } else if (sk === 6) {
     const zvE6 = Math.max(0, bruttoJahr - vorsorgepauschaleJahr);
-    estJahr = estFormel2026(zvE6) * 1.1;
+    estJahr = lohnsteuerKlasse56(zvE6);
   } else if (sk === 2) {
     estJahr = estFormel2026(Math.max(0, zvE - 4260));
   } else {
