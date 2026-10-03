@@ -16,6 +16,7 @@ import {
 } from "@/data/tvoed";
 import ReviewerByline from "@/components/ReviewerByline";
 import Tvoed2027Ausblick from "@/components/Tvoed2027Ausblick";
+import { pageImageUrl } from "@/lib/pageImage";
 
 /**
  * TVöD-Hub: komplette Entgelttabelle 2026 plus Netto.
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: "BruttoNettoCalculator.com",
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/tvoed-rechner")],
   },
   twitter: {
     card: "summary",

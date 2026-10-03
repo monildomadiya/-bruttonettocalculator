@@ -6,6 +6,7 @@ import ReviewerByline from "@/components/ReviewerByline";
 import { siteConfig } from "@/lib/authors";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 /**
  * Beitragsbemessungsgrenze 2026.
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
     type: "article",
     locale: "de_DE",
     siteName: "BruttoNettoCalculator.com",
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/beitragsbemessungsgrenze-2026")],
   },
   twitter: {
     card: "summary",

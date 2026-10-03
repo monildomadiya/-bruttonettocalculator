@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import UrlaubsanspruchRechner from "./UrlaubsanspruchRechner";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Urlaubsanspruch berechnen: Rechner für Teilzeit & Vollzeit",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/urlaubsanspruch-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/urlaubsanspruch-rechner")],
     title: "Urlaubsanspruch berechnen — Rechner 2026",
     description: "Wie viele Urlaubstage stehen Ihnen zu? Für Teilzeit, 4-Tage-Woche, Minijob und unterjährigen Eintritt.",
     url: "https://bruttonettocalculator.com/urlaubsanspruch-rechner",

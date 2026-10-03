@@ -7,6 +7,7 @@ import Section from "@/components/ui/Section";
 import TableOfContents from "@/components/TableOfContents";
 import ReviewerByline from "@/components/ReviewerByline";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const BASE = "https://bruttonettocalculator.com";
 const CANONICAL = `${BASE}/lohnabrechnung-rechner`;
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: "BruttoNettoCalculator.com",
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/lohnabrechnung-rechner")],
   },
 };
 

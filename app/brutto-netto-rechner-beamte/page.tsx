@@ -6,6 +6,7 @@ import BeamtenRechner from "@/components/BeamtenRechner";
 import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const CANONICAL = "https://bruttonettocalculator.com/brutto-netto-rechner-beamte";
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/brutto-netto-rechner-beamte")],
     title: "Brutto Netto Rechner für Beamte 2026",
     description:
       "Netto aus Dienstbezügen berechnen: keine Sozialabgaben, Mindestvorsorgepauschale, PKV-Eigenanteil — inklusive Vergleich Beamter vs. Angestellter.",

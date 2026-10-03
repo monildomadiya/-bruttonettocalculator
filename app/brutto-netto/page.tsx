@@ -11,6 +11,7 @@ import { DESTATIS_JAHR_2025 } from "@/data/wage-stats";
 import ReviewerByline from "@/components/ReviewerByline";
 import AccordionFaq from "@/components/AccordionFaq";
 import { siteConfig } from "@/lib/authors";
+import { pageImageUrl } from "@/lib/pageImage";
 
 /*
  * Statisch — kein `revalidate = 0`.
@@ -66,7 +67,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/brutto-netto")],
     title: "Gehalt nach Branche 2026 – Brutto Netto im Vergleich",
     description:
       "Durchschnittsgehälter nach Wirtschaftszweig (Destatis 2025) mit engine-berechnetem Nettogehalt 2026.",

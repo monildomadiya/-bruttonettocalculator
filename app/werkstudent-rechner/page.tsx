@@ -3,6 +3,7 @@ import WerkstudentRechner from "./WerkstudentRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const URL = "https://bruttonettocalculator.com/werkstudent-rechner";
 
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/werkstudent-rechner")],
     title: "Werkstudent Brutto-Netto-Rechner 2026",
     description: "Nettogehalt als Werkstudent berechnen — nur 9,3 % Rentenbeitrag dank Werkstudentenprivileg.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import BafoegRechner from "./BafoegRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "BAföG-Rechner 2026 — Anspruch & Höhe berechnen (Studium)",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/bafoeg-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/bafoeg-rechner")],
     title: "BAföG-Rechner 2026 — Anspruch & Höhe berechnen",
     description:
       "BAföG-Anspruch 2026 schätzen: Bedarfssatz, Wohnsituation, eigenes Einkommen und Elterneinkommen. Kostenlos & mit aktuellen Bedarfssätzen.",

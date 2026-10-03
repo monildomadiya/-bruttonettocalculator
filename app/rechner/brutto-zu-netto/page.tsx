@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Calculator as CalcIcon, ListChecks, ChevronDown } from "lucide-react";
 import Calculator from "@/components/Calculator";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Brutto zu Netto Rechner | Gehaltsberechnung 2026",
@@ -20,13 +21,13 @@ export const metadata: Metadata = {
     url: "https://bruttonettocalculator.com/rechner/brutto-zu-netto",
     locale: "de_DE",
     type: "website",
-    images: [{ url: "https://bruttonettocalculator.com/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: pageImageUrl("/rechner/brutto-zu-netto"), width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Brutto zu Netto Rechner 2026",
     description: "Bruttogehalt sofort in Nettogehalt umrechnen — kostenlos & präzise.",
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/rechner/brutto-zu-netto")],
   },
 };
 

@@ -15,6 +15,7 @@ import LatestPosts from "@/components/LatestPosts";
 import TableOfContents from "@/components/TableOfContents";
 import { LANGUAGE_CLUSTER } from "@/lib/expat/cluster";
 import { calculateNetto, formatEUR, GRUNDFREIBETRAG, ARBEITNEHMER_PAUSCHBETRAG, KINDERGELD } from "@/lib/taxCalculator";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     languages: LANGUAGE_CLUSTER,
   },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/")],
     title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
     description:
       "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",

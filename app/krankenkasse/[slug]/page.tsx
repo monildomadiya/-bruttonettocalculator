@@ -19,6 +19,7 @@ import {
 import KrankenkassenRechner from "@/components/KrankenkassenRechner";
 import ReviewerByline from "@/components/ReviewerByline";
 import Zusatzbeitrag2027Ausblick from "@/components/Zusatzbeitrag2027Ausblick";
+import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
 
 /**
  * Detailseite je gesetzlicher Krankenkasse.
@@ -118,7 +119,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       type: "article",
       locale: "de_DE",
       siteName: "BruttoNettoCalculator.com",
-      images: [`${BASE}/og-image.png`],
+      images: [pageImageFromCanonical(canonical)],
     },
     twitter: {
       card: "summary",

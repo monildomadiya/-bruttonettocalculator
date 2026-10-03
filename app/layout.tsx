@@ -6,6 +6,7 @@ import MobileMenu from "@/components/MobileMenu";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import RelatedToolsAuto from "@/components/RelatedToolsAuto";
+import PageFigure from "@/components/PageFigure";
 import SupportStory from "@/components/SupportStory";
 import StoriesBar from "@/components/StoriesBar";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -71,16 +72,15 @@ export const metadata: Metadata = {
       },
     ],
   },
+  // Nur der Kartentyp. Titel, Beschreibung und Bild standen hier früher fest
+  // drin und wurden von jeder Seite ohne eigenes `twitter`-Objekt geerbt —
+  // 80 Seiten teilten so Titel und Bild der Startseite. Ohne diese Felder
+  // nimmt X die og:*-Tags der jeweiligen Seite (inkl. eigenem Seitenbild).
+  //
+  // `creator`/`site` verwiesen auf @bruttonetto_de — ein Konto, das es nicht
+  // gibt. Wieder eintragen, sobald ein echtes Profil existiert.
   twitter: {
     card: "summary_large_image",
-    title: "Brutto Netto Rechner 2026/2027 — kostenlos & aktuell",
-    description:
-      "Nettogehalt berechnen — Lohnsteuer, Soli, alle Steuerklassen, Mindestlohn 2027, BKK Zusatzbeitrag 2026, Firmenwagenrechner & Düsseldorfer Tabelle.",
-    // `creator`/`site` verwiesen auf @bruttonetto_de — ein Konto, das es nicht
-    // gibt. Ein twitter:site-Tag auf ein totes Handle bringt keine Attribution,
-    // sondern nur eine widerlegbare Angabe. Wieder eintragen, sobald ein echtes
-    // Profil existiert.
-    images: ["https://bruttonettocalculator.com/og-image.png"],
   },
   alternates: {
     canonical: "https://bruttonettocalculator.com",
@@ -252,6 +252,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StoriesBar />
 
         <main>{children}</main>
+
+        {/* ── Seitengrafik (public/seiten-bilder, `npm run page:images`) ── */}
+        <PageFigure />
 
         {/* ── End-of-content ad (site-wide, one guaranteed slot per page) ─ */}
         <SiteWideAd />

@@ -11,6 +11,7 @@ import {
 } from "@/data/krankenkassen";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
+import { pageImageUrl } from "@/lib/pageImage";
 
 /**
  * English landing page for the German gross-to-net calculator.
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     languages: LANGUAGE_CLUSTER,
   },
   openGraph: {
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/en/tax-calculator-germany")],
     title: "Brutto Netto Calculator Germany 2026 – Gross to Net Salary",
     description:
       "Turn gross into net pay in Germany — income tax, solidarity surcharge and all social security contributions, for all six tax classes. Free, in English.",

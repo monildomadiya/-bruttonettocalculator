@@ -3,6 +3,7 @@ import WeihnachtsgeldRechner from "./WeihnachtsgeldRechner";
 import WeihnachtsgeldContent from "./WeihnachtsgeldContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import SupportButton from "@/components/SupportButton";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Weihnachtsgeld-Rechner 2026: Brutto Netto berechnen",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/weihnachtsgeld-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/weihnachtsgeld-rechner")],
     title: "Weihnachtsgeld-Rechner 2026 — Brutto Netto berechnen",
     description:
       "Wie viel bleibt vom Weihnachtsgeld netto? Berechnen Sie Steuern und Sozialabgaben auf Ihre Sonderzahlung — gilt auch für Urlaubsgeld & Boni.",

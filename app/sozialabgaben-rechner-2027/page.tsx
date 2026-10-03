@@ -6,6 +6,7 @@ import ReviewerByline from "@/components/ReviewerByline";
 import { formatEUR, SV_RECHENGROESSEN_2027_ENTWURF as E } from "@/lib/taxCalculator";
 import { SV_2026, sv2027, berechneSv, RV_SATZ_2027_ERWARTET } from "@/lib/sozialabgaben2027";
 import { siteConfig } from "@/lib/authors";
+import { pageImageUrl } from "@/lib/pageImage";
 
 /**
  * Sozialabgaben-Rechner 2027 — "Wie viel mehr zahle ich 2027?"
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: "BruttoNettoCalculator.com",
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/sozialabgaben-rechner-2027")],
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };

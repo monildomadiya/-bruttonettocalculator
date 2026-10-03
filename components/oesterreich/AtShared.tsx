@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronRight, MapPin } from "lucide-react";
 import { siteConfig } from "@/lib/authors";
 import { formatEURat as eur } from "@/lib/oesterreich";
+import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
 
 /**
  * Gemeinsame Bausteine des Österreich-Clusters (Rechner, Pension, Lehrer,
@@ -45,7 +46,7 @@ export function atMetadata({
       type: "website",
       locale: "de_AT",
       siteName: "BruttoNettoCalculator.com",
-      images: [`${AT_BASE}/og-image.png`],
+      images: [pageImageUrl(path)],
     },
     twitter: { card: "summary_large_image", title, description },
   };

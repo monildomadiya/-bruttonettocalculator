@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import EinkommensteuerRechner from "./EinkommensteuerRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Einkommensteuer-Rechner 2026 — Steuer nach § 32a EStG",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/einkommensteuer-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/einkommensteuer-rechner")],
     title: "Einkommensteuer-Rechner 2026 — Steuer nach § 32a EStG",
     description:
       "Einkommensteuer, Soli & Kirchensteuer berechnen — Grund- & Splittingtarif, Grenz- und Durchschnittssteuersatz. Kostenloser Steuerrechner 2026.",

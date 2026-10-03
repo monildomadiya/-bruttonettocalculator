@@ -3,6 +3,7 @@ import KurzarbeitergeldRechner from "./KurzarbeitergeldRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const URL = "https://bruttonettocalculator.com/kurzarbeitergeld-rechner";
 
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/kurzarbeitergeld-rechner")],
     title: "Kurzarbeitergeld-Rechner 2026 — KUG berechnen",
     description: "Kurzarbeitergeld (60 %/67 %) und Gesamteinkommen bei Kurzarbeit berechnen. Kostenlos für 2026.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

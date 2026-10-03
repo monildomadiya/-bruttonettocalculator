@@ -3,6 +3,7 @@ import FirmenwagenrechnerCalculator from "./FirmenwagenrechnerCalculator";
 import FirmenwagenContent from "./FirmenwagenContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import SupportButton from "@/components/SupportButton";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Firmenwagenrechner 2026: Geldwerten Vorteil berechnen",
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/firmenwagenrechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/firmenwagenrechner")],
     title: "Firmenwagenrechner 2026 — Geldwerter Vorteil & 1%-Regelung",
     description:
       "Geldwerten Vorteil des Firmenwagens nach der 1%-Regelung berechnen und aufs Nettogehalt anrechnen — inkl. Elektro-Sätze und Arbeitsweg-Zuschlag.",

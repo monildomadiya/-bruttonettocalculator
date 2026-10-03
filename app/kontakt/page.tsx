@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Mail, MessageSquare, Clock } from "lucide-react";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Kontakt — Brutto Netto Rechner 2026",
   description: "Treten Sie mit unserem Team in Kontakt bei Fragen, Feedback oder Verbesserungsvorschlägen zum Gehaltsrechner.",
   alternates: { canonical: "https://bruttonettocalculator.com/kontakt" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/kontakt")],
     title: "Kontakt | BruttoNettoCalculator.com",
     description: "Fragen, Feedback oder Verbesserungsvorschläge — kontaktieren Sie unser Team.",
     url: "https://bruttonettocalculator.com/kontakt",

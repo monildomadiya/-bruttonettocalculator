@@ -13,6 +13,7 @@ import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import JahresgehaltPage from "./JahresgehaltPage";
 import NettoInBruttoPage, { solveNetto } from "./NettoInBruttoPage";
+import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
 
 /*
  * Kein `revalidate = 0` — diese Route ist vollständig statisch.
@@ -160,7 +161,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       keywords: `${amount} netto in brutto, ${amount} netto brutto, ${amount} euro netto wieviel brutto, ${amount} netto in brutto steuerklasse 1, wieviel brutto für ${amount} netto`,
       alternates: { canonical: canonicalUrl },
       openGraph: {
-        images: ["https://bruttonettocalculator.com/og-image.png"],
+        images: [pageImageFromCanonical(canonicalUrl)],
         title,
         description,
         url: canonicalUrl,
@@ -168,7 +169,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         locale: "de_DE",
         siteName: "BruttoNettoCalculator.com",
       },
-      twitter: { card: "summary", title, description },
+      twitter: { card: "summary_large_image", title, description },
     };
   }
 
@@ -188,7 +189,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       keywords: `${amount} brutto in netto, ${amount} euro jahresgehalt netto, ${amount} brutto jahr netto, ${amount} jahresbrutto, wieviel netto bei ${amount} brutto`,
       alternates: { canonical: canonicalUrl },
       openGraph: {
-        images: ["https://bruttonettocalculator.com/og-image.png"],
+        images: [pageImageFromCanonical(canonicalUrl)],
         title,
         description,
         url: canonicalUrl,
@@ -196,7 +197,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         locale: "de_DE",
         siteName: "BruttoNettoCalculator.com",
       },
-      twitter: { card: "summary", title, description },
+      twitter: { card: "summary_large_image", title, description },
     };
   }
 
@@ -224,7 +225,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       keywords: `${amount} brutto in netto steuerklasse ${steuerklasse}, ${amount} euro brutto steuerklasse ${steuerklasse}, ${amount} brutto netto steuerklasse ${steuerklasse} 2026, ${amount} brutto wieviel netto steuerklasse ${steuerklasse}, gehaltsrechner steuerklasse ${steuerklasse}`,
       alternates: { canonical: canonicalUrl },
       openGraph: {
-        images: ["https://bruttonettocalculator.com/og-image.png"],
+        images: [pageImageFromCanonical(canonicalUrl)],
         title,
         description,
         url: canonicalUrl,
@@ -232,7 +233,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         locale: "de_DE",
         siteName: "BruttoNettoCalculator.com",
       },
-      twitter: { card: "summary", title, description },
+      twitter: { card: "summary_large_image", title, description },
     };
   }
 
@@ -249,7 +250,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: canonicalUrl,
     },
     openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageFromCanonical(canonicalUrl)],
       title,
       description,
       url: canonicalUrl,

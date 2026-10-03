@@ -8,6 +8,7 @@ import Section from "@/components/ui/Section";
 import { TOOL_CONTENT } from "@/data/tool-content";
 import { calculateNetto } from "@/lib/taxCalculator";
 import { krankengeldTag, krankengeldNachJobende2027Tag } from "@/lib/krankengeld";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const URL = "https://bruttonettocalculator.com/krankengeld-rechner";
 const PAGE_TITLE = "Krankengeld-Rechner 2026/2027 — Höhe des Krankengeldes";
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/krankengeld-rechner")],
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

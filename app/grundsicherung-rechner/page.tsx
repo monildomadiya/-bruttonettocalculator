@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import GrundsicherungRechner from "./GrundsicherungRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Grundsicherung-Rechner 2026 — Anspruch im Alter berechnen",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/grundsicherung-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/grundsicherung-rechner")],
     title: "Grundsicherung-Rechner 2026 — Anspruch im Alter berechnen",
     description:
       "Möglichen Anspruch auf Grundsicherung im Alter & bei Erwerbsminderung berechnen — Regelbedarf 563 €, Unterkunft, minus Einkommen.",

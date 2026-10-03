@@ -7,6 +7,7 @@ import { SITE_URL, WEBSITE_ID, ORG_ID } from "@/lib/seo";
 import { siteConfig } from "@/lib/authors";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 /*
  * Statisch — kein `revalidate = 0`.
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     "Brutto-Netto-Tabelle 2026 und 2027: Nettogehalt von 1.500 € bis 10.000 € brutto in Steuerklasse I und III — mit Steuerreform 2027 und Detailseite je Betrag.",
   alternates: { canonical: CANONICAL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/brutto-netto-gehaltstabelle")],
     title: "Brutto-Netto-Tabelle 2026/2027: Netto für jedes Gehalt",
     description:
       "Nettogehalt für jeden Bruttobetrag von 1.500 € bis 10.000 € (Steuerklasse I, 2026) — mit Detailseite je Betrag.",

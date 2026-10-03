@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Users, Shield, ShieldCheck, CheckCircle2, Award, BookOpen, RefreshCw } from "lucide-react";
 import { primaryReviewer, siteConfig } from "@/lib/authors";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Über uns & Redaktionsstandards — Brutto Netto Rechner 2026",
@@ -14,13 +15,13 @@ export const metadata: Metadata = {
     url: "https://bruttonettocalculator.com/ueber-uns",
     locale: "de_DE",
     type: "website",
-    images: [{ url: "https://bruttonettocalculator.com/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: pageImageUrl("/ueber-uns"), width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Über uns | BruttoNettoCalculator.com",
     description: "Unsere Mission und Redaktionsstandards für den kostenlosen Brutto Netto Rechner 2026.",
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/ueber-uns")],
   },
 };
 

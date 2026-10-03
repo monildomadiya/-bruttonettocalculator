@@ -10,6 +10,7 @@ import AccordionFaq from "@/components/AccordionFaq";
 import TableOfContents from "@/components/TableOfContents";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Gehaltsrechner 2026/2027 — Brutto Netto Gehalt berechnen",
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/gehaltsrechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/gehaltsrechner")],
     title: "Gehaltsrechner 2026/2027 — Brutto Netto Gehalt berechnen",
     description:
       "Nettogehalt aus dem Bruttogehalt berechnen: Lohnsteuer, Soli, Sozialabgaben & alle 6 Steuerklassen. Kostenloser Gehaltsrechner für 2026 & 2027.",

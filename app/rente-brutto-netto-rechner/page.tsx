@@ -12,6 +12,7 @@ import {
   AKTUELLER_RENTENWERT_2026,
 } from "@/lib/renteNetto";
 import { GRUNDFREIBETRAG, formatEUR } from "@/lib/taxCalculator";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const BASE = "https://bruttonettocalculator.com";
 const CANONICAL = `${BASE}/rente-brutto-netto-rechner`;
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: "BruttoNettoCalculator.com",
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/rente-brutto-netto-rechner")],
   },
 };
 

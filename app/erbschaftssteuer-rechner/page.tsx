@@ -6,6 +6,7 @@ import { VERWANDTSCHAFT, TARIF } from "@/lib/erbschaftsteuer";
 import { formatEUR } from "@/lib/taxCalculator";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Erbschaftssteuer-Rechner 2026: Freibetrag & Steuer berechnen",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/erbschaftssteuer-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/erbschaftssteuer-rechner")],
     title: "Erbschaftssteuer-Rechner 2026 — Freibetrag & Steuer",
     description: "Wie viel Erbschaftssteuer fällt an? Mit Freibeträgen, Steuerklassen und Härteausgleich.",
     url: "https://bruttonettocalculator.com/erbschaftssteuer-rechner",

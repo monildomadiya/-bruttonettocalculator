@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import AbfindungsRechner from "./AbfindungsRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Abfindungsrechner 2026 — Fünftelregelung berechnen",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/abfindungsrechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/abfindungsrechner")],
     title: "Abfindungsrechner 2026 — Fünftelregelung berechnen",
     description: "Steuerlast auf Ihre Abfindung nach der Fünftelregelung (§ 34 EStG) berechnen — sozialversicherungsfrei.",
     url: "https://bruttonettocalculator.com/abfindungsrechner",

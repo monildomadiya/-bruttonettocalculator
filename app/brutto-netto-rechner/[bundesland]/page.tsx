@@ -9,6 +9,7 @@ import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
 import { BUNDESLAENDER, getBundeslandBySlug, Bundesland } from "@/data/bundeslaender";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
+import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
 
 /*
  * Statisch — kein `revalidate = 0`.
@@ -83,7 +84,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     keywords: kwBase,
     alternates: { canonical },
     openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageFromCanonical(canonical)],
       title,
       description,
       url: canonical,

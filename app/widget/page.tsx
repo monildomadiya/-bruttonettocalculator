@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Check, Zap, ShieldCheck, Euro } from "lucide-react";
 import WidgetBuilder from "./WidgetBuilder";
 import { SITE_URL, webPageSchema } from "@/lib/seo";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Brutto-Netto-Rechner einbetten — kostenloses Widget",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     description: "Kostenlos, anpassbar, ohne Registrierung — der Gehaltsrechner 2026 für Ihre Website.",
     url: `${SITE_URL}/widget`,
     type: "website",
-    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 }],
+    images: [{ url: pageImageUrl("/widget"), width: 1200, height: 630 }],
   },
 };
 

@@ -14,6 +14,7 @@ import {
   eur,
 } from "@/lib/expat/numbers";
 import { siteConfig } from "@/lib/authors";
+import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
 
 /**
  * Seitenvorlagen für die Expat-Sprachen. Texte: lib/expat/content-*.ts,
@@ -46,7 +47,7 @@ export function expatMetadata(c: ExpatContent, art: Art): Metadata {
       type: "website",
       locale: c.ogLocale,
       siteName: "BruttoNettoCalculator.com",
-      images: [`${BASE}/og-image.png`],
+      images: [pageImageUrl(t.path)],
     },
     twitter: { card: "summary_large_image", title: t.title, description: t.description },
   };

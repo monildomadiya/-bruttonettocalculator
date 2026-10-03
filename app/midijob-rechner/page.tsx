@@ -13,6 +13,7 @@ import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const PAGE_TITLE = "Midijob-Rechner 2026/2027 — Übergangsbereich bis 2.000 €";
 const PAGE_DESCRIPTION =
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/midijob-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/midijob-rechner")],
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     url: "https://bruttonettocalculator.com/midijob-rechner",

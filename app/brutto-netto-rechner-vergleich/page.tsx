@@ -4,6 +4,7 @@ import { ChevronRight, Scale, ArrowRight, Check, X, Minus, Info, ExternalLink } 
 import ReviewerByline from "@/components/ReviewerByline";
 import BruttoNettoBreakdownChart from "@/components/BruttoNettoBreakdownChart";
 import { webPageSchema, ORG_ID } from "@/lib/seo";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const CANONICAL = "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich";
 const GEHALT_URL = "https://www.gehalt.de/einkommen/brutto-netto-rechner";
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/brutto-netto-rechner-vergleich")],
     title: "Brutto-Netto-Rechner im Vergleich 2026/2027",
     description:
       "Drei Rechner, 17 Funktionen, jede Angabe belegt: Wer rechnet 2027, Netto zu Brutto, Midijob und Beamte? Geprüft im Oktober 2026.",

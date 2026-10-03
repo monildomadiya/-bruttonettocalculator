@@ -5,6 +5,7 @@ import MwstRechner from "@/components/MwstRechner";
 import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const CANONICAL = "https://bruttonettocalculator.com/mehrwertsteuer-rechner";
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/mehrwertsteuer-rechner")],
     title: "MwSt-Rechner — Mehrwertsteuer 19 % & 7 % berechnen",
     description:
       "MwSt aufschlagen oder herausrechnen: Netto ↔ Brutto mit 19 % oder 7 % — inklusive Formeln und 7-%-Liste.",

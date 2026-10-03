@@ -5,6 +5,7 @@ import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const CANONICAL = "https://bruttonettocalculator.com/steuerfreibetrag-2026";
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/steuerfreibetrag-2026")],
     title: "Steuerfreibetrag 2026 — alle Freibeträge im Überblick",
     description:
       "Grundfreibetrag 12.348 €, Kinderfreibetrag 9.756 €, alle Pauschbeträge 2026 — und ab welchem Brutto Lohnsteuer anfällt.",

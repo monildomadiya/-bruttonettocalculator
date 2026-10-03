@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import UeberstundenRechner from "./UeberstundenRechner";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Überstunden auszahlen Rechner 2026: Was bleibt netto?",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/ueberstunden-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/ueberstunden-rechner")],
     title: "Überstunden auszahlen — Netto-Rechner 2026",
     description: "Was von ausgezahlten Überstunden netto bleibt, inklusive steuerfreier Zuschläge nach § 3b EStG.",
     url: "https://bruttonettocalculator.com/ueberstunden-rechner",

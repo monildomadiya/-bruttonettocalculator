@@ -5,6 +5,7 @@ import RelatedCalculators from "@/components/RelatedCalculators";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 import SupportButton from "@/components/SupportButton";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "ALG-1-Rechner 2026: Arbeitslosengeld berechnen",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/arbeitslosengeld-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/arbeitslosengeld-rechner")],
     title: "ALG-1-Rechner 2026: Arbeitslosengeld berechnen",
     description: "Voraussichtliches Arbeitslosengeld I 2026 mit Leistungssatz, Bemessungsentgelt und Beispielen.",
     url: "https://bruttonettocalculator.com/arbeitslosengeld-rechner",

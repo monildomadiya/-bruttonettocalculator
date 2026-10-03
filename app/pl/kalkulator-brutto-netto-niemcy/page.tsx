@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Calculator as CalcIcon, ChevronRight, Globe, BarChart3 } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import Calculator from "@/components/Calculator";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Kalkulator brutto netto Niemcy 2026 – Oblicz wynagrodzenie",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     languages: LANGUAGE_CLUSTER,
   },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/pl/kalkulator-brutto-netto-niemcy")],
     title: "Kalkulator brutto netto Niemcy 2026 – Oblicz wynagrodzenie",
     description:
       "Oblicz swoje wynagrodzenie netto w Niemczech z kwoty brutto — podatek dochodowy, dodatek solidarnościowy i składki społeczne dla wszystkich 6 klas podatkowych. Darmowy kalkulator.",

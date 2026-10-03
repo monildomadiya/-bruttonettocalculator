@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ShieldAlert } from "lucide-react";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Datenschutzerklärung — Brutto Netto Rechner 2026",
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/datenschutz" },
   robots: { index: true, follow: true },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/datenschutz")],
     title: "Datenschutzerklärung | BruttoNettoCalculator.com",
     description: "Datenschutz, Cookies, Google Analytics & Google AdSense gem. DSGVO auf BruttoNettoCalculator.com.",
     url: "https://bruttonettocalculator.com/datenschutz",

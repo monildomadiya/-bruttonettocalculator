@@ -3,6 +3,7 @@ import JahresgehaltRechner from "./JahresgehaltRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const URL = "https://bruttonettocalculator.com/jahresgehalt-rechner";
 
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/jahresgehalt-rechner")],
     title: "Jahresgehalt-Rechner 2026 — Brutto & Netto",
     description: "Brutto- und Nettojahresgehalt aus dem Monatsgehalt berechnen — inkl. 13./14. Gehalt.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

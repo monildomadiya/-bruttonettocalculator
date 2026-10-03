@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import WitwenrenteRechner from "./WitwenrenteRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Witwenrente-Rechner 2026 — Höhe berechnen (55 % / 25 %)",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/witwenrente-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/witwenrente-rechner")],
     title: "Witwenrente-Rechner 2026 — Höhe berechnen (55 % / 25 %)",
     description:
       "Große (55 %) oder kleine (25 %) Witwenrente berechnen — inkl. Sterbevierteljahr und Einkommensanrechnung mit Freibetrag. Kostenlos für 2026.",

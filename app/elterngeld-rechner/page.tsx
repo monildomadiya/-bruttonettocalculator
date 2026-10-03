@@ -5,6 +5,7 @@ import { ELTERNGELD_FAQS, ELTERNGELD_REFORM_STAND } from "./elterngeldData";
 import ToolContent from "@/components/ToolContent";
 import Section from "@/components/ui/Section";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const PAGE_TITLE = "Elterngeld-Rechner 2026/2027 – Basis & Plus, Reform 2027";
 const PAGE_DESCRIPTION =
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/elterngeld-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/elterngeld-rechner")],
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     url: "https://bruttonettocalculator.com/elterngeld-rechner",

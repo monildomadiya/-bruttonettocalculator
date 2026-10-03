@@ -4,6 +4,7 @@ import AbgeltungssteuerRechner from "./AbgeltungssteuerRechner";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Abgeltungssteuer-Rechner 2026: Kapitalertragsteuer berechnen",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/abgeltungssteuer-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/abgeltungssteuer-rechner")],
     title: "Abgeltungssteuer-Rechner 2026 — Kapitalertragsteuer",
     description: "Was bleibt von Zinsen, Dividenden und Kursgewinnen netto? Mit Sparer-Pauschbetrag und Kirchensteuer.",
     url: "https://bruttonettocalculator.com/abgeltungssteuer-rechner",

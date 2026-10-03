@@ -7,6 +7,7 @@ import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 import SupportButton from "@/components/SupportButton";
 import { calculateNetto } from "@/lib/taxCalculator";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const VZ_STUNDEN = (40 * 52) / 12;
 const netto = (b: number, jahr: 2026 | 2027, sk: 1 | 3) =>
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/mindestlohn")],
     title: "Mindestlohn-Rechner 2026/2027",
     description: "Mindestlohn 2026 (13,90 €) und 2027 (14,60 €): Monats- und Jahresgehalt berechnen.",
     url: URL,

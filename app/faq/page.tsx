@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HelpCircle } from "lucide-react";
 import AccordionFaq from "@/components/AccordionFaq";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Häufige Fragen (FAQ) — Brutto Netto Rechner 2026",
@@ -12,13 +13,13 @@ export const metadata: Metadata = {
     url: "https://bruttonettocalculator.com/faq",
     locale: "de_DE",
     type: "website",
-    images: [{ url: "https://bruttonettocalculator.com/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: pageImageUrl("/faq"), width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "FAQ | Brutto Netto Rechner 2026",
     description: "Antworten zu Brutto, Netto, Steuerklassen & Abgaben in Deutschland.",
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/faq")],
   },
 };
 

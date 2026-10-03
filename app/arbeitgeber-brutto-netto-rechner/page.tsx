@@ -3,6 +3,7 @@ import ArbeitgeberRechner from "./ArbeitgeberRechner";
 import ArbeitgeberContent from "./ArbeitgeberContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import SupportButton from "@/components/SupportButton";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Arbeitgeberrechner 2026: Lohnkosten berechnen",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/arbeitgeber-brutto-netto-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/arbeitgeber-brutto-netto-rechner")],
     title: "Arbeitgeber Brutto-Netto-Rechner 2026 — Arbeitgeberkosten berechnen",
     description:
       "Arbeitgeberanteil, Arbeitgeberbrutto und Personalkosten berechnen — plus Nettogehalt des Arbeitnehmers. Kostenloser Rechner für 2026.",

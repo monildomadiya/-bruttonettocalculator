@@ -3,6 +3,7 @@ import MinijobRechner from "./MinijobRechner";
 import { MINIJOB_FAQS } from "./minijobData";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const PAGE_TITLE = "Minijob-Rechner 2026/2027: Grenze 603 € und 633 € ab 2027";
 const PAGE_DESCRIPTION =
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/minijob-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/minijob-rechner")],
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     url: "https://bruttonettocalculator.com/minijob-rechner",

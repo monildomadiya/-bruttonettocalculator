@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import MieteinnahmenRechner from "./MieteinnahmenRechner";
 import MieteinnahmenContent from "./MieteinnahmenContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Mieteinnahmen versteuern 2026 — Steuer berechnen",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/mieteinnahmen-versteuern" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/mieteinnahmen-versteuern")],
     title: "Mieteinnahmen versteuern — Steuer auf Mieteinnahmen berechnen",
     description:
       "Berechnen Sie den steuerpflichtigen Überschuss aus Vermietung und die Steuer darauf — mit AfA, Zinsen und Werbungskosten.",

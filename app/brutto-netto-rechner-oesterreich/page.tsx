@@ -5,6 +5,7 @@ import RechnerOesterreich from "./RechnerOesterreich";
 import { siteConfig } from "@/lib/authors";
 import { AT_2026, berechneBruttoNettoAT, formatEURat as eur } from "@/lib/oesterreich";
 import { regionalGroups } from "@/lib/navigation";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const AT_LINKS = regionalGroups[0].items.filter((i) => i.href !== "/brutto-netto-rechner-oesterreich");
 
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_AT",
     siteName: "BruttoNettoCalculator.com",
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/brutto-netto-rechner-oesterreich")],
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };

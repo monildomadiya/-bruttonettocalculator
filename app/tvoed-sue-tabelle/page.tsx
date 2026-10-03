@@ -7,6 +7,7 @@ import ReviewerByline from "@/components/ReviewerByline";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import { TVOED_SUE_2026, SUE_STAND, SUE_STAND_ISO, SUE_GUELTIG_AB } from "@/data/tvoedSue";
 import { GUELTIG_BIS, URLAUBSTAGE_AB_2027, JAHRESSONDERZAHLUNG_VKA_PROZENT } from "@/data/tvoed";
+import { pageImageUrl } from "@/lib/pageImage";
 
 /**
  * TVöD SuE (S-Tabelle) mit Netto. Schließt die größte offene Lücke im
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: "BruttoNettoCalculator.com",
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/tvoed-sue-tabelle")],
   },
 };
 

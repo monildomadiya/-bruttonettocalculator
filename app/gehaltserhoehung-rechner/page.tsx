@@ -3,6 +3,7 @@ import GehaltserhoehungRechner from "./GehaltserhoehungRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const URL = "https://bruttonettocalculator.com/gehaltserhoehung-rechner";
 
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/gehaltserhoehung-rechner")],
     title: "Gehaltserhöhung Netto-Rechner 2026 — Was bleibt übrig?",
     description: "Wie viel Ihrer Gehaltserhöhung netto ankommt — inkl. Grenzsteuersatz. Kostenloser Rechner für 2026.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

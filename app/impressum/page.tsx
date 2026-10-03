@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Landmark } from "lucide-react";
 import { company, addressLine } from "@/lib/company";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Impressum — Brutto Netto Rechner 2026",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bruttonettocalculator.com/impressum" },
   robots: { index: true, follow: true },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/impressum")],
     title: "Impressum | BruttoNettoCalculator.com",
     description: "Anbieterkennzeichnung gem. § 5 TMG für BruttoNettoCalculator.com.",
     url: "https://bruttonettocalculator.com/impressum",

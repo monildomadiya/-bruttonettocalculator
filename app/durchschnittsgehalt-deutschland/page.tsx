@@ -7,6 +7,7 @@ import GehaltsvergleichRechner from "@/components/GehaltsvergleichRechner";
 import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const CANONICAL = "https://bruttonettocalculator.com/durchschnittsgehalt-deutschland";
 
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/durchschnittsgehalt-deutschland")],
     title: "Durchschnittsgehalt Deutschland 2026 — brutto, netto & Perzentil-Vergleich",
     description:
       "64.441 € Durchschnitt, 54.066 € Median (Destatis). Vergleichen Sie Ihr Gehalt mit der amtlichen Verdienstverteilung.",

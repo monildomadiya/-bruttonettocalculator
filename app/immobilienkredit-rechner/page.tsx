@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ImmobilienkreditRechner from "./ImmobilienkreditRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Immobilienkredit-Rechner 2026 — Baufinanzierung berechnen",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/immobilienkredit-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/immobilienkredit-rechner")],
     title: "Immobilienkredit-Rechner 2026 — Baufinanzierung berechnen",
     description:
       "Aus Nettoeinkommen & Eigenkapital den möglichen Kaufpreis, das Darlehen und die monatliche Rate berechnen. Kostenloser Baufinanzierungsrechner.",

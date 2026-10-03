@@ -3,6 +3,7 @@ import StundenlohnRechner from "./StundenlohnRechner";
 import StundenlohnContent from "./StundenlohnContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import SupportButton from "@/components/SupportButton";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Stundenlohn berechnen: Stundenlohn-Rechner 2026",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/stundenlohn-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/stundenlohn-rechner")],
     title: "Stundenlohn berechnen — Stundenlohn-Rechner 2026",
     description: "Stundenlohn in Monatsgehalt umrechnen oder Stundengehalt aus dem Gehalt berechnen — inkl. Netto pro Stunde.",
     url: "https://bruttonettocalculator.com/stundenlohn-rechner",

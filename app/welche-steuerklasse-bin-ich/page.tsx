@@ -8,6 +8,7 @@ import SteuerklassenFinder from "@/components/SteuerklassenFinder";
 import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const CANONICAL = "https://bruttonettocalculator.com/welche-steuerklasse-bin-ich";
 
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/welche-steuerklasse-bin-ich")],
     title: "Welche Steuerklasse bin ich? — Interaktiver Finder 2026",
     description:
       "Beantworten Sie 3 kurze Fragen und erfahren Sie sofort Ihre Steuerklasse — inklusive Netto-Vorschau 2026 und Wechsel-Tipps.",

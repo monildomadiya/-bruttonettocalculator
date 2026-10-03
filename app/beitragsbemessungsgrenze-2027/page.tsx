@@ -4,6 +4,7 @@ import { ChevronRight, Info, TrendingUp, Gavel, Wallet2 } from "lucide-react";
 import { formatEUR, SV_RECHENGROESSEN_2027_ENTWURF as E, BBG_2026 } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import { siteConfig } from "@/lib/authors";
+import { pageImageUrl } from "@/lib/pageImage";
 
 /**
  * Beitragsbemessungsgrenze 2027.
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
     type: "article",
     locale: "de_DE",
     siteName: "BruttoNettoCalculator.com",
-    images: [`${BASE}/og-image.png`],
+    images: [pageImageUrl("/beitragsbemessungsgrenze-2027")],
   },
   twitter: {
     card: "summary",

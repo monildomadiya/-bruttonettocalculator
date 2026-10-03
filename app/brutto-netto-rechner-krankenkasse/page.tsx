@@ -17,6 +17,7 @@ import Zusatzbeitrag2027Ausblick from "@/components/Zusatzbeitrag2027Ausblick";
 import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const CANONICAL = "https://bruttonettocalculator.com/brutto-netto-rechner-krankenkasse";
 
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/brutto-netto-rechner-krankenkasse")],
     title: "Brutto-Netto-Rechner mit Krankenkasse — Zusatzbeitrag 2026",
     description:
       "AOK, TK, Barmer, DAK: Der Zusatzbeitrag Ihrer Kasse kostet bis zu 1.000 € Netto im Jahr. Jetzt mit der eigenen Kasse rechnen.",

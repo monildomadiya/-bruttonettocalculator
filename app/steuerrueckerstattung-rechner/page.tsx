@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import SteuerrueckerstattungRechner from "./SteuerrueckerstattungRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Steuerrückerstattung-Rechner 2026 — was kommt zurück?",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/steuerrueckerstattung-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/steuerrueckerstattung-rechner")],
     title: "Steuerrückerstattung-Rechner 2026 — was kommt zurück?",
     description:
       "Schätzen Sie Ihre Steuererstattung aus Werbungskosten & Sonderausgaben. Kostenloser Rechner für die Steuererklärung 2025/2026.",

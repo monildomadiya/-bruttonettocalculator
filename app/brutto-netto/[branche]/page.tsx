@@ -14,6 +14,7 @@ import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import AccordionFaq from "@/components/AccordionFaq";
 import { siteConfig } from "@/lib/authors";
+import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
 
 /*
  * Statisch — kein `revalidate = 0`.
@@ -105,7 +106,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ],
     alternates: { canonical },
     openGraph: {
-      images: [`${BASE}/og-image.png`],
+      images: [pageImageFromCanonical(canonical)],
       title,
       description,
       url: canonical,

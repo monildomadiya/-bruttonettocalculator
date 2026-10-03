@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import UrlaubsgeldRechner from "./UrlaubsgeldRechner";
 import UrlaubsgeldContent from "./UrlaubsgeldContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Urlaubsgeld-Rechner 2026: Urlaubsgeld netto berechnen",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/urlaubsgeld-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/urlaubsgeld-rechner")],
     title: "Urlaubsgeld-Rechner 2026 — Urlaubsgeld netto berechnen",
     description:
       "Wie viel bleibt vom Urlaubsgeld netto? Inklusive kombinierter Berechnung mit dem Weihnachtsgeld.",

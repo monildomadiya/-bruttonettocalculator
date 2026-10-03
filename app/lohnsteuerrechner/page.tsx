@@ -6,6 +6,7 @@ import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Lohnsteuerrechner 2026 — Lohnsteuer & Nettolohn berechnen",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/lohnsteuerrechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/lohnsteuerrechner")],
     title: "Lohnsteuerrechner 2026 — Lohnsteuer & Nettolohn berechnen",
     description:
       "Lohnsteuer, Soli & Nettolohn aus dem Bruttolohn berechnen — kostenloser Lohnrechner & Nettolohnrechner für 2026 & 2027, alle 6 Steuerklassen.",

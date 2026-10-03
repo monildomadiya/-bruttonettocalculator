@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import SchonvermoegenRechner from "./SchonvermoegenRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Schonvermögen-Rechner 2026 — Bürgergeld Vermögensfreibetrag",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/schonvermoegen-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/schonvermoegen-rechner")],
     title: "Schonvermögen-Rechner 2026 — Bürgergeld Vermögensfreibetrag",
     description:
       "Anrechnungsfreies Vermögen beim Bürgergeld berechnen — Karenzzeit-Regeln und Neuregelung ab 1. Juli 2026.",

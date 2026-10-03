@@ -4,6 +4,7 @@ import { ChevronDown } from "lucide-react";
 import AzubiRechner from "./AzubiRechner";
 import CalculatorSchema from "@/components/CalculatorSchema";
 import { calculateNetto, formatEUR, AZUBI_GERINGVERDIENERGRENZE } from "@/lib/taxCalculator";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const URL = "https://bruttonettocalculator.com/ausbildung-brutto-netto-rechner";
 
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: URL },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/ausbildung-brutto-netto-rechner")],
     title: "Ausbildung Brutto Netto Rechner 2026",
     description: "Azubi-Netto richtig berechnen — ohne Midijob-Rabatt, mit 325-€-Geringverdienergrenze.",
     url: URL, locale: "de_DE", type: "website", siteName: "BruttoNettoCalculator.com",

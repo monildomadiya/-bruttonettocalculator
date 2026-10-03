@@ -5,6 +5,7 @@ import ReverseCalculator from "@/components/ReverseCalculator";
 import { formatEUR } from "@/lib/taxCalculator";
 import { getNettoInBruttoAmounts } from "@/data/wage-stats";
 import { solveNetto } from "../[betrag]/NettoInBruttoPage";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Netto Brutto Rechner 2026 – Wunschbrutto berechnen",
@@ -24,13 +25,13 @@ export const metadata: Metadata = {
     url: "https://bruttonettocalculator.com/rechner/netto-zu-brutto",
     locale: "de_DE",
     type: "website",
-    images: [{ url: "https://bruttonettocalculator.com/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: pageImageUrl("/rechner/netto-zu-brutto"), width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Netto zu Brutto Rechner 2026",
     description: "Nettowunschgehalt in Bruttobedarf umrechnen — kostenlos & präzise.",
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/rechner/netto-zu-brutto")],
   },
 };
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import BafoegRueckzahlungRechner from "./BafoegRueckzahlungRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "BAföG-Rückzahlung-Rechner 2026 — Raten & Dauer berechnen",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/bafoeg-rueckzahlung-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/bafoeg-rueckzahlung-rechner")],
     title: "BAföG-Rückzahlung-Rechner 2026 — Raten & Dauer berechnen",
     description:
       "Anzahl der Raten, monatliche Rate und Rückzahlungsdauer für Ihr BAföG-Darlehen berechnen. Höchstbetrag 10.010 €.",

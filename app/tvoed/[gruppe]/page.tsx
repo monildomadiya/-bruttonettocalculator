@@ -15,6 +15,7 @@ import {
 } from "@/data/tvoed";
 import Tvoed2027Ausblick from "@/components/Tvoed2027Ausblick";
 import ReviewerByline from "@/components/ReviewerByline";
+import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
 
 /**
  * Detailseite je TVöD-Entgeltgruppe.
@@ -85,7 +86,7 @@ export async function generateMetadata({ params }: { params: { gruppe: string } 
       type: "article",
       locale: "de_DE",
       siteName: "BruttoNettoCalculator.com",
-      images: [`${BASE}/og-image.png`],
+      images: [pageImageFromCanonical(canonical)],
     },
     twitter: {
       card: "summary",

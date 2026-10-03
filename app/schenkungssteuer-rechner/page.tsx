@@ -6,6 +6,7 @@ import { VERWANDTSCHAFT } from "@/lib/erbschaftsteuer";
 import { formatEUR } from "@/lib/taxCalculator";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Schenkungssteuer-Rechner 2026: Freibetrag & Steuer berechnen",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/schenkungssteuer-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/schenkungssteuer-rechner")],
     title: "Schenkungssteuer-Rechner 2026 — Freibetrag & Steuer",
     description: "Wie viel Schenkungssteuer fällt an? Mit Freibeträgen, 10-Jahres-Frist und Härteausgleich.",
     url: "https://bruttonettocalculator.com/schenkungssteuer-rechner",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import RentenpunkteRechner from "./RentenpunkteRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Rentenpunkte-Rechner 2026 — Entgeltpunkte & Rente berechnen",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/rentenpunkte-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/rentenpunkte-rechner")],
     title: "Rentenpunkte-Rechner 2026 — Entgeltpunkte & Rente berechnen",
     description:
       "Entgeltpunkte aus dem Bruttogehalt und die spätere Monatsrente berechnen — mit Rentenwert 42,52 € (Juli 2026). Kostenlos.",

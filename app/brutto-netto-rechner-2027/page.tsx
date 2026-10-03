@@ -14,6 +14,7 @@ import {
   KINDERFREIBETRAG,
   ENTWURF,
 } from "@/lib/taxCalculator";
+import { pageImageUrl } from "@/lib/pageImage";
 
 const eur = (n: number) => n.toLocaleString("de-DE");
 
@@ -66,7 +67,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/brutto-netto-rechner-2027" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/brutto-netto-rechner-2027")],
     title: PAGE_TITLE,
     description:
       PAGE_DESCRIPTION,

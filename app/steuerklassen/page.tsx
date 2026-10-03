@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BarChart3, ChevronDown, Calculator, ArrowRight, Users, RefreshCw } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Steuerklassen 2026: Welche Steuerklasse für Verheiratete?",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/steuerklassen" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/steuerklassen")],
     title: "Steuerklassen 2026 — Alle 6 Steuerklassen im Vergleich",
     description:
       "Klarer Vergleich aller 6 deutschen Steuerklassen mit Nettogehalt-Beispielen, Steuerklassenwechsel-Info und FAQ.",

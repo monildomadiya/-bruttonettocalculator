@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import RiesterRechner from "./RiesterRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Riester-Rechner 2026 — Zulagen & Eigenbeitrag berechnen",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/riester-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/riester-rechner")],
     title: "Riester-Rechner 2026 — Zulagen & Eigenbeitrag berechnen",
     description:
       "Staatliche Riester-Zulagen und den Mindest-Eigenbeitrag für die volle Förderung berechnen (Grundzulage 175 €, Kinderzulage bis 300 €).",

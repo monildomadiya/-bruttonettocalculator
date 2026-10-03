@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Rentenrechner from "./Rentenrechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Rentenrechner 2026 — Brutto Netto Rente berechnen",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/rentenrechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/rentenrechner")],
     title: "Rentenrechner 2026 — Brutto Netto Rente berechnen",
     description: "Rentenversicherungsbeitrag berechnen und gesetzliche Rente auf Basis des Entgeltpunkte-Systems schätzen.",
     url: "https://bruttonettocalculator.com/rentenrechner",

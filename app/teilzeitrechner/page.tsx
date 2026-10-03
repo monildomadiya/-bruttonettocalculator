@@ -6,6 +6,7 @@ import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Teilzeitrechner 2026 — Brutto Netto Gehalt berechnen",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/teilzeitrechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/teilzeitrechner")],
     title: "Teilzeitrechner 2026 — Netto-Gehalt bei Teilzeit berechnen",
     description:
       "Nettogehalt bei Teilzeit berechnen — Brutto in Netto für beliebige Wochenstunden. Kostenloser Teilzeitrechner 2026.",

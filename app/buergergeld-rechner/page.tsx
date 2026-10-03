@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import BuergergeldRechner from "./BuergergeldRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
+import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
   title: "Bürgergeld-Rechner 2026 — Anspruch & Regelsatz berechnen",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/buergergeld-rechner" },
   openGraph: {
-    images: ["https://bruttonettocalculator.com/og-image.png"],
+    images: [pageImageUrl("/buergergeld-rechner")],
     title: "Bürgergeld-Rechner 2026 — Anspruch & Regelsatz berechnen",
     description:
       "Bürgergeld-Anspruch 2026 berechnen: Regelsatz 563 €, Kosten der Unterkunft und angerechnetes Einkommen inkl. Freibeträgen. Kostenlos & aktuell.",
