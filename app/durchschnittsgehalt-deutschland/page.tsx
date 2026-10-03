@@ -10,10 +10,17 @@ import { TOOL_CONTENT } from "@/data/tool-content";
 
 const CANONICAL = "https://bruttonettocalculator.com/durchschnittsgehalt-deutschland";
 
+// Snippet numbers from the engine, not typed in: "durchschnittsgehalt deutschland
+// netto" and its variants ask for the netto figure, which the title lacked.
+const nettoMonatVon = (bruttoJahr: number) =>
+  calculateNetto({ bruttoMonat: bruttoJahr / 12, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 }).nettoMonat;
+const eur0 = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });
+const NETTO_DURCHSCHNITT = eur0(nettoMonatVon(DESTATIS_JAHR_2025.durchschnittJahr));
+const NETTO_MEDIAN = eur0(nettoMonatVon(DESTATIS_JAHR_2025.medianJahr));
+
 export const metadata: Metadata = {
-  title: "Durchschnittsgehalt Deutschland 2026: 64.441 € brutto netto",
-  description:
-    "Durchschnittsgehalt Deutschland: 64.441 € brutto im Jahr, Median 54.066 € (Destatis 2025). Wie viel netto bleibt und wo Sie im Perzentil-Vergleich stehen.",
+  title: `Durchschnittsgehalt Deutschland 2026: ${NETTO_DURCHSCHNITT} € netto`,
+  description: `Durchschnittsgehalt Deutschland: ${eur0(DESTATIS_JAHR_2025.durchschnittJahr)} € brutto im Jahr = ca. ${NETTO_DURCHSCHNITT} € netto im Monat, Median ${NETTO_MEDIAN} € netto (Destatis, Steuerklasse 1).`,
   keywords: [
     "durchschnittsgehalt deutschland",
     "durchschnittsgehalt deutschland 2026",
@@ -194,7 +201,7 @@ export default function DurchschnittsgehaltPage() {
           <BarChart3 size={14} /> Destatis-Daten · Berichtsjahr {d.berichtsjahr}
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-4 tracking-tight leading-tight">
-          <span className="text-gradient-accent">Durchschnittsgehalt</span> in Deutschland
+          <span className="text-gradient-accent">Durchschnittsgehalt</span> in Deutschland: brutto und netto
         </h1>
         <p className="text-lg sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-6">
           Vollzeitbeschäftigte verdienten in Deutschland zuletzt{" "}

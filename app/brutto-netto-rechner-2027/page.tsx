@@ -21,9 +21,9 @@ const eur = (n: number) => n.toLocaleString("de-DE");
 // query-deserves-freshness, ein veralteter Stand im Snippet kostet Rankings
 // (Absturz im September 2026). Bei jedem Verfahrensschritt mit REFORM_STAND
 // in components/Reform2027Status.tsx zusammen aktualisieren.
-const PAGE_TITLE = "Brutto Netto Rechner 2027 – Gesetzentwurf im Bundestag";
+const PAGE_TITLE = "Brutto Netto Rechner 2027 – Steuerreform im Bundestag";
 const PAGE_DESCRIPTION =
-  "Brutto Netto Rechner 2027 nach dem Gesetzentwurf im Bundestag (Drs. 21/8235): Grundfreibetrag 12.564 €, Pauschbetrag 1.430 €, 47 % ab 280.000 €. Stand 30.9.2026.";
+  "Brutto Netto Rechner 2027: Wie viel mehr Netto bringt die Steuerreform? Tabelle nach Gehalt, Gesetzentwurf im Bundestag (Drs. 21/8235). Stand 30.9.2026.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

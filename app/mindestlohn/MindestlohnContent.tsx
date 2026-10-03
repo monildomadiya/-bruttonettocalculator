@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import { calculateArbeitgeberkosten, formatEUR } from "@/lib/taxCalculator";
+import { calculateArbeitgeberkosten, calculateNetto, formatEUR, type Steuerjahr } from "@/lib/taxCalculator";
 import { WAGE_STATS_2026 } from "@/data/wage-stats";
 
 /**
@@ -15,6 +15,12 @@ const STUNDEN_PRO_MONAT_VZ = (40 * 52) / 12; // 173,33 h
 
 const BMAS =
   "https://www.bmas.de/DE/Arbeit/Arbeitsrecht/Mindestlohn/Informationen-zum-Mindestlohn/informationen-zum-mindestlohn-deutsch.html";
+
+const nettoSk1 = (bruttoMonat: number, jahr: Steuerjahr) =>
+  calculateNetto({ bruttoMonat, jahr, steuerklasse: 1, verheiratet: false, kinderlosUeber23: true, kirche: false }).nettoMonat;
+
+/** Wochenstunden für die 2026-vs-2027-Tabelle (Vollzeit bis typische Teilzeit). */
+const WOCHENSTUNDEN = [40, 38, 35, 30, 25, 20];
 
 export default function MindestlohnContent() {
   const bruttoVollzeit = MINDESTLOHN_2026 * STUNDEN_PRO_MONAT_VZ;
@@ -39,6 +45,54 @@ export default function MindestlohnContent() {
             bleibt, zeigt der Rechner oben – auf Basis der gesetzlichen Werte, unverbindlich.
           </p>
         </div>
+      </section>
+
+      {/* Mindestlohn 2027 netto — the table "mindestlohn 2027 netto / vollzeit / 40 stunden" asks for */}
+      <section className="py-6" aria-labelledby="ml-2027-netto">
+        <h2 id="ml-2027-netto" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
+          Mindestlohn 2027 netto: Tabelle nach Wochenstunden
+        </h2>
+        <p className="text-sm sm:text-base text-black/70 mb-6 leading-relaxed">
+          Monatsbrutto und -netto beim Mindestlohn von {MINDESTLOHN_2026.toLocaleString("de-DE", { minimumFractionDigits: 2 })} € (2026) und{" "}
+          {MINDESTLOHN_2027.toLocaleString("de-DE", { minimumFractionDigits: 2 })} € (2027) — Steuerklasse I, ohne Kirchensteuer,
+          kinderlos ab 23. Bei 40 Stunden bleiben 2027 rund{" "}
+          <strong className="text-[#16181D]">{formatEUR(nettoSk1(MINDESTLOHN_2027 * STUNDEN_PRO_MONAT_VZ, 2027))} netto</strong> im Monat.
+        </p>
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-xl overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[600px]">
+            <thead>
+              <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
+                <th className="py-3.5 px-5">Stunden / Woche</th>
+                <th className="py-3.5 px-5 text-right">Brutto 2026</th>
+                <th className="py-3.5 px-5 text-right">Netto 2026</th>
+                <th className="py-3.5 px-5 text-right">Brutto 2027</th>
+                <th className="py-3.5 px-5 text-right text-[#16181D] font-bold">Netto 2027</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-black/10 text-sm sm:text-base">
+              {WOCHENSTUNDEN.map((h) => {
+                const m = (h * 52) / 12;
+                const b26 = MINDESTLOHN_2026 * m;
+                const b27 = MINDESTLOHN_2027 * m;
+                return (
+                  <tr key={h} className={h === 40 ? "bg-[#E60A1C]/5 font-semibold" : ""}>
+                    <td className="py-3 px-5">{h} Stunden{h === 40 ? " (Vollzeit)" : ""}</td>
+                    <td className="py-3 px-5 text-right font-mono">{formatEUR(b26)}</td>
+                    <td className="py-3 px-5 text-right font-mono">{formatEUR(nettoSk1(b26, 2026))}</td>
+                    <td className="py-3 px-5 text-right font-mono">{formatEUR(b27)}</td>
+                    <td className="py-3 px-5 text-right font-mono font-bold">{formatEUR(nettoSk1(b27, 2027))}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-xs sm:text-sm text-black/55">
+          Netto 2027 mit dem Steuertarif laut Gesetzentwurf zur Einkommensteuerreform 2027 und den Sozialversicherungswerten 2026
+          (die Rechengrößen 2027 sind noch nicht beschlossen). Unter 2.000 € gelten die reduzierten Midijob-Beiträge.
+          Andere Steuerklassen:{" "}
+          <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner 2027</Link>.
+        </p>
       </section>
 
       {/* Minijob */}

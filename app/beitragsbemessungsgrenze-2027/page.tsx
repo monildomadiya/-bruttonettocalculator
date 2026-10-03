@@ -24,7 +24,7 @@ const CANONICAL = `${BASE}/beitragsbemessungsgrenze-2027`;
 const eur = (v: number) => v.toLocaleString("de-DE") + " €";
 
 export const metadata: Metadata = {
-  title: "Beitragsbemessungsgrenze 2027: 76.500 € & 106.200 €",
+  title: "Beitragsbemessungsgrenze 2027: Rente 106.200 €, KV 76.500 €",
   description:
     "Beitragsbemessungsgrenze 2027 nach dem BMAS-Entwurf vom 21.9.2026: 76.500 € für Kranken- und Pflegeversicherung, 106.200 € für Rente und Arbeitslosigkeit.",
   keywords: [
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Beitragsbemessungsgrenze 2027: 76.500 € & 106.200 €",
+    title: "Beitragsbemessungsgrenze 2027: Rente 106.200 €, KV 76.500 €",
     description: "Alle Entwurfswerte 2027 inkl. Versicherungspflichtgrenze und Mehrbelastung.",
   },
 };

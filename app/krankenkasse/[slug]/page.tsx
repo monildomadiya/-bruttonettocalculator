@@ -65,6 +65,16 @@ function nettoDiff(bruttoMonat: number, zusatzbeitrag: number, vergleich: number
   };
 }
 
+/** Short brand names as people search them ("tk gehaltsrechner", "hek brutto netto"). */
+const KURZNAME: Record<string, string> = {
+  tk: "TK",
+  hek: "HEK",
+  hkk: "hkk",
+  kkh: "KKH",
+  dak: "DAK",
+  "big-direkt": "BIG direkt",
+};
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const kasse = findKrankenkasse(params.slug);
   if (!kasse) return {};
@@ -76,7 +86,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   // Descriptions über ~165 Zeichen ab, und abgeschnittene Snippets kosten CTR.
   // Der längste Kassenname ("HEK — Hanseatische Krankenkasse") bleibt mit
   // diesem Muster bei 57 Zeichen.
-  const title = `${kasse.name} Zusatzbeitrag 2026: ${satz}`;
+  // "tk brutto netto rechner", "bkk firmus gehaltsrechner", "aok netto rechner"
+  // ranked on page 1–2 without the word "Rechner" in the title. Add it where the
+  // title still fits; the long AOK names fall back to the original pattern.
+  const kurz = KURZNAME[kasse.slug] ?? kasse.name;
+  const title =
+    [
+      `${kurz} Zusatzbeitrag 2026: ${satz} – Brutto Netto Rechner`,
+      `${kurz} Zusatzbeitrag 2026: ${satz} – Netto-Rechner`,
+    ].find((t) => t.length <= 60) ?? `${kasse.name} Zusatzbeitrag 2026: ${satz}`;
   const description =
     `${kasse.name}: Zusatzbeitrag ${satz}, Gesamtbeitrag ${gesamt}. ` +
     `Was der Satz Ihrer Kasse netto kostet — mit Vergleich zum Durchschnitt ` +
@@ -405,7 +423,7 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
         {/* ── Interaktiver Rechner ──────────────────────────────────── */}
         <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-2">
-            Mit dem Satz der {kasse.name} rechnen
+            {KURZNAME[kasse.slug] ?? kasse.name} Brutto-Netto-Rechner: mit dem Satz der {kasse.name} rechnen
           </h2>
           <p className="text-sm text-black/60 mb-5 max-w-3xl">
             Der Rechner startet mit der {kasse.name} — tragen Sie Ihr Bruttogehalt ein und vergleichen Sie

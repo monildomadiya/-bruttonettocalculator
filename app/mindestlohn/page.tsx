@@ -6,17 +6,26 @@ import { webPageSchema } from "@/lib/seo";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 import SupportButton from "@/components/SupportButton";
+import { calculateNetto } from "@/lib/taxCalculator";
+
+const VZ_STUNDEN = (40 * 52) / 12;
+const netto = (b: number, jahr: 2026 | 2027, sk: 1 | 3) =>
+  calculateNetto({ bruttoMonat: b, jahr, steuerklasse: sk, verheiratet: sk === 3, kinderlosUeber23: true, kirche: false }).nettoMonat;
+const eur0 = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });
+const VZ26 = 13.9 * VZ_STUNDEN;
+const VZ27 = 14.6 * VZ_STUNDEN;
 
 const URL = "https://bruttonettocalculator.com/mindestlohn";
 
 export const metadata: Metadata = {
-  title: "Mindestlohn-Rechner 2026/2027",
-  description:
-    "Mindestlohn-Rechner: 13,90 € (2026) und 14,60 € (2027) pro Stunde. Monats- und Jahresgehalt aus Wochenstunden berechnen — inklusive Minijob und Arbeitgeberkosten.",
+  title: "Mindestlohn-Rechner 2026/2027: brutto & netto im Monat",
+  description: `Mindestlohn 2027: 14,60 € pro Stunde = ${eur0(VZ27)} € brutto und ca. ${eur0(netto(VZ27, 2027, 1))} € netto im Monat bei 40 Stunden (Steuerklasse 1). Mit Tabelle für 2026 und Teilzeit.`,
   keywords: [
     "mindestlohnrechner",
     "Mindestlohn Rechner 2026",
     "Mindestlohn 2027",
+    "Mindestlohn 2027 Rechner",
+    "Mindestlohn 2027 netto",
     "Mindestlohn brutto netto",
     "Mindestlohn berechnen",
     "gesetzlicher Mindestlohn 2026",
@@ -38,7 +47,7 @@ export const metadata: Metadata = {
 const faqs = [
   { q: "Wie hoch ist der Mindestlohn 2026?", a: "Der gesetzliche Mindestlohn in Deutschland ist zum 1. Januar 2026 auf 13,90 € brutto pro Stunde gestiegen (zuvor 12,82 € in 2025)." },
   { q: "Wann kommt der neue Mindestlohn 2027?", a: "Die Bundesregierung hat die zweistufige Erhöhung der Mindestlohnkommission per Verordnung bereits beschlossen: Zum 1. Januar 2027 steigt der Mindestlohn auf 14,60 € brutto pro Stunde." },
-  { q: "Wie viel Netto bleibt vom Mindestlohn 2026 übrig?", a: "Bei Vollzeit (40 Std./Woche, 13,90 €/h) ergibt sich ein Bruttogehalt von ca. 2.409 €/Monat. In Steuerklasse I bleiben nach Abzügen etwa 1.724 € netto, in Steuerklasse III ca. 1.883 €." },
+  { q: "Wie viel Netto bleibt vom Mindestlohn 2026 übrig?", a: `Bei Vollzeit (40 Std./Woche, 13,90 €/h) ergibt sich ein Bruttogehalt von ca. ${eur0(VZ26)} €/Monat. In Steuerklasse I bleiben nach Abzügen etwa ${eur0(netto(VZ26, 2026, 1))} € netto, in Steuerklasse III ca. ${eur0(netto(VZ26, 2026, 3))} €.` },
   { q: "Gilt der Mindestlohn für alle Beschäftigten?", a: "Der gesetzliche Mindestlohn gilt grundsätzlich für alle Arbeitnehmer ab 18 Jahren. Ausnahmen gelten für Praktikanten (unter 3 Monate), Pflichtpraktika, Langzeitarbeitslose in den ersten 6 Monaten sowie Auszubildende." },
   { q: "Was ist der Unterschied zwischen Mindestlohn brutto und netto?", a: "Der Mindestlohn von 13,90 € ist ein Bruttobetrag. Vom Bruttogehalt werden Lohnsteuer (abhängig von Steuerklasse) sowie Sozialversicherungsbeiträge (ca. 20 %) abgezogen. Das Netto variiert je nach Steuerklasse und persönlichen Abzügen." },
 ];

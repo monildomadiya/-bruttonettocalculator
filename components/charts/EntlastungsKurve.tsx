@@ -271,10 +271,13 @@ export default function EntlastungsKurve() {
         ohne Grafikdarstellung — und weil Suchmaschinen und Antwortmaschinen
         eine Tabelle zitieren können, eine SVG-Kurve aber nicht.
       */}
-      <details className="mt-4 bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
-        <summary className="cursor-pointer px-5 py-3.5 text-sm font-bold text-[#16181D]">
-          Werte als Tabelle anzeigen
-        </summary>
+      {/* Visible, not collapsed: "steuerreform 2027 wie viel mehr netto tabelle"
+          is a query of its own, and a table folded into <details> is the
+          weakest possible answer to it. */}
+      <div className="mt-6 bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
+        <h4 className="px-5 pt-4 pb-1 text-base sm:text-lg font-extrabold text-[#16181D]">
+          Tabelle: Wie viel mehr Netto bringt die Steuerreform 2027?
+        </h4>
         <div className="px-5 pb-5 overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <caption className="sr-only">
@@ -288,7 +291,7 @@ export default function EntlastungsKurve() {
               </tr>
             </thead>
             <tbody>
-              {[2000, 3000, 4000, 5000, 6000, 8000, 10000, 15000, 25000].map((b) => {
+              {[1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 10000, 15000, 25000].map((b) => {
                 const d27 = differenzProMonat(b, "entwurf2027");
                 const d28 = differenzProMonat(b, "stufe2028");
                 const zelle = (v: number) =>
@@ -310,7 +313,7 @@ export default function EntlastungsKurve() {
             </tbody>
           </table>
         </div>
-      </details>
+      </div>
     </figure>
   );
 }

@@ -28,13 +28,13 @@ import { TOOL_CONTENT } from "@/data/tool-content";
 const CANONICAL = `${SITE_URL}/brutto-netto-gehaltstabelle`;
 
 export const metadata: Metadata = {
-  title: "Brutto-Netto-Tabelle 2026: Gehälter im Vergleich",
+  title: "Brutto-Netto-Tabelle 2026/2027: Netto für jedes Gehalt",
   description:
-    "Brutto-Netto-Gehaltstabelle 2026: Nettogehalt für jeden Bruttobetrag von 1.500 € bis 10.000 € in Steuerklasse I — direkt zur Detailseite jedes Betrags.",
+    "Brutto-Netto-Tabelle 2026 und 2027: Nettogehalt von 1.500 € bis 10.000 € brutto in Steuerklasse I und III — mit Steuerreform 2027 und Detailseite je Betrag.",
   alternates: { canonical: CANONICAL },
   openGraph: {
     images: ["https://bruttonettocalculator.com/og-image.png"],
-    title: "Brutto-Netto-Tabelle 2026: Gehälter im Vergleich",
+    title: "Brutto-Netto-Tabelle 2026/2027: Netto für jedes Gehalt",
     description:
       "Nettogehalt für jeden Bruttobetrag von 1.500 € bis 10.000 € (Steuerklasse I, 2026) — mit Detailseite je Betrag.",
     url: CANONICAL,
@@ -62,6 +62,20 @@ const GROUPS: RangeGroup[] = [
   { label: "7.000 – 8.900 €", from: 7000, to: 8900 },
   { label: "9.000 – 10.000 €", from: 9000, to: 10000 },
 ];
+
+function netto(brutto: number, jahr: 2026 | 2027, steuerklasse: 1 | 3): number {
+  return calculateNetto({
+    bruttoMonat: brutto,
+    jahr,
+    verheiratet: steuerklasse === 3,
+    kinderlosUeber23: true,
+    kirche: false,
+    steuerklasse,
+  }).nettoMonat;
+}
+
+/** Zeilen der kompakten Tabelle: 1.500–10.000 € in 500-€-Schritten. */
+const TABELLE: number[] = Array.from({ length: 18 }, (_, i) => 1500 + i * 500);
 
 function nettoSK1(brutto: number): number {
   return calculateNetto({
@@ -119,10 +133,10 @@ export default function SalaryHubPage() {
       {/* Hero */}
       <header className="mb-12">
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-4">
-          <Table2 size={14} /> Gehaltstabelle 2026
+          <Table2 size={14} /> Gehaltstabelle 2026 / 2027
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-4">
-          Brutto-Netto-Gehaltstabelle <span className="text-gradient-accent">2026</span>
+          Brutto-Netto-Tabelle <span className="text-gradient-accent">2026 und 2027</span>
         </h1>
         <p className="text-lg sm:text-xl text-black/80 max-w-3xl leading-relaxed">
           Wie viel Netto bleibt von Ihrem Bruttogehalt? Diese Übersicht listet jeden Bruttobetrag von
@@ -146,6 +160,57 @@ export default function SalaryHubPage() {
           <CalcIcon size={16} /> Zum Brutto-Netto-Rechner
         </Link>
       </div>
+
+      {/* The actual table — the page ranked for "brutto netto tabelle" while
+          rendering only link cards. Every cell comes from the tax engine. */}
+      <section aria-labelledby="tabelle" className="mb-14">
+        <h2 id="tabelle" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
+          Brutto-Netto-Tabelle: Monatsnetto 2026 und 2027
+        </h2>
+        <p className="text-sm sm:text-base text-black/70 mb-6 leading-relaxed">
+          Ohne Kirchensteuer, kinderlos ab 23, durchschnittlicher Krankenkassen-Zusatzbeitrag. 2027: Steuertarif laut
+          Gesetzentwurf zur Steuerreform, Sozialabgaben mit den Werten 2026.
+        </p>
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-xl overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[640px]">
+            <thead>
+              <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
+                <th scope="col" className="py-3.5 px-4">Brutto / Monat</th>
+                <th scope="col" className="py-3.5 px-4 text-right text-[#16181D] font-bold">Netto SK I 2026</th>
+                <th scope="col" className="py-3.5 px-4 text-right">Netto SK III 2026</th>
+                <th scope="col" className="py-3.5 px-4 text-right">Netto SK I 2027</th>
+                <th scope="col" className="py-3.5 px-4 text-right">Plus 2027</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-black/10 text-sm sm:text-base">
+              {TABELLE.map((b) => {
+                const n26 = netto(b, 2026, 1);
+                const n27 = netto(b, 2027, 1);
+                return (
+                  <tr key={b} className="hover:bg-black/[0.03]">
+                    <th scope="row" className="py-3 px-4 font-semibold text-left">
+                      <Link href={`/rechner/${b}-euro-brutto-netto`} className="text-[#16181D] hover:text-[#E60A1C] hover:underline underline-offset-2">
+                        {new Intl.NumberFormat("de-DE").format(b)} €
+                      </Link>
+                    </th>
+                    <td className="py-3 px-4 text-right font-mono font-bold">{formatEUR(n26)}</td>
+                    <td className="py-3 px-4 text-right font-mono text-black/75">{formatEUR(netto(b, 2026, 3))}</td>
+                    <td className="py-3 px-4 text-right font-mono text-black/75">{formatEUR(n27)}</td>
+                    <td className={`py-3 px-4 text-right font-mono ${n27 - n26 >= 0 ? "text-emerald-700" : "text-[#E60A1C]"}`}>
+                      {n27 - n26 >= 0 ? "+" : "−"}{formatEUR(Math.abs(n27 - n26))}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-xs sm:text-sm text-black/55">
+          Mehr zur Reform:{" "}
+          <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner 2027</Link>.
+          Darunter: jeder Betrag in 100-€-Schritten mit eigener Detailseite.
+        </p>
+      </section>
 
       {/* Range groups */}
       <div className="space-y-12">

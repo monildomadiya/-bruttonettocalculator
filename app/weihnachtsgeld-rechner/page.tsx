@@ -5,9 +5,9 @@ import RelatedCalculators from "@/components/RelatedCalculators";
 import SupportButton from "@/components/SupportButton";
 
 export const metadata: Metadata = {
-  title: "Weihnachtsgeld-Rechner 2026: Brutto & Netto",
+  title: "Weihnachtsgeld-Rechner 2026: Brutto Netto berechnen",
   description:
-    "Berechnen Sie Ihr Weihnachtsgeld 2026 netto. Mit Steuerklassen, Beispielrechnungen und Erklärung zur Versteuerung von Sonderzahlungen.",
+    "Weihnachtsgeld 2026 brutto netto berechnen: Wie viel bleibt nach Lohnsteuer (sonstiger Bezug) und Sozialabgaben? Alle Steuerklassen, mit Beispielrechnungen.",
   keywords: [
     "weihnachtsgeld rechner",
     "brutto netto rechner weihnachtsgeld",

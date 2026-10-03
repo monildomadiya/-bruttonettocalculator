@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { TrendingUp, Clock, Calculator, ChevronDown, ArrowRight, Info } from "lucide-react";
+import { calculateNetto, type Steuerjahr, type Steuerklasse } from "@/lib/taxCalculator";
 
 const MINDESTLOHN_2026 = 13.90;
 const MINDESTLOHN_2027_EXPECTED = 14.60;
@@ -18,13 +19,22 @@ const history = [
   { year: "2027 (Jan)", betrag: "14,60 €", change: "+5,0 %" },
 ];
 
-// Approximate net multipliers per Steuerklasse for estimation
-const netMultipliers = [
-  { klasse: "I", label: "Klasse I (ledig)", factor: 0.74 },
-  { klasse: "III", label: "Klasse III (verheiratet)", factor: 0.83 },
-  { klasse: "IV", label: "Klasse IV (verheiratet gleich)", factor: 0.74 },
-  { klasse: "V", label: "Klasse V (verheiratet geringer)", factor: 0.62 },
+// Netto per Steuerklasse from the tax engine. These used to be flat
+// multipliers (I ×0,74, III ×0,83, V ×0,62), which ignored the progression,
+// the Midijob range for part-time hours and the 2027 tariff entirely.
+const STEUERKLASSEN: { sk: Steuerklasse; label: string }[] = [
+  { sk: 1, label: "Klasse I (ledig)" },
+  { sk: 3, label: "Klasse III (verheiratet)" },
+  { sk: 4, label: "Klasse IV (verheiratet gleich)" },
+  { sk: 5, label: "Klasse V (verheiratet geringer)" },
 ];
+
+const nettoFor = (bruttoMonat: number, jahr: Steuerjahr, sk: Steuerklasse) =>
+  calculateNetto({ bruttoMonat, jahr, steuerklasse: sk, verheiratet: sk === 3 || sk === 4 || sk === 5, kinderlosUeber23: true, kirche: false }).nettoMonat;
+
+const VZ_STUNDEN_MONAT = (40 * 52) / 12;
+const fmt0 = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });
+const VZ_BRUTTO_2026 = MINDESTLOHN_2026 * VZ_STUNDEN_MONAT;
 
 const faqs = [
   {
@@ -37,7 +47,7 @@ const faqs = [
   },
   {
     q: "Wie viel Netto bleibt vom Mindestlohn 2026 übrig?",
-    a: "Bei Vollzeit (40 Std./Woche, 13,90 €/h) ergibt sich ein Bruttogehalt von ca. 2.409 €/Monat. In Steuerklasse I bleiben nach Abzügen etwa 1.724 € netto, in Steuerklasse III ca. 1.883 €.",
+    a: `Bei Vollzeit (40 Std./Woche, 13,90 €/h) ergibt sich ein Bruttogehalt von ca. ${fmt0(VZ_BRUTTO_2026)} €/Monat. In Steuerklasse I bleiben nach Abzügen etwa ${fmt0(nettoFor(VZ_BRUTTO_2026, 2026, 1))} € netto, in Steuerklasse III ca. ${fmt0(nettoFor(VZ_BRUTTO_2026, 2026, 3))} €.`,
   },
   {
     q: "Gilt der Mindestlohn für alle Beschäftigten?",
@@ -55,16 +65,11 @@ function formatEuro(value: number): string {
 
 export default function MindestlohnCalculator({ content }: { content?: React.ReactNode }) {
   const [stunden, setStunden] = useState(40);
-  const [bruttoMonat, setBruttoMonat] = useState(0);
-  const [bruttoJahr, setBruttoJahr] = useState(0);
-
-  useEffect(() => {
-    const monatsStunden = (stunden * 52) / 12;
-    const monat = MINDESTLOHN_2026 * monatsStunden;
-    const jahr = MINDESTLOHN_2026 * stunden * 52;
-    setBruttoMonat(monat);
-    setBruttoJahr(jahr);
-  }, [stunden]);
+  const [jahr, setJahr] = useState<Steuerjahr>(2026);
+  const stundenlohn = jahr === 2027 ? MINDESTLOHN_2027_EXPECTED : MINDESTLOHN_2026;
+  // Derived, not state: the old useEffect left both at 0 in the server HTML.
+  const bruttoMonat = stundenlohn * ((stunden * 52) / 12);
+  const bruttoJahr = stundenlohn * stunden * 52;
 
   return (
     <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
@@ -75,7 +80,7 @@ export default function MindestlohnCalculator({ content }: { content?: React.Rea
         <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-28 text-center">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
             <TrendingUp size={14} />
-            Trending +50% · Aktuell 2026
+            13,90 € (2026) · 14,60 € (2027)
           </div>
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
             Mindestlohn-Rechner{" "}
@@ -129,11 +134,26 @@ export default function MindestlohnCalculator({ content }: { content?: React.Rea
               </div>
             </div>
 
-            {/* Mindestlohn display */}
+            {/* Jahr + Mindestlohn display */}
+            <div className="grid grid-cols-2 gap-2 mb-4" role="group" aria-label="Jahr wählen">
+              {([2026, 2027] as Steuerjahr[]).map((j) => (
+                <button
+                  key={j}
+                  type="button"
+                  onClick={() => setJahr(j)}
+                  aria-pressed={jahr === j}
+                  className={`rounded-xl py-2.5 text-sm font-bold border transition-colors ${
+                    jahr === j ? "bg-[#E60A1C] border-[#E60A1C] text-white" : "bg-white border-black/[0.10] text-black/70 hover:border-[#E60A1C]/50"
+                  }`}
+                >
+                  {j}
+                </button>
+              ))}
+            </div>
             <div className="bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-2xl p-5 mb-6">
               <div className="flex items-center justify-between">
-                <span className="text-black/70 text-sm font-medium">Mindestlohn 2026</span>
-                <span className="text-2xl font-extrabold text-[#16181D]">13,90 €&nbsp;/&nbsp;h</span>
+                <span className="text-black/70 text-sm font-medium">Mindestlohn {jahr}</span>
+                <span className="text-2xl font-extrabold text-[#16181D]">{stundenlohn.toFixed(2).replace(".", ",")} €&nbsp;/&nbsp;h</span>
               </div>
             </div>
 
@@ -154,24 +174,26 @@ export default function MindestlohnCalculator({ content }: { content?: React.Rea
           <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-2 flex items-center gap-2">
               <Clock size={22} className="text-[#E60A1C]" />
-              Geschätztes Nettogehalt
+              Nettogehalt {jahr}
             </h2>
             <div className="flex items-center gap-2 mb-6 text-xs text-amber-600/80 bg-amber-50 border border-amber-500/20 rounded-xl px-3 py-2">
               <Info size={13} className="flex-shrink-0" />
-              Schätzung — Für exakte Werte den Rechner nutzen
+              {jahr === 2027
+                ? "2027: Steuertarif laut Gesetzentwurf, Sozialabgaben mit Werten 2026 — ohne Kirchensteuer, kinderlos"
+                : "Ohne Kirchensteuer, kinderlos ab 23, Ø-Zusatzbeitrag der Krankenkasse"}
             </div>
 
-            <div className="space-y-3">
-              {netMultipliers.map((nm) => {
-                const netto = bruttoMonat * nm.factor;
+            <div className="space-y-3" aria-live="polite">
+              {STEUERKLASSEN.map(({ sk, label }) => {
+                const netto = nettoFor(bruttoMonat, jahr, sk);
                 return (
                   <div
-                    key={nm.klasse}
+                    key={sk}
                     className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4 hover:bg-black/[0.08] transition-colors"
                   >
                     <div>
-                      <div className="text-[#16181D] font-semibold text-sm">{nm.label}</div>
-                      <div className="text-black/40 text-xs mt-0.5">ca. {Math.round(nm.factor * 100)} % von Brutto</div>
+                      <div className="text-[#16181D] font-semibold text-sm">{label}</div>
+                      <div className="text-black/40 text-xs mt-0.5">{bruttoMonat > 0 ? Math.round((netto / bruttoMonat) * 100) : 0} % von Brutto</div>
                     </div>
                     <span className="text-lg font-extrabold text-emerald-600">
                       {formatEuro(netto)}
