@@ -27,7 +27,7 @@ const GEPRUEFT_AM = "2. Oktober 2026";
 export const metadata: Metadata = {
   title: "Brutto-Netto-Rechner Vergleich 2026/2027: wer kann was?",
   description:
-    "Brutto-Netto-Rechner im Vergleich: BruttoNettoCalculator, gehalt.de und Finanztip — 2027-Werte, Netto zu Brutto, Krankenkasse, Midijob und Beamte im belegten Feature-Check.",
+    "Brutto-Netto-Rechner im Vergleich: BruttoNettoCalculator, gehalt.de und Finanztip — 2027-Werte, Netto zu Brutto, Midijob und Beamte im belegten Feature-Check.",
   keywords: [
     "brutto netto rechner vergleich",
     "bester brutto netto rechner",

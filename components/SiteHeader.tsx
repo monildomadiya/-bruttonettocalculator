@@ -63,14 +63,20 @@ export default function SiteHeader() {
   return (
     <div className="sticky top-0 z-40 w-full px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 pointer-events-none">
       <header
-        className="pointer-events-auto relative max-w-6xl mx-auto transition-all duration-500"
+        // Only transform + box-shadow animate. `transition-all` used to tween the
+        // backdrop-filter (blur 20 → 28 px, saturate 1.7 → 2) for 500 ms right as
+        // the visitor starts scrolling — re-rendering a full-width blur on every
+        // frame, the most expensive thing a phone GPU can be asked to animate.
+        // The blur is now constant; the scrolled state still reads through the
+        // shadow, the lighter tint and the slight scale.
+        className="pointer-events-auto relative max-w-6xl mx-auto transition-[transform,box-shadow] duration-300 ease-out"
         style={{
           borderRadius: "15px",
           background: scrolled
             ? "linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(241,243,245,0.68) 50%, rgba(255,255,255,0.72) 100%)"
             : "linear-gradient(135deg, rgba(255,255,255,0.80) 0%, rgba(245,246,248,0.76) 50%, rgba(255,255,255,0.80) 100%)",
-          backdropFilter: scrolled ? "blur(28px) saturate(2)" : "blur(20px) saturate(1.7)",
-          WebkitBackdropFilter: scrolled ? "blur(28px) saturate(2)" : "blur(20px) saturate(1.7)",
+          backdropFilter: "blur(20px) saturate(1.7)",
+          WebkitBackdropFilter: "blur(20px) saturate(1.7)",
           border: "1px solid rgba(255,255,255,0.5)",
           boxShadow: scrolled
             ? "inset 0 1px 0 rgba(255,255,255,0.6), 0 8px 40px rgba(16,24,40,0.10), 0 2px 6px rgba(16,24,40,0.04), 0 0 0 1px rgba(0,0,0,0.04)"

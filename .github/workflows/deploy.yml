@@ -18,6 +18,10 @@ jobs:
   azure:
     name: Azure VM
     runs-on: ubuntu-latest
+    # Optional — the purge step below only runs once both secrets exist.
+    env:
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
 
     steps:
       - name: Deploy over SSH
@@ -51,3 +55,15 @@ jobs:
             sleep 5
             pm2 status
             curl -fsS -o /dev/null -w 'local check: %{http_code}\n' http://127.0.0.1:3007/
+
+      # ── Cloudflare purge ──────────────────────────────────────────────
+      # Prerequisite for an HTML Cache Rule in Cloudflare (today every page is
+      # `cf-cache-status: DYNAMIC`, ~1,1–1,4 s TTFB from Germany). Once HTML is
+      # cached at the edge, a deploy MUST purge it: cached pages reference the
+      # previous build's /_next/static chunk hashes, which no longer exist after
+      # `npm run build`, so stale HTML would load without its JavaScript.
+      # Token needs only "Zone → Cache Purge → Purge" on this zone.
+      - name: Purge Cloudflare cache
+        if: ${{ env.CF_API_TOKEN != '' && env.CF_ZONE_ID != '' }}
+        run: |
+          curl -fsS -X POST "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" -H "Authorization: Bearer ${CF_API_TOKEN}" -H "Content-Type: application/json" --data '{"purge_everything":true}'

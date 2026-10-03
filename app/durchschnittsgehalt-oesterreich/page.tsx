@@ -16,7 +16,7 @@ import { atMetadata, AtSchemas, AtHero, AtFaqList, AtTabelle, AtQuellen, AT_STAN
 const PATH = "/durchschnittsgehalt-oesterreich";
 const TITLE = "Durchschnittsgehalt Österreich — brutto & netto (Median)";
 const DESCRIPTION =
-  "Durchschnittsgehalt in Österreich: Vollzeit verdient man im Median 55.678 € brutto im Jahr. Was das netto pro Monat bedeutet — mit Werten für alle Beschäftigten und Pensionen.";
+  "Durchschnittsgehalt Österreich: Vollzeit im Median 55.678 € brutto im Jahr. Was das netto pro Monat bedeutet — mit Werten für alle Beschäftigten und Pensionen.";
 
 export const metadata = atMetadata({
   path: PATH,

@@ -167,7 +167,10 @@ body { overflow-wrap: break-word; }
     radial-gradient(ellipse 40% 40% at 85% 80%, rgba(230,10,28,0.05) 0%, transparent 60%),
     radial-gradient(ellipse 35% 40% at 15% 30%, rgba(16,24,40,0.03) 0%, transparent 55%);
   pointer-events: none;
-  animation: meshPulse 8s ease-in-out infinite alternate;
+  /* No looping animation here: this layer sits directly under the blurred
+     sticky header, so an infinite pulse forced the header's backdrop-filter to
+     re-render every frame for as long as the homepage stayed open — constant
+     GPU load (and battery drain) on phones for a 3 % scale change nobody sees. */
 }
 
 .hero-bg::after {
@@ -177,11 +180,6 @@ body { overflow-wrap: break-word; }
   background-image: radial-gradient(rgba(16,24,40,0.045) 1px, transparent 1px);
   background-size: 32px 32px;
   pointer-events: none;
-}
-
-@keyframes meshPulse {
-  0%   { opacity: 0.7; transform: scale(1); }
-  100% { opacity: 1;   transform: scale(1.03); }
 }
 
 /* ─── Tool-page hero ────────────────────────────────────────────────── */
@@ -460,7 +458,7 @@ input[type="number"]::-webkit-outer-spin-button {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .hero-bg::before { animation: none; }
+  html { scroll-behavior: auto; }
 }
 
 /* ─── Article / Blog Content Renderer ──────────────────────────────────

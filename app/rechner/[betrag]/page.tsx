@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import {
   Calculator as CalcIcon, ArrowRight, ArrowLeft, CheckCircle2,
   TrendingUp, HelpCircle, Calendar, Sparkles, Building2,
-  ChevronRight, BarChart3,
+  ChevronRight, BarChart3, ArrowDown,
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse, isMidijob2026, midijobArbeitnehmerBemessungMonat } from "@/lib/taxCalculator";
 import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
@@ -470,6 +470,15 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             </p>
           </>
         )}
+        {/* The interactive calculator sits below six content sections — on a phone
+            that is ~6 screens down. Visitors whose case differs from the headline
+            (Kirchensteuer, Kinder, another Steuerklasse) get there in one tap. */}
+        <a
+          href="#rechner"
+          className="no-print mb-6 inline-flex items-center gap-2 rounded-full bg-[#16181D] px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#E60A1C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E60A1C]"
+        >
+          Mit eigenen Angaben berechnen <ArrowDown size={16} aria-hidden="true" />
+        </a>
         <ReviewerByline />
       </div>
 
@@ -703,7 +712,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
       </div>
 
       {/* Interactive Calculator Pre-filled */}
-      <div className="mb-16">
+      <div id="rechner" className="mb-16">
         <div className="text-center mb-8">
           <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
             Interaktiver Gehaltsrechner für {formattedBrutto}

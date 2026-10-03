@@ -10,8 +10,21 @@ type GridPost = Pick<Post, "slug" | "title" | "category" | "image">;
 /**
  * Infografik cards (4:5, like the uploads) with category chips. Every tile is in the server HTML
  * (crawlable links); the chips only hide tiles in the browser.
+ *
+ * `eager` = how many leading tiles load immediately. Defaults to none: React emits a
+ * `<link rel="preload">` for every non-lazy `<img>` in the server HTML, so the grid at the
+ * bottom of the homepage used to preload six tiles ahead of the fonts and the calculator.
+ * Only the /infografiken index, where the grid is the first thing on screen, opts in.
  */
-export default function PostGrid({ posts, filter = true }: { posts: GridPost[]; filter?: boolean }) {
+export default function PostGrid({
+  posts,
+  filter = true,
+  eager = 0,
+}: {
+  posts: GridPost[];
+  filter?: boolean;
+  eager?: number;
+}) {
   const [active, setActive] = useState<string | null>(null);
   const categories = Array.from(new Set(posts.map((p) => p.category)));
   const visible = active ? posts.filter((p) => p.category === active) : posts;
@@ -55,7 +68,7 @@ export default function PostGrid({ posts, filter = true }: { posts: GridPost[]; 
                   alt={p.image.alt}
                   width={600}
                   height={750}
-                  loading={i < 6 ? "eager" : "lazy"}
+                  loading={i < eager ? "eager" : "lazy"}
                   decoding="async"
                   className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
                 />

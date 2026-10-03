@@ -49,7 +49,11 @@ export default function GoogleAdSense() {
       /* storage blocked (private mode, cookie settings) — treat as opted in */
     }
 
-    const reason = isInternal
+    // Same host rule as <AdGuard>: previews and localhost are own traffic.
+    const host = window.location.hostname;
+    const offHost = host !== "bruttonettocalculator.com" && host !== "www.bruttonettocalculator.com";
+
+    const reason = isInternal || offHost
       ? "internal"
       : optedOut
       ? "own-traffic"

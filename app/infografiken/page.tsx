@@ -134,6 +134,7 @@ export default async function InfografikenPage() {
             Alle Infografiken
           </h2>
           <PostGrid
+            eager={4}
             posts={posts.map(({ slug, title, category, image }) => ({ slug, title, category, image }))}
           />
         </section>

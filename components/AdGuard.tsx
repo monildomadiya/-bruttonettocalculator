@@ -49,6 +49,13 @@ import { ADS_OFF_STORAGE_KEY, ADSENSE_LOADER_SRC, AD_FREQUENCY_HINT } from "@/li
  *    readable here. Audited 2026-09-11: the only noindex surfaces on the site
  *    are the 404, /admin-secure and /embed — all three must be ad-free anyway.
  *  - Any browser that has opted out via `?noads=1`.
+ *  - Any host other than the production domain — `localhost`, `next start`
+ *    previews, LAN IPs. Every one of those page loads is the publisher's own
+ *    traffic, and AdSense answered them with three `No slot size for
+ *    availableWidth=0` errors per page, burying real errors in the console.
+ *
+ * The loader is marked with `id`, not a `data-*` attribute: AdSense inspects
+ * its own tag and warns about every data attribute it does not know.
  *
  * The own-traffic opt-out
  * ───────────────────────
@@ -73,6 +80,8 @@ var w=window,d=document,K=${JSON.stringify(ADS_OFF_STORAGE_KEY)},SRC=${JSON.stri
 w.adsbygoogle=w.adsbygoogle||[];
 w.__bncAdsOff=function(){
 var p=location.pathname||"/";
+var h=location.hostname;
+if(h!=="bruttonettocalculator.com"&&h!=="www.bruttonettocalculator.com")return "internal";
 if(p.indexOf("/admin")===0||p.indexOf("/api")===0||p.indexOf("/embed")===0)return "internal";
 var m=d.querySelector('meta[name="robots"][content*="noindex"]');
 if(m)return "no-content";
@@ -80,10 +89,10 @@ var s=null;try{s=localStorage.getItem(K)}catch(e){}
 return s==="1"?"own-traffic":"";
 };
 w.__bncLoadAds=function(){
-if(d.querySelector("script[data-bnc-adsense]"))return;
+if(d.getElementById("bnc-adsense"))return;
 var el=d.createElement("script");
 el.async=true;el.src=SRC;el.crossOrigin="anonymous";
-el.setAttribute("data-bnc-adsense","1");
+el.id="bnc-adsense";
 if(FH)el.setAttribute("data-ad-frequency-hint",FH);
 (d.head||d.documentElement).appendChild(el);
 };
