@@ -12,6 +12,7 @@ import { siteConfig } from "@/lib/authors";
 import ReviewerByline from "@/components/ReviewerByline";
 import SupportButton from "@/components/SupportButton";
 import AdUnit from "@/components/AdUnit";
+import NextSteps from "@/components/NextSteps";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
@@ -1464,6 +1465,17 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             )}
 
           </div>
+
+          {/* ── Personalised next steps — keeps the visit going after the result.
+              Sits below both accordions, i.e. well clear of the result ad. ── */}
+          {lang === "de" && (
+            <NextSteps
+              brutto={bruttoMonat}
+              jahr={jahr}
+              steuerklasse={steuerklasse}
+              netto2027Gain={jahr === 2026 ? resOtherYear.nettoMonat - result.nettoMonat : 0}
+            />
+          )}
 
           {/* ── Support / Buy-me-a-coffee ──────────────────────────
               Placed at the END of the result column on purpose: the
