@@ -203,9 +203,9 @@ function Tabelle({ kopf, zeilen, minWidth = 480 }: { kopf: string[]; zeilen: (st
 }
 
 const Rahmen = ({ c, children }: { c: ExpatContent; children: React.ReactNode }) => (
-  <main lang={c.lang} className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-16 pb-24 text-[#16181D]">
+  <div lang={c.lang} className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-16 pb-24 text-[#16181D]">
     {children}
-  </main>
+  </div>
 );
 
 /* ── Seite 1: Rechner ──────────────────────────────────────────────── */

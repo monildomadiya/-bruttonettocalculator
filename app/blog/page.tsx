@@ -79,7 +79,7 @@ export default function BlogOverviewPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <main className="min-h-screen bg-[#F4F5F7] text-[#16181D] py-16 sm:py-24 px-4 sm:px-8 relative overflow-hidden">
+      <div className="min-h-screen bg-[#F4F5F7] text-[#16181D] py-16 sm:py-24 px-4 sm:px-8 relative overflow-hidden">
         {/* Background ambient glow */}
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-[#E60A1C]/15 to-[#FF2436]/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
@@ -202,7 +202,7 @@ export default function BlogOverviewPage() {
             </div>
           )}
         </div>
-      </main>
+      </div>
 
       {/* Infografiken-Teaser — leer, solange es keine Beiträge gibt */}
       <LatestPosts />

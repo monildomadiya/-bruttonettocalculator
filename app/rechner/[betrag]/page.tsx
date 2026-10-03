@@ -7,11 +7,12 @@ import {
   ChevronRight, BarChart3, ArrowDown,
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse, isMidijob2026, midijobArbeitnehmerBemessungMonat } from "@/lib/taxCalculator";
-import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
 import { getPostBySlug } from "@/lib/blog";
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import JahresgehaltPage from "./JahresgehaltPage";
+import NettoInBruttoPage, { solveNetto } from "./NettoInBruttoPage";
 
 /*
  * Kein `revalidate = 0` — diese Route ist vollständig statisch.
@@ -69,6 +70,10 @@ export async function generateStaticParams() {
   for (const amount of getCommonAnnualSalaryAmounts()) {
     params.push({ betrag: `${amount}-euro-jahresgehalt-brutto-netto` });
   }
+  // Reverse variant ("3000 netto in brutto"-type queries)
+  for (const amount of getNettoInBruttoAmounts()) {
+    params.push({ betrag: `${amount}-euro-netto-in-brutto` });
+  }
   return params;
 }
 
@@ -77,7 +82,14 @@ export async function generateStaticParams() {
 //   "<amount>-euro-brutto-netto"                  (monthly, all classes)
 //   "<amount>-euro-brutto-netto-steuerklasse-N"   (monthly, N = 1..6 focused)
 //   "<amount>-euro-jahresgehalt-brutto-netto"     (annual salary page)
-function parseSlug(betragStr: string): { amount: number; steuerklasse: Steuerklasse | null; jahresgehalt: boolean } | null {
+//   "<amount>-euro-netto-in-brutto"               (reverse: monthly net → gross)
+function parseSlug(betragStr: string): { amount: number; steuerklasse: Steuerklasse | null; jahresgehalt: boolean; nettoInBrutto?: boolean } | null {
+  const reverseMatch = /^(\d+)-euro-netto-in-brutto$/.exec(betragStr);
+  if (reverseMatch) {
+    const num = parseInt(reverseMatch[1], 10);
+    if (isNaN(num) || num < 500 || num > 20000) return null;
+    return { amount: num, steuerklasse: null, jahresgehalt: false, nettoInBrutto: true };
+  }
   const jahrMatch = /^(\d+)-euro-jahresgehalt-brutto-netto$/.exec(betragStr);
   if (jahrMatch) {
     const num = parseInt(jahrMatch[1], 10);
@@ -133,6 +145,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Gehalt nicht gefunden" };
   }
   const { amount, steuerklasse } = parsed;
+
+  // Reverse page ("<amount> € Netto in Brutto")
+  if (parsed.nettoInBrutto) {
+    const r = solveNetto(amount);
+    const fmt = new Intl.NumberFormat("de-DE").format(amount);
+    const eur = (n: number) => new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(n);
+    const canonicalUrl = `https://bruttonettocalculator.com/rechner/${amount}-euro-netto-in-brutto`;
+    const title = `${fmt} € Netto in Brutto 2026 – benötigtes Bruttogehalt`;
+    const description = `Für ${fmt} € netto im Monat brauchen Sie 2026 in Steuerklasse 1 rund ${eur(r.bruttoMonat)} brutto. Alle 6 Steuerklassen, mit Kirchensteuer und 2027.`;
+    return {
+      title,
+      description,
+      keywords: `${amount} netto in brutto, ${amount} netto brutto, ${amount} euro netto wieviel brutto, ${amount} netto in brutto steuerklasse 1, wieviel brutto für ${amount} netto`,
+      alternates: { canonical: canonicalUrl },
+      openGraph: {
+        images: ["https://bruttonettocalculator.com/og-image.png"],
+        title,
+        description,
+        url: canonicalUrl,
+        type: "website",
+        locale: "de_DE",
+        siteName: "BruttoNettoCalculator.com",
+      },
+      twitter: { card: "summary", title, description },
+    };
+  }
 
   // Annual-salary page ("<amount> € Jahresgehalt in Netto")
   if (parsed.jahresgehalt) {
@@ -237,6 +275,11 @@ export default function LongTailSalaryPage({ params }: PageProps) {
   // Annual-salary slug → dedicated Jahresgehalt page
   if (parsed.jahresgehalt) {
     return <JahresgehaltPage amount={amount} />;
+  }
+
+  // Reverse slug → dedicated Netto-in-Brutto page
+  if (parsed.nettoInBrutto) {
+    return <NettoInBruttoPage amount={amount} />;
   }
 
   const isSkPage = steuerklasse !== null;
@@ -421,7 +464,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
   };
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJsonLd) }}
@@ -856,9 +899,19 @@ export default function LongTailSalaryPage({ params }: PageProps) {
                 {new Intl.NumberFormat("de-DE").format(a)} Euro brutto in netto
               </Link>
             ))}
+            {/* Same amount, other direction — "3000 brutto in netto" and
+                "3000 netto in brutto" are searched interchangeably. */}
+            {getNettoInBruttoAmounts().includes(amount) && (
+              <Link
+                href={`/rechner/${amount}-euro-netto-in-brutto`}
+                className="text-xs font-semibold bg-[#16181D] hover:bg-[#E60A1C] text-white px-3.5 py-2 rounded-xl transition-colors"
+              >
+                {new Intl.NumberFormat("de-DE").format(amount)} Euro netto in brutto
+              </Link>
+            )}
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -167,7 +167,7 @@ export default function KrankenkassePage() {
   };
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJsonLd) }} />
 
       {/* Breadcrumb */}
@@ -371,6 +371,6 @@ export default function KrankenkassePage() {
         </div>
       </div>
       <ToolContent config={TOOL_CONTENT["/brutto-netto-rechner-krankenkasse"]} />
-    </main>
+    </div>
   );
 }

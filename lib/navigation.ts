@@ -96,6 +96,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/stundenlohn-rechner", label: "Stundenlohn-Rechner", icon: Clock3, description: "Netto pro Stunde" },
       { href: "/teilzeitrechner", label: "Teilzeitrechner", icon: Timer, description: "Netto bei Teilzeit" },
       { href: "/werkstudent-rechner", label: "Werkstudent-Rechner", icon: GraduationCap, description: "Nur 9,3 % Rentenbeitrag" },
+      { href: "/ausbildung-brutto-netto-rechner", label: "Azubi-Rechner", icon: GraduationCap, description: "Ausbildungsvergütung netto" },
       { href: "/pendlerpauschale-rechner", label: "Pendlerpauschale-Rechner", icon: Route, description: "Entfernungspauschale" },
       { href: "/en/tax-calculator-germany", label: "Tax Calculator (EN)", icon: Globe, description: "German salary in English" },
     ],

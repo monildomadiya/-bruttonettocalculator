@@ -72,6 +72,12 @@ export default function NextSteps({
     });
   }
 
+  // Typical Ausbildungsvergütung range: the result above applies the Midijob rule,
+  // which by law does not apply to Azubis (§ 20 Abs. 2a SGB IV).
+  if (brutto > UEBERGANGSBEREICH_2026.untergrenze && brutto <= 1400) {
+    candidates.push({ href: "/ausbildung-brutto-netto-rechner", title: "In Ausbildung? Azubi-Netto berechnen", sub: "Für Azubis gilt der Midijob-Rabatt nicht", icon: Gauge });
+  }
+
   if (steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5) {
     candidates.push({ href: "/steuerklassenwechsel-rechner", title: "Steuerklasse 3/5 oder 4/4?", sub: "Welche Kombination mehr Netto bringt", icon: Users });
   }

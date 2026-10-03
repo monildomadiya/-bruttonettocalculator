@@ -105,7 +105,7 @@ export default function SalaryHubPage() {
   };
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-24 text-[#16181D] min-h-screen">
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-24 text-[#16181D] min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
@@ -193,6 +193,6 @@ export default function SalaryHubPage() {
         <Link href="/#rechner" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner</Link>.
       </p>
       <ToolContent config={TOOL_CONTENT["/brutto-netto-gehaltstabelle"]} />
-    </main>
+    </div>
   );
 }

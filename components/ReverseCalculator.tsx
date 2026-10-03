@@ -40,9 +40,9 @@ function useAnimatedValue(target: number, duration = 380) {
   return display;
 }
 
-export default function ReverseCalculator() {
-  const [nettoZiel, setNettoZiel] = useState<number>(2500);
-  const [inputStr, setInputStr] = useState<string>("2500");
+export default function ReverseCalculator({ initialNetto = 2500 }: { initialNetto?: number } = {}) {
+  const [nettoZiel, setNettoZiel] = useState<number>(initialNetto);
+  const [inputStr, setInputStr] = useState<string>(String(initialNetto));
   const [inputError, setInputError] = useState<string>("");
   const [jahr, setJahr] = useState<Steuerjahr>(2026);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);

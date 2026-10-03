@@ -92,7 +92,7 @@ export default function WidgetPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <main className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
+      <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
         {/* ── Hero ── */}
         <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
@@ -183,7 +183,7 @@ export default function WidgetPage() {
             — wir helfen gern weiter.
           </p>
         </section>
-      </main>
+      </div>
     </>
   );
 }

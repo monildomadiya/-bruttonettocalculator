@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { KRANKENKASSEN_2026 } from "@/data/krankenkassen";
 import { TVOED_VKA_2026 } from "@/data/tvoed";
 import { getAllPosts } from "@/lib/blog";
-import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts } from "@/data/wage-stats";
 import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
@@ -70,6 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/kurzarbeitergeld-rechner",
     "/pendlerpauschale-rechner",
     "/werkstudent-rechner",
+    "/ausbildung-brutto-netto-rechner",
     "/lohnsteuerrechner",
     "/einkommensteuer-rechner",
     "/steuerrueckerstattung-rechner",
@@ -225,6 +226,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const amount of getCommonAnnualSalaryAmounts()) {
     sitemapEntries.push({
       url: `${base}/rechner/${amount}-euro-jahresgehalt-brutto-netto`,
+      lastModified: engineUpdated,
+    });
+  }
+
+  // Reverse pages ("3000 netto in brutto"-type queries) — curated list
+  for (const amount of getNettoInBruttoAmounts()) {
+    sitemapEntries.push({
+      url: `${base}/rechner/${amount}-euro-netto-in-brutto`,
       lastModified: engineUpdated,
     });
   }

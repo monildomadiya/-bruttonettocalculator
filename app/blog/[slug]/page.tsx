@@ -269,7 +269,7 @@ export default function ArticleReaderPage({
         />
       )}
 
-      <main className="min-h-screen bg-[#F4F5F7] text-[#16181D] relative overflow-hidden">
+      <div className="min-h-screen bg-[#F4F5F7] text-[#16181D] relative overflow-hidden">
         {/* Ambient background */}
         <div
           aria-hidden="true"
@@ -869,7 +869,7 @@ export default function ArticleReaderPage({
             )}
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }

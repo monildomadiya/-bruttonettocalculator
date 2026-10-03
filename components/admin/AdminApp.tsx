@@ -242,12 +242,12 @@ function Admin({ linkOptions, calculators }: { linkOptions: LinkOption[]; calcul
           </div>
         </header>
 
-        <main className="mx-auto max-w-6xl px-4 pb-[calc(96px+env(safe-area-inset-bottom))] pt-5 sm:px-6 lg:px-8 lg:pb-12">
+        <div className="mx-auto max-w-6xl px-4 pb-[calc(96px+env(safe-area-inset-bottom))] pt-5 sm:px-6 lg:px-8 lg:pb-12">
           {tab === "dashboard" && <Dashboard />}
           {tab === "stories" && <StoriesPanel />}
           {tab === "posts" && <PostsPanel />}
           {tab === "tools" && <ToolsPanel />}
-        </main>
+        </div>
 
         {/* Mobile bottom navigation */}
         <nav

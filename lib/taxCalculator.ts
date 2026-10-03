@@ -88,7 +88,19 @@ export interface CalculatorInput {
   szenario?: Szenario;
   /** Nur für `jahr: 2027` wirksam, Default "beschlossen". Siehe `Sv2027`. */
   sv2027?: Sv2027;
+  /**
+   * Beschäftigung zur Berufsausbildung (Azubi). Zwei Sonderregeln aus § 20 SGB IV:
+   *  - Abs. 2a: der Übergangsbereich (Midijob) gilt NICHT — volle AN-Beiträge
+   *    auch bei 603,01–2.000 €;
+   *  - Abs. 3: bis 325 € im Monat (Geringverdienergrenze) trägt der Arbeitgeber
+   *    den gesamten SV-Beitrag allein, inkl. Kinderlosenzuschlag.
+   * Ohne Angabe `false` — alle bestehenden Aufrufer rechnen unverändert.
+   */
+  auszubildend?: boolean;
 }
+
+/** Geringverdienergrenze für Auszubildende, § 20 Abs. 3 Satz 1 Nr. 1 SGB IV. */
+export const AZUBI_GERINGVERDIENERGRENZE = 325;
 
 export interface CalculatorResult {
   bruttoJahr: number;
@@ -628,7 +640,9 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   // werden die AN-Beiträge von der reduzierten beitragspflichtigen Einnahme
   // berechnet, sonst vom Brutto.
   const jahr = input.jahr ?? 2026;
-  const svBemessungMonat = isMidijob(input.bruttoMonat, jahr)
+  const svBemessungMonat = input.auszubildend
+    ? (input.bruttoMonat <= AZUBI_GERINGVERDIENERGRENZE ? 0 : input.bruttoMonat)
+    : isMidijob(input.bruttoMonat, jahr)
     ? Math.max(0, midijobArbeitnehmerBemessungMonat(input.bruttoMonat, jahr))
     : input.bruttoMonat;
   const svBemessungJahr = svBemessungMonat * 12;

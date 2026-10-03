@@ -28,8 +28,8 @@ export const dynamic = "force-static";
  */
 export default function EmbedBruttoNettoPage() {
   return (
-    <main style={{ margin: 0, padding: 8, background: "transparent" }}>
+    <div style={{ margin: 0, padding: 8, background: "transparent" }}>
       <EmbedCalculator />
-    </main>
+    </div>
   );
 }

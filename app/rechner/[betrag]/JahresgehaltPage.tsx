@@ -135,7 +135,7 @@ export default function JahresgehaltPage({ amount }: { amount: number }) {
   };
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-24 text-[#16181D] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJsonLd) }}
@@ -357,6 +357,6 @@ export default function JahresgehaltPage({ amount }: { amount: number }) {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

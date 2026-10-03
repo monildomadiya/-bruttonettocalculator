@@ -155,7 +155,7 @@ export default function GermanyTaxCalculatorPage() {
   });
 
   return (
-    <main lang="en" className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-16 pb-24 text-[#16181D]">
+    <div lang="en" className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-16 pb-24 text-[#16181D]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
@@ -358,6 +358,6 @@ export default function GermanyTaxCalculatorPage() {
         </h2>
         <AccordionFaq faqs={faqs} />
       </section>
-    </main>
+    </div>
   );
 }

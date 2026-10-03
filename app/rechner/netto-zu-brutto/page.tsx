@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { ArrowRightLeft, Sparkles, ListChecks, ChevronDown } from "lucide-react";
+import Link from "next/link";
 import ReverseCalculator from "@/components/ReverseCalculator";
+import { formatEUR } from "@/lib/taxCalculator";
+import { getNettoInBruttoAmounts } from "@/data/wage-stats";
+import { solveNetto } from "../[betrag]/NettoInBruttoPage";
 
 export const metadata: Metadata = {
   title: "Netto Brutto Rechner 2026 – Wunschbrutto berechnen",
@@ -90,6 +94,41 @@ export default function NettoZuBruttoPage() {
           Vergleichen Sie oben verschiedene Steuerklassen — schon der Wechsel von Klasse I zu III kann das
           benötigte Bruttogehalt für dasselbe Netto deutlich senken.
         </p>
+      </div>
+
+      {/* Netto → Brutto table: every curated amount, solved by the engine.
+          Doubles as the crawl path into the /rechner/<n>-euro-netto-in-brutto pages. */}
+      <div className="w-full max-w-6xl mx-auto mb-16">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
+          Netto-in-Brutto-Tabelle 2026
+        </h2>
+        <p className="text-sm sm:text-base text-black/70 mb-6">
+          Benötigtes Monatsbrutto für ein gewünschtes Netto — Steuerklasse I und III, ohne Kirchensteuer, kinderlos ab 23.
+        </p>
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-xl overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[480px]">
+            <thead>
+              <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
+                <th className="py-3.5 px-5">Netto / Monat</th>
+                <th className="py-3.5 px-5 text-right text-[#16181D] font-bold">Brutto Steuerklasse I</th>
+                <th className="py-3.5 px-5 text-right">Brutto Steuerklasse III</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-black/10 text-sm sm:text-base">
+              {getNettoInBruttoAmounts().map((n) => (
+                <tr key={n} className="hover:bg-black/[0.03]">
+                  <td className="py-3 px-5">
+                    <Link href={`/rechner/${n}-euro-netto-in-brutto`} className="font-semibold text-[#16181D] hover:text-[#E60A1C] underline-offset-2 hover:underline">
+                      {new Intl.NumberFormat("de-DE").format(n)} € netto
+                    </Link>
+                  </td>
+                  <td className="py-3 px-5 text-right font-mono font-bold">{formatEUR(solveNetto(n).bruttoMonat)}</td>
+                  <td className="py-3 px-5 text-right font-mono text-black/75">{formatEUR(solveNetto(n, { steuerklasse: 3 }).bruttoMonat)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Erklärung: So funktioniert die Rückrechnung */}

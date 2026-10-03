@@ -208,3 +208,18 @@ export function getCommonAnnualSalaryAmounts(): number[] {
   }
   return amounts;
 }
+
+/**
+ * Whitelisted, indexable net amounts for the "<amount> netto in brutto" pages
+ * (/rechner/<amount>-euro-netto-in-brutto). Curated, not a range: each value
+ * appears as its own "<amount> netto in brutto" query in the Google Ads Keyword
+ * Planner export of 2026-10-03 (DE). Indexation is the site's bottleneck, so a
+ * net amount is only added when there is evidence someone searches for it.
+ */
+export function getNettoInBruttoAmounts(): number[] {
+  return [
+    1200, 1250, 1300, 1400, 1500, 1600, 2000, 2100, 2500, 2650, 2700, 2800,
+    3000, 3300, 3500, 3600, 3700, 3800, 3900, 4000, 4100, 4300, 4600, 4700,
+    5000, 5400, 6000,
+  ];
+}

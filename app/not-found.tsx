@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className="min-h-[80vh] bg-[#F4F5F7] text-[#16181D] flex items-center justify-center px-6 py-20 relative overflow-hidden">
+    <div className="min-h-[80vh] bg-[#F4F5F7] text-[#16181D] flex items-center justify-center px-6 py-20 relative overflow-hidden">
       {/* Google Publisher Policies: no ads on screens without publisher content.
           The two site-wide units live in the root layout, which this page
           inherits like any other route — this switches them off. */}
@@ -76,6 +76,6 @@ export default function NotFound() {
         </div>
 
       </div>
-    </main>
+    </div>
   );
 }
