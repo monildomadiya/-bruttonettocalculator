@@ -80,5 +80,74 @@ eq("7.000 €/Monat: RV/ALV voll beitragspflichtig", e2.svBasisRvAlv, 5000);
 const e3 = ez.nettoEinmalzahlung({ bruttoMonat: 5500, einmal: 4000, steuerklasse: 1, kirche: false, kinderlosUeber23: false });
 eq("5.500 €/Monat: KV/PV nur bis anteilige BBG", e3.svBasisKvPv, 69750 * 11 / 12 - 5500 * 11);
 
+// ── Unterhalt: Düsseldorfer Tabelle 2026 (OLG Düsseldorf) ───────────────
+const uh = await import("../lib/unterhalt.ts");
+// Anhang „Tabelle Zahlbeträge“ — Stichproben
+eq("DT Zahlbetrag Gr. 1, 0–5", uh.zahlbetrag(uh.DT_2026[0], 3), 356.5);
+eq("DT Zahlbetrag Gr. 1, ab 18", uh.zahlbetrag(uh.DT_2026[0], 18), 439);
+eq("DT Zahlbetrag Gr. 12, 12–17", uh.zahlbetrag(uh.DT_2026[11], 14), 1020.5);
+eq("DT Zahlbetrag Gr. 15, 6–11", uh.zahlbetrag(uh.DT_2026[14], 8), 986.5);
+eq("DT Zahlbetrag Gr. 15, ab 18", uh.zahlbetrag(uh.DT_2026[14], 19), 1137);
+eq("DT Gruppe für 2.100 €", uh.gruppeFuer(2100).nr, 1);
+eq("DT Gruppe für 2.100,50 €", uh.gruppeFuer(2100.5).nr, 2);
+eq("DT Gruppe für 6.400 €", uh.gruppeFuer(6400).nr, 11);
+// Mangelfall-Beispiel aus Anm. C der Tabelle: 1.750 €, Kinder 18 (Schüler), 7, 5
+const mf = uh.berechneUnterhalt({ einkommen: 1750, alter: [18, 7, 5], erwerbstaetig: true, bedarfskontrolle: true });
+eq("Mangelfall erkannt", mf.mangelfall, true);
+eq("Mangelfall K1 (OLG: 107,60)", mf.kinder[0].zahlbetrag, 107.6);
+eq("Mangelfall K2 (OLG: 105,02)", mf.kinder[1].zahlbetrag, 105.02);
+eq("Mangelfall K3 (OLG: 87,38)", mf.kinder[2].zahlbetrag, 87.38);
+// Bedarfskontrollbetrag: 3.000 € (Gr. 4, BKB 1.950), zwei Kinder 4 und 9
+const bk = uh.berechneUnterhalt({ einkommen: 3000, alter: [4, 9], erwerbstaetig: true, bedarfskontrolle: true });
+console.log(`  · 3.000 €, Kinder 4/9: Gruppe ${bk.gruppeNachEinkommen} → ${bk.gruppe}, Zahlbeträge ${bk.kinder.map((k) => k.zahlbetrag).join(" / ")}, bleibt ${bk.verbleibt}`);
+eq("BKB-Herabstufung hält den Kontrollbetrag ein", bk.verbleibt >= uh.DT_2026[bk.gruppe - 1].bkb || bk.gruppe === 1, true);
+
+// ── TV-L 2026 (LfF Bayern) ───────────────────────────────────────────────
+const tvl = await import("../data/tvl.ts");
+const tv = (slug: string, st: number) => tvl.TVL_2026.find((g) => g.slug === slug)!.stufen[st - 1];
+eq("TV-L E 13 Stufe 1", tv("e13", 1), 4759.37);
+eq("TV-L E 9a Stufe 3", tv("e9a", 3), 3925.58);
+eq("TV-L E 1 Stufe 1 (gibt es nicht)", tv("e1", 1), null);
+eq("TV-L E 1 Stufe 2", tv("e1", 2), 2534.49);
+eq("TV-L E 15 Stufe 6", tv("e15", 6), 7854.52);
+
+// ── Mutterschutz (MuSchG §§ 3, 19, 20; § 24i SGB V) ──────────────────────
+const ms = await import("../lib/mutterschutz.ts");
+const sf = ms.schutzfristen(new Date(2027, 4, 15), false);
+eq("ET 15.05.2027: Beginn", iso(sf.beginn), "2027-04-03");
+eq("ET 15.05.2027: Ende (8 Wochen)", iso(sf.ende), "2027-07-10");
+eq("ET 15.05.2027: Tage Mutterschaftsgeld", sf.tageGesamt, 99);
+const sf12 = ms.schutzfristen(new Date(2027, 4, 15), true);
+eq("ET 15.05.2027: Ende (12 Wochen)", iso(sf12.ende), "2027-08-07");
+eq("12 Wochen: Tage", sf12.tageGesamt, 127);
+eq("Bemessung Jan–Mär 2027 = 90 Tage", ms.tageBemessung(sf.beginn), 90);
+const mg = ms.mutterschaftsgeld({ nettoMonat: 2000, fristen: sf, gesetzlichVersichert: true });
+eq("Mutterschaftsgeld KK 13 € × 99", mg.krankenkasse, 1287);
+eq("KK + AG = volles Netto der 99 Tage", mg.gesamt, (6000 / 90) * 99);
+const mgP = ms.mutterschaftsgeld({ nettoMonat: 2000, fristen: sf, gesetzlichVersichert: false });
+eq("Privat versichert: BAS max. 210 €", mgP.krankenkasse, 210);
+eq("Fehlgeburt 18. SSW → 6 Wochen", ms.schutzfristFehlgeburt(18), 6);
+eq("Fehlgeburt 12. SSW → keine Schutzfrist", ms.schutzfristFehlgeburt(12), null);
+
+// ── Kündigungsfrist (§ 622 BGB, §§ 187 f. BGB) ───────────────────────────
+const kf = await import("../lib/kuendigungsfrist.ts");
+const d = (y: number, m: number, t: number) => new Date(y, m - 1, t);
+eq("4 Wochen zum 15./Monatsende: Zugang Mo 1.6.2026", iso(kf.fristEnde(d(2026, 6, 1), { wochen: 4, termin: "15oderMonatsende" })), "2026-06-30");
+eq("Zugang 2.6.2026 (Frist endet 30.6.)", iso(kf.fristEnde(d(2026, 6, 2), { wochen: 4, termin: "15oderMonatsende" })), "2026-06-30");
+eq("Zugang 3.6.2026 → 15.7.", iso(kf.fristEnde(d(2026, 6, 3), { wochen: 4, termin: "15oderMonatsende" })), "2026-07-15");
+eq("1 Monat zum Monatsende, Zugang 31.3.", iso(kf.fristEnde(d(2026, 3, 31), { monate: 1, termin: "monatsende" })), "2026-04-30");
+eq("1 Monat zum Monatsende, Zugang 1.4.", iso(kf.fristEnde(d(2026, 4, 1), { monate: 1, termin: "monatsende" })), "2026-05-31");
+eq("6 Wochen zum Quartalsende, Zugang 17.2.", iso(kf.fristEnde(d(2026, 2, 17), { wochen: 6, termin: "quartalsende" })), "2026-03-31");
+eq("6 Wochen zum Quartalsende, Zugang 18.2.", iso(kf.fristEnde(d(2026, 2, 18), { wochen: 6, termin: "quartalsende" })), "2026-06-30");
+eq("Probezeit 2 Wochen, Zugang 10.3.", iso(kf.fristEnde(d(2026, 3, 10), { wochen: 2, termin: "keiner" })), "2026-03-24");
+const ag10 = kf.gesetzlicheFrist({ arbeitgeberKuendigt: true, beginn: d(2016, 1, 1), zugang: d(2026, 1, 15), probezeit: false });
+eq("AG nach 10 Jahren: 4 Monate", ag10.text, "4 Monate zum Monatsende");
+const ag9 = kf.gesetzlicheFrist({ arbeitgeberKuendigt: true, beginn: d(2016, 1, 16), zugang: d(2026, 1, 15), probezeit: false });
+eq("AG einen Tag vor 10 Jahren: 3 Monate", ag9.text, "3 Monate zum Monatsende");
+const an = kf.gesetzlicheFrist({ arbeitgeberKuendigt: false, beginn: d(2000, 1, 1), zugang: d(2026, 1, 15), probezeit: false });
+eq("Arbeitnehmer nach 26 Jahren: Grundfrist", an.text, "4 Wochen zum 15. oder zum Monatsende");
+eq("Spätester Zugang für Ende 30.6. (4 Wochen)", iso(kf.spaetesterZugang(d(2026, 6, 30), { wochen: 4, termin: "15oderMonatsende" })), "2026-06-02");
+eq("Spätester Zugang für Ende 30.4. (1 Monat)", iso(kf.spaetesterZugang(d(2026, 4, 30), { monate: 1, termin: "monatsende" })), "2026-03-31");
+
 console.log(failed ? `\n${failed} PRUEFUNG(EN) FEHLGESCHLAGEN` : "\nALLE PRUEFUNGEN BESTANDEN");
 process.exit(failed ? 1 : 0);

@@ -72,6 +72,7 @@ export default function SiteFooter() {
               <li><Link href="/durchschnittsgehalt-oesterreich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Durchschnittsgehalt Österreich</Link></li>
               <li><Link href="/tvoed-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">TVöD-Rechner 2026</Link></li>
               <li><Link href="/jahressonderzahlung-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Jahressonderzahlung-Rechner</Link></li>
+              <li><Link href="/tv-l-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">TV-L-Rechner 2026</Link></li>
               <li><Link href="/immobilienkredit-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Immobilienkredit-Rechner</Link></li>
               <li><Link href="/steuerklassenwechsel-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerklassenwechsel</Link></li>
               <li><Link href="/gehaltserhoehung-rechner"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Gehaltserhöhung-Rechner</Link></li>
@@ -117,9 +118,12 @@ export default function SiteFooter() {
               <li><Link href="/werkstudent-rechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Werkstudent-Rechner</Link></li>
               <li><Link href="/ausbildung-brutto-netto-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Azubi-Rechner</Link></li>
               <li><Link href="/elterngeld-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Elterngeld-Rechner</Link></li>
+              <li><Link href="/mutterschutz-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Mutterschutz-Rechner</Link></li>
+              <li><Link href="/unterhaltsrechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Unterhaltsrechner</Link></li>
               <li><Link href="/arbeitslosengeld-rechner"  className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Arbeitslosengeld-Rechner</Link></li>
               <li><Link href="/kurzarbeitergeld-rechner"  className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kurzarbeitergeld-Rechner</Link></li>
               <li><Link href="/abfindungsrechner"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Abfindungsrechner</Link></li>
+              <li><Link href="/kuendigungsfrist-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kündigungsfrist-Rechner</Link></li>
               <li><Link href="/bonus-steuerrechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Bonus-Steuerrechner</Link></li>
               <li><Link href="/stundenlohn-rechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Stundenlohn-Rechner</Link></li>
               <li><Link href="/ueberstunden-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Überstunden-Rechner</Link></li>

@@ -254,6 +254,9 @@ export default function ElterngeldRechner() {
               alle kostenlos und aktuell für 2026.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
+              <Link href="/mutterschutz-rechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
+                Mutterschutz-Rechner
+              </Link>
               <Link href="/minijob-rechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
                 Minijob-Rechner
               </Link>

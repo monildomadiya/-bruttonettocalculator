@@ -216,6 +216,10 @@ export default function TvoedHubPage() {
               <Link href="/tvoed-sue-tabelle" className="text-[#E60A1C] font-semibold hover:underline">
                 TVöD SuE Tabelle (S 2 bis S 18)
               </Link>
+              , für Beschäftigte der Länder der{" "}
+              <Link href="/tv-l-rechner" className="text-[#E60A1C] font-semibold hover:underline">
+                TV-L-Rechner
+              </Link>
               .
             </span>
           </div>

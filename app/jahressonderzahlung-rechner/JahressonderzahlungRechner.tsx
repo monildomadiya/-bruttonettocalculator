@@ -173,11 +173,11 @@ export default function JahressonderzahlungRechner() {
               <Info size={13} className="flex-shrink-0" /> Auszahlung mit dem Novembergehalt 2026 — keine Steuerberatung
             </div>
             <div className="space-y-3" aria-live="polite">
-              <div className="flex items-center justify-between bg-[#FFFFFF] border border-black/[0.08] rounded-xl px-5 py-4">
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 bg-[#FFFFFF] border border-black/[0.08] rounded-xl px-5 py-4">
                 <span className="text-black/75 text-sm font-semibold">
                   Brutto ({prozent.toLocaleString("de-DE")} %{anteil < 1 ? `, ${12 - monateOhne}/12` : ""})
                 </span>
-                <span className="text-xl font-mono font-extrabold text-[#16181D]">{formatEUR(jszBrutto)}</span>
+                <span className="text-xl font-mono font-extrabold text-[#16181D] ml-auto">{formatEUR(jszBrutto)}</span>
               </div>
               {[
                 { label: "Krankenversicherung", v: r.svKranken },
@@ -188,14 +188,14 @@ export default function JahressonderzahlungRechner() {
                 { label: "Solidaritätszuschlag", v: r.soli },
                 ...(kirche ? [{ label: "Kirchensteuer", v: r.kirchensteuer }] : []),
               ].map((row) => (
-                <div key={row.label} className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-2.5">
+                <div key={row.label} className="flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-2.5">
                   <span className="text-black/70 text-sm font-medium">{row.label}</span>
-                  <span className="text-sm sm:text-base font-mono font-bold text-[#16181D]">−{formatEUR(row.v)}</span>
+                  <span className="text-sm sm:text-base font-mono font-bold text-[#16181D] ml-auto">−{formatEUR(row.v)}</span>
                 </div>
               ))}
-              <div className="flex items-center justify-between bg-emerald-50 border border-emerald-500/25 rounded-xl px-5 py-4">
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 bg-emerald-50 border border-emerald-500/25 rounded-xl px-5 py-4">
                 <span className="text-black/80 text-sm font-semibold">Netto im November extra</span>
-                <span className="text-2xl font-mono font-extrabold text-emerald-700">{formatEUR(r.netto)}</span>
+                <span className="text-2xl font-mono font-extrabold text-emerald-700 ml-auto">{formatEUR(r.netto)}</span>
               </div>
               <p className="text-xs text-black/60 px-1 leading-relaxed">
                 Von der Sonderzahlung bleiben {r.nettoQuotePct.toLocaleString("de-DE", { maximumFractionDigits: 1 })} % netto.

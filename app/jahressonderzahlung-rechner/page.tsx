@@ -162,7 +162,8 @@ export default function Page() {
         <p className="mt-3 text-xs sm:text-sm text-black/55">
           Alle Gruppen und Stufen der Tabelle zeigt der{" "}
           <Link href="/tvoed-rechner" className="underline hover:text-[#E60A1C]">TVöD-Rechner</Link>; die S-Gruppen die{" "}
-          <Link href="/tvoed-sue-tabelle" className="underline hover:text-[#E60A1C]">TVöD-SuE-Tabelle</Link>.
+          <Link href="/tvoed-sue-tabelle" className="underline hover:text-[#E60A1C]">TVöD-SuE-Tabelle</Link>, die Länder-Tabelle der{" "}
+          <Link href="/tv-l-rechner" className="underline hover:text-[#E60A1C]">TV-L-Rechner</Link>.
         </p>
       </section>
 

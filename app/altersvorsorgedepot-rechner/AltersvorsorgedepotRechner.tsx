@@ -159,9 +159,9 @@ export default function AltersvorsorgedepotRechner() {
                 {kinder > 0 && <Zeile label={`Kinderzulage (${kinder} × bis 300 €)`} wert={`+${formatEUR(zRegel.kinder)}`} />}
                 {unter25 && beitragJahr >= AVD.mindesteigenbeitrag && <Zeile label="Berufseinsteigerbonus (einmalig)" wert={`+${formatEUR(AVD.berufseinsteigerbonus)}`} />}
                 <Zeile label="Zusätzlich per Steuererklärung (Günstigerprüfung)" wert={`+${formatEUR(gp.zusaetzlicheErstattung)}`} />
-                <div className="flex items-center justify-between bg-emerald-50 border border-emerald-500/25 rounded-xl px-5 py-4">
+                <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 bg-emerald-50 border border-emerald-500/25 rounded-xl px-5 py-4">
                   <span className="text-black/80 text-sm font-semibold">Staatliche Förderung / Jahr</span>
-                  <span className="text-2xl font-mono font-extrabold text-emerald-700">{formatEUR(gp.foerderungGesamt)}</span>
+                  <span className="text-2xl font-mono font-extrabold text-emerald-700 ml-auto">{formatEUR(gp.foerderungGesamt)}</span>
                 </div>
                 <p className="text-xs text-black/60 px-1 leading-relaxed">
                   {beitragJahr < AVD.mindesteigenbeitrag
@@ -183,9 +183,9 @@ export default function AltersvorsorgedepotRechner() {
                 <Zeile label="Eigene Einzahlungen" wert={formatEUR(sp.eigenbeitraege)} />
                 <Zeile label="Zulagen" wert={formatEUR(sp.zulagenSumme)} />
                 <Zeile label={`Erträge (${rendite} % minus ${kosten.toLocaleString("de-DE")} % Kosten)`} wert={formatEUR(sp.ertraege)} />
-                <div className="flex items-center justify-between bg-[#FFFFFF] border border-black/[0.10] rounded-xl px-5 py-4">
+                <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 bg-[#FFFFFF] border border-black/[0.10] rounded-xl px-5 py-4">
                   <span className="text-black/80 text-sm font-semibold">Depotwert bei Rentenbeginn</span>
-                  <span className="text-2xl font-mono font-extrabold text-[#16181D]">{formatEUR(sp.endkapital)}</span>
+                  <span className="text-2xl font-mono font-extrabold text-[#16181D] ml-auto">{formatEUR(sp.endkapital)}</span>
                 </div>
                 <Zeile label={`Auszahlungsplan bis ${AVD.auszahlplanBis} (vor Steuern)`} wert={`${formatEUR(sp.monatlicheAuszahlung)} / Monat`} />
                 <p className="flex gap-2 text-xs text-black/60 px-1 leading-relaxed">
@@ -205,9 +205,9 @@ export default function AltersvorsorgedepotRechner() {
 
 function Zeile({ label, wert }: { label: string; wert: string }) {
   return (
-    <div className="flex items-center justify-between gap-3 bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-2.5">
+    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-2.5">
       <span className="text-black/70 text-sm font-medium">{label}</span>
-      <span className="text-sm sm:text-base font-mono font-bold text-[#16181D] whitespace-nowrap">{wert}</span>
+      <span className="text-sm sm:text-base font-mono font-bold text-[#16181D] whitespace-nowrap ml-auto">{wert}</span>
     </div>
   );
 }
