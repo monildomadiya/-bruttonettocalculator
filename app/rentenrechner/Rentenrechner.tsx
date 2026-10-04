@@ -257,7 +257,9 @@ export default function Rentenrechner() {
             Wichtig: Die gesetzliche Rente unterliegt im Ruhestand der{" "}
             <strong className="text-[#16181D]">nachgelagerten Besteuerung</strong> — je nach Renteneintrittsjahr
             ist ein steigender Anteil steuerpflichtig. Der Rechner liefert eine realistische Orientierung, ersetzt
-            aber keine individuelle Rentenberatung der Deutschen Rentenversicherung.
+            aber keine individuelle Rentenberatung der Deutschen Rentenversicherung. Ab wann Sie ohne Abschlag in
+            Rente gehen können, zeigt der{" "}
+            <Link href="/renteneintrittsalter-rechner" className="text-[#E60A1C] font-semibold hover:underline">Renteneintrittsalter-Rechner</Link>.
           </p>
         </div>
       </section>

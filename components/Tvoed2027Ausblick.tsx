@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CalendarClock, CheckCircle2, Clock } from "lucide-react";
 import Section from "@/components/ui/Section";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
@@ -87,7 +88,8 @@ export default function Tvoed2027Ausblick({ gruppe }: { gruppe?: TvoedGruppe }) 
             <span>
               <strong className="text-[#16181D]">Jahressonderzahlung {JAHRESSONDERZAHLUNG_VKA_PROZENT} %</strong> bei den
               Kommunen für alle Entgeltgruppen, ausgezahlt mit dem Novembergehalt. Ein Teil davon lässt sich in bis zu
-              drei freie Tage umwandeln.
+              drei freie Tage umwandeln. Netto ausrechnen:{" "}
+              <Link href="/jahressonderzahlung-rechner" className="text-[#E60A1C] font-semibold hover:underline">Jahressonderzahlung-Rechner</Link>.
             </span>
           </li>
         </ul>
@@ -154,7 +156,8 @@ export default function Tvoed2027Ausblick({ gruppe }: { gruppe?: TvoedGruppe }) 
         <p>
           <strong className="text-[#16181D]">Jahressonderzahlung:</strong> In {beispiele[0].label} sind {JAHRESSONDERZAHLUNG_VKA_PROZENT} %
           des Monatsentgelts rund {formatEUR(beispiele[0].jsz)} brutto. Maßgeblich ist der Durchschnitt der Monate Juli bis
-          September.
+          September. Was davon netto bleibt, rechnet der{" "}
+          <Link href="/jahressonderzahlung-rechner" className="text-[#E60A1C] font-semibold hover:underline">Jahressonderzahlung-Rechner</Link>.
         </p>
       )}
     </Section>

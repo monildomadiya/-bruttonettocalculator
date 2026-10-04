@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import RiesterRechner from "./RiesterRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
@@ -88,6 +89,23 @@ export default function RiesterRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <RiesterRechner />
+      {/* Reform-Hinweis: Ab 2027 löst das Altersvorsorgedepot Riester für neue
+          Verträge ab (BGBl. 2026 I Nr. 156). Ohne diesen Hinweis wirkt die Seite
+          auf einem Thema mit laufender Gesetzgebung veraltet. */}
+      <section data-section="" className="max-w-6xl mx-auto px-5 py-4">
+        <div className="bg-[#FFFFFF] border border-[#E60A1C]/30 rounded-2xl p-5 sm:p-6 text-sm sm:text-base text-black/75 leading-relaxed">
+          <strong className="text-[#16181D]">Neu ab 2027: das Altersvorsorgedepot.</strong> Mit dem
+          Altersvorsorgereformgesetz (BGBl. 2026 I Nr. 156) gibt es ab dem 1. Januar 2027 eine neue Förderung:
+          50 % Zulage auf die ersten 360 € und 25 % bis 1.800 € Eigenbeitrag (bis 540 € im Jahr), 300 €
+          Kinderzulage je Kind. Bestehende Riester-Verträge laufen mit der bisherigen Förderung weiter; ein Wechsel
+          in einen Neuvertrag ist laut BMF ohne Rückzahlung der Förderung möglich. Was Sie im neuen Modell bekommen,
+          zeigt der{" "}
+          <Link href="/altersvorsorgedepot-rechner" className="text-[#E60A1C] font-semibold hover:underline">
+            Altersvorsorgedepot-Rechner 2027
+          </Link>
+          .
+        </div>
+      </section>
       <ToolContent config={TOOL_CONTENT["/riester-rechner"]} />
     </>
   );

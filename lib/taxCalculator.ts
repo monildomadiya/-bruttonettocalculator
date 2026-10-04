@@ -631,6 +631,57 @@ export function einkommensteuerFuerZvE(zvE: number, steuerklasse: Steuerklasse =
   }
 }
 
+/**
+ * Jahres-Lohnsteuer, Soli und Kirchensteuer nach Steuerklasse — genau die
+ * Rechnung, die `calculateNetto` intern verwendet. Exportiert für Tools, die
+ * eine Steuer-DIFFERENZ brauchen (Einmalzahlungen nach § 39b Abs. 3 EStG:
+ * Steuer auf Jahreslohn + sonstiger Bezug minus Steuer auf den Jahreslohn).
+ *
+ * `zvE` ist das vereinfachte zu versteuernde Einkommen der Engine (Brutto −
+ * Sozialabgaben − Arbeitnehmer- und Sonderausgaben-Pauschbetrag);
+ * `bruttoJahr` und `svSummeJahr` braucht nur Klasse VI (ohne Pauschbeträge).
+ */
+export function steuerNachKlasse(opts: {
+  zvE: number;
+  bruttoJahr: number;
+  svSummeJahr: number;
+  steuerklasse: Steuerklasse;
+  jahr: Steuerjahr;
+  szenario?: Szenario;
+  kirche: boolean;
+  kirchensteuerSatz?: number;
+}): { estJahr: number; soliJahr: number; kirchensteuerJahr: number; summeJahr: number } {
+  const ctx = resolveSteuerkontext(opts.jahr, opts.szenario);
+  const { zvE, steuerklasse: sk } = opts;
+
+  let estJahr: number;
+  if (sk === 3) {
+    // Steuerklasse III: Splittingverfahren
+    estJahr = 2 * ctx.est(zvE / 2);
+  } else if (sk === 5) {
+    // Steuerklasse V: § 39b Abs. 2 Satz 7 EStG (PAP MST5-6), mit
+    // Arbeitnehmer- und Sonderausgaben-Pauschbetrag wie im zvE oben.
+    estJahr = lohnsteuerKlasse56(zvE, ctx.est);
+  } else if (sk === 6) {
+    // Steuerklasse VI: gleiche Formel, aber ohne Arbeitnehmer- und
+    // Sonderausgaben-Pauschbetrag (PAP MZTABFB: ANP und SAP nur bis Klasse V).
+    const zvE6 = Math.max(0, opts.bruttoJahr - opts.svSummeJahr);
+    estJahr = lohnsteuerKlasse56(zvE6, ctx.est);
+  } else if (sk === 2) {
+    // Steuerklasse II: Alleinerziehendenentlastungsbetrag 4.260 € (2026)
+    const zvE2 = Math.max(0, zvE - 4260);
+    estJahr = ctx.est(zvE2);
+  } else {
+    // Steuerklasse I, IV: Grundtarif
+    estJahr = ctx.est(zvE);
+  }
+
+  const soliJahr = soliBerechnen(estJahr, sk === 3, ctx.soliFaktor);
+  const ksSatz = opts.kirchensteuerSatz ?? 0.09;
+  const kirchensteuerJahr = opts.kirche ? estJahr * ksSatz : 0;
+  return { estJahr, soliJahr, kirchensteuerJahr, summeJahr: estJahr + soliJahr + kirchensteuerJahr };
+}
+
 export function calculateNetto(input: CalculatorInput): CalculatorResult {
   const bruttoJahr = input.bruttoMonat * 12;
   const r = RECHENGROESSEN_2026; // 2026-Parameter (auch als 2027-Platzhalter verwendet)
@@ -681,33 +732,16 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
 
   const sk = input.steuerklasse ?? 1;
 
-  let estJahr: number;
-  if (sk === 3) {
-    // Steuerklasse III: Splittingverfahren
-    estJahr = 2 * ctx.est(zvE / 2);
-  } else if (sk === 5) {
-    // Steuerklasse V: § 39b Abs. 2 Satz 7 EStG (PAP MST5-6), mit
-    // Arbeitnehmer- und Sonderausgaben-Pauschbetrag wie im zvE oben.
-    estJahr = lohnsteuerKlasse56(zvE, ctx.est);
-  } else if (sk === 6) {
-    // Steuerklasse VI: gleiche Formel, aber ohne Arbeitnehmer- und
-    // Sonderausgaben-Pauschbetrag (PAP MZTABFB: ANP und SAP nur bis Klasse V).
-    const zvE6 = Math.max(0, bruttoJahr - svSummeJahr);
-    estJahr = lohnsteuerKlasse56(zvE6, ctx.est);
-  } else if (sk === 2) {
-    // Steuerklasse II: Alleinerziehendenentlastungsbetrag 4.260 € (2026)
-    const zvE2 = Math.max(0, zvE - 4260);
-    estJahr = ctx.est(zvE2);
-  } else {
-    // Steuerklasse I, IV: Grundtarif
-    estJahr = ctx.est(zvE);
-  }
-
-  const soliJahr = soliBerechnen(estJahr, sk === 3, ctx.soliFaktor);
-  const ksSatz = input.kirchensteuerSatz ?? 0.09;
-  const kirchensteuerJahr = input.kirche ? estJahr * ksSatz : 0;
-
-  const steuerSummeJahr = estJahr + soliJahr + kirchensteuerJahr;
+  const { estJahr, soliJahr, kirchensteuerJahr, summeJahr: steuerSummeJahr } = steuerNachKlasse({
+    zvE,
+    bruttoJahr,
+    svSummeJahr,
+    steuerklasse: sk,
+    jahr: input.jahr,
+    szenario: input.szenario,
+    kirche: input.kirche,
+    kirchensteuerSatz: input.kirchensteuerSatz,
+  });
   const nettoJahr = bruttoJahr - svSummeJahr - steuerSummeJahr;
 
   const grenzsteuersatzPct = ctx.grenz(sk === 3 ? zvE / 2 : zvE) * 100;

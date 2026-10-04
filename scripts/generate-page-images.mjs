@@ -79,7 +79,10 @@ const glyphSafe = (s) =>
     // Rest der Pfeil-, Mathe-, Technik- und Dingbat-Blöcke: nicht in Noto Sans
     .replace(/[←-⋿⌀-➿]/g, "")
     .replace(/\s{2,}/g, " ");
-const text = (html) => glyphSafe(decode(html.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim());
+// Inline-Tags ohne Leerzeichen entfernen, wie der Browser rendert: "Altersvorsorgedepot-<span>Rechner</span>"
+// ist "Altersvorsorgedepot-Rechner", nicht "Altersvorsorgedepot- Rechner". Block-Tags trennen weiter mit Leerzeichen.
+const text = (html) =>
+  glyphSafe(decode(html.replace(/<\/?(span|strong|em|b|i|a|small|sup|sub)\b[^>]*>/gi, "").replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim());
 
 function extract(html) {
   const h1 = text((/<h1[^>]*>([\s\S]*?)<\/h1>/i.exec(html) || [])[1] || "");
@@ -112,7 +115,7 @@ const TAGLINE = {
   uk: "Зарплата брутто нетто · Німеччина 2026",
 };
 
-function eyebrowFor(p, rubrik) {
+function eyebrowFor(p, rubrik, h1 = "") {
   if (p === "/") return "Brutto Netto Rechner";
   if (/-euro-netto-in-brutto$/.test(p)) return "Netto in Brutto 2026";
   if (/-euro-jahresgehalt-brutto-netto$/.test(p)) return "Jahresgehalt 2026";
@@ -124,7 +127,7 @@ function eyebrowFor(p, rubrik) {
   if (/oesterreich/.test(p)) return "Österreich";
   if (langOf(p) !== "de") return { en: "Germany", pl: "Niemcy", ro: "Germania", tr: "Almanya", uk: "Німеччина" }[langOf(p)];
   if (rubrik && rubrik !== "Startseite" && rubrik.length <= 34) return rubrik;
-  return /2027/.test(p) ? "Rechner 2027" : "Rechner 2026";
+  return /2027/.test(p) || /2027/.test(h1) ? "Rechner 2027" : "Rechner 2026";
 }
 
 const eur = (n) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
@@ -253,7 +256,7 @@ async function main() {
           manifest[p] = h1;
           const out = path.join(OUT_DIR, `${slugFor(p)}.png`);
           if (fs.existsSync(out) && !FORCE) { skipped++; return; }
-          const eyebrow = eyebrowFor(p, rubrik);
+          const eyebrow = eyebrowFor(p, rubrik, h1);
           const data = salaryData(p);
           await render(data ? salaryCard({ eyebrow, title: h1, data }) : genericCard({ eyebrow, title: h1, desc, lang: langOf(p) }), out);
           written++;

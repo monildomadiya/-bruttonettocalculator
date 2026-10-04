@@ -144,7 +144,10 @@ export default function WeihnachtsgeldContent() {
           Sie mit dem Weihnachtsgeld die Grenze (2026: 101.400 € in der Renten-/Arbeitslosenversicherung,
           69.750 € in Kranken-/Pflegeversicherung), bleibt vom übersteigenden Teil relativ mehr netto übrig. Ihr
           reguläres Nettogehalt berechnen Sie mit dem{" "}
-          <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner</Link>.
+          <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner</Link>. Im
+          öffentlichen Dienst heißt das Weihnachtsgeld Jahressonderzahlung und wird als Prozentsatz des Gehalts
+          gezahlt — die Sätze 2026 für TVöD und TV-L rechnet der{" "}
+          <Link href="/jahressonderzahlung-rechner" className="text-[#E60A1C] font-semibold hover:underline">Jahressonderzahlung-Rechner</Link>.
         </p>
         <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Weihnachtsgeld vs. Bonus</h3>
         <p>
