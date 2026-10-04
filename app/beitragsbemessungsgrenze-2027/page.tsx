@@ -331,7 +331,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
               { href: "/sozialabgaben-rechner-2027", label: "Sozialabgaben-Rechner 2027", desc: "Ihre Mehrbelastung mit eigenem Gehalt" },
-              { href: "/brutto-netto-rechner-2027", label: "Brutto-Netto-Rechner 2027", desc: "Steuerreform-Szenarien im Vergleich" },
+              { href: "/brutto-netto-rechner-2027", label: "Steuerreform-Rechner 2027", desc: "Wie viel mehr Netto bringt die Reform?" },
               { href: "/beitragsbemessungsgrenze-2026", label: "Beitragsbemessungsgrenze 2026", desc: "Die amtlichen Werte im Vergleich" },
               { href: "/private-krankenversicherung-vs-gesetzlich", label: "PKV oder GKV", desc: "Ab der Versicherungspflichtgrenze" },
             ].map((l) => (

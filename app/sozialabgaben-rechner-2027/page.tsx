@@ -308,7 +308,7 @@ export default function SozialabgabenRechner2027Page() {
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-4">Passende Rechner</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
-              { href: "/brutto-netto-rechner-2027", label: "Brutto-Netto-Rechner 2027", text: "Netto 2027 mit Steuerreform" },
+              { href: "/brutto-netto-rechner-2027", label: "Steuerreform-Rechner 2027", text: "Wie viel mehr Netto bringt die Reform?" },
               { href: "/beitragsbemessungsgrenze-2027", label: "Beitragsbemessungsgrenze 2027", text: "Alle Grenzwerte im Detail" },
               { href: "/brutto-netto-rechner-krankenkasse", label: "Rechner mit Krankenkasse", text: "Zusatzbeitrag Ihrer Kasse" },
               { href: "/arbeitgeber-brutto-netto-rechner", label: "Arbeitgeber-Rechner", text: "Gesamtkosten einer Stelle" },

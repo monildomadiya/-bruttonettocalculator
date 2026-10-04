@@ -62,8 +62,8 @@ const faqs = [
     a: "Der Spitzensteuersatz von 42 % greift ab einem zu versteuernden Einkommen von 69.879 €. Die sogenannte Reichensteuer von 45 % gilt ab 277.826 €.",
   },
   {
-    q: "Kann ich diesen Rechner als Brutto Netto Rechner 2027 und Lohnrechner 2027 nutzen?",
-    a: "Ja! Unser Gehaltsrechner fungiert auch für das Steuerjahr 2027 als präziser Brutto Netto Rechner für 2027 sowie als Netto Brutto Rechner 2027. Schalten Sie oben im Lohnrechner einfach das Jahr von 2026 auf 2027 um, um die vorläufigen Netto-Unterschiede und Entlastungen durch den neuen Grundfreibetrag sowie die geänderten Beitragssätze (z.B. Mindestlohn 2027) zu vergleichen.",
+    q: "Kann ich diesen Rechner als Brutto Netto Rechner 2027 nutzen?",
+    a: `Ja. Stellen Sie oben im Rechner das Steuerjahr von 2026 auf 2027 um: Die Lohnsteuer folgt dann dem Gesetzentwurf zur Steuerreform (Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag ${ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €). Für die Sozialabgaben wählen Sie unter „Sozialabgaben 2027“ zwischen dem Stand 2026 und den höheren Beitragsbemessungsgrenzen aus dem BMAS-Entwurf. Der Rechner zeigt das Netto 2027 direkt neben dem Wert für 2026.`,
   },
   {
     q: "Gilt das Tool auch als Gehaltsrechner mit Auto (Firmenwagenrechner & 1%-Regelung)?",
@@ -217,12 +217,20 @@ const breadcrumbSchema = {
 const eurZahl = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 // Netto 2026 ↔ 2027 für den Antwortblock — direkt aus der Rechen-Engine.
+// Zwei 2027-Spalten: nur Steuerreform (Sozialabgaben Stand 2026) und zusätzlich
+// die Beitragsbemessungsgrenzen aus dem BMAS-Entwurf. Ab rund 5.800 € brutto
+// dreht das Vorzeichen — die "2027 weniger netto"-Frage, die Finanztip & Co.
+// gerade aufgreifen, beantwortet der Block so selbst.
 const netto2027Zeilen = [2500, 3800, 5000, 7000].map((brutto) => {
   const basis = { bruttoMonat: brutto, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 as const };
   const n2026 = calculateNetto({ ...basis, jahr: 2026 }).nettoMonat;
   const n2027 = calculateNetto({ ...basis, jahr: 2027 }).nettoMonat;
-  return { brutto, n2026, n2027, plus: n2027 - n2026 };
+  const n2027Sv = calculateNetto({ ...basis, jahr: 2027, sv2027: "entwurf" }).nettoMonat;
+  return { brutto, n2026, n2027, plus: n2027 - n2026, n2027Sv, plusSv: n2027Sv - n2026 };
 });
+const zeile3800 = netto2027Zeilen.find((z) => z.brutto === 3800)!;
+const zeile7000 = netto2027Zeilen.find((z) => z.brutto === 7000)!;
+const eurRund = (n: number) => Math.round(Math.abs(n)).toLocaleString("de-DE");
 
 export default function HomePage() {
   return (
@@ -258,8 +266,8 @@ export default function HomePage() {
             style={{ animationDelay: "160ms" }}
           >
             Nettogehalt in Sekunden berechnen — mit Lohnsteuer, Solidaritätszuschlag, Kirchensteuer
-            und allen Sozialabgaben für alle sechs Steuerklassen. Offizielle Werte 2026,
-            Krankenkassen-Zusatzbeitrag bereits eingerechnet.
+            und allen Sozialabgaben für alle sechs Steuerklassen. Offizielle Werte 2026, für 2027
+            mit dem Gesetzentwurf zur Steuerreform.
           </p>
 
           <TableOfContents
@@ -305,14 +313,16 @@ export default function HomePage() {
 
         {/* Quick-intent links: surface adjacent tools at the moment of intent (SXO) */}
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-          {/* Erster Chip bewusst 2027: Die Startseite rankt selbst für
-              "brutto netto rechner 2027", die Fachseite mit Reform-Szenarien und
-              Gesetzgebungs-Status bekommt so den stärksten internen Link. */}
+          {/* Ankertext bewusst NICHT "Brutto Netto Rechner 2027": Für diese Suche
+              rankt die Startseite selbst (GSC 23.–29.9.2026: Pos. 1,9). Der
+              Exact-Match-Chip vom 30.9. ließ Google stattdessen die Fachseite
+              wählen (4.10.: Fachseite #3, Startseite #13). Die Fachseite bedient
+              die Reform-Frage — siehe app/brutto-netto-rechner-2027/page.tsx. */}
           <Link
             href="/brutto-netto-rechner-2027"
             className="group inline-flex items-center gap-2 bg-[#FFFFFF] hover:bg-[#F1F3F5] border border-[#E60A1C]/40 hover:border-[#E60A1C]/70 rounded-full px-5 py-2.5 text-sm font-bold text-[#16181D] shadow-sm transition-all"
           >
-            <Sparkles size={16} className="text-[#E60A1C]" /> Brutto Netto Rechner 2027
+            <Sparkles size={16} className="text-[#E60A1C]" /> Steuerreform 2027: wie viel mehr Netto?
           </Link>
           <Link
             href="/rechner/netto-zu-brutto"
@@ -346,7 +356,7 @@ export default function HomePage() {
             <TrendingUp size={13} aria-hidden="true" /> Steuerjahr 2027
           </p>
           <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] leading-tight">
-            Brutto Netto 2027: So viel bleibt mehr
+            Brutto Netto Rechner 2027: So viel Netto bleibt 2027
           </h2>
           <p className="mt-3 text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl">
             Ihr Netto für 2027 berechnen Sie oben im Rechner: Bruttogehalt eingeben und das Steuerjahr auf{" "}
@@ -354,7 +364,12 @@ export default function HomePage() {
             Steuerreform (BT-Drucksache 21/8235): Grundfreibetrag{" "}
             {GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} € statt{" "}
             {GRUNDFREIBETRAG.amtlich2026.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag{" "}
-            {ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €. Beschlossen ist das Gesetz noch nicht.
+            {ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €. Bei{" "}
+            {zeile3800.brutto.toLocaleString("de-DE")} € brutto bleiben so rund {eurRund(zeile3800.plus)} € mehr
+            im Monat. Kommen die höheren Beitragsbemessungsgrenzen aus dem BMAS-Entwurf, haben Gutverdiener 2027
+            trotzdem <strong className="text-[#16181D]">weniger Netto</strong> — bei{" "}
+            {zeile7000.brutto.toLocaleString("de-DE")} € brutto rund {eurRund(zeile7000.plusSv)} € im Monat.
+            Beschlossen ist beides noch nicht.
           </p>
           <div className="mt-5 bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs sm:text-base">
@@ -362,8 +377,8 @@ export default function HomePage() {
                 <tr className="border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
                   <th className="py-3 px-2 sm:px-4">Brutto (€)</th>
                   <th className="py-3 px-2 sm:px-4 text-right">Netto 2026</th>
-                  <th className="py-3 px-2 sm:px-4 text-right">Netto 2027*</th>
-                  <th className="py-3 px-2 sm:px-4 text-right">Plus</th>
+                  <th className="py-3 px-2 sm:px-4 text-right">Netto 2027¹</th>
+                  <th className="py-3 px-2 sm:px-4 text-right">Netto 2027²</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-black/10">
@@ -371,21 +386,27 @@ export default function HomePage() {
                   <tr key={z.brutto}>
                     <td className="py-3 px-2 sm:px-4 font-mono font-bold text-[#16181D] whitespace-nowrap">{eurZahl(z.brutto)}</td>
                     <td className="py-3 px-2 sm:px-4 text-right font-mono whitespace-nowrap">{eurZahl(z.n2026)}</td>
-                    <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D] whitespace-nowrap">{eurZahl(z.n2027)}</td>
-                    <td className="py-3 px-2 sm:px-4 text-right font-mono text-emerald-700 whitespace-nowrap">
-                      {z.plus >= 0 ? "+" : ""}
-                      {eurZahl(z.plus)}
-                    </td>
+                    {[z.plus, z.plusSv].map((plus, i) => (
+                      <td key={i} className="py-3 px-2 sm:px-4 text-right font-mono whitespace-nowrap">
+                        <span className="font-bold text-[#16181D]">{eurZahl(i === 0 ? z.n2027 : z.n2027Sv)}</span>
+                        <span className={`block text-[11px] sm:text-xs ${plus >= 0 ? "text-emerald-700" : "text-[#E60A1C]"}`}>
+                          {plus >= 0 ? "+" : "−"}
+                          {eurZahl(Math.abs(plus))}
+                        </span>
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <p className="text-xs text-black/50 mt-3 leading-relaxed">
-            Beträge in Euro pro Monat, Steuerklasse I, kinderlos, ohne Kirchensteuer. * Steuer nach dem Gesetzentwurf, Sozialabgaben mit
-            den Werten 2026 (die Rechengrößen 2027 sind noch nicht beschlossen).{" "}
+            Beträge in Euro pro Monat, Steuerklasse I, kinderlos, ohne Kirchensteuer; darunter die Differenz zu 2026.
+            Lohnsteuer 2027 jeweils nach dem Gesetzentwurf. ¹ Sozialabgaben mit den amtlichen Werten 2026.
+            ² Mit den Beitragsbemessungsgrenzen aus dem BMAS-Referentenentwurf vom 21.09.2026 (Beitragssätze wie 2026).
+            Wie viel mehr Netto die Reform über alle Gehälter bringt und wie weit das Verfahren ist, zeigt der{" "}
             <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
-              Alle Szenarien und den Stand der Reform zeigt der Brutto Netto Rechner 2027
+              Steuerreform-Rechner 2027
             </Link>
             .
           </p>
@@ -570,7 +591,7 @@ export default function HomePage() {
             { label: "Brutto zu Netto", href: "/rechner/brutto-zu-netto" },
             { label: "Brutto-Netto-Tabelle", href: "/brutto-netto-gehaltstabelle" },
             { label: "Brutto Netto Rechner 2026", href: "/brutto-netto-rechner-2026" },
-            { label: "Brutto Netto Rechner 2027", href: "/brutto-netto-rechner-2027" },
+            { label: "Steuerreform-Rechner 2027", href: "/brutto-netto-rechner-2027" },
             { label: "Teilzeitrechner", href: "/teilzeitrechner" },
             { label: "Minijob-Rechner", href: "/minijob-rechner" },
             { label: "Werkstudent-Rechner", href: "/werkstudent-rechner" },

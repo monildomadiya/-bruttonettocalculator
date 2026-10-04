@@ -245,7 +245,7 @@ export default function Rechner2026Page() {
             Der umgekehrte Weg — aus einem gewünschten Nettobetrag das nötige Bruttogehalt 2026 — hat einen eigenen{" "}
             <a href="/rechner/netto-zu-brutto" className="text-[#E60A1C] font-semibold hover:underline">Netto-zu-Brutto-Rechner</a>. Möchten Sie die geplante
             Entlastung durch die Steuerreform sehen, vergleichen Sie einfach mit dem{" "}
-            <a href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Brutto Netto Rechner 2027</a>.
+            <a href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Steuerreform-Rechner 2027</a>.
           </p>
         </div>
       </div>

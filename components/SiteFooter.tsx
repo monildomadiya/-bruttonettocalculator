@@ -81,7 +81,7 @@ export default function SiteFooter() {
               <li><Link href="/rechner/brutto-zu-netto"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto zu Netto</Link></li>
               <li><Link href="/brutto-netto-gehaltstabelle" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto-Netto-Tabelle</Link></li>
               <li><Link href="/brutto-netto-rechner-2026" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner 2026</Link></li>
-              <li><Link href="/brutto-netto-rechner-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brutto Netto Rechner 2027</Link></li>
+              <li><Link href="/brutto-netto-rechner-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerreform-Rechner 2027</Link></li>
               <li><Link href="/pfaendungstabelle"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Pfändungstabelle 2026</Link></li>
               <li><Link href="/welche-steuerklasse-bin-ich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Welche Steuerklasse bin ich?</Link></li>
               <li><Link href="/brutto-netto-rechner-krankenkasse" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner mit Krankenkasse</Link></li>

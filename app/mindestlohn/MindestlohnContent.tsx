@@ -91,7 +91,7 @@ export default function MindestlohnContent() {
           Netto 2027 mit dem Steuertarif laut Gesetzentwurf zur Einkommensteuerreform 2027 und den Sozialversicherungswerten 2026
           (die Rechengrößen 2027 sind noch nicht beschlossen). Unter 2.000 € gelten die reduzierten Midijob-Beiträge.
           Andere Steuerklassen:{" "}
-          <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner 2027</Link>.
+          <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Steuerreform-Rechner 2027</Link>.
         </p>
       </section>
 

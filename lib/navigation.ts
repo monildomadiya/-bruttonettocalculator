@@ -48,7 +48,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/brutto-netto-rechner-krankenkasse", label: "Rechner mit Krankenkasse", icon: HeartPulse, description: "AOK, TK & Co. · Zusatzbeitrag 2026" },
       { href: "/durchschnittsgehalt-deutschland", label: "Durchschnittsgehalt Deutschland", icon: BarChart3, description: "Wo steht Ihr Gehalt im Vergleich?" },
       { href: "/brutto-netto-rechner-2026", label: "Rechner 2026", icon: Calendar, description: "Amtliche Werte 2026" },
-      { href: "/brutto-netto-rechner-2027", label: "Vorschau 2027", icon: Calendar, description: "Reform-Eckwerte testen" },
+      { href: "/brutto-netto-rechner-2027", label: "Steuerreform 2027", icon: Calendar, description: "Wie viel mehr Netto?" },
       { href: "/brutto-netto-rechner-vergleich", label: "Rechner im Vergleich", icon: Scale, description: "Welcher Rechner kann was?" },
     ],
   },

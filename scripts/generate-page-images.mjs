@@ -124,7 +124,7 @@ function eyebrowFor(p, rubrik) {
   if (/oesterreich/.test(p)) return "Österreich";
   if (langOf(p) !== "de") return { en: "Germany", pl: "Niemcy", ro: "Germania", tr: "Almanya", uk: "Німеччина" }[langOf(p)];
   if (rubrik && rubrik !== "Startseite" && rubrik.length <= 34) return rubrik;
-  return "Rechner 2026";
+  return /2027/.test(p) ? "Rechner 2027" : "Rechner 2026";
 }
 
 const eur = (n) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";

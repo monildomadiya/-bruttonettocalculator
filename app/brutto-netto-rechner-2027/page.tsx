@@ -18,13 +18,21 @@ import { pageImageUrl } from "@/lib/pageImage";
 
 const eur = (n: number) => n.toLocaleString("de-DE");
 
-// Titel und Beschreibung nennen den aktuellen Verfahrensschritt: Das Thema ist
+// Suchintention dieser Seite: die REFORM-Frage („Steuerreform 2027 Rechner“,
+// „wie viel mehr Netto 2027“). Die Kopfsuche „brutto netto rechner 2027“ gehört
+// der Startseite — sie stand dort am 23.–29.9.2026 auf Pos. 1,9. Als Titel, H1
+// und Startseiten-Chip hier ebenfalls exakt „Brutto Netto Rechner 2027“ lauteten,
+// wählte Google ab Oktober diese Seite statt der Startseite (4.10.: #3 statt #1–2,
+// Startseite auf #13). Deshalb hier keinen Exact-Match-Titel und keine
+// Exact-Match-Ankertexte auf diese URL — siehe auch app/page.tsx.
+//
+// Die Beschreibung nennt den aktuellen Verfahrensschritt: Das Thema ist
 // query-deserves-freshness, ein veralteter Stand im Snippet kostet Rankings
 // (Absturz im September 2026). Bei jedem Verfahrensschritt mit REFORM_STAND
 // in components/Reform2027Status.tsx zusammen aktualisieren.
-const PAGE_TITLE = "Brutto Netto Rechner 2027 – Steuerreform im Bundestag";
+const PAGE_TITLE = "Steuerreform 2027 Rechner: Wie viel mehr Netto bleibt?";
 const PAGE_DESCRIPTION =
-  "Brutto Netto Rechner 2027: Wie viel mehr Netto bringt die Steuerreform? Tabelle nach Gehalt, Gesetzentwurf im Bundestag (Drs. 21/8235). Stand 30.9.2026.";
+  "Steuerreform 2027: So viel mehr Netto bringt der Gesetzentwurf (Drs. 21/8235) — Rechner und Tabelle nach Gehalt, 2027 und 2028. 1. Lesung am 8.10.2026.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -35,14 +43,8 @@ export const metadata: Metadata = {
     "steuerreform rechner 2027",
     "steuerreform 2027",
     "brutto netto rechner 2027 steuerreform",
-    "brutto netto rechner 2027",
-    "brutto netto 2027",
-    "brutto-netto-rechner 2027",
-    "netto brutto rechner 2027",
-    "lohnrechner 2027",
-    "netto 2027",
-    "brutto netto rechner für 2027",
-    "gehaltsrechner 2027",
+    "steuerentlastung 2027 rechner",
+    "einkommensteuer 2027 rechner",
     "steuerreform 2027 netto",
     "steuer rechner 2027",
     "grundfreibetrag 2027",
@@ -103,8 +105,8 @@ const faqs = [
     a: "Der gesetzliche Mindestlohn: Die zweistufige Erhöhung auf 14,60 € brutto pro Stunde zum 1. Januar 2027 ist per Verordnung bereits beschlossen und damit geltendes Recht. Die Steuerreform ist weiter — seit dem 2.09.2026 liegt ein vom Kabinett beschlossener Regierungsentwurf mit konkreten Tarifwerten vor —, aber noch nicht verkündet und damit noch nicht bindend.",
   },
   {
-    q: "Wie funktioniert der Netto Brutto Rechner 2027?",
-    a: "Sie können sowohl die normale Brutto-zu-Netto-Rechnung als auch die umgekehrte Netto-zu-Brutto-Kalkulation nutzen. Schalten Sie auf das Steuerjahr 2027 und wählen Sie ein Reformszenario, um Ihre finanzielle Planung frühzeitig auf die geplante Tarifreform abzustimmen.",
+    q: "Wie funktioniert der Steuerreform-Rechner 2027?",
+    a: "Bruttogehalt eingeben, Steuerklasse wählen — der Rechner steht bereits auf dem Steuerjahr 2027. Mit „Entwurf 2027“, „Stufe 2028“ und „Ohne Reform“ vergleichen Sie, was die Reform bei Ihrem Gehalt ändert. Den umgekehrten Weg rechnet der Netto-zu-Brutto-Rechner, ebenfalls für 2027.",
   },
   {
     q: "Wer verliert durch die Steuerreform 2027?",
@@ -156,7 +158,7 @@ const breadcrumbJsonLd = {
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Startseite", item: "https://bruttonettocalculator.com" },
-    { "@type": "ListItem", position: 2, name: "Brutto Netto Rechner 2027", item: "https://bruttonettocalculator.com/brutto-netto-rechner-2027" },
+    { "@type": "ListItem", position: 2, name: "Steuerreform-Rechner 2027", item: "https://bruttonettocalculator.com/brutto-netto-rechner-2027" },
   ],
 };
 
@@ -180,7 +182,7 @@ export default function Rechner2027Page() {
           </span>
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-[#16181D] mb-3 sm:mb-4 tracking-tight">
-          Brutto Netto Rechner <span className="text-gradient-accent">2027</span> — so viel mehr
+          Steuerreform <span className="text-gradient-accent">2027</span> Rechner — so viel mehr
           Netto bringt der Entwurf
         </h1>
         <p className="text-base sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed">
@@ -215,16 +217,18 @@ export default function Rechner2027Page() {
           Am 2. September 2026 hat das Bundeskabinett den{" "}
           <strong className="text-[#16181D] font-semibold">Regierungsentwurf eines Einkommensteuerreformgesetzes 2027</strong>{" "}
           beschlossen. Er fasst § 32a EStG für 2027 und 2028 komplett neu — dieser{" "}
-          <strong className="text-[#16181D] font-semibold">Brutto Netto Rechner für 2027</strong> rechnet
+          <strong className="text-[#16181D] font-semibold">Steuerreform-Rechner</strong> rechnet
           mit genau diesen Zahlen statt mit Schätzungen: Grundfreibetrag{" "}
           {eur(GRUNDFREIBETRAG.entwurf2027)} €, Arbeitnehmer-Pauschbetrag{" "}
           {eur(ARBEITNEHMER_PAUSCHBETRAG.reform)} € und oben ein neuer Spitzensatz von 47 %.
           Seit dem 28. September 2026 liegt der Entwurf dem Bundestag als Drucksache 21/8235 vor, die
           erste Lesung ist für den 8. Oktober 2026 angesetzt. Verkündet ist das Gesetz noch nicht —
           Bundestag und Bundesrat müssen noch zustimmen, deshalb steht „Ohne Reform“ weiter als
-          Untergrenze daneben. Als <strong className="text-[#16181D] font-semibold">Netto Brutto Rechner 2027</strong> und{" "}
-          <strong className="text-[#16181D] font-semibold">Lohnrechner 2027</strong> zeigt das Tool den
-          Unterschied im echten Jahresvergleich.
+          Untergrenze daneben. Ihr reguläres Netto für 2026 und 2027 ohne Szenarien rechnet der{" "}
+          <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">
+            Brutto Netto Rechner 2026/2027
+          </Link>{" "}
+          auf der Startseite.
         </p>
         <div className="flex items-start gap-3 sm:gap-4 bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-4 sm:p-6">
         <SlidersHorizontal size={22} className="text-[#E60A1C] flex-shrink-0 mt-0.5" />
@@ -340,7 +344,7 @@ export default function Rechner2027Page() {
       </Section>
 
       {/* SEO Q&A section for 2027 long-tail queries */}
-      <Section id="faq" variant="muted" eyebrow="FAQ" eyebrowIcon={HelpCircle} title="Häufige Fragen zum Brutto Netto Rechner 2027">
+      <Section id="faq" variant="muted" eyebrow="FAQ" eyebrowIcon={HelpCircle} title="Häufige Fragen zur Steuerreform 2027">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 text-sm sm:text-base">
           {faqs.map((faq) => (
             <div key={faq.q}>

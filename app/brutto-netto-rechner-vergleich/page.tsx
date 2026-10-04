@@ -248,7 +248,7 @@ const itemListJsonLd = {
   name: "Brutto-Netto-Rechner im Vergleich 2026/2027",
   numberOfItems: 3,
   itemListElement: [
-    { "@type": "ListItem", position: 1, item: app("BruttoNettoCalculator", "https://bruttonettocalculator.com/brutto-netto-rechner-2027", { publisher: { "@id": ORG_ID } }) },
+    { "@type": "ListItem", position: 1, item: app("BruttoNettoCalculator", "https://bruttonettocalculator.com/", { publisher: { "@id": ORG_ID } }) },
     { "@type": "ListItem", position: 2, item: app("gehalt.de Brutto-Netto-Rechner", GEHALT_URL) },
     { "@type": "ListItem", position: 3, item: app("Finanztip Brutto-Netto-Rechner 2026 & 2027", FINANZTIP_URL) },
   ],

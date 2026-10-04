@@ -208,7 +208,7 @@ export default function SalaryHubPage() {
         </div>
         <p className="mt-3 text-xs sm:text-sm text-black/55">
           Mehr zur Reform:{" "}
-          <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner 2027</Link>.
+          <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Steuerreform-Rechner 2027</Link>.
           Darunter: jeder Betrag in 100-€-Schritten mit eigener Detailseite.
         </p>
       </section>

@@ -276,7 +276,7 @@ export default function RenteBruttoNettoPage() {
             {eur0(GRUNDFREIBETRAG.entwurf2027)} € ab 2027 nach dem Gesetzentwurf zur Steuerreform — Stand und
             Termine auf der Seite{" "}
             <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
-              Brutto Netto Rechner 2027
+              Steuerreform-Rechner 2027
             </Link>
             .
           </li>
