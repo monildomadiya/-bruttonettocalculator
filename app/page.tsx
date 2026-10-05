@@ -60,6 +60,10 @@ const reformPlus = (brutto: number) => {
 const eur2 = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const reform3000 = reformPlus(3000);
 const reform5000 = reformPlus(5000);
+// "brutto netto rechner 2027" wird von Google teils als Betrag gelesen ("Wie viel Netto
+// bleibt von 2027 Brutto?" in den Weiteren Fragen). Die FAQ beantwortet diese Lesart mit Engine-Werten.
+const netto2027Euro = (jahr: 2026 | 2027, kirche: boolean) =>
+  calculateNetto({ bruttoMonat: 2027, jahr, verheiratet: false, kinderlosUeber23: true, kirche, steuerklasse: 1 }).nettoMonat;
 // Ab welchem Brutto (50-€-Raster) kostet der BMAS-Entwurf der BBG mehr, als die Steuerreform bringt?
 const svKippBrutto = (() => {
   for (let brutto = 3000; brutto <= 12000; brutto += 50) {
@@ -106,6 +110,10 @@ const faqs = [
   {
     q: "Wie viel mehr Netto bringt die Steuerreform 2027?",
     a: `Wenig: Nach dem Gesetzentwurf bleiben bei 3.000 € brutto in Steuerklasse I rund ${eur2(reform3000)} € und bei 5.000 € rund ${eur2(reform5000)} € mehr netto im Monat (kinderlos, ohne Kirchensteuer, Sozialabgaben auf dem Stand 2026). Steigen 2027 wie im BMAS-Entwurf vorgesehen die Beitragsbemessungsgrenzen, zahlen Gutverdiener mehr Sozialabgaben. Ab rund ${svKippBrutto.toLocaleString("de-DE")} € brutto bleibt dann insgesamt weniger netto als 2026.`,
+  },
+  {
+    q: "Wie viel netto sind 2.027 € brutto?",
+    a: `Bei 2.027 € brutto im Monat bleiben 2026 in Steuerklasse I rund ${eur2(netto2027Euro(2026, false))} € netto (kinderlos, ohne Kirchensteuer, durchschnittlicher Zusatzbeitrag der Krankenkasse). Mit 9 % Kirchensteuer sind es rund ${eur2(netto2027Euro(2026, true))} €. Im Jahr 2027 steigt das Netto nach dem Gesetzentwurf zur Steuerreform auf rund ${eur2(netto2027Euro(2027, false))} € (Sozialabgaben auf dem Stand 2026). Für eine andere Steuerklasse oder mit Kindern geben Sie 2.027 € einfach oben in den Rechner ein.`,
   },
   {
     q: "Warum sind die Werte für 2027 vorläufig?",
