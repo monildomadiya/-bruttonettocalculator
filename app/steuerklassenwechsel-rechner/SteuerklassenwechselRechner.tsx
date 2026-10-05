@@ -2,190 +2,161 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Users, Calculator, ArrowRight, Info, ChevronDown, CheckCircle2 } from "lucide-react";
-import { calculateNetto, estFormel2026, soliBerechnen, formatEUR } from "@/lib/taxCalculator";
+import { Users, Calculator, Info, CheckCircle2, Scale } from "lucide-react";
+import { formatEUR } from "@/lib/taxCalculator";
+import { vergleichePaar, arbeitslosengeldMonat } from "@/lib/steuerklassenPaar";
 
-const faqs = [
-  {
-    q: "Steuerklasse 3/5 oder 4/4 — was ist besser?",
-    a: "Für das monatliche Netto lohnt sich die Kombination III/V, wenn ein Partner deutlich mehr verdient: Der Hauptverdiener zahlt in Klasse III wenig Lohnsteuer, der Partner in Klasse V mehr. Aufs Jahr gerechnet ist die Steuerlast bei allen Kombinationen gleich — die Differenz wird spätestens bei der Steuererklärung ausgeglichen. IV/IV mit Faktor verteilt die Last am fairsten und vermeidet Nachzahlungen.",
-  },
-  {
-    q: "Führt Steuerklasse III/V zu einer Nachzahlung?",
-    a: "Häufig ja. Weil in III/V unterm Strich zu wenig Lohnsteuer einbehalten wird, ist bei III/V-Paaren eine Steuererklärung Pflicht und es kann zu einer Nachzahlung kommen. Der Vorteil ist rein die höhere monatliche Liquidität.",
-  },
-  {
-    q: "Was ist das Faktorverfahren (IV/IV mit Faktor)?",
-    a: "Beim Faktorverfahren berechnet das Finanzamt einen Faktor kleiner 1, der die voraussichtliche gemeinsame Jahressteuer möglichst genau auf beide Partner verteilt. Das monatliche Netto entspricht dann fast exakt dem, was nach dem Ehegattensplitting tatsächlich fällig ist — Nachzahlungen werden weitgehend vermieden.",
-  },
-  {
-    q: "Wie oft kann man die Steuerklasse wechseln?",
-    a: "Seit 2020 ist ein Steuerklassenwechsel mehrmals im Jahr möglich. Der Antrag wird beim Finanzamt gestellt (auch online über ELSTER) und gilt in der Regel ab dem Folgemonat.",
-  },
-];
+/*
+ * Rechenkern: lib/steuerklassenPaar.ts — Faktor nach § 39f EStG (Y/X, drei
+ * Nachkommastellen abgeschnitten), Jahresausgleich gegen die Splitting-Steuer
+ * und Arbeitslosengeld I nach § 153 SGB III als Lohnersatz-Beispiel.
+ * (Die frühere Fassung setzte "IV/IV mit Faktor" mit Splittingsteuer ÷ 12 gleich.)
+ */
 
-function Card({ title, value, sub, best }: { title: string; value: string; sub?: string; best?: boolean }) {
-  return (
-    <div className={`rounded-2xl border p-5 ${best ? "bg-emerald-50 border-emerald-500/30" : "bg-[#FFFFFF] border-black/[0.10]"}`}>
-      <div className="flex items-center justify-between mb-1">
-        <span className="text-xs font-mono uppercase tracking-wider text-black/50">{title}</span>
-        {best && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600"><CheckCircle2 size={12} /> Meiste Liquidität</span>}
-      </div>
-      <div className={`font-mono font-extrabold text-2xl ${best ? "text-emerald-600" : "text-[#16181D]"}`}>{value}</div>
-      {sub && <div className="text-xs text-black/55 mt-1">{sub}</div>}
-    </div>
-  );
-}
+const inputCls =
+  "w-full bg-[#FFFFFF] border border-black/[0.12] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none";
 
 export default function SteuerklassenwechselRechner() {
   const [bruttoA, setBruttoA] = useState(4500);
   const [bruttoB, setBruttoB] = useState(2500);
   const [kirche, setKirche] = useState(false);
+  const [kinderlos, setKinderlos] = useState(true);
 
-  const r = useMemo(() => {
-    // Höher-/Geringverdiener bestimmen
-    const hoch = Math.max(bruttoA, bruttoB);
-    const gering = Math.min(bruttoA, bruttoB);
-
-    const opt = (brutto: number, sk: 3 | 4 | 5) =>
-      calculateNetto({ bruttoMonat: brutto, jahr: 2026, verheiratet: sk === 3 || sk === 5, kinderlosUeber23: false, kirche, steuerklasse: sk });
-
-    // IV/IV: jeder im Grundtarif
-    const a4 = opt(hoch, 4), b4 = opt(gering, 4);
-    const nettoIVIV = a4.nettoMonat + b4.nettoMonat;
-
-    // III/V: Hauptverdiener III, Partner V
-    const a3 = opt(hoch, 3), b5 = opt(gering, 5);
-    const nettoIIIV = a3.nettoMonat + b5.nettoMonat;
-
-    // IV/IV mit Faktor ≈ tatsächliche Jahressteuer nach Splitting / 12
-    const zvE = a4.steuer.zvE + b4.steuer.zvE;
-    const estSplitJahr = 2 * estFormel2026(zvE / 2);
-    const soliJahr = soliBerechnen(estSplitJahr, true);
-    const kircheJahr = kirche ? estSplitJahr * 0.09 : 0;
-    const jahresSteuer = estSplitJahr + soliJahr + kircheJahr;
-    const svMonat = a4.sv.summeMonat + b4.sv.summeMonat;
-    const nettoFaktor = (hoch + gering) - svMonat - jahresSteuer / 12;
-
-    const best = Math.max(nettoIVIV, nettoIIIV, nettoFaktor);
-    return { nettoIVIV, nettoIIIV, nettoFaktor, best, diffMonat: nettoIIIV - nettoIVIV };
-  }, [bruttoA, bruttoB, kirche]);
+  const r = useMemo(
+    () => vergleichePaar({ bruttoA, bruttoB, kirche, kinderlosUeber23: kinderlos }),
+    [bruttoA, bruttoB, kirche, kinderlos],
+  );
+  const best = Math.max(...r.kombinationen.map((k) => k.nettoMonat));
+  const gering = bruttoA <= bruttoB ? { name: "A", brutto: bruttoA } : { name: "B", brutto: bruttoB };
+  const alg = ([3, 4, 5] as const).map((sk) => ({ sk, wert: arbeitslosengeldMonat(gering.brutto, sk) }));
 
   return (
-    <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
+    <div className="bg-[#F4F5F7] text-[#16181D]">
       <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
-        <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-28 text-center">
+        <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-24 text-center">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
             <Users size={14} /> Steuerklassenwechsel · Ehepaare · 2026
           </div>
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
-            Steuerklassen{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">3/5 oder 4/4</span>
-            {" "}Rechner
+            Steuerklassen-Rechner:{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">III/V, IV/IV oder Faktor?</span>
           </h1>
           <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Berechnen Sie für Ihr Ehepaar, welche Steuerklassen-Kombination das meiste monatliche
-            Netto bringt — <strong className="text-[#16181D]">III/V</strong>,{" "}
-            <strong className="text-[#16181D]">IV/IV</strong> oder{" "}
-            <strong className="text-[#16181D]">IV/IV mit Faktor</strong>.
+            Vergleichen Sie das monatliche Netto Ihres Paares in allen Kombinationen, inklusive Faktorverfahren nach § 39f EStG,
+            und sehen Sie, was mit der Steuererklärung nachgezahlt oder erstattet wird.
           </p>
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-5 pt-2 pb-12 sm:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-9">
+      <section className="max-w-6xl mx-auto px-5 pt-2 pb-10 sm:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-6">
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-5 sm:p-9 shadow-sm">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
               <Calculator size={22} className="text-[#E60A1C]" /> Ihre Angaben
             </h2>
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-semibold text-black/70 mb-2">Bruttogehalt Partner A / Monat</label>
-                <input type="number" value={bruttoA} onChange={(e) => setBruttoA(Number(e.target.value))}
-                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none" />
+                <label htmlFor="sk-a" className="block text-sm font-semibold text-black/70 mb-2">Bruttogehalt Partner A / Monat</label>
+                <input id="sk-a" type="number" min={0} inputMode="decimal" value={bruttoA} onChange={(e) => setBruttoA(Number(e.target.value))} className={inputCls} />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-black/70 mb-2">Bruttogehalt Partner B / Monat</label>
-                <input type="number" value={bruttoB} onChange={(e) => setBruttoB(Number(e.target.value))}
-                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none" />
+                <label htmlFor="sk-b" className="block text-sm font-semibold text-black/70 mb-2">Bruttogehalt Partner B / Monat</label>
+                <input id="sk-b" type="number" min={0} inputMode="decimal" value={bruttoB} onChange={(e) => setBruttoB(Number(e.target.value))} className={inputCls} />
               </div>
               <label className="flex items-center gap-2 text-sm font-semibold text-black/70 cursor-pointer">
                 <input type="checkbox" checked={kirche} onChange={(e) => setKirche(e.target.checked)} className="accent-[#E60A1C] w-4 h-4" />
-                Kirchensteuer berücksichtigen
+                Kirchensteuer (9 %)
+              </label>
+              <label className="flex items-center gap-2 text-sm font-semibold text-black/70 cursor-pointer">
+                <input type="checkbox" checked={kinderlos} onChange={(e) => setKinderlos(e.target.checked)} className="accent-[#E60A1C] w-4 h-4" />
+                Kinderlos (Pflegeversicherung)
               </label>
             </div>
           </div>
 
-          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-2 flex items-center gap-2">
-              <Users size={22} className="text-[#E60A1C]" /> Gemeinsames Netto / Monat
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-5 sm:p-8 shadow-sm" aria-live="polite">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-4 flex items-center gap-2">
+              <Users size={22} className="text-[#E60A1C]" /> Netto pro Monat
             </h2>
-            <div className="flex items-center gap-2 mb-6 text-xs text-amber-600/80 bg-amber-50 border border-amber-500/20 rounded-xl px-3 py-2">
-              <Info size={13} className="flex-shrink-0" /> Vereinfachte Berechnung — keine Steuerberatung
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-sm min-w-[460px]">
+                <thead>
+                  <tr className="border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/60">
+                    <th className="py-2 pr-3">Kombination</th>
+                    <th className="py-2 px-2 text-right">Netto A</th>
+                    <th className="py-2 px-2 text-right">Netto B</th>
+                    <th className="py-2 pl-2 text-right">Zusammen</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-black/[0.06]">
+                  {r.kombinationen.map((k) => {
+                    const top = Math.abs(k.nettoMonat - best) < 0.005;
+                    return (
+                      <tr key={k.key} className={top ? "bg-emerald-50" : undefined}>
+                        <td className="py-2.5 pr-3">
+                          <span className="font-bold text-[#16181D]">{k.key === "IV/IV-Faktor" ? "IV/IV + Faktor" : k.key}</span>
+                          <span className="block text-xs text-black/50">{k.label}</span>
+                          {top && <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700"><CheckCircle2 size={11} /> meiste Liquidität</span>}
+                        </td>
+                        <td className="py-2.5 px-2 text-right font-mono">{formatEUR(k.a.nettoMonat)}</td>
+                        <td className="py-2.5 px-2 text-right font-mono">{formatEUR(k.b.nettoMonat)}</td>
+                        <td className="py-2.5 pl-2 text-right font-mono font-bold">{formatEUR(k.nettoMonat)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
-            <div className="space-y-3">
-              <Card title="Steuerklasse III / V" value={formatEUR(r.nettoIIIV)} best={r.nettoIIIV === r.best} sub="Hauptverdiener III, Partner V" />
-              <Card title="Steuerklasse IV / IV" value={formatEUR(r.nettoIVIV)} best={r.nettoIVIV === r.best} sub="Beide im Grundtarif" />
-              <Card title="IV / IV mit Faktor" value={formatEUR(r.nettoFaktor)} best={r.nettoFaktor === r.best} sub="Entspricht der echten Jahressteuer" />
+
+            <h3 className="text-base font-extrabold text-[#16181D] mt-6 mb-2 flex items-center gap-2">
+              <Scale size={17} className="text-[#E60A1C]" /> Aufs Jahr: Steuererklärung
+            </h3>
+            <p className="text-xs text-black/60 mb-2">
+              Die Jahressteuer des Paares ist immer gleich: {formatEUR(r.splittingSteuerJahr)} nach dem Splittingverfahren. Die
+              Steuerklassen bestimmen nur, wie viel davon monatlich einbehalten wird.
+            </p>
+            <div className="divide-y divide-black/[0.06] text-sm">
+              {r.kombinationen.map((k) => (
+                <div key={k.key} className="flex flex-wrap items-center justify-between gap-x-3 py-1.5">
+                  <span className="text-black/70">{k.key === "IV/IV-Faktor" ? "IV/IV + Faktor" : k.key}</span>
+                  <span className={`ml-auto font-mono font-semibold ${k.ausgleichJahr >= 0.5 ? "text-emerald-700" : k.ausgleichJahr <= -0.5 ? "text-[#E60A1C]" : "text-black/60"}`}>
+                    {Math.abs(k.ausgleichJahr) < 0.5 ? "± 0 €" : k.ausgleichJahr > 0 ? `${formatEUR(k.ausgleichJahr)} Erstattung` : `${formatEUR(-k.ausgleichJahr)} Nachzahlung`}
+                  </span>
+                </div>
+              ))}
             </div>
-            <p className="text-xs text-black/55 mt-4 px-1">
-              III/V bringt hier{" "}
-              <strong className="text-[#16181D]">{formatEUR(Math.abs(r.diffMonat))} {r.diffMonat >= 0 ? "mehr" : "weniger"}</strong>{" "}
-              monatliche Liquidität als IV/IV — die Jahressteuer ist jedoch identisch und wird bei der Steuererklärung ausgeglichen.
+            <p className="mt-4 text-xs text-black/50 flex gap-1.5">
+              <Info size={13} className="flex-shrink-0 mt-0.5" />
+              Steuerjahr 2026, vereinfachtes zu versteuerndes Einkommen, keine weiteren Einkünfte oder Abzüge. Alle Angaben ohne
+              Gewähr, keine Steuerberatung.
             </p>
           </div>
         </div>
-      </section>
 
-      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">Steuerklassenwechsel: III/V, IV/IV oder Faktor?</h2>
-          <p>
-            Verheiratete und eingetragene Lebenspartner können zwischen den Kombinationen{" "}
-            <strong className="text-[#16181D]">III/V</strong>, <strong className="text-[#16181D]">IV/IV</strong> und{" "}
-            <strong className="text-[#16181D]">IV/IV mit Faktor</strong> wählen. Wichtig: Die{" "}
-            <strong className="text-[#16181D]">gesamte Jahressteuer ist in allen Fällen gleich</strong> — sie wird
-            durch das Ehegattensplitting bestimmt. Die Steuerklasse regelt nur, wie viel Lohnsteuer{" "}
-            <em>monatlich</em> einbehalten wird.
+        <div className="mt-6 bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-5 sm:p-8 shadow-sm">
+          <h2 className="text-lg sm:text-xl font-extrabold text-[#16181D] mb-2">Achtung bei Lohnersatzleistungen</h2>
+          <p className="text-sm text-black/70 leading-relaxed mb-4">
+            Arbeitslosengeld, Elterngeld, Krankengeld und Mutterschaftsgeld richten sich nach dem Netto und damit nach der
+            Steuerklasse. Beispiel Arbeitslosengeld I für Partner {gering.name} ({formatEUR(gering.brutto)} brutto, ohne Kind):
           </p>
-          <p>
-            <strong className="text-[#16181D]">III/V</strong> lohnt sich für die monatliche Liquidität, wenn die
-            Einkommen stark auseinanderliegen — führt aber oft zu einer Nachzahlung.{" "}
-            <strong className="text-[#16181D]">IV/IV</strong> ist neutral, kann bei ungleichen Einkommen aber zu
-            viel einbehalten. <strong className="text-[#16181D]">IV/IV mit Faktor</strong> trifft die echte
-            Jahressteuer am genauesten. Prüfen Sie Ihr individuelles Nettogehalt zusätzlich mit dem{" "}
-            <Link href="/gehaltsrechner" className="text-[#E60A1C] font-semibold hover:underline">Gehaltsrechner</Link>.
-          </p>
-        </div>
-      </section>
-
-      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">Häufige Fragen zum Steuerklassenwechsel</h2>
-        <div className="space-y-3">
-          {faqs.map((faq, i) => (
-            <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
-              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
-                <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
-                <ChevronDown size={18} className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180" />
-              </summary>
-              <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">{faq.a}</div>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      <section className="max-w-6xl mx-auto px-5 pb-20">
-        <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
-          <div className="relative">
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">Weitere Rechner</h2>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link href="/steuerklassen" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">Steuerklassen erklärt</Link>
-              <Link href="/gehaltsrechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">Gehaltsrechner</Link>
-              <Link href="/" className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3 rounded-xl transition-all text-sm"><Calculator size={16} /> Brutto-Netto-Rechner</Link>
-            </div>
+          <div className="grid grid-cols-3 gap-3">
+            {alg.map((x) => (
+              <div key={x.sk} className="rounded-2xl bg-[#F4F5F7] border border-black/[0.08] p-3 sm:p-4 text-center">
+                <p className="text-xs font-semibold text-black/60">Klasse {["", "I", "II", "III", "IV", "V"][x.sk]}</p>
+                <p className="font-mono font-extrabold text-base sm:text-lg text-[#16181D] mt-1">{formatEUR(x.wert)}</p>
+              </div>
+            ))}
           </div>
+          <p className="text-xs text-black/55 mt-3 leading-relaxed">
+            Pauschaliertes Leistungsentgelt nach § 153 SGB III, davon 60 %. Wer absehbar Elterngeld, Arbeitslosengeld oder
+            Krankengeld bezieht, kann rechtzeitig vorher die Steuerklasse wechseln. Beim Elterngeld zählt grundsätzlich die
+            Steuerklasse im letzten Monat des Bemessungszeitraums, es sei denn, eine andere galt in den meisten Monaten (§ 2c Abs. 3 BEEG). Mehr
+            im{" "}
+            <Link href="/arbeitslosengeld-rechner" className="text-[#E60A1C] font-semibold hover:underline">Arbeitslosengeld-Rechner</Link>{" "}
+            und im{" "}
+            <Link href="/elterngeld-rechner" className="text-[#E60A1C] font-semibold hover:underline">Elterngeld-Rechner</Link>.
+          </p>
         </div>
       </section>
     </div>
