@@ -39,7 +39,7 @@ export const DURCHSCHNITT_ZUSATZBEITRAG_2026 = 2.9;
  * 1. November). Sobald er feststeht: hier eintragen — die Kassenseiten und der
  * Hub zeigen ihn dann automatisch im Abschnitt "Zusatzbeitrag 2027".
  */
-export const DURCHSCHNITT_ZUSATZBEITRAG_2027: number | null = null;
+export const ZUSATZBEITRAG_DURCHSCHNITT_2027: number | null = null;
 
 /** Allgemeiner Beitragssatz der GKV (§ 241 SGB V) — für alle Kassen identisch. */
 export const ALLGEMEINER_BEITRAGSSATZ = 14.6;

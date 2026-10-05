@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CalendarClock, CheckCircle2, Clock } from "lucide-react";
 import Section from "@/components/ui/Section";
-import { DURCHSCHNITT_ZUSATZBEITRAG_2026, DURCHSCHNITT_ZUSATZBEITRAG_2027, type Krankenkasse } from "@/data/krankenkassen";
+import { DURCHSCHNITT_ZUSATZBEITRAG_2026, ZUSATZBEITRAG_DURCHSCHNITT_2027, type Krankenkasse } from "@/data/krankenkassen";
 import { SV_RECHENGROESSEN_2027_ENTWURF, formatEUR } from "@/lib/taxCalculator";
 import { ZUSATZBEITRAG_2027_PROGNOSE } from "@/lib/sozialabgaben2027";
 
@@ -17,7 +17,7 @@ const pct = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 1,
  * kommen — und dann nur noch Daten bekommen, keinen neuen Text.
  *
  * Regel: Es wird nie ein Kassensatz 2027 geschätzt. Bekannt ist er erst, wenn
- * `zusatzbeitrag2027` bzw. `DURCHSCHNITT_ZUSATZBEITRAG_2027` in
+ * `zusatzbeitrag2027` bzw. `ZUSATZBEITRAG_DURCHSCHNITT_2027` in
  * data/krankenkassen.ts gepflegt ist; bis dahin steht "noch nicht festgelegt".
  */
 export default function Zusatzbeitrag2027Ausblick({
@@ -29,7 +29,7 @@ export default function Zusatzbeitrag2027Ausblick({
   aufVergleichsseite?: boolean;
 }) {
   const kasseSatz2027 = kasse?.zusatzbeitrag2027;
-  const durchschnitt2027 = DURCHSCHNITT_ZUSATZBEITRAG_2027;
+  const durchschnitt2027 = ZUSATZBEITRAG_DURCHSCHNITT_2027;
   const bbgMonat2027 = SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgJahr / 12;
   // Nominativ — "die Kasse" ist feminin, auch "die TK", "die hkk", "die Audi BKK".
   const subjekt = kasse ? `die ${kasse.name}` : "Ihre Kasse";

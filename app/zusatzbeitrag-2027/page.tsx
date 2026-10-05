@@ -4,7 +4,7 @@ import { ChevronRight, HeartPulse } from "lucide-react";
 import {
   KRANKENKASSEN_2026,
   DURCHSCHNITT_ZUSATZBEITRAG_2026,
-  DURCHSCHNITT_ZUSATZBEITRAG_2027,
+  ZUSATZBEITRAG_DURCHSCHNITT_2027,
   ALLGEMEINER_BEITRAGSSATZ,
   GUENSTIGSTE_KASSE,
   TEUERSTE_KASSE,
@@ -79,8 +79,8 @@ const faqs = [
   {
     q: "Wie hoch ist der durchschnittliche Zusatzbeitrag 2027?",
     a:
-      DURCHSCHNITT_ZUSATZBEITRAG_2027 !== null
-        ? `Das Bundesgesundheitsministerium hat den durchschnittlichen Zusatzbeitrag 2027 auf ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2027)} festgelegt (2026: ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}). Er ist ein Rechenwert; Ihre Kasse erhebt ihren eigenen Satz.`
+      ZUSATZBEITRAG_DURCHSCHNITT_2027 !== null
+        ? `Das Bundesgesundheitsministerium hat den durchschnittlichen Zusatzbeitrag 2027 auf ${pct(ZUSATZBEITRAG_DURCHSCHNITT_2027)} festgelegt (2026: ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}). Er ist ein Rechenwert; Ihre Kasse erhebt ihren eigenen Satz.`
         : `Er steht noch nicht fest. Das Bundesgesundheitsministerium gibt ihn bis zum 1. November 2026 bekannt, nachdem der GKV-Schätzerkreis Mitte Oktober die Finanzen der Kassen für 2027 prognostiziert hat (§ 242a SGB V). 2026 lag er bei ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}.`,
   },
   {
@@ -169,9 +169,9 @@ export default function Zusatzbeitrag2027Page() {
           Zusatzbeitrag 2027: Alle Krankenkassen im Vergleich
         </h1>
         <p className="text-base sm:text-lg text-black/80 max-w-4xl leading-relaxed mb-4">
-          {DURCHSCHNITT_ZUSATZBEITRAG_2027 !== null ? (
+          {ZUSATZBEITRAG_DURCHSCHNITT_2027 !== null ? (
             <>
-              Der durchschnittliche Zusatzbeitrag 2027 beträgt <strong>{pct(DURCHSCHNITT_ZUSATZBEITRAG_2027)}</strong> (2026:{" "}
+              Der durchschnittliche Zusatzbeitrag 2027 beträgt <strong>{pct(ZUSATZBEITRAG_DURCHSCHNITT_2027)}</strong> (2026:{" "}
               {pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}).
             </>
           ) : (

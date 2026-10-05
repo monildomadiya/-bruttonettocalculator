@@ -97,7 +97,18 @@ export interface CalculatorInput {
    * Ohne Angabe `false` — alle bestehenden Aufrufer rechnen unverändert.
    */
   auszubildend?: boolean;
+  /**
+   * Anzahl der Kinder unter 25 Jahren für den Beitragsabschlag in der
+   * Pflegeversicherung (§ 55 Abs. 3 Satz 4 SGB XI): ab dem 2. bis zum 5. Kind
+   * je 0,25 Beitragssatzpunkte weniger, nur auf den Arbeitnehmeranteil. Den
+   * Kinderlosenzuschlag steuert weiterhin `kinderlosUeber23`. Ohne Angabe kein
+   * Abschlag — alle bestehenden Aufrufer rechnen unverändert.
+   */
+  pvKinderUnter25?: number;
 }
+
+/** PV-Abschlag je Kind ab dem 2. bis zum 5. Kind unter 25 (§ 55 Abs. 3 Satz 4 SGB XI). */
+export const PV_ABSCHLAG_JE_KIND = 0.0025;
 
 /** Geringverdienergrenze für Auszubildende, § 20 Abs. 3 Satz 1 Nr. 1 SGB IV. */
 export const AZUBI_GERINGVERDIENERGRENZE = 325;
@@ -712,7 +723,9 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   // Kinderlosenzuschlag trägt der AN allein. Sachsen-Sonderfall: der AN trägt
   // einen Prozentpunkt allein, AG daher nur 1,3 %.
   const pvAgAnteil = input.sachsen ? r.pvAgAnteilSachsen : r.pvAgAnteil;
-  const pvSatzAn = pvSatzGesamt - pvAgAnteil;
+  const kinderU25 = Math.max(0, Math.floor(input.pvKinderUnter25 ?? 0));
+  const pvKinderAbschlag = kinderU25 >= 2 ? PV_ABSCHLAG_JE_KIND * (Math.min(kinderU25, 5) - 1) : 0;
+  const pvSatzAn = pvSatzGesamt - pvAgAnteil - pvKinderAbschlag;
 
   const kranken = kvPvBemessung * kvSatzAn;
   const pflege = kvPvBemessung * pvSatzAn;

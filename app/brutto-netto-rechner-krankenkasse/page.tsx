@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, HeartPulse, ArrowRight, Info, Wallet2, ShieldCheck } from "lucide-react";
+import { ChevronRight, HeartPulse, ArrowRight, Info, Wallet2, ShieldCheck, ExternalLink } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
 import {
   KRANKENKASSEN_2026,
@@ -9,22 +9,37 @@ import {
   GUENSTIGSTE_KASSE,
   TEUERSTE_KASSE,
   ZUSATZBEITRAG_STAND,
-  ZUSATZBEITRAG_STAND_ISO,
+  ZUSATZBEITRAG_DURCHSCHNITT_2027,
   gesamtbeitragssatz,
 } from "@/data/krankenkassen";
-import KrankenkassenRechner from "@/components/KrankenkassenRechner";
+import KrankenkassenbeitragRechner2027 from "./KrankenkassenbeitragRechner2027";
 import Zusatzbeitrag2027Ausblick from "@/components/Zusatzbeitrag2027Ausblick";
 import ReviewerByline from "@/components/ReviewerByline";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 import { pageImageUrl } from "@/lib/pageImage";
+import { pageStand } from "@/lib/pageDates";
+import { SV_RECHENGROESSEN_2027_ENTWURF } from "@/lib/taxCalculator";
 
 const CANONICAL = "https://bruttonettocalculator.com/brutto-netto-rechner-krankenkasse";
+const STAND = pageStand("/brutto-netto-rechner-krankenkasse");
+
+/*
+ * Neu ausgerichtet (Okt. 2026): vorher „Brutto-Netto-Rechner Krankenkasse:
+ * AOK, TK & Zusatzbeitrag“ mit Kassen-Markensuchen bei 0,7 % CTR. Jetzt der
+ * Rechner-Intent „krankenkassenbeitrag rechner 2027“ / „zusatzbeitrag 2027
+ * rechner“. Die Kassenliste 2027 bleibt auf /zusatzbeitrag-2027 — diese Seite
+ * verlinkt dorthin, statt sie zu doppeln.
+ */
+const TITLE = "Krankenkassenbeitrag-Rechner 2027: Zusatzbeitrag & Netto";
+const DESCRIPTION = `Krankenkassenbeitrag 2027 berechnen: Zusatzbeitrag Ihrer Kasse eingeben, Netto 2027 sehen – mit neuer Beitragsbemessungsgrenze (${SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} €) und Vergleich zu 2026.`;
+
+/** Partnerlink „Krankenkassen vergleichen“ — nur, wenn die Umgebungsvariable gesetzt ist. */
+const CHECK24_AWIN_URL = process.env.CHECK24_AWIN_URL;
 
 export const metadata: Metadata = {
-  title: "Brutto-Netto-Rechner Krankenkasse: AOK, TK & Zusatzbeitrag",
-  description:
-    "Brutto-Netto-Rechner mit dem Zusatzbeitrag Ihrer Krankenkasse: AOK, TK, Barmer & DAK 2026 im Vergleich (2,18–4,39 %) und was der Unterschied netto kostet.",
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: [
     "brutto netto rechner aok",
     "aok brutto netto rechner",
@@ -36,13 +51,15 @@ export const metadata: Metadata = {
     "beitragssatz krankenkasse 2026",
     "brutto netto rechner tk",
     "krankenkasse wechseln sparen",
+    "krankenkassenbeitrag rechner 2027",
+    "zusatzbeitrag 2027 rechner",
+    "krankenkassenbeitrag 2027",
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
     images: [pageImageUrl("/brutto-netto-rechner-krankenkasse")],
-    title: "Brutto-Netto-Rechner mit Krankenkasse — Zusatzbeitrag 2026",
-    description:
-      "AOK, TK, Barmer, DAK: Der Zusatzbeitrag Ihrer Kasse kostet bis zu 1.000 € Netto im Jahr. Jetzt mit der eigenen Kasse rechnen.",
+    title: TITLE,
+    description: DESCRIPTION,
     url: CANONICAL,
     type: "website",
     locale: "de_DE",
@@ -50,8 +67,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Brutto-Netto-Rechner mit Krankenkasse: AOK, TK & Co.",
-    description: "Zusatzbeiträge 2026 von 2,18 % bis 4,39 % — so viel Netto macht die Kassenwahl aus.",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
@@ -85,6 +102,14 @@ export default function KrankenkassePage() {
   }));
 
   const faqs = [
+    {
+      q: "Wie hoch ist der Krankenkassenbeitrag 2027?",
+      a: `Der allgemeine Beitragssatz bleibt bei ${ALLGEMEINER_BEITRAGSSATZ.toLocaleString("de-DE", { minimumFractionDigits: 1 })} %, dazu kommt der Zusatzbeitrag Ihrer Kasse; beides teilen Sie sich mit dem Arbeitgeber. ${ZUSATZBEITRAG_DURCHSCHNITT_2027 === null ? "Den durchschnittlichen Zusatzbeitrag 2027 gibt das Bundesgesundheitsministerium bis zum 1. November 2026 bekannt; bis dahin rechnet der Rechner vorläufig mit 2,9 %." : `Der durchschnittliche Zusatzbeitrag 2027 beträgt ${ZUSATZBEITRAG_DURCHSCHNITT_2027.toLocaleString("de-DE", { minimumFractionDigits: 1 })} %.`} Neu ist die höhere Beitragsbemessungsgrenze: Nach dem Referentenentwurf des BMAS zahlen Sie 2027 Beiträge bis ${SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € brutto im Monat statt bis 5.812,50 €.`,
+    },
+    {
+      q: "Wer zahlt 2027 mehr Krankenkassenbeitrag?",
+      a: `Zwei Gruppen: Alle, deren Kasse den Zusatzbeitrag erhöht, und alle mit mehr als 5.812,50 € brutto im Monat, weil die Beitragsbemessungsgrenze auf ${SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € steigen soll. Wer mehr als ${SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € verdient, zahlt den Höchstbeitrag auf diese neue Grenze. Den Betrag für Ihr Gehalt zeigt der Rechner oben.`,
+    },
     {
       q: "Warum zeigt ein normaler Brutto-Netto-Rechner ein anderes Netto als meine Gehaltsabrechnung?",
       a: `Die häufigste Ursache ist der Zusatzbeitrag zur Krankenversicherung. Die meisten Rechner setzen den amtlichen Durchschnittswert von ${DURCHSCHNITT_ZUSATZBEITRAG_2026.toLocaleString("de-DE", { minimumFractionDigits: 1 })} % an (§ 242a SGB V). Ihre Kasse erhebt aber ihren eigenen Satz — 2026 zwischen ${GUENSTIGSTE_KASSE.zusatzbeitrag.toLocaleString("de-DE", { minimumFractionDigits: 2 })} % und ${TEUERSTE_KASSE.zusatzbeitrag.toLocaleString("de-DE", { minimumFractionDigits: 2 })} %. Dieser Rechner rechnet mit dem Satz Ihrer Kasse und trifft die Abrechnung damit deutlich genauer.`,
@@ -127,22 +152,24 @@ export default function KrankenkassePage() {
         "@id": `${CANONICAL}#breadcrumb`,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Startseite", item: "https://bruttonettocalculator.com" },
-          { "@type": "ListItem", position: 2, name: "Brutto-Netto-Rechner mit Krankenkasse", item: CANONICAL },
+          { "@type": "ListItem", position: 2, name: "Krankenkassenbeitrag-Rechner 2027", item: CANONICAL },
         ],
       },
       {
         "@type": "WebApplication",
         "@id": `${CANONICAL}#app`,
-        name: "Brutto-Netto-Rechner mit Krankenkassen-Zusatzbeitrag",
+        name: "Krankenkassenbeitrag-Rechner 2027",
         url: CANONICAL,
         applicationCategory: "FinanceApplication",
         operatingSystem: "Web",
         inLanguage: "de-DE",
+        isAccessibleForFree: true,
+        dateModified: STAND.iso,
         offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
         featureList: [
-          "Netto-Berechnung mit kassenindividuellem Zusatzbeitrag",
-          "Vergleich von 19 Krankenkassen inkl. AOK-Regionalkassen",
-          "Sparpotenzial bei Kassenwechsel in Euro",
+          "Krankenkassen- und Pflegebeitrag 2026 und 2027 mit eigenem Zusatzbeitrag",
+          "Netto 2027 mit der Beitragsbemessungsgrenze aus dem BMAS-Entwurf",
+          "Kosten je 0,1 % Zusatzbeitrag in Euro pro Jahr",
         ],
       },
       {
@@ -152,7 +179,6 @@ export default function KrankenkassePage() {
         description:
           "Kassenindividuelle Zusatzbeiträge zur gesetzlichen Krankenversicherung im Jahr 2026 für AOK-Regionalkassen, TK, BARMER, DAK-Gesundheit, hkk, KNAPPSCHAFT und weitere Kassen.",
         temporalCoverage: "2026",
-        dateModified: ZUSATZBEITRAG_STAND_ISO,
         isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
       },
       {
@@ -175,33 +201,66 @@ export default function KrankenkassePage() {
       <div className="flex items-center gap-2 text-xs sm:text-sm text-black/50 mb-4 sm:mb-8 font-medium">
         <Link href="/" className="hover:text-[#16181D] transition-colors">Startseite</Link>
         <ChevronRight size={14} className="text-black/30" />
-        <span className="text-black/80">Brutto-Netto-Rechner mit Krankenkasse</span>
+        <span className="text-black/80">Krankenkassenbeitrag-Rechner 2027</span>
       </div>
 
       {/* Hero */}
       <div className="mb-6 sm:mb-10">
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-4">
-          <HeartPulse size={14} /> Zusatzbeiträge 2026 · Stand {ZUSATZBEITRAG_STAND}
+          <HeartPulse size={14} /> Kranken- und Pflegebeitrag 2026 &amp; 2027
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-black text-[#16181D] mb-3 sm:mb-4 tracking-tight leading-tight">
-          <span className="text-gradient-accent">Brutto-Netto-Rechner</span> mit Ihrer Krankenkasse
+          <span className="text-gradient-accent">Krankenkassenbeitrag-Rechner 2027:</span> Was kostet Sie der Zusatzbeitrag?
         </h1>
-        <p className="text-base sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-2 sm:mb-6">
-          Fast alle Brutto-Netto-Rechner rechnen mit dem amtlichen{" "}
-          <strong className="text-[#16181D]">Durchschnitts-Zusatzbeitrag von {DURCHSCHNITT_ZUSATZBEITRAG_2026.toLocaleString("de-DE", { minimumFractionDigits: 1 })} %</strong> —
-          und liegen damit systematisch neben Ihrer echten Gehaltsabrechnung. Denn Ihre Kasse erhebt ihren eigenen
-          Satz: 2026 zwischen{" "}
-          <strong className="text-[#16181D]">{GUENSTIGSTE_KASSE.zusatzbeitrag.toLocaleString("de-DE", { minimumFractionDigits: 2 })} %</strong> und{" "}
-          <strong className="text-[#16181D]">{TEUERSTE_KASSE.zusatzbeitrag.toLocaleString("de-DE", { minimumFractionDigits: 2 })} %</strong>.
-          Wählen Sie unten AOK, TK, Barmer, DAK oder Ihre eigene Kasse — und sehen Sie das Netto, das wirklich ankommt.
+        <p className="text-base sm:text-xl text-black/80 w-full max-w-4xl leading-relaxed mb-2 sm:mb-4">
+          Geben Sie Ihr Bruttogehalt und den Zusatzbeitrag Ihrer Kasse ein: Der Rechner zeigt Ihren Kranken- und
+          Pflegebeitrag, Ihr Netto 2027 und den Unterschied zu 2026 — mit der höheren Beitragsbemessungsgrenze von{" "}
+          <strong className="text-[#16181D]">{SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € im Monat</strong>{" "}
+          aus dem BMAS-Entwurf.
         </p>
-        <ReviewerByline />
+        <p className="text-xs sm:text-sm text-black/60 font-medium mb-3">
+          Aktualisiert am <time dateTime={STAND.iso}>{STAND.display}</time> · 2027 vorläufig (Regierungsentwurf
+          Steuerreform, BMAS-Entwurf der Rechengrößen)
+        </p>
+        <ReviewerByline updatedDisplay={null} />
       </div>
 
       {/* Rechner */}
       <div id="rechner" className="mb-14 scroll-mt-24">
-        <KrankenkassenRechner />
+        <KrankenkassenbeitragRechner2027 />
       </div>
+
+      {/* Neutral: gleiche Regeln für alle gesetzlichen Kassen */}
+      <div className="mb-10 bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-5 sm:p-6 text-sm sm:text-base text-black/75 leading-relaxed">
+        <h2 className="font-display text-xl font-extrabold text-[#16181D] mb-2">Gleiche Regeln für alle gesetzlichen Kassen</h2>
+        <p>
+          Alle gesetzlichen Krankenkassen — ob TK, AOK, BKK, Barmer, DAK oder IKK — rechnen nach denselben gesetzlichen
+          Vorgaben: gleicher allgemeiner Beitragssatz von {ALLGEMEINER_BEITRAGSSATZ.toLocaleString("de-DE", { minimumFractionDigits: 1 })} %
+          (§ 241 SGB V), gleiche Beitragsbemessungsgrenze, gleiche Aufteilung zwischen Ihnen und Ihrem Arbeitgeber
+          (§ 249 SGB V). Unterscheiden darf sich nur der Zusatzbeitrag. Deshalb genügt für die Rechnung oben der
+          Prozentsatz Ihrer Kasse. Die Zusatzbeiträge 2027 aller großen Kassen sammeln wir unter{" "}
+          <Link href="/zusatzbeitrag-2027" className="text-[#E60A1C] font-semibold hover:underline">Zusatzbeitrag 2027 aller Kassen</Link>.
+        </p>
+      </div>
+
+      {/* Partnerlink — erscheint nur mit gesetzter Umgebungsvariable CHECK24_AWIN_URL */}
+      {CHECK24_AWIN_URL && (
+        <aside className="mb-12 rounded-2xl border border-black/[0.10] bg-[#FFFFFF] p-5 sm:p-6 shadow-sm" aria-label="Anzeige">
+          <p className="text-[11px] font-mono uppercase tracking-widest text-black/50 font-bold mb-2">Anzeige</p>
+          <h2 className="font-display text-lg sm:text-xl font-extrabold text-[#16181D] mb-2">Krankenkassen vergleichen</h2>
+          <p className="text-sm sm:text-base text-black/75 leading-relaxed mb-4">
+            Zusatzbeiträge und Zusatzleistungen der gesetzlichen Kassen im Vergleich — beim Partnerportal.
+          </p>
+          <a
+            href={CHECK24_AWIN_URL}
+            target="_blank"
+            rel="sponsored nofollow noopener"
+            className="inline-flex items-center gap-2 bg-[#16181D] hover:bg-black text-white font-bold px-5 py-3 rounded-xl text-sm transition-colors"
+          >
+            Krankenkassen vergleichen <ExternalLink size={15} aria-hidden="true" />
+          </a>
+        </aside>
+      )}
 
       {/* Engine-computed spread highlight */}
       <div className="mb-14 bg-gradient-to-br from-[#E60A1C]/10 via-[#FFFFFF] to-[#FFFFFF] border border-[#E60A1C]/30 rounded-3xl p-6 sm:p-10 shadow-xl">
@@ -328,7 +387,8 @@ export default function KrankenkassePage() {
           <p className="text-sm text-black/70 leading-relaxed mt-3">
             Beide Teile werden paritätisch geteilt (§ 249 SGB V): Sie zahlen die Hälfte, Ihr Arbeitgeber die andere.
             Bemessungsgrundlage ist Ihr Bruttoentgelt bis zur Beitragsbemessungsgrenze von{" "}
-            <strong className="text-[#16181D]">5.812,50 € im Monat</strong> (69.750 € im Jahr, 2026).
+            <strong className="text-[#16181D]">5.812,50 € im Monat</strong> (69.750 € im Jahr, 2026); 2027 nach dem
+            BMAS-Entwurf {SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € im Monat.
           </p>
         </div>
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-6 shadow-sm">
@@ -355,7 +415,7 @@ export default function KrankenkassePage() {
       {/* FAQ */}
       <div className="mb-4">
         <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
-          Häufige Fragen zum Zusatzbeitrag 2026
+          Häufige Fragen zu Krankenkassenbeitrag und Zusatzbeitrag
         </h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
@@ -371,7 +431,7 @@ export default function KrankenkassePage() {
           ))}
         </div>
       </div>
-      <ToolContent config={TOOL_CONTENT["/brutto-netto-rechner-krankenkasse"]} />
+      <ToolContent config={TOOL_CONTENT["/brutto-netto-rechner-krankenkasse"]} stand={null} />
     </div>
   );
 }
