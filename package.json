@@ -16,7 +16,8 @@
     "test:steuerklassen": "node --experimental-strip-types --no-warnings scripts/steuerklassen.test.mts",
     "test:sv2027": "node --experimental-strip-types --no-warnings scripts/sv2027.test.mts",
     "test:azubi": "node --experimental-strip-types --no-warnings scripts/azubi.test.mts",
-    "test:neue-rechner": "node --experimental-strip-types --no-warnings scripts/neue-rechner.test.mts"
+    "test:neue-rechner": "node --experimental-strip-types --no-warnings scripts/neue-rechner.test.mts",
+    "check:seo": "node scripts/check-seo-uniqueness.mjs"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",
