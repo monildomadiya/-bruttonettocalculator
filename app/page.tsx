@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import Calculator from "@/components/Calculator";
 import AccordionFaq from "@/components/AccordionFaq";
-import { siteConfig } from "@/lib/authors";
 import { ORG_ID } from "@/lib/seo";
 import SupportButton from "@/components/SupportButton";
 import LatestPosts from "@/components/LatestPosts";
@@ -18,6 +17,12 @@ import { calculateNetto, formatEUR, GRUNDFREIBETRAG, ARBEITNEHMER_PAUSCHBETRAG, 
 import { pageImageUrl } from "@/lib/pageImage";
 import { WAGE_STATS_2026 } from "@/data/wage-stats";
 import { standardSteuerjahr, istWeihnachtsgeldSaison } from "@/lib/steuerjahr2027";
+
+// Eigenes Stand-Datum der Startseite. Sie ist die rankende URL für
+// "brutto netto rechner 2027" und wird öfter inhaltlich aktualisiert als der Rest
+// der Seite (siteConfig.lastUpdatedISO). Speist sichtbares Datum + dateModified;
+// bei echten Inhaltsänderungen hier UND in CONTENT_UPDATED[""] (app/sitemap.ts) anheben.
+const STARTSEITE_STAND = { iso: "2026-10-05", display: "5. Oktober 2026" };
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
@@ -226,8 +231,8 @@ const webAppSchema = {
   // Honest authorship/review signals: content is produced and reviewed by the
   // site's editorial team (Organization node in the global @graph), not a named
   // individual. See lib/authors.ts for why no personal reviewer is claimed.
-  dateModified: siteConfig.lastUpdatedISO,
-  lastReviewed: siteConfig.lastUpdatedISO,
+  dateModified: STARTSEITE_STAND.iso,
+  lastReviewed: STARTSEITE_STAND.iso,
   reviewedBy: { "@id": ORG_ID },
   author: { "@id": ORG_ID },
   publisher: { "@id": ORG_ID },
@@ -293,9 +298,10 @@ export default function HomePage() {
             className="font-display font-extrabold text-display-xl mb-4 sm:mb-6 w-full max-w-6xl tracking-tight animate-fade-up leading-tight px-2"
             style={{ animationDelay: "80ms" }}
           >
-            <span className="text-[#16181D]">Der präzise </span>
-            <span className="text-gradient-accent">Brutto Netto</span>
-            <span className="text-[#16181D]"> Rechner für Deutschland</span>
+            {/* H1 trägt die Jahre: Die Startseite ist die Ziel-URL für
+                "brutto netto rechner 2027" (siehe Kommentar am Antwortblock #netto-2027). */}
+            <span className="text-gradient-accent">Brutto Netto Rechner</span>
+            <span className="text-[#16181D]"> 2026 &amp; 2027 für Deutschland</span>
           </h1>
 
           {/* Sub-headline — kurz halten: Der Rechner soll auf dem Handy möglichst
@@ -309,6 +315,11 @@ export default function HomePage() {
             Nettogehalt in Sekunden berechnen — mit Lohnsteuer, Solidaritätszuschlag, Kirchensteuer
             und allen Sozialabgaben für alle sechs Steuerklassen. Offizielle Werte 2026, für 2027
             mit dem Gesetzentwurf zur Steuerreform.
+          </p>
+
+          <p className="-mt-3 sm:-mt-5 mb-5 sm:mb-7 text-xs sm:text-sm text-black/60 font-medium animate-fade-up px-2">
+            Aktualisiert am <time dateTime={STARTSEITE_STAND.iso}>{STARTSEITE_STAND.display}</time> · 2027 nach
+            Regierungsentwurf (BT-Drs. 21/8235)
           </p>
 
           <TableOfContents
@@ -762,10 +773,10 @@ export default function HomePage() {
         <div className="flex items-start gap-4 bg-[#F4F5F7] rounded-3xl p-6 sm:p-8 border border-black/[0.10] text-sm sm:text-base text-black/80 leading-relaxed shadow-lg">
           <AlertTriangle size={22} className="flex-shrink-0 mt-0.5 text-[#E60A1C]" />
           <p>
-            <strong className="text-[#16181D] font-bold">Stand: {siteConfig.lastUpdatedDisplay}.</strong> Alle Berechnungen ohne Gewähr.
+            <strong className="text-[#16181D] font-bold">Stand: {STARTSEITE_STAND.display}.</strong> Alle Berechnungen ohne Gewähr.
             Dieser Rechner ersetzt keine Steuerberatung. Grundlage: § 32a EStG (Fassung ab
-            Veranlagungszeitraum 2026) sowie die Sozialversicherungs-Rechengrößen-Verordnung 2026.
-            Die Berechnungen für Steuerklasse V und VI sind Näherungswerte.
+            Veranlagungszeitraum 2026) sowie die Sozialversicherungs-Rechengrößen-Verordnung 2026; für
+            2027 der Regierungsentwurf zur Steuerreform und der BMAS-Entwurf der Rechengrößen (vorläufig).
           </p>
         </div>
       </section>
