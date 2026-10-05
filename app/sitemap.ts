@@ -117,6 +117,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/bafoeg-rechner",
     "/teilzeitrechner",
     "/firmenwagenrechner",
+    "/dienstrad-rechner",
     "/rentenrechner",
     "/rente-brutto-netto-rechner",
     "/rentenpunkte-rechner",

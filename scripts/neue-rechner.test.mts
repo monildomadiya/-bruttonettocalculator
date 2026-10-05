@@ -188,5 +188,19 @@ eq("Heizkosten 1 Person 2026 / Entwurf 2027", `${wg.heizkostenentlastung(1, "202
 eq("Entwurf 2027: Fall 1 sinkt", wg.wohngeldRechnen({ recht: "2027", personen: 1, mietenstufe: 1, bruttokaltmiete: 335,
   einkommen: { quellen: [{ art: "rente", bruttoMonat: 1300, steuern: false }], alleinerziehend: false, schwerbehindert: 0 } }).wohngeld < 110, true);
 
+// Dienstrad (gleich lautende Erlasse 9.1.2020, Rdnr. 2 und 6): 1 % eines auf volle 100 € abgerundeten Viertels der UVP
+const dr = await import("../lib/dienstrad.ts");
+eq("Vorteil UVP 3.999 € (Viertel 999,75 → 900)", dr.geldwerterVorteil(3999), 9);
+eq("Vorteil UVP 4.000 €", dr.geldwerterVorteil(4000), 10);
+eq("Vorteil UVP 2.999 € (749,75 → 700)", dr.geldwerterVorteil(2999), 7);
+eq("S-Pedelec 6.000 €, 10 km (15 + 4,50)", dr.geldwerterVorteil(6000, "spedelec", 10), 19.5);
+const drIn = { bruttoMonat: 4000, steuerklasse: 1 as const, kinderlosUeber23: true, kirche: false, uvp: 3600, rate: 100, zuschuss: 0, typ: "fahrrad" as const, kmArbeitsweg: 0, laufzeitMonate: 36, uebernahme: 0, kaufRabattPct: 0 };
+const drR = dr.dienstradRechnen(drIn);
+const nn = (b: number) => calculateNetto({ bruttoMonat: b, jahr: 2026, steuerklasse: 1, verheiratet: false, kinderlosUeber23: true, kirche: false }).nettoMonat;
+eq("Belastung = Netto(4.000) − (Netto(4.000 − 100 + 9) − 9)", drR.belastung, nn(4000) - (nn(3909) - 9));
+eq("Belastung liegt zwischen Vorteil und Rate", drR.belastung > 9 && drR.belastung < 100, true);
+eq("AG zahlt ganze Rate: steuerfrei, keine Belastung", dr.dienstradRechnen({ ...drIn, zuschuss: 100 }).belastung, 0);
+eq("Über der RV-BBG kein Rentenverlust", dr.dienstradRechnen({ ...drIn, bruttoMonat: 9500 }).renteWeniger, 0);
+
 console.log(failed ? `\n${failed} PRUEFUNG(EN) FEHLGESCHLAGEN` : "\nALLE PRUEFUNGEN BESTANDEN");
 process.exit(failed ? 1 : 0);

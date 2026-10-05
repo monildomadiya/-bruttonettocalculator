@@ -3,7 +3,7 @@ import {
   Car, PiggyBank, Umbrella, Wallet2, Baby, Banknote, Gift, Clock3,
   Coins, Receipt, Landmark, HandCoins, GraduationCap, HeartHandshake, Timer, Globe,
   Building2, Snowflake, Users, TrendingUp, CalendarRange, HeartPulse, TrendingDown, Route, Gauge, Receipt as ReceiptIcon, Home,
-  HelpCircle, BarChart3, Sun, Palmtree, FileText,
+  HelpCircle, BarChart3, Sun, Palmtree, FileText, Bike,
 } from "lucide-react";
 
 export interface NavLink {
@@ -80,6 +80,7 @@ export const calculatorGroups: NavGroup[] = [
     label: "Sonderfälle",
     items: [
       { href: "/firmenwagenrechner", label: "Firmenwagenrechner", icon: Car, description: "1%-Regelung & Dienstwagen" },
+      { href: "/dienstrad-rechner", label: "Dienstrad-Rechner", icon: Bike, description: "Jobrad netto · 0,25-%-Regel" },
       { href: "/rentenrechner", label: "Rentenrechner", icon: PiggyBank, description: "Rentenbeitrag & Prognose" },
       { href: "/rentenpunkte-rechner", label: "Rentenpunkte-Rechner", icon: TrendingUp, description: "Entgeltpunkte & Rente · 42,52 €" },
       { href: "/rente-brutto-netto-rechner", label: "Rente Brutto Netto", icon: PiggyBank, description: "Nettorente 2026/2027" },

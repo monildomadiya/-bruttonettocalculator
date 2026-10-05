@@ -173,6 +173,8 @@ export default function BavRechner() {
             geringer aus, und die bAV-Rente ist später steuer- und krankenversicherungspflichtig. Prüfen Sie parallel Ihr{" "}
             <Link href="/gehaltsrechner" className="text-[#E60A1C] font-semibold hover:underline">Nettogehalt</Link> und den
             möglichen <Link href="/steuerrueckerstattung-rechner" className="text-[#E60A1C] font-semibold hover:underline">Steuervorteil</Link>.
+            Dasselbe Prinzip der Entgeltumwandlung gibt es für Fahrräder: der{" "}
+            <Link href="/dienstrad-rechner" className="text-[#E60A1C] font-semibold hover:underline">Dienstrad-Rechner</Link>.
           </p>
         </div>
       </section>

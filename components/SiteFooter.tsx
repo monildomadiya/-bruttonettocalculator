@@ -102,6 +102,7 @@ export default function SiteFooter() {
             </p>
             <ul className="space-y-3.5 text-sm sm:text-base text-black/60 font-medium">
               <li><Link href="/firmenwagenrechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Firmenwagenrechner</Link></li>
+              <li><Link href="/dienstrad-rechner"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Dienstrad-Rechner (Jobrad)</Link></li>
               <li><Link href="/weihnachtsgeld-rechner"    className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Weihnachtsgeld-Rechner</Link></li>
               <li><Link href="/brutto-netto-rechner/bayern" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner Bayern</Link></li>
               <li><Link href="/brutto-netto-rechner/nordrhein-westfalen" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner NRW</Link></li>

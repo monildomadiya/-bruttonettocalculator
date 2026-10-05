@@ -111,7 +111,7 @@ export default function FirmenwagenrechnerPage() {
         links={[
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Nettogehalt ohne Firmenwagen" },
           { href: "/arbeitgeber-brutto-netto-rechner", label: "Arbeitgeberrechner", desc: "Firmenwagen als Personalkosten" },
-          { href: "/stundenlohn-rechner", label: "Stundenlohnrechner", desc: "Stundenlohn aus dem Gehalt" },
+          { href: "/dienstrad-rechner", label: "Dienstrad-Rechner", desc: "Jobrad & E-Bike-Leasing netto" },
           { href: "/gehaltsrechner", label: "Gehaltsrechner", desc: "Brutto-Netto-Gehalt 2026" },
         ]}
       />
