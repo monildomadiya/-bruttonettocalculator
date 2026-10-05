@@ -7,8 +7,12 @@ interface ReviewerBylineProps {
   className?: string;
   variant?: "compact" | "banner";
   lang?: "de" | "en" | "pl" | "ro" | "tr" | "uk";
-  /** Eigener Stand für Seiten, die sich unabhängig von der Engine ändern (2027-Reform). */
-  updatedDisplay?: string;
+  /**
+   * Eigener Stand der Seite (lib/pageDates.ts). `null` blendet das Datum aus —
+   * für Seiten, die ihr „Aktualisiert am“ bereits an anderer Stelle zeigen
+   * (ein Datum pro Seite).
+   */
+  updatedDisplay?: string | null;
 }
 
 /**
@@ -80,6 +84,7 @@ const BYLINE_T = {
 } as const;
 
 export default function ReviewerByline({ className = "", variant = "compact", lang = "de", updatedDisplay }: ReviewerBylineProps) {
+  const ohneDatum = updatedDisplay === null;
   const stand = updatedDisplay ?? (lang === "de" ? siteConfig.lastUpdatedDisplay : standLokal(lang));
   const bt = BYLINE_T[lang];
   const credentials = lang === "de" ? primaryReviewer.credentials : bt.credentials;
@@ -109,9 +114,11 @@ export default function ReviewerByline({ className = "", variant = "compact", la
               <span className="text-black/40">•</span>
               <span className="text-black/70 font-normal">{credentials}</span>
             </div>
-            <p className="text-xs text-black/50 mt-0.5">
-              {bt.basis} {stand}
-            </p>
+            {!ohneDatum && (
+              <p className="text-xs text-black/50 mt-0.5">
+                {bt.basis} {stand}
+              </p>
+            )}
           </div>
         </div>
         <Link
@@ -141,8 +148,12 @@ export default function ReviewerByline({ className = "", variant = "compact", la
         {primaryReviewer.name}
       </Link>
       <span className="text-black/40">({credentials})</span>
-      <span className="text-black/30">•</span>
-      <span>{bt.updated} <strong className="text-black/90 font-normal">{stand}</strong></span>
+      {!ohneDatum && (
+        <>
+          <span className="text-black/30">•</span>
+          <span>{bt.updated} <strong className="text-black/90 font-normal">{stand}</strong></span>
+        </>
+      )}
     </div>
   );
 }

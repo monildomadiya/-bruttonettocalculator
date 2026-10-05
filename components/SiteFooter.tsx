@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { siteConfig } from "@/lib/authors";
 import { ArrowRight } from "lucide-react";
 import SupportButton from "@/components/SupportButton";
 
@@ -42,7 +41,8 @@ export default function SiteFooter() {
             </p>
             <div className="pt-1 flex items-center gap-3 text-xs font-mono text-black/40">
               <span className="inline-block w-2 h-2 rounded-full bg-[#E60A1C]" />
-              <span>Stand: {siteConfig.lastUpdatedDisplay} · § 32a EStG</span>
+              {/* Kein Datum im Footer: Jede Seite zeigt ihr eigenes „Aktualisiert am“ (lib/pageDates.ts). */}
+              <span>Steuer- und Sozialversicherungswerte 2026/2027 · § 32a EStG</span>
             </div>
           </div>
 

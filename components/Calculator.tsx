@@ -738,15 +738,25 @@ interface CalculatorProps {
   deepLink?: boolean;
   /** UI language. Defaults to German; pass "en" on the English landing page. */
   lang?: Lang;
-  /** Overrides the byline's "zuletzt aktualisiert" date (the 2027 page follows the reform, not the engine). */
-  standDisplay?: string;
+  /**
+   * Overrides the byline's "zuletzt aktualisiert" date with the page's own date
+   * (lib/pageDates.ts). `null` hides the date — for pages that already show
+   * their single "Aktualisiert am" line elsewhere.
+   */
+  standDisplay?: string | null;
   /** Bundesland-Seiten: Kirchensteuersatz des Landes (8 % BY/BW, sonst 9 %). */
   kirchensteuerSatz?: number;
   /** Bundesland-Seite Sachsen: höherer PV-Arbeitnehmeranteil. */
   sachsen?: boolean;
+  /**
+   * Startseite: Netto 2026 und Netto 2027 (Entwurf) immer nebeneinander zeigen,
+   * mit der Differenz pro Monat und Jahr — ohne dass der Nutzer das Steuerjahr
+   * umschalten muss. Ersetzt dann das aufklappbare Jahresvergleich-Akkordeon.
+   */
+  jahresvergleich?: boolean;
 }
 
-export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1, deepLink = true, lang = "de", standDisplay, kirchensteuerSatz = 0.09, sachsen = false }: CalculatorProps = {}) {
+export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1, deepLink = true, lang = "de", standDisplay, kirchensteuerSatz = 0.09, sachsen = false, jahresvergleich = false }: CalculatorProps = {}) {
   const t = T[lang];
   const skInfo = STEUERKLASSE_INFO[lang];
   const [bruttoMonat,  setBruttoMonat]  = useState<number>(initialBrutto);
@@ -853,6 +863,29 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   }), [bruttoMonat, otherYear, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027]);
 
   const diffYear = result.nettoMonat - resOtherYear.nettoMonat;
+
+  /*
+   * Fester Jahresvergleich (nur mit `jahresvergleich`): immer 2026 gegen den
+   * Regierungsentwurf 2027 ("entwurf2027"), unabhängig davon, welches Jahr und
+   * welches Szenario oben gewählt ist. Sozialabgaben 2027 folgen dem Schalter
+   * "Sozialabgaben 2027" (Voreinstellung: Werte 2026) — dieselbe Rechnung, die
+   * der Rechner bei Steuerjahr 2027 zeigt.
+   */
+  const vergleich = useMemo(() => {
+    if (!jahresvergleich) return null;
+    const basis = {
+      bruttoMonat: Math.max(0, bruttoMonat || 0),
+      verheiratet,
+      kinderlosUeber23,
+      kirche,
+      kirchensteuerSatz,
+      sachsen,
+      steuerklasse,
+    };
+    const n2026 = calculateNetto({ ...basis, jahr: 2026 });
+    const n2027 = calculateNetto({ ...basis, jahr: 2027, szenario: "entwurf2027", sv2027 });
+    return { n2026, n2027, diffMonat: n2027.nettoMonat - n2026.nettoMonat, diffJahr: n2027.nettoJahr - n2026.nettoJahr };
+  }, [jahresvergleich, bruttoMonat, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, sv2027]);
 
   const animatedNetto = useAnimatedValue(
     isJahresansicht ? result.nettoJahr : result.nettoMonat
@@ -1191,6 +1224,51 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
               </div>
             </div>
 
+            {/* ── Fester Jahresvergleich 2026 ↔ 2027 (Startseite) ──────────
+                Immer sichtbar, ohne Umschalten: die Suche „brutto netto rechner
+                2027“ will das 2027er Netto sofort sehen, und zwar neben 2026. */}
+            {vergleich && (
+              <div className="bg-[#FFFFFF] border border-black/[0.12] rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-sm" data-testid="jahresvergleich">
+                <table className="w-full text-left border-collapse text-sm sm:text-base">
+                  <caption className="text-left text-[11px] sm:text-xs font-mono uppercase tracking-widest text-black/60 font-bold pb-3">
+                    Ihr Netto 2026 und 2027 im Vergleich
+                  </caption>
+                  <thead>
+                    <tr className="border-b border-black/[0.10] text-xs text-black/60">
+                      <th scope="col" className="py-2 pr-2 font-semibold"><span className="sr-only">Zeitraum</span></th>
+                      <th scope="col" className="py-2 px-2 text-right font-semibold">Netto 2026</th>
+                      <th scope="col" className="py-2 pl-2 text-right font-semibold">Netto 2027 <span className="font-normal">(Entwurf)</span></th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-black/[0.06] tabular-nums">
+                    <tr>
+                      <th scope="row" className="py-2 pr-2 font-medium text-black/70">pro Monat</th>
+                      <td className="py-2 px-2 text-right font-mono font-bold text-[#16181D] whitespace-nowrap">{formatEUR(vergleich.n2026.nettoMonat)}</td>
+                      <td className="py-2 pl-2 text-right font-mono font-bold text-[#16181D] whitespace-nowrap">{formatEUR(vergleich.n2027.nettoMonat)}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" className="py-2 pr-2 font-medium text-black/70">pro Jahr</th>
+                      <td className="py-2 px-2 text-right font-mono text-black/80 whitespace-nowrap">{formatEUR(vergleich.n2026.nettoJahr)}</td>
+                      <td className="py-2 pl-2 text-right font-mono text-black/80 whitespace-nowrap">{formatEUR(vergleich.n2027.nettoJahr)}</td>
+                    </tr>
+                    <tr className="bg-[#F4F5F7]">
+                      <th scope="row" className="py-2 pl-2 pr-2 font-bold text-[#16181D] rounded-l-lg">Unterschied</th>
+                      <td colSpan={2} className={`py-2 pl-2 pr-2 text-right font-mono font-bold whitespace-nowrap rounded-r-lg ${vergleich.diffMonat >= 0.005 ? "text-emerald-700" : vergleich.diffMonat <= -0.005 ? "text-[#E60A1C]" : "text-black/60"}`}>
+                        {vergleich.diffMonat >= 0.005 ? "+" : vergleich.diffMonat <= -0.005 ? "−" : "±"}{formatEUR(Math.abs(vergleich.diffMonat))} / Monat
+                        <span className="text-black/30 font-normal"> · </span>
+                        {vergleich.diffJahr >= 0.005 ? "+" : vergleich.diffJahr <= -0.005 ? "−" : "±"}{formatEUR(Math.abs(vergleich.diffJahr))} / Jahr
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p className="mt-3 text-[11px] sm:text-xs text-black/55 leading-relaxed">
+                  2027 vorläufig: Lohnsteuer nach Regierungsentwurf (BT-Drs. 21/8235),{" "}
+                  {sv2027 === "entwurf" ? "Sozialabgaben mit den Beitragsbemessungsgrenzen aus dem BMAS-Entwurf" : "Sozialabgaben mit den Werten 2026"}.
+                  Gleiche Angaben wie oben.
+                </p>
+              </div>
+            )}
+
             {/* ── Deep-link funnel: full salary analysis (more pageviews / engagement) ─ */}
             {deepLink && bruttoMonat >= 500 && bruttoMonat <= 100000 && (
               <Link
@@ -1430,7 +1508,10 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             )}
           </div>
 
-          {/* ── Expandable: Year Comparison ────────────────────────────── */}
+          {/* ── Expandable: Year Comparison ──────────────────────────────
+              Mit `jahresvergleich` steht der Vergleich bereits fest über dem
+              Ergebnis — das Akkordeon entfällt dann. */}
+          {!jahresvergleich && (
           <div className="mt-3 bg-[#F1F3F5] border border-black/[0.10] rounded-2xl overflow-hidden transition-all shadow-lg">
             <button
               type="button"
@@ -1520,6 +1601,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             )}
 
           </div>
+          )}
 
           {/* ── Personalised next steps — keeps the visit going after the result.
               Sits below both accordions, i.e. well clear of the result ad. ── */}

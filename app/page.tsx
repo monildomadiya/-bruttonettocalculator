@@ -17,26 +17,31 @@ import { calculateNetto, formatEUR, GRUNDFREIBETRAG, ARBEITNEHMER_PAUSCHBETRAG, 
 import { pageImageUrl } from "@/lib/pageImage";
 import { WAGE_STATS_2026 } from "@/data/wage-stats";
 import { standardSteuerjahr, istWeihnachtsgeldSaison } from "@/lib/steuerjahr2027";
+import { LEGISLATION_STATUS } from "@/lib/config2027";
+import { pageStand } from "@/lib/pageDates";
 
-// Eigenes Stand-Datum der Startseite. Sie ist die rankende URL für
-// "brutto netto rechner 2027" und wird öfter inhaltlich aktualisiert als der Rest
-// der Seite (siteConfig.lastUpdatedISO). Speist sichtbares Datum + dateModified;
-// bei echten Inhaltsänderungen hier UND in CONTENT_UPDATED[""] (app/sitemap.ts) anheben.
-const STARTSEITE_STAND = { iso: "2026-10-05", display: "5. Oktober 2026" };
+// Ein Datum pro Seite: lib/pageDates.ts ("/"). Speist die Zeile „Aktualisiert
+// am“ unter der H1, dateModified und <lastmod> in der Sitemap. Byline und
+// Hinweiskasten zeigen bewusst KEIN weiteres Datum.
+const STARTSEITE_STAND = pageStand("/");
+
+// Alle Top-Suchen der Startseite sind 2027-Suchen ("brutto netto rechner 2027",
+// Ø-Pos. 2,3, zuvor 1,3); 2026 bringt kaum noch Verkehr. Deshalb 2027 zuerst.
+const PAGE_TITLE = "Brutto Netto Rechner 2027 & 2026 — Gehaltsrechner kostenlos";
+const PAGE_DESCRIPTION =
+  "Brutto Netto Rechner 2027: Netto nach Steuerreform-Entwurf berechnen, direkt im Vergleich zu 2026. Alle 6 Steuerklassen, kostenlos, ohne Anmeldung.";
 
 export const metadata: Metadata = {
-  title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
-  description:
-    "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
     canonical: "https://bruttonettocalculator.com/",
     languages: LANGUAGE_CLUSTER,
   },
   openGraph: {
     images: [pageImageUrl("/")],
-    title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner Deutschland kostenlos",
-    description:
-      "Kostenloser Brutto Netto Rechner 2026/2027: Nettogehalt sofort berechnen — Lohnsteuer, Soli & alle 6 Steuerklassen. Mit Firmenwagen- & Rentenrechner, ohne Anmeldung.",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     url: "https://bruttonettocalculator.com",
     locale: "de_DE",
     type: "website",
@@ -101,7 +106,7 @@ const faqs = [
   },
   {
     q: "Kann ich diesen Rechner als Brutto Netto Rechner 2027 nutzen?",
-    a: `Ja. Stellen Sie oben im Rechner das Steuerjahr von 2026 auf 2027 um: Die Lohnsteuer folgt dann dem Gesetzentwurf zur Steuerreform (Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag ${ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €). Für die Sozialabgaben wählen Sie unter „Sozialabgaben 2027“ zwischen dem Stand 2026 und den höheren Beitragsbemessungsgrenzen aus dem BMAS-Entwurf. Der Rechner zeigt das Netto 2027 direkt neben dem Wert für 2026.`,
+    a: `Ja. Unter dem Ergebnis zeigt der Rechner immer Ihr Netto 2026 und Ihr Netto 2027 (Entwurf) nebeneinander, mit der Differenz pro Monat und Jahr. Stellen Sie das Steuerjahr auf 2027, sehen Sie zusätzlich alle Abzüge für 2027: Die Lohnsteuer folgt dann dem Gesetzentwurf zur Steuerreform (Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag ${ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €). Für die Sozialabgaben wählen Sie unter „Sozialabgaben 2027“ zwischen dem Stand 2026 und den höheren Beitragsbemessungsgrenzen aus dem BMAS-Entwurf.`,
   },
   {
     q: "Ab wann gilt der Brutto Netto Rechner 2027?",
@@ -171,7 +176,7 @@ const infoCards = [
   {
     Icon:  Wallet,
     title: "Brutto Netto Rechner 2027",
-    text:  "Stellen Sie im Rechner das Steuerjahr auf 2027: Er rechnet dann mit dem Gesetzentwurf zur Steuerreform (Grundfreibetrag 12.564 €) und zeigt, was 2027 netto übrig bleibt.",
+    text:  `Der Rechner zeigt Ihr Netto 2027 nach dem Gesetzentwurf zur Steuerreform (Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €) immer direkt neben dem Netto 2026 — mit der Differenz pro Monat und Jahr.`,
     accentColor: "#FFFFFF",
   },
   {
@@ -233,7 +238,7 @@ const webAppSchema = {
   "@type": "WebPage",
   inLanguage: "de-DE",
   isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
-  "name": "Brutto Netto Rechner Deutschland 2026/2027",
+  "name": "Brutto Netto Rechner 2027 & 2026 für Deutschland",
   "url": "https://bruttonettocalculator.com",
   "description": "Präziser Brutto Netto Rechner für Deutschland. Gehaltsberechnung nach § 32a EStG für das Steuerjahr 2026/2027 mit allen 6 Steuerklassen, BKK/TK Zusatzbeitrag 2026, Mindestlohn 2027, Firmenwagen (1%-Regelung) und Rentenrechner.",
   // Honest authorship/review signals: content is produced and reviewed by the
@@ -297,7 +302,7 @@ export default function HomePage() {
           <div className="inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-[#FFFFFF] border border-black/[0.12] rounded-full px-4 sm:px-6 py-2 sm:py-2.5 mb-4 sm:mb-8 animate-fade-up max-w-[95vw]">
             <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#E60A1C] animate-pulse flex-shrink-0" />
             <span className="font-mono text-[11px] sm:text-sm uppercase tracking-wider sm:tracking-widest text-black/90 font-bold leading-tight">
-              AUF BASIS OFFIZIELLER WERTE · § 32A ESTG · 2026/2027
+              AUF BASIS OFFIZIELLER WERTE · § 32A ESTG · 2027/2026
             </span>
           </div>
 
@@ -309,7 +314,7 @@ export default function HomePage() {
             {/* H1 trägt die Jahre: Die Startseite ist die Ziel-URL für
                 "brutto netto rechner 2027" (siehe Kommentar am Antwortblock #netto-2027). */}
             <span className="text-gradient-accent">Brutto Netto Rechner</span>
-            <span className="text-[#16181D]"> 2026 &amp; 2027 für Deutschland</span>
+            <span className="text-[#16181D]"> 2027 &amp; 2026 für Deutschland</span>
           </h1>
 
           {/* Sub-headline — kurz halten: Der Rechner soll auf dem Handy möglichst
@@ -326,8 +331,8 @@ export default function HomePage() {
           </p>
 
           <p className="-mt-3 sm:-mt-5 mb-5 sm:mb-7 text-xs sm:text-sm text-black/60 font-medium animate-fade-up px-2">
-            Aktualisiert am <time dateTime={STARTSEITE_STAND.iso}>{STARTSEITE_STAND.display}</time> · 2027 nach
-            Regierungsentwurf (BT-Drs. 21/8235)
+            Aktualisiert am <time dateTime={STARTSEITE_STAND.iso}>{STARTSEITE_STAND.display}</time> ·{" "}
+            {LEGISLATION_STATUS.short}
           </p>
 
           <TableOfContents
@@ -369,7 +374,9 @@ export default function HomePage() {
 
       {/* ── Calculator Section ───────────────────────────────────────── */}
       <section id="rechner" className="max-w-6xl mx-auto px-2.5 sm:px-5 mt-4 sm:-mt-16 pb-20 relative z-20 scroll-mt-24">
-        <Calculator initialJahr={standardSteuerjahr()} />
+        {/* jahresvergleich: Netto 2026 und 2027 (Entwurf) immer nebeneinander.
+            standDisplay={null}: das einzige Datum der Seite steht unter der H1. */}
+        <Calculator initialJahr={standardSteuerjahr()} jahresvergleich standDisplay={null} />
 
         {/* Quick-intent links: surface adjacent tools at the moment of intent (SXO) */}
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
@@ -434,8 +441,8 @@ export default function HomePage() {
             Brutto Netto Rechner 2027: So viel Netto bleibt 2027
           </h2>
           <p className="mt-3 text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl">
-            Ihr Netto für 2027 berechnen Sie oben im Rechner: Bruttogehalt eingeben und das Steuerjahr auf{" "}
-            <strong className="text-[#16181D]">2027</strong> stellen. Gerechnet wird dann mit dem Gesetzentwurf zur
+            Ihr Netto für 2027 zeigt der Rechner oben direkt neben dem Wert für 2026 — Bruttogehalt eingeben genügt,
+            für alle Abzüge stellen Sie das Steuerjahr auf <strong className="text-[#16181D]">2027</strong>. Gerechnet wird mit dem Gesetzentwurf zur
             Steuerreform (BT-Drucksache 21/8235): Grundfreibetrag{" "}
             {GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} € statt{" "}
             {GRUNDFREIBETRAG.amtlich2026.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag{" "}
@@ -781,7 +788,7 @@ export default function HomePage() {
         <div className="flex items-start gap-4 bg-[#F4F5F7] rounded-3xl p-6 sm:p-8 border border-black/[0.10] text-sm sm:text-base text-black/80 leading-relaxed shadow-lg">
           <AlertTriangle size={22} className="flex-shrink-0 mt-0.5 text-[#E60A1C]" />
           <p>
-            <strong className="text-[#16181D] font-bold">Stand: {STARTSEITE_STAND.display}.</strong> Alle Berechnungen ohne Gewähr.
+            <strong className="text-[#16181D] font-bold">Alle Berechnungen ohne Gewähr.</strong>
             Dieser Rechner ersetzt keine Steuerberatung. Grundlage: § 32a EStG (Fassung ab
             Veranlagungszeitraum 2026) sowie die Sozialversicherungs-Rechengrößen-Verordnung 2026; für
             2027 der Regierungsentwurf zur Steuerreform und der BMAS-Entwurf der Rechengrößen (vorläufig).

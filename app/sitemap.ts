@@ -7,7 +7,7 @@ import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
 import { LANGUAGE_CLUSTER } from "@/lib/expat/cluster";
-import { REFORM_STAND } from "@/components/Reform2027Status";
+import { pageStand } from "@/lib/pageDates";
 import { getPublishedPosts } from "@/lib/postsStore";
 
 /*
@@ -177,30 +177,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const sitemapEntries: MetadataRoute.Sitemap = [];
 
-  // Die 2027-Seite ändert sich mit jedem Gesetzgebungsschritt, nicht mit der
-  // Engine — ihr lastmod folgt deshalb dem Redaktionsstand der Reform.
-  const reformUpdated = new Date(REFORM_STAND);
-
-  // Seiten, deren Inhalt sich nach dem letzten Engine-Stand geändert hat
-  // (Rechenlogik, Tabellen, Texte). Ohne eigenes Datum würde Google die
-  // Änderung über lastmod nicht sehen. Nur echte inhaltliche Änderungen eintragen.
-  const CONTENT_UPDATED: Record<string, string> = {
-    "": "2026-10-05", // Startseite: 2027-FAQ, Badge, Steuer/SV-Aufteilung
-    "/weihnachtsgeld-rechner": "2026-10-05",
-    "/abfindungsrechner": "2026-10-05",
-    "/firmenwagenrechner": "2026-10-05",
-    "/steuerklassenwechsel-rechner": "2026-10-05",
-    "/beitragsbemessungsgrenze-2027": "2026-10-05",
-    "/brutto-netto-rechner-2027": "2026-10-05",
-    "/zusatzbeitrag-2027": "2026-10-05",
-    "/rente-brutto-netto-rechner": "2026-10-05",
-    "/minijob-rechner": "2026-10-05",
-  };
-  const lastmodFor = (path: string) => {
-    const basis = path === "/brutto-netto-rechner-2027" ? reformUpdated : engineUpdated;
-    const eigen = CONTENT_UPDATED[path];
-    return eigen && new Date(eigen) > basis ? new Date(eigen) : basis;
-  };
+  // Ein Datum pro Seite: Seiten mit eigenem redaktionellem Stand stehen in
+  // lib/pageDates.ts (PAGE_LAST_UPDATED) — dasselbe Datum, das die Seite als
+  // „Aktualisiert am“ und als dateModified zeigt. Alle anderen folgen dem
+  // Engine-Stand (siteConfig.lastUpdatedISO).
+  const lastmodFor = (path: string) => new Date(pageStand(path === "" ? "/" : path).iso);
 
   for (const path of calculatorRoutes) {
     sitemapEntries.push({
