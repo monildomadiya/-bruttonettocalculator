@@ -27,11 +27,23 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { register } from "node:module";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+// Beiträge dürfen mit der Engine rechnen (z. B. Netto-Tabellen aus
+// lib/einmalzahlung.ts). Diese importieren über den Next-Alias "@/…", den Node
+// nicht kennt — derselbe Resolve-Hook wie in scripts/*.test.mts.
+const ROOT_URL = pathToFileURL(ROOT + "/").href;
+register(
+  "data:text/javascript," +
+    encodeURIComponent(
+      `export async function resolve(s, c, n) { if (s.startsWith("@/")) return n(${JSON.stringify(ROOT_URL)} + s.slice(2) + ".ts", c); return n(s, c); }`
+    )
+);
 const CONTENT_DIR = path.join(ROOT, "content", "blog");
 const OUT_DIR = path.join(ROOT, "public", "blog-cover");
 const FONT_DIR = path.join(ROOT, "assets", "fonts");
