@@ -99,14 +99,14 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
             1%-Regelung · Aktuell 2026
           </div>
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
-            Firmenwagenrechner 2026:{" "}
+            Brutto Netto Rechner{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              1%-Regelung berechnen
+              mit Firmenwagen
             </span>
           </h1>
           <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Berechnen Sie den geldwerten Vorteil Ihres Dienstwagens nach der 1%-Regelung und sehen Sie sofort,
-            wie viel von Ihrem Nettogehalt durch die Firmenwagen-Versteuerung übrig bleibt.
+            Unser Firmenwagenrechner 2026 berechnet den geldwerten Vorteil Ihres Dienstwagens nach der 1%-Regelung und
+            zeigt sofort Ihr Nettogehalt mit und ohne Firmenwagen.
           </p>
         </div>
       </section>

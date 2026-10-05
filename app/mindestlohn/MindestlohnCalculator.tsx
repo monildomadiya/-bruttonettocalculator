@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { TrendingUp, Clock, Calculator, ChevronDown, ArrowRight, Info } from "lucide-react";
 import { calculateNetto, type Steuerjahr, type Steuerklasse } from "@/lib/taxCalculator";
+import { MINDESTLOHN_BRUTTO_ODER_NETTO } from "./bruttoOderNetto";
 
 const MINDESTLOHN_2026 = 13.90;
 const MINDESTLOHN_2027_EXPECTED = 14.60;
@@ -54,8 +55,8 @@ const faqs = [
     a: "Der gesetzliche Mindestlohn gilt grundsätzlich für alle Arbeitnehmer ab 18 Jahren. Ausnahmen gelten für Praktikanten (unter 3 Monate), Pflichtpraktika, Langzeitarbeitslose in den ersten 6 Monaten sowie Auszubildende.",
   },
   {
-    q: "Was ist der Unterschied zwischen Mindestlohn brutto und netto?",
-    a: "Der Mindestlohn von 13,90 € ist ein Bruttobetrag. Vom Bruttogehalt werden Lohnsteuer (abhängig von Steuerklasse) sowie Sozialversicherungsbeiträge (ca. 20 %) abgezogen. Das Netto variiert je nach Steuerklasse und persönlichen Abzügen.",
+    q: "Ist der Mindestlohn brutto oder netto?",
+    a: MINDESTLOHN_BRUTTO_ODER_NETTO,
   },
 ];
 

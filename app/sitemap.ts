@@ -77,6 +77,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/unterhaltsrechner",
     "/tv-l-rechner",
     "/mutterschutz-rechner",
+    "/kindergeld-rechner",
     "/kuendigungsfrist-rechner",
     "/lohnsteuerrechner",
     "/einkommensteuer-rechner",

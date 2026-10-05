@@ -306,7 +306,7 @@ export default function Rechner2027Page() {
             </li>
             <li className="flex gap-3">
               <span className="text-[#E60A1C] font-bold">›</span>
-              <span><strong className="text-[#16181D]">Kindergeld {eur(KINDERGELD.entwurf2027)} € ab 2027</strong> und {eur(KINDERGELD.stufe2028)} € ab 2028, Kinderfreibetrag je Elternteil {eur(KINDERFREIBETRAG.entwurf2027)} € beziehungsweise {eur(KINDERFREIBETRAG.stufe2028)} €: Zusätzliche Entlastung für Familien.</span>
+              <span><strong className="text-[#16181D]">Kindergeld {eur(KINDERGELD.entwurf2027)} € ab 2027</strong> und {eur(KINDERGELD.stufe2028)} € ab 2028, Kinderfreibetrag je Elternteil {eur(KINDERFREIBETRAG.entwurf2027)} € beziehungsweise {eur(KINDERFREIBETRAG.stufe2028)} €: Zusätzliche Entlastung für Familien — ob Kindergeld oder Freibetrag für Sie mehr bringt, zeigt der <Link href="/kindergeld-rechner" className="text-[#E60A1C] font-semibold hover:underline">Kindergeld-Rechner 2027</Link>.</span>
             </li>
             <li className="flex gap-3">
               <span className="text-[#E60A1C] font-bold">›</span>

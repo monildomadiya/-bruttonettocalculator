@@ -149,5 +149,26 @@ eq("Arbeitnehmer nach 26 Jahren: Grundfrist", an.text, "4 Wochen zum 15. oder zu
 eq("Spätester Zugang für Ende 30.6. (4 Wochen)", iso(kf.spaetesterZugang(d(2026, 6, 30), { wochen: 4, termin: "15oderMonatsende" })), "2026-06-02");
 eq("Spätester Zugang für Ende 30.4. (1 Monat)", iso(kf.spaetesterZugang(d(2026, 4, 30), { monate: 1, termin: "monatsende" })), "2026-03-31");
 
+// Kindergeld & Günstigerprüfung (§§ 31, 32 Abs. 6, 66 EStG; 2027/2028 laut BT-Drs. 21/8235)
+const kgm = await import("../lib/kindergeld.ts");
+const { estFormel2026 } = await import("../lib/taxCalculator.ts");
+eq("Kindergeld 2026", kgm.KG_WERTE[2026].kindergeld, 259);
+eq("Kindergeld 2027 (Entwurf)", kgm.KG_WERTE[2027].kindergeld, 267);
+eq("Kindergeld 2028 (Entwurf)", kgm.KG_WERTE[2028].kindergeld, 272);
+eq("Freibeträge je Elternteil 2026 (3.414 + 1.464)", kgm.freibetragJeElternteil(2026), 4878);
+eq("Freibeträge je Elternteil 2027 (3.564 + 1.464)", kgm.freibetragJeElternteil(2027), 5028);
+const kgV = kgm.kindergeldRechnen({ jahr: 2026, veranlagung: "verheiratet", brutto1: 140000, kinder: 1 });
+const splitt = (z: number) => 2 * estFormel2026(z / 2);
+eq("Ehepaar 2026: Ersparnis = Splitting(zvE) − Splitting(zvE − 9.756)", kgV.kinder[0].ersparnis, splitt(kgV.zvE) - splitt(kgV.zvE - 9756));
+eq("Ehepaar 2026, 140.000 €: Freibetrag günstiger", kgV.kinder[0].freibetragGuenstiger, kgV.kinder[0].ersparnis > 3108);
+const kgG = kgm.kindergeldRechnen({ jahr: 2026, veranlagung: "getrennt", brutto1: 70000, kinder: 1 });
+eq("Getrennt: halber Freibetrag 4.878 €", kgG.freibetragJeKind, 4878);
+eq("Getrennt: angerechnet halbes Kindergeld 1.554 €", kgG.kinder[0].kindergeldJahr, 1554);
+eq("Getrennt: Ersparnis = ESt(zvE) − ESt(zvE − 4.878)", kgG.kinder[0].ersparnis, estFormel2026(kgG.zvE) - estFormel2026(kgG.zvE - 4878));
+eq("Geringes Einkommen: Kindergeld günstiger", kgm.kindergeldRechnen({ jahr: 2027, veranlagung: "verheiratet", brutto1: 40000, kinder: 2 }).mehrGesamt, 0);
+const sw = kgm.schwelleFreibetrag(2027, "verheiratet");
+eq("Schwelle 2027: knapp darunter Kindergeld", kgm.kindergeldRechnen({ jahr: 2027, veranlagung: "verheiratet", brutto1: sw - 100, kinder: 1 }).kinder[0].freibetragGuenstiger, false);
+eq("Schwelle 2027: ab Schwelle Freibetrag", kgm.kindergeldRechnen({ jahr: 2027, veranlagung: "verheiratet", brutto1: sw, kinder: 1 }).kinder[0].freibetragGuenstiger, true);
+
 console.log(failed ? `\n${failed} PRUEFUNG(EN) FEHLGESCHLAGEN` : "\nALLE PRUEFUNGEN BESTANDEN");
 process.exit(failed ? 1 : 0);

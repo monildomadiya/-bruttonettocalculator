@@ -6,7 +6,8 @@ import SupportButton from "@/components/SupportButton";
 import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
-  title: "Firmenwagenrechner 2026: Geldwerten Vorteil berechnen",
+  // „brutto netto rechner mit firmenwagen" war Breakout in Google Trends DE (5.10.2026).
+  title: "Firmenwagenrechner: Brutto Netto mit Firmenwagen 2026",
   description:
     "Firmenwagenrechner 2026: geldwerten Vorteil nach der 1%-Regelung berechnen — inkl. Elektro-Sätze (0,25 %/0,5 %) und 0,03 %-Zuschlag für den Arbeitsweg.",
   keywords: [

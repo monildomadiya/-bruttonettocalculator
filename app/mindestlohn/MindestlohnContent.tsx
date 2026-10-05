@@ -35,14 +35,17 @@ export default function MindestlohnContent() {
         <div className="bg-[#FFFFFF] border-l-4 border-[#E60A1C] rounded-2xl p-6 sm:p-7 shadow-sm">
           <h2 id="ml-kurzantwort" className="text-lg sm:text-xl font-extrabold text-[#16181D] mb-2">Kurzantwort</h2>
           <p className="text-black/75 text-sm sm:text-base leading-relaxed">
+            <strong className="text-[#16181D]">Ist der Mindestlohn brutto oder netto? Brutto.</strong>{" "}
             Der gesetzliche Mindestlohn beträgt seit dem 1. Januar 2026{" "}
             <strong className="text-[#16181D]">{MINDESTLOHN_2026.toLocaleString("de-DE", { minimumFractionDigits: 2 })} € brutto pro Stunde</strong>{" "}
             und steigt zum 1. Januar 2027 auf{" "}
             <strong className="text-[#16181D]">{MINDESTLOHN_2027.toLocaleString("de-DE", { minimumFractionDigits: 2 })} €</strong>.
             Beide Stufen sind bereits verbindlich beschlossen. Bei einer 40-Stunden-Woche entspricht der
             Mindestlohn 2026 einem Bruttogehalt von rund{" "}
-            <strong className="text-[#16181D]">{formatEUR(bruttoVollzeit)} / Monat</strong>. Wie viel davon netto
-            bleibt, zeigt der Rechner oben – auf Basis der gesetzlichen Werte, unverbindlich.
+            <strong className="text-[#16181D]">{formatEUR(bruttoVollzeit)} / Monat</strong>. Netto bleiben davon in
+            Steuerklasse I rund <strong className="text-[#16181D]">{formatEUR(nettoSk1(bruttoVollzeit, 2026))}</strong>, also etwa{" "}
+            {formatEUR(nettoSk1(bruttoVollzeit, 2026) / STUNDEN_PRO_MONAT_VZ)} pro Stunde. Ihren Wert zeigt der Rechner oben –
+            auf Basis der gesetzlichen Werte, unverbindlich.
           </p>
         </div>
       </section>

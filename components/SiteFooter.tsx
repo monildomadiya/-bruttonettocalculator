@@ -118,6 +118,7 @@ export default function SiteFooter() {
               <li><Link href="/werkstudent-rechner"       className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Werkstudent-Rechner</Link></li>
               <li><Link href="/ausbildung-brutto-netto-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Azubi-Rechner</Link></li>
               <li><Link href="/elterngeld-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Elterngeld-Rechner</Link></li>
+              <li><Link href="/kindergeld-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Kindergeld-Rechner</Link></li>
               <li><Link href="/mutterschutz-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Mutterschutz-Rechner</Link></li>
               <li><Link href="/unterhaltsrechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Unterhaltsrechner</Link></li>
               <li><Link href="/arbeitslosengeld-rechner"  className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Arbeitslosengeld-Rechner</Link></li>

@@ -66,6 +66,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/grundsicherung-rechner", label: "Grundsicherung-Rechner", icon: HandCoins, description: "Im Alter · Regelbedarf 563 €" },
       { href: "/schonvermoegen-rechner", label: "Schonvermögen-Rechner", icon: PiggyBank, description: "Bürgergeld Vermögensfreibetrag" },
       { href: "/elterngeld-rechner", label: "Elterngeld-Rechner", icon: Baby, description: "Basiselterngeld & Plus" },
+      { href: "/kindergeld-rechner", label: "Kindergeld-Rechner", icon: Baby, description: "267 € ab 2027 · Freibetrag-Check" },
       { href: "/mutterschutz-rechner", label: "Mutterschutz-Rechner", icon: Baby, description: "Fristen & Mutterschaftsgeld" },
       { href: "/unterhaltsrechner", label: "Unterhaltsrechner", icon: Users, description: "Düsseldorfer Tabelle 2026" },
       { href: "/arbeitslosengeld-rechner", label: "Arbeitslosengeld-Rechner", icon: Umbrella, description: "ALG I Orientierung" },
