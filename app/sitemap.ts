@@ -181,10 +181,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Engine — ihr lastmod folgt deshalb dem Redaktionsstand der Reform.
   const reformUpdated = new Date(REFORM_STAND);
 
+  // Seiten, deren Inhalt sich nach dem letzten Engine-Stand geändert hat
+  // (Rechenlogik, Tabellen, Texte). Ohne eigenes Datum würde Google die
+  // Änderung über lastmod nicht sehen. Nur echte inhaltliche Änderungen eintragen.
+  const CONTENT_UPDATED: Record<string, string> = {
+    "": "2026-10-05", // Startseite: 2027-FAQ, Badge, Steuer/SV-Aufteilung
+    "/weihnachtsgeld-rechner": "2026-10-05",
+    "/abfindungsrechner": "2026-10-05",
+    "/firmenwagenrechner": "2026-10-05",
+    "/steuerklassenwechsel-rechner": "2026-10-05",
+    "/beitragsbemessungsgrenze-2027": "2026-10-05",
+    "/brutto-netto-rechner-2027": "2026-10-05",
+    "/zusatzbeitrag-2027": "2026-10-05",
+    "/rente-brutto-netto-rechner": "2026-10-05",
+    "/minijob-rechner": "2026-10-05",
+  };
+  const lastmodFor = (path: string) => {
+    const basis = path === "/brutto-netto-rechner-2027" ? reformUpdated : engineUpdated;
+    const eigen = CONTENT_UPDATED[path];
+    return eigen && new Date(eigen) > basis ? new Date(eigen) : basis;
+  };
+
   for (const path of calculatorRoutes) {
     sitemapEntries.push({
       url: `${base}${path}`,
-      lastModified: path === "/brutto-netto-rechner-2027" ? reformUpdated : engineUpdated,
+      lastModified: lastmodFor(path),
       ...(clusterPaths.has(path) ? { alternates: { languages: languageCluster } } : {}),
     });
   }
