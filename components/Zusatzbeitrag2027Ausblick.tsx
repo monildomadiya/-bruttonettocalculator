@@ -20,7 +20,14 @@ const pct = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 1,
  * `zusatzbeitrag2027` bzw. `DURCHSCHNITT_ZUSATZBEITRAG_2027` in
  * data/krankenkassen.ts gepflegt ist; bis dahin steht "noch nicht festgelegt".
  */
-export default function Zusatzbeitrag2027Ausblick({ kasse }: { kasse?: Krankenkasse }) {
+export default function Zusatzbeitrag2027Ausblick({
+  kasse,
+  aufVergleichsseite = false,
+}: {
+  kasse?: Krankenkasse;
+  /** Auf /zusatzbeitrag-2027 selbst: kein Link auf die eigene Seite. */
+  aufVergleichsseite?: boolean;
+}) {
   const kasseSatz2027 = kasse?.zusatzbeitrag2027;
   const durchschnitt2027 = DURCHSCHNITT_ZUSATZBEITRAG_2027;
   const bbgMonat2027 = SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgJahr / 12;
@@ -160,13 +167,22 @@ export default function Zusatzbeitrag2027Ausblick({ kasse }: { kasse?: Krankenka
         </Link>
         {kasse ? (
           <>
-            ; alle Kassen im Vergleich zeigt der{" "}
+            ; Ihr Netto mit dem Satz jeder Kasse zeigt der{" "}
             <Link href="/brutto-netto-rechner-krankenkasse" className="text-[#E60A1C] font-semibold hover:underline">
               Brutto-Netto-Rechner mit Krankenkasse
             </Link>
           </>
         ) : null}
         .
+        {!aufVergleichsseite && (
+          <>
+            {" "}Die Sätze 2027 aller Kassen, sobald sie feststehen, finden Sie in der Übersicht{" "}
+            <Link href="/zusatzbeitrag-2027" className="text-[#E60A1C] font-semibold hover:underline">
+              Zusatzbeitrag 2027: alle Krankenkassen im Vergleich
+            </Link>
+            .
+          </>
+        )}
       </p>
     </Section>
   );

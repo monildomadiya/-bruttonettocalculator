@@ -87,6 +87,7 @@ export default function SiteFooter() {
               <li><Link href="/pfaendungstabelle"         className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Pfändungstabelle 2026</Link></li>
               <li><Link href="/welche-steuerklasse-bin-ich" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Welche Steuerklasse bin ich?</Link></li>
               <li><Link href="/brutto-netto-rechner-krankenkasse" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rechner mit Krankenkasse</Link></li>
+              <li><Link href="/zusatzbeitrag-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Zusatzbeitrag 2027</Link></li>
               <li><Link href="/brutto-netto-rechner-beamte" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Beamten-Rechner</Link></li>
               <li><Link href="/steuerfreibetrag-2026" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerfreibetrag 2026</Link></li>
               <li><Link href="/durchschnittsgehalt-deutschland" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Durchschnittsgehalt Deutschland</Link></li>
