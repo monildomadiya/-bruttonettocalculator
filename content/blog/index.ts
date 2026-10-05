@@ -58,6 +58,8 @@ import { post as mieteinnahmenAfa } from "./mieteinnahmen-versteuern-afa";
 import { post as weihnachtsgeldAnspruch } from "./weihnachtsgeld-anspruch";
 import { post as minijob2027 } from "./minijob-2027";
 import { post as mindestlohn2027 } from "./mindestlohn-2027";
+import { post as aktivrente } from "./aktivrente";
+import { post as steuerklasseNachHeirat } from "./steuerklasse-nach-heirat";
 
 export const BLOG_POSTS: BlogPost[] = [
   kinderfreibetrag2026,
@@ -92,4 +94,6 @@ export const BLOG_POSTS: BlogPost[] = [
   weihnachtsgeldAnspruch,
   minijob2027,
   mindestlohn2027,
+  aktivrente,
+  steuerklasseNachHeirat,
 ];
