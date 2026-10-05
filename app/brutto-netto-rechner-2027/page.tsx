@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Fragment } from "react";
 import Link from "next/link";
 import { Sparkles, AlertCircle, SlidersHorizontal, Calculator as CalculatorIcon, LineChart, BookOpen, HelpCircle } from "lucide-react";
 import Calculator from "@/components/Calculator";
-import Reform2027Status, { REFORM_STAND } from "@/components/Reform2027Status";
+import Reform2027Status from "@/components/Reform2027Status";
 import TableOfContents from "@/components/TableOfContents";
 import Section from "@/components/ui/Section";
 import EntlastungsKurve from "@/components/charts/EntlastungsKurve";
@@ -17,25 +16,69 @@ import {
   calculateNetto,
 } from "@/lib/taxCalculator";
 import { pageImageUrl } from "@/lib/pageImage";
+import { LEGISLATION_STATUS } from "@/lib/config2027";
+import { pageStand } from "@/lib/pageDates";
+import { nettoFuerJahr, bruttoReihe, eurDe, eurDeSigned } from "@/lib/vergleich2027";
+
+const STAND = pageStand("/brutto-netto-rechner-2027");
 
 const eur = (n: number) => n.toLocaleString("de-DE");
-const signed = (n: number) =>
-  Math.abs(n) < 0.005 ? "0,00" : `${n > 0 ? "+" : "−"}${Math.abs(n).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-/** Engine-Vergleich 2026 → 2027 je Gehalt, getrennt nach Steuer- und Sozialabgaben-Effekt. */
-const VERGLEICH_ZEILEN = [2000, 3000, 4000, 5000, 6000, 7000, 8000].map((brutto) => {
-  const effekt = (sk: 1 | 3) => {
-    const basis = { bruttoMonat: brutto, steuerklasse: sk, verheiratet: sk === 3, kinderlosUeber23: true, kirche: false };
-    const a = calculateNetto({ ...basis, jahr: 2026 });
-    const b = calculateNetto({ ...basis, jahr: 2027, sv2027: "entwurf" });
-    return {
-      steuer: a.steuer.summeMonat - b.steuer.summeMonat,
-      sv: a.sv.summeMonat - b.sv.summeMonat,
-      netto: b.nettoMonat - a.nettoMonat,
-    };
+/*
+ * „Wie viel mehr Netto?“-Tabelle: Monatsbrutto 2.000–8.000 € in 500-€-Schritten,
+ * je eine Tabelle für Steuerklasse I und III. Alle Werte aus der Engine
+ * (lib/vergleich2027.ts → calculateNetto). Sozialabgaben 2027 und 2028 mit den
+ * Beitragsbemessungsgrenzen aus dem BMAS-Referentenentwurf 2027 (für 2028 gibt
+ * es noch keine Werte) — dieselbe Zahl, die der Rechner mit „Sozialabgaben 2027:
+ * Entwurf 2027“ zeigt.
+ */
+const MEHR_NETTO_ZEILEN = bruttoReihe(2000, 8000, 500).map((brutto) => {
+  const zeile = (sk: 1 | 3) => {
+    const n26 = nettoFuerJahr(brutto, 2026, { steuerklasse: sk }).nettoMonat;
+    const n27 = nettoFuerJahr(brutto, 2027, { steuerklasse: sk, sv: "entwurf" }).nettoMonat;
+    const n28 = nettoFuerJahr(brutto, 2028, { steuerklasse: sk, sv: "entwurf" }).nettoMonat;
+    return { n26, n27, plus27: n27 - n26, n28, plus28: n28 - n26 };
   };
-  return { brutto, sk1: effekt(1), sk3: effekt(3) };
+  return { brutto, sk1: zeile(1), sk3: zeile(3) };
 });
+
+function MehrNettoTabelle({ sk }: { sk: 1 | 3 }) {
+  const roemisch = sk === 1 ? "I" : "III";
+  return (
+    <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl overflow-x-auto">
+      <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[600px]">
+        <caption className="text-left px-3 pt-3 pb-2 text-sm font-bold text-[#16181D]">
+          Steuerklasse {roemisch}: Netto pro Monat 2026, 2027 und 2028
+        </caption>
+        <thead>
+          <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-[11px] font-mono uppercase tracking-wider text-black/70">
+            <th scope="col" className="py-2.5 px-3">Monatsbrutto</th>
+            <th scope="col" className="py-2.5 px-3 text-right">Netto 2026</th>
+            <th scope="col" className="py-2.5 px-3 text-right">Netto 2027</th>
+            <th scope="col" className="py-2.5 px-3 text-right">+ € / Monat</th>
+            <th scope="col" className="py-2.5 px-3 text-right border-l border-black/10">Netto 2028</th>
+            <th scope="col" className="py-2.5 px-3 text-right">+ € / Monat (vs. 2026)</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-black/10 tabular-nums">
+          {MEHR_NETTO_ZEILEN.map((z) => {
+            const w = sk === 1 ? z.sk1 : z.sk3;
+            return (
+              <tr key={z.brutto}>
+                <th scope="row" className="py-2.5 px-3 font-mono font-bold text-[#16181D] whitespace-nowrap">{eurDe(z.brutto)}</th>
+                <td className="py-2.5 px-3 text-right font-mono whitespace-nowrap">{eurDe(w.n26)}</td>
+                <td className="py-2.5 px-3 text-right font-mono font-bold whitespace-nowrap">{eurDe(w.n27)}</td>
+                <td className={`py-2.5 px-3 text-right font-mono whitespace-nowrap ${w.plus27 >= 0 ? "text-emerald-700" : "text-[#E60A1C]"}`}>{eurDeSigned(w.plus27)}</td>
+                <td className="py-2.5 px-3 text-right font-mono font-bold whitespace-nowrap border-l border-black/10">{eurDe(w.n28)}</td>
+                <td className={`py-2.5 px-3 text-right font-mono whitespace-nowrap ${w.plus28 >= 0 ? "text-emerald-700" : "text-[#E60A1C]"}`}>{eurDeSigned(w.plus28)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 // Suchintention dieser Seite: die REFORM-Frage („Steuerreform 2027 Rechner“,
 // „wie viel mehr Netto 2027“). Die Kopfsuche „brutto netto rechner 2027“ gehört
@@ -47,11 +90,10 @@ const VERGLEICH_ZEILEN = [2000, 3000, 4000, 5000, 6000, 7000, 8000].map((brutto)
 //
 // Die Beschreibung nennt den aktuellen Verfahrensschritt: Das Thema ist
 // query-deserves-freshness, ein veralteter Stand im Snippet kostet Rankings
-// (Absturz im September 2026). Bei jedem Verfahrensschritt mit REFORM_STAND
-// in components/Reform2027Status.tsx zusammen aktualisieren.
+// (Absturz im September 2026). Der Verfahrensschritt kommt deshalb aus
+// LEGISLATION_STATUS (lib/config2027.ts), nicht als fester Text.
 const PAGE_TITLE = "Steuerreform 2027 Rechner: Wie viel mehr Netto bleibt?";
-const PAGE_DESCRIPTION =
-  "Steuerreform 2027: So viel mehr Netto bringt der Gesetzentwurf (Drs. 21/8235) — Rechner und Tabelle nach Gehalt, 2027 und 2028. 1. Lesung am 8.10.2026.";
+const PAGE_DESCRIPTION = `Steuerreform 2027: So viel mehr Netto bringt der Gesetzentwurf — Tabelle nach Gehalt für 2027 und 2028. ${LEGISLATION_STATUS.schritt}.`;
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -158,7 +200,7 @@ const appJsonLd = {
   name: PAGE_TITLE,
   url: "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
   inLanguage: "de-DE",
-  dateModified: REFORM_STAND,
+  dateModified: STAND.iso,
   description:
     PAGE_DESCRIPTION,
   about: { "@type": "Thing", name: "Einkommensteuerreform 2027 (Deutschland)" },
@@ -210,12 +252,22 @@ export default function Rechner2027Page() {
           {eur(ARBEITNEHMER_PAUSCHBETRAG.reform)} €. Brutto eingeben und „Entwurf 2027“, „Stufe 2028“ und
           „Ohne Reform“ direkt vergleichen.
         </p>
+        <p className="mt-3 text-xs sm:text-sm text-black/60 font-medium">
+          Aktualisiert am <time dateTime={STAND.iso}>{STAND.display}</time> · {LEGISLATION_STATUS.short}
+        </p>
+        <p className="mt-2 text-sm sm:text-base text-black/80">
+          Nur Ihr normales Netto 2027 berechnen? →{" "}
+          <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">
+            Brutto Netto Rechner 2027
+          </Link>
+        </p>
       </div>
 
       <TableOfContents
         className="mb-4 sm:mb-8"
         items={[
-          { id: "entlastung", label: "Mehr Netto nach Gehalt" },
+          { id: "tabelle", label: "Tabelle nach Gehalt" },
+          { id: "entlastung", label: "Mehr Netto im Verlauf" },
           { id: "tarif", label: "Was sich am Tarif ändert" },
           { id: "reform-status-heading", label: "Stand der Reform" },
           { id: "bereits-fest", label: "Was 2027 schon feststeht" },
@@ -225,11 +277,31 @@ export default function Rechner2027Page() {
       />
 
       <div className="w-full max-w-6xl mx-auto mb-10 sm:mb-14">
-        <Calculator
-          initialJahr={2027}
-          standDisplay={new Date(REFORM_STAND).toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" })}
-        />
+        {/* standDisplay={null}: das einzige Datum der Seite steht unter der H1. */}
+        <Calculator initialJahr={2027} standDisplay={null} />
       </div>
+
+      {/* Direkt unter dem Rechner: die Tabelle zur Suche
+          „steuerreform 2027 wieviel mehr netto tabelle“. */}
+      <Section
+        id="tabelle"
+        eyebrow="Tabelle"
+        eyebrowIcon={LineChart}
+        title="Steuerreform 2027: Wie viel mehr Netto? Tabelle nach Gehalt"
+        intro="Netto pro Monat, kinderlos, ohne Kirchensteuer, durchschnittlicher Zusatzbeitrag 2,9 %. 2027 und 2028 nach dem Regierungsentwurf (vorläufig)."
+      >
+        <div className="space-y-6">
+          <MehrNettoTabelle sk={1} />
+          <MehrNettoTabelle sk={3} />
+        </div>
+        <p className="text-xs text-black/55 mt-3 leading-relaxed">
+          „+ € / Monat“ = Netto 2027 bzw. 2028 minus Netto 2026. Lohnsteuer 2027 nach Artikel 1, 2028 nach Artikel 2 des
+          Regierungsentwurfs ({LEGISLATION_STATUS.drucksache}, Entwurf). Sozialabgaben 2027 mit den
+          Beitragsbemessungsgrenzen aus dem BMAS-Referentenentwurf vom 21.09.2026 (Beitragssätze wie 2026); für 2028
+          sind noch keine Werte festgelegt, angenommen sind die Werte 2027. Deshalb wird das Plus oberhalb der
+          Beitragsbemessungsgrenze 2026 (5.812,50 € brutto) kleiner oder negativ. Beschlossen ist beides noch nicht.
+        </p>
+      </Section>
 
       <Section eyebrow="So wird gerechnet" eyebrowIcon={CalculatorIcon} title="Worauf dieser Rechner 2027 basiert" prose>
         <p>
@@ -283,58 +355,6 @@ export default function Rechner2027Page() {
         <div id="tarif">
           <TarifKurve />
         </div>
-      </Section>
-
-      {/*
-        Tabelle 2.000–8.000 € für Steuerklasse I und III: Steuerentlastung und
-        Mehrkosten der Sozialabgaben (BBG-Entwurf) getrennt, damit sichtbar wird,
-        woher das Plus kommt und wo es kippt. Alles aus der Engine.
-      */}
-      <Section
-        id="tabelle"
-        eyebrow="Tabelle"
-        eyebrowIcon={LineChart}
-        title="Netto 2026 vs. 2027 nach Gehalt: Steuerklasse I und III"
-        intro="Pro Monat, kinderlos, ohne Kirchensteuer. Steuer: Regierungsentwurf zur Steuerreform 2027. Sozialabgaben: Beitragsbemessungsgrenzen aus dem BMAS-Entwurf, Beitragssätze wie 2026."
-      >
-        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[640px]">
-            <thead>
-              <tr className="bg-[#F1F3F5] text-[11px] font-mono uppercase tracking-wider text-black/70">
-                <th rowSpan={2} className="py-2.5 px-3 align-bottom">Brutto</th>
-                <th colSpan={3} className="py-2.5 px-3 text-center border-l border-black/10">Steuerklasse I</th>
-                <th colSpan={3} className="py-2.5 px-3 text-center border-l border-black/10">Steuerklasse III</th>
-              </tr>
-              <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-[11px] font-mono uppercase tracking-wider text-black/70">
-                {["Steuer", "Sozialabg.", "Netto"].map((h) => (
-                  <th key={`1${h}`} className={`py-2 px-3 text-right ${h === "Steuer" ? "border-l border-black/10" : ""}`}>{h}</th>
-                ))}
-                {["Steuer", "Sozialabg.", "Netto"].map((h) => (
-                  <th key={`3${h}`} className={`py-2 px-3 text-right ${h === "Steuer" ? "border-l border-black/10" : ""}`}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-black/10">
-              {VERGLEICH_ZEILEN.map((z) => (
-                <tr key={z.brutto}>
-                  <td className="py-2.5 px-3 font-mono font-bold text-[#16181D] whitespace-nowrap">{eur(z.brutto)} €</td>
-                  {[z.sk1, z.sk3].map((w, i) => (
-                    <Fragment key={i}>
-                      <td className="py-2.5 px-3 text-right font-mono whitespace-nowrap border-l border-black/10 text-emerald-700">{signed(w.steuer)}</td>
-                      <td className={`py-2.5 px-3 text-right font-mono whitespace-nowrap ${w.sv < -0.005 ? "text-[#E60A1C]" : "text-black/50"}`}>{signed(w.sv)}</td>
-                      <td className={`py-2.5 px-3 text-right font-mono font-bold whitespace-nowrap ${w.netto >= 0 ? "text-emerald-700" : "text-[#E60A1C]"}`}>{signed(w.netto)}</td>
-                    </Fragment>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-black/55 mt-3 leading-relaxed">
-          Veränderung 2027 gegenüber 2026 in Euro pro Monat. „Steuer“ = weniger Lohnsteuer und Soli durch die Reform, „Sozialabg.“ = mehr
-          Beiträge durch die höheren Beitragsbemessungsgrenzen, „Netto“ = Summe. Status: Regierungsentwurf (BT-Drs. 21/8235) und
-          BMAS-Referentenentwurf; beide noch nicht beschlossen. Wir aktualisieren die Tabelle, sobald das Gesetz verabschiedet ist.
-        </p>
       </Section>
 
       <Reform2027Status />

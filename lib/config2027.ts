@@ -5,7 +5,7 @@
  *
  *   Wann                                   Änderung
  *   ─────────────────────────────────────  ──────────────────────────────────────
- *   nach der 1. Lesung (8.10.2026)         LEGISLATION_STATUS.short anpassen und
+ *   nach der 1. Lesung (8.10.2026)         VERFAHRENSSCHRITT (→ LEGISLATION_STATUS) und
  *                                          lastUpdated der betroffenen Seiten in
  *                                          lib/pageDates.ts anheben
  *   bis 1.11.2026 (BMG-Bekanntgabe)        ZUSATZBEITRAG_DURCHSCHNITT_2027 in
@@ -19,6 +19,9 @@
  */
 import { ENTWURF } from "@/lib/taxCalculator";
 
+/** Letzter bzw. nächster Verfahrensschritt — nach der 1. Lesung hier anpassen. */
+const VERFAHRENSSCHRITT = "1. Lesung im Bundestag: 8. Oktober 2026";
+
 /**
  * Stand des Gesetzgebungsverfahrens zum Einkommensteuerreformgesetz 2027.
  * Wird auf jeder Seite gezeigt, die die Reform erwähnt.
@@ -26,9 +29,10 @@ import { ENTWURF } from "@/lib/taxCalculator";
  */
 export const LEGISLATION_STATUS = {
   drucksache: "BT-Drs. 21/8235",
-  short: "2027 nach Regierungsentwurf (BT-Drs. 21/8235) · 1. Lesung im Bundestag: 8. Oktober 2026",
+  /** "2027 nach Regierungsentwurf (BT-Drs. 21/8235) · 1. Lesung im Bundestag: 8. Oktober 2026" */
+  short: `2027 nach Regierungsentwurf (BT-Drs. 21/8235) · ${VERFAHRENSSCHRITT}`,
   /** Nur der Verfahrensschritt, für Meta-Beschreibungen (dort ist Platz knapp). */
-  schritt: "1. Lesung im Bundestag am 8. Oktober 2026",
+  schritt: VERFAHRENSSCHRITT,
   quelle: ENTWURF.quelle,
 } as const;
 

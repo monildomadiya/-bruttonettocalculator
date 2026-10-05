@@ -1,13 +1,14 @@
 import { CheckCircle2, Clock, Gavel, ShieldCheck } from "lucide-react";
 import Section from "@/components/ui/Section";
+import { LEGISLATION_STATUS } from "@/lib/config2027";
 
 /**
  * Gesetzgebungs-Status der Steuerreform 2027.
  *
  * Bewusst als eigenständige Komponente: Der Reformstand ist die einzige
  * Information auf der 2027-Seite, die sich laufend ändert. Wird eine Stufe
- * erreicht, wird hier `status` umgestellt und `STAND` aktualisiert — das ist
- * zugleich die Quelle für `dateModified` im Schema der Seite.
+ * erreicht, wird hier `status` umgestellt, `LEGISLATION_STATUS` in
+ * lib/config2027.ts angepasst und das Seitendatum in lib/pageDates.ts angehoben.
  *
  * Quellenlage: Das Bundeskabinett hat den Regierungsentwurf eines
  * Einkommensteuerreformgesetzes 2027 (EStRefG 2027) am 02.09.2026 beschlossen.
@@ -17,8 +18,8 @@ import Section from "@/components/ui/Section";
  * mit der Verkündung im Bundesgesetzblatt.
  */
 
-/** Letzter redaktioneller Stand — auch als `dateModified` verwendet. */
-export const REFORM_STAND = "2026-09-30";
+// Das Seitendatum (sichtbar, dateModified, lastmod) steht in lib/pageDates.ts —
+// ein Datum pro Seite. Der Verfahrensstand selbst in lib/config2027.ts.
 
 type Status = "erledigt" | "offen";
 
@@ -194,11 +195,7 @@ export default function Reform2027Status() {
       </ol>
 
       <p className="text-xs text-black/50 leading-relaxed border-t border-black/[0.08] pt-5">
-        Redaktioneller Stand:{" "}
-        <time dateTime={REFORM_STAND}>
-          {new Date(REFORM_STAND).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}
-        </time>
-        . Quellen: Gesetzentwurf der Bundesregierung, Entwurf eines Einkommensteuerreformgesetzes
+        Verfahrensstand: {LEGISLATION_STATUS.short}. Quellen: Gesetzentwurf der Bundesregierung, Entwurf eines Einkommensteuerreformgesetzes
         2027, BT-Drucksache 21/8235 vom 28.9.2026 (Artikel 1 für den Veranlagungszeitraum 2027, Artikel 2 für 2028); zugrunde
         liegender Referentenentwurf des Bundesministeriums der Finanzen, Bearbeitungsstand
         18.08.2026; Beschluss des Koalitionsausschusses vom 1.7.2026;
