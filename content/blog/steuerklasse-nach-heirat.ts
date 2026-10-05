@@ -31,7 +31,7 @@ export const post: BlogPost = {
   headline: "Welche Steuerklasse nach der Heirat? 3/5, 4/4 oder Faktor",
   metaTitle: "Steuerklasse nach der Heirat: 3/5, 4/4 oder Faktor?",
   metaDescription:
-    "Nach der Hochzeit gilt automatisch Steuerklasse 4/4. Wann sich 3/5 oder das Faktorverfahren lohnt, wie Sie über ELSTER wechseln und was Alleinerziehende wissen müssen.",
+    "Nach der Hochzeit gilt Steuerklasse 4/4. Wann sich 3/5 oder der Faktor lohnt, wie Sie per ELSTER wechseln und was Alleinerziehende wissen müssen.",
   excerpt:
     "Wer heiratet, landet automatisch in Steuerklasse IV. Ob 3/5 oder IV mit Faktor besser ist, hängt vom Gehaltsunterschied ab, und von Elterngeld oder Arbeitslosengeld, die absehbar kommen.",
   focusKeyword: "steuerklasse nach heirat",

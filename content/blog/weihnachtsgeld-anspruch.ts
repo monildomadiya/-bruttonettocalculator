@@ -26,7 +26,7 @@ export const post: BlogPost = {
   headline: "Weihnachtsgeld 2026: Anspruch, Auszahlung, Kündigung & Rückzahlung",
   metaTitle: "Weihnachtsgeld Anspruch 2026: Wer bekommt es wann?",
   metaDescription:
-    "Weihnachtsgeld: Wann besteht ein Anspruch, wann wird es gezahlt, und was gilt bei Kündigung, Elternzeit, Krankheit und Rückzahlung? Mit Netto-Tabelle 2026.",
+    "Weihnachtsgeld: Wann besteht ein Anspruch, wann wird es gezahlt, was gilt bei Kündigung, Elternzeit und Rückzahlung? Mit Netto-Tabelle 2026.",
   excerpt:
     "Ein Gesetz, das Weihnachtsgeld vorschreibt, gibt es nicht. Ein Anspruch entsteht aus Vertrag, Tarif, Betriebsvereinbarung oder betrieblicher Übung. Was bei Kündigung, Elternzeit und Krankheit gilt und wann Sie es zurückzahlen müssen.",
   focusKeyword: "weihnachtsgeld anspruch",

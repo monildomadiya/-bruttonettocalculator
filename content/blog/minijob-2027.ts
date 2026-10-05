@@ -44,7 +44,7 @@ export const post: BlogPost = {
   headline: "Minijob 2027: 633-€-Grenze, 5 % Pauschsteuer & alle Änderungen",
   metaTitle: "Minijob Grenze 2027: 633 € und neue Abgaben",
   metaDescription:
-    "Minijob 2027: Grenze 633 € im Monat, rund 43 Stunden bei Mindestlohn. Was die höhere KV-Pauschale, die geplante 5 % Pauschsteuer und die Debatte um die Abschaffung bedeuten.",
+    "Minijob 2027: Grenze 633 €, rund 43 Stunden bei Mindestlohn. Was höhere KV-Pauschale, geplante 5 % Pauschsteuer und die Abschaffungsdebatte bedeuten.",
   excerpt:
     "Ab Januar 2027 dürfen Minijobber 633 € im Monat verdienen. Für Beschäftigte ändert sich am Netto kaum etwas, für Arbeitgeber wird der Minijob deutlich teurer. Alle Werte, Stunden und Vorhaben im Überblick.",
   focusKeyword: "minijob grenze 2027",
