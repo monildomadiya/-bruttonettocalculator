@@ -5,6 +5,8 @@
  * Werte nicht lesen, nur eine Client-Referenz.
  */
 
+import { MINDESTLOHN, MINIJOB_GRENZE } from "@/lib/config2027";
+
 export type MinijobJahr = 2026 | 2027;
 
 /**
@@ -13,10 +15,10 @@ export type MinijobJahr = 2026 | 2027;
  * die Grenzen stehen damit fest.
  */
 export const MINIJOB_WERTE: Record<MinijobJahr, { grenze: number; mindestlohn: number; pauschsteuerPct: number }> = {
-  2026: { grenze: 603, mindestlohn: 13.9, pauschsteuerPct: 2 },
+  2026: { grenze: MINIJOB_GRENZE[2026], mindestlohn: MINDESTLOHN[2026], pauschsteuerPct: 2 },
   // Pauschsteuer 5 %: Regierungsentwurf EStRefG 2027 (BT-Drs. 21/8235, Art. 1
   // Nr. 7, § 40a Abs. 2 EStG) — geplant, noch nicht verkündet.
-  2027: { grenze: 633, mindestlohn: 14.6, pauschsteuerPct: 5 },
+  2027: { grenze: MINIJOB_GRENZE[2027], mindestlohn: MINDESTLOHN[2027], pauschsteuerPct: 5 },
 };
 
 /** RV-Eigenanteil: 18,6 % Gesamtbeitrag − 15 % Arbeitgeber-Pauschale (gewerblich). */

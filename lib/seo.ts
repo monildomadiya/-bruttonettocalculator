@@ -62,6 +62,8 @@ export function webPageSchema(opts: {
   url: string;
   description?: string;
   breadcrumbId?: string;
+  /** Eigenes Seitendatum (lib/pageDates.ts); sonst der allgemeine Engine-Stand. */
+  dateModified?: string;
 }) {
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -74,8 +76,8 @@ export function webPageSchema(opts: {
     // Honest authorship/review signals: content is produced and reviewed by the
     // site's editorial team (Organization node in the global @graph), never a
     // named individual. See lib/authors.ts for why no personal reviewer is claimed.
-    dateModified: siteConfig.lastUpdatedISO,
-    lastReviewed: siteConfig.lastUpdatedISO,
+    dateModified: opts.dateModified ?? siteConfig.lastUpdatedISO,
+    lastReviewed: opts.dateModified ?? siteConfig.lastUpdatedISO,
     reviewedBy: { "@id": ORG_ID },
     author: { "@id": ORG_ID },
     publisher: { "@id": ORG_ID },

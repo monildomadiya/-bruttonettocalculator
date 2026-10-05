@@ -9,19 +9,27 @@ import { TOOL_CONTENT } from "@/data/tool-content";
 import SupportButton from "@/components/SupportButton";
 import { calculateNetto } from "@/lib/taxCalculator";
 import { pageImageUrl } from "@/lib/pageImage";
+import { pageStand } from "@/lib/pageDates";
+import { MINDESTLOHN } from "@/lib/config2027";
+import { monatsBrutto } from "./mindestlohnWerte";
 
-const VZ_STUNDEN = (40 * 52) / 12;
 const netto = (b: number, jahr: 2026 | 2027, sk: 1 | 3) =>
   calculateNetto({ bruttoMonat: b, jahr, steuerklasse: sk, verheiratet: sk === 3, kinderlosUeber23: true, kirche: false }).nettoMonat;
 const eur0 = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });
-const VZ26 = 13.9 * VZ_STUNDEN;
-const VZ27 = 14.6 * VZ_STUNDEN;
+const eur2 = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const VZ26 = monatsBrutto(MINDESTLOHN[2026], 40);
 
 const URL = "https://bruttonettocalculator.com/mindestlohn";
+const STAND = pageStand("/mindestlohn");
+
+// Ziel: „mindestlohn 2027 netto“ (Pos. 3,7), „mindestlohn 2027 rechner“ (9,2),
+// „mindestlohnrechner 2027“ (7,8). 2027 zuerst; die URL bleibt /mindestlohn.
+const TITLE = `Mindestlohn 2027: ${eur2(MINDESTLOHN[2027])} € – Netto-Rechner & Tabelle`;
+const DESCRIPTION = `Mindestlohn 2027: ${eur2(MINDESTLOHN[2027])} € ab 1. Januar. Netto im Monat bei 20 bis 40 Wochenstunden, alle Steuerklassen – mit Rechner und Vergleich zu 2026 (${eur2(MINDESTLOHN[2026])} €).`;
 
 export const metadata: Metadata = {
-  title: "Mindestlohn-Rechner 2026/2027: brutto & netto im Monat",
-  description: `Mindestlohn 2027: 14,60 € pro Stunde = ${eur0(VZ27)} € brutto und ca. ${eur0(netto(VZ27, 2027, 1))} € netto im Monat bei 40 Stunden (Steuerklasse 1). Mit Tabelle für 2026 und Teilzeit.`,
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: [
     "mindestlohnrechner",
     "Mindestlohn Rechner 2026",
@@ -37,8 +45,8 @@ export const metadata: Metadata = {
   alternates: { canonical: URL },
   openGraph: {
     images: [pageImageUrl("/mindestlohn")],
-    title: "Mindestlohn-Rechner 2026/2027",
-    description: "Mindestlohn 2026 (13,90 €) und 2027 (14,60 €): Monats- und Jahresgehalt berechnen.",
+    title: TITLE,
+    description: DESCRIPTION,
     url: URL,
     locale: "de_DE",
     type: "website",
@@ -47,9 +55,9 @@ export const metadata: Metadata = {
 
 /* Mirrors the FAQs visibly rendered inside MindestlohnCalculator. */
 const faqs = [
-  { q: "Wie hoch ist der Mindestlohn 2026?", a: "Der gesetzliche Mindestlohn in Deutschland ist zum 1. Januar 2026 auf 13,90 € brutto pro Stunde gestiegen (zuvor 12,82 € in 2025)." },
-  { q: "Wann kommt der neue Mindestlohn 2027?", a: "Die Bundesregierung hat die zweistufige Erhöhung der Mindestlohnkommission per Verordnung bereits beschlossen: Zum 1. Januar 2027 steigt der Mindestlohn auf 14,60 € brutto pro Stunde." },
-  { q: "Wie viel Netto bleibt vom Mindestlohn 2026 übrig?", a: `Bei Vollzeit (40 Std./Woche, 13,90 €/h) ergibt sich ein Bruttogehalt von ca. ${eur0(VZ26)} €/Monat. In Steuerklasse I bleiben nach Abzügen etwa ${eur0(netto(VZ26, 2026, 1))} € netto, in Steuerklasse III ca. ${eur0(netto(VZ26, 2026, 3))} €.` },
+  { q: "Wie hoch ist der Mindestlohn 2026?", a: `Der gesetzliche Mindestlohn in Deutschland ist zum 1. Januar 2026 auf ${eur2(MINDESTLOHN[2026])} € brutto pro Stunde gestiegen (zuvor 12,82 € in 2025).` },
+  { q: "Wann kommt der neue Mindestlohn 2027?", a: `Die Bundesregierung hat die zweistufige Erhöhung der Mindestlohnkommission per Verordnung bereits beschlossen: Zum 1. Januar 2027 steigt der Mindestlohn auf ${eur2(MINDESTLOHN[2027])} € brutto pro Stunde.` },
+  { q: "Wie viel Netto bleibt vom Mindestlohn 2026 übrig?", a: `Bei Vollzeit (40 Std./Woche, ${eur2(MINDESTLOHN[2026])} €/h) ergibt sich ein Bruttogehalt von ca. ${eur0(VZ26)} €/Monat. In Steuerklasse I bleiben nach Abzügen etwa ${eur0(netto(VZ26, 2026, 1))} € netto, in Steuerklasse III ca. ${eur0(netto(VZ26, 2026, 3))} €.` },
   { q: "Gilt der Mindestlohn für alle Beschäftigten?", a: "Der gesetzliche Mindestlohn gilt grundsätzlich für alle Arbeitnehmer ab 18 Jahren. Ausnahmen gelten für Praktikanten (unter 3 Monate), Pflichtpraktika, Langzeitarbeitslose in den ersten 6 Monaten sowie Auszubildende." },
   { q: "Ist der Mindestlohn brutto oder netto?", a: MINDESTLOHN_BRUTTO_ODER_NETTO },
 ];
@@ -61,11 +69,11 @@ const faqSchema = {
 };
 
 const pageSchema = webPageSchema({
-  name: "Mindestlohn-Rechner 2026/2027",
+  name: TITLE,
   url: URL,
-  description:
-    "Mindestlohn-Rechner für 2026 (13,90 €) und 2027 (14,60 €): Monats- und Jahresgehalt aus Wochenstunden berechnen.",
+  description: DESCRIPTION,
   breadcrumbId: `${URL}#breadcrumb`,
+  dateModified: STAND.iso,
 });
 
 const breadcrumbSchema = {
@@ -84,7 +92,7 @@ export default function MindestlohnPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <MindestlohnCalculator content={<MindestlohnContent />} />
+      <MindestlohnCalculator content={<MindestlohnContent />} stand={STAND} />
       {/* Coffee section before the curated related block: that block keeps it
           apart from the end-of-content ad (see components/SupportStory.tsx). */}
       <SupportButton variant="story" lang="de" placement="page_inline" />
@@ -98,7 +106,7 @@ export default function MindestlohnPage() {
           { href: "/blog/gehalt-2027-was-sich-aendert", label: "Ratgeber: Gehalt 2027", desc: "Was sich zum 1. Januar ändert" },
         ]}
       />
-      <ToolContent config={TOOL_CONTENT["/mindestlohn"]} />
+      <ToolContent config={TOOL_CONTENT["/mindestlohn"]} stand={null} />
     </>
   );
 }

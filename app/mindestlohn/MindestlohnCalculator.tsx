@@ -3,11 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { TrendingUp, Clock, Calculator, ChevronDown, ArrowRight, Info } from "lucide-react";
-import { calculateNetto, type Steuerjahr, type Steuerklasse } from "@/lib/taxCalculator";
+import { type Steuerjahr, type Steuerklasse } from "@/lib/taxCalculator";
 import { MINDESTLOHN_BRUTTO_ODER_NETTO } from "./bruttoOderNetto";
+import { MINDESTLOHN } from "@/lib/config2027";
+import { monatsBrutto, mindestlohnNetto } from "./mindestlohnWerte";
+import { MINIJOB_GRENZE } from "@/lib/config2027";
 
-const MINDESTLOHN_2026 = 13.90;
-const MINDESTLOHN_2027_EXPECTED = 14.60;
+const MINDESTLOHN_2026 = MINDESTLOHN[2026];
+const MINDESTLOHN_2027 = MINDESTLOHN[2027];
 
 const history = [
   { year: "2020", betrag: "9,35 €", change: "" },
@@ -30,25 +33,27 @@ const STEUERKLASSEN: { sk: Steuerklasse; label: string }[] = [
   { sk: 5, label: "Klasse V (verheiratet geringer)" },
 ];
 
-const nettoFor = (bruttoMonat: number, jahr: Steuerjahr, sk: Steuerklasse) =>
-  calculateNetto({ bruttoMonat, jahr, steuerklasse: sk, verheiratet: sk === 3 || sk === 4 || sk === 5, kinderlosUeber23: true, kirche: false }).nettoMonat;
+// Bis zur Minijob-Grenze: nur RV-Eigenanteil 3,6 %; darüber die Engine (mindestlohnWerte.ts).
+const nettoFor = (bruttoMonat: number, jahr: Steuerjahr, sk: Steuerklasse) => mindestlohnNetto(bruttoMonat, jahr, sk).netto;
 
-const VZ_STUNDEN_MONAT = (40 * 52) / 12;
 const fmt0 = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });
-const VZ_BRUTTO_2026 = MINDESTLOHN_2026 * VZ_STUNDEN_MONAT;
+const VZ_BRUTTO_2026 = monatsBrutto(MINDESTLOHN_2026, 40);
+// Antwortbox unter der H1: Vollzeit 2027, Steuerklasse I — aus der Engine.
+const VZ_BRUTTO_2027 = monatsBrutto(MINDESTLOHN_2027, 40);
+const VZ_NETTO_2027 = nettoFor(VZ_BRUTTO_2027, 2027, 1);
 
 const faqs = [
   {
     q: "Wie hoch ist der Mindestlohn 2026?",
-    a: "Der gesetzliche Mindestlohn in Deutschland ist zum 1. Januar 2026 auf 13,90 € brutto pro Stunde gestiegen (zuvor 12,82 € in 2025).",
+    a: `Der gesetzliche Mindestlohn in Deutschland ist zum 1. Januar 2026 auf ${formatEuro(MINDESTLOHN_2026)} brutto pro Stunde gestiegen (zuvor 12,82 € in 2025).`,
   },
   {
     q: "Wann kommt der neue Mindestlohn 2027?",
-    a: "Die Bundesregierung hat die zweistufige Erhöhung der Mindestlohnkommission per Verordnung bereits beschlossen: Zum 1. Januar 2027 steigt der Mindestlohn auf 14,60 € brutto pro Stunde.",
+    a: `Die Bundesregierung hat die zweistufige Erhöhung der Mindestlohnkommission per Verordnung bereits beschlossen: Zum 1. Januar 2027 steigt der Mindestlohn auf ${formatEuro(MINDESTLOHN_2027)} brutto pro Stunde.`,
   },
   {
     q: "Wie viel Netto bleibt vom Mindestlohn 2026 übrig?",
-    a: `Bei Vollzeit (40 Std./Woche, 13,90 €/h) ergibt sich ein Bruttogehalt von ca. ${fmt0(VZ_BRUTTO_2026)} €/Monat. In Steuerklasse I bleiben nach Abzügen etwa ${fmt0(nettoFor(VZ_BRUTTO_2026, 2026, 1))} € netto, in Steuerklasse III ca. ${fmt0(nettoFor(VZ_BRUTTO_2026, 2026, 3))} €.`,
+    a: `Bei Vollzeit (40 Std./Woche, ${formatEuro(MINDESTLOHN_2026)}/h) ergibt sich ein Bruttogehalt von ca. ${fmt0(VZ_BRUTTO_2026)} €/Monat. In Steuerklasse I bleiben nach Abzügen etwa ${fmt0(nettoFor(VZ_BRUTTO_2026, 2026, 1))} € netto, in Steuerklasse III ca. ${fmt0(nettoFor(VZ_BRUTTO_2026, 2026, 3))} €.`,
   },
   {
     q: "Gilt der Mindestlohn für alle Beschäftigten?",
@@ -64,12 +69,21 @@ function formatEuro(value: number): string {
   return value.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
 }
 
-export default function MindestlohnCalculator({ content }: { content?: React.ReactNode }) {
+export default function MindestlohnCalculator({
+  content,
+  stand,
+}: {
+  content?: React.ReactNode;
+  /** Seitendatum aus lib/pageDates.ts — das einzige „Aktualisiert am“ der Seite. */
+  stand?: { iso: string; display: string };
+}) {
   const [stunden, setStunden] = useState(40);
-  const [jahr, setJahr] = useState<Steuerjahr>(2026);
-  const stundenlohn = jahr === 2027 ? MINDESTLOHN_2027_EXPECTED : MINDESTLOHN_2026;
+  // 2027 vorausgewählt (Suchen nach „mindestlohn 2027 rechner“); 2026 bleibt wählbar.
+  const [jahr, setJahr] = useState<Steuerjahr>(2027);
+  const stundenlohn = jahr === 2027 ? MINDESTLOHN_2027 : MINDESTLOHN_2026;
   // Derived, not state: the old useEffect left both at 0 in the server HTML.
-  const bruttoMonat = stundenlohn * ((stunden * 52) / 12);
+  // Monatsbrutto = Stundenlohn × Wochenstunden × 13 ÷ 3 (= × 52 ÷ 12).
+  const bruttoMonat = monatsBrutto(stundenlohn, stunden);
   const bruttoJahr = stundenlohn * stunden * 52;
 
   return (
@@ -81,20 +95,29 @@ export default function MindestlohnCalculator({ content }: { content?: React.Rea
         <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-28 text-center">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
             <TrendingUp size={14} />
-            13,90 € (2026) · 14,60 € (2027)
+            {formatEuro(MINDESTLOHN_2027)} (2027) · {formatEuro(MINDESTLOHN_2026)} (2026)
           </div>
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
-            Mindestlohn-Rechner{" "}
+            Mindestlohn 2027:{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              2026 und 2027
+              Wie viel bleibt von {formatEuro(MINDESTLOHN_2027)} netto?
             </span>
           </h1>
+          {/* Antwort direkt unter der H1 — berechnet, nicht getippt. */}
+          <p className="mx-auto max-w-3xl rounded-2xl border border-[#E60A1C]/30 bg-[#FFFFFF] px-4 py-3 text-base sm:text-lg text-[#16181D] font-semibold shadow-sm mb-4">
+            Vollzeit (40 Std./Woche): {formatEuro(VZ_BRUTTO_2027)} brutto ≈ {formatEuro(VZ_NETTO_2027)} netto im Monat (Steuerklasse 1, 2027).
+          </p>
           <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Berechnen Sie Ihr monatliches Brutto- &amp; Nettogehalt beim gesetzlichen Mindestlohn von{" "}
-            <strong className="text-[#16181D]">13,90&nbsp;€&nbsp;/&nbsp;Stunde</strong> (2026) bzw.{" "}
-            <strong className="text-[#16181D]">14,60&nbsp;€&nbsp;/&nbsp;Stunde</strong> (ab 2027). Alle
+            <strong className="text-[#16181D]">{formatEuro(MINDESTLOHN_2027)}&nbsp;/&nbsp;Stunde</strong> (ab 2027) bzw.{" "}
+            <strong className="text-[#16181D]">{formatEuro(MINDESTLOHN_2026)}&nbsp;/&nbsp;Stunde</strong> (2026). Alle
             Steuerklassen, Vollzeit &amp; Teilzeit.
           </p>
+          {stand && (
+            <p className="mt-3 text-xs sm:text-sm text-black/60 font-medium">
+              Aktualisiert am <time dateTime={stand.iso}>{stand.display}</time> · Netto 2027 vorläufig (Steuerreform-Entwurf)
+            </p>
+          )}
         </div>
       </section>
 
@@ -179,7 +202,9 @@ export default function MindestlohnCalculator({ content }: { content?: React.Rea
             </h2>
             <div className="flex items-center gap-2 mb-6 text-xs text-amber-600/80 bg-amber-50 border border-amber-500/20 rounded-xl px-3 py-2">
               <Info size={13} className="flex-shrink-0" />
-              {jahr === 2027
+              {bruttoMonat <= MINIJOB_GRENZE[jahr]
+                ? `Minijob (bis ${MINIJOB_GRENZE[jahr]} €): keine Lohnsteuer, nur 3,6 % Rentenbeitrag (ohne Befreiung)`
+                : jahr === 2027
                 ? "2027: Steuertarif laut Gesetzentwurf, Sozialabgaben mit Werten 2026 — ohne Kirchensteuer, kinderlos"
                 : "Ohne Kirchensteuer, kinderlos ab 23, Ø-Zusatzbeitrag der Krankenkasse"}
             </div>
@@ -229,14 +254,14 @@ export default function MindestlohnCalculator({ content }: { content?: React.Rea
               <p className="text-black/60 text-sm sm:text-base leading-relaxed">
                 Die Bundesregierung hat die zweistufige Erhöhung der Mindestlohnkommission per Verordnung bereits beschlossen: Zum 1. Januar 2027 steigt der Mindestlohn auf{" "}
                 <strong className="text-[#16181D]">
-                  {MINDESTLOHN_2027_EXPECTED.toFixed(2).replace(".", ",")} €&nbsp;/&nbsp;h
+                  {MINDESTLOHN_2027.toFixed(2).replace(".", ",")} €&nbsp;/&nbsp;h
                 </strong>
                 .
               </p>
             </div>
             <div className="bg-black/[0.04] border border-black/[0.08] rounded-2xl p-5 text-center min-w-[140px]">
               <div className="text-3xl font-extrabold text-[#16181D] mb-1">
-                {MINDESTLOHN_2027_EXPECTED.toFixed(2).replace(".", ",")} €
+                {MINDESTLOHN_2027.toFixed(2).replace(".", ",")} €
               </div>
               <div className="text-xs text-black/50">ab 2027 / Stunde</div>
             </div>

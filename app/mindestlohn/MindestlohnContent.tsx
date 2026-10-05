@@ -1,17 +1,18 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { calculateArbeitgeberkosten, calculateNetto, formatEUR, type Steuerjahr } from "@/lib/taxCalculator";
-import { WAGE_STATS_2026 } from "@/data/wage-stats";
+import { MINDESTLOHN, MINIJOB_GRENZE } from "@/lib/config2027";
+import { mindestlohnTabelle2027, monatsBrutto } from "./mindestlohnWerte";
 
 /**
  * Server-rendered SEO content for the Mindestlohn page: Minijob implications and
- * employer costs, computed from central constants (WAGE_STATS_2026) and the
+ * employer costs, computed from central constants (lib/config2027.ts) and the
  * calculation engine. Official BMAS source linked.
  */
-const MINDESTLOHN_2026 = WAGE_STATS_2026.minWageHourly2026; // 13,90 €
-const MINDESTLOHN_2027 = 14.6;
-const MINIJOB_GRENZE_2026 = 603; // = Mindestlohn × 130 / 3, aufgerundet
-const STUNDEN_PRO_MONAT_VZ = (40 * 52) / 12; // 173,33 h
+const MINDESTLOHN_2026 = MINDESTLOHN[2026]; // 13,90 €
+const MINDESTLOHN_2027 = MINDESTLOHN[2027]; // 14,60 €
+const MINIJOB_GRENZE_2026 = MINIJOB_GRENZE[2026]; // = Mindestlohn × 130 / 3, aufgerundet
+const STUNDEN_PRO_MONAT_VZ = (40 * 13) / 3; // 173,33 h
 
 const BMAS =
   "https://www.bmas.de/DE/Arbeit/Arbeitsrecht/Mindestlohn/Informationen-zum-Mindestlohn/informationen-zum-mindestlohn-deutsch.html";
@@ -19,11 +20,11 @@ const BMAS =
 const nettoSk1 = (bruttoMonat: number, jahr: Steuerjahr) =>
   calculateNetto({ bruttoMonat, jahr, steuerklasse: 1, verheiratet: false, kinderlosUeber23: true, kirche: false }).nettoMonat;
 
-/** Wochenstunden für die 2026-vs-2027-Tabelle (Vollzeit bis typische Teilzeit). */
-const WOCHENSTUNDEN = [40, 38, 35, 30, 25, 20];
+const ROEMISCH = ["I", "II", "III", "IV", "V", "VI"];
 
 export default function MindestlohnContent() {
-  const bruttoVollzeit = MINDESTLOHN_2026 * STUNDEN_PRO_MONAT_VZ;
+  const bruttoVollzeit = monatsBrutto(MINDESTLOHN_2026, 40);
+  const tabelle = mindestlohnTabelle2027();
   const ag = calculateArbeitgeberkosten(bruttoVollzeit, true);
   const minijobMaxStundenMonat = MINIJOB_GRENZE_2026 / MINDESTLOHN_2026;
   const minijobMaxStundenWoche = (minijobMaxStundenMonat * 12) / 52;
@@ -56,45 +57,57 @@ export default function MindestlohnContent() {
           Mindestlohn 2027 netto: Tabelle nach Wochenstunden
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6 leading-relaxed">
-          Monatsbrutto und -netto beim Mindestlohn von {MINDESTLOHN_2026.toLocaleString("de-DE", { minimumFractionDigits: 2 })} € (2026) und{" "}
-          {MINDESTLOHN_2027.toLocaleString("de-DE", { minimumFractionDigits: 2 })} € (2027) — Steuerklasse I, ohne Kirchensteuer,
-          kinderlos ab 23. Bei 40 Stunden bleiben 2027 rund{" "}
-          <strong className="text-[#16181D]">{formatEUR(nettoSk1(MINDESTLOHN_2027 * STUNDEN_PRO_MONAT_VZ, 2027))} netto</strong> im Monat.
+          Monatsbrutto und -netto beim Mindestlohn 2027 von {MINDESTLOHN_2027.toLocaleString("de-DE", { minimumFractionDigits: 2 })} € je
+          Stunde, für alle sechs Steuerklassen — ohne Kirchensteuer, kinderlos ab 23. Bei 40 Stunden bleiben 2027 in
+          Steuerklasse I rund{" "}
+          <strong className="text-[#16181D]">{formatEUR(tabelle[tabelle.length - 1].netto[0].netto)} netto</strong> im Monat.
         </p>
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-xl overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[600px]">
+          <table className="w-full text-left border-collapse min-w-[860px] text-sm">
+            <caption className="sr-only">Mindestlohn 2027: Monatsbrutto und Netto nach Wochenstunden für Steuerklasse I bis VI</caption>
             <thead>
               <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
-                <th className="py-3.5 px-5">Stunden / Woche</th>
-                <th className="py-3.5 px-5 text-right">Brutto 2026</th>
-                <th className="py-3.5 px-5 text-right">Netto 2026</th>
-                <th className="py-3.5 px-5 text-right">Brutto 2027</th>
-                <th className="py-3.5 px-5 text-right text-[#16181D] font-bold">Netto 2027</th>
+                <th scope="col" className="py-3.5 px-3">Std. / Woche</th>
+                <th scope="col" className="py-3.5 px-3 text-right">Brutto / Monat</th>
+                {ROEMISCH.map((r) => (
+                  <th key={r} scope="col" className="py-3.5 px-3 text-right">Netto SK {r}</th>
+                ))}
+                <th scope="col" className="py-3.5 px-3 text-right">SK I: + € vs. 2026</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-black/10 text-sm sm:text-base">
-              {WOCHENSTUNDEN.map((h) => {
-                const m = (h * 52) / 12;
-                const b26 = MINDESTLOHN_2026 * m;
-                const b27 = MINDESTLOHN_2027 * m;
-                return (
-                  <tr key={h} className={h === 40 ? "bg-[#E60A1C]/5 font-semibold" : ""}>
-                    <td className="py-3 px-5">{h} Stunden{h === 40 ? " (Vollzeit)" : ""}</td>
-                    <td className="py-3 px-5 text-right font-mono">{formatEUR(b26)}</td>
-                    <td className="py-3 px-5 text-right font-mono">{formatEUR(nettoSk1(b26, 2026))}</td>
-                    <td className="py-3 px-5 text-right font-mono">{formatEUR(b27)}</td>
-                    <td className="py-3 px-5 text-right font-mono font-bold">{formatEUR(nettoSk1(b27, 2027))}</td>
-                  </tr>
-                );
-              })}
+            <tbody className="divide-y divide-black/10 tabular-nums">
+              {tabelle.map((z) => (
+                <tr key={z.stunden} className={z.stunden === 40 ? "bg-[#E60A1C]/5 font-semibold" : ""}>
+                  <th scope="row" className="py-3 px-3 text-left whitespace-nowrap">
+                    {z.stunden} Std.{z.stunden === 40 ? " (Vollzeit)" : ""}
+                    {z.minijob && <span className="block text-[11px] font-normal text-black/50">Minijob</span>}
+                  </th>
+                  <td className="py-3 px-3 text-right font-mono whitespace-nowrap">{formatEUR(z.brutto27)}</td>
+                  {z.netto.map((n, i) => (
+                    <td key={i} className={`py-3 px-3 text-right font-mono whitespace-nowrap ${i === 0 ? "font-bold text-[#16181D]" : ""}`}>
+                      {formatEUR(n.netto)}
+                    </td>
+                  ))}
+                  <td className="py-3 px-3 text-right font-mono whitespace-nowrap text-emerald-700">
+                    {z.plusSk1 >= 0 ? "+" : "−"}{formatEUR(Math.abs(z.plusSk1))}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
         <p className="mt-3 text-xs sm:text-sm text-black/55">
-          Netto 2027 mit dem Steuertarif laut Gesetzentwurf zur Einkommensteuerreform 2027 und den Sozialversicherungswerten 2026
-          (die Rechengrößen 2027 sind noch nicht beschlossen). Unter 2.000 € gelten die reduzierten Midijob-Beiträge.
-          Andere Steuerklassen:{" "}
-          <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Steuerreform-Rechner 2027</Link>.
+          Monatsbrutto = Stundenlohn × Wochenstunden × 13 ÷ 3. Netto 2027 vorläufig: Steuertarif laut Gesetzentwurf zur
+          Einkommensteuerreform 2027, Sozialversicherungswerte 2026 (die Rechengrößen 2027 sind noch nicht beschlossen).
+          Bis 2.000 € gelten die reduzierten Midijob-Beiträge. Minijob (bis {MINIJOB_GRENZE[2027]} €): keine Lohnsteuer
+          für Sie, nur 3,6 % Rentenbeitrag, sofern Sie sich nicht befreien lassen. „+ € vs. 2026“ vergleicht mit dem
+          Mindestlohn 2026 von {MINDESTLOHN_2026.toLocaleString("de-DE", { minimumFractionDigits: 2 })} € bei gleichen Stunden.
+        </p>
+        <p className="mt-3 text-sm sm:text-base text-black/75">
+          Minijob-Grenze 2027: {MINIJOB_GRENZE[2027]} € (2026: {MINIJOB_GRENZE[2026]} €) —{" "}
+          <Link href="/minijob-rechner" className="text-[#E60A1C] font-semibold hover:underline">Minijob-Rechner</Link>
+          {" · "}
+          <Link href="/midijob-rechner" className="text-[#E60A1C] font-semibold hover:underline">Midijob-Rechner</Link>
         </p>
       </section>
 
