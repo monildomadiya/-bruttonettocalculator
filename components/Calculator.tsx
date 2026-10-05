@@ -740,9 +740,13 @@ interface CalculatorProps {
   lang?: Lang;
   /** Overrides the byline's "zuletzt aktualisiert" date (the 2027 page follows the reform, not the engine). */
   standDisplay?: string;
+  /** Bundesland-Seiten: Kirchensteuersatz des Landes (8 % BY/BW, sonst 9 %). */
+  kirchensteuerSatz?: number;
+  /** Bundesland-Seite Sachsen: höherer PV-Arbeitnehmeranteil. */
+  sachsen?: boolean;
 }
 
-export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1, deepLink = true, lang = "de", standDisplay }: CalculatorProps = {}) {
+export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, initialSk = 1, deepLink = true, lang = "de", standDisplay, kirchensteuerSatz = 0.09, sachsen = false }: CalculatorProps = {}) {
   const t = T[lang];
   const skInfo = STEUERKLASSE_INFO[lang];
   const [bruttoMonat,  setBruttoMonat]  = useState<number>(initialBrutto);
@@ -801,12 +805,13 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
       verheiratet,
       kinderlosUeber23,
       kirche,
-      kirchensteuerSatz: 0.09,
+      kirchensteuerSatz,
+      sachsen,
       steuerklasse,
       szenario,
       sv2027,
     }),
-    [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, steuerklasse, szenario, sv2027]
+    [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027]
   );
 
   const resBW_BY = useMemo(() => calculateNetto({
@@ -840,11 +845,12 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     verheiratet,
     kinderlosUeber23,
     kirche,
-    kirchensteuerSatz: 0.09,
+    kirchensteuerSatz,
+    sachsen,
     steuerklasse,
     szenario,
     sv2027,
-  }), [bruttoMonat, otherYear, verheiratet, kinderlosUeber23, kirche, steuerklasse, szenario, sv2027]);
+  }), [bruttoMonat, otherYear, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027]);
 
   const diffYear = result.nettoMonat - resOtherYear.nettoMonat;
 
@@ -1104,7 +1110,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 checked={kirche}
                 onChange={setKirche}
                 label={t.churchLabel}
-                hint={t.churchHint}
+                hint={kirchensteuerSatz === 0.09 ? t.churchHint : t.churchHint.replace("9", String(Math.round(kirchensteuerSatz * 100)))}
               />
             </div>
 

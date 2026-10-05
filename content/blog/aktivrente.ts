@@ -58,7 +58,7 @@ export const post: BlogPost = {
   headline: "Aktivrente 2026: 2.000 € steuerfrei – was netto bleibt",
   metaTitle: "Aktivrente 2026: 2.000 € steuerfrei – was netto bleibt",
   metaDescription:
-    "Aktivrente: Wer nach der Regelaltersgrenze weiterarbeitet, verdient seit 2026 bis 2.000 € im Monat steuerfrei. Wer profitiert, welche Abgaben bleiben, wo die Steuerfallen liegen.",
+    "Aktivrente: Wer nach der Regelaltersgrenze weiterarbeitet, verdient bis 2.000 € im Monat steuerfrei. Wer profitiert und welche Abgaben bleiben.",
   excerpt:
     "Seit Januar 2026 bleiben bis zu 2.000 € Arbeitslohn im Monat steuerfrei, wenn Sie nach Erreichen der Regelaltersgrenze weiterarbeiten. Für wen das gilt, welche Abgaben trotzdem anfallen und was die Aktivrente netto bringt.",
   focusKeyword: "aktivrente",

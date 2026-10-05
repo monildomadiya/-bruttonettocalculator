@@ -16,6 +16,7 @@ import {
 } from "@/data/tvoed";
 import ReviewerByline from "@/components/ReviewerByline";
 import Tvoed2027Ausblick from "@/components/Tvoed2027Ausblick";
+import TvoedNettoRechner from "./TvoedNettoRechner";
 import { pageImageUrl } from "@/lib/pageImage";
 
 /**
@@ -170,6 +171,10 @@ export default function TvoedHubPage() {
             <ReviewerByline />
           </div>
         </header>
+
+        <section data-section="" id="rechner" className="mb-12 scroll-mt-24">
+          <TvoedNettoRechner />
+        </section>
 
         <section data-section="" className="mb-12">
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-2">Alle Entgeltgruppen im Überblick</h2>
