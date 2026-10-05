@@ -390,12 +390,12 @@ Every post:
 - ☑ 2.1 Weihnachtsgeld-Rechner b14f870 · ☑ 2.2 Weihnachtsgeld post a784857
 - ☑ 3.1 Minijob 2027 post ae103e5 · ☑ 3.2 Mindestlohn 2027 post 0e2b7f7 · ☑ 3.3 Midijob-Rechner exists (no change)
 - ☑ 4.1 /zusatzbeitrag-2027 2e15666 · ☑ 4.2 BBG 2027: extended the existing page d189e9f (no post) · ☑ 4.3 Steuerreform: extended /brutto-netto-rechner-2027 612b5f3 (no post)
-- ☐ 5.1 TVöD interactive calculator on /tvoed-rechner (Bund/P tables ⛔ need official sources) · ☑ 5.2 Stundenlohn exists · ☑ 5.3 Netto→Brutto exists · ☑ 5.4 Rente: Aktivrente section 5cf4b2a · ☑ 5.5 Aktivrente post 5cf4b2a · ☑ 5.6 Abfindung rebuild b95aee2 · ☑ 5.7 Firmenwagen fix fa878c3 · ☑ 5.8 Steuerklassen § 39f 370d0af · ☑ 5.9 Steuerklasse-Heirat post 42bcd2e
-- ☐ Phase 6: amount pages already exist (86 amounts). Still open: scripts/check-seo-uniqueness (post-build HTML scan, NOT wired into `build` because the VM deploy runs it)
-- ☐ Phase 7: 16 Bundesland pages exist; still open: add 2027 column + '2026 & 2027' titles
-- ☐ Phase 8: page images (`npm run page:images` against next start for /zusatzbeitrag-2027 + regenerate weihnachtsgeld/abfindung/steuerklassenwechsel with --force), crawl, final report, GSC list
+- ☑ 5.1 TVöD interactive calculator on /tvoed-rechner 0002d96 (VKA + SuE; ⛔ TVöD Bund and P tables: need official sources; title kept) · ☑ 5.2 Stundenlohn exists · ☑ 5.3 Netto→Brutto exists · ☑ 5.4 Rente: Aktivrente section 5cf4b2a · ☑ 5.5 Aktivrente post 5cf4b2a · ☑ 5.6 Abfindung rebuild b95aee2 · ☑ 5.7 Firmenwagen fix fa878c3 · ☑ 5.8 Steuerklassen § 39f 370d0af · ☑ 5.9 Steuerklasse-Heirat post 42bcd2e
+- ☑ Phase 6: amount pages already exist (86 amounts ⊇ 38); `npm run check:seo` d00727c (482 pages, 0 duplicates; deliberately not part of `build`)
+- ☑ Phase 7: 16 Bundesland pages: 2027 column, '2026 & 2027' titles, calculator pre-filled with KiSt rate + Sachsen PV f9b653a
+- ☑ Phase 8: sitemap lastmod 1c24050, page images (20) committed, full local crawl (482 pages, 0 orphans, 0 pages without JSON-LD; 4 long descriptions fixed 63f8b30), report in §15
 - ☑ Phase 9: Austria section exists, 2027 already built
-- ☐ Engine reference tests: needs BMF Lohnsteuerrechner results from the owner (engine uses a simplified zvE)
+- ◐ Engine reference tests: scaffold `npm run test:referenz` 0068f51 with 13 cases; ⛔ BMF values must be entered by the owner
 - Note for Dec 2026: when the Kassen publish their 2027 rates, do NOT retitle the hub to 'Zusatzbeitrag 2027'; /zusatzbeitrag-2027 owns that keyword.
 
 ---
@@ -509,3 +509,46 @@ Every post:
 
 ### Reference tests (§2)
 The engine's zvE is simplified (see above), so exact BMF parity is not expected yet. The BMF Lohnsteuerrechner (bmf-steuerrechner.de) is a JSF form; its API needs a registered code. The inputs are in `scripts/lohnsteuer-referenz.test.mts`, and the BMF results must be filled in by the owner (see the final report).
+
+
+---
+
+## 15. Final report (05.10.2026)
+
+### New URLs
+- `/zusatzbeitrag-2027`
+- `/blog/weihnachtsgeld-anspruch`, `/blog/minijob-2027`, `/blog/mindestlohn-2027`, `/blog/aktivrente`, `/blog/steuerklasse-nach-heirat`
+
+### Changed URLs (content/logic)
+- `/` (2027 badge, tax/SV split, FAQ, Weihnachtsgeld teaser, default-year switch)
+- `/weihnachtsgeld-rechner`, `/abfindungsrechner`, `/firmenwagenrechner`, `/steuerklassenwechsel-rechner` (calculations fixed or rebuilt)
+- `/tvoed-rechner` (interactive calculator), `/beitragsbemessungsgrenze-2027`, `/brutto-netto-rechner-2027` (tables)
+- `/rente-brutto-netto-rechner` (Aktivrente section), `/minijob-rechner` (KV-Pauschale 2027)
+- 16 × `/brutto-netto-rechner/<land>` (2027 + titles)
+- 19 × `/krankenkasse/<slug>` + hub (link to the 2027 overview)
+- `/blog/minijob-grenze-2026` ("Werte 2027" box)
+
+### Blocked / needs the owner
+1. **BMF reference values:** enter 13 values from bmf-steuerrechner.de into `scripts/lohnsteuer-referenz.test.mts` (`bmf: null` → number).
+2. **TVöD Bund + TVöD P tables:** need official tables (BMI / VKA). Not derived on purpose.
+3. **Google Search Console:** no credentials in the repo. Resubmit the sitemap and request indexing (list below).
+4. **Affiliate partners:** enter links in `lib/affiliate.ts` (Krankenkassen-Vergleich, Steuererklärung). Until then nothing renders.
+
+### GSC submission order
+1. `https://bruttonettocalculator.com/sitemap.xml` (resubmit)
+2. `/zusatzbeitrag-2027`
+3. `/weihnachtsgeld-rechner`
+4. `/blog/weihnachtsgeld-anspruch`
+5. `/abfindungsrechner`
+6. `/blog/minijob-2027`
+7. `/blog/mindestlohn-2027`
+8. `/steuerklassenwechsel-rechner`
+9. `/tvoed-rechner`
+10. `/blog/aktivrente`
+11. `/blog/steuerklasse-nach-heirat`
+
+### Not done on purpose
+- New URLs for the BBG/Steuerreform posts, `/firmenwagen-rechner`, `/steuerklassen-rechner`, `/netto-brutto-rechner`, `/rente-netto-rechner`, `/brutto-netto/[betrag]-euro`. Each would duplicate an existing ranking page (rule 7).
+- Homepage title and Firmenwagen title: owner decisions from 691fdd7 / 0e3ea89.
+- `WebApplication` schema: the site emits `WebPage` on purpose (no fabricated ratings).
+- Lighthouse: no Lighthouse CLI in the repo; not run.
