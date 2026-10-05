@@ -83,6 +83,20 @@ export const PARAMETER_2027: Parameter2027[] = [
     quelle: "https://www.gesetze-im-internet.de/sgb_4/__20.html",
   },
   {
+    label: "Minijob: Pauschalbeitrag Krankenversicherung (Arbeitgeber)",
+    wert: "14,6 % + Ø-Zusatzbeitrag 2027 (bei 2,9 %: 17,5 %) statt 13 %",
+    status: "final",
+    hinweis: "GKV-Beitragssatzstabilisierungsgesetz, BGBl. vom 29.07.2026; die genaue Höhe hängt am Ø-Zusatzbeitrag 2027",
+    quelle: "https://magazin.minijob-zentrale.de/aktuelle-minijob-vorhaben/",
+  },
+  {
+    label: "Minijob: Pauschsteuer",
+    wert: "5 % statt 2 %",
+    status: "provisional",
+    hinweis: "Regierungsentwurf EStRefG 2027 (§ 40a Abs. 2 EStG)",
+    quelle: BT_DRUCKSACHE,
+  },
+  {
     label: "Faktor F (Midijob)",
     wert: "noch nicht veröffentlicht",
     status: "provisional",
