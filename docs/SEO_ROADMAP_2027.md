@@ -386,16 +386,17 @@ Every post:
 ## 11. Checklist (keep updated)
 
 - ☑ Phase 0: Audit + mapping (see §14)
-- ☐ 1.1 Engine 2027 + year selector · ☐ 1.2 Vorläufig badge · ☐ 1.3 2026 vs. 2027 comparison · ☐ 1.4 Metadata · ☐ 1.5 New sections + FAQ · ☐ 1.6 JSON-LD + sitemap
-- ☐ 2.1 Weihnachtsgeld-Rechner · ☐ 2.2 Weihnachtsgeld post
-- ☐ 3.1 Minijob 2027 post · ☐ 3.2 Mindestlohn 2027 post · ☐ 3.3 Midijob-Rechner
-- ☐ 4.1 Zusatzbeitrag 2027 page · ☐ 4.2 BBG 2027 post · ☐ 4.3 Steuerreform 2027 post
-- ☐ 5.1 TVöD · ☐ 5.2 Stundenlohn · ☐ 5.3 Netto→Brutto · ☐ 5.4 Rente · ☐ 5.5 Aktivrente post · ☐ 5.6 Abfindung · ☐ 5.7 Firmenwagen · ☐ 5.8 Steuerklassen · ☐ 5.9 Steuerklasse post
-- ☐ Phase 6: 38 amount pages + hub + uniqueness check
-- ☐ Phase 7: 8 Bundesland pages
-- ☐ Phase 8: Linking, sitemap, schema, crawl, Lighthouse, final report
-- ☐ Phase 9: Austria (only if applicable)
-- ☐ Engine reference tests (§2)
+- ☑ 1.1 Default year switch (lib/steuerjahr2027.ts; engine 2027 already existed) bdda192 · ☑ 1.2 Vorläufig badge bdda192 · ☑ 1.3 tax/SV split bdda192 · ☑ 1.4 Metadata: title kept on purpose (cannibalization fix 691fdd7) · ☑ 1.5 Sections + FAQ bdda192 · ☑ 1.6 JSON-LD exists (WebPage instead of WebApplication on purpose, no fake rating)
+- ☑ 2.1 Weihnachtsgeld-Rechner b14f870 · ☑ 2.2 Weihnachtsgeld post a784857
+- ☑ 3.1 Minijob 2027 post ae103e5 · ☑ 3.2 Mindestlohn 2027 post 0e2b7f7 · ☑ 3.3 Midijob-Rechner exists (no change)
+- ☑ 4.1 /zusatzbeitrag-2027 2e15666 · ☑ 4.2 BBG 2027: extended the existing page d189e9f (no post) · ☑ 4.3 Steuerreform: extended /brutto-netto-rechner-2027 612b5f3 (no post)
+- ☐ 5.1 TVöD interactive calculator on /tvoed-rechner (Bund/P tables ⛔ need official sources) · ☑ 5.2 Stundenlohn exists · ☑ 5.3 Netto→Brutto exists · ☑ 5.4 Rente: Aktivrente section 5cf4b2a · ☑ 5.5 Aktivrente post 5cf4b2a · ☑ 5.6 Abfindung rebuild b95aee2 · ☑ 5.7 Firmenwagen fix fa878c3 · ☑ 5.8 Steuerklassen § 39f 370d0af · ☑ 5.9 Steuerklasse-Heirat post 42bcd2e
+- ☐ Phase 6: amount pages already exist (86 amounts). Still open: scripts/check-seo-uniqueness (post-build HTML scan, NOT wired into `build` because the VM deploy runs it)
+- ☐ Phase 7: 16 Bundesland pages exist; still open: add 2027 column + '2026 & 2027' titles
+- ☐ Phase 8: page images (`npm run page:images` against next start for /zusatzbeitrag-2027 + regenerate weihnachtsgeld/abfindung/steuerklassenwechsel with --force), crawl, final report, GSC list
+- ☑ Phase 9: Austria section exists, 2027 already built
+- ☐ Engine reference tests: needs BMF Lohnsteuerrechner results from the owner (engine uses a simplified zvE)
+- Note for Dec 2026: when the Kassen publish their 2027 rates, do NOT retitle the hub to 'Zusatzbeitrag 2027'; /zusatzbeitrag-2027 owns that keyword.
 
 ---
 
