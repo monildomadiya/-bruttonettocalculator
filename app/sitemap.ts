@@ -137,6 +137,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/urlaubsgeld-rechner",
     "/ueberstunden-rechner",
     "/urlaubsanspruch-rechner",
+    "/brueckentage-rechner",
     "/erbschaftssteuer-rechner",
     "/schenkungssteuer-rechner",
     "/abgeltungssteuer-rechner",

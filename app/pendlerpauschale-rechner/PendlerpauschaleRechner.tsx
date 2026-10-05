@@ -143,6 +143,8 @@ export default function PendlerpauschaleRechner() {
             ohnehin automatisch anerkannt. Ihre tatsächliche Steuerersparnis entsteht erst, wenn Pendlerpauschale
             (plus weitere Werbungskosten) diese Grenze übersteigt. Die Ersparnis hängt dann von Ihrem persönlichen{" "}
             <Link href="/gehaltsrechner" className="text-[#E60A1C] font-semibold hover:underline">Grenzsteuersatz</Link> ab.
+            Wie viele Arbeitstage Ihr Bundesland 2026 und 2027 hat, zeigt der{" "}
+            <Link href="/brueckentage-rechner" className="text-[#E60A1C] font-semibold hover:underline">Brückentage-Rechner</Link>.
           </p>
         </div>
       </section>

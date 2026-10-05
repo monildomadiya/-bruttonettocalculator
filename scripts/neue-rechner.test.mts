@@ -202,5 +202,23 @@ eq("Belastung liegt zwischen Vorteil und Rate", drR.belastung > 9 && drR.belastu
 eq("AG zahlt ganze Rate: steuerfrei, keine Belastung", dr.dienstradRechnen({ ...drIn, zuschuss: 100 }).belastung, 0);
 eq("Über der RV-BBG kein Rentenverlust", dr.dienstradRechnen({ ...drIn, bruttoMonat: 9500 }).renteWeniger, 0);
 
+// Feiertage & Brückentage
+const fe = await import("../lib/feiertage.ts");
+eq("Ostersonntag 2026", fe.fmt(fe.ostersonntag(2026)), "05.04.2026");
+eq("Ostersonntag 2027", fe.fmt(fe.ostersonntag(2027)), "28.03.2027");
+eq("Buß- und Bettag 2026", fe.fmt(fe.feiertage(2026, "SN").find((f: { name: string }) => f.name === "Buß- und Bettag")!.t), "18.11.2026");
+eq("Buß- und Bettag 2027", fe.fmt(fe.feiertage(2027, "SN").find((f: { name: string }) => f.name === "Buß- und Bettag")!.t), "17.11.2027");
+eq("Fronleichnam 2027", fe.fmt(fe.feiertage(2027, "NW").find((f: { name: string }) => f.name === "Fronleichnam")!.t), "27.05.2027");
+// Gegengeprüft mit veröffentlichten Arbeitstage-Tabellen 2027
+eq("Arbeitstage 2027 Bayern", fe.arbeitstage(2027, "BY"), 253);
+eq("Arbeitstage 2027 Berlin", fe.arbeitstage(2027, "BE"), 255);
+eq("Arbeitstage 2027 NRW", fe.arbeitstage(2027, "NW"), 254);
+eq("Arbeitstage 2027 Brandenburg", fe.arbeitstage(2027, "BB"), 256);
+eq("Fronleichnam in Sachsen nur regional", fe.feiertage(2027, "SN").some((f: { name: string }) => f.name === "Fronleichnam"), false);
+const himmel = fe.brueckentage(2027, "HB").find((o: { urlaub: number[]; feiertage: string[] }) => o.urlaub.length === 1 && o.feiertage.includes("Christi Himmelfahrt"));
+eq("Himmelfahrt 2027: Fr 7.5. → 4 Tage frei", himmel ? `${fe.fmt(himmel.urlaub[0], false)} ${himmel.freieTage}` : "—", "07.05. 4");
+const plan = fe.planen(2027, "BY", 10);
+eq("Planer hält das Budget ein", plan.urlaub <= 10, true);
+
 console.log(failed ? `\n${failed} PRUEFUNG(EN) FEHLGESCHLAGEN` : "\nALLE PRUEFUNGEN BESTANDEN");
 process.exit(failed ? 1 : 0);

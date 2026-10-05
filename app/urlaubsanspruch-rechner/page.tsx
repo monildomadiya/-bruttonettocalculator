@@ -234,6 +234,10 @@ function Content() {
           <Link href="/minijob-rechner" className="text-[#E60A1C] font-semibold hover:underline">
             Minijob-Rechner
           </Link>
+          . Wie Sie Ihre Urlaubstage rund um die Feiertage am klügsten verteilen, zeigt der{" "}
+          <Link href="/brueckentage-rechner" className="text-[#E60A1C] font-semibold hover:underline">
+            Brückentage-Rechner 2027
+          </Link>
           .
         </p>
       </section>

@@ -97,6 +97,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/weihnachtsgeld-rechner", label: "Weihnachtsgeld-Rechner", icon: Snowflake, description: "Netto vom Weihnachtsgeld" },
       { href: "/urlaubsgeld-rechner", label: "Urlaubsgeld-Rechner", icon: Sun, description: "Netto vom Urlaubsgeld" },
       { href: "/urlaubsanspruch-rechner", label: "Urlaubsanspruch-Rechner", icon: Palmtree, description: "Wie viele Urlaubstage stehen mir zu?" },
+      { href: "/brueckentage-rechner", label: "Brückentage-Rechner", icon: CalendarRange, description: "Brückentage & Arbeitstage 2027" },
       { href: "/ueberstunden-rechner", label: "Überstunden-Rechner", icon: Timer, description: "Netto von ausgezahlten Überstunden" },
       { href: "/erbschaftssteuer-rechner", label: "Erbschaftssteuer-Rechner", icon: Landmark, description: "Freibeträge & Tarif nach ErbStG" },
       { href: "/schenkungssteuer-rechner", label: "Schenkungssteuer-Rechner", icon: Landmark, description: "Freibetrag alle 10 Jahre neu" },

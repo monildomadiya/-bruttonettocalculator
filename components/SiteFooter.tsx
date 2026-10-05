@@ -132,6 +132,7 @@ export default function SiteFooter() {
               <li><Link href="/ueberstunden-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Überstunden-Rechner</Link></li>
               <li><Link href="/urlaubsgeld-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Urlaubsgeld-Rechner</Link></li>
               <li><Link href="/urlaubsanspruch-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Urlaubsanspruch-Rechner</Link></li>
+              <li><Link href="/brueckentage-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brückentage-Rechner 2027</Link></li>
               <li><Link href="/mehrwertsteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">MwSt-Rechner</Link></li>
               <li><Link href="/erbschaftssteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Erbschaftssteuer-Rechner</Link></li>
               <li><Link href="/schenkungssteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Schenkungssteuer-Rechner</Link></li>
