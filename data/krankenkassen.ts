@@ -44,6 +44,8 @@ export const DURCHSCHNITT_ZUSATZBEITRAG_2027: number | null = null;
 /** Allgemeiner Beitragssatz der GKV (§ 241 SGB V) — für alle Kassen identisch. */
 export const ALLGEMEINER_BEITRAGSSATZ = 14.6;
 
+export type Kassenart = "AOK" | "BKK" | "IKK" | "Ersatzkasse" | "Knappschaft";
+
 export interface Krankenkasse {
   /** URL-/Query-tauglicher Schlüssel. */
   slug: string;
@@ -56,6 +58,12 @@ export interface Krankenkasse {
    * zeigt die Seite "noch nicht festgelegt", nie eine Schätzung.
    */
   zusatzbeitrag2027?: number;
+  /** Datum, an dem die Kasse ihren Satz 2027 veröffentlicht hat (ISO), zusammen mit `zusatzbeitrag2027` pflegen. */
+  zusatzbeitrag2027Bekanntgabe?: string;
+  /** Beleg für den Satz 2027 (Satzung/Pressemitteilung der Kasse). */
+  zusatzbeitrag2027Quelle?: string;
+  /** Kassenart nach SGB V (§§ 143 ff.). */
+  art: Kassenart;
   /** Bundesweit wählbar oder nur in bestimmten Regionen geöffnet. */
   bundesweit: boolean;
   /** Kurzhinweis zur Region/Besonderheit, wenn nicht bundesweit. */
@@ -68,25 +76,25 @@ export interface Krankenkasse {
  * Krankenkassen; die Spanne 2026 reicht von 2,18 % bis 4,39 %.
  */
 export const KRANKENKASSEN_2026: Krankenkasse[] = [
-  { slug: "bkk-firmus", name: "BKK firmus", zusatzbeitrag: 2.18, bundesweit: true },
-  { slug: "aok-rheinland-pfalz-saarland", name: "AOK Rheinland-Pfalz/Saarland", zusatzbeitrag: 2.47, bundesweit: false, region: "Rheinland-Pfalz, Saarland" },
-  { slug: "hkk", name: "hkk Krankenkasse", zusatzbeitrag: 2.59, bundesweit: true },
-  { slug: "audi-bkk", name: "Audi BKK", zusatzbeitrag: 2.6, bundesweit: true },
-  { slug: "tk", name: "Techniker Krankenkasse (TK)", zusatzbeitrag: 2.69, bundesweit: true },
-  { slug: "aok-bayern", name: "AOK Bayern", zusatzbeitrag: 2.69, bundesweit: false, region: "Bayern" },
-  { slug: "hek", name: "HEK — Hanseatische Krankenkasse", zusatzbeitrag: 2.89, bundesweit: true },
-  { slug: "aok-hessen", name: "AOK Hessen", zusatzbeitrag: 2.98, bundesweit: false, region: "Hessen" },
-  { slug: "aok-niedersachsen", name: "AOK Niedersachsen", zusatzbeitrag: 2.98, bundesweit: false, region: "Niedersachsen" },
-  { slug: "aok-baden-wuerttemberg", name: "AOK Baden-Württemberg", zusatzbeitrag: 2.99, bundesweit: false, region: "Baden-Württemberg" },
-  { slug: "aok-nordwest", name: "AOK NordWest", zusatzbeitrag: 2.99, bundesweit: false, region: "Westfalen-Lippe, Schleswig-Holstein" },
-  { slug: "aok-plus", name: "AOK PLUS", zusatzbeitrag: 3.1, bundesweit: false, region: "Sachsen, Thüringen" },
-  { slug: "dak", name: "DAK-Gesundheit", zusatzbeitrag: 3.2, bundesweit: true },
-  { slug: "barmer", name: "BARMER", zusatzbeitrag: 3.29, bundesweit: true },
-  { slug: "aok-nordost", name: "AOK Nordost", zusatzbeitrag: 3.5, bundesweit: false, region: "Berlin, Brandenburg, Mecklenburg-Vorpommern" },
-  { slug: "big-direkt", name: "BIG direkt gesund", zusatzbeitrag: 3.69, bundesweit: true },
-  { slug: "kkh", name: "KKH Kaufmännische Krankenkasse", zusatzbeitrag: 3.78, bundesweit: true },
-  { slug: "knappschaft", name: "KNAPPSCHAFT", zusatzbeitrag: 4.3, bundesweit: true },
-  { slug: "bkk24", name: "BKK24", zusatzbeitrag: 4.39, bundesweit: true },
+  { slug: "bkk-firmus", name: "BKK firmus", zusatzbeitrag: 2.18, art: "BKK", bundesweit: true },
+  { slug: "aok-rheinland-pfalz-saarland", name: "AOK Rheinland-Pfalz/Saarland", zusatzbeitrag: 2.47, art: "AOK", bundesweit: false, region: "Rheinland-Pfalz, Saarland" },
+  { slug: "hkk", name: "hkk Krankenkasse", zusatzbeitrag: 2.59, art: "Ersatzkasse", bundesweit: true },
+  { slug: "audi-bkk", name: "Audi BKK", zusatzbeitrag: 2.6, art: "BKK", bundesweit: true },
+  { slug: "tk", name: "Techniker Krankenkasse (TK)", zusatzbeitrag: 2.69, art: "Ersatzkasse", bundesweit: true },
+  { slug: "aok-bayern", name: "AOK Bayern", zusatzbeitrag: 2.69, art: "AOK", bundesweit: false, region: "Bayern" },
+  { slug: "hek", name: "HEK — Hanseatische Krankenkasse", zusatzbeitrag: 2.89, art: "Ersatzkasse", bundesweit: true },
+  { slug: "aok-hessen", name: "AOK Hessen", zusatzbeitrag: 2.98, art: "AOK", bundesweit: false, region: "Hessen" },
+  { slug: "aok-niedersachsen", name: "AOK Niedersachsen", zusatzbeitrag: 2.98, art: "AOK", bundesweit: false, region: "Niedersachsen" },
+  { slug: "aok-baden-wuerttemberg", name: "AOK Baden-Württemberg", zusatzbeitrag: 2.99, art: "AOK", bundesweit: false, region: "Baden-Württemberg" },
+  { slug: "aok-nordwest", name: "AOK NordWest", zusatzbeitrag: 2.99, art: "AOK", bundesweit: false, region: "Westfalen-Lippe, Schleswig-Holstein" },
+  { slug: "aok-plus", name: "AOK PLUS", zusatzbeitrag: 3.1, art: "AOK", bundesweit: false, region: "Sachsen, Thüringen" },
+  { slug: "dak", name: "DAK-Gesundheit", zusatzbeitrag: 3.2, art: "Ersatzkasse", bundesweit: true },
+  { slug: "barmer", name: "BARMER", zusatzbeitrag: 3.29, art: "Ersatzkasse", bundesweit: true },
+  { slug: "aok-nordost", name: "AOK Nordost", zusatzbeitrag: 3.5, art: "AOK", bundesweit: false, region: "Berlin, Brandenburg, Mecklenburg-Vorpommern" },
+  { slug: "big-direkt", name: "BIG direkt gesund", zusatzbeitrag: 3.69, art: "IKK", bundesweit: true },
+  { slug: "kkh", name: "KKH Kaufmännische Krankenkasse", zusatzbeitrag: 3.78, art: "Ersatzkasse", bundesweit: true },
+  { slug: "knappschaft", name: "KNAPPSCHAFT", zusatzbeitrag: 4.3, art: "Knappschaft", bundesweit: true },
+  { slug: "bkk24", name: "BKK24", zusatzbeitrag: 4.39, art: "BKK", bundesweit: true },
 ];
 
 export const GUENSTIGSTE_KASSE = KRANKENKASSEN_2026[0];

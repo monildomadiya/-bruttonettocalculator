@@ -98,6 +98,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/mehrwertsteuer-rechner",
     "/steuerfreibetrag-2026",
     "/brutto-netto-rechner-krankenkasse",
+    "/zusatzbeitrag-2027",
     "/beitragsbemessungsgrenze-2026",
     "/beitragsbemessungsgrenze-2027",
     "/sozialabgaben-rechner-2027",

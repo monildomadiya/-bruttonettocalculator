@@ -48,6 +48,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/tv-l-rechner", label: "TV-L-Rechner 2026", icon: Landmark, description: "Länder-Tabelle mit Netto je Gruppe" },
       { href: "/jahressonderzahlung-rechner", label: "Jahressonderzahlung-Rechner", icon: Gift, description: "TVöD & TV-L netto im November" },
       { href: "/brutto-netto-rechner-krankenkasse", label: "Rechner mit Krankenkasse", icon: HeartPulse, description: "AOK, TK & Co. · Zusatzbeitrag 2026" },
+      { href: "/zusatzbeitrag-2027", label: "Zusatzbeitrag 2027", icon: HeartPulse, description: "Alle Kassen im Vergleich" },
       { href: "/durchschnittsgehalt-deutschland", label: "Durchschnittsgehalt Deutschland", icon: BarChart3, description: "Wo steht Ihr Gehalt im Vergleich?" },
       { href: "/brutto-netto-rechner-2026", label: "Rechner 2026", icon: Calendar, description: "Amtliche Werte 2026" },
       { href: "/brutto-netto-rechner-2027", label: "Steuerreform 2027", icon: Calendar, description: "Wie viel mehr Netto?" },

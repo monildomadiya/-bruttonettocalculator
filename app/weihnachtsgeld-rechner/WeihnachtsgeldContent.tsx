@@ -1,163 +1,263 @@
 import Link from "next/link";
-import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
+import { BBG_2026, calculateNetto, formatEUR, type Steuerklasse } from "@/lib/taxCalculator";
+import { nettoEinmalzahlung } from "@/lib/einmalzahlung";
+import { JSZ_TARIFE } from "@/data/jahressonderzahlung";
 
 /**
- * Server-rendered SEO content for the Weihnachtsgeld page (crawlable, no JS).
- * All numbers come from the shared calculation engine so they stay consistent
- * with the interactive calculator — nothing is hardcoded.
- *
- * Weihnachtsgeld is a "sonstiger Bezug": the tax/SV on it is the *marginal*
- * effect of adding it to the annual income. We model that by comparing the
- * engine's annual net at base salary vs. base salary + Weihnachtsgeld/12.
+ * Server-gerenderter Inhalt der Weihnachtsgeld-Seite (crawlbar, ohne JS).
+ * Jede Zahl kommt aus lib/einmalzahlung.ts — derselben Funktion wie der Rechner
+ * oben. Nichts ist hart codiert.
  */
-const BASE_MONTHLY = 3500; // Annahme: reguläres Bruttogehalt / Monat
-const BASE_SK: Steuerklasse = 1;
 
-function marginalNetto(bonus: number) {
-  const base = calculateNetto({
-    bruttoMonat: BASE_MONTHLY,
-    jahr: 2026,
-    verheiratet: false,
-    kinderlosUeber23: false,
-    kirche: false,
-    steuerklasse: BASE_SK,
-  });
-  const withBonus = calculateNetto({
-    bruttoMonat: BASE_MONTHLY + bonus / 12,
-    jahr: 2026,
-    verheiratet: false,
-    kinderlosUeber23: false,
-    kirche: false,
-    steuerklasse: BASE_SK,
-  });
-  const steuer = withBonus.steuer.summeJahr - base.steuer.summeJahr;
-  const sv = withBonus.sv.summeJahr - base.sv.summeJahr;
-  const netto = bonus - steuer - sv;
-  return { bonus, steuer, sv, netto, quote: bonus > 0 ? (netto / bonus) * 100 : 0 };
+/** Stand der Seite: bei jeder inhaltlichen Änderung anpassen. */
+export const WEIHNACHTSGELD_STAND = "5. Oktober 2026";
+
+export const BEISPIEL_BRUTTO = 3500;
+export const BEISPIEL_WG = 1500;
+const BETRAEGE = [500, 1000, 1500, 2000, 3000];
+const KLASSEN: Steuerklasse[] = [1, 3, 4];
+
+export function wgNetto(einmal: number, sk: Steuerklasse = 1, bruttoMonat = BEISPIEL_BRUTTO) {
+  return nettoEinmalzahlung({ bruttoMonat, einmal, steuerklasse: sk, kirche: false, kinderlosUeber23: true, auszahlungsMonat: 11 });
 }
 
-const EXAMPLE_AMOUNTS = [500, 1000, 1500, 2000];
+export function monatsNetto(bruttoMonat = BEISPIEL_BRUTTO, sk: Steuerklasse = 1) {
+  return calculateNetto({
+    bruttoMonat,
+    jahr: 2026,
+    steuerklasse: sk,
+    verheiratet: sk === 3 || sk === 4 || sk === 5,
+    kinderlosUeber23: true,
+    kirche: false,
+  }).nettoMonat;
+}
+
+const eur0 = (n: number) => Math.round(n).toLocaleString("de-DE") + " €";
+const pct0 = (n: number) => Math.round(n).toLocaleString("de-DE") + " %";
+
+export const QUELLEN = [
+  { label: "§ 39b Abs. 3 EStG — Lohnsteuer auf sonstige Bezüge", url: "https://www.gesetze-im-internet.de/estg/__39b.html" },
+  { label: "§ 23a SGB IV — Einmalig gezahltes Arbeitsentgelt (anteilige BBG, Märzklausel)", url: "https://www.gesetze-im-internet.de/sgb_4/__23a.html" },
+  { label: "BMF — Programmablaufplan Lohnsteuer 2026", url: "https://www.bundesfinanzministerium.de/Content/DE/Downloads/Steuern/Steuerarten/Lohnsteuer/Programmablaufplan/" },
+  { label: "Minijob-Zentrale — Urlaubs- und Weihnachtsgeld im Minijob", url: "https://magazin.minijob-zentrale.de/einmalzahlungen-minijob/" },
+  { label: "Einigungspapier TVöD vom 06.04.2025 (Jahressonderzahlung ab 2026)", url: JSZ_TARIFE[0].quelle.url },
+];
 
 export default function WeihnachtsgeldContent() {
-  const examples = EXAMPLE_AMOUNTS.map(marginalNetto);
+  const beispiel = wgNetto(BEISPIEL_WG);
+  const monat = monatsNetto();
+  const tabelle = BETRAEGE.map((b) => ({ betrag: b, werte: KLASSEN.map((sk) => wgNetto(b, sk)) }));
+  const minijobJahr = 603 * 12;
 
   return (
     <div className="max-w-6xl mx-auto px-5">
-      {/* Kurzantwort */}
+      {/* Antwort zuerst */}
       <section className="py-6" aria-labelledby="kurzantwort">
         <div className="bg-[#FFFFFF] border-l-4 border-[#E60A1C] rounded-2xl p-6 sm:p-7 shadow-sm">
           <h2 id="kurzantwort" className="text-lg sm:text-xl font-extrabold text-[#16181D] mb-2">
-            Kurzantwort
+            Wie viel Weihnachtsgeld bleibt netto?
           </h2>
           <p className="text-black/75 text-sm sm:text-base leading-relaxed">
-            Vom <strong className="text-[#16181D]">Weihnachtsgeld</strong> bleiben je nach Steuerklasse und Höhe
-            des laufenden Gehalts meist rund <strong className="text-[#16181D]">50–65&nbsp;%</strong> netto übrig.
-            Weihnachtsgeld gilt steuerlich als <strong className="text-[#16181D]">sonstiger Bezug</strong>: Es wird
-            dem Jahreseinkommen hinzugerechnet und mit dem persönlichen Grenzsteuersatz belastet, zusätzlich fallen
-            Sozialabgaben an, solange die Beitragsbemessungsgrenze nicht überschritten ist. Der Rechner oben zeigt
-            Ihren individuellen Netto-Betrag – unverbindlich und auf Basis der gesetzlichen Werte für 2026.
+            Von <strong className="text-[#16181D]">{formatEUR(BEISPIEL_WG)} Weihnachtsgeld</strong> bleiben bei{" "}
+            {formatEUR(BEISPIEL_BRUTTO)} Monatsbrutto in Steuerklasse I rund{" "}
+            <strong className="text-[#16181D]">{eur0(beispiel.netto)} netto</strong> übrig, also{" "}
+            {pct0(beispiel.nettoQuotePct)}. Abgezogen werden {formatEUR(beispiel.lohnsteuer)} Lohnsteuer und{" "}
+            {formatEUR(beispiel.svSumme)} Sozialabgaben (kinderlos, ohne Kirchensteuer, Auszahlung im November 2026).
+            Weihnachtsgeld ist ein sonstiger Bezug und wird mit Ihrem Grenzsteuersatz belastet. Deshalb bleibt davon
+            prozentual weniger übrig als vom Monatsgehalt.
           </p>
         </div>
       </section>
 
-      {/* Beispielrechnungen */}
-      <section className="py-6" aria-labelledby="beispiele">
-        <h2 id="beispiele" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
-          Beispielrechnungen: Weihnachtsgeld netto
+      {/* Tabelle */}
+      <section data-section="" className="py-6" aria-labelledby="tabelle">
+        <h2 id="tabelle" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
+          Weihnachtsgeld netto nach Steuerklasse
         </h2>
         <p className="text-black/65 text-sm sm:text-base mb-5 max-w-3xl">
-          Alle Werte auf Basis eines regulären Bruttogehalts von{" "}
-          <strong className="text-[#16181D]">{formatEUR(BASE_MONTHLY)} / Monat</strong>,{" "}
-          <strong className="text-[#16181D]">Steuerklasse&nbsp;I</strong>, ohne Kirchensteuer, ohne
-          Kinderfreibeträge, Steuerjahr 2026. Berechnet mit derselben Engine wie der Rechner oben – Ihre
-          tatsächliche Abrechnung kann je nach Bundesland, Kasse und Freibeträgen abweichen.
+          Netto vom Weihnachtsgeld bei {formatEUR(BEISPIEL_BRUTTO)} Monatsbrutto, Auszahlung im November 2026,
+          kinderlos, ohne Kirchensteuer, Ø-Zusatzbeitrag 2,9 %.
         </p>
-        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-sm overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[560px]">
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl shadow-sm overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[520px]">
             <thead>
               <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
-                <th className="py-4 px-5">Weihnachtsgeld (brutto)</th>
-                <th className="py-4 px-5 text-right">Steuer</th>
-                <th className="py-4 px-5 text-right">Sozialabgaben</th>
-                <th className="py-4 px-5 text-right text-[#16181D] font-bold">Netto</th>
-                <th className="py-4 px-5 text-right">Netto-Quote</th>
+                <th className="py-4 px-5">Weihnachtsgeld brutto</th>
+                {KLASSEN.map((sk) => (
+                  <th key={sk} className="py-4 px-5 text-right">Netto Klasse {["", "I", "II", "III", "IV", "V", "VI"][sk]}</th>
+                ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-black/10 text-sm sm:text-base">
-              {examples.map((e) => (
-                <tr key={e.bonus} className="hover:bg-black/[0.03] transition-colors">
-                  <td className="py-4 px-5 font-bold text-[#16181D] font-mono">{formatEUR(e.bonus)}</td>
-                  <td className="py-4 px-5 text-right text-rose-600 font-mono">−{formatEUR(e.steuer)}</td>
-                  <td className="py-4 px-5 text-right text-amber-600 font-mono">−{formatEUR(e.sv)}</td>
-                  <td className="py-4 px-5 text-right font-bold font-mono text-emerald-600 bg-emerald-50/60">{formatEUR(e.netto)}</td>
-                  <td className="py-4 px-5 text-right font-mono text-black/70">{e.quote.toFixed(0)} %</td>
+              {tabelle.map((z) => (
+                <tr key={z.betrag}>
+                  <td className="py-3.5 px-5 font-bold font-mono text-[#16181D]">{formatEUR(z.betrag)}</td>
+                  {z.werte.map((w, i) => (
+                    <td key={i} className="py-3.5 px-5 text-right font-mono">
+                      <span className="font-bold text-[#16181D]">{formatEUR(w.netto)}</span>
+                      <span className="block text-xs text-black/50">{pct0(w.nettoQuotePct)}</span>
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <p className="text-xs text-black/50 mt-3">
-          Unverbindliche Berechnung nach § 32a EStG und den SV-Rechengrößen 2026. Keine Steuerberatung.
+          Klasse III rechnet mit dem Splittingtarif. Klasse IV rechnet wie Klasse I mit dem Grundtarif, deshalb sind die
+          Werte bei gleichem Gehalt identisch. Wie viel ein Partner in Klasse V zahlt, zeigt der Rechner oben.
         </p>
       </section>
 
-      {/* Wie wird Weihnachtsgeld versteuert? */}
-      <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="versteuerung">
+      {/* Versteuerung */}
+      <section data-section="" className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="versteuerung">
         <h2 id="versteuerung" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
           Wie wird Weihnachtsgeld versteuert?
         </h2>
         <p>
-          Weihnachtsgeld ist ein <strong className="text-[#16181D]">sonstiger Bezug</strong>. Der Arbeitgeber
-          berechnet die Lohnsteuer darauf nach der sogenannten Jahresmethode: Er ermittelt die Lohnsteuer auf das
-          voraussichtliche Jahresgehalt <strong className="text-[#16181D]">mit</strong> und{" "}
-          <strong className="text-[#16181D]">ohne</strong> Weihnachtsgeld. Die Differenz ist die Steuer, die auf
-          die Sonderzahlung entfällt. Genau diese Logik bildet der Rechner oben ab.
+          Weihnachtsgeld ist steuerlich ein <strong className="text-[#16181D]">sonstiger Bezug</strong> (§ 39b Abs. 3
+          EStG). Der Arbeitgeber rechnet die Lohnsteuer auf Ihren voraussichtlichen Jahresarbeitslohn zweimal aus: einmal
+          mit und einmal ohne Weihnachtsgeld. Die Differenz ist die Lohnsteuer auf das Weihnachtsgeld. Soli und
+          Kirchensteuer folgen dieser Differenz.
         </p>
-        <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Warum wird Weihnachtsgeld scheinbar höher besteuert?</h3>
         <p>
-          Das Weihnachtsgeld kommt <em>zusätzlich</em> zum laufenden Gehalt und wird deshalb mit Ihrem
-          persönlichen <strong className="text-[#16181D]">Grenzsteuersatz</strong> belastet – nicht mit dem
-          niedrigeren Durchschnittssteuersatz. Dadurch wirkt die Abgabenlast auf die Sonderzahlung höher als auf
-          das normale Monatsgehalt. Zu viel gezahlte Lohnsteuer holen sich viele Arbeitnehmer über die
-          Einkommensteuererklärung teilweise zurück, wenn die tatsächliche Jahressteuer niedriger ausfällt.
+          Sozialabgaben fallen an, solange Ihr Entgelt die <strong className="text-[#16181D]">anteilige
+          Beitragsbemessungsgrenze</strong> bis zum Auszahlungsmonat nicht erreicht (§ 23a SGB IV). Bei einer Zahlung im
+          November und ganzjähriger Beschäftigung sind das 11/12 der Jahresgrenze:{" "}
+          {formatEUR((BBG_2026.kvPvJahr * 11) / 12)} in der Kranken- und Pflegeversicherung,{" "}
+          {formatEUR((BBG_2026.rvAlvJahr * 11) / 12)} in der Renten- und Arbeitslosenversicherung, jeweils abzüglich der elf schon
+          gezahlten Monatsgehälter. Wer gut verdient, zahlt deshalb auf das Weihnachtsgeld oft keine oder nur
+          teilweise Kranken- und Pflegebeiträge.
+        </p>
+        <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Warum wird Weihnachtsgeld so hoch versteuert?</h3>
+        <p>
+          Es wird nicht höher besteuert als Ihr Gehalt, sondern es landet ganz oben auf Ihrem Jahreseinkommen. Im
+          Beispiel oben gehen vom Monatsgehalt {pct0(((BEISPIEL_BRUTTO - monat) / BEISPIEL_BRUTTO) * 100)} an Steuern
+          und Abgaben, vom Weihnachtsgeld {pct0(beispiel.abzugsQuotePct)}. Das ist der Grenzsteuersatz plus
+          Sozialabgaben. Zu viel einbehaltene Lohnsteuer gibt es über die Steuererklärung nur zurück, wenn Ihre
+          tatsächliche Jahressteuer niedriger ist, etwa wegen Werbungskosten.
         </p>
       </section>
 
-      {/* Einfluss der Steuerklasse */}
-      <section className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="steuerklasse">
-        <h2 id="steuerklasse" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
-          Einfluss der Steuerklasse
+      {/* Steuerfrei? */}
+      <section data-section="" className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="steuerfrei">
+        <h2 id="steuerfrei" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
+          Ist Weihnachtsgeld steuerfrei?
         </h2>
         <p>
-          Die Steuerklasse bestimmt, wie viel Lohnsteuer monatlich einbehalten wird – und damit auch, wie hoch der
-          Abzug auf das Weihnachtsgeld ausfällt. In <strong className="text-[#16181D]">Steuerklasse&nbsp;III</strong>{" "}
-          bleibt vom Weihnachtsgeld tendenziell mehr netto übrig als in{" "}
-          <strong className="text-[#16181D]">Steuerklasse&nbsp;V</strong> oder{" "}
-          <strong className="text-[#16181D]">VI</strong>. Wählen Sie im Rechner oben Ihre Steuerklasse aus, um den
-          Unterschied direkt zu sehen. Einen vollständigen Überblick bietet unsere Seite{" "}
-          <Link href="/steuerklassen" className="text-[#E60A1C] font-semibold hover:underline">Steuerklassen im Vergleich</Link>.
+          Nein. Weihnachtsgeld in Geld ist voll lohnsteuer- und in der Regel sozialversicherungspflichtig. Es gibt keinen
+          Freibetrag dafür. Steuerfrei bleiben können nur andere Zuwendungen rund um Weihnachten: Sachgeschenke bis zur
+          monatlichen Sachbezugsfreigrenze von 50 € (§ 8 Abs. 2 Satz 11 EStG) und die Weihnachtsfeier bis 110 € je
+          Beschäftigten als Betriebsveranstaltung (§ 19 Abs. 1 Satz 1 Nr. 1a EStG). Wer das Weihnachtsgeld in eine
+          betriebliche Altersvorsorge umwandelt, spart im Rahmen von § 3 Nr. 63 EStG Steuern und Abgaben, bekommt es
+          aber erst im Alter ausgezahlt.
         </p>
-        <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Weihnachtsgeld und reguläres Monatsgehalt</h3>
+      </section>
+
+      {/* Minijob */}
+      <section data-section="" className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="minijob">
+        <h2 id="minijob" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
+          Weihnachtsgeld im Minijob
+        </h2>
         <p>
-          Ob sich Weihnachtsgeld „lohnt“, hängt vom laufenden Gehalt ab: Liegt Ihr Jahreseinkommen inklusive
-          Sonderzahlung noch unter der Beitragsbemessungsgrenze, fallen die vollen Sozialabgaben an. Überschreiten
-          Sie mit dem Weihnachtsgeld die Grenze (2026: 101.400 € in der Renten-/Arbeitslosenversicherung,
-          69.750 € in Kranken-/Pflegeversicherung), bleibt vom übersteigenden Teil relativ mehr netto übrig. Ihr
-          reguläres Nettogehalt berechnen Sie mit dem{" "}
-          <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner</Link>. Im
-          öffentlichen Dienst heißt das Weihnachtsgeld Jahressonderzahlung und wird als Prozentsatz des Gehalts
-          gezahlt — die Sätze 2026 für TVöD und TV-L rechnet der{" "}
-          <Link href="/jahressonderzahlung-rechner" className="text-[#E60A1C] font-semibold hover:underline">Jahressonderzahlung-Rechner</Link>.
+          Auch Minijobber können Weihnachtsgeld bekommen. Ist es vertraglich zugesichert oder wird es regelmäßig
+          gezahlt, zählt es laut Minijob-Zentrale zum regelmäßigen Verdienst. Entscheidend ist dann die Jahresgrenze:
+          2026 sind das 12 × 603 € = <strong className="text-[#16181D]">{minijobJahr.toLocaleString("de-DE")} €</strong>.
+          Wer jeden Monat die vollen 603 € verdient und zusätzlich Weihnachtsgeld bekommt, überschreitet diese Grenze.
+          Dann liegt von Anfang an kein Minijob vor, sondern ein sozialversicherungspflichtiger Midijob. Bleibt das
+          Jahresentgelt inklusive Weihnachtsgeld unter der Grenze, ist das Weihnachtsgeld für Minijobber in der Regel
+          abgabenfrei. Ein freiwilliges, vorher nicht absehbares Weihnachtsgeld wird bei der Prüfung der Grenze nicht
+          berücksichtigt. 2027 steigt die Jahresgrenze auf 7.596 € (633 € im Monat), mehr dazu im Beitrag{" "}
+          <Link href="/blog/minijob-2027" className="text-[#E60A1C] font-semibold hover:underline">Minijob 2027</Link>.
         </p>
-        <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Weihnachtsgeld vs. Bonus</h3>
+      </section>
+
+      {/* TVöD */}
+      <section data-section="" className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="tvoed">
+        <h2 id="tvoed" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
+          Weihnachtsgeld im TVöD (Jahressonderzahlung)
+        </h2>
         <p>
-          Steuerlich gibt es keinen Unterschied: Weihnachtsgeld, Urlaubsgeld, 13.&nbsp;Monatsgehalt und ein
-          Jahresbonus werden alle als sonstiger Bezug behandelt. Für die kombinierte Berechnung von Urlaubs- und
-          Weihnachtsgeld oder eines Bonus nutzen Sie den{" "}
+          Im öffentlichen Dienst heißt das Weihnachtsgeld Jahressonderzahlung (§ 20 TVöD). Sie wird mit dem
+          Novemberentgelt gezahlt und als Prozentsatz des durchschnittlichen Monatsentgelts aus Juli bis September
+          berechnet. Seit 2026 gelten diese Sätze:
+        </p>
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl shadow-sm overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[420px] text-sm">
+            <thead>
+              <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
+                <th className="py-3 px-4">Tarif</th>
+                <th className="py-3 px-4">Entgeltgruppen</th>
+                <th className="py-3 px-4 text-right">Satz</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-black/10">
+              {JSZ_TARIFE.filter((t) => t.key !== "tvl").flatMap((t) =>
+                t.staffel.map((st, i) => (
+                  <tr key={`${t.key}-${st.bisEg}`}>
+                    <td className="py-2.5 px-4 font-semibold text-[#16181D]">{i === 0 ? t.name : ""}</td>
+                    <td className="py-2.5 px-4">{st.label}</td>
+                    <td className="py-2.5 px-4 text-right font-mono font-bold">{st.prozent.toLocaleString("de-DE")} %</td>
+                  </tr>
+                )),
+              )}
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Quelle: {JSZ_TARIFE[0].quelle.titel}. Den Betrag und das Netto für Ihre Entgeltgruppe rechnet der{" "}
+          <Link href="/jahressonderzahlung-rechner" className="text-[#E60A1C] font-semibold hover:underline">Jahressonderzahlung-Rechner</Link>{" "}
+          aus, das laufende TVöD-Gehalt der{" "}
+          <Link href="/tvoed-rechner" className="text-[#E60A1C] font-semibold hover:underline">TVöD-Rechner</Link>. Für
+          Landesbeschäftigte gilt der{" "}
+          <Link href="/tv-l-rechner" className="text-[#E60A1C] font-semibold hover:underline">TV-L-Rechner</Link>.
+        </p>
+      </section>
+
+      {/* Anspruch + Verwandtes */}
+      <section data-section="" className="py-6 text-black/75 text-sm sm:text-base leading-relaxed space-y-4" aria-labelledby="anspruch">
+        <h2 id="anspruch" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
+          Habe ich überhaupt Anspruch auf Weihnachtsgeld?
+        </h2>
+        <p>
+          Ein gesetzlicher Anspruch besteht nicht. Er kann sich aus Arbeitsvertrag, Tarifvertrag, Betriebsvereinbarung
+          oder betrieblicher Übung ergeben. Wann Arbeitgeber kürzen oder zurückfordern dürfen, etwa bei Kündigung,
+          Elternzeit oder Krankheit, erklärt der Beitrag{" "}
+          <Link href="/blog/weihnachtsgeld-anspruch" className="text-[#E60A1C] font-semibold hover:underline">Weihnachtsgeld: Anspruch, Kündigung und Rückzahlung</Link>.
+          Urlaubsgeld, das 13. Gehalt und Boni werden steuerlich genauso behandelt wie Weihnachtsgeld. Den Unterschied
+          zwischen Urlaubs- und Weihnachtsgeld zeigt der Beitrag{" "}
+          <Link href="/blog/weihnachtsgeld-urlaubsgeld-unterschied" className="text-[#E60A1C] font-semibold hover:underline">Weihnachtsgeld und Urlaubsgeld im Vergleich</Link>,
+          einen Bonus rechnet der{" "}
           <Link href="/bonus-steuerrechner" className="text-[#E60A1C] font-semibold hover:underline">Bonus-Steuerrechner</Link>.
-          Aus Arbeitgebersicht erhöhen Sonderzahlungen die gesamten Lohnkosten – diese berechnen Sie mit dem{" "}
-          <Link href="/arbeitgeber-brutto-netto-rechner" className="text-[#E60A1C] font-semibold hover:underline">Arbeitgeberrechner</Link>.
         </p>
+      </section>
+
+      {/* So rechnen wir + Quellen */}
+      <section data-section="" className="py-6" aria-labelledby="methodik">
+        <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-6 sm:p-8 text-sm text-black/70 leading-relaxed space-y-3">
+          <h2 id="methodik" className="text-lg sm:text-xl font-extrabold text-[#16181D]">So rechnen wir</h2>
+          <p>
+            Lohnsteuer: Jahreslohnsteuer 2026 auf den voraussichtlichen Jahresarbeitslohn mit und ohne Weihnachtsgeld
+            (Tarif § 32a EStG 2026; Klasse V/VI nach dem Programmablaufplan 2026). Soli und Kirchensteuer berücksichtigen
+            die Kinderfreibeträge nach § 51a EStG. Sozialabgaben: Arbeitnehmeranteile 2026 auf den Teil der Zahlung, der
+            unter der anteiligen Beitragsbemessungsgrenze bis zum Auszahlungsmonat liegt. Vereinfachungen: keine
+            individuellen Freibeträge, keine Midijob-Sonderregel für Einmalzahlungen, keine Märzklausel.
+          </p>
+          <p>
+            <strong className="text-[#16181D]">Stand: {WEIHNACHTSGELD_STAND}.</strong> Alle Angaben ohne Gewähr, keine
+            Steuerberatung.
+          </p>
+          <h3 className="font-bold text-[#16181D] pt-2">Quellen</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            {QUELLEN.map((q) => (
+              <li key={q.url}>
+                <a href={q.url} target="_blank" rel="noopener noreferrer" className="text-[#E60A1C] hover:underline">
+                  {q.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
     </div>
   );

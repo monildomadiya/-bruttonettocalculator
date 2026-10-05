@@ -5,14 +5,35 @@ import Link from "next/link";
 import { Car, Calculator, ArrowRight, Info, ChevronDown, Gauge } from "lucide-react";
 import { calculateNetto } from "@/lib/taxCalculator";
 
-type Fahrzeugtyp = "verbrenner" | "elektroKlein" | "elektroGross";
+type Fahrzeugtyp = "verbrenner" | "hybrid" | "elektro";
+type Anschaffung = "ab2025-07" | "2024" | "2020";
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
 
-const SATZ: Record<Fahrzeugtyp, { privat: number; pendler: number; label: string }> = {
-  verbrenner:   { privat: 0.01,   pendler: 0.0003,   label: "Verbrenner / Hybrid" },
-  elektroKlein: { privat: 0.0025, pendler: 0.000075, label: "Elektro ≤ 70.000 € Listenpreis" },
-  elektroGross: { privat: 0.005,  pendler: 0.00015,  label: "Elektro/Hybrid > 70.000 € Listenpreis" },
+/*
+ * § 6 Abs. 1 Nr. 4 Satz 2 EStG: Bemessungsgrundlage ist der Bruttolistenpreis,
+ * bei Elektrofahrzeugen nur ein Viertel (bis zur Preisgrenze), sonst und bei
+ * Plug-in-Hybriden, die die Voraussetzungen erfüllen, die Hälfte. Preisgrenze für
+ * das Viertel nach Anschaffungsdatum: 60.000 € (2020–2023), 70.000 €
+ * (1.1.2024–30.6.2025), 100.000 € (ab 1.7.2025, Investitionssofortprogramm,
+ * BGBl. 2025 I Nr. 161). Die geminderte Grundlage wird auf volle 100 € abgerundet.
+ */
+const FAHRZEUG: Record<Fahrzeugtyp, string> = {
+  verbrenner: "Verbrenner / Hybrid ohne Voraussetzungen (1 %)",
+  hybrid: "Plug-in-Hybrid (≤ 50 g CO₂/km oder ≥ 80 km elektrisch, 0,5 %)",
+  elektro: "Reines Elektroauto (0,25 % bzw. 0,5 %)",
 };
+const PREISGRENZE_E: Record<Anschaffung, { grenze: number; label: string }> = {
+  "ab2025-07": { grenze: 100000, label: "ab 1. Juli 2025" },
+  "2024": { grenze: 70000, label: "1. Januar 2024 bis 30. Juni 2025" },
+  "2020": { grenze: 60000, label: "2020 bis 2023" },
+};
+
+function bemessung(listenpreis: number, typ: Fahrzeugtyp, anschaffung: Anschaffung) {
+  let faktor = 1;
+  if (typ === "hybrid") faktor = 0.5;
+  if (typ === "elektro") faktor = listenpreis <= PREISGRENZE_E[anschaffung].grenze ? 0.25 : 0.5;
+  return { faktor, basis: Math.floor((Math.max(0, listenpreis) * faktor) / 100) * 100 };
+}
 
 const STEUERKLASSE_INFO: Record<Steuerklasse, string> = {
   1: "Klasse I — Ledig",
@@ -34,7 +55,7 @@ const faqs = [
   },
   {
     q: "Wie hoch ist die 1%-Regelung bei Elektroautos?",
-    a: "Für vollelektrische Fahrzeuge mit einem Bruttolistenpreis bis 70.000 € gilt eine reduzierte Versteuerung von nur 0,25 % monatlich. Liegt der Listenpreis darüber (oder handelt es sich um bestimmte Hybridfahrzeuge), sind es 0,5 % statt der vollen 1 %.",
+    a: "Für reine Elektroautos, die ab dem 1. Juli 2025 angeschafft wurden, gilt bis 100.000 € Bruttolistenpreis ein Satz von 0,25 % im Monat (für Anschaffungen 2024 bis Juni 2025: bis 70.000 €). Teurere E-Autos und Plug-in-Hybride mit höchstens 50 g CO₂/km oder mindestens 80 km elektrischer Reichweite werden mit 0,5 % versteuert. Der Zuschlag für den Arbeitsweg sinkt entsprechend auf 0,0075 % bzw. 0,015 % je Kilometer.",
   },
   {
     q: "Lohnt sich die Fahrtenbuch-Methode statt der 1%-Regelung?",
@@ -51,19 +72,23 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
   const [listenpreis, setListenpreis] = useState(45000);
   const [entfernung, setEntfernung] = useState(15);
   const [fahrzeugtyp, setFahrzeugtyp] = useState<Fahrzeugtyp>("verbrenner");
+  const [anschaffung, setAnschaffung] = useState<Anschaffung>("ab2025-07");
+  const [zuzahlung, setZuzahlung] = useState(0);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kirche, setKirche] = useState(false);
 
   const result = useMemo(() => {
-    const satz = SATZ[fahrzeugtyp];
-    const geldwerterVorteilPrivat = listenpreis * satz.privat;
-    const geldwerterVorteilPendler = listenpreis * satz.pendler * entfernung;
-    const geldwerterVorteilGesamt = geldwerterVorteilPrivat + geldwerterVorteilPendler;
+    const { faktor, basis } = bemessung(listenpreis, fahrzeugtyp, anschaffung);
+    const geldwerterVorteilPrivat = basis * 0.01;
+    const geldwerterVorteilPendler = basis * 0.0003 * Math.max(0, entfernung);
+    // Zuzahlungen des Arbeitnehmers mindern den geldwerten Vorteil, höchstens auf 0 (R 8.1 Abs. 9 Nr. 4 LStR).
+    const geldwerterVorteilGesamt = Math.max(0, geldwerterVorteilPrivat + geldwerterVorteilPendler - Math.max(0, zuzahlung));
+    const satzPrivatPct = faktor * 1;
 
     const ohneAuto = calculateNetto({
       bruttoMonat: brutto,
       jahr: 2026,
-      verheiratet: steuerklasse === 3 || steuerklasse === 5,
+      verheiratet: steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5,
       kinderlosUeber23: false,
       kirche,
       steuerklasse,
@@ -72,20 +97,22 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
     const mitAuto = calculateNetto({
       bruttoMonat: brutto + geldwerterVorteilGesamt,
       jahr: 2026,
-      verheiratet: steuerklasse === 3 || steuerklasse === 5,
+      verheiratet: steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5,
       kinderlosUeber23: false,
       kirche,
       steuerklasse,
     });
 
     return {
+      satzPrivatPct,
+      basis,
       geldwerterVorteilPrivat,
       geldwerterVorteilPendler,
       geldwerterVorteilGesamt,
       nettoOhneAuto: ohneAuto.nettoMonat,
       nettoMitAuto: mitAuto.nettoMonat,
     };
-  }, [brutto, listenpreis, entfernung, fahrzeugtyp, steuerklasse, kirche]);
+  }, [brutto, listenpreis, entfernung, fahrzeugtyp, anschaffung, zuzahlung, steuerklasse, kirche]);
 
   return (
     <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
@@ -149,10 +176,38 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
                   onChange={(e) => setFahrzeugtyp(e.target.value as Fahrzeugtyp)}
                   className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-semibold focus:border-[#E60A1C] outline-none"
                 >
-                  {(Object.keys(SATZ) as Fahrzeugtyp[]).map((k) => (
-                    <option key={k} value={k}>{SATZ[k].label}</option>
+                  {(Object.keys(FAHRZEUG) as Fahrzeugtyp[]).map((k) => (
+                    <option key={k} value={k}>{FAHRZEUG[k]}</option>
                   ))}
                 </select>
+              </div>
+
+              {fahrzeugtyp === "elektro" && (
+                <div>
+                  <label className="block text-sm font-semibold text-black/70 mb-2">Anschaffung des E-Autos</label>
+                  <select
+                    value={anschaffung}
+                    onChange={(e) => setAnschaffung(e.target.value as Anschaffung)}
+                    className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-semibold focus:border-[#E60A1C] outline-none"
+                  >
+                    {(Object.keys(PREISGRENZE_E) as Anschaffung[]).map((k) => (
+                      <option key={k} value={k}>
+                        {PREISGRENZE_E[k].label} (0,25 % bis {PREISGRENZE_E[k].grenze.toLocaleString("de-DE")} €)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <div>
+                <label className="block text-sm font-semibold text-black/70 mb-2">Ihre Zuzahlung pro Monat (optional)</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={zuzahlung}
+                  onChange={(e) => setZuzahlung(Number(e.target.value))}
+                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
+                />
               </div>
 
               <div>
@@ -203,15 +258,19 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
 
             <div className="space-y-3">
               <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
-                <span className="text-black/70 text-sm font-medium">Geldwerter Vorteil (privat)</span>
+                <span className="text-black/70 text-sm font-medium">
+                  Privatnutzung ({result.satzPrivatPct.toLocaleString("de-DE")} % von {formatEuro(listenpreis)})
+                </span>
                 <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.geldwerterVorteilPrivat)}</span>
               </div>
               <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
-                <span className="text-black/70 text-sm font-medium">Zuschlag Arbeitsweg (0,03 %-Regel)</span>
+                <span className="text-black/70 text-sm font-medium">Zuschlag Arbeitsweg ({entfernung} km × 0,03 % der Bemessungsgrundlage)</span>
                 <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.geldwerterVorteilPendler)}</span>
               </div>
               <div className="flex items-center justify-between bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-xl px-5 py-4">
-                <span className="text-black/80 text-sm font-semibold">Geldwerter Vorteil gesamt / Monat</span>
+                <span className="text-black/80 text-sm font-semibold">
+                  Geldwerter Vorteil gesamt / Monat{zuzahlung > 0 ? " (nach Zuzahlung)" : ""}
+                </span>
                 <span className="text-xl font-extrabold text-[#16181D]">{formatEuro(result.geldwerterVorteilGesamt)}</span>
               </div>
 
@@ -264,16 +323,21 @@ export default function FirmenwagenrechnerCalculator({ content }: { content?: Re
           <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Elektroauto: der große Steuervorteil</h3>
           <p>
             Für vollelektrische Firmenwagen gilt eine stark reduzierte Versteuerung: nur{" "}
-            <strong className="text-[#16181D]">0,25 %</strong> des Listenpreises bei E-Autos bis 70.000 €, und{" "}
-            <strong className="text-[#16181D]">0,5 %</strong> bei teureren Modellen oder bestimmten Hybriden — statt
-            der vollen 1 %. Ein E-Firmenwagen kann Ihr Nettogehalt daher deutlich weniger belasten als ein
+            <strong className="text-[#16181D]">0,25 %</strong> des Listenpreises bei E-Autos bis 100.000 € (Anschaffung ab
+            1. Juli 2025; davor 70.000 €), und <strong className="text-[#16181D]">0,5 %</strong> bei teureren E-Autos oder
+            Plug-in-Hybriden mit höchstens 50 g CO₂/km oder mindestens 80 km elektrischer Reichweite — statt der vollen 1 %. Ein E-Firmenwagen kann Ihr Nettogehalt daher deutlich weniger belasten als ein
             Verbrenner.
           </p>
           <p>
             <strong className="text-[#16181D]">Alternative Fahrtenbuch:</strong> Bei geringer Privatnutzung oder
             hohem Anschaffungspreis kann die Fahrtenbuch-Methode günstiger sein, da nur die tatsächliche
             private Nutzung versteuert wird. Der Rechner zeigt Ihnen die Belastung nach der 1%-Regelung, damit
-            Sie beide Varianten vergleichen können.
+            Sie beide Varianten vergleichen können. Alle Sätze, Rechenbeispiele und die Voraussetzungen für das Fahrtenbuch
+            erklärt der Ratgeber{" "}
+            <Link href="/blog/geldwerter-vorteil-firmenwagen" className="text-[#E60A1C] font-semibold hover:underline">
+              Geldwerter Vorteil beim Firmenwagen
+            </Link>
+            .
           </p>
         </div>
       </section>

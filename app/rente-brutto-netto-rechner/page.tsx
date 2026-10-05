@@ -299,6 +299,20 @@ export default function RenteBruttoNettoPage() {
         </p>
       </Section>
 
+      <Section id="aktivrente" title="Weiterarbeiten mit Rente: die Aktivrente" prose>
+        <p>
+          Wer die Regelaltersgrenze erreicht hat und als Arbeitnehmer weiterarbeitet, verdient seit dem 1. Januar 2026 bis zu{" "}
+          <strong className="text-[#16181D]">2.000 € im Monat steuerfrei</strong> (§ 3 Nr. 21 EStG). Die Rente selbst bleibt
+          steuerpflichtig und wird so berechnet wie oben. Auf den Lohn fallen weiter Kranken- und Pflegebeiträge an; Minijobs,
+          Selbständige und Beamte sind ausgeschlossen. Wie viel Steuer die Aktivrente spart und wo die Fallen liegen, erklärt der
+          Beitrag{" "}
+          <Link href="/blog/aktivrente" className="text-[#E60A1C] font-semibold hover:underline">
+            Aktivrente: 2.000 € steuerfrei
+          </Link>
+          .
+        </p>
+      </Section>
+
       <Section id="faq" variant="muted" eyebrow="FAQ" eyebrowIcon={HelpCircle} title="Häufige Fragen zur Nettorente">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 text-sm sm:text-base">
           {faqs.map((f) => (

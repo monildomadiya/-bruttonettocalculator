@@ -54,6 +54,13 @@ import { post as rentenpunkteEinJahr } from "./rentenpunkte-ein-jahr-arbeit";
 import { post as steuerklasseWechselnFrist } from "./steuerklasse-wechseln-frist-november";
 import { post as mieteinnahmenAfa } from "./mieteinnahmen-versteuern-afa";
 
+// SEO-Roadmap 2027 (10/2026) — saisonale und 2027-Beiträge, siehe docs/SEO_ROADMAP_2027.md
+import { post as weihnachtsgeldAnspruch } from "./weihnachtsgeld-anspruch";
+import { post as minijob2027 } from "./minijob-2027";
+import { post as mindestlohn2027 } from "./mindestlohn-2027";
+import { post as aktivrente } from "./aktivrente";
+import { post as steuerklasseNachHeirat } from "./steuerklasse-nach-heirat";
+
 export const BLOG_POSTS: BlogPost[] = [
   kinderfreibetrag2026,
   kinderfreibetragZaehler,
@@ -84,4 +91,9 @@ export const BLOG_POSTS: BlogPost[] = [
   rentenpunkteEinJahr,
   steuerklasseWechselnFrist,
   mieteinnahmenAfa,
+  weihnachtsgeldAnspruch,
+  minijob2027,
+  mindestlohn2027,
+  aktivrente,
+  steuerklasseNachHeirat,
 ];

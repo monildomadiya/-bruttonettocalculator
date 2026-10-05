@@ -217,6 +217,11 @@ export default function MinijobRechner() {
                   <td className="py-3 px-2 sm:px-4 text-right font-mono">{MINIJOB_WERTE[2026].pauschsteuerPct} %</td>
                   <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D]">{MINIJOB_WERTE[2027].pauschsteuerPct} %*</td>
                 </tr>
+                <tr>
+                  <td className="py-3 px-2 sm:px-4">KV-Pauschalbeitrag (Arbeitgeber)</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono">13 %</td>
+                  <td className="py-3 px-2 sm:px-4 text-right font-mono font-bold text-[#16181D]">17,5 %**</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -224,6 +229,10 @@ export default function MinijobRechner() {
             * Geplant im Regierungsentwurf des Einkommensteuerreformgesetzes 2027 (BT-Drucksache 21/8235, § 40a Abs. 2
             EStG), noch nicht beschlossen. Die Pauschsteuer trägt in der Regel der Arbeitgeber; am Netto des Minijobbers
             ändert sie dann nichts. Grenze und Mindestlohn 2027 sind dagegen bereits geltendes Recht.
+            <br />
+            ** Beschlossen mit dem GKV-Beitragssatzstabilisierungsgesetz (Bundesgesetzblatt vom 29.07.2026): allgemeiner
+            Beitragssatz 14,6 % plus durchschnittlicher Zusatzbeitrag. 17,5 % gelten, wenn der Durchschnitt 2027 bei 2,9 %
+            bleibt; das BMG legt ihn bis zum 1. November 2026 fest. Auch diesen Beitrag zahlt allein der Arbeitgeber.
           </p>
 
           <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] pt-4">

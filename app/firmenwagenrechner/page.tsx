@@ -63,7 +63,7 @@ const faqSchema = {
       name: "Wie hoch ist die 1%-Regelung bei Elektroautos?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Für vollelektrische Fahrzeuge mit einem Bruttolistenpreis bis 70.000 € gilt eine reduzierte Versteuerung von 0,25 % monatlich, darüber bzw. bei bestimmten Hybridfahrzeugen 0,5 % statt der vollen 1 %.",
+        text: "Für reine Elektroautos, die ab dem 1. Juli 2025 angeschafft wurden, gilt bis 100.000 € Bruttolistenpreis ein Satz von 0,25 % im Monat (für Anschaffungen 2024 bis Juni 2025: bis 70.000 €). Teurere E-Autos und Plug-in-Hybride mit höchstens 50 g CO₂/km oder mindestens 80 km elektrischer Reichweite werden mit 0,5 % versteuert.",
       },
     },
     {

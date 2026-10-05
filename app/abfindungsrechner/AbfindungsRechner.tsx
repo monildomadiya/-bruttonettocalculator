@@ -1,11 +1,19 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
-import { Banknote, Calculator, ArrowRight, Info, ChevronDown } from "lucide-react";
-import { calculateNetto, estFormel2026, soliBerechnen } from "@/lib/taxCalculator";
+import { Banknote, Calculator, Info, Receipt, Undo2 } from "lucide-react";
+import { formatEUR, type Steuerklasse } from "@/lib/taxCalculator";
+import { berechneAbfindung, type SteuerTeil } from "@/lib/abfindung";
+import { BUNDESLAENDER } from "@/data/bundeslaender";
 
-type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
+/*
+ * Rechenkern: lib/abfindung.ts. Seit 2025 behält der Arbeitgeber die Lohnsteuer
+ * OHNE Fünftelregelung ein; die Ermäßigung kommt erst mit der Steuererklärung.
+ * Der Rechner zeigt deshalb drei Werte: Einbehalt, Steuer nach Veranlagung und
+ * die Differenz als voraussichtliche Erstattung. (Die frühere Fassung rechnete
+ * die Fünftelregelung direkt in den Auszahlungsbetrag und schätzte Klasse V mit
+ * ESt × 1,45.)
+ */
 
 const STEUERKLASSE_INFO: Record<Steuerklasse, string> = {
   1: "Klasse I — Ledig",
@@ -16,278 +24,158 @@ const STEUERKLASSE_INFO: Record<Steuerklasse, string> = {
   6: "Klasse VI — Zweiter Job",
 };
 
-function formatEuro(value: number): string {
-  return value.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
-}
+const inputCls =
+  "w-full bg-[#FFFFFF] border border-black/[0.12] rounded-xl px-4 py-3 text-[#16181D] font-semibold focus:border-[#E60A1C] outline-none";
 
-function estJahrFuerSK(zvE: number, sk: Steuerklasse): number {
-  if (sk === 3) return 2 * estFormel2026(Math.max(0, zvE) / 2);
-  if (sk === 5) {
-    const baseEst = estFormel2026(Math.max(0, zvE));
-    return Math.min(baseEst * 1.45, Math.max(0, zvE) * 0.40);
-  }
-  return estFormel2026(Math.max(0, zvE));
+function Zeilen({ t }: { t: SteuerTeil }) {
+  return (
+    <div className="divide-y divide-black/[0.06] text-sm">
+      {[
+        { l: "Lohn-/Einkommensteuer", v: t.lohnsteuer },
+        { l: "Solidaritätszuschlag", v: t.soli },
+        { l: "Kirchensteuer", v: t.kirchensteuer },
+      ].map((z) => (
+        <div key={z.l} className="flex flex-wrap items-center justify-between gap-x-3 py-1.5">
+          <span className="text-black/65">{z.l}</span>
+          <span className="ml-auto font-mono tabular-nums">{formatEUR(z.v)}</span>
+        </div>
+      ))}
+    </div>
+  );
 }
-
-const faqs = [
-  {
-    q: "Wie wird eine Abfindung versteuert?",
-    a: "Abfindungen werden nach der sogenannten Fünftelregelung (§ 34 Abs. 1 EStG) versteuert. Dabei wird ein Fünftel der Abfindung fiktiv zum regulären zu versteuernden Einkommen hinzugerechnet, um die Steuerprogression abzumildern. Die Differenz der Einkommensteuer wird anschließend mit 5 multipliziert.",
-  },
-  {
-    q: "Muss ich auf die Abfindung Sozialversicherungsbeiträge zahlen?",
-    a: "Nein. Abfindungen sind grundsätzlich sozialversicherungsfrei — es fallen weder Renten-, Kranken-, Pflege- noch Arbeitslosenversicherungsbeiträge an. Es wird ausschließlich Lohn-/Einkommensteuer (zzgl. Soli und ggf. Kirchensteuer) fällig.",
-  },
-  {
-    q: "Lohnt sich die Fünftelregelung immer?",
-    a: "Die Fünftelregelung wird vom Finanzamt automatisch angewendet, wenn sie günstiger ist als die reguläre Versteuerung. Sie wirkt sich am stärksten aus, wenn die Abfindung im Verhältnis zum sonstigen Jahreseinkommen hoch ist. Bei bereits sehr hohem Einkommen (Spitzensteuersatz-Bereich) ist der Effekt gering.",
-  },
-  {
-    q: "Kann ich die Steuerlast auf die Abfindung weiter senken?",
-    a: "Ja, häufig lohnt sich der Bezug der Abfindung in einem Jahr mit niedrigerem sonstigem Einkommen (z. B. bei Arbeitslosigkeit über den Jahreswechsel) oder die Einzahlung eines Teils in die Basis-/Rürup-Rente als Sonderausgabe.",
-  },
-];
 
 export default function AbfindungsRechner() {
-  const [brutto, setBrutto] = useState(4500);
+  const [abfindung, setAbfindung] = useState(30000);
+  const [jahresbrutto, setJahresbrutto] = useState(54000);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kirche, setKirche] = useState(false);
-  const [abfindung, setAbfindung] = useState(30000);
+  const [landSlug, setLandSlug] = useState("nordrhein-westfalen");
+  const land = BUNDESLAENDER.find((b) => b.slug === landSlug) ?? BUNDESLAENDER[0];
 
-  const result = useMemo(() => {
-    const regulaer = calculateNetto({
-      bruttoMonat: brutto,
-      jahr: 2026,
-      verheiratet: steuerklasse === 3 || steuerklasse === 5,
-      kinderlosUeber23: false,
-      kirche,
-      steuerklasse,
-    });
-
-    const zvEOhne = regulaer.steuer.zvE;
-    const zvEMitFuenftel = zvEOhne + abfindung / 5;
-
-    const estOhne = estJahrFuerSK(zvEOhne, steuerklasse);
-    const estMitFuenftel = estJahrFuerSK(zvEMitFuenftel, steuerklasse);
-    const estAufAbfindung = 5 * (estMitFuenftel - estOhne);
-    const estGesamt = estOhne + estAufAbfindung;
-
-    const verheiratet = steuerklasse === 3;
-    const soliOhne = soliBerechnen(estOhne, verheiratet);
-    const soliGesamt = soliBerechnen(estGesamt, verheiratet);
-
-    const ksSatz = 0.09;
-    const ksOhne = kirche ? estOhne * ksSatz : 0;
-    const ksGesamt = kirche ? estGesamt * ksSatz : 0;
-
-    const steuerlastOhne = estOhne + soliOhne + ksOhne;
-    const steuerlastGesamt = estGesamt + soliGesamt + ksGesamt;
-    const steuerAufAbfindungGesamt = steuerlastGesamt - steuerlastOhne;
-
-    const nettoAbfindung = abfindung - steuerAufAbfindungGesamt;
-    const effektiverSteuersatz = abfindung > 0 ? (steuerAufAbfindungGesamt / abfindung) * 100 : 0;
-
-    return { nettoAbfindung, steuerAufAbfindungGesamt, effektiverSteuersatz };
-  }, [brutto, steuerklasse, kirche, abfindung]);
+  const r = useMemo(
+    () =>
+      berechneAbfindung({
+        abfindung,
+        jahresbrutto,
+        steuerklasse,
+        kirche,
+        kirchensteuerSatz: land.kirchensteuerSatz,
+      }),
+    [abfindung, jahresbrutto, steuerklasse, kirche, land],
+  );
 
   return (
-    <div className="min-h-screen bg-[#F4F5F7] text-[#16181D]">
-      {/* Hero */}
+    <div className="bg-[#F4F5F7] text-[#16181D]">
       <section className="tool-hero relative overflow-hidden border-b border-black/[0.08]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-48 bg-[#E60A1C]/10 blur-3xl pointer-events-none" />
-        <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-28 text-center">
+        <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-24 text-center">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
             <Banknote size={14} />
-            Fünftelregelung · § 34 EStG
+            Abfindung · Fünftelregelung · Rechtsstand 2026
           </div>
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
-            Abfindungsrechner{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              2026
-            </span>
+            Abfindungsrechner 2026:{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">Abfindung brutto netto</span>
           </h1>
           <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Berechnen Sie die Steuerlast Ihrer Abfindung nach der Fünftelregelung (§ 34 EStG) —
-            sozialversicherungsfrei, nur Lohnsteuer, Soli und ggf. Kirchensteuer.
+            Was der Arbeitgeber bei Auszahlung einbehält, was nach der Fünftelregelung in der Steuererklärung übrig bleibt und
+            wie viel Sie zurückbekommen.
           </p>
         </div>
       </section>
 
-      {/* Calculator */}
       <section className="max-w-6xl mx-auto px-5 pt-2 pb-12 sm:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Inputs */}
-          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-9">
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-5 sm:p-9 shadow-sm">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-6 flex items-center gap-2">
               <Calculator size={22} className="text-[#E60A1C]" />
               Ihre Angaben
             </h2>
-
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-semibold text-black/70 mb-2">Reguläres Bruttogehalt / Monat</label>
-                <input
-                  type="number"
-                  value={brutto}
-                  onChange={(e) => setBrutto(Number(e.target.value))}
-                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
-                />
+                <label htmlFor="ab-betrag" className="block text-sm font-semibold text-black/70 mb-2">Abfindung brutto</label>
+                <input id="ab-betrag" type="number" min={0} inputMode="decimal" value={abfindung} onChange={(e) => setAbfindung(Number(e.target.value))} className={`${inputCls} text-lg font-bold`} />
               </div>
-
               <div>
-                <label className="block text-sm font-semibold text-black/70 mb-2">Höhe der Abfindung (einmalig)</label>
-                <input
-                  type="number"
-                  value={abfindung}
-                  onChange={(e) => setAbfindung(Number(e.target.value))}
-                  className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none"
-                />
+                <label htmlFor="ab-jahr" className="block text-sm font-semibold text-black/70 mb-2">
+                  Jahresbrutto ohne Abfindung (im Auszahlungsjahr)
+                </label>
+                <input id="ab-jahr" type="number" min={0} inputMode="decimal" value={jahresbrutto} onChange={(e) => setJahresbrutto(Number(e.target.value))} className={`${inputCls} text-lg font-bold`} />
+                <p className="text-xs text-black/50 mt-1.5">Endet der Job im Lauf des Jahres, nur den bis dahin gezahlten Lohn eintragen.</p>
               </div>
-
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-semibold text-black/70 mb-2">Steuerklasse</label>
-                  <select
-                    value={steuerklasse}
-                    onChange={(e) => setSteuerklasse(Number(e.target.value) as Steuerklasse)}
-                    className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 text-[#16181D] font-semibold focus:border-[#E60A1C] outline-none"
-                  >
+                  <label htmlFor="ab-sk" className="block text-sm font-semibold text-black/70 mb-2">Steuerklasse</label>
+                  <select id="ab-sk" value={steuerklasse} onChange={(e) => setSteuerklasse(Number(e.target.value) as Steuerklasse)} className={inputCls}>
                     {([1, 2, 3, 4, 5, 6] as Steuerklasse[]).map((sk) => (
                       <option key={sk} value={sk}>{STEUERKLASSE_INFO[sk]}</option>
                     ))}
                   </select>
                 </div>
-                <div className="flex items-end pb-1">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-black/70 cursor-pointer">
-                    <input type="checkbox" checked={kirche} onChange={(e) => setKirche(e.target.checked)} className="accent-[#E60A1C] w-4 h-4" />
-                    Kirchensteuer
-                  </label>
+                <div>
+                  <label htmlFor="ab-land" className="block text-sm font-semibold text-black/70 mb-2">Bundesland</label>
+                  <select id="ab-land" value={landSlug} onChange={(e) => setLandSlug(e.target.value)} className={inputCls}>
+                    {BUNDESLAENDER.map((b) => (
+                      <option key={b.slug} value={b.slug}>{b.name}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
+              <label className="flex items-center gap-2 text-sm font-semibold text-black/70 cursor-pointer">
+                <input type="checkbox" checked={kirche} onChange={(e) => setKirche(e.target.checked)} className="accent-[#E60A1C] w-4 h-4" />
+                Kirchensteuer ({Math.round(land.kirchensteuerSatz * 100)} %)
+              </label>
+              <p className="text-xs text-black/55 bg-[#F4F5F7] border border-black/[0.08] rounded-xl px-3 py-2.5">
+                Sozialabgaben fallen auf eine Abfindung für den Verlust des Arbeitsplatzes nicht an.
+              </p>
             </div>
           </div>
 
-          {/* Results */}
-          <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-7 sm:p-9">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#16181D] mb-2 flex items-center gap-2">
-              <Banknote size={22} className="text-[#E60A1C]" />
-              Netto-Abfindung
-            </h2>
-            <div className="flex items-center gap-2 mb-6 text-xs text-amber-600/80 bg-amber-50 border border-amber-500/20 rounded-xl px-3 py-2">
-              <Info size={13} className="flex-shrink-0" />
-              Vereinfachte Berechnung — keine Steuerberatung
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
-                <span className="text-black/70 text-sm font-medium">Steuerlast auf Abfindung (Fünftelregelung)</span>
-                <span className="text-lg font-extrabold text-[#16181D]">{formatEuro(result.steuerAufAbfindungGesamt)}</span>
-              </div>
-              <div className="flex items-center justify-between bg-black/[0.04] border border-black/[0.08] rounded-xl px-5 py-4">
-                <span className="text-black/70 text-sm font-medium">Effektiver Steuersatz auf Abfindung</span>
-                <span className="text-lg font-extrabold text-[#16181D]">{result.effektiverSteuersatz.toFixed(1)} %</span>
-              </div>
-              <div className="flex items-center justify-between bg-[#E60A1C]/10 border border-[#E60A1C]/25 rounded-xl px-5 py-4">
-                <span className="text-black/80 text-sm font-semibold">Netto-Abfindung (nach Steuer)</span>
-                <span className="text-2xl font-extrabold text-emerald-600">{formatEuro(result.nettoAbfindung)}</span>
+          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-3xl p-5 sm:p-9 shadow-sm space-y-4" aria-live="polite">
+            <div className="rounded-2xl border border-black/[0.10] p-4">
+              <p className="text-sm font-bold text-[#16181D] flex items-center gap-2 mb-1">
+                <Receipt size={16} className="text-[#E60A1C]" /> 1. Bei Auszahlung (Lohnsteuerabzug)
+              </p>
+              <p className="text-xs text-black/55 mb-2">Ohne Fünftelregelung, wie für jeden sonstigen Bezug.</p>
+              <Zeilen t={r.auszahlung} />
+              <div className="flex flex-wrap items-center justify-between gap-x-3 pt-2 mt-1 border-t border-black/10 font-bold">
+                <span>Netto auf dem Konto</span>
+                <span className="ml-auto font-mono text-lg">{formatEUR(r.nettoBeiAuszahlung)}</span>
               </div>
             </div>
 
-            <Link
-              href="/"
-              className="mt-5 w-full flex items-center justify-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3.5 rounded-xl transition-all text-sm"
-            >
-              Reguläres Nettogehalt berechnen
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Explainer / SEO content */}
-      <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
-        <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
-            Abfindung versteuern: So funktioniert die Fünftelregelung
-          </h2>
-          <p>
-            Eine <strong className="text-[#16181D]">Abfindung</strong> bei Kündigung oder Aufhebungsvertrag ist
-            voll steuerpflichtig, wird aber steuerlich begünstigt: Über die{" "}
-            <strong className="text-[#16181D]">Fünftelregelung (§ 34 EStG)</strong> soll die Steuerprogression
-            abgemildert werden, die sonst durch die geballte Einmalzahlung entstehen würde.
-          </p>
-          <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-2xl p-5">
-            <p className="font-mono text-[#16181D] text-sm mb-2">So rechnet die Fünftelregelung:</p>
-            <p className="text-black/60 text-sm">
-              Nur <strong className="text-[#16181D]">ein Fünftel</strong> der Abfindung wird fiktiv zum
-              Jahreseinkommen addiert und die Steuer­mehrbelastung berechnet. Diese Differenz wird{" "}
-              <strong className="text-[#16181D]">× 5</strong> genommen — so verteilt sich der Progressionseffekt
-              rechnerisch auf fünf Jahre.
-            </p>
-          </div>
-          <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Der große Vorteil: keine Sozialabgaben</h3>
-          <p>
-            Anders als beim Gehalt sind Abfindungen <strong className="text-[#16181D]">sozialversicherungsfrei</strong> —
-            es fallen weder Renten-, Kranken-, Pflege- noch Arbeitslosenversicherungsbeiträge an. Fällig wird
-            ausschließlich Lohn-/Einkommensteuer zzgl. Soli und ggf. Kirchensteuer.
-          </p>
-          <p>
-            Die Fünftelregelung wirkt am stärksten, wenn die Abfindung im Verhältnis zum sonstigen
-            Jahreseinkommen hoch ist. <strong className="text-[#16181D]">Steuertipp:</strong> Der Bezug in einem
-            Jahr mit niedrigerem Einkommen (etwa bei Arbeitslosigkeit über den Jahreswechsel) oder die
-            Einzahlung eines Teils in eine Basis-/Rürup-Rente kann die Steuerlast weiter senken.
-          </p>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
-        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
-          Häufige Fragen zur Abfindung
-        </h2>
-        <div className="space-y-3">
-          {faqs.map((faq, i) => (
-            <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
-              <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
-                <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
-                <ChevronDown size={18} className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180" />
-              </summary>
-              <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
-                {faq.a}
+            <div className="rounded-2xl border border-black/[0.10] p-4">
+              <p className="text-sm font-bold text-[#16181D] flex items-center gap-2 mb-1">
+                <Calculator size={16} className="text-[#E60A1C]" /> 2. Nach der Steuererklärung
+              </p>
+              <p className="text-xs text-black/55 mb-2">
+                {r.fuenftelGuenstiger
+                  ? `Mit Fünftelregelung (§ 34 EStG), ${formatEUR(r.fuenftelVorteil)} günstiger als die normale Besteuerung.`
+                  : "Die Fünftelregelung bringt hier keinen Vorteil; das Finanzamt rechnet normal."}
+              </p>
+              <Zeilen t={r.veranlagung} />
+              <div className="flex flex-wrap items-center justify-between gap-x-3 pt-2 mt-1 border-t border-black/10 font-bold">
+                <span>Abfindung netto endgültig</span>
+                <span className="ml-auto font-mono text-lg">{formatEUR(r.nettoNachErklaerung)}</span>
               </div>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="max-w-6xl mx-auto px-5 pb-20">
-        <div className="relative overflow-hidden bg-gradient-to-br from-[#E60A1C]/20 via-[#E60A1C]/10 to-transparent border border-[#E60A1C]/30 rounded-3xl p-8 sm:p-12 text-center">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
-          <div className="relative">
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
-              Weitere Gehaltsrechner entdecken
-            </h2>
-            <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
-              Bonus-Steuerrechner, Arbeitslosengeld-Rechner, Firmenwagenrechner &amp; mehr —
-              alle kostenlos und aktuell für 2026.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link href="/kuendigungsfrist-rechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
-                Kündigungsfrist-Rechner
-              </Link>
-              <Link href="/bonus-steuerrechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
-                Bonus-Steuerrechner
-              </Link>
-              <Link href="/arbeitslosengeld-rechner" className="inline-flex items-center gap-2 bg-black/[0.05] hover:bg-black/[0.06] border border-black/[0.10] text-[#16181D] font-bold px-6 py-3 rounded-xl transition-all text-sm">
-                Arbeitslosengeld-Rechner
-              </Link>
-              <Link href="/" className="inline-flex items-center gap-2 bg-[#E60A1C] hover:bg-[#FF2436] text-white font-bold px-6 py-3 rounded-xl transition-all text-sm">
-                <Calculator size={16} />
-                Brutto-Netto-Rechner
-              </Link>
             </div>
+
+            <div className="rounded-2xl bg-emerald-50 border border-emerald-500/25 p-4">
+              <p className="text-sm font-bold text-[#16181D] flex items-center gap-2">
+                <Undo2 size={16} className="text-emerald-700" /> 3. Voraussichtliche Erstattung
+              </p>
+              <p className="text-3xl font-mono font-extrabold text-emerald-700 mt-1">{formatEUR(Math.max(0, r.erstattung))}</p>
+              <p className="text-xs text-black/60 mt-1">vom Finanzamt, nach Abgabe der Einkommensteuererklärung für das Auszahlungsjahr.</p>
+            </div>
+
+            {r.unsicher && (
+              <p className="flex gap-2 text-xs text-amber-800 bg-amber-50 border border-amber-500/25 rounded-xl px-3 py-2">
+                <Info size={14} className="flex-shrink-0 mt-0.5" />
+                Klasse IV, V oder VI: Die endgültige Steuer hängt an der Zusammenveranlagung mit dem Partner bzw. an Ihren
+                übrigen Einkünften. Schritt 2 und 3 rechnen vereinfacht mit dem Grundtarif und nur diesem Lohn.
+              </p>
+            )}
+            <p className="text-xs text-black/50">Steuerjahr 2026. Alle Angaben ohne Gewähr, keine Steuerberatung.</p>
           </div>
         </div>
       </section>

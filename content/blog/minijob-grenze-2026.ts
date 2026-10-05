@@ -11,7 +11,6 @@ export const post: BlogPost = {
   focusKeyword: "minijob grenze 2026",
   secondaryKeywords: [
     "wie hoch minijob grenze 2026",
-    "minijob grenze 2027",
     "minijob 603 euro",
     "minijob wie viele stunden",
     "minijob grenze überschritten",
@@ -20,7 +19,7 @@ export const post: BlogPost = {
   category: "Job & Sonderfälle",
   tags: ["Minijob", "Mindestlohn", "Midijob", "Verdienstgrenze", "Sozialversicherung"],
   publishedISO: "2026-08-22",
-  updatedISO: "2026-08-22",
+  updatedISO: "2026-10-05",
   answer:
     "Die Minijob-Grenze liegt 2026 bei 603 € im Monat, also 7.236 € im Jahr. Ab dem 1. Januar 2027 steigt sie auf 633 € monatlich (7.596 € jährlich). Grund ist die dynamische Kopplung an den Mindestlohn: Die Grenze entspricht dem Mindestlohn mal 130 geteilt durch 3, aufgerundet — bei 13,90 € ergibt das 603 €, bei 14,60 € im Jahr 2027 dann 633 €.",
   keyFacts: [
@@ -32,6 +31,8 @@ export const post: BlogPost = {
     { label: "Übergangsbereich (Midijob)", value: "603,01 € – 2.000 €" },
   ],
   content: `
+<p><strong>Werte 2027 →</strong> Ab 1. Januar 2027 gilt die Minijob-Grenze von 633 €. Alle Änderungen für 2027, auch die höheren Arbeitgeberabgaben und die geplante Pauschsteuer von 5 %, stehen im Beitrag <a href="/blog/minijob-2027">Minijob 2027: 633-€-Grenze und alle Änderungen</a>.</p>
+
 <p>Seit Oktober 2022 ist die Minijob-Grenze keine feste Zahl mehr, die die Politik gelegentlich anpasst, sondern eine <strong>dynamische Größe</strong>, die automatisch mit dem Mindestlohn steigt. Das erspart Beschäftigten die Sorge, bei jeder Mindestlohnerhöhung Stunden kürzen zu müssen.</p>
 
 <h2>Wie hoch ist die Minijob-Grenze 2026?</h2>
