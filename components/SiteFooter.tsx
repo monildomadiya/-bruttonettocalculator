@@ -110,6 +110,7 @@ export default function SiteFooter() {
               <li><Link href="/pendlerpauschale-rechner"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Pendlerpauschale-Rechner</Link></li>
               <li><Link href="/rentenrechner"              className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Rentenrechner</Link></li>
               <li><Link href="/buergergeld-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Bürgergeld-Rechner</Link></li>
+              <li><Link href="/wohngeld-rechner"           className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Wohngeld-Rechner</Link></li>
               <li><Link href="/witwenrente-rechner"        className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Witwenrente-Rechner</Link></li>
               <li><Link href="/bafoeg-rechner"             className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">BAföG-Rechner</Link></li>
               <li><Link href="/teilzeitrechner"            className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Teilzeitrechner</Link></li>

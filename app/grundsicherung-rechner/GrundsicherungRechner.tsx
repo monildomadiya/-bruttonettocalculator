@@ -133,6 +133,8 @@ export default function GrundsicherungRechner() {
             <Link href="/rentenpunkte-rechner" className="text-[#E60A1C] font-semibold hover:underline">Rentenpunkte-Rechner</Link>{" "}
             abschätzen. Erwerbsfähige Personen erhalten statt Grundsicherung das{" "}
             <Link href="/buergergeld-rechner" className="text-[#E60A1C] font-semibold hover:underline">Bürgergeld</Link>.
+            Reicht die Rente knapp zum Leben, aber nicht für die Miete, kann stattdessen Wohngeld günstiger sein — das zeigt der{" "}
+            <Link href="/wohngeld-rechner" className="text-[#E60A1C] font-semibold hover:underline">Wohngeld-Rechner</Link>.
           </p>
           <p>
             Dieser Rechner ist eine vereinfachte Orientierung ohne Mehrbedarfe und Einkommensfreibeträge. Verbindlich entscheidet

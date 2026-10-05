@@ -60,6 +60,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/mindestlohn", label: "Mindestlohn Rechner", icon: Scale, description: "13,90 €/h ab 2026" },
       { href: "/minijob-rechner", label: "Minijob-Rechner", icon: Wallet2, description: "Verdienstgrenze 603 €" },
       { href: "/midijob-rechner", label: "Midijob-Rechner", icon: Gauge, description: "Übergangsbereich 603–2.000 €" },
+      { href: "/wohngeld-rechner", label: "Wohngeld-Rechner", icon: Home, description: "2026 & Entwurf 2027 · Mietenstufen" },
       { href: "/buergergeld-rechner", label: "Bürgergeld-Rechner", icon: HandCoins, description: "Regelsatz 563 € · SGB II" },
       { href: "/bafoeg-rechner", label: "BAföG-Rechner", icon: GraduationCap, description: "Anspruch für Studierende" },
       { href: "/bafoeg-rueckzahlung-rechner", label: "BAföG-Rückzahlung", icon: GraduationCap, description: "Raten & Dauer · max. 10.010 €" },

@@ -85,6 +85,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/brutto-netto-rechner-2026",
     "/brutto-netto-rechner-2027",
     "/buergergeld-rechner",
+    "/wohngeld-rechner",
     "/rechner/brutto-zu-netto",
     "/rechner/netto-zu-brutto",
     "/brutto-netto-gehaltstabelle",

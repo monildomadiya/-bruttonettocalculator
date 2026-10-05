@@ -199,6 +199,8 @@ export default function Page() {
             <Link href="/unterhaltsrechner" className="text-[#E60A1C] font-semibold hover:underline">Unterhaltsrechner</Link>,
             das Elterngeld nach der Geburt der{" "}
             <Link href="/elterngeld-rechner" className="text-[#E60A1C] font-semibold hover:underline">Elterngeld-Rechner</Link>.
+            Ob Ihnen zusätzlich Wohngeld zusteht — Kindergeld zählt dabei nicht als Einkommen —, prüft der{" "}
+            <Link href="/wohngeld-rechner" className="text-[#E60A1C] font-semibold hover:underline">Wohngeld-Rechner 2027</Link>.
           </p>
         </div>
       </section>

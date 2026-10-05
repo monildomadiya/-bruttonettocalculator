@@ -170,5 +170,23 @@ const sw = kgm.schwelleFreibetrag(2027, "verheiratet");
 eq("Schwelle 2027: knapp darunter Kindergeld", kgm.kindergeldRechnen({ jahr: 2027, veranlagung: "verheiratet", brutto1: sw - 100, kinder: 1 }).kinder[0].freibetragGuenstiger, false);
 eq("Schwelle 2027: ab Schwelle Freibetrag", kgm.kindergeldRechnen({ jahr: 2027, veranlagung: "verheiratet", brutto1: sw, kinder: 1 }).kinder[0].freibetragGuenstiger, true);
 
+// Wohngeld: amtliche BMWSB-Rechenbeispiele, Stand 1.1.2025 (geltendes Recht 2026)
+const wg = await import("../lib/wohngeld.ts");
+type Q = { art: "arbeitnehmer" | "minijob" | "rente" | "ohneAbzug"; bruttoMonat: number; steuern: boolean };
+const wgFall = (personen: number, stufe: number, miete: number, quellen: Q[], extra: { alleinerziehend?: boolean; schwerbehindert?: number } = {}) =>
+  wg.wohngeldRechnen({ recht: "2026", personen, mietenstufe: stufe, bruttokaltmiete: miete,
+    einkommen: { quellen, alleinerziehend: extra.alleinerziehend ?? false, schwerbehindert: extra.schwerbehindert ?? 0 } }).wohngeld;
+eq("BMWSB 1: Rentnerin, Stufe I, 335 €", wgFall(1, 1, 335, [{ art: "rente", bruttoMonat: 1300, steuern: false }]), 110);
+eq("BMWSB 2: ALG I, Stufe IV, 470 €", wgFall(1, 4, 470, [{ art: "ohneAbzug", bruttoMonat: 1350, steuern: false }]), 88);
+eq("BMWSB 3: Rentnerpaar, GdB 100, Stufe II", wgFall(2, 2, 480, [{ art: "rente", bruttoMonat: 1410, steuern: false }, { art: "rente", bruttoMonat: 540, steuern: false }], { schwerbehindert: 1 }), 166);
+eq("BMWSB 4: Familie, Eigenheim 750 €, Stufe I", wgFall(3, 1, 750, [{ art: "arbeitnehmer", bruttoMonat: 2150, steuern: false }]), 320);
+eq("BMWSB 5: Alleinerziehende, Stufe VI", wgFall(3, 6, 700, [{ art: "arbeitnehmer", bruttoMonat: 1530, steuern: false }, { art: "ohneAbzug", bruttoMonat: 696, steuern: false }], { alleinerziehend: true }), 372);
+eq("BMWSB 6: München, Minijob, Miete über Höchstbetrag", wgFall(4, 7, 1225, [{ art: "arbeitnehmer", bruttoMonat: 2490, steuern: true }, { art: "minijob", bruttoMonat: 556, steuern: false }]), 691);
+eq("BMWSB 7: Weimar, 4 Personen", wgFall(4, 3, 580, [{ art: "arbeitnehmer", bruttoMonat: 2240, steuern: false }]), 485);
+eq("BMWSB 9: 6 Personen, Stufe II", wgFall(6, 2, 780, [{ art: "arbeitnehmer", bruttoMonat: 4000, steuern: true }, { art: "rente", bruttoMonat: 645, steuern: false }]), 343);
+eq("Heizkosten 1 Person 2026 / Entwurf 2027", `${wg.heizkostenentlastung(1, "2026")} / ${wg.heizkostenentlastung(1, "2027")}`, "110.4 / 62.4");
+eq("Entwurf 2027: Fall 1 sinkt", wg.wohngeldRechnen({ recht: "2027", personen: 1, mietenstufe: 1, bruttokaltmiete: 335,
+  einkommen: { quellen: [{ art: "rente", bruttoMonat: 1300, steuern: false }], alleinerziehend: false, schwerbehindert: 0 } }).wohngeld < 110, true);
+
 console.log(failed ? `\n${failed} PRUEFUNG(EN) FEHLGESCHLAGEN` : "\nALLE PRUEFUNGEN BESTANDEN");
 process.exit(failed ? 1 : 0);
