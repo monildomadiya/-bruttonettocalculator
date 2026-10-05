@@ -38,10 +38,10 @@ export async function generateStaticParams() {
   return BUNDESLAENDER.map((b) => ({ bundesland: b.slug }));
 }
 
-function nettoFor(bl: Bundesland, brutto: number, sk: Steuerklasse, kirche: boolean) {
+function nettoFor(bl: Bundesland, brutto: number, sk: Steuerklasse, kirche: boolean, jahr: 2026 | 2027 = 2026) {
   return calculateNetto({
     bruttoMonat: brutto,
-    jahr: 2026,
+    jahr,
     verheiratet: sk === 3 || sk === 4 || sk === 5,
     kinderlosUeber23: true,
     kirche,
@@ -60,10 +60,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonical = `https://bruttonettocalculator.com/brutto-netto-rechner/${bl.slug}`;
   const aliasPart = bl.alias ? ` (${bl.alias})` : "";
 
-  const title = `Brutto-Netto-Rechner ${bl.name}${aliasPart} 2026`;
+  // "2026 & 2027" (SEO-Roadmap 2027, Phase 7). Mit Alias über 60 Zeichen → ohne Alias.
+  const titleLang = `Brutto-Netto-Rechner ${bl.name}${aliasPart} 2026 & 2027`;
+  const title = titleLang.length <= 60 ? titleLang : `Brutto-Netto-Rechner ${bl.name} 2026 & 2027`;
   // Kurz genug, dass Google sie nicht abschneidet (~155 Zeichen): der längste
   // Ländername (Mecklenburg-Vorpommern, 22 Zeichen) ergibt 143 Zeichen.
-  const description = `Brutto-Netto-Rechner ${bl.name}: Nettogehalt 2026 mit Kirchensteuer ${(bl.kirchensteuerSatz * 100).toFixed(0)} % berechnen. 4.000 € brutto ≈ ${nettoFmt} netto (Steuerklasse I).`;
+  const description = `Brutto-Netto-Rechner ${bl.name}: Nettogehalt mit ${(bl.kirchensteuerSatz * 100).toFixed(0)} % Kirchensteuer${bl.sachsen ? " und sächsischer Pflegeversicherung" : ""} berechnen, Werte 2026 und 2027. 4.000 € brutto ≈ ${nettoFmt} netto (SK I).`;
 
   const kwBase = [
     `brutto netto rechner ${bl.name.toLowerCase()}`,
@@ -112,6 +114,7 @@ export default function BundeslandPage({ params }: PageProps) {
     nettoSK1: nettoFor(bl, brutto, 1, false),
     nettoSK1Kirche: nettoFor(bl, brutto, 1, true),
     nettoSK3: nettoFor(bl, brutto, 3, false),
+    netto2027SK1: nettoFor(bl, brutto, 1, false, 2027),
   }));
 
   const others = BUNDESLAENDER.filter((b) => b.slug !== bl.slug);
@@ -138,6 +141,12 @@ export default function BundeslandPage({ params }: PageProps) {
       )} netto. Mit Kirchensteuer (${kirchePct} %) sind es etwa ${formatEUR(nettoFor(bl, 4000, 1, true))}.`,
     },
     {
+      q: `Wie viel Netto bleibt 2027 ${bl.praep}?`,
+      a: `Nach dem Gesetzentwurf zur Steuerreform 2027 bleiben bei 4.000 € brutto in Steuerklasse I ${bl.praep} voraussichtlich ${formatEUR(
+        nettoFor(bl, 4000, 1, false, 2027)
+      )} netto (2026: ${formatEUR(nettoFor(bl, 4000, 1, false))}). Der Wert ist vorläufig, weil das Gesetz noch nicht beschlossen ist; die Sozialabgaben sind mit den Werten 2026 gerechnet. Im Rechner oben können Sie das Steuerjahr 2027 auswählen.`,
+    },
+    {
       q: "Ist der Brutto-Netto-Rechner kostenlos?",
       a: "Ja, der Rechner ist zu 100 % kostenlos, erfordert keine Anmeldung und speichert keine Daten. Die Berechnung erfolgt nach den amtlichen Werten für 2026 (§ 32a EStG).",
     },
@@ -162,7 +171,7 @@ export default function BundeslandPage({ params }: PageProps) {
     "@type": "WebPage",
   inLanguage: "de-DE",
   isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
-    name: `Brutto-Netto-Rechner ${bl.name} 2026`,
+    name: `Brutto-Netto-Rechner ${bl.name} 2026 & 2027`,
     url: canonical,
     description: `Kostenloser Brutto-Netto-Rechner für ${bl.name} — Nettogehalt 2026 mit dem regionalen Kirchensteuersatz von ${kirchePct} % berechnen.`,
   };
@@ -185,13 +194,13 @@ export default function BundeslandPage({ params }: PageProps) {
       {/* Hero */}
       <div className="mb-6 sm:mb-10 text-center flex flex-col items-center">
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-5">
-          <MapPin size={14} /> {bl.name} · Steuerjahr 2026
+          <MapPin size={14} /> {bl.name} · Steuerjahr 2026 & 2027
         </div>
         <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-5 max-w-4xl">
           <span className="text-gradient-accent">Brutto-Netto-Rechner</span> {bl.name}
         </h1>
         <p className="text-base sm:text-xl text-black/80 max-w-3xl leading-relaxed mb-2 sm:mb-6">
-          Berechnen Sie Ihr <strong className="text-[#16181D]">Nettogehalt {bl.praep}</strong> für 2026 —
+          Berechnen Sie Ihr <strong className="text-[#16181D]">Nettogehalt {bl.praep}</strong> für 2026 und 2027 —
           mit dem regional gültigen <strong className="text-[#16181D]">Kirchensteuersatz von {kirchePct} %</strong>.
           Lohnsteuer, Soli und Sozialabgaben werden nach den amtlichen Werten (§ 32a EStG) berechnet.
         </p>
@@ -213,7 +222,7 @@ export default function BundeslandPage({ params }: PageProps) {
             Geben Sie Ihr Bruttogehalt ein und passen Sie Steuerklasse, Kirchensteuer und Kinderfreibeträge an:
           </p>
         </div>
-        <Calculator initialBrutto={4000} initialJahr={2026} initialSk={1} />
+        <Calculator initialBrutto={4000} initialJahr={2026} initialSk={1} kirchensteuerSatz={bl.kirchensteuerSatz} sachsen={bl.sachsen} />
       </section>
 
       {/* State context */}
@@ -229,7 +238,7 @@ export default function BundeslandPage({ params }: PageProps) {
       <section data-section="" className="mb-16">
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#E60A1C] font-semibold bg-[#E60A1C]/10 border border-[#E60A1C]/20 px-3 py-1 rounded-full mb-2">
-            <BarChart3 size={13} /> Netto-Tabelle {bl.name} 2026
+            <BarChart3 size={13} /> Netto-Tabelle {bl.name} 2026 & 2027
           </div>
           <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
             Brutto-Netto-Tabelle für {bl.name}
@@ -239,13 +248,14 @@ export default function BundeslandPage({ params }: PageProps) {
           </p>
         </div>
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-xl overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[620px]">
+          <table className="w-full text-left border-collapse min-w-[720px]">
             <thead>
               <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
                 <th className="py-4 px-5">Brutto / Monat</th>
                 <th className="py-4 px-5 text-right">Netto SK I (ohne Kirche)</th>
                 <th className="py-4 px-5 text-right">Netto SK I (mit Kirche {kirchePct} %)</th>
                 <th className="py-4 px-5 text-right">Netto SK III</th>
+                <th className="py-4 px-5 text-right">Netto SK I 2027*</th>
                 <th className="py-4 px-5 text-right">Detail</th>
               </tr>
             </thead>
@@ -256,6 +266,7 @@ export default function BundeslandPage({ params }: PageProps) {
                   <td className="py-4 px-5 text-right font-mono text-[#16181D] font-semibold">{formatEUR(r.nettoSK1)}</td>
                   <td className="py-4 px-5 text-right font-mono text-black/70">{formatEUR(r.nettoSK1Kirche)}</td>
                   <td className="py-4 px-5 text-right font-mono text-emerald-600 font-semibold">{formatEUR(r.nettoSK3)}</td>
+                  <td className="py-4 px-5 text-right font-mono text-black/80">{formatEUR(r.netto2027SK1)}</td>
                   <td className="py-4 px-5 text-right">
                     <Link href={`/rechner/${r.brutto}-euro-brutto-netto`} className="text-xs font-bold text-[#E60A1C] hover:underline inline-flex items-center gap-1">
                       Details <ArrowRight size={13} />
@@ -268,7 +279,7 @@ export default function BundeslandPage({ params }: PageProps) {
         </div>
         <p className="text-xs text-black/50 mt-3 flex items-start gap-1.5">
           <Info size={13} className="flex-shrink-0 mt-0.5" />
-          Vereinfachte Berechnung für einen ersten Überblick (Steuerklasse I, kinderlos ab 23, GKV-Zusatzbeitrag Ø 2,9 %). Keine Steuerberatung.
+          Vereinfachte Berechnung für einen ersten Überblick (kinderlos ab 23, GKV-Zusatzbeitrag Ø 2,9 %{bl.sachsen ? ", Pflegeversicherung nach der sächsischen Sonderregel" : ""}). * 2027 vorläufig: Lohnsteuer nach dem Regierungsentwurf zur Steuerreform 2027, Sozialabgaben mit den Werten 2026. Alle Angaben ohne Gewähr, keine Steuerberatung.
         </p>
       </section>
 
