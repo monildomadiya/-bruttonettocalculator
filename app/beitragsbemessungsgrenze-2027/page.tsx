@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Info, TrendingUp, Gavel, Wallet2 } from "lucide-react";
-import { formatEUR, SV_RECHENGROESSEN_2027_ENTWURF as E, BBG_2026 } from "@/lib/taxCalculator";
+import { calculateNetto, formatEUR, SV_RECHENGROESSEN_2027_ENTWURF as E, BBG_2026 } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
 import { siteConfig } from "@/lib/authors";
 import { pageImageUrl } from "@/lib/pageImage";
@@ -85,6 +85,18 @@ export default function Beitragsbemessungsgrenze2027Page() {
   const mehrKvPv = deltaKvPv * (BBG_2026.anSatzKv + BBG_2026.anSatzPv);
   const mehrRvAlv = deltaRvAlv * (BBG_2026.anSatzRv + BBG_2026.anSatzAlv);
   const mehrGesamt = mehrKvPv + mehrRvAlv;
+
+  /*
+   * Mehrbelastung nach Gehalt — direkt aus der Engine: Sozialabgaben 2027 mit den
+   * Entwurfs-BBG (Sätze 2026) gegen 2026; dazu das Netto inklusive Steuerreform
+   * (Lohnsteuer 2027 nach dem Regierungsentwurf). SK I, kinderlos, ohne KiSt.
+   */
+  const mehrNachGehalt = [5000, 6000, 7000, 9000].map((brutto) => {
+    const basis = { bruttoMonat: brutto, steuerklasse: 1 as const, verheiratet: false, kinderlosUeber23: true, kirche: false };
+    const a = calculateNetto({ ...basis, jahr: 2026 });
+    const b = calculateNetto({ ...basis, jahr: 2027, sv2027: "entwurf" });
+    return { brutto, svMehr: b.sv.summeMonat - a.sv.summeMonat, nettoDiff: b.nettoMonat - a.nettoMonat };
+  });
 
   const weitereWerte = [
     { label: "Bezugsgröße", jahr: E.bezugsgroesseJahr, monat: E.bezugsgroesseMonat },
@@ -324,6 +336,36 @@ export default function Beitragsbemessungsgrenze2027Page() {
               fällt die Mehrbelastung höher aus. Der Arbeitgeber trägt noch einmal etwa denselben Betrag.
             </p>
           </div>
+
+          <h3 className="text-lg sm:text-xl font-extrabold text-[#16181D] mt-8 mb-3">Mehrbelastung nach Bruttogehalt</h3>
+          <div className="bg-white border border-black/[0.10] rounded-2xl overflow-x-auto">
+            <table className="w-full text-left border-collapse text-sm sm:text-base min-w-[480px]">
+              <thead>
+                <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
+                  <th className="py-3 px-4">Brutto / Monat</th>
+                  <th className="py-3 px-4 text-right">Mehr Sozialabgaben</th>
+                  <th className="py-3 px-4 text-right">Netto 2027 vs. 2026</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-black/10">
+                {mehrNachGehalt.map((z) => (
+                  <tr key={z.brutto}>
+                    <td className="py-3 px-4 font-mono font-bold text-[#16181D]">{formatEUR(z.brutto)}</td>
+                    <td className="py-3 px-4 text-right font-mono">+{formatEUR(z.svMehr)}</td>
+                    <td className={`py-3 px-4 text-right font-mono font-bold ${z.nettoDiff >= 0 ? "text-emerald-700" : "text-[#E60A1C]"}`}>
+                      {z.nettoDiff >= 0 ? "+" : "−"}{formatEUR(Math.abs(z.nettoDiff))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-black/45 mt-3">
+            Arbeitnehmeranteil pro Monat, Steuerklasse I, kinderlos, ohne Kirchensteuer. „Netto 2027 vs. 2026“ enthält auch die
+            Entlastung der Steuerreform 2027 (Regierungsentwurf) und zeigt, was unterm Strich bleibt. Beide Werte sind vorläufig.
+            Mit Ihrem eigenen Gehalt rechnet der{" "}
+            <Link href="/sozialabgaben-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Sozialabgaben-Rechner 2027</Link>.
+          </p>
         </section>
 
         <section data-section="" className="mb-12">
