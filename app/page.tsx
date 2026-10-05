@@ -14,8 +14,10 @@ import SupportButton from "@/components/SupportButton";
 import LatestPosts from "@/components/LatestPosts";
 import TableOfContents from "@/components/TableOfContents";
 import { LANGUAGE_CLUSTER } from "@/lib/expat/cluster";
-import { calculateNetto, formatEUR, GRUNDFREIBETRAG, ARBEITNEHMER_PAUSCHBETRAG, KINDERGELD } from "@/lib/taxCalculator";
+import { calculateNetto, formatEUR, GRUNDFREIBETRAG, ARBEITNEHMER_PAUSCHBETRAG, KINDERGELD, BBG_2026, SV_RECHENGROESSEN_2027_ENTWURF } from "@/lib/taxCalculator";
 import { pageImageUrl } from "@/lib/pageImage";
+import { WAGE_STATS_2026 } from "@/data/wage-stats";
+import { standardSteuerjahr, istWeihnachtsgeldSaison } from "@/lib/steuerjahr2027";
 
 export const metadata: Metadata = {
   title: "Brutto Netto Rechner 2026/2027 — Gehaltsrechner kostenlos",
@@ -35,6 +37,33 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
+
+/*
+ * Kein eigenes `revalidate`: Das Root-Layout setzt bereits `revalidate = 3600`
+ * (ISR, stündlich). Deshalb springt das Standard-Steuerjahr des Rechners
+ * (`standardSteuerjahr()`) am 1.1.2027 binnen einer Stunde ohne Deploy auf 2027,
+ * und der saisonale Weihnachtsgeld-Hinweis verschwindet im Januar von selbst.
+ * Siehe lib/steuerjahr2027.ts.
+ */
+
+// Reformbeispiele für die FAQ, direkt aus der Engine (SK I, kinderlos, ohne KiSt,
+// Sozialabgaben auf dem Stand 2026 — also reiner Steuereffekt).
+const reformPlus = (brutto: number) => {
+  const basis = { bruttoMonat: brutto, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 as const };
+  return calculateNetto({ ...basis, jahr: 2027 }).nettoMonat - calculateNetto({ ...basis, jahr: 2026 }).nettoMonat;
+};
+const eur2 = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const reform3000 = reformPlus(3000);
+const reform5000 = reformPlus(5000);
+// Ab welchem Brutto (50-€-Raster) kostet der BMAS-Entwurf der BBG mehr, als die Steuerreform bringt?
+const svKippBrutto = (() => {
+  for (let brutto = 3000; brutto <= 12000; brutto += 50) {
+    const basis = { bruttoMonat: brutto, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 as const };
+    const plus = calculateNetto({ ...basis, jahr: 2027, sv2027: "entwurf" }).nettoMonat - calculateNetto({ ...basis, jahr: 2026 }).nettoMonat;
+    if (plus < 0) return brutto;
+  }
+  return 12000;
+})();
 
 const faqs = [
   {
@@ -66,6 +95,18 @@ const faqs = [
     a: `Ja. Stellen Sie oben im Rechner das Steuerjahr von 2026 auf 2027 um: Die Lohnsteuer folgt dann dem Gesetzentwurf zur Steuerreform (Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag ${ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €). Für die Sozialabgaben wählen Sie unter „Sozialabgaben 2027“ zwischen dem Stand 2026 und den höheren Beitragsbemessungsgrenzen aus dem BMAS-Entwurf. Der Rechner zeigt das Netto 2027 direkt neben dem Wert für 2026.`,
   },
   {
+    q: "Ab wann gilt der Brutto Netto Rechner 2027?",
+    a: "Die Werte 2027 gelten für Gehälter, die ab dem 1. Januar 2027 gezahlt werden. Schon jetzt können Sie im Rechner das Steuerjahr 2027 wählen und Ihr Netto vorab berechnen. Ab dem 1. Januar 2027 ist 2027 hier automatisch voreingestellt. Sobald das Gesetz zur Steuerreform verkündet ist und die Rechengrößen-Verordnung 2027 vorliegt, ersetzen wir die vorläufigen Werte durch die endgültigen.",
+  },
+  {
+    q: "Wie viel mehr Netto bringt die Steuerreform 2027?",
+    a: `Wenig: Nach dem Gesetzentwurf bleiben bei 3.000 € brutto in Steuerklasse I rund ${eur2(reform3000)} € und bei 5.000 € rund ${eur2(reform5000)} € mehr netto im Monat (kinderlos, ohne Kirchensteuer, Sozialabgaben auf dem Stand 2026). Steigen 2027 wie im BMAS-Entwurf vorgesehen die Beitragsbemessungsgrenzen, zahlen Gutverdiener mehr Sozialabgaben. Ab rund ${svKippBrutto.toLocaleString("de-DE")} € brutto bleibt dann insgesamt weniger netto als 2026.`,
+  },
+  {
+    q: "Warum sind die Werte für 2027 vorläufig?",
+    a: "Weil die maßgeblichen Regeln noch nicht verkündet sind. Steuertarif, Grundfreibetrag und Arbeitnehmer-Pauschbetrag stammen aus dem Regierungsentwurf, den Bundestag und Bundesrat noch beschließen müssen. Die Beitragsbemessungsgrenzen 2027 stehen bisher nur in einem Referentenentwurf des BMAS. Den durchschnittlichen Zusatzbeitrag 2027 gibt das Bundesgesundheitsministerium bis zum 1. November 2026 bekannt. Endgültig sind schon der Mindestlohn von 14,60 € und die Minijob-Grenze von 633 €.",
+  },
+  {
     q: "Gilt das Tool auch als Gehaltsrechner mit Auto (Firmenwagenrechner & 1%-Regelung)?",
     a: "Ein Firmenwagen stellt einen geldwerten Vorteil dar, der das monatliche Bruttogehalt erhöht (meist über die 1%-Regelung). Als praktischer Firmenwagenrechner bzw. Gehaltsrechner mit Auto können Sie Ihren geldwerten Vorteil einfach zu Ihrem regulären Bruttolohn addieren und die voraussichtliche Lohnsteuer- sowie Sozialabgabenlast sofort online abschätzen.",
   },
@@ -91,7 +132,7 @@ const faqs = [
   },
   {
     q: "Wie hoch ist das Durchschnittsgehalt in Deutschland 2026?",
-    a: "Das durchschnittliche Bruttogehalt in Deutschland liegt 2026 bei ca. 4.323 € pro Monat (Vollzeit). Das entspricht einem Nettogehalt von ca. 2.600–2.900 € (je nach Steuerklasse). Mit unserem Brutto Netto Rechner können Sie das Nettogehalt für jeden Betrag sofort und kostenlos berechnen — egal ob 2.800, 3.200 oder 4.200 € brutto.",
+    a: `Laut Destatis verdienten Vollzeitbeschäftigte im April 2025 im Durchschnitt ${WAGE_STATS_2026.averageGrossMonthly.toLocaleString("de-DE")} € brutto im Monat (ohne Sonderzahlungen); das mittlere Gehalt (Median) lag bei ${WAGE_STATS_2026.medianGrossMonthly.toLocaleString("de-DE")} €. In Steuerklasse I bleiben 2026 vom Durchschnittsgehalt rund ${Math.round(calculateNetto({ bruttoMonat: WAGE_STATS_2026.averageGrossMonthly, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 }).nettoMonat).toLocaleString("de-DE")} € netto (kinderlos, ohne Kirchensteuer). Mit dem Rechner oben ermitteln Sie das Netto für jeden anderen Betrag.`,
   },
 ];
 
@@ -218,7 +259,7 @@ const eurZahl = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits
 
 // Netto 2026 ↔ 2027 für den Antwortblock — direkt aus der Rechen-Engine.
 // Zwei 2027-Spalten: nur Steuerreform (Sozialabgaben Stand 2026) und zusätzlich
-// die Beitragsbemessungsgrenzen aus dem BMAS-Entwurf. Ab rund 5.800 € brutto
+// die Beitragsbemessungsgrenzen aus dem BMAS-Entwurf. Ab rund 6.000 € brutto
 // dreht das Vorzeichen — die "2027 weniger netto"-Frage, die Finanztip & Co.
 // gerade aufgreifen, beantwortet der Block so selbst.
 const netto2027Zeilen = [2500, 3800, 5000, 7000].map((brutto) => {
@@ -309,7 +350,7 @@ export default function HomePage() {
 
       {/* ── Calculator Section ───────────────────────────────────────── */}
       <section id="rechner" className="max-w-6xl mx-auto px-2.5 sm:px-5 mt-4 sm:-mt-16 pb-20 relative z-20 scroll-mt-24">
-        <Calculator />
+        <Calculator initialJahr={standardSteuerjahr()} />
 
         {/* Quick-intent links: surface adjacent tools at the moment of intent (SXO) */}
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
@@ -343,6 +384,21 @@ export default function HomePage() {
             <SlidersHorizontal size={16} className="text-[#E60A1C]" /> Steuerklassen vergleichen
           </Link>
         </div>
+
+        {/* Saisonaler Hinweis Okt.–Dez. (lib/steuerjahr2027.ts): Weihnachtsgeld hat im
+            November das 8- bis 10-fache Suchvolumen. Fester Platz unter den Chips,
+            keine Layoutverschiebung — die Seite wird serverseitig gerendert. */}
+        {istWeihnachtsgeldSaison() && (
+          <Link
+            href="/weihnachtsgeld-rechner"
+            className="group mt-5 mx-auto max-w-2xl flex items-center justify-between gap-3 bg-[#FFF8E6] hover:bg-[#FFF1CC] border border-amber-500/40 rounded-2xl px-5 py-3.5 text-sm sm:text-base text-[#16181D] transition-colors"
+          >
+            <span>
+              <strong>Weihnachtsgeld 2026:</strong> Wie viel bleibt netto? Zum Weihnachtsgeld-Rechner
+            </span>
+            <ArrowRight size={18} className="text-[#E60A1C] flex-shrink-0 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        )}
 
       </section>
 
@@ -409,6 +465,52 @@ export default function HomePage() {
               Steuerreform-Rechner 2027
             </Link>
             .
+          </p>
+
+          <h3 className="font-display text-lg sm:text-xl font-extrabold text-[#16181D] mt-8 mb-3">
+            Was ändert sich 2027 beim Nettogehalt?
+          </h3>
+          <ul className="space-y-2 text-sm sm:text-base text-black/75 leading-relaxed list-disc pl-5">
+            <li>
+              <strong className="text-[#16181D]">Grundfreibetrag und Tarif:</strong>{" "}
+              {GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} € statt{" "}
+              {GRUNDFREIBETRAG.amtlich2026.toLocaleString("de-DE")} €, Spitzensteuersatz 42 % ab 70.601 €, neu 47 % ab
+              280.000 € zu versteuerndem Einkommen (Gesetzentwurf, vorläufig).{" "}
+              <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Zur Steuerreform 2027</Link>
+            </li>
+            <li>
+              <strong className="text-[#16181D]">Beitragsbemessungsgrenzen:</strong> Kranken- und Pflegeversicherung{" "}
+              {SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € statt{" "}
+              {(BBG_2026.kvPvJahr / 12).toLocaleString("de-DE", { minimumFractionDigits: 2 })} € im Monat, Rente{" "}
+              {SV_RECHENGROESSEN_2027_ENTWURF.rvAlvBbgMonat.toLocaleString("de-DE")} € statt{" "}
+              {(BBG_2026.rvAlvJahr / 12).toLocaleString("de-DE", { minimumFractionDigits: 2 })} € (BMAS-Entwurf).{" "}
+              <Link href="/beitragsbemessungsgrenze-2027" className="text-[#E60A1C] font-semibold hover:underline">Beitragsbemessungsgrenze 2027</Link>
+            </li>
+            <li>
+              <strong className="text-[#16181D]">Zusatzbeitrag:</strong> Den Durchschnitt für 2027 legt das
+              Bundesgesundheitsministerium bis zum 1. November fest, die Kassen folgen im Dezember.{" "}
+              <Link href="/zusatzbeitrag-2027" className="text-[#E60A1C] font-semibold hover:underline">Zusatzbeitrag 2027 aller Kassen</Link>
+            </li>
+            <li>
+              <strong className="text-[#16181D]">Mindestlohn und Minijob:</strong> 14,60 € pro Stunde statt 13,90 €,
+              Minijob-Grenze 633 € statt 603 € (beschlossen).{" "}
+              <Link href="/blog/mindestlohn-2027" className="text-[#E60A1C] font-semibold hover:underline">Mindestlohn 2027</Link>
+              {" · "}
+              <Link href="/blog/minijob-2027" className="text-[#E60A1C] font-semibold hover:underline">Minijob 2027</Link>
+            </li>
+          </ul>
+
+          <h3 className="font-display text-lg sm:text-xl font-extrabold text-[#16181D] mt-8 mb-3">
+            Gehaltsrechner und Lohnrechner 2027
+          </h3>
+          <p className="text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl">
+            Ob Sie ihn Gehaltsrechner, Lohnrechner oder Nettorechner nennen: Für Monatsgehalt und Stundenlohn gilt
+            dieselbe Rechnung. Wer nach Stunden bezahlt wird, rechnet den Lohn mit dem{" "}
+            <Link href="/stundenlohn-rechner" className="text-[#E60A1C] font-semibold hover:underline">Stundenlohn-Rechner</Link>{" "}
+            in ein Monatsbrutto um und stellt hier anschließend das Steuerjahr 2027 ein. Für ein Wunschnetto liefert
+            der{" "}
+            <Link href="/rechner/netto-zu-brutto" className="text-[#E60A1C] font-semibold hover:underline">Netto-Brutto-Rechner</Link>{" "}
+            das nötige Bruttogehalt.
           </p>
         </div>
       </section>

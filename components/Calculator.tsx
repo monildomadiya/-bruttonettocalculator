@@ -5,7 +5,7 @@ import Link from "next/link";
 import {
   AlertCircle, Share2, Check, ChevronRight,
   TrendingUp, Landmark, HeartPulse, Briefcase,
-  CircleDollarSign, Sparkles, MapPin, Calendar, ChevronDown, ChevronUp,
+  CircleDollarSign, Sparkles, MapPin, Calendar, ChevronDown, ChevronUp, Info,
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr, Szenario, Sv2027, GRUNDFREIBETRAG, BBG_2026, SV_RECHENGROESSEN_2027_ENTWURF } from "@/lib/taxCalculator";
 import { siteConfig } from "@/lib/authors";
@@ -193,6 +193,10 @@ const T: Record<Lang, Record<string, string>> = {
     compareYear: "Vergleichsjahr",
     taxYearWord: "Steuerjahr",
     netDiff: "Rechnerische Netto-Differenz",
+    diffTax: "davon Lohnsteuer, Soli & Kirchensteuer",
+    diffSv: "davon Sozialabgaben",
+    provisional: "vorläufig",
+    provisionalTip: "Vorläufige Werte 2027: Steuertarif, Grundfreibetrag, Arbeitnehmer-Pauschbetrag und Kindergeld aus dem Regierungsentwurf EStRefG 2027 (noch nicht beschlossen); Sozialabgaben mit den Werten 2026 oder dem BMAS-Entwurf der Rechengrößen 2027; Ø-Zusatzbeitrag 2,9 % (Wert 2027 gibt das BMG bis 1.11.2026 bekannt); Lohnsteuer-Grenzwerte Klasse V/VI aus dem PAP 2026.",
     monthlyAdj: "monatlich",
     annualAdj: "jährlich",
     perYearWord: "/ Jahr",
@@ -278,6 +282,10 @@ const T: Record<Lang, Record<string, string>> = {
     compareYear: "Comparison year",
     taxYearWord: "Tax year",
     netDiff: "Calculated net difference",
+    diffTax: "of which income tax, soli & church tax",
+    diffSv: "of which social contributions",
+    provisional: "provisional",
+    provisionalTip: "Provisional 2027 values: tax tariff, basic allowance, employee lump sum and child benefit from the EStRefG 2027 government draft (not yet passed); social contributions at 2026 values or the BMAS 2027 draft; average additional contribution 2.9 % (2027 value due by 1 Nov 2026).",
     monthlyAdj: "monthly",
     annualAdj: "annually",
     perYearWord: "/ year",
@@ -363,6 +371,10 @@ const T: Record<Lang, Record<string, string>> = {
     compareYear: "Rok porównawczy",
     taxYearWord: "Rok podatkowy",
     netDiff: "Obliczona różnica netto",
+    diffTax: "w tym podatek, soli i podatek kościelny",
+    diffSv: "w tym składki socjalne",
+    provisional: "wstępnie",
+    provisionalTip: "Wartości wstępne 2027: taryfa, kwota wolna, ryczałt pracowniczy i Kindergeld z rządowego projektu EStRefG 2027 (jeszcze nieuchwalonego); składki według wartości 2026 lub projektu BMAS 2027; średnia składka dodatkowa 2,9 %.",
     monthlyAdj: "miesięcznie",
     annualAdj: "rocznie",
     perYearWord: "/ rok",
@@ -448,6 +460,10 @@ const T: Record<Lang, Record<string, string>> = {
     compareYear: "Anul de comparație",
     taxYearWord: "An fiscal",
     netDiff: "Diferența netă calculată",
+    diffTax: "din care impozit, soli și impozit bisericesc",
+    diffSv: "din care contribuții sociale",
+    provisional: "provizoriu",
+    provisionalTip: "Valori provizorii 2027: tariful fiscal, suma scutită, deducerea forfetară și alocația pentru copii din proiectul EStRefG 2027 (încă neadoptat); contribuții după valorile 2026 sau proiectul BMAS 2027; contribuția suplimentară medie 2,9 %.",
     monthlyAdj: "lunar",
     annualAdj: "anual",
     perYearWord: "/ an",
@@ -533,6 +549,10 @@ const T: Record<Lang, Record<string, string>> = {
     compareYear: "Karşılaştırma yılı",
     taxYearWord: "Vergi yılı",
     netDiff: "Hesaplanan net fark",
+    diffTax: "bunun vergi, soli ve kilise vergisi kısmı",
+    diffSv: "bunun sosyal sigorta kısmı",
+    provisional: "geçici",
+    provisionalTip: "2027 geçici değerleri: vergi tarifesi, temel muafiyet, götürü gider ve çocuk parası EStRefG 2027 hükümet tasarısından (henüz kabul edilmedi); sosyal sigorta 2026 değerleri veya BMAS 2027 taslağı; ortalama ek prim %2,9.",
     monthlyAdj: "aylık",
     annualAdj: "yıllık",
     perYearWord: "/ yıl",
@@ -618,6 +638,10 @@ const T: Record<Lang, Record<string, string>> = {
     compareYear: "Рік для порівняння",
     taxYearWord: "Податковий рік",
     netDiff: "Розрахована різниця нетто",
+    diffTax: "з них податки, солідарний збір і церковний податок",
+    diffSv: "з них соціальні внески",
+    provisional: "попередньо",
+    provisionalTip: "Попередні значення 2027: тариф, неоподатковуваний мінімум, паушальна сума та Kindergeld з урядового законопроєкту EStRefG 2027 (ще не ухвалено); внески за значеннями 2026 або проєктом BMAS 2027; середній додатковий внесок 2,9 %.",
     monthlyAdj: "щомісяця",
     annualAdj: "щороку",
     perYearWord: "/ рік",
@@ -1131,6 +1155,16 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                   <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-black/70 font-semibold mb-2">
                     <Sparkles size={14} className="text-[#E60A1C] flex-shrink-0" />
                     <span>{isJahresansicht ? t.annualNet : t.monthlyNet}</span>
+                    {jahr === 2027 && (
+                      <span
+                        title={t.provisionalTip}
+                        aria-label={`${t.provisional}: ${t.provisionalTip}`}
+                        className="ml-1 inline-flex items-center gap-1 rounded-full bg-amber-100 border border-amber-500/40 text-amber-800 px-2 py-0.5 normal-case tracking-normal font-bold cursor-help"
+                      >
+                        <Info size={12} aria-hidden="true" />
+                        {t.provisional}
+                      </span>
+                    )}
                   </div>
                   <p className="font-display font-black tabular-nums leading-none tracking-tight text-[#16181D] text-3xl sm:text-5xl lg:text-6xl number-animate break-all sm:break-normal">
                     {formatEUR(animatedNetto)}
@@ -1460,6 +1494,21 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                   <span className={`font-mono font-bold text-sm sm:text-base ${diffYear >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
                     {diffYear > 0 ? `+${formatEUR(showVal(diffYear))}` : formatEUR(showVal(diffYear))}
                   </span>
+                </div>
+
+                {/* Aufschlüsselung: Steuereffekt (Tarif) vs. Sozialabgaben-Effekt (BBG/Zusatzbeitrag). */}
+                <div className="space-y-1.5 px-1">
+                  {[
+                    { label: t.diffTax, val: resOtherYear.steuer.summeMonat - result.steuer.summeMonat },
+                    { label: t.diffSv,  val: resOtherYear.sv.summeMonat - result.sv.summeMonat },
+                  ].map(({ label, val }) => (
+                    <div key={label} className="flex flex-wrap items-center justify-between gap-x-3 text-xs sm:text-sm">
+                      <span className="text-black/65">{label}</span>
+                      <span className={`ml-auto font-mono font-semibold tabular-nums ${val >= 0.005 ? "text-emerald-700" : val <= -0.005 ? "text-rose-700" : "text-black/60"}`}>
+                        {val >= 0.005 ? `+${formatEUR(showVal(val))}` : formatEUR(showVal(Math.abs(val) < 0.005 ? 0 : val))}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
