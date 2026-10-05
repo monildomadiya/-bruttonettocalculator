@@ -3,10 +3,12 @@ import Link from "next/link";
 import { ChevronRight, Gavel, ArrowRight } from "lucide-react";
 import SozialabgabenRechner2027 from "./SozialabgabenRechner2027";
 import ReviewerByline from "@/components/ReviewerByline";
-import { formatEUR, SV_RECHENGROESSEN_2027_ENTWURF as E } from "@/lib/taxCalculator";
+import { BBG_2026, formatEUR, SV_RECHENGROESSEN_2027_ENTWURF as E } from "@/lib/taxCalculator";
 import { SV_2026, sv2027, berechneSv, RV_SATZ_2027_ERWARTET } from "@/lib/sozialabgaben2027";
-import { siteConfig } from "@/lib/authors";
 import { pageImageUrl } from "@/lib/pageImage";
+import { pageStand } from "@/lib/pageDates";
+import { BBG_2027_FINAL } from "@/lib/config2027";
+import { nettoFuerJahr, eurDe, eurDeSigned } from "@/lib/vergleich2027";
 
 /**
  * Sozialabgaben-Rechner 2027 — "Wie viel mehr zahle ich 2027?"
@@ -20,9 +22,33 @@ import { pageImageUrl } from "@/lib/pageImage";
 const BASE = "https://bruttonettocalculator.com";
 const CANONICAL = `${BASE}/sozialabgaben-rechner-2027`;
 
-const TITLE = "Sozialabgaben-Rechner 2027: Wie viel mehr zahlen Sie?";
-const DESCRIPTION =
-  "Sozialabgaben 2027 berechnen: höhere Beitragsbemessungsgrenzen, Rentenbeitrag 18,8 % und Zusatzbeitrag — Ihre Mehrbelastung 2026 vs. 2027 je Monat.";
+const STAND = pageStand("/sozialabgaben-rechner-2027");
+
+// „sozialabgaben rechner 2027“ (Pos. 2–2,7) bleibt im Titel vorn; dazu
+// „beitragsbemessungsgrenze 2027 rechner“ (Pos. 3,4).
+const TITLE = "Sozialabgaben 2027 Rechner – Beitragsbemessungsgrenze 2027";
+const DESCRIPTION = `Sozialabgaben 2027 berechnen: neue Beitragsbemessungsgrenzen (KV ${E.kvPvBbgMonat.toLocaleString("de-DE")} €, RV ${E.rvAlvBbgMonat.toLocaleString("de-DE")} € im Monat) – so viel mehr zahlen Sie 2027 für KV, PV, RV und AV.`;
+
+/*
+ * Beitragsbemessungsgrenzen 2026 ↔ 2027, Monat und Jahr — direkt aus der
+ * Engine-Konfiguration (BBG_2026, SV_RECHENGROESSEN_2027_ENTWURF).
+ */
+const BBG_ZEILEN = [
+  { label: "Kranken- und Pflegeversicherung (KV/PV)", jahr26: BBG_2026.kvPvJahr, jahr27: E.kvPvBbgJahr, monat27: E.kvPvBbgMonat },
+  { label: "Renten- und Arbeitslosenversicherung (RV/AV)", jahr26: BBG_2026.rvAlvJahr, jahr27: E.rvAlvBbgJahr, monat27: E.rvAlvBbgMonat },
+];
+
+/*
+ * „Wer zahlt 2027 mehr?“ — Arbeitnehmeranteil Sozialversicherung 2026 vs. 2027
+ * aus calculateNetto (Steuerklasse I, kinderlos ab 23, Ø-Zusatzbeitrag 2,9 %).
+ * 2027 mit den Grenzen aus dem BMAS-Entwurf, Beitragssätze wie 2026 — also der
+ * reine Effekt der neuen Beitragsbemessungsgrenzen.
+ */
+const WER_ZAHLT_MEHR = [5000, 5500, 6000, 6500, 7000, 8000, 9000].map((brutto) => {
+  const a = nettoFuerJahr(brutto, 2026).sv.summeMonat;
+  const b = nettoFuerJahr(brutto, 2027, { sv: "entwurf" }).sv.summeMonat;
+  return { brutto, a, b, mehr: b - a };
+});
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -138,7 +164,7 @@ export default function SozialabgabenRechner2027Page() {
     name: TITLE,
     description: DESCRIPTION,
     inLanguage: "de-DE",
-    dateModified: siteConfig.lastUpdatedISO,
+    dateModified: STAND.iso,
     isPartOf: { "@id": `${BASE}/#website` },
     publisher: { "@id": `${BASE}/#organization` },
     citation: {
@@ -168,7 +194,7 @@ export default function SozialabgabenRechner2027Page() {
             Grenzen 2027 laut BMAS-Entwurf vom 21.09.2026
           </div>
           <h1 className="font-display font-extrabold text-3xl sm:text-5xl tracking-tight leading-tight mb-4 max-w-4xl">
-            Sozialabgaben-Rechner 2027: <span className="text-gradient-accent">Wie viel mehr zahlen Sie?</span>
+            Sozialabgaben 2027: <span className="text-gradient-accent">Rechner mit neuen Beitragsbemessungsgrenzen</span>
           </h1>
           <p className="text-base sm:text-lg text-black/75 max-w-3xl leading-relaxed">
             Höhere Beitragsbemessungsgrenzen, ein Rentenbeitrag von voraussichtlich 18,8 % und steigende
@@ -176,7 +202,7 @@ export default function SozialabgabenRechner2027Page() {
             nebeneinander — für jeden Versicherungszweig, für Sie und Ihren Arbeitgeber.
           </p>
           <div className="mt-5">
-            <ReviewerByline />
+            <ReviewerByline updatedDisplay={STAND.display} />
           </div>
         </div>
       </section>
@@ -184,6 +210,81 @@ export default function SozialabgabenRechner2027Page() {
       <SozialabgabenRechner2027 />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-5 pb-16 space-y-12">
+        <section aria-labelledby="bbg-2027">
+          <h2 id="bbg-2027" className="text-2xl font-extrabold text-[#16181D] mb-3">Beitragsbemessungsgrenze 2027: alle Werte</h2>
+          <div className="overflow-x-auto bg-white border border-black/[0.08] rounded-2xl">
+            <table className="w-full text-sm min-w-[620px]">
+              <caption className="sr-only">Beitragsbemessungsgrenzen 2026 und 2027 je Monat und Jahr</caption>
+              <thead>
+                <tr className="text-left bg-black/[0.03] border-b border-black/[0.08]">
+                  <th scope="col" className="px-4 py-3 font-bold">Versicherungszweig</th>
+                  <th scope="col" className="px-4 py-3 font-bold text-right">2026 / Monat</th>
+                  <th scope="col" className="px-4 py-3 font-bold text-right">2027 / Monat</th>
+                  <th scope="col" className="px-4 py-3 font-bold text-right">2026 / Jahr</th>
+                  <th scope="col" className="px-4 py-3 font-bold text-right">2027 / Jahr</th>
+                </tr>
+              </thead>
+              <tbody className="tabular-nums">
+                {BBG_ZEILEN.map((z) => (
+                  <tr key={z.label} className="border-b border-black/[0.05] last:border-0">
+                    <th scope="row" className="px-4 py-3 font-semibold text-left">{z.label}</th>
+                    <td className="px-4 py-3 text-right whitespace-nowrap">{eurDe(z.jahr26 / 12)}</td>
+                    <td className="px-4 py-3 text-right font-bold whitespace-nowrap">{eurDe(z.monat27)}</td>
+                    <td className="px-4 py-3 text-right whitespace-nowrap">{eurDe(z.jahr26)}</td>
+                    <td className="px-4 py-3 text-right font-bold whitespace-nowrap">{eurDe(z.jahr27)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {!BBG_2027_FINAL && (
+            <p className="text-sm text-black/60 mt-3">
+              Stand: Referentenentwurf vom 21.09.2026 – Kabinett und Bundesrat stehen noch aus.
+            </p>
+          )}
+        </section>
+
+        <section aria-labelledby="wer-zahlt-mehr">
+          <h2 id="wer-zahlt-mehr" className="text-2xl font-extrabold text-[#16181D] mb-3">Wer zahlt 2027 mehr?</h2>
+          <p className="text-sm sm:text-base text-black/75 leading-relaxed mb-4">
+            Die neuen Grenzen treffen nur Gehälter über der Grenze von 2026 ({formatEUR(BBG_2026.kvPvJahr / 12)} im
+            Monat in der Kranken- und Pflegeversicherung). Arbeitnehmeranteil zur Sozialversicherung pro Monat,
+            Steuerklasse I, kinderlos ab 23, durchschnittlicher Zusatzbeitrag 2,9 %; 2027 mit den Grenzen aus dem
+            BMAS-Entwurf und den Beitragssätzen 2026.
+          </p>
+          <div className="overflow-x-auto bg-white border border-black/[0.08] rounded-2xl">
+            <table className="w-full text-sm min-w-[480px]">
+              <caption className="sr-only">Arbeitnehmeranteil Sozialversicherung 2026 und 2027 nach Monatsbrutto</caption>
+              <thead>
+                <tr className="text-left bg-black/[0.03] border-b border-black/[0.08]">
+                  <th scope="col" className="px-4 py-3 font-bold">Monatsbrutto</th>
+                  <th scope="col" className="px-4 py-3 font-bold text-right">Sozialabgaben 2026</th>
+                  <th scope="col" className="px-4 py-3 font-bold text-right">Sozialabgaben 2027</th>
+                  <th scope="col" className="px-4 py-3 font-bold text-right">Mehrkosten / Monat</th>
+                </tr>
+              </thead>
+              <tbody className="tabular-nums">
+                {WER_ZAHLT_MEHR.map((z) => (
+                  <tr key={z.brutto} className="border-b border-black/[0.05] last:border-0">
+                    <th scope="row" className="px-4 py-3 font-semibold text-left whitespace-nowrap">{eurDe(z.brutto)}</th>
+                    <td className="px-4 py-3 text-right whitespace-nowrap">{eurDe(z.a)}</td>
+                    <td className="px-4 py-3 text-right whitespace-nowrap">{eurDe(z.b)}</td>
+                    <td className={`px-4 py-3 text-right font-bold whitespace-nowrap ${z.mehr > 0.005 ? "text-[#E60A1C]" : "text-black/60"}`}>{eurDeSigned(z.mehr)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-sm text-black/60 mt-3">
+            Höhere Beitragssätze 2027 (etwa ein höherer Zusatzbeitrag) kommen noch hinzu — den Rentenbeitrag und den
+            Zusatzbeitrag stellen Sie im Rechner oben selbst ein.{" "}
+            <Link href="/brutto-netto-rechner-krankenkasse" className="text-[#E60A1C] font-semibold hover:underline">
+              Zusatzbeitrag 2027 berechnen
+            </Link>
+            .
+          </p>
+        </section>
+
         <section>
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-3">Was sich 2027 bei den Sozialabgaben ändert</h2>
           <div className="overflow-x-auto bg-white border border-black/[0.08] rounded-2xl">

@@ -23,6 +23,7 @@ export const PAGE_LAST_UPDATED: Record<string, string> = {
   "/weihnachtsgeld-rechner": "2026-10-05",
   "/bonus-steuerrechner": "2026-10-05",
   "/brutto-netto-rechner-krankenkasse": "2026-10-05",
+  "/sozialabgaben-rechner-2027": "2026-10-05",
   "/abfindungsrechner": "2026-10-05",
   "/firmenwagenrechner": "2026-10-05",
   "/steuerklassenwechsel-rechner": "2026-10-05",
