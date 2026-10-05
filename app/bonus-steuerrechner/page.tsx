@@ -3,18 +3,20 @@ import BonusSteuerrechner from "./BonusSteuerrechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 import { pageImageUrl } from "@/lib/pageImage";
+import { pageStand } from "@/lib/pageDates";
+import { BONUS_FAQS } from "./faqs";
 
 export const metadata: Metadata = {
   title: "Bonus-Steuerrechner 2026 — Bonus & Urlaubsgeld versteuern",
+  // Bewusst ohne „Weihnachtsgeld“ in Titel, H1, Beschreibung und H2: Die Seite
+  // konkurrierte mit /weihnachtsgeld-rechner um „weihnachtsgeld rechner“ (Pos. 85).
   description:
-    "Bonus-Steuerrechner 2026: Wie viel von Weihnachtsgeld, Urlaubsgeld oder Bonus nach Steuern und Sozialabgaben netto übrig bleibt. Kostenlos & sofort.",
+    "Bonus-Steuerrechner 2026: Wie viel von Bonus, Prämie, Urlaubsgeld oder 13. Gehalt nach Steuern und Sozialabgaben netto übrig bleibt. Kostenlos & sofort.",
   keywords: [
     "Bonus Steuerrechner",
-    "Weihnachtsgeld Rechner",
-    "Weihnachtsgeld versteuern",
-    "Urlaubsgeld Rechner",
+    "Bonus versteuern",
+    "Prämie versteuern",
     "Urlaubsgeld versteuern",
-    "Weihnachtsgeld netto",
     "Sonderzahlung versteuern",
     "13. Monatsgehalt Steuer",
   ],
@@ -22,42 +24,43 @@ export const metadata: Metadata = {
   openGraph: {
     images: [pageImageUrl("/bonus-steuerrechner")],
     title: "Bonus-Steuerrechner 2026 — Bonus & Urlaubsgeld versteuern",
-    description: "Berechnen Sie, wie viel von Ihrem Weihnachtsgeld, Urlaubsgeld oder Bonus netto übrig bleibt.",
+    description: "Berechnen Sie, wie viel von Ihrem Bonus, Urlaubsgeld oder 13. Gehalt netto übrig bleibt.",
     url: "https://bruttonettocalculator.com/bonus-steuerrechner",
     locale: "de_DE",
     type: "website",
   },
 };
 
+const URL = "https://bruttonettocalculator.com/bonus-steuerrechner";
+const STAND = pageStand("/bonus-steuerrechner");
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Wie wird Weihnachtsgeld oder Urlaubsgeld versteuert?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Weihnachtsgeld und Urlaubsgeld zählen als sonstige Bezüge und werden dem Jahresgehalt hinzugerechnet und nach der Jahreslohnsteuertabelle versteuert.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Fallen auf Weihnachtsgeld auch Sozialabgaben an?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Ja, Weihnachts- und Urlaubsgeld sind normal sozialversicherungspflichtig, sofern die jeweilige Beitragsbemessungsgrenze noch nicht erreicht ist.",
-      },
-    },
-  ],
+  mainEntity: BONUS_FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+const pageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  inLanguage: "de-DE",
+  isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
+  name: "Bonus-Steuerrechner 2026",
+  url: URL,
+  dateModified: STAND.iso,
 };
 
 export default function BonusSteuerrechnerPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <BonusSteuerrechner />
-      <ToolContent config={TOOL_CONTENT["/bonus-steuerrechner"]} />
+      <BonusSteuerrechner stand={STAND} />
+      <ToolContent config={TOOL_CONTENT["/bonus-steuerrechner"]} stand={null} />
     </>
   );
 }

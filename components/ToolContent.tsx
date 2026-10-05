@@ -105,7 +105,17 @@ function inline(text: string, keyPrefix: string): ReactNode[] {
   return out;
 }
 
-export default function ToolContent({ config }: { config: ToolContentConfig }) {
+export default function ToolContent({
+  config,
+  stand,
+}: {
+  config: ToolContentConfig;
+  /**
+   * Datum der Seite (lib/pageDates.ts). `null` lässt das Datum weg — für
+   * Seiten, die ihr einziges „Aktualisiert am“ bereits oben zeigen.
+   */
+  stand?: string | null;
+}) {
   const { heading, answer, facts, steps, table, sections, source } = config;
 
   return (
@@ -257,8 +267,8 @@ export default function ToolContent({ config }: { config: ToolContentConfig }) {
           <CheckCircle2 size={13} className="flex-shrink-0 mt-0.5 text-emerald-600" />
           <span>
             {source ? source + " · " : ""}
-            Rechenwerte {siteConfig.sourceSV}. Stand: {siteConfig.lastUpdatedDisplay}. Keine
-            Steuerberatung.
+            Rechenwerte {siteConfig.sourceSV}.{" "}
+            {stand === null ? "" : `Stand: ${stand ?? siteConfig.lastUpdatedDisplay}. `}Keine Steuerberatung.
           </span>
         </p>
       </Section>

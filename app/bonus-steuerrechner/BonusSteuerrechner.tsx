@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Gift, Calculator, ArrowRight, Info, ChevronDown } from "lucide-react";
-import { calculateNetto, estFormel2026, soliBerechnen } from "@/lib/taxCalculator";
+import { BBG_2026, calculateNetto, estFormel2026, soliBerechnen } from "@/lib/taxCalculator";
+import { BONUS_FAQS as faqs } from "./faqs";
 
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -29,22 +30,7 @@ function estJahrFuerSK(zvE: number, sk: Steuerklasse): number {
   return estFormel2026(Math.max(0, zvE));
 }
 
-const faqs = [
-  {
-    q: "Wie wird Weihnachtsgeld oder Urlaubsgeld versteuert?",
-    a: "Weihnachtsgeld, Urlaubsgeld und andere Einmalzahlungen zählen steuerlich als „sonstige Bezüge”. Sie werden dem Jahresgehalt hinzugerechnet und nach der Jahreslohnsteuertabelle versteuert — die Steuerlast entspricht der Differenz zwischen der Steuer auf (Jahresgehalt + Bonus) und der Steuer auf das Jahresgehalt allein.",
-  },
-  {
-    q: "Fallen auf Weihnachtsgeld auch Sozialabgaben an?",
-    a: "Ja, anders als bei einer Abfindung sind Weihnachts- und Urlaubsgeld normal sozialversicherungspflichtig (Renten-, Kranken-, Pflege- und Arbeitslosenversicherung), sofern die jeweilige Beitragsbemessungsgrenze noch nicht erreicht ist.",
-  },
-  {
-    q: "Warum wirkt sich ein Bonus manchmal stärker auf die Steuer aus als erwartet?",
-    a: "Da der Bonus zusätzlich zum regulären Gehalt versteuert wird, greift er in einen höheren Bereich der Steuerprogression — der Grenzsteuersatz auf den Bonus liegt daher oft über dem Durchschnittssteuersatz des regulären Gehalts.",
-  },
-];
-
-export default function BonusSteuerrechner() {
+export default function BonusSteuerrechner({ stand }: { stand?: { iso: string; display: string } } = {}) {
   const [brutto, setBrutto] = useState(4000);
   const [steuerklasse, setSteuerklasse] = useState<Steuerklasse>(1);
   const [kirche, setKirche] = useState(false);
@@ -104,7 +90,7 @@ export default function BonusSteuerrechner() {
         <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-28 text-center">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
             <Gift size={14} />
-            Weihnachtsgeld · Urlaubsgeld · Bonus
+            Bonus · Prämie · Urlaubsgeld
           </div>
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
             Bonus-{" "}
@@ -113,9 +99,20 @@ export default function BonusSteuerrechner() {
             </span>
           </h1>
           <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Berechnen Sie, wie viel von Ihrem Weihnachtsgeld, Urlaubsgeld oder Bonus nach Steuern
+            Berechnen Sie, wie viel von Ihrem Bonus, Urlaubsgeld oder 13. Gehalt nach Steuern
             und Sozialabgaben tatsächlich übrig bleibt.
           </p>
+          <p className="mt-3 text-sm sm:text-base text-black/75">
+            Weihnachtsgeld berechnen? →{" "}
+            <Link href="/weihnachtsgeld-rechner" className="text-[#E60A1C] font-semibold hover:underline">
+              Weihnachtsgeld-Rechner 2026
+            </Link>
+          </p>
+          {stand && (
+            <p className="mt-2 text-xs sm:text-sm text-black/60 font-medium">
+              Aktualisiert am <time dateTime={stand.iso}>{stand.display}</time>
+            </p>
+          )}
         </div>
       </section>
 
@@ -141,7 +138,7 @@ export default function BonusSteuerrechner() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-black/70 mb-2">Weihnachtsgeld / Urlaubsgeld / Bonus (brutto)</label>
+                <label className="block text-sm font-semibold text-black/70 mb-2">Bonus / Urlaubsgeld / Sonderzahlung (brutto)</label>
                 <input
                   type="number"
                   value={bonus}
@@ -218,11 +215,11 @@ export default function BonusSteuerrechner() {
       <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
         <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10 text-black/70 text-sm sm:text-base leading-relaxed space-y-5">
           <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D]">
-            Weihnachtsgeld &amp; Bonus versteuern: Warum netto so wenig übrig bleibt
+            Bonus &amp; Sonderzahlungen versteuern: Warum netto so wenig übrig bleibt
           </h2>
           <p>
-            Einmalzahlungen wie <strong className="text-[#16181D]">Weihnachtsgeld</strong>,{" "}
-            <strong className="text-[#16181D]">Urlaubsgeld</strong>, Boni oder das{" "}
+            Einmalzahlungen wie <strong className="text-[#16181D]">Boni</strong>,{" "}
+            <strong className="text-[#16181D]">Urlaubsgeld</strong>, Prämien oder das{" "}
             <strong className="text-[#16181D]">13. Monatsgehalt</strong> gelten steuerlich als „sonstige Bezüge".
             Sie werden nicht dem laufenden Monat, sondern dem gesamten Jahreseinkommen hinzugerechnet und
             nach der Jahreslohnsteuertabelle versteuert. Weil dadurch oft ein höherer Grenzsteuersatz greift,
@@ -230,11 +227,11 @@ export default function BonusSteuerrechner() {
           </p>
           <h3 className="text-lg sm:text-xl font-bold text-[#16181D]">Fallen auf den Bonus auch Sozialabgaben an?</h3>
           <p>
-            Ja — Weihnachts- und Urlaubsgeld sind grundsätzlich sozialversicherungspflichtig, solange die
+            Ja — Bonus und Urlaubsgeld sind grundsätzlich sozialversicherungspflichtig, solange die
             jeweilige <strong className="text-[#16181D]">Beitragsbemessungsgrenze</strong> noch nicht erreicht ist.
-            Liegt Ihr Jahreseinkommen inklusive Sonderzahlung bereits über der Grenze (2026: 96.600 € in der
-            Renten-/Arbeitslosenversicherung), fallen auf den darüber liegenden Teil keine Renten- und
-            Arbeitslosenbeiträge mehr an — netto bleibt dann relativ mehr übrig.
+            Liegt Ihr Jahreseinkommen inklusive Sonderzahlung bereits über der Grenze (2026:{" "}
+            {BBG_2026.rvAlvJahr.toLocaleString("de-DE")} € in der Renten-/Arbeitslosenversicherung), fallen auf den
+            darüber liegenden Teil keine Renten- und Arbeitslosenbeiträge mehr an — netto bleibt dann relativ mehr übrig.
           </p>
           <div className="bg-[#FFFFFF] border border-black/[0.08] rounded-2xl p-5">
             <p className="font-mono text-[#16181D] text-sm mb-2">So rechnet der Bonus-Steuerrechner:</p>
@@ -242,7 +239,7 @@ export default function BonusSteuerrechner() {
               Er vergleicht Ihre Jahreslohnsteuer <strong className="text-[#16181D]">mit</strong> und{" "}
               <strong className="text-[#16181D]">ohne</strong> Sonderzahlung. Die Differenz ist die auf den
               Bonus entfallende Steuer — so sehen Sie exakt, wie viel von 500 €, 1.000 € oder einem vollen
-              Monatsgehalt Weihnachtsgeld netto ankommt.
+              Monatsgehalt als Bonus netto ankommt.
             </p>
           </div>
           <p>
@@ -256,7 +253,7 @@ export default function BonusSteuerrechner() {
       {/* FAQ */}
       <section data-section="" className="max-w-6xl mx-auto px-5 py-6 pb-12">
         <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-8">
-          Häufige Fragen zu Weihnachtsgeld &amp; Bonus
+          Häufige Fragen zu Bonus &amp; Sonderzahlungen
         </h2>
         <div className="space-y-3">
           {faqs.map((faq, i) => (

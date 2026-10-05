@@ -40,9 +40,12 @@ export interface WeihnachtsgeldFaq {
 export default function WeihnachtsgeldRechner({
   content,
   faqs,
+  stand,
 }: {
   content?: React.ReactNode;
   faqs: WeihnachtsgeldFaq[];
+  /** Seitendatum aus lib/pageDates.ts — das einzige „Aktualisiert am“ der Seite. */
+  stand?: { iso: string; display: string };
 }) {
   const [brutto, setBrutto] = useState(3500);
   const [wgModus, setWgModus] = useState<"euro" | "prozent">("euro");
@@ -118,7 +121,7 @@ export default function WeihnachtsgeldRechner({
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
             Weihnachtsgeld-Rechner 2026:{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-              Wie viel bleibt netto?
+              So viel Weihnachtsgeld bleibt netto
             </span>
           </h1>
           <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
@@ -126,6 +129,11 @@ export default function WeihnachtsgeldRechner({
             Lohnsteuer, Soli, Kirchensteuer und Sozialabgaben, für alle Steuerklassen. Die Berechnung gilt genauso
             für Urlaubsgeld, das 13. Monatsgehalt und Boni.
           </p>
+          {stand && (
+            <p className="mt-3 text-xs sm:text-sm text-black/60 font-medium">
+              Aktualisiert am <time dateTime={stand.iso}>{stand.display}</time> · Steuerjahr 2026
+            </p>
+          )}
         </div>
       </section>
 

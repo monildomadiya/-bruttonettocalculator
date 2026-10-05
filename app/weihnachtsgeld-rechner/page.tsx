@@ -5,10 +5,12 @@ import RelatedCalculators from "@/components/RelatedCalculators";
 import SupportButton from "@/components/SupportButton";
 import { pageImageUrl } from "@/lib/pageImage";
 import { formatEUR } from "@/lib/taxCalculator";
+import { pageStand } from "@/lib/pageDates";
 
-const TITLE = "Weihnachtsgeld Rechner 2026: Wie viel bleibt netto?";
+const TITLE = "Weihnachtsgeld-Rechner 2026: Wie viel bleibt netto?";
 const DESCRIPTION =
-  "Wie viel Weihnachtsgeld bleibt netto? Kostenloser Rechner 2026 mit Lohnsteuer, Soli, Kirchensteuer und Sozialabgaben – für alle Steuerklassen.";
+  "Weihnachtsgeld 2026 netto berechnen: Steuern und Sozialabgaben auf die Sonderzahlung für alle Steuerklassen – mit Rechner und Netto-Tabelle.";
+const STAND = pageStand("/weihnachtsgeld-rechner");
 const URL = "https://bruttonettocalculator.com/weihnachtsgeld-rechner";
 
 export const metadata: Metadata = {
@@ -100,6 +102,7 @@ const appSchema = {
   name: "Weihnachtsgeld-Rechner 2026",
   url: URL,
   description: DESCRIPTION,
+  dateModified: STAND.iso,
 };
 
 export default function WeihnachtsgeldRechnerPage() {
@@ -108,7 +111,7 @@ export default function WeihnachtsgeldRechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <WeihnachtsgeldRechner faqs={faqs} content={<WeihnachtsgeldContent />} />
+      <WeihnachtsgeldRechner faqs={faqs} content={<WeihnachtsgeldContent />} stand={STAND} />
       {/* Coffee section before the curated related block: that block keeps it
           apart from the end-of-content ad (see components/SupportStory.tsx). */}
       <SupportButton variant="story" lang="de" placement="page_inline" />
