@@ -35,6 +35,8 @@ const faqs = [
   { q: "Zählt die einfache Strecke oder Hin- und Rückfahrt?", a: "Nur die einfache Entfernung zwischen Wohnung und erster Tätigkeitsstätte. Auch mit dem eigenen Auto wird nur eine Strecke pro Arbeitstag angerechnet." },
   { q: "Wirkt sich die Pendlerpauschale immer steuermindernd aus?", a: "Nur der Teil der Werbungskosten über dem Arbeitnehmer-Pauschbetrag von 1.230 € senkt zusätzlich die Steuer. Die ersten 1.230 € werden automatisch berücksichtigt." },
   { q: "Welche Entfernung darf ich ansetzen?", a: "Grundsätzlich die kürzeste Straßenverbindung. Eine längere Strecke ist nur zulässig, wenn sie offensichtlich verkehrsgünstiger ist und regelmäßig genutzt wird." },
+  { q: "Gibt es die Pendlerpauschale auch mit Firmenwagen?", a: "Ja. Die Entfernungspauschale gilt unabhängig vom Verkehrsmittel, also auch, wenn Sie mit dem Dienstwagen zur Arbeit fahren: 0,38 € je Entfernungskilometer und Arbeitstag. Im Gegenzug versteuern Sie für die Fahrten zur Arbeit einen geldwerten Vorteil von monatlich 0,03 % des Listenpreises je Entfernungskilometer zusätzlich zur 1-%-Regelung (beim E-Auto vom geviertelten oder halbierten Listenpreis). Was das netto kostet, zeigt der Firmenwagenrechner." },
+  { q: "Gilt die Pendlerpauschale auch, wenn ich mit dem Zug fahre?", a: "Ja, auch für Bahn, Bus, Fahrrad oder zu Fuß gibt es 0,38 € je Entfernungskilometer. Ohne eigenes Auto oder Dienstwagen ist sie allerdings auf 4.500 € im Jahr begrenzt. Sind Ihre tatsächlichen Ticketkosten höher als die Pauschale, dürfen Sie stattdessen diese ansetzen. Ein steuerfreies Jobticket des Arbeitgebers wird auf die Pauschale angerechnet, ein pauschal mit 25 % versteuertes nicht." },
 ];
 
 export default function Page() {

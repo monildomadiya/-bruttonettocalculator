@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { KRANKENKASSEN_2026 } from "@/data/krankenkassen";
 import { TVOED_VKA_2026 } from "@/data/tvoed";
 import { getAllPosts } from "@/lib/blog";
-import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts, getSteuerklasseVariantPages } from "@/data/wage-stats";
 import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
@@ -232,6 +232,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Steuerklasse-1 exact-match variant — targets "<amount> brutto in netto steuerklasse 1"
     sitemapEntries.push({
       url: `${base}/rechner/${amount}-euro-brutto-netto-steuerklasse-1`,
+      lastModified: engineUpdated,
+    });
+  }
+
+  // Curated Steuerklasse-III/IV variants with search evidence
+  for (const { amount, steuerklasse } of getSteuerklasseVariantPages()) {
+    sitemapEntries.push({
+      url: `${base}/rechner/${amount}-euro-brutto-netto-steuerklasse-${steuerklasse}`,
       lastModified: engineUpdated,
     });
   }

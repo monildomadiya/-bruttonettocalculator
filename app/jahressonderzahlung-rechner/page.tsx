@@ -11,9 +11,16 @@ import { pageImageUrl } from "@/lib/pageImage";
 
 const PATH = "/jahressonderzahlung-rechner";
 const URL = `https://bruttonettocalculator.com${PATH}`;
-const TITLE = "Jahressonderzahlung Rechner 2026: TVöD & TV-L netto";
+/*
+ * Google Trends DE (30 Tage bis 6.10.2026), Thema „weihnachtsgeld“: „weihnachtsgeld
+ * öffentlicher dienst rechner“ Breakout, „wieviel weihnachtsgeld bekommt man im
+ * öffentlichen dienst“ +3.850 %, Top-Query „weihnachtsgeld tvöd“. Die Seite heißt
+ * weiter Jahressonderzahlung (Tarifbegriff, rankt), trägt die Weihnachtsgeld-
+ * Formulierung aber jetzt in Title, H1 und einer eigenen FAQ.
+ */
+const TITLE = "Jahressonderzahlung 2026 Rechner – Weihnachtsgeld öffentlicher Dienst";
 const DESCRIPTION =
-  "Jahressonderzahlung 2026 brutto und netto: TVöD Bund 95/90/75 %, VKA 85 %, TV-L bis 88,14 %. Mit Abzügen im November und Tabelle nach Entgeltgruppe.";
+  "Wie viel Weihnachtsgeld gibt es im öffentlichen Dienst? Jahressonderzahlung 2026 brutto und netto: TVöD Bund 95/90/75 %, VKA 85 %, TV-L bis 88,14 % – nach Entgeltgruppe.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -26,6 +33,10 @@ export const metadata: Metadata = {
     "jahressonderzahlung netto",
     "jahressonderzahlung rechner netto",
     "weihnachtsgeld öffentlicher dienst 2026",
+    "weihnachtsgeld öffentlicher dienst rechner",
+    "wieviel weihnachtsgeld bekommt man im öffentlichen dienst",
+    "weihnachtsgeld tvöd",
+    "weihnachtsgeld tvöd rechner",
   ],
   alternates: { canonical: URL },
   openGraph: {
@@ -49,7 +60,14 @@ const vkaZeilen = TVOED_VKA_2026.filter((g) => g.slug !== "e15ue").map((g) => {
 export default function Page() {
   const beispiel = vkaZeilen.find((z) => z.label === "E 9a")!;
 
+  const e5 = vkaZeilen.find((z) => z.label === "E 5");
+  const e13 = vkaZeilen.find((z) => z.label === "E 13");
+
   const faqs = [
+    {
+      q: "Wie viel Weihnachtsgeld bekommt man im öffentlichen Dienst?",
+      a: `Das Weihnachtsgeld heißt im öffentlichen Dienst Jahressonderzahlung und ist ein Prozentsatz des Monatsentgelts: bei den Kommunen (TVöD VKA) 2026 ${JAHRESSONDERZAHLUNG_VKA_PROZENT} %, beim Bund 75 bis 95 %, in den Ländern (TV-L) 32,53 bis 88,14 % je nach Entgeltgruppe. ${e5 && e13 ? `Im TVöD VKA, jeweils Stufe 3, sind das in E 5 rund ${formatEUR(e5.jsz)} brutto (netto in Steuerklasse I etwa ${formatEUR(e5.netto)}), in E 9a ${formatEUR(beispiel.jsz)} (netto ${formatEUR(beispiel.netto)}) und in E 13 ${formatEUR(e13.jsz)} (netto ${formatEUR(e13.netto)}).` : ""} Beamte erhalten kein tarifliches Weihnachtsgeld; ob es eine Sonderzahlung gibt, regelt das Besoldungsrecht von Bund und Land.`,
+    },
     {
       q: "Wie hoch ist die Jahressonderzahlung 2026 im TVöD?",
       a: `Seit 2026 gelten neue Sätze: Bei den Kommunen (VKA) einheitlich ${JAHRESSONDERZAHLUNG_VKA_PROZENT} % für alle Entgeltgruppen, in Krankenhäusern und Pflegeeinrichtungen (BT-K, BT-B) 90 % für die Entgeltgruppen 1 bis 8. Beim Bund 95 % (E 1–8), 90 % (E 9a–12) und 75 % (E 13–15). Grundlage ist das Einigungspapier vom 6. April 2025; ausgezahlt wird erstmals mit dem Novembergehalt 2026.`,

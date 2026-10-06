@@ -5,7 +5,7 @@ import { TOOL_CONTENT } from "@/data/tool-content";
 import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
-  title: "Steuerrückerstattung-Rechner 2026 — was kommt zurück?",
+  title: "Lohnt sich die Steuererklärung? Steuerrückerstattung-Rechner 2026",
   description:
     "Steuerrückerstattung-Rechner 2026: Wie viel Steuer bekomme ich zurück? Erstattung aus Werbungskosten & Sonderausgaben schätzen — im Schnitt rund 1.100 €.",
   keywords: [
@@ -16,11 +16,13 @@ export const metadata: Metadata = {
     "steuerrückzahlung rechner",
     "steuererklärung erstattung schätzen",
     "werbungskosten steuer zurück",
+    "lohnt sich steuererklärung rechner",
+    "lohnt sich eine steuererklärung",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/steuerrueckerstattung-rechner" },
   openGraph: {
     images: [pageImageUrl("/steuerrueckerstattung-rechner")],
-    title: "Steuerrückerstattung-Rechner 2026 — was kommt zurück?",
+    title: "Lohnt sich die Steuererklärung? Steuerrückerstattung-Rechner 2026",
     description:
       "Schätzen Sie Ihre Steuererstattung aus Werbungskosten & Sonderausgaben. Kostenloser Rechner für die Steuererklärung 2025/2026.",
     url: "https://bruttonettocalculator.com/steuerrueckerstattung-rechner",
@@ -30,10 +32,18 @@ export const metadata: Metadata = {
   },
 };
 
+// Google Trends DE (30 Tage bis 6.10.2026), Thema „steuererklärung“:
+// „lohnt sich steuererklärung rechner“ +2.150 % — Title, H1 und erste FAQ tragen
+// jetzt diese Frage.
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
+    {
+      "@type": "Question",
+      name: "Lohnt sich eine Steuererklärung?",
+      acceptedAnswer: { "@type": "Answer", text: "Für die meisten Arbeitnehmer ja: Wer freiwillig abgibt, bekommt laut Statistischem Bundesamt im Schnitt rund 1.100 € zurück, und eine Nachzahlung droht bei der freiwilligen Abgabe nicht, weil Sie den Antrag zurücknehmen können. Besonders lohnt sie sich, wenn Ihre Werbungskosten über dem Pauschbetrag von 1.230 € liegen (2026 schon ab rund 15 km Arbeitsweg bei 220 Arbeitstagen), Sie den Job gewechselt oder nur einen Teil des Jahres gearbeitet haben, eine Abfindung bekamen oder Handwerkerkosten, Spenden oder Kirchensteuer angeben können. Freiwillig geht das vier Jahre rückwirkend; für 2022 also noch bis 31. Dezember 2026." },
+    },
     {
       "@type": "Question",
       name: "Wie viel Steuern bekomme ich durchschnittlich zurück?",

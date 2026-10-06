@@ -30,6 +30,14 @@ const faqs = [
     a: "Die Bezugsdauer richtet sich nach Ihrem Alter und der Dauer der vorherigen Beschäftigung: zwischen 6 Monaten (mind. 12 Monate versichert) und bis zu 24 Monaten (ab 58 Jahren mit entsprechend langer Beschäftigungszeit).",
   },
   {
+    q: "Wann überweist die Arbeitsagentur das Arbeitslosengeld?",
+    a: "Arbeitslosengeld wird monatlich nachträglich gezahlt (§ 337 Abs. 2 SGB III): Das Geld für einen Monat überweist die Agentur für Arbeit zum Monatsende, auf dem Konto ist es meist am letzten Bankarbeitstag des Monats oder in den ersten Tagen des Folgemonats. Die erste Zahlung kommt erst, wenn der Antrag bewilligt ist; Zeiten davor werden nachgezahlt. Ruht der Anspruch, etwa wegen einer Sperrzeit, beginnt die Zahlung entsprechend später.",
+  },
+  {
+    q: "Wird eine Abfindung auf das Arbeitslosengeld angerechnet?",
+    a: "Nein, die Abfindung selbst kürzt das Arbeitslosengeld nicht und erhöht auch nicht das Bemessungsentgelt. Endet das Arbeitsverhältnis aber vor Ablauf der ordentlichen Kündigungsfrist, ruht der Anspruch für eine gewisse Zeit (§ 158 SGB III), und wer ohne wichtigen Grund einen Aufhebungsvertrag unterschreibt, riskiert eine Sperrzeit von bis zu zwölf Wochen (§ 159 SGB III). Was von der Abfindung netto bleibt, zeigt der Abfindungsrechner.",
+  },
+  {
     q: "Ist dieser Rechner rechtsverbindlich?",
     a: "Nein. Dieser Rechner liefert einen Näherungswert auf Basis Ihres geschätzten Nettogehalts. Die tatsächliche Höhe des Arbeitslosengeldes wird von der Agentur für Arbeit anhand des pauschalierten Nettoentgelts nach der Leistungsentgeltverordnung verbindlich festgestellt.",
   },

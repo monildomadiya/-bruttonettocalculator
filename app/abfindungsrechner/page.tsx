@@ -11,11 +11,16 @@ import { berechneAbfindung } from "@/lib/abfindung";
 import { formatEUR } from "@/lib/taxCalculator";
 
 const URL = "https://bruttonettocalculator.com/abfindungsrechner";
-const TITLE = "Abfindungsrechner 2026: Abfindung brutto netto berechnen";
+// Google Trends DE (30 Tage bis 6.10.2026): „abfindungsrechner brutto netto“ Breakout
+// (auch im Thema „brutto netto“ +60 %), dazu als Breakout „wie viel abfindung steht
+// mir zu“, „mit wieviel prozent wird eine abfindung versteuert“, „abfindung
+// sozialversicherungsfrei“, „berechnung abfindung formel“; „krankheitsbedingte
+// kündigung abfindung“ +1.850 %. Title und FAQ-Fragen tragen jetzt diese Wortlaute.
+const TITLE = "Abfindungsrechner Brutto Netto 2026: Abfindung netto berechnen";
 const DESCRIPTION =
   "Abfindung netto berechnen: Lohnsteuer bei Auszahlung, Fünftelregelung über die Steuererklärung und Erstattung – kostenloser Rechner 2026.";
 /** Stand der Seite — bei inhaltlichen Änderungen anpassen. */
-const STAND = "5. Oktober 2026";
+const STAND = "6. Oktober 2026";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -29,6 +34,11 @@ export const metadata: Metadata = {
     "abfindung brutto netto",
     "abfindung berechnen",
     "abfindung nach 10 jahren",
+    "abfindungsrechner brutto netto",
+    "wie viel abfindung steht mir zu",
+    "abfindung formel",
+    "mit wieviel prozent wird eine abfindung versteuert",
+    "abfindung sozialversicherungsfrei",
   ],
   alternates: { canonical: URL },
   openGraph: {
@@ -49,6 +59,7 @@ const TABELLE = [10000, 20000, 30000, 50000, 100000].map((abfindung) => ({
   r: berechneAbfindung({ abfindung, jahresbrutto: BEISPIEL_JAHR, steuerklasse: 1, kirche: false }),
 }));
 const halbJahr = berechneAbfindung({ abfindung: 30000, jahresbrutto: BEISPIEL_JAHR / 2, steuerklasse: 1, kirche: false });
+const prozent = (steuer: number, abfindung: number) => ((steuer / abfindung) * 100).toLocaleString("de-DE", { maximumFractionDigits: 1 });
 
 const faqs = [
   {
@@ -60,12 +71,24 @@ const faqs = [
     a: "Nein. Mit dem Wachstumschancengesetz wurde die Anwendung der Fünftelregelung im Lohnsteuerabzug ab 2025 gestrichen. Sie wird nur noch vom Finanzamt in der Einkommensteuerveranlagung berücksichtigt. Dafür müssen Sie eine Steuererklärung abgeben und die Abfindung in der Anlage N als ermäßigt zu besteuernden Arbeitslohn angeben.",
   },
   {
-    q: "Muss ich auf die Abfindung Sozialversicherungsbeiträge zahlen?",
+    q: "Ist eine Abfindung sozialversicherungsfrei?",
     a: "Nein, wenn die Abfindung für den Verlust des Arbeitsplatzes gezahlt wird. Sie ist dann kein Arbeitsentgelt im Sinne der Sozialversicherung (BSG, 21.02.1990, 12 RK 20/88). Beitragspflichtig sind dagegen Zahlungen, die in Wahrheit noch ausstehenden Lohn ausgleichen, etwa für die Zeit bis zum Ende der Kündigungsfrist.",
   },
   {
-    q: "Wie hoch ist eine Abfindung?",
+    q: "Wie viel Abfindung steht mir zu?",
     a: "Einen allgemeinen Anspruch gibt es nicht; die Höhe wird ausgehandelt. Als Faustregel gilt ein halbes Bruttomonatsgehalt je Beschäftigungsjahr. Nach 10 Jahren bei 4.500 € brutto wären das 22.500 €. Gesetzlich festgelegt ist dieser Wert nur für die Abfindung nach § 1a KSchG bei einer betriebsbedingten Kündigung mit Abfindungsangebot.",
+  },
+  {
+    q: "Wie lautet die Formel zur Berechnung der Abfindung?",
+    a: "Abfindung = Bruttomonatsgehalt × Beschäftigungsjahre × Faktor. Der übliche Faktor ist 0,5, so steht es auch in § 1a KSchG; ein Rest von mehr als sechs Monaten wird dort auf ein volles Jahr aufgerundet. Zum Monatsgehalt zählen anteilig auch Sonderzahlungen wie Weihnachtsgeld. In Verhandlungen und vor dem Arbeitsgericht liegt der Faktor je nach Prozessrisiko des Arbeitgebers oft zwischen 0,25 und 1,5.",
+  },
+  {
+    q: "Mit wie viel Prozent wird eine Abfindung versteuert?",
+    a: `Einen festen Prozentsatz gibt es nicht. Die Abfindung wird mit Ihrem persönlichen Steuersatz versteuert, der durch die Abfindung selbst steigt. Beispiel 30.000 € Abfindung bei ${formatEUR(BEISPIEL_JAHR)} Jahresgehalt, Steuerklasse I: Der Arbeitgeber behält rund ${prozent(bsp.auszahlung.summe, 30000)} % ein, nach der Steuererklärung mit Fünftelregelung bleiben etwa ${prozent(bsp.veranlagung.summe, 30000)} %. Bei niedrigerem übrigem Einkommen ist der Satz deutlich geringer.`,
+  },
+  {
+    q: "Gibt es eine Abfindung bei krankheitsbedingter Kündigung?",
+    a: "Einen gesetzlichen Anspruch gibt es auch hier nicht. Eine krankheitsbedingte Kündigung ist aber nur unter strengen Voraussetzungen wirksam (negative Gesundheitsprognose, erhebliche betriebliche Beeinträchtigung, Interessenabwägung). Weil Arbeitgeber das vor Gericht oft nicht beweisen können, endet eine Kündigungsschutzklage häufig mit einem Vergleich gegen Abfindung. Die Klage muss innerhalb von drei Wochen nach Zugang der Kündigung erhoben werden (§ 4 KSchG).",
   },
   {
     q: "Wird die Abfindung auf das Arbeitslosengeld angerechnet?",

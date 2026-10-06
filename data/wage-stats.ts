@@ -188,8 +188,15 @@ export function getWagePercentileContext(grossMonthly: number): {
 // 1.000 €: added 2026-09-30 after "1000 brutto in netto" rose +150 % in Google Trends (DE, 24 h).
 const APPROVED_MIDIJOB_AMOUNTS = [1000, 1200, 1300];
 
+/**
+ * Off-grid monthly amounts (not on the 100-€ grid) with direct search evidence.
+ * 3.750 €: "3750 brutto in netto steuerklasse 1" +110 % (Google Trends DE,
+ * Thema „steuerklasse“, 30 Tage bis 6.10.2026).
+ */
+const APPROVED_OFFGRID_AMOUNTS = [3750];
+
 export function getCommonGrossSalaryAmounts(): number[] {
-  const amounts: number[] = [...APPROVED_MIDIJOB_AMOUNTS];
+  const amounts: number[] = [...APPROVED_MIDIJOB_AMOUNTS, ...APPROVED_OFFGRID_AMOUNTS];
   for (let amount = 1500; amount <= 10000; amount += 100) {
     amounts.push(amount);
   }
@@ -217,9 +224,26 @@ export function getCommonAnnualSalaryAmounts(): number[] {
  * net amount is only added when there is evidence someone searches for it.
  */
 export function getNettoInBruttoAmounts(): number[] {
+  // 1.800 €: "1800 netto in brutto steuerklasse 1" +120 % (Google Trends DE, 6.10.2026).
   return [
-    1200, 1250, 1300, 1400, 1500, 1600, 2000, 2100, 2500, 2650, 2700, 2800,
+    1200, 1250, 1300, 1400, 1500, 1600, 1800, 2000, 2100, 2500, 2650, 2700, 2800,
     3000, 3300, 3500, 3600, 3700, 3800, 3900, 4000, 4100, 4300, 4600, 4700,
     5000, 5400, 6000,
+  ];
+}
+
+/**
+ * Indexable Steuerklasse-III/IV focus pages (/rechner/<amount>-euro-brutto-netto-steuerklasse-<N>).
+ * The route renders every class for every amount, but only Steuerklasse 1 is
+ * listed in the sitemap by default (index-bloat guard). A III/IV variant is
+ * added here only with direct search evidence — Google Trends DE, Thema
+ * „steuerklasse“, 30 Tage bis 6.10.2026: "3400 brutto in netto steuerklasse 3"
+ * Breakout, "4000 brutto in netto steuerklasse 4" +70 %, "… steuerklasse 3" +40 %.
+ */
+export function getSteuerklasseVariantPages(): { amount: number; steuerklasse: 3 | 4 }[] {
+  return [
+    { amount: 3400, steuerklasse: 3 },
+    { amount: 4000, steuerklasse: 3 },
+    { amount: 4000, steuerklasse: 4 },
   ];
 }

@@ -17,6 +17,16 @@ export const ELTERNGELD_FAQS = [
     q: "Wie hoch ist das Elterngeld 2026?",
     a: "Das Basiselterngeld beträgt 65–100 % des durchschnittlichen Nettoeinkommens der letzten 12 Monate vor der Geburt — je niedriger das Einkommen, desto höher der Prozentsatz. Mindestens 300 € und höchstens 1.800 € im Monat.",
   },
+  // Google Trends DE (30 Tage bis 6.10.2026): „wie lange gibt es elterngeld“
+  // +180 %, „elterngeld bei zwillingen“ +80 %, „elterngeld maximal“ +50 %.
+  {
+    q: "Wie lange gibt es Elterngeld?",
+    a: "Basiselterngeld gibt es für einen Elternteil höchstens 12 Monate, zusammen 14 Monate, wenn beide Eltern Elterngeld nehmen und dafür ihr Einkommen wegfällt (zwei Partnermonate); Alleinerziehende können die 14 Monate allein nehmen. Basiselterngeld wird nur bis zum Ende des 14. Lebensmonats gezahlt. Ein Basismonat lässt sich in zwei Monate ElterngeldPlus tauschen, so verlängert sich der Bezug auf bis zu 28 Monate, dazu kommen bis zu vier Bonusmonate beim Partnerschaftsbonus. Gleichzeitig Basiselterngeld beziehen dürfen Eltern nur einen Monat lang in den ersten zwölf Lebensmonaten.",
+  },
+  {
+    q: "Wie viel Elterngeld gibt es maximal — auch bei Zwillingen?",
+    a: "Höchstens 1.800 € Basiselterngeld im Monat (ElterngeldPlus: 900 €), erreicht ab rund 2.770 € Nettoeinkommen vor der Geburt. Darüber hinaus erhöhen nur Zuschläge den Betrag: der Geschwisterbonus von 10 %, mindestens 75 €, wenn ältere kleine Geschwister im Haushalt leben, und bei Zwillingen oder Mehrlingen ein Mehrlingszuschlag von 300 € je weiterem Kind (ElterngeldPlus: 150 €). Bei Zwillingen sind so bis zu 2.100 € Basiselterngeld möglich; einen doppelten Elterngeldanspruch gibt es nicht.",
+  },
   {
     q: "Wird das Elterngeld 2027 gekürzt?",
     a: "Beschlossen ist nichts. Ein Referentenentwurf des Bundesfamilienministeriums vom Juli 2026 sieht für Kinder, die ab dem 1. November 2027 geboren werden, höchstens 12 statt 14 Monate Basiselterngeld vor — je drei Monate für jeden Elternteil reserviert, sechs frei verteilbar —, dafür einen Mindestbetrag von 330 statt 300 € und einen Höchstbetrag von 1.900 statt 1.800 €. Ende September 2026 hat Familienministerin Prien angekündigt, die Kürzung noch einmal zu prüfen; auch ein Festhalten an 14 Monaten ist möglich. Für Kinder, die vor dem 1. November 2027 geboren werden, soll in jedem Fall das heutige Recht gelten.",

@@ -41,7 +41,7 @@ export const post: BlogPost = {
   category: "Job & Sonderfälle",
   tags: ["Weihnachtsgeld", "Sonderzahlung", "Arbeitsrecht", "Kündigung", "Elternzeit"],
   publishedISO: "2026-10-05",
-  updatedISO: "2026-10-05",
+  updatedISO: "2026-10-06",
   answer:
     "Einen gesetzlichen Anspruch auf Weihnachtsgeld gibt es nicht. Er entsteht nur aus Arbeitsvertrag, Tarifvertrag, Betriebsvereinbarung, dem Gleichbehandlungsgrundsatz oder betrieblicher Übung, etwa nach drei Jahren vorbehaltloser Zahlung. Wer einen Anspruch hat, bekommt das Weihnachtsgeld meist mit dem November- oder Dezembergehalt. Ob es bei Kündigung, Elternzeit oder Krankheit gekürzt oder zurückgefordert werden darf, hängt von der Klausel ab, die es regelt.",
   keyFacts: [
@@ -108,6 +108,7 @@ export const post: BlogPost = {
 
 <h2>Weihnachtsgeld in Elternzeit und Mutterschutz</h2>
 <p>Während der Elternzeit ruht das Arbeitsverhältnis. Ist das Weihnachtsgeld Vergütung für geleistete Arbeit, darf der Arbeitgeber es für die Monate der Elternzeit anteilig kürzen, wenn das vereinbart ist. Belohnt es dagegen nur die Betriebstreue, besteht der Anspruch ohne eine ausdrückliche Kürzungsregel auch in der Elternzeit. Zeiten des Mutterschutzes dürfen nicht anspruchsmindernd angerechnet werden; das wäre eine Benachteiligung wegen des Geschlechts.</p>
+<p><strong>Beschäftigungsverbot:</strong> Auch bei einem ärztlichen Beschäftigungsverbot in der Schwangerschaft bekommen Sie Weihnachtsgeld. Der Arbeitgeber zahlt in dieser Zeit Mutterschutzlohn in Höhe des bisherigen Durchschnittsverdienstes (§ 18 MuSchG), das Arbeitsverhältnis läuft normal weiter; eine Kürzung wegen der fehlenden Arbeit wäre ebenfalls eine unzulässige Benachteiligung.</p>
 
 <h2>Weihnachtsgeld bei Krankheit und Krankengeld</h2>
 <p>Eine Kürzung wegen Krankheit erlaubt das Gesetz ausdrücklich, aber nur, wenn sie vereinbart ist, und begrenzt: Je Krankheitstag darf höchstens ein Viertel des durchschnittlichen Tagesverdienstes abgezogen werden (§ 4a EntgFG). Ohne eine solche Vereinbarung bleibt der Anspruch auch bei längerer Krankheit bestehen. Umgekehrt erhöht beitragspflichtiges Weihnachtsgeld aus den letzten zwölf Monaten sogar das Krankengeld: Die Kasse rechnet ein 360stel davon dem täglichen Regelentgelt hinzu (§ 47 Abs. 2 SGB V). Wie hoch Ihr Krankengeld ist, zeigt der <a href="/krankengeld-rechner">Krankengeld-Rechner</a>.</p>

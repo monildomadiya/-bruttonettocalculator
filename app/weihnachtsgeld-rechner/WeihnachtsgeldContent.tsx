@@ -269,7 +269,7 @@ export default function WeihnachtsgeldContent() {
         </div>
         <p>
           Quelle: {JSZ_TARIFE[0].quelle.titel}. Den Betrag und das Netto für Ihre Entgeltgruppe rechnet der{" "}
-          <Link href="/jahressonderzahlung-rechner" className="text-[#E60A1C] font-semibold hover:underline">Jahressonderzahlung-Rechner</Link>{" "}
+          <Link href="/jahressonderzahlung-rechner" className="text-[#E60A1C] font-semibold hover:underline">Rechner für das Weihnachtsgeld im öffentlichen Dienst</Link>{" "}
           aus, das laufende TVöD-Gehalt der{" "}
           <Link href="/tvoed-rechner" className="text-[#E60A1C] font-semibold hover:underline">TVöD-Rechner</Link>. Für
           Landesbeschäftigte gilt der{" "}

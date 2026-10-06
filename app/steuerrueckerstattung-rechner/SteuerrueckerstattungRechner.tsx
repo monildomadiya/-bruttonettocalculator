@@ -14,6 +14,7 @@ import {
 const WK_PAUSCHALE = 1230; // Arbeitnehmer-Pauschbetrag 2026
 
 const faqs = [
+  { q: "Lohnt sich eine Steuererklärung?", a: "Für die meisten Arbeitnehmer ja: Wer freiwillig abgibt, bekommt laut Statistischem Bundesamt im Schnitt rund 1.100 € zurück, und eine Nachzahlung droht bei der freiwilligen Abgabe nicht, weil Sie den Antrag zurücknehmen können. Besonders lohnt sie sich, wenn Ihre Werbungskosten über dem Pauschbetrag von 1.230 € liegen (2026 schon ab rund 15 km Arbeitsweg bei 220 Arbeitstagen), Sie den Job gewechselt oder nur einen Teil des Jahres gearbeitet haben, eine Abfindung bekamen oder Handwerkerkosten, Spenden oder Kirchensteuer angeben können. Freiwillig geht das vier Jahre rückwirkend; für 2022 also noch bis 31. Dezember 2026." },
   { q: "Wie viel Steuern bekomme ich durchschnittlich zurück?", a: "Laut Statistischem Bundesamt erhalten Arbeitnehmer, die eine Steuererklärung abgeben, im Durchschnitt rund 1.100 € zurück. Die tatsächliche Erstattung hängt von Ihrem Einkommen, Ihrer Steuerklasse und Ihren absetzbaren Kosten (Werbungskosten, Sonderausgaben) ab." },
   { q: "Wie entsteht eine Steuerrückerstattung?", a: "Ihr Arbeitgeber behält die Lohnsteuer nur mit dem pauschalen Arbeitnehmer-Pauschbetrag von 1.230 € ein. Wenn Sie in der Steuererklärung höhere Werbungskosten oder Sonderausgaben nachweisen, sinkt Ihr zu versteuerndes Einkommen — die zu viel gezahlte Steuer bekommen Sie zurück." },
   { q: "Bis wann muss ich die Steuererklärung 2025 abgeben?", a: "Bei Pflichtveranlagung ist die Frist für das Steuerjahr 2025 der 31. Juli 2026 (mit Steuerberater bzw. Lohnsteuerhilfeverein verlängert sich die Frist bis Ende Februar 2027). Eine freiwillige Erklärung können Sie sogar bis zu 4 Jahre rückwirkend abgeben." },
@@ -72,6 +73,7 @@ export default function SteuerrueckerstattungRechner() {
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
             Steuerrückerstattung{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">Rechner</span>
+            <span className="block text-xl sm:text-3xl lg:text-4xl font-bold text-black/75 mt-2">Lohnt sich die Steuererklärung?</span>
           </h1>
           <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
             Wie viel Steuer bekomme ich zurück? Schätzen Sie Ihre mögliche{" "}

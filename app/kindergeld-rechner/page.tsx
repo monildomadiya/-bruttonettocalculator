@@ -6,6 +6,7 @@ import CalculatorSchema from "@/components/CalculatorSchema";
 import { BETREUUNGSFREIBETRAG, ENTWURF, formatEUR } from "@/lib/taxCalculator";
 import { KG_JAHRE, KG_VERLAUF, KG_WERTE, kindergeldRechnen, schwelleFreibetrag, type Veranlagung } from "@/lib/kindergeld";
 import { pageImageUrl } from "@/lib/pageImage";
+import { KG_AUSZAHLUNG_2026, KG_AUSZAHLUNG_MONATE, KG_AUSZAHLUNG_QUELLE, KG_AUSZAHLUNG_STAND } from "@/data/kindergeldAuszahlung";
 
 const PATH = "/kindergeld-rechner";
 const URL = `https://bruttonettocalculator.com${PATH}`;
@@ -16,7 +17,7 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ["kindergeld 2027", "kindergeld rechner", "kindergeld erhöhung 2027", "kindergeld 2026", "kinderfreibetrag 2027", "kindergeld oder kinderfreibetrag", "günstigerprüfung kindergeld"],
+  keywords: ["kindergeld 2027", "kindergeld rechner", "kindergeld erhöhung 2027", "kindergeld 2026", "kinderfreibetrag 2027", "kindergeld oder kinderfreibetrag", "günstigerprüfung kindergeld", "kindergeld auszahlung oktober 2026", "auszahlungstermine kindergeld 2026"],
   alternates: { canonical: URL },
   openGraph: {
     images: [pageImageUrl(PATH)],
@@ -44,7 +45,13 @@ export default function Page() {
   const schwelleVerh27 = schwellen[0].werte[1];
   const zeilen = EINKOMMEN.map((b) => ({ b, r: kindergeldRechnen({ jahr: 2027, veranlagung: "verheiratet", brutto1: b, kinder: 1 }) }));
 
+  const okt = (d: number) => KG_AUSZAHLUNG_2026.find((z) => z.endziffer === d)!.tage[0];
+
   const faqs = [
+    {
+      q: "Wann wird das Kindergeld im Oktober 2026 ausgezahlt?",
+      a: `Das hängt von der letzten Ziffer Ihrer Kindergeldnummer ab: Endziffer 0 am ${okt(0)}. Oktober, Endziffer 5 am ${okt(5)}. Oktober, Endziffer 9 am ${okt(9)}. Oktober 2026. Die Familienkasse überweist gestaffelt — Endziffer 0 am Monatsanfang, Endziffer 9 gegen Monatsende. Bis das Geld auf dem Konto ist, kann es ein bis zwei Bankarbeitstage dauern; einen Anspruch auf einen bestimmten Tag gibt es nicht.`,
+    },
     {
       q: "Wie hoch ist das Kindergeld 2027?",
       a: `Laut Regierungsentwurf des Einkommensteuerreformgesetzes 2027 steigt das Kindergeld zum 1. Januar 2027 von ${kg26} € auf ${kg27} € pro Kind und Monat — ${kg27 - kg26} € mehr. Ab 2028 sind ${kg28} € vorgesehen. Der Betrag ist für jedes Kind gleich hoch, auch für das dritte und vierte Kind.`,
@@ -120,6 +127,43 @@ export default function Page() {
           <a href="https://www.gesetze-im-internet.de/estg/__32.html" className="underline hover:text-[#E60A1C]" rel="noopener" target="_blank">§ 32 Abs. 6 EStG</a>;
           2027/2028:{" "}
           <a href={ENTWURF.quelle} className="underline hover:text-[#E60A1C]" rel="noopener" target="_blank">{ENTWURF.drucksache}</a> (Art. 1 und 2).
+        </p>
+      </section>
+
+      <section data-section="" id="auszahlungstermine" className="max-w-6xl mx-auto px-5 py-6 scroll-mt-24">
+        <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
+          Kindergeld Auszahlungstermine 2026: Oktober, November, Dezember
+        </h2>
+        <p className="text-sm sm:text-base text-black/70 mb-6 max-w-4xl">
+          Wann das Kindergeld kommt, bestimmt die letzte Ziffer Ihrer Kindergeldnummer (z. B. 123FK45678<strong>9</strong> →
+          Endziffer 9). Die Termine gelten auch für den Kinderzuschlag. Fällt der Eingang auf ein Wochenende oder einen
+          Feiertag, kann er sich verschieben.
+        </p>
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-xl overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[480px]">
+            <caption className="sr-only">Auszahlungstermine Kindergeld Oktober bis Dezember 2026 nach Endziffer der Kindergeldnummer</caption>
+            <thead>
+              <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
+                <th className="py-3.5 px-5">Endziffer</th>
+                {KG_AUSZAHLUNG_MONATE.map((m) => <th key={m} className="py-3.5 px-5 text-right">{m} 2026</th>)}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-black/10 text-sm sm:text-base">
+              {KG_AUSZAHLUNG_2026.map((z) => (
+                <tr key={z.endziffer}>
+                  <td className="py-3 px-5 font-mono font-semibold">{z.endziffer}</td>
+                  {z.tage.map((t, i) => (
+                    <td key={i} className="py-3 px-5 text-right font-mono">{t}. {KG_AUSZAHLUNG_MONATE[i]}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-xs sm:text-sm text-black/55">
+          Quelle:{" "}
+          <a href={KG_AUSZAHLUNG_QUELLE} className="underline hover:text-[#E60A1C]" rel="noopener" target="_blank">Familienkasse der Bundesagentur für Arbeit</a>,
+          Stand {KG_AUSZAHLUNG_STAND}. Ab Januar 2027 kommt das Kindergeld laut Regierungsentwurf mit {kg27} € statt {kg26} € pro Kind.
         </p>
       </section>
 

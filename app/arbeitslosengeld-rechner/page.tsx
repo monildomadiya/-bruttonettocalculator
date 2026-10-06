@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     "arbeitslosengeld rechner",
     "arbeitslosengeld höhe",
     "leistungsentgelt bemessungsentgelt",
+    "wann wird arbeitslosengeld überwiesen",
+    "abfindung arbeitslosengeld angerechnet",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/arbeitslosengeld-rechner" },
   openGraph: {
@@ -50,6 +52,16 @@ const jsonLd = {
         "@type": "Answer",
         text: "Die Bezugsdauer liegt je nach Alter und Beschäftigungsdauer zwischen 6 und 24 Monaten.",
       },
+    },
+    {
+      "@type": "Question",
+      name: "Wann überweist die Arbeitsagentur das Arbeitslosengeld?",
+      acceptedAnswer: { "@type": "Answer", text: "Arbeitslosengeld wird monatlich nachträglich gezahlt (§ 337 Abs. 2 SGB III): Das Geld für einen Monat überweist die Agentur für Arbeit zum Monatsende, auf dem Konto ist es meist am letzten Bankarbeitstag des Monats oder in den ersten Tagen des Folgemonats. Die erste Zahlung kommt erst, wenn der Antrag bewilligt ist; Zeiten davor werden nachgezahlt. Ruht der Anspruch, etwa wegen einer Sperrzeit, beginnt die Zahlung entsprechend später." },
+    },
+    {
+      "@type": "Question",
+      name: "Wird eine Abfindung auf das Arbeitslosengeld angerechnet?",
+      acceptedAnswer: { "@type": "Answer", text: "Nein, die Abfindung selbst kürzt das Arbeitslosengeld nicht und erhöht auch nicht das Bemessungsentgelt. Endet das Arbeitsverhältnis aber vor Ablauf der ordentlichen Kündigungsfrist, ruht der Anspruch für eine gewisse Zeit (§ 158 SGB III), und wer ohne wichtigen Grund einen Aufhebungsvertrag unterschreibt, riskiert eine Sperrzeit von bis zu zwölf Wochen (§ 159 SGB III). Was von der Abfindung netto bleibt, zeigt der Abfindungsrechner." },
     },
   ],
 };

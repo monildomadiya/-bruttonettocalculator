@@ -66,10 +66,12 @@ export default function JahressonderzahlungRechner() {
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
             Jahressonderzahlung-
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">Rechner 2026</span>
+            <span className="block text-xl sm:text-3xl lg:text-4xl font-bold text-black/75 mt-2">Weihnachtsgeld im öffentlichen Dienst</span>
           </h1>
           <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Wie hoch ist Ihre <strong className="text-[#16181D]">Jahressonderzahlung</strong> im November — brutto und
-            netto? Mit den Sätzen 2026 für TVöD Bund, TVöD VKA und TV-L.
+            Wie viel <strong className="text-[#16181D]">Weihnachtsgeld</strong> bekommen Sie im öffentlichen Dienst — brutto
+            und netto? Die <strong className="text-[#16181D]">Jahressonderzahlung</strong> im November mit den Sätzen 2026
+            für TVöD Bund, TVöD VKA und TV-L.
           </p>
         </div>
       </section>

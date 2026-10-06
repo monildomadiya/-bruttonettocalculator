@@ -32,6 +32,12 @@ export const KRANKENGELD_FAQS = [
   },
   {
     q: "Muss man Krankengeld versteuern?",
-    a: "Krankengeld ist steuerfrei, unterliegt aber dem Progressionsvorbehalt: Es erhöht den Steuersatz auf Ihr übriges Einkommen und kann bei der Steuererklärung zu einer Nachzahlung führen.",
+    a: "Krankengeld ist steuerfrei, unterliegt aber dem Progressionsvorbehalt: Es erhöht den Steuersatz auf Ihr übriges Einkommen und kann bei der Steuererklärung zu einer Nachzahlung führen. Wer mehr als 410 € Krankengeld im Jahr bezogen hat, muss deshalb eine Steuererklärung abgeben (§ 46 Abs. 2 Nr. 1 EStG).",
+  },
+  // Google Trends DE (30 Tage bis 6.10.2026): „bekommt man weihnachtsgeld wenn man
+  // krankengeld bekommt“ +550 %, „weihnachtsgeld trotz krankengeld“ +80 %.
+  {
+    q: "Bekommt man Weihnachtsgeld, wenn man Krankengeld bekommt?",
+    a: "In der Regel ja — gekürzt werden darf es nur, wenn Arbeits- oder Tarifvertrag das ausdrücklich vorsehen, und dann höchstens um ein Viertel des durchschnittlichen Tagesverdienstes je Krankheitstag (§ 4a EntgFG). Im öffentlichen Dienst mindert sich die Jahressonderzahlung um ein Zwölftel für jeden Monat ohne Entgelt, aber nicht für Monate, in denen Krankengeldzuschuss gezahlt wurde oder nur wegen der Höhe des Krankengelds nicht gezahlt wurde (§ 20 Abs. 4 TVöD). Das Weihnachtsgeld selbst ist kein Krankengeld; beitragspflichtige Einmalzahlungen der letzten zwölf Monate erhöhen aber das Krankengeld.",
   },
 ];

@@ -7,7 +7,7 @@ import {
   ChevronRight, BarChart3, ArrowDown,
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse, isMidijob2026, midijobArbeitnehmerBemessungMonat } from "@/lib/taxCalculator";
-import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts, getSteuerklasseVariantPages, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
 import { getPostBySlug } from "@/lib/blog";
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
@@ -66,6 +66,10 @@ export async function generateStaticParams() {
   for (const amount of amounts) {
     params.push({ betrag: `${amount}-euro-brutto-netto` });
     params.push({ betrag: `${amount}-euro-brutto-netto-steuerklasse-1` });
+  }
+  // Curated Steuerklasse-III/IV variants (search evidence only)
+  for (const { amount, steuerklasse } of getSteuerklasseVariantPages()) {
+    params.push({ betrag: `${amount}-euro-brutto-netto-steuerklasse-${steuerklasse}` });
   }
   // Annual-salary variant ("70000 brutto in netto"-type queries)
   for (const amount of getCommonAnnualSalaryAmounts()) {
@@ -711,6 +715,18 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             <CheckCircle2 size={15} /> Ausführliche Seite: {formattedBrutto} Brutto in Netto in Steuerklasse 1 <ArrowRight size={14} />
           </Link>
         )}
+        {!isSkPage &&
+          getSteuerklasseVariantPages()
+            .filter((v) => v.amount === amount)
+            .map((v) => (
+              <Link
+                key={v.steuerklasse}
+                href={`/rechner/${amount}-euro-brutto-netto-steuerklasse-${v.steuerklasse}`}
+                className="mt-3 sm:ml-6 inline-flex items-center gap-1.5 text-sm font-bold text-[#E60A1C] hover:underline"
+              >
+                <CheckCircle2 size={15} /> {formattedBrutto} Brutto in Netto in Steuerklasse {v.steuerklasse} <ArrowRight size={14} />
+              </Link>
+            ))}
       </div>
 
       {/* Table 2: 2-Year Tax Comparison (2026 vs 2027) */}

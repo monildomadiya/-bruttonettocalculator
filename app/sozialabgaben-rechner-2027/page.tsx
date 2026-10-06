@@ -136,6 +136,28 @@ const FAQS = [
     a:
       "Ja. Kranken-, Renten- und Arbeitslosenversicherung werden je zur Hälfte getragen, deshalb steigt der Arbeitgeberanteil im gleichen Maß. Nur Kinderlosenzuschlag und Kinderabschläge in der Pflegeversicherung betreffen allein den Arbeitnehmer.",
   },
+  // Google Trends DE (30 Tage bis 6.10.2026), Thema „sozialabgaben“: „sozialabgaben
+  // gutverdiener“, „höhere sozialabgaben 2027“ und „warum zahlen beamte keine
+  // sozialabgaben“ jeweils Breakout.
+  {
+    q: "Zahlen Gutverdiener 2027 höhere Sozialabgaben?",
+    a:
+      "Ja, am stärksten sogar: Wer über den bisherigen Beitragsbemessungsgrenzen verdient, zahlt 2027 nicht nur die höheren Sätze, sondern auch auf einen größeren Teil des Gehalts Beiträge. Bei " +
+      formatEUR(HOECHST.monat) +
+      " brutto im Monat sind das mit Rentenbeitrag 18,8 % und 3,3 % Zusatzbeitrag rund " +
+      formatEUR(HOECHST.diff) +
+      " mehr im Monat, bei " +
+      formatEUR(DURCHSCHNITT.monat) +
+      " nur etwa " +
+      formatEUR(DURCHSCHNITT.diff) +
+      ". Oberhalb von " +
+      formatEUR(E.rvAlvBbgJahr / 12) +
+      " im Monat steigt der Betrag nicht weiter.",
+  },
+  {
+    q: "Warum zahlen Beamte keine Sozialabgaben?",
+    a: "Beamte sind in der Renten-, Kranken- und Arbeitslosenversicherung versicherungsfrei (§ 5 SGB VI, § 6 SGB V, § 27 SGB III), weil der Dienstherr sie anders absichert: Statt Rente gibt es eine Pension aus dem Haushalt, statt gesetzlicher Krankenversicherung eine Beihilfe von meist 50 bis 80 % der Krankheitskosten, und arbeitslos werden können Beamte auf Lebenszeit praktisch nicht. Den Rest der Krankheitskosten versichern sie privat und zahlen die Beiträge selbst, ebenso die Pflegepflichtversicherung. Die steigenden Sozialabgaben 2027 treffen sie deshalb nicht; was netto bleibt, zeigt der Beamten-Rechner.",
+  },
 ];
 
 export default function SozialabgabenRechner2027Page() {
