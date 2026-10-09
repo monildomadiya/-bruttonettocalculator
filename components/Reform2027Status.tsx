@@ -75,10 +75,17 @@ const gesetzgebung: Schritt[] = [
   },
   {
     titel: "Bundestag, 1. Lesung",
-    status: "offen",
-    datum: "angesetzt: 8. Oktober 2026",
+    status: "erledigt",
+    datum: "8. Oktober 2026",
     detail:
-      "Erste Beratung im Plenum mit einstündiger Debatte; anschließend soll der Entwurf an die Ausschüsse überwiesen werden, federführend der Finanzausschuss. Dort können sich die Beträge noch verändern.",
+      "Der Bundestag hat den Gesetzentwurf in erster Lesung beraten, gemeinsam mit dem Entwurf eines Jahressteuergesetzes 2026 (Drucksache 21/8283), und ihn an die Ausschüsse überwiesen. Die Federführung hat der Finanzausschuss. An den Zahlen ändert die erste Lesung nichts — dieser Rechner verwendet weiter die Werte der Drucksache 21/8235.",
+  },
+  {
+    titel: "Beratung im Finanzausschuss",
+    status: "offen",
+    datum: "seit 8. Oktober 2026",
+    detail:
+      "Im federführenden Finanzausschuss wird der Entwurf beraten, üblicherweise mit einer öffentlichen Anhörung von Sachverständigen. Hier können sich Beträge noch ändern — etwa beim Tarif oder bei der Gegenfinanzierung. Einen Termin für die Anhörung hat der Bundestag noch nicht veröffentlicht.",
   },
   {
     titel: "Bundestag (2./3. Lesung)",
@@ -199,7 +206,7 @@ export default function Reform2027Status() {
         2027, BT-Drucksache 21/8235 vom 28.9.2026 (Artikel 1 für den Veranlagungszeitraum 2027, Artikel 2 für 2028); zugrunde
         liegender Referentenentwurf des Bundesministeriums der Finanzen, Bearbeitungsstand
         18.08.2026; Beschluss des Koalitionsausschusses vom 1.7.2026;
-        Mindestlohnanpassungsverordnung. Diese Seite wird bei jedem Verfahrensschritt aktualisiert.
+        Mindestlohnanpassungsverordnung; Deutscher Bundestag, Textarchiv zur ersten Lesung am 8.10.2026. Diese Seite wird bei jedem Verfahrensschritt aktualisiert.
       </p>
     </Section>
   );

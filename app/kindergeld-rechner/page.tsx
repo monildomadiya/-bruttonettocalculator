@@ -58,7 +58,7 @@ export default function Page() {
     },
     {
       q: "Ist die Kindergelderhöhung 2027 schon beschlossen?",
-      a: `Noch nicht. Das Bundeskabinett hat den Entwurf am 2. September 2026 beschlossen; er liegt dem Bundestag seit dem 28. September 2026 als ${ENTWURF.drucksache} vor, die erste Lesung ist für den 8. Oktober 2026 angesetzt. Bundestag und Bundesrat müssen noch zustimmen. Bis dahin können sich die Beträge ändern — der Rechner wird dann angepasst.`,
+      a: `Noch nicht. Das Bundeskabinett hat den Entwurf am 2. September 2026 beschlossen; er liegt dem Bundestag seit dem 28. September 2026 als ${ENTWURF.drucksache} vor. Nach der ersten Lesung am 8. Oktober 2026 berät ihn jetzt der Finanzausschuss. Bundestag und Bundesrat müssen noch zustimmen. Bis dahin können sich die Beträge ändern — der Rechner wird dann angepasst.`,
     },
     {
       q: "Muss ich die Erhöhung beantragen?",

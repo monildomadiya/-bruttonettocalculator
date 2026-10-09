@@ -5,8 +5,8 @@
  *
  *   Wann                                   Änderung
  *   ─────────────────────────────────────  ──────────────────────────────────────
- *   nach der 1. Lesung (8.10.2026)         VERFAHRENSSCHRITT (→ LEGISLATION_STATUS) und
- *                                          lastUpdated der betroffenen Seiten in
+ *   nach jedem Verfahrensschritt           VERFAHRENSSCHRITT (→ LEGISLATION_STATUS) und
+ *   (nächster: 2./3. Lesung im Bundestag)  lastUpdated der betroffenen Seiten in
  *                                          lib/pageDates.ts anheben
  *   bis 1.11.2026 (BMG-Bekanntgabe)        ZUSATZBEITRAG_DURCHSCHNITT_2027 in
  *                                          data/krankenkassen.ts setzen
@@ -19,8 +19,8 @@
  */
 import { ENTWURF } from "@/lib/taxCalculator";
 
-/** Letzter bzw. nächster Verfahrensschritt — nach der 1. Lesung hier anpassen. */
-const VERFAHRENSSCHRITT = "1. Lesung im Bundestag: 8. Oktober 2026";
+/** Letzter Verfahrensschritt — nach der 2./3. Lesung hier anpassen. */
+const VERFAHRENSSCHRITT = "1. Lesung am 8. Oktober 2026, jetzt im Finanzausschuss";
 
 /**
  * Stand des Gesetzgebungsverfahrens zum Einkommensteuerreformgesetz 2027.
@@ -29,7 +29,7 @@ const VERFAHRENSSCHRITT = "1. Lesung im Bundestag: 8. Oktober 2026";
  */
 export const LEGISLATION_STATUS = {
   drucksache: "BT-Drs. 21/8235",
-  /** "2027 nach Regierungsentwurf (BT-Drs. 21/8235) · 1. Lesung im Bundestag: 8. Oktober 2026" */
+  /** "2027 nach Regierungsentwurf (BT-Drs. 21/8235) · 1. Lesung am 8. Oktober 2026, jetzt im Finanzausschuss" */
   short: `2027 nach Regierungsentwurf (BT-Drs. 21/8235) · ${VERFAHRENSSCHRITT}`,
   /** Nur der Verfahrensschritt, für Meta-Beschreibungen (dort ist Platz knapp). */
   schritt: VERFAHRENSSCHRITT,

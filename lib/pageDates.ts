@@ -18,8 +18,8 @@
 import { siteConfig } from "@/lib/authors";
 
 export const PAGE_LAST_UPDATED: Record<string, string> = {
-  "/": "2026-10-05",
-  "/brutto-netto-rechner-2027": "2026-10-05",
+  "/": "2026-10-09",
+  "/brutto-netto-rechner-2027": "2026-10-09",
   "/weihnachtsgeld-rechner": "2026-10-05",
   "/bonus-steuerrechner": "2026-10-05",
   "/brutto-netto-rechner-krankenkasse": "2026-10-05",
@@ -38,7 +38,7 @@ export const PAGE_LAST_UPDATED: Record<string, string> = {
   "/steuerrueckerstattung-rechner": "2026-10-06",
   "/arbeitslosengeld-rechner": "2026-10-06",
   "/jahressonderzahlung-rechner": "2026-10-06",
-  "/kindergeld-rechner": "2026-10-06",
+  "/kindergeld-rechner": "2026-10-09",
   "/lohnsteuerrechner": "2026-10-06",
 };
 
