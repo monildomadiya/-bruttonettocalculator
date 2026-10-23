@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { CalendarClock, CheckCircle2, Clock } from "lucide-react";
 import Section from "@/components/ui/Section";
-import { DURCHSCHNITT_ZUSATZBEITRAG_2026, ZUSATZBEITRAG_DURCHSCHNITT_2027, type Krankenkasse } from "@/data/krankenkassen";
+import {
+  DURCHSCHNITT_ZUSATZBEITRAG_2026,
+  ZUSATZBEITRAG_DURCHSCHNITT_2027,
+  ZUSATZBEITRAG_2027_SCHAETZERKREIS as SK,
+  type Krankenkasse,
+} from "@/data/krankenkassen";
 import { SV_RECHENGROESSEN_2027_ENTWURF, formatEUR } from "@/lib/taxCalculator";
-import { ZUSATZBEITRAG_2027_PROGNOSE } from "@/lib/sozialabgaben2027";
 
 // Geschütztes Leerzeichen: "3,1 %" darf nicht zwischen Zahl und Prozentzeichen umbrechen.
 const pct = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 1, maximumFractionDigits: 2 }) + " %";
@@ -36,9 +40,9 @@ export default function Zusatzbeitrag2027Ausblick({
 
   const schritte = [
     {
-      datum: "Mitte Oktober 2026",
-      text: "Der GKV-Schätzerkreis prognostiziert Einnahmen und Ausgaben der Krankenkassen für 2027.",
-      erledigt: false,
+      datum: SK.datum,
+      text: `Der GKV-Schätzerkreis hat die Finanzen der Krankenkassen für 2027 prognostiziert: rechnerischer Durchschnitt unverändert ${pct(SK.wert)}.`,
+      erledigt: true,
     },
     {
       datum: "bis 1. November 2026",
@@ -94,9 +98,10 @@ export default function Zusatzbeitrag2027Ausblick({
               </>
             ) : (
               <>
-                <strong>Noch nicht festgelegt.</strong> Fachleute erwarten für den Durchschnitt 2027{" "}
-                {pct(ZUSATZBEITRAG_2027_PROGNOSE.von * 100)} bis {pct(ZUSATZBEITRAG_2027_PROGNOSE.bis * 100)} — das ist eine
-                Prognose, kein Beschluss.
+                <strong>Schätzerkreis: {pct(SK.wert)}.</strong> Der GKV-Schätzerkreis hat am {SK.datum} einen
+                rechnerischen Durchschnitt von unverändert {pct(SK.wert)} ermittelt; amtlich gibt ihn das
+                Bundesgesundheitsministerium bis zum 1. November 2026 bekannt. Die Sätze der einzelnen Kassen folgen
+                im Dezember und können darüber liegen.
               </>
             )}
           </p>
@@ -155,7 +160,7 @@ export default function Zusatzbeitrag2027Ausblick({
         </div>
         <p className="text-xs text-black/50 mt-2">
           Arbeitnehmeranteil = Brutto × Erhöhung ÷ 2, höchstens bis zur Beitragsbemessungsgrenze 2027 von{" "}
-          {formatEUR(bbgMonat2027)} im Monat (Referentenentwurf der Rechengrößen-Verordnung 2027).
+          {formatEUR(bbgMonat2027)} im Monat (Rechengrößen-Verordnung 2027, Kabinettsbeschluss vom 7.10.2026).
         </p>
       </div>
 

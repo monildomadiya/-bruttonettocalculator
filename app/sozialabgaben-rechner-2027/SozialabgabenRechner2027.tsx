@@ -4,12 +4,15 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Calculator, Info, TrendingUp, Building2, ArrowRight, Gavel } from "lucide-react";
 import { formatEUR } from "@/lib/taxCalculator";
+import { BBG_2027_STATUS } from "@/lib/config2027";
+import { ZUSATZBEITRAG_2027_SCHAETZERKREIS as SK } from "@/data/krankenkassen";
 import {
   SV_2026,
   sv2027,
   berechneSv,
   RV_SATZ_2027_ERWARTET,
-  ZUSATZBEITRAG_2027_PROGNOSE,
+  RV_SATZ_2027_RISIKO,
+  PV_KINDERLOSENZUSCHLAG_2027_ENTWURF,
   MIDIJOB_OBERGRENZE_MONAT,
   type Beitraege,
 } from "@/lib/sozialabgaben2027";
@@ -17,12 +20,14 @@ import {
 const pct = (v: number, digits = 2) =>
   (v * 100).toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits }) + " %";
 
+// Voreinstellung = Ergebnis des GKV-Schätzerkreises; die höheren Werte bilden
+// Kassen ab, die über dem rechnerischen Durchschnitt liegen.
 const ZB_OPTIONEN = [
-  { wert: SV_2026.kvZusatzbeitrag, label: "unverändert 2,9 %" },
-  { wert: ZUSATZBEITRAG_2027_PROGNOSE.von, label: "3,1 % (untere Prognose)" },
+  { wert: SK.wert / 100, label: "2,9 % (Schätzerkreis, unverändert)" },
+  { wert: 0.031, label: "3,1 %" },
   { wert: 0.033, label: "3,3 %" },
   { wert: 0.035, label: "3,5 %" },
-  { wert: ZUSATZBEITRAG_2027_PROGNOSE.bis, label: "3,7 % (obere Prognose)" },
+  { wert: 0.037, label: "3,7 %" },
 ];
 
 // `kurz` fürs Handy: mit den vollen Namen passt die Tabelle erst ab ~440 px.
@@ -39,8 +44,9 @@ export default function SozialabgabenRechner2027() {
   const [kinder, setKinder] = useState(0);
   const [ueber23, setUeber23] = useState(true);
   const [sachsen, setSachsen] = useState(false);
-  const [rvErhoehung, setRvErhoehung] = useState(true);
-  const [zb2027, setZb2027] = useState<number>(ZB_OPTIONEN[2].wert);
+  const [rvErhoehung, setRvErhoehung] = useState(false);
+  const [pvReform, setPvReform] = useState(true);
+  const [zb2027, setZb2027] = useState<number>(ZB_OPTIONEN[0].wert);
 
   const bruttoJahr = Math.max(0, periode === "monat" ? betrag * 12 : betrag);
   const bruttoMonat = bruttoJahr / 12;
@@ -50,8 +56,9 @@ export default function SozialabgabenRechner2027() {
     const person = { bruttoJahr, kinder, ueber23, sachsen };
     const a = berechneSv(SV_2026, person);
     const werte27 = sv2027({
-      rvSatz: rvErhoehung ? RV_SATZ_2027_ERWARTET : SV_2026.rvSatz,
+      rvSatz: rvErhoehung ? RV_SATZ_2027_RISIKO : RV_SATZ_2027_ERWARTET,
       kvZusatzbeitrag: zb2027,
+      pvKinderlosenzuschlag: pvReform ? PV_KINDERLOSENZUSCHLAG_2027_ENTWURF : SV_2026.pvKinderlosenzuschlag,
     });
     const b = berechneSv(werte27, person);
 
@@ -65,7 +72,7 @@ export default function SozialabgabenRechner2027() {
     const satzEffekt = b.an.summe - nurGrenzen.an.summe;
 
     return { a, b, werte27, grenzEffekt, satzEffekt };
-  }, [bruttoJahr, kinder, ueber23, sachsen, rvErhoehung, zb2027]);
+  }, [bruttoJahr, kinder, ueber23, sachsen, rvErhoehung, pvReform, zb2027]);
 
   const diffAn = r.b.an.summe - r.a.an.summe;
   const diffAg = r.b.ag.summe - r.a.ag.summe;
@@ -175,7 +182,24 @@ export default function SozialabgabenRechner2027() {
               <span className="text-sm leading-snug">
                 <span className="font-semibold">Rentenbeitrag steigt auf 18,8 %</span>
                 <span className="block text-[11px] text-black/45 mt-0.5">
-                  Erwartet laut Rentenpaket; verbindlich erst mit der Beitragssatzverordnung im Herbst 2026.
+                  Risikoszenario. Erwartet sind laut Rentenversicherungsbericht weiter 18,6 %; nur bei einer
+                  Kürzung des Bundeszuschusses wären es rund 0,2 Punkte mehr.
+                </span>
+              </span>
+            </label>
+
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={pvReform}
+                onChange={(e) => setPvReform(e.target.checked)}
+                className="mt-0.5 w-4 h-4 accent-[#E60A1C]"
+              />
+              <span className="text-sm leading-snug">
+                <span className="font-semibold">Kinderlosenzuschlag Pflege 0,9 %</span>
+                <span className="block text-[11px] text-black/45 mt-0.5">
+                  Pflegereform der Bundesregierung (Kabinett 30.9.2026): 0,9 statt 0,6 Punkte ab 1.1.2027,
+                  noch nicht vom Bundestag beschlossen. Gilt nur für Kinderlose ab 23.
                 </span>
               </span>
             </label>
@@ -194,7 +218,8 @@ export default function SozialabgabenRechner2027() {
                 ))}
               </select>
               <span className="block text-[11px] text-black/45 mt-1">
-                Festsetzung nach dem GKV-Schätzerkreis Mitte Oktober 2026. Prognosen: 3,1–3,7 %.
+                GKV-Schätzerkreis am {SK.datum}: rechnerisch unverändert 2,9 %. Amtlich setzt das BMG den
+                Wert bis 1.11.2026 fest; Ihre Kasse kann darüber liegen.
               </span>
             </label>
           </div>
@@ -340,7 +365,7 @@ export default function SozialabgabenRechner2027() {
                 </dl>
                 <p className="text-[11px] text-black/45 mt-3 flex items-start gap-1.5">
                   <Info size={12} className="flex-shrink-0 mt-0.5" />
-                  Grenzen 2027: Referentenentwurf des BMAS vom 21.09.2026, noch nicht beschlossen. Sätze gesamt
+                  Grenzen 2027: Rechengrößen-Verordnung 2027, {BBG_2027_STATUS.satz}. Sätze gesamt
                   (AN + AG), Pflegeversicherung als Ihr Arbeitnehmeranteil. Gesetzlich Versicherte ohne
                   knappschaftliche Rentenversicherung.
                 </p>

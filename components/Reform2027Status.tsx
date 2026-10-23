@@ -81,11 +81,25 @@ const gesetzgebung: Schritt[] = [
       "Der Bundestag hat den Gesetzentwurf in erster Lesung beraten, gemeinsam mit dem Entwurf eines Jahressteuergesetzes 2026 (Drucksache 21/8283), und ihn an die Ausschüsse überwiesen. Die Federführung hat der Finanzausschuss. An den Zahlen ändert die erste Lesung nichts — dieser Rechner verwendet weiter die Werte der Drucksache 21/8235.",
   },
   {
-    titel: "Beratung im Finanzausschuss",
-    status: "offen",
-    datum: "seit 8. Oktober 2026",
+    titel: "Lohnsteuer-Programmablaufplan 2027 (Entwurf)",
+    status: "erledigt",
+    datum: "8. Oktober 2026",
     detail:
-      "Im federführenden Finanzausschuss wird der Entwurf beraten, üblicherweise mit einer öffentlichen Anhörung von Sachverständigen. Hier können sich Beträge noch ändern — etwa beim Tarif oder bei der Gegenfinanzierung. Einen Termin für die Anhörung hat der Bundestag noch nicht veröffentlicht.",
+      "Das Bundesfinanzministerium hat die Entwürfe der Programmablaufpläne zur Lohnsteuer 2027 veröffentlicht (IV C 5 - S 2361/00025/017/004). Sie setzen den Tarif des Regierungsentwurfs, die Beitragsbemessungsgrenzen 2027, einen um 0,3 Punkte höheren Pflegezuschlag für Kinderlose und einen durchschnittlichen Zusatzbeitrag von 2,9 % um. Rechtlich verbindlich sind sie noch nicht.",
+  },
+  {
+    titel: "Stellungnahme des Bundesrats",
+    status: "erledigt",
+    datum: "16. Oktober 2026",
+    detail:
+      "Der Bundesrat hat seine Stellungnahme zum Regierungsentwurf beschlossen (BR-Drs. 507/26). Änderungswünsche betreffen unter anderem die steuerfreien Sonn- und Feiertagszuschläge und die Gewerbesteuer; Grundfreibetrag, Tarif, Arbeitnehmer-Pauschbetrag und Kindergeld stellt er nicht in Frage. Die Werte in diesem Rechner bleiben deshalb unverändert.",
+  },
+  {
+    titel: "Anhörung im Finanzausschuss",
+    status: "offen",
+    datum: "4. November 2026",
+    detail:
+      "Der federführende Finanzausschuss hört am 4. November 2026 von 11 bis 12.30 Uhr Sachverständige zum Gesetzentwurf an (öffentlich, Übertragung auf bundestag.de). Danach berät der Ausschuss die endgültige Fassung — hier können sich Beträge noch ändern, etwa beim Tarif oder bei der Gegenfinanzierung.",
   },
   {
     titel: "Bundestag (2./3. Lesung)",
@@ -120,9 +134,23 @@ const bereitsBeschlossen = [
   {
     titel: "SV-Rechengrößen 2027",
     status: "offen" as Status,
-    datum: "Referentenentwurf vom 21. September 2026",
+    datum: "Kabinettsbeschluss vom 7. Oktober 2026",
     detail:
-      "Das BMAS hat den Entwurf der Sozialversicherungsrechengrößen-Verordnung 2027 vorgelegt: Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat (106.200 € im Jahr), Kranken- und Pflegeversicherung 6.375 € im Monat (76.500 € im Jahr), Versicherungspflichtgrenze 7.012,50 € im Monat. Grundlage ist die Lohnentwicklung 2025 von 4,38 %; bei der Krankenversicherung kommen 300 € monatlich obendrauf. Beschlossen ist die Verordnung noch nicht — Bundesregierung und Bundesrat stehen aus. Im Rechner bleibt deshalb der amtliche Stand 2026 voreingestellt; unter „Sozialabgaben 2027“ lassen sich die Entwurfsgrenzen zuschalten.",
+      "Das Bundeskabinett hat die Sozialversicherungsrechengrößen-Verordnung 2027 beschlossen, mit denselben Werten wie im Referentenentwurf vom 21. September: Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat (106.200 € im Jahr), Kranken- und Pflegeversicherung 6.375 € im Monat (76.500 € im Jahr), Versicherungspflichtgrenze 7.012,50 € im Monat. Grundlage ist die Lohnentwicklung 2025 von 4,38 %; bei der Krankenversicherung kommen 300 € monatlich obendrauf. Es fehlt noch die Zustimmung des Bundesrats. Im Rechner bleibt deshalb der amtliche Stand 2026 voreingestellt; unter „Sozialabgaben 2027“ lassen sich die Grenzen 2027 zuschalten.",
+  },
+  {
+    titel: "Zusatzbeitrag 2027",
+    status: "offen" as Status,
+    datum: "GKV-Schätzerkreis am 14. Oktober 2026",
+    detail:
+      "Der Schätzerkreis hat einen rechnerischen durchschnittlichen Zusatzbeitrag von unverändert 2,9 % ermittelt; das Bundesgesundheitsministerium gibt den amtlichen Wert bis zum 1. November 2026 bekannt. Die einzelnen Kassen legen ihre Sätze im Dezember fest. Der Rechner verwendet 2,9 %.",
+  },
+  {
+    titel: "Pflegeversicherung: Zuschlag für Kinderlose",
+    status: "offen" as Status,
+    datum: "Kabinettsbeschluss vom 30. September 2026",
+    detail:
+      "Nach dem Regierungsentwurf des Pflegeneuordnungsgesetzes steigt der Zuschlag für Kinderlose ab 23 zum 1. Januar 2027 von 0,6 auf 0,9 Prozentpunkte; der Grundbeitrag bleibt bei 3,6 %. Bundestag und Bundesrat müssen noch zustimmen. Der Hauptrechner rechnet bis dahin mit 0,6 Punkten, der Sozialabgaben-Rechner 2027 zeigt beide Varianten.",
   },
 ];
 

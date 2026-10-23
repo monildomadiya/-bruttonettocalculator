@@ -28,7 +28,7 @@ export default function ZusatzbeitragVergleich({
 }: {
   kassen: Krankenkasse[];
   bbgMonat2026: number;
-  /** BMAS-Referentenentwurf — vorläufig. */
+  /** Rechengrößen-Verordnung 2027 (Kabinettsbeschluss) — vorläufig. */
   bbgMonat2027: number;
 }) {
   const [art, setArt] = useState<Kassenart | "alle">("alle");
@@ -154,7 +154,7 @@ export default function ZusatzbeitragVergleich({
           </div>
         </div>
         <p className="text-xs text-black/50 mt-4">
-          Beitragsbemessungsgrenze 2026: {eur(bbgMonat2026)} im Monat; 2027 laut BMAS-Entwurf {eur(bbgMonat2027)} (vorläufig). Ihr
+          Beitragsbemessungsgrenze 2026: {eur(bbgMonat2026)} im Monat; 2027 laut Kabinettsbeschluss {eur(bbgMonat2027)} (Bundesrat steht aus). Ihr
           vollständiges Netto mit dem Satz Ihrer Kasse rechnet der{" "}
           <Link href="/brutto-netto-rechner-krankenkasse" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner mit Krankenkasse</Link>.
         </p>

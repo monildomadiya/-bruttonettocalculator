@@ -18,18 +18,18 @@
 import { siteConfig } from "@/lib/authors";
 
 export const PAGE_LAST_UPDATED: Record<string, string> = {
-  "/": "2026-10-09",
-  "/brutto-netto-rechner-2027": "2026-10-09",
+  "/": "2026-10-23",
+  "/brutto-netto-rechner-2027": "2026-10-23",
   "/weihnachtsgeld-rechner": "2026-10-05",
   "/bonus-steuerrechner": "2026-10-05",
-  "/brutto-netto-rechner-krankenkasse": "2026-10-05",
-  "/sozialabgaben-rechner-2027": "2026-10-06",
+  "/brutto-netto-rechner-krankenkasse": "2026-10-23",
+  "/sozialabgaben-rechner-2027": "2026-10-23",
   "/mindestlohn": "2026-10-05",
   "/abfindungsrechner": "2026-10-06",
   "/firmenwagenrechner": "2026-10-05",
   "/steuerklassenwechsel-rechner": "2026-10-05",
-  "/beitragsbemessungsgrenze-2027": "2026-10-05",
-  "/zusatzbeitrag-2027": "2026-10-05",
+  "/beitragsbemessungsgrenze-2027": "2026-10-23",
+  "/zusatzbeitrag-2027": "2026-10-23",
   "/rente-brutto-netto-rechner": "2026-10-05",
   "/minijob-rechner": "2026-10-05",
   "/pendlerpauschale-rechner": "2026-10-06",
@@ -38,9 +38,17 @@ export const PAGE_LAST_UPDATED: Record<string, string> = {
   "/steuerrueckerstattung-rechner": "2026-10-06",
   "/arbeitslosengeld-rechner": "2026-10-06",
   "/jahressonderzahlung-rechner": "2026-10-06",
-  "/kindergeld-rechner": "2026-10-09",
+  "/kindergeld-rechner": "2026-10-23",
   "/lohnsteuerrechner": "2026-10-06",
+  "/brutto-netto-rechner-vergleich": "2026-10-23",
 };
+
+/**
+ * Gemeinsamer redaktioneller Stand aller /krankenkasse/<slug>-Seiten (Abschnitt
+ * „Zusatzbeitrag 2027“). Der Datenstand der Kassensätze bleibt davon getrennt
+ * (ZUSATZBEITRAG_STAND in data/krankenkassen.ts).
+ */
+export const KRANKENKASSE_SEITEN_STAND = "2026-10-23";
 
 const MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 

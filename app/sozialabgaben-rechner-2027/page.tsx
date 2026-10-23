@@ -4,10 +4,11 @@ import { ChevronRight, Gavel, ArrowRight } from "lucide-react";
 import SozialabgabenRechner2027 from "./SozialabgabenRechner2027";
 import ReviewerByline from "@/components/ReviewerByline";
 import { BBG_2026, formatEUR, SV_RECHENGROESSEN_2027_ENTWURF as E } from "@/lib/taxCalculator";
-import { SV_2026, sv2027, berechneSv, RV_SATZ_2027_ERWARTET } from "@/lib/sozialabgaben2027";
+import { SV_2026, sv2027, berechneSv, RV_SATZ_2027_ERWARTET, PV_KINDERLOSENZUSCHLAG_2027_ENTWURF } from "@/lib/sozialabgaben2027";
+import { ZUSATZBEITRAG_2027_SCHAETZERKREIS as SK } from "@/data/krankenkassen";
 import { pageImageUrl } from "@/lib/pageImage";
 import { pageStand } from "@/lib/pageDates";
-import { BBG_2027_FINAL } from "@/lib/config2027";
+import { BBG_2027_FINAL, BBG_2027_STATUS } from "@/lib/config2027";
 import { nettoFuerJahr, eurDe, eurDeSigned } from "@/lib/vergleich2027";
 
 /**
@@ -16,7 +17,7 @@ import { nettoFuerJahr, eurDe, eurDeSigned } from "@/lib/vergleich2027";
  * Ergänzt /beitragsbemessungsgrenze-2027 (Referenzseite zu den Grenzwerten)
  * um die interaktive Frage, die Suchende eigentlich stellen: Was kostet mich
  * das bei MEINEM Gehalt? Jede 2027-Annahme ist auf der Seite benannt und im
- * Rechner verstellbar — beschlossen ist bislang keiner der 2027-Werte.
+ * Rechner verstellbar — verkündet ist bislang keiner der 2027-Werte.
  */
 
 const BASE = "https://bruttonettocalculator.com";
@@ -27,7 +28,7 @@ const STAND = pageStand("/sozialabgaben-rechner-2027");
 // „sozialabgaben rechner 2027“ (Pos. 2–2,7) bleibt im Titel vorn; dazu
 // „beitragsbemessungsgrenze 2027 rechner“ (Pos. 3,4).
 const TITLE = "Sozialabgaben 2027 Rechner – Beitragsbemessungsgrenze 2027";
-const DESCRIPTION = `Sozialabgaben 2027 berechnen: neue Beitragsbemessungsgrenzen (KV ${E.kvPvBbgMonat.toLocaleString("de-DE")} €, RV ${E.rvAlvBbgMonat.toLocaleString("de-DE")} € im Monat) – so viel mehr zahlen Sie 2027 für KV, PV, RV und AV.`;
+const DESCRIPTION = `Sozialabgaben 2027 berechnen: Beitragsbemessungsgrenzen laut Kabinett (KV ${E.kvPvBbgMonat.toLocaleString("de-DE")} €, RV ${E.rvAlvBbgMonat.toLocaleString("de-DE")} €), Zusatzbeitrag 2,9 %, Pflege 0,9 % für Kinderlose.`;
 
 /*
  * Beitragsbemessungsgrenzen 2026 ↔ 2027, Monat und Jahr — direkt aus der
@@ -41,7 +42,7 @@ const BBG_ZEILEN = [
 /*
  * „Wer zahlt 2027 mehr?“ — Arbeitnehmeranteil Sozialversicherung 2026 vs. 2027
  * aus calculateNetto (Steuerklasse I, kinderlos ab 23, Ø-Zusatzbeitrag 2,9 %).
- * 2027 mit den Grenzen aus dem BMAS-Entwurf, Beitragssätze wie 2026 — also der
+ * 2027 mit den Grenzen der Rechengrößen-Verordnung 2027, Beitragssätze wie 2026 — also der
  * reine Effekt der neuen Beitragsbemessungsgrenzen.
  */
 const WER_ZAHLT_MEHR = [5000, 5500, 6000, 6500, 7000, 8000, 9000].map((brutto) => {
@@ -75,9 +76,15 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };
 
-/* Beispielrechnung mit den Standardannahmen des Rechners. */
-const ZB_BEISPIEL = 0.033;
-const WERTE_2027 = sv2027({ rvSatz: RV_SATZ_2027_ERWARTET, kvZusatzbeitrag: ZB_BEISPIEL });
+/* Beispielrechnung mit den Standardannahmen des Rechners: Grenzen laut
+   Kabinettsbeschluss, Rentenbeitrag 18,6 %, Zusatzbeitrag laut Schätzerkreis,
+   Kinderlosenzuschlag 0,9 % laut Pflegereform-Entwurf. */
+const ZB_BEISPIEL = SK.wert / 100;
+const WERTE_2027 = sv2027({
+  rvSatz: RV_SATZ_2027_ERWARTET,
+  kvZusatzbeitrag: ZB_BEISPIEL,
+  pvKinderlosenzuschlag: PV_KINDERLOSENZUSCHLAG_2027_ENTWURF,
+});
 const BEISPIELE = [3000, 4500, 5812.5, 6500, 8000, 8850, 10000].map((monat) => {
   const person = { bruttoJahr: monat * 12, kinder: 0, ueber23: true, sachsen: false };
   const a = berechneSv(SV_2026, person).an.summe / 12;
@@ -88,21 +95,30 @@ const HOECHST = BEISPIELE[BEISPIELE.length - 1];
 const DURCHSCHNITT = BEISPIELE[1];
 
 const eur0 = (v: number) => v.toLocaleString("de-DE", { maximumFractionDigits: 2 }) + " €";
+const BEISPIEL_3000 = BEISPIELE[0];
 
 const FAQS = [
   {
     q: "Steigen die Sozialabgaben 2027?",
     a:
-      "Ja, für die meisten Beschäftigten. Drei Dinge wirken zusammen: Die Beitragsbemessungsgrenzen steigen nach dem Referentenentwurf des BMAS auf " +
+      "Für Gutverdiener und Kinderlose ja. Die Beitragsbemessungsgrenzen steigen auf " +
       eur0(E.kvPvBbgJahr) +
       " (Kranken- und Pflegeversicherung) und " +
       eur0(E.rvAlvBbgJahr) +
-      " (Renten- und Arbeitslosenversicherung) im Jahr, der Rentenbeitrag soll von 18,6 auf 18,8 % steigen, und für den durchschnittlichen Zusatzbeitrag der Krankenkassen erwarten Prognosen 3,1 bis 3,7 % statt 2,9 %.",
+      " (Renten- und Arbeitslosenversicherung) im Jahr — " +
+      BBG_2027_STATUS.satz +
+      ". Kinderlose ab 23 sollen nach der Pflegereform der Bundesregierung 0,9 statt 0,6 Prozentpunkte Zuschlag zahlen. Die Beitragssätze selbst bleiben voraussichtlich gleich: Rente 18,6 %, und der GKV-Schätzerkreis hat am " +
+      SK.datum +
+      " einen rechnerisch unveränderten durchschnittlichen Zusatzbeitrag von 2,9 % ermittelt.",
   },
   {
     q: "Wie viel mehr Sozialabgaben zahle ich 2027?",
     a:
-      "Das hängt vom Gehalt ab. Mit Rentenbeitrag 18,8 % und einem Zusatzbeitrag von 3,3 % zahlt ein kinderloser Arbeitnehmer mit " +
+      "Das hängt vom Gehalt ab. Mit den Grenzen 2027, Rentenbeitrag 18,6 %, Zusatzbeitrag 2,9 % und dem höheren Pflegezuschlag zahlt ein kinderloser Arbeitnehmer mit " +
+      formatEUR(BEISPIEL_3000.monat) +
+      " brutto rund " +
+      formatEUR(BEISPIEL_3000.diff) +
+      " mehr im Monat, mit " +
       formatEUR(DURCHSCHNITT.monat) +
       " brutto rund " +
       formatEUR(DURCHSCHNITT.diff) +
@@ -119,22 +135,33 @@ const FAQS = [
       formatEUR(SV_2026.kvPvBbgJahr / 12) +
       " im Monat für Kranken- und Pflegeversicherung bzw. über " +
       formatEUR(SV_2026.rvAlvBbgJahr / 12) +
-      " für Renten- und Arbeitslosenversicherung. Wer darunter verdient, spürt nur die höheren Beitragssätze.",
+      " für Renten- und Arbeitslosenversicherung. Wer darunter verdient, spürt nur höhere Beitragssätze — 2027 voraussichtlich nur den höheren Pflegezuschlag für Kinderlose und einen höheren Zusatzbeitrag, falls die eigene Kasse ihn anhebt.",
   },
   {
-    q: "Steigt der Rentenbeitrag 2027 auf 18,8 %?",
+    q: "Steigt der Rentenbeitrag 2027?",
     a:
-      "Das ist der erwartete Wert: Nach dem Rentenversicherungsbericht und dem Rentenpaket soll der Beitragssatz zum 1. Januar 2027 von 18,6 auf 18,8 % steigen. Verbindlich festgelegt wird er mit der Beitragssatzverordnung im Herbst 2026. Im Rechner lässt sich die Erhöhung abschalten.",
+      "Voraussichtlich nicht. Nach dem Rentenversicherungsbericht 2025 der Bundesregierung bleibt der Beitragssatz bis einschließlich 2027 bei 18,6 % und steigt erst 2028 (Vorausberechnung: 19,8 %). Die Deutsche Rentenversicherung warnt allerdings: Kürzt der Bund seinen Zuschuss um 4 Mrd. €, wären schon 2027 rund 0,2 Punkte mehr nötig. Dieses Szenario (18,8 %) können Sie im Rechner zuschalten.",
   },
   {
     q: "Wie hoch wird der Zusatzbeitrag der Krankenkassen 2027?",
     a:
-      "Den durchschnittlichen Zusatzbeitrag legt das Bundesgesundheitsministerium nach der Prognose des GKV-Schätzerkreises fest, die Mitte Oktober 2026 erwartet wird. Fachprognosen liegen zwischen 3,1 und 3,7 %. Der Beitrag Ihrer eigenen Kasse kann davon abweichen; im Rechner wählen Sie das Szenario selbst.",
+      "Der GKV-Schätzerkreis hat am " +
+      SK.datum +
+      " einen rechnerischen durchschnittlichen Zusatzbeitrag von unverändert 2,9 % ermittelt; das Bundesgesundheitsministerium setzt den amtlichen Wert bis zum 1. November 2026 fest. Was Ihre eigene Kasse 2027 verlangt, beschließt sie im Dezember — viele Kassen liegen schon 2026 über dem Durchschnitt. Im Rechner wählen Sie den Satz selbst.",
   },
   {
     q: "Zahlt der Arbeitgeber 2027 auch mehr?",
     a:
-      "Ja. Kranken-, Renten- und Arbeitslosenversicherung werden je zur Hälfte getragen, deshalb steigt der Arbeitgeberanteil im gleichen Maß. Nur Kinderlosenzuschlag und Kinderabschläge in der Pflegeversicherung betreffen allein den Arbeitnehmer.",
+      "Ja, für Beschäftigte über den bisherigen Beitragsbemessungsgrenzen. Kranken-, Renten- und Arbeitslosenversicherung werden je zur Hälfte getragen, deshalb steigt der Arbeitgeberanteil im gleichen Maß. Nur Kinderlosenzuschlag und Kinderabschläge in der Pflegeversicherung betreffen allein den Arbeitnehmer.",
+  },
+  {
+    q: "Zahlen Kinderlose 2027 mehr für die Pflegeversicherung?",
+    a:
+      "Nach dem Entwurf des Pflegeneuordnungsgesetzes, den das Bundeskabinett am 30. September 2026 beschlossen hat, ja: Der Zuschlag für Kinderlose ab 23 steigt zum 1. Januar 2027 von 0,6 auf 0,9 Prozentpunkte, ihr Arbeitnehmeranteil damit von 2,4 auf 2,7 % (Sachsen: 3,2 %). Bei " +
+      formatEUR(BEISPIEL_3000.monat) +
+      " brutto sind das " +
+      formatEUR(BEISPIEL_3000.monat * 0.003) +
+      " mehr im Monat. Den Zuschlag zahlt der Arbeitnehmer allein. Bundestag und Bundesrat müssen noch zustimmen.",
   },
   // Google Trends DE (30 Tage bis 6.10.2026), Thema „sozialabgaben“: „sozialabgaben
   // gutverdiener“, „höhere sozialabgaben 2027“ und „warum zahlen beamte keine
@@ -144,7 +171,7 @@ const FAQS = [
     a:
       "Ja, am stärksten sogar: Wer über den bisherigen Beitragsbemessungsgrenzen verdient, zahlt 2027 nicht nur die höheren Sätze, sondern auch auf einen größeren Teil des Gehalts Beiträge. Bei " +
       formatEUR(HOECHST.monat) +
-      " brutto im Monat sind das mit Rentenbeitrag 18,8 % und 3,3 % Zusatzbeitrag rund " +
+      " brutto im Monat sind das für Kinderlose rund " +
       formatEUR(HOECHST.diff) +
       " mehr im Monat, bei " +
       formatEUR(DURCHSCHNITT.monat) +
@@ -191,10 +218,10 @@ export default function SozialabgabenRechner2027Page() {
     publisher: { "@id": `${BASE}/#organization` },
     citation: {
       "@type": "Legislation",
-      name: "Referentenentwurf einer Sozialversicherungsrechengrößen-Verordnung 2027",
+      name: "Sozialversicherungsrechengrößen-Verordnung 2027 (Kabinettsbeschluss)",
       legislationJurisdiction: "Deutschland",
-      legislationDate: E.stand,
-      url: E.quelle,
+      legislationDate: BBG_2027_STATUS.datum,
+      url: BBG_2027_STATUS.quelle,
     },
   };
 
@@ -213,15 +240,16 @@ export default function SozialabgabenRechner2027Page() {
           </nav>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E60A1C]/10 border border-[#E60A1C]/25 text-[#E60A1C] text-xs font-bold mb-4">
             <Gavel size={14} />
-            Grenzen 2027 laut BMAS-Entwurf vom 21.09.2026
+            Grenzen 2027: {BBG_2027_STATUS.kurz}
           </div>
           <h1 className="font-display font-extrabold text-3xl sm:text-5xl tracking-tight leading-tight mb-4 max-w-4xl">
             Sozialabgaben 2027: <span className="text-gradient-accent">Rechner mit neuen Beitragsbemessungsgrenzen</span>
           </h1>
           <p className="text-base sm:text-lg text-black/75 max-w-3xl leading-relaxed">
-            Höhere Beitragsbemessungsgrenzen, ein Rentenbeitrag von voraussichtlich 18,8 % und steigende
-            Zusatzbeiträge: Geben Sie Ihr Bruttogehalt ein und sehen Sie Ihre Beiträge 2026 und 2027
-            nebeneinander — für jeden Versicherungszweig, für Sie und Ihren Arbeitgeber.
+            Höhere Beitragsbemessungsgrenzen (vom Kabinett am 7. Oktober beschlossen), ein höherer
+            Pflegezuschlag für Kinderlose und ein Zusatzbeitrag von rechnerisch 2,9 %: Geben Sie Ihr
+            Bruttogehalt ein und sehen Sie Ihre Beiträge 2026 und 2027 nebeneinander — für jeden
+            Versicherungszweig, für Sie und Ihren Arbeitgeber.
           </p>
           <div className="mt-5">
             <ReviewerByline updatedDisplay={STAND.display} />
@@ -261,7 +289,7 @@ export default function SozialabgabenRechner2027Page() {
           </div>
           {!BBG_2027_FINAL && (
             <p className="text-sm text-black/60 mt-3">
-              Stand: Referentenentwurf vom 21.09.2026 – Kabinett und Bundesrat stehen noch aus.
+              Stand: Rechengrößen-Verordnung 2027, {BBG_2027_STATUS.satz}.
             </p>
           )}
         </section>
@@ -271,8 +299,8 @@ export default function SozialabgabenRechner2027Page() {
           <p className="text-sm sm:text-base text-black/75 leading-relaxed mb-4">
             Die neuen Grenzen treffen nur Gehälter über der Grenze von 2026 ({formatEUR(BBG_2026.kvPvJahr / 12)} im
             Monat in der Kranken- und Pflegeversicherung). Arbeitnehmeranteil zur Sozialversicherung pro Monat,
-            Steuerklasse I, kinderlos ab 23, durchschnittlicher Zusatzbeitrag 2,9 %; 2027 mit den Grenzen aus dem
-            BMAS-Entwurf und den Beitragssätzen 2026.
+            Steuerklasse I, kinderlos ab 23, durchschnittlicher Zusatzbeitrag 2,9 %; 2027 mit den Grenzen der
+            Rechengrößen-Verordnung 2027 und den Beitragssätzen 2026.
           </p>
           <div className="overflow-x-auto bg-white border border-black/[0.08] rounded-2xl">
             <table className="w-full text-sm min-w-[480px]">
@@ -298,8 +326,8 @@ export default function SozialabgabenRechner2027Page() {
             </table>
           </div>
           <p className="text-sm text-black/60 mt-3">
-            Höhere Beitragssätze 2027 (etwa ein höherer Zusatzbeitrag) kommen noch hinzu — den Rentenbeitrag und den
-            Zusatzbeitrag stellen Sie im Rechner oben selbst ein.{" "}
+            Höhere Beitragssätze 2027 (der Pflegezuschlag für Kinderlose, ein höherer Zusatzbeitrag Ihrer Kasse)
+            kommen noch hinzu — Sie stellen sie im Rechner oben selbst ein.{" "}
             <Link href="/brutto-netto-rechner-krankenkasse" className="text-[#E60A1C] font-semibold hover:underline">
               Zusatzbeitrag 2027 berechnen
             </Link>
@@ -324,37 +352,43 @@ export default function SozialabgabenRechner2027Page() {
                   <td className="px-4 py-3">BBG Kranken- und Pflegeversicherung</td>
                   <td className="px-4 py-3 text-right">{eur0(SV_2026.kvPvBbgJahr)}</td>
                   <td className="px-4 py-3 text-right font-bold">{eur0(E.kvPvBbgJahr)}</td>
-                  <td className="px-4 py-3 text-black/60">Referentenentwurf</td>
+                  <td className="px-4 py-3 text-black/60">{BBG_2027_STATUS.kurz}</td>
                 </tr>
                 <tr className="border-b border-black/[0.05]">
                   <td className="px-4 py-3">BBG Renten- und Arbeitslosenversicherung</td>
                   <td className="px-4 py-3 text-right">{eur0(SV_2026.rvAlvBbgJahr)}</td>
                   <td className="px-4 py-3 text-right font-bold">{eur0(E.rvAlvBbgJahr)}</td>
-                  <td className="px-4 py-3 text-black/60">Referentenentwurf</td>
+                  <td className="px-4 py-3 text-black/60">{BBG_2027_STATUS.kurz}</td>
                 </tr>
                 <tr className="border-b border-black/[0.05]">
                   <td className="px-4 py-3">Versicherungspflichtgrenze</td>
                   <td className="px-4 py-3 text-right">77.400 €</td>
                   <td className="px-4 py-3 text-right font-bold">{eur0(E.versicherungspflichtgrenzeJahr)}</td>
-                  <td className="px-4 py-3 text-black/60">Referentenentwurf</td>
+                  <td className="px-4 py-3 text-black/60">{BBG_2027_STATUS.kurz}</td>
                 </tr>
                 <tr className="border-b border-black/[0.05]">
                   <td className="px-4 py-3">Rentenversicherung</td>
                   <td className="px-4 py-3 text-right">18,6 %</td>
-                  <td className="px-4 py-3 text-right font-bold">18,8 %</td>
-                  <td className="px-4 py-3 text-black/60">erwartet, Verordnung Herbst 2026</td>
+                  <td className="px-4 py-3 text-right font-bold">18,6 %</td>
+                  <td className="px-4 py-3 text-black/60">erwartet (Rentenversicherungsbericht 2025)</td>
                 </tr>
                 <tr className="border-b border-black/[0.05]">
                   <td className="px-4 py-3">Ø Zusatzbeitrag Krankenversicherung</td>
                   <td className="px-4 py-3 text-right">2,9 %</td>
-                  <td className="px-4 py-3 text-right font-bold">3,1–3,7 %</td>
-                  <td className="px-4 py-3 text-black/60">Prognose, Festsetzung Okt./Nov. 2026</td>
+                  <td className="px-4 py-3 text-right font-bold">2,9 %</td>
+                  <td className="px-4 py-3 text-black/60">Schätzerkreis {SK.datum}; BMG-Festsetzung bis 1.11.</td>
+                </tr>
+                <tr className="border-b border-black/[0.05]">
+                  <td className="px-4 py-3">Pflegeversicherung: Zuschlag für Kinderlose</td>
+                  <td className="px-4 py-3 text-right">0,6 Pp.</td>
+                  <td className="px-4 py-3 text-right font-bold">0,9 Pp.</td>
+                  <td className="px-4 py-3 text-black/60">Kabinett 30.9.2026, Bundestag steht aus</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3">Pflege- und Arbeitslosenversicherung</td>
+                  <td className="px-4 py-3">Pflege-Grundbeitrag / Arbeitslosenversicherung</td>
                   <td className="px-4 py-3 text-right">3,6 % / 2,6 %</td>
                   <td className="px-4 py-3 text-right font-bold">3,6 % / 2,6 %</td>
-                  <td className="px-4 py-3 text-black/60">keine Änderung beschlossen</td>
+                  <td className="px-4 py-3 text-black/60">keine Änderung geplant</td>
                 </tr>
               </tbody>
             </table>
@@ -371,9 +405,9 @@ export default function SozialabgabenRechner2027Page() {
         <section>
           <h2 className="text-2xl font-extrabold text-[#16181D] mb-3">Mehrbelastung nach Gehalt</h2>
           <p className="text-sm sm:text-base text-black/75 leading-relaxed mb-4">
-            Arbeitnehmeranteil pro Monat, kinderlos ab 23, mit Rentenbeitrag 18,8 % und einem
-            durchschnittlichen Zusatzbeitrag von 3,3 % (Mitte des Prognosekorridors). Bis zur alten Grenze
-            steigen die Abgaben nur über die Sätze; darüber kommt der Effekt der höheren Grenzen hinzu —
+            Arbeitnehmeranteil pro Monat, kinderlos ab 23, mit Rentenbeitrag 18,6 %, Zusatzbeitrag 2,9 %
+            (Schätzerkreis) und dem Pflegezuschlag von 0,9 Punkten aus dem Regierungsentwurf. Bis zur alten
+            Grenze steigen die Abgaben nur über den Pflegezuschlag; darüber kommt der Effekt der höheren Grenzen hinzu —
             bis {formatEUR(E.rvAlvBbgMonat)} Brutto, ab dann ist der Höchstbeitrag erreicht.
           </p>
           <div className="overflow-x-auto bg-white border border-black/[0.08] rounded-2xl">
@@ -409,7 +443,8 @@ export default function SozialabgabenRechner2027Page() {
               Arbeitnehmer und Arbeitgeber je zur Hälfte, den Zusatzbeitrag der Krankenkasse eingeschlossen.
             </p>
             <p>
-              In der Pflegeversicherung zahlen Kinderlose ab 23 Jahren 0,6 Prozentpunkte zusätzlich; Eltern
+              In der Pflegeversicherung zahlen Kinderlose ab 23 Jahren 2026 0,6 Prozentpunkte zusätzlich, 2027
+              nach dem Regierungsentwurf 0,9 Prozentpunkte; Eltern
               mit mehreren Kindern unter 25 bekommen ab dem zweiten bis zum fünften Kind je 0,25 Prozentpunkte
               Abschlag. In Sachsen trägt der Arbeitnehmer einen halben Prozentpunkt mehr, weil dort der
               Buß- und Bettag Feiertag geblieben ist.

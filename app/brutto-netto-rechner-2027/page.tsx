@@ -28,7 +28,7 @@ const eur = (n: number) => n.toLocaleString("de-DE");
  * „Wie viel mehr Netto?“-Tabelle: Monatsbrutto 2.000–8.000 € in 500-€-Schritten,
  * je eine Tabelle für Steuerklasse I und III. Alle Werte aus der Engine
  * (lib/vergleich2027.ts → calculateNetto). Sozialabgaben 2027 und 2028 mit den
- * Beitragsbemessungsgrenzen aus dem BMAS-Referentenentwurf 2027 (für 2028 gibt
+ * Beitragsbemessungsgrenzen der Rechengrößen-Verordnung 2027 (Kabinettsbeschluss; für 2028 gibt
  * es noch keine Werte) — dieselbe Zahl, die der Rechner mit „Sozialabgaben 2027:
  * Entwurf 2027“ zeigt.
  */
@@ -159,7 +159,7 @@ const faqs = [
   },
   {
     q: "Sind die Sozialabgaben 2027 schon berücksichtigt?",
-    a: "Wahlweise. Für die Rechengrößen 2027 liegt seit dem 21. September 2026 ein Referentenentwurf des BMAS vor (Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat, Kranken- und Pflegeversicherung 6.375 € im Monat), beschlossen ist die Verordnung aber noch nicht. Im Rechner wählen Sie deshalb unter „Sozialabgaben 2027“: „Stand 2026“ rechnet mit den amtlichen Grenzen 2026 weiter (Voreinstellung), „Entwurf 2027“ mit den Entwurfsgrenzen. Die Beitragssätze bleiben in beiden Fällen auf dem Stand 2026, weil für 2027 noch keiner beschlossen ist. Der Unterschied zeigt sich erst ab 5.812,50 € brutto im Monat. Sobald die Verordnung in Kraft ist, wird der Rechner umgestellt.",
+    a: "Wahlweise. Die Rechengrößen-Verordnung 2027 hat das Bundeskabinett am 7. Oktober 2026 beschlossen (Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat, Kranken- und Pflegeversicherung 6.375 € im Monat); die Zustimmung des Bundesrats steht noch aus. Im Rechner wählen Sie deshalb unter „Sozialabgaben 2027“: „Stand 2026“ rechnet mit den amtlichen Grenzen 2026 weiter (Voreinstellung), „Grenzen 2027“ mit den beschlossenen Grenzen. Die Beitragssätze bleiben in beiden Fällen auf dem Stand 2026: Der GKV-Schätzerkreis hat am 14. Oktober 2026 einen unveränderten durchschnittlichen Zusatzbeitrag von 2,9 % errechnet, und der Rentenbeitrag bleibt nach dem Rentenversicherungsbericht 2027 bei 18,6 %. Nur der Pflegezuschlag für Kinderlose soll nach dem Regierungsentwurf zur Pflegereform von 0,6 auf 0,9 Punkte steigen; das ist noch nicht eingerechnet. Der Unterschied zeigt sich erst ab 5.812,50 € brutto im Monat. Sobald die Verordnung in Kraft ist, wird der Rechner umgestellt.",
   },
   {
     q: "Welche 2027-Werte stehen bereits fest?",
@@ -175,7 +175,7 @@ const faqs = [
   },
   {
     q: "Was ist das EStRefG 2027?",
-    a: "Das Einkommensteuerreformgesetz 2027 ist das Gesetzesvorhaben, mit dem die Bundesregierung den Einkommensteuertarif reformieren will. Das Bundesfinanzministerium hat den Referentenentwurf am 18. August 2026 vorgelegt; das Bundeskabinett hat den Regierungsentwurf am 2. September 2026 beschlossen. Seit dem 28. September 2026 liegt er dem Bundestag als Drucksache 21/8235 vor. Am 8. Oktober 2026 hat ihn der Bundestag in erster Lesung beraten und an den Finanzausschuss überwiesen, der ihn nun federführend berät. Artikel 1 fasst § 32a Absatz 1 EStG für den Veranlagungszeitraum 2027 neu, Artikel 2 für 2028. Enthalten sind außerdem ein höherer Arbeitnehmer-Pauschbetrag, höheres Kindergeld, höhere Kinderfreibeträge sowie Gegenfinanzierungsmaßnahmen.",
+    a: "Das Einkommensteuerreformgesetz 2027 ist das Gesetzesvorhaben, mit dem die Bundesregierung den Einkommensteuertarif reformieren will. Das Bundesfinanzministerium hat den Referentenentwurf am 18. August 2026 vorgelegt; das Bundeskabinett hat den Regierungsentwurf am 2. September 2026 beschlossen. Seit dem 28. September 2026 liegt er dem Bundestag als Drucksache 21/8235 vor. Am 8. Oktober 2026 hat ihn der Bundestag in erster Lesung beraten und an den Finanzausschuss überwiesen, der ihn federführend berät; am 16. Oktober 2026 hat der Bundesrat Stellung genommen, ohne Tarif oder Grundfreibetrag in Frage zu stellen. Die öffentliche Anhörung im Finanzausschuss ist am 4. November 2026. Artikel 1 fasst § 32a Absatz 1 EStG für den Veranlagungszeitraum 2027 neu, Artikel 2 für 2028. Enthalten sind außerdem ein höherer Arbeitnehmer-Pauschbetrag, höheres Kindergeld, höhere Kinderfreibeträge sowie Gegenfinanzierungsmaßnahmen.",
   },
   {
     q: "Gilt dieser Rechner auch für Österreich?",
@@ -297,7 +297,7 @@ export default function Rechner2027Page() {
         <p className="text-xs text-black/55 mt-3 leading-relaxed">
           „+ € / Monat“ = Netto 2027 bzw. 2028 minus Netto 2026. Lohnsteuer 2027 nach Artikel 1, 2028 nach Artikel 2 des
           Regierungsentwurfs ({LEGISLATION_STATUS.drucksache}, Entwurf). Sozialabgaben 2027 mit den
-          Beitragsbemessungsgrenzen aus dem BMAS-Referentenentwurf vom 21.09.2026 (Beitragssätze wie 2026); für 2028
+          Beitragsbemessungsgrenzen der Rechengrößen-Verordnung 2027 (Kabinettsbeschluss vom 07.10.2026; Beitragssätze wie 2026); für 2028
           sind noch keine Werte festgelegt, angenommen sind die Werte 2027. Deshalb wird das Plus oberhalb der
           Beitragsbemessungsgrenze 2026 (5.812,50 € brutto) kleiner oder negativ. Beschlossen ist beides noch nicht.
         </p>
@@ -313,7 +313,7 @@ export default function Rechner2027Page() {
           {eur(GRUNDFREIBETRAG.entwurf2027)} €, Arbeitnehmer-Pauschbetrag{" "}
           {eur(ARBEITNEHMER_PAUSCHBETRAG.reform)} € und oben ein neuer Spitzensatz von 47 %.
           Seit dem 28. September 2026 liegt der Entwurf dem Bundestag als Drucksache 21/8235 vor; nach
-          der ersten Lesung am 8. Oktober 2026 berät ihn jetzt der Finanzausschuss. Verkündet ist das Gesetz noch nicht —
+          der ersten Lesung am 8. Oktober 2026 berät ihn jetzt der Finanzausschuss (Anhörung am 4. November 2026). Verkündet ist das Gesetz noch nicht —
           Bundestag und Bundesrat müssen noch zustimmen, deshalb steht „Ohne Reform“ weiter als
           Untergrenze daneben. Ihr reguläres Netto für 2026 und 2027 ohne Szenarien rechnet der{" "}
           <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">

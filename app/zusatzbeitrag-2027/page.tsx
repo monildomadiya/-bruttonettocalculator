@@ -9,7 +9,7 @@ import {
   GUENSTIGSTE_KASSE,
   TEUERSTE_KASSE,
   ZUSATZBEITRAG_STAND,
-  ZUSATZBEITRAG_STAND_ISO,
+  ZUSATZBEITRAG_2027_SCHAETZERKREIS,
 } from "@/data/krankenkassen";
 import { BBG_2026, SV_RECHENGROESSEN_2027_ENTWURF, formatEUR } from "@/lib/taxCalculator";
 import ZusatzbeitragVergleich from "./ZusatzbeitragVergleich";
@@ -20,6 +20,7 @@ import ReviewerByline from "@/components/ReviewerByline";
 import Section from "@/components/ui/Section";
 import { pageImageUrl } from "@/lib/pageImage";
 import { ORG_ID } from "@/lib/seo";
+import { pageStand } from "@/lib/pageDates";
 
 /*
  * /zusatzbeitrag-2027 — Listen-Intention ("alle Kassen im Vergleich").
@@ -35,10 +36,11 @@ import { ORG_ID } from "@/lib/seo";
 const CANONICAL = "https://bruttonettocalculator.com/zusatzbeitrag-2027";
 const TITLE = "Zusatzbeitrag 2027: Alle Krankenkassen im Vergleich";
 const DESCRIPTION =
-  "Zusatzbeitrag 2027 aller Krankenkassen: TK, AOK, Barmer, DAK, hkk & mehr im Vergleich – plus Rechner, was der neue Beitrag netto kostet.";
+  "Zusatzbeitrag 2027: Schätzerkreis errechnet 2,9 %. Alle Krankenkassen (TK, AOK, Barmer, DAK …) im Vergleich – plus Rechner für Ihr Netto.";
 
-/** Stand der Seite (Text); der Datenstand der Sätze steht in ZUSATZBEITRAG_STAND. */
-const SEITEN_STAND = "5. Oktober 2026";
+/** Stand der Seite; der Datenstand der Sätze steht in ZUSATZBEITRAG_STAND. */
+const SEITE = pageStand("/zusatzbeitrag-2027");
+const SEITEN_STAND = SEITE.display;
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -81,7 +83,7 @@ const faqs = [
     a:
       ZUSATZBEITRAG_DURCHSCHNITT_2027 !== null
         ? `Das Bundesgesundheitsministerium hat den durchschnittlichen Zusatzbeitrag 2027 auf ${pct(ZUSATZBEITRAG_DURCHSCHNITT_2027)} festgelegt (2026: ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}). Er ist ein Rechenwert; Ihre Kasse erhebt ihren eigenen Satz.`
-        : `Er steht noch nicht fest. Das Bundesgesundheitsministerium gibt ihn bis zum 1. November 2026 bekannt, nachdem der GKV-Schätzerkreis Mitte Oktober die Finanzen der Kassen für 2027 prognostiziert hat (§ 242a SGB V). 2026 lag er bei ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}.`,
+        : `Nach dem GKV-Schätzerkreis vom ${ZUSATZBEITRAG_2027_SCHAETZERKREIS.datum} rechnerisch unverändert ${pct(ZUSATZBEITRAG_2027_SCHAETZERKREIS.wert)} (2026: ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}). Amtlich gibt ihn das Bundesgesundheitsministerium bis zum 1. November 2026 bekannt (§ 242a SGB V). Er ist ein Rechenwert; Ihre Kasse beschließt ihren eigenen Satz im Dezember und kann darüber liegen.`,
   },
   {
     q: "Wann veröffentlichen die Krankenkassen ihren Zusatzbeitrag 2027?",
@@ -114,7 +116,7 @@ const schema = {
       name: TITLE,
       description: DESCRIPTION,
       inLanguage: "de-DE",
-      dateModified: ZUSATZBEITRAG_STAND_ISO,
+      dateModified: SEITE.iso,
       isPartOf: { "@id": "https://bruttonettocalculator.com/#website" },
     },
     {
@@ -124,7 +126,7 @@ const schema = {
       description:
         "Kassenindividuelle Zusatzbeiträge zur gesetzlichen Krankenversicherung 2026 und, sobald veröffentlicht, 2027 für AOK-Regionalkassen, TK, BARMER, DAK-Gesundheit, hkk, KNAPPSCHAFT und weitere Kassen.",
       temporalCoverage: "2026/2027",
-      dateModified: ZUSATZBEITRAG_STAND_ISO,
+      dateModified: SEITE.iso,
       isAccessibleForFree: true,
       creator: { "@id": ORG_ID },
     },
@@ -147,7 +149,8 @@ const QUELLEN = [
   { label: "§ 242a SGB V — Durchschnittlicher Zusatzbeitragssatz", url: "https://www.gesetze-im-internet.de/sgb_5/__242a.html" },
   { label: "§ 175 SGB V — Kassenwahl und Sonderkündigungsrecht", url: "https://www.gesetze-im-internet.de/sgb_5/__175.html" },
   { label: "GKV-Spitzenverband — Krankenkassenliste", url: "https://www.gkv-spitzenverband.de/service/krankenkassenliste/krankenkassen.jsp" },
-  { label: "BMAS — Referentenentwurf Sozialversicherungsrechengrößen 2027", url: SV_RECHENGROESSEN_2027_ENTWURF.quelle },
+  { label: "BMG — Ergebnisse des GKV-Schätzerkreises (14.10.2026)", url: ZUSATZBEITRAG_2027_SCHAETZERKREIS.quelle },
+  { label: "BMAS — Kabinettsbeschluss Sozialversicherungsrechengrößen 2027 (7.10.2026)", url: SV_RECHENGROESSEN_2027_ENTWURF.quelleKabinett },
 ];
 
 export default function Zusatzbeitrag2027Page() {

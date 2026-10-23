@@ -129,9 +129,9 @@ const T: Record<Lang, Record<string, string>> = {
     year2027Note: "Für 2027 gibt es noch kein verkündetes Gesetz — aber seit dem 2.9.2026 einen vom Kabinett beschlossenen Regierungsentwurf mit konkreten Tarifwerten. Wählen Sie ein Steuer-Szenario und darunter, ob die Sozialabgaben auf dem amtlichen Stand 2026 bleiben oder mit dem Entwurf 2027 gerechnet werden.",
     svLabel: "Sozialabgaben 2027",
     svBeschlossen: "Stand 2026",
-    svEntwurf: "Entwurf 2027",
+    svEntwurf: "Grenzen 2027",
     svBeschlossenHint: `Amtliche Beitragsbemessungsgrenzen 2026 (KV/PV ${B.kv26} €, RV/ALV ${B.rv26} € im Monat) — sie gelten weiter, bis die Rechengrößen-Verordnung 2027 verkündet ist.`,
-    svEntwurfHint: `BMAS-Referentenentwurf vom 21.9.2026: Beitragsbemessungsgrenze KV/PV ${B.kv27} €, RV/ALV ${B.rv27} € im Monat. Beitragssätze wie 2026. Wirkt erst ab ${B.kv26} € brutto.`,
+    svEntwurfHint: `Rechengrößen-Verordnung 2027 (Kabinettsbeschluss 7.10.2026, Bundesrat steht aus): Beitragsbemessungsgrenze KV/PV ${B.kv27} €, RV/ALV ${B.rv27} € im Monat. Beitragssätze wie 2026. Wirkt erst ab ${B.kv26} € brutto.`,
     scenarioLabel: "Reformszenario 2027",
     scenarioOhne: "Ohne Reform",
     scenarioStufe1: "Entwurf 2027",
@@ -196,7 +196,7 @@ const T: Record<Lang, Record<string, string>> = {
     diffTax: "davon Lohnsteuer, Soli & Kirchensteuer",
     diffSv: "davon Sozialabgaben",
     provisional: "vorläufig",
-    provisionalTip: "Vorläufige Werte 2027: Steuertarif, Grundfreibetrag, Arbeitnehmer-Pauschbetrag und Kindergeld aus dem Regierungsentwurf EStRefG 2027 (noch nicht beschlossen); Sozialabgaben mit den Werten 2026 oder dem BMAS-Entwurf der Rechengrößen 2027; Ø-Zusatzbeitrag 2,9 % (Wert 2027 gibt das BMG bis 1.11.2026 bekannt); Lohnsteuer-Grenzwerte Klasse V/VI aus dem PAP 2026.",
+    provisionalTip: "Vorläufige Werte 2027: Steuertarif, Grundfreibetrag, Arbeitnehmer-Pauschbetrag und Kindergeld aus dem Regierungsentwurf EStRefG 2027 (noch nicht beschlossen); Sozialabgaben mit den Werten 2026 oder den Beitragsbemessungsgrenzen 2027 (Kabinettsbeschluss 7.10.2026); Ø-Zusatzbeitrag 2,9 % (GKV-Schätzerkreis 14.10.2026, amtlich bis 1.11.2026); Lohnsteuer-Grenzwerte Klasse V/VI aus dem PAP 2026.",
     monthlyAdj: "monatlich",
     annualAdj: "jährlich",
     perYearWord: "/ Jahr",
@@ -218,9 +218,9 @@ const T: Record<Lang, Record<string, string>> = {
     year2027Note: "There is no enacted 2027 law yet — but since 2 Sep 2026 there is a cabinet-approved government draft with concrete tariff values. Pick a tax scenario and, below it, whether social contributions stay at official 2026 levels or use the 2027 draft.",
     svLabel: "Social contributions 2027",
     svBeschlossen: "2026 levels",
-    svEntwurf: "2027 draft",
+    svEntwurf: "2027 ceilings",
     svBeschlossenHint: `Official 2026 contribution ceilings (health/care €${BE.kv26}, pension/unemployment €${BE.rv26} per month) — they apply until the 2027 ordinance is enacted.`,
-    svEntwurfHint: `Labour ministry draft of 21 Sep 2026: ceilings health/care €${BE.kv27}, pension/unemployment €${BE.rv27} per month. Rates as in 2026. Only matters above €${BE.kv26} gross.`,
+    svEntwurfHint: `Adopted by the federal cabinet on 7 Oct 2026 (Bundesrat approval pending): ceilings health/care €${BE.kv27}, pension/unemployment €${BE.rv27} per month. Rates as in 2026. Only matters above €${BE.kv26} gross.`,
     scenarioLabel: "2027 reform scenario",
     scenarioOhne: "No reform",
     scenarioStufe1: "Draft 2027",
@@ -285,7 +285,7 @@ const T: Record<Lang, Record<string, string>> = {
     diffTax: "of which income tax, soli & church tax",
     diffSv: "of which social contributions",
     provisional: "provisional",
-    provisionalTip: "Provisional 2027 values: tax tariff, basic allowance, employee lump sum and child benefit from the EStRefG 2027 government draft (not yet passed); social contributions at 2026 values or the BMAS 2027 draft; average additional contribution 2.9 % (2027 value due by 1 Nov 2026).",
+    provisionalTip: "Provisional 2027 values: tax tariff, basic allowance, employee lump sum and child benefit from the EStRefG 2027 government draft (not yet passed); social contributions at 2026 values or the 2027 ceilings adopted by the cabinet; average additional contribution 2.9 % (estimators' panel of 14 Oct 2026, official value due by 1 Nov 2026).",
     monthlyAdj: "monthly",
     annualAdj: "annually",
     perYearWord: "/ year",
@@ -309,7 +309,7 @@ const T: Record<Lang, Record<string, string>> = {
     svBeschlossen: "Poziom 2026",
     svEntwurf: "Projekt 2027",
     svBeschlossenHint: `Urzędowe limity składek 2026 (zdrowotna/pielęgnacyjna ${B.kv26} €, emerytalna/bezrobocie ${B.rv26} € miesięcznie) — obowiązują do ogłoszenia rozporządzenia na 2027 r.`,
-    svEntwurfHint: `Projekt ministerstwa pracy z 21.9.2026: limity zdrowotna/pielęgnacyjna ${B.kv27} €, emerytalna/bezrobocie ${B.rv27} € miesięcznie. Stawki jak w 2026 r. Ma znaczenie dopiero powyżej ${B.kv26} € brutto.`,
+    svEntwurfHint: `Przyjęte przez rząd 7.10.2026 (brak jeszcze zgody Bundesratu): limity zdrowotna/pielęgnacyjna ${B.kv27} €, emerytalna/bezrobocie ${B.rv27} € miesięcznie. Stawki jak w 2026 r. Ma znaczenie dopiero powyżej ${B.kv26} € brutto.`,
     scenarioLabel: "Scenariusz reformy 2027",
     scenarioOhne: "Bez reformy",
     scenarioStufe1: "Projekt 2027",
@@ -398,7 +398,7 @@ const T: Record<Lang, Record<string, string>> = {
     svBeschlossen: "Nivel 2026",
     svEntwurf: "Proiect 2027",
     svBeschlossenHint: `Plafoanele oficiale de contribuții 2026 (sănătate/îngrijire ${B.kv26} €, pensie/șomaj ${B.rv26} € pe lună) — se aplică până la publicarea ordonanței pentru 2027.`,
-    svEntwurfHint: `Proiectul Ministerului Muncii din 21.9.2026: plafon sănătate/îngrijire ${B.kv27} €, pensie/șomaj ${B.rv27} € pe lună. Cote ca în 2026. Contează doar peste ${B.kv26} € brut.`,
+    svEntwurfHint: `Adoptat de guvern la 7.10.2026 (aprobarea Bundesrat în așteptare): plafon sănătate/îngrijire ${B.kv27} €, pensie/șomaj ${B.rv27} € pe lună. Cote ca în 2026. Contează doar peste ${B.kv26} € brut.`,
     scenarioLabel: "Scenariu reformă 2027",
     scenarioOhne: "Fără reformă",
     scenarioStufe1: "Proiect 2027",
@@ -487,7 +487,7 @@ const T: Record<Lang, Record<string, string>> = {
     svBeschlossen: "2026 değerleri",
     svEntwurf: "2027 taslağı",
     svBeschlossenHint: `2026 resmî prim tavanları (sağlık/bakım aylık ${B.kv26} €, emeklilik/işsizlik ${B.rv26} €) — 2027 yönetmeliği yayımlanana kadar geçerlidir.`,
-    svEntwurfHint: `Çalışma Bakanlığı'nın 21.9.2026 tarihli taslağı: prim tavanı sağlık/bakım aylık ${B.kv27} €, emeklilik/işsizlik ${B.rv27} €. Oranlar 2026 ile aynı. Yalnızca ${B.kv26} € brütün üzerinde fark eder.`,
+    svEntwurfHint: `Federal kabine 7.10.2026'da kabul etti (Bundesrat onayı bekleniyor): prim tavanı sağlık/bakım aylık ${B.kv27} €, emeklilik/işsizlik ${B.rv27} €. Oranlar 2026 ile aynı. Yalnızca ${B.kv26} € brütün üzerinde fark eder.`,
     scenarioLabel: "2027 reform senaryosu",
     scenarioOhne: "Reformsuz",
     scenarioStufe1: "Tasarı 2027",
@@ -576,7 +576,7 @@ const T: Record<Lang, Record<string, string>> = {
     svBeschlossen: "Рівень 2026",
     svEntwurf: "Проєкт 2027",
     svBeschlossenHint: `Офіційні граничні суми внесків 2026 (медичне/догляд ${B.kv26} €, пенсійне/безробіття ${B.rv26} € на місяць) — діють, доки не опубліковано постанову на 2027 рік.`,
-    svEntwurfHint: `Проєкт Міністерства праці від 21.9.2026: граничні суми медичне/догляд ${B.kv27} €, пенсійне/безробіття ${B.rv27} € на місяць. Ставки як у 2026. Має значення лише понад ${B.kv26} € брутто.`,
+    svEntwurfHint: `Ухвалено урядом 7.10.2026 (схвалення Бундесрату очікується): граничні суми медичне/догляд ${B.kv27} €, пенсійне/безробіття ${B.rv27} € на місяць. Ставки як у 2026. Має значення лише понад ${B.kv26} € брутто.`,
     scenarioLabel: "Сценарій реформи 2027",
     scenarioOhne: "Без реформи",
     scenarioStufe1: "Проєкт 2027",
@@ -1263,7 +1263,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 </table>
                 <p className="mt-3 text-[11px] sm:text-xs text-black/55 leading-relaxed">
                   2027 vorläufig: Lohnsteuer nach Regierungsentwurf (BT-Drs. 21/8235),{" "}
-                  {sv2027 === "entwurf" ? "Sozialabgaben mit den Beitragsbemessungsgrenzen aus dem BMAS-Entwurf" : "Sozialabgaben mit den Werten 2026"}.
+                  {sv2027 === "entwurf" ? "Sozialabgaben mit den Beitragsbemessungsgrenzen 2027 (Kabinettsbeschluss)" : "Sozialabgaben mit den Werten 2026"}.
                   Gleiche Angaben wie oben.
                 </p>
               </div>

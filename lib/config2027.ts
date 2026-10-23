@@ -12,15 +12,17 @@
  *                                          data/krankenkassen.ts setzen
  *   1.12.2026                              TABLE_TITLE_2027_FIRST = true
  *   BMF veröffentlicht den PAP 2027        Engine prüfen, dann LST_2027_OFFICIAL = true
+ *   Bundesrat stimmt den SV-Rechengrößen   BBG_2027_STATUS anpassen
+ *   2027 zu
  *   SV-Rechengrößen 2027 verkündet         BBG_2027_FINAL = true
  *
  * Die Zahlen selbst stehen weiter in der Engine (`lib/taxCalculator.ts`) —
  * hier stehen nur Status, Wortlaut und Schalter.
  */
-import { ENTWURF } from "@/lib/taxCalculator";
+import { ENTWURF, SV_RECHENGROESSEN_2027_ENTWURF } from "@/lib/taxCalculator";
 
 /** Letzter Verfahrensschritt — nach der 2./3. Lesung hier anpassen. */
-const VERFAHRENSSCHRITT = "1. Lesung am 8. Oktober 2026, jetzt im Finanzausschuss";
+const VERFAHRENSSCHRITT = "Bundesrat-Stellungnahme am 16. Oktober, Anhörung im Finanzausschuss am 4. November 2026";
 
 /**
  * Stand des Gesetzgebungsverfahrens zum Einkommensteuerreformgesetz 2027.
@@ -29,7 +31,7 @@ const VERFAHRENSSCHRITT = "1. Lesung am 8. Oktober 2026, jetzt im Finanzausschus
  */
 export const LEGISLATION_STATUS = {
   drucksache: "BT-Drs. 21/8235",
-  /** "2027 nach Regierungsentwurf (BT-Drs. 21/8235) · 1. Lesung am 8. Oktober 2026, jetzt im Finanzausschuss" */
+  /** "2027 nach Regierungsentwurf (BT-Drs. 21/8235) · Bundesrat-Stellungnahme am 16. Oktober, Anhörung im Finanzausschuss am 4. November 2026" */
   short: `2027 nach Regierungsentwurf (BT-Drs. 21/8235) · ${VERFAHRENSSCHRITT}`,
   /** Nur der Verfahrensschritt, für Meta-Beschreibungen (dort ist Platz knapp). */
   schritt: VERFAHRENSSCHRITT,
@@ -38,10 +40,29 @@ export const LEGISLATION_STATUS = {
 
 /**
  * Beitragsbemessungsgrenzen 2027 endgültig? Solange `false`, steht unter jeder
- * BBG-Tabelle 2027 der Entwurfshinweis. Quelle der Werte:
- * SV_RECHENGROESSEN_2027_ENTWURF (Referentenentwurf BMAS vom 21.09.2026).
+ * BBG-Tabelle 2027 der Hinweis aus BBG_2027_STATUS. Quelle der Werte:
+ * SV_RECHENGROESSEN_2027_ENTWURF (Referentenentwurf BMAS vom 21.09.2026,
+ * Kabinettsbeschluss vom 07.10.2026 mit denselben Werten).
  */
 export const BBG_2027_FINAL = false;
+
+/**
+ * Verfahrensstand der Sozialversicherungsrechengrößen-Verordnung 2027 — eine
+ * Stelle für jeden Satz, der sagt, wie verbindlich die Grenzen 2027 sind.
+ * Nach der Zustimmung des Bundesrats hier anpassen, nach der Verkündung
+ * BBG_2027_FINAL = true setzen.
+ * Quelle: BMAS-Pressemitteilung vom 07.10.2026.
+ */
+export const BBG_2027_STATUS = {
+  /** Für Badges und Tabellenzellen. */
+  kurz: "Kabinettsbeschluss 7.10.2026",
+  /** Für Fließtext: „Die Grenzen sind …“ */
+  satz: "von der Bundesregierung am 7. Oktober 2026 beschlossen; die Zustimmung des Bundesrats steht noch aus",
+  /** Für Quellenangaben. */
+  quelleName: "Bundeskabinett beschließt Sozialversicherungsrechengrößen 2027 (BMAS, 7.10.2026)",
+  quelle: SV_RECHENGROESSEN_2027_ENTWURF.quelleKabinett,
+  datum: SV_RECHENGROESSEN_2027_ENTWURF.kabinett,
+} as const;
 
 /**
  * Hat das BMF den amtlichen Programmablaufplan 2027 veröffentlicht? Solange

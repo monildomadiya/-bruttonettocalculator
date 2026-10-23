@@ -54,8 +54,8 @@ export type Szenario = "ohneReform" | "entwurf2027" | "stufe2028";
 /**
  * Sozialabgaben im Steuerjahr 2027: "beschlossen" rechnet mit den amtlichen
  * Rechengrößen 2026 weiter (Default, solange die Verordnung 2027 nicht
- * verkündet ist), "entwurf" mit den Beitragsbemessungsgrenzen aus dem
- * BMAS-Referentenentwurf vom 21.09.2026 (SV_RECHENGROESSEN_2027_ENTWURF).
+ * verkündet ist), "entwurf" mit den Beitragsbemessungsgrenzen der
+ * Rechengrößen-Verordnung 2027 (Kabinettsbeschluss 07.10.2026, SV_RECHENGROESSEN_2027_ENTWURF).
  * Die Beitragssätze bleiben in beiden Fällen auf dem Stand 2026 — für 2027
  * ist noch keiner beschlossen.
  */
@@ -196,22 +196,28 @@ export const BBG_2026 = {
 } as const;
 
 /**
- * Rechengrößen der Sozialversicherung 2027 — Referentenentwurf des BMAS zur
- * Sozialversicherungsrechengrößen-Verordnung 2027 vom 21.09.2026.
+ * Rechengrößen der Sozialversicherung 2027 — Sozialversicherungsrechengrößen-
+ * Verordnung 2027: Referentenentwurf des BMAS vom 21.09.2026, vom
+ * Bundeskabinett am 07.10.2026 mit denselben Werten beschlossen. Die
+ * Zustimmung des Bundesrats steht noch aus (Status: `BBG_2027_STATUS` in
+ * lib/config2027.ts).
  *
  * Zugrunde liegt die Lohnentwicklung 2025 von 4,38 %. Die Grenzen für Kranken-
  * und Pflegeversicherung steigen zusätzlich um 300 € monatlich über die
  * Lohnentwicklung hinaus.
  *
- * NICHT im Rechner verwendet: Die Verordnung ist weder von der Bundesregierung
- * beschlossen noch vom Bundesrat gebilligt. Alle 2027-Szenarien rechnen weiter
- * mit den amtlichen Werten 2026 (siehe `RECHENGROESSEN_2026`); diese Konstante
- * versorgt ausschließlich die Informationsseiten.
+ * Im Hauptrechner nur auf Wunsch (`sv2027: "entwurf"`): Voreingestellt rechnen
+ * die 2027-Szenarien weiter mit den amtlichen Werten 2026 (siehe
+ * `RECHENGROESSEN_2026`), bis die Verordnung verkündet ist.
  */
 export const SV_RECHENGROESSEN_2027_ENTWURF = {
   stand: "2026-09-21",
   quelle:
     "https://www.bmas.de/DE/Service/Presse/Meldungen/2026/referentenentwurf-zur-sozialversicherungsrechengroessen-verordnung-2027.html",
+  /** Kabinettsbeschluss — Werte unverändert gegenüber dem Referentenentwurf. */
+  kabinett: "2026-10-07",
+  quelleKabinett:
+    "https://www.bmas.de/DE/Service/Presse/Pressemitteilungen/2026/bundeskabinett-beschliesst-sozialversicherungsrechengroessen-2027.html",
   lohnentwicklung2025: 0.0438,
   bezugsgroesseMonat: 4130,
   bezugsgroesseJahr: 49560,
@@ -709,7 +715,7 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
     : input.bruttoMonat;
   const svBemessungJahr = svBemessungMonat * 12;
 
-  // Beitragsbemessungsgrenzen: 2027 wahlweise aus dem BMAS-Referentenentwurf.
+  // Beitragsbemessungsgrenzen: 2027 wahlweise aus der Rechengrößen-Verordnung 2027 (Kabinettsbeschluss).
   const svEntwurf = jahr === 2027 && input.sv2027 === "entwurf";
   const kvPvBbgJahr = svEntwurf ? SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgJahr : r.kvPvBbgJahr;
   const rvAlvBbgJahr = svEntwurf ? SV_RECHENGROESSEN_2027_ENTWURF.rvAlvBbgJahr : r.rvAlvBbgJahr;

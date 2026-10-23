@@ -59,7 +59,7 @@ export interface Parameter2027 {
 
 const de = (n: number) => n.toLocaleString("de-DE");
 
-const BMAS_ENTWURF = SV_RECHENGROESSEN_2027_ENTWURF.quelle;
+const BMAS_KABINETT = SV_RECHENGROESSEN_2027_ENTWURF.quelleKabinett;
 const BT_DRUCKSACHE = ENTWURF.quelle;
 
 export const PARAMETER_2027: Parameter2027[] = [
@@ -135,36 +135,36 @@ export const PARAMETER_2027: Parameter2027[] = [
     label: "Beitragsbemessungsgrenze KV/PV",
     wert: `${de(SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat)} € im Monat`,
     status: "provisional",
-    hinweis: "Referentenentwurf der Rechengrößen-Verordnung 2027",
-    quelle: BMAS_ENTWURF,
+    hinweis: "Kabinettsbeschluss vom 7.10.2026, Zustimmung des Bundesrats steht aus",
+    quelle: BMAS_KABINETT,
   },
   {
     label: "Beitragsbemessungsgrenze RV/ALV",
     wert: `${de(SV_RECHENGROESSEN_2027_ENTWURF.rvAlvBbgMonat)} € im Monat`,
     status: "provisional",
-    hinweis: "Referentenentwurf der Rechengrößen-Verordnung 2027",
-    quelle: BMAS_ENTWURF,
+    hinweis: "Kabinettsbeschluss vom 7.10.2026, Zustimmung des Bundesrats steht aus",
+    quelle: BMAS_KABINETT,
   },
   {
     label: "Versicherungspflichtgrenze",
     wert: `${de(SV_RECHENGROESSEN_2027_ENTWURF.versicherungspflichtgrenzeJahr)} € im Jahr`,
     status: "provisional",
-    hinweis: "Referentenentwurf der Rechengrößen-Verordnung 2027",
-    quelle: BMAS_ENTWURF,
+    hinweis: "Kabinettsbeschluss vom 7.10.2026, Zustimmung des Bundesrats steht aus",
+    quelle: BMAS_KABINETT,
   },
   {
     label: "Ø-Zusatzbeitrag Krankenversicherung",
-    wert: "2,9 % (Wert 2026 als Platzhalter)",
+    wert: "2,9 % (GKV-Schätzerkreis vom 14.10.2026: unverändert)",
     status: "provisional",
-    hinweis: "das BMG gibt den Wert 2027 bis zum 1.11.2026 bekannt",
-    quelle: "https://www.bundesgesundheitsministerium.de/",
+    hinweis: "amtliche Bekanntgabe durch das BMG bis zum 1.11.2026",
+    quelle: "https://www.bundesgesundheitsministerium.de/presse/pressemitteilungen/ergebnisse-gkv-schaetzerkreis-zusatzbeitragssatz",
   },
   {
     label: "Pflegeversicherung, Kinderlosenzuschlag",
     wert: "3,6 % / 0,6 % (Werte 2026)",
     status: "provisional",
-    hinweis: "keine beschlossene Änderung für 2027 bekannt",
-    quelle: "https://www.bundesgesundheitsministerium.de/",
+    hinweis: "Regierungsentwurf Pflegereform (Kabinett 30.9.2026): Kinderlosenzuschlag 0,9 % ab 2027, noch nicht beschlossen",
+    quelle: "https://www.bundesgesundheitsministerium.de/presse/pressemitteilungen/kabinett-beschliesst-pflegeneuordnungsgesetz",
   },
   {
     label: "Solidaritätszuschlag-Freigrenze",

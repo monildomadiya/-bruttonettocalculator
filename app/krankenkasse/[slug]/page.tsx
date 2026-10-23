@@ -10,7 +10,6 @@ import {
   GUENSTIGSTE_KASSE,
   TEUERSTE_KASSE,
   ZUSATZBEITRAG_STAND,
-  ZUSATZBEITRAG_STAND_ISO,
   findKrankenkasse,
   gesamtbeitragssatz,
   arbeitnehmeranteilProzent,
@@ -20,6 +19,7 @@ import KrankenkassenRechner from "@/components/KrankenkassenRechner";
 import ReviewerByline from "@/components/ReviewerByline";
 import Zusatzbeitrag2027Ausblick from "@/components/Zusatzbeitrag2027Ausblick";
 import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
+import { KRANKENKASSE_SEITEN_STAND } from "@/lib/pageDates";
 
 /**
  * Detailseite je gesetzlicher Krankenkasse.
@@ -239,7 +239,7 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
     url: canonical,
     name: `${kasse.name} Zusatzbeitrag 2026`,
     inLanguage: "de-DE",
-    dateModified: ZUSATZBEITRAG_STAND_ISO,
+    dateModified: KRANKENKASSE_SEITEN_STAND,
     isPartOf: { "@id": `${BASE}/#website` },
     publisher: { "@id": `${BASE}/#organization` },
   };

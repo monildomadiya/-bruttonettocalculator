@@ -69,7 +69,7 @@ const reform5000 = reformPlus(5000);
 // bleibt von 2027 Brutto?" in den Weiteren Fragen). Die FAQ beantwortet diese Lesart mit Engine-Werten.
 const netto2027Euro = (jahr: 2026 | 2027, kirche: boolean) =>
   calculateNetto({ bruttoMonat: 2027, jahr, verheiratet: false, kinderlosUeber23: true, kirche, steuerklasse: 1 }).nettoMonat;
-// Ab welchem Brutto (50-€-Raster) kostet der BMAS-Entwurf der BBG mehr, als die Steuerreform bringt?
+// Ab welchem Brutto (50-€-Raster) kosten die BBG 2027 mehr, als die Steuerreform bringt?
 const svKippBrutto = (() => {
   for (let brutto = 3000; brutto <= 12000; brutto += 50) {
     const basis = { bruttoMonat: brutto, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 as const };
@@ -106,7 +106,7 @@ const faqs = [
   },
   {
     q: "Kann ich diesen Rechner als Brutto Netto Rechner 2027 nutzen?",
-    a: `Ja. Unter dem Ergebnis zeigt der Rechner immer Ihr Netto 2026 und Ihr Netto 2027 (Entwurf) nebeneinander, mit der Differenz pro Monat und Jahr. Stellen Sie das Steuerjahr auf 2027, sehen Sie zusätzlich alle Abzüge für 2027: Die Lohnsteuer folgt dann dem Gesetzentwurf zur Steuerreform (Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag ${ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €). Für die Sozialabgaben wählen Sie unter „Sozialabgaben 2027“ zwischen dem Stand 2026 und den höheren Beitragsbemessungsgrenzen aus dem BMAS-Entwurf.`,
+    a: `Ja. Unter dem Ergebnis zeigt der Rechner immer Ihr Netto 2026 und Ihr Netto 2027 (Entwurf) nebeneinander, mit der Differenz pro Monat und Jahr. Stellen Sie das Steuerjahr auf 2027, sehen Sie zusätzlich alle Abzüge für 2027: Die Lohnsteuer folgt dann dem Gesetzentwurf zur Steuerreform (Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag ${ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €). Für die Sozialabgaben wählen Sie unter „Sozialabgaben 2027“ zwischen dem Stand 2026 und den höheren Beitragsbemessungsgrenzen 2027, die das Bundeskabinett am 7. Oktober 2026 beschlossen hat.`,
   },
   {
     q: "Ab wann gilt der Brutto Netto Rechner 2027?",
@@ -114,7 +114,7 @@ const faqs = [
   },
   {
     q: "Wie viel mehr Netto bringt die Steuerreform 2027?",
-    a: `Wenig: Nach dem Gesetzentwurf bleiben bei 3.000 € brutto in Steuerklasse I rund ${eur2(reform3000)} € und bei 5.000 € rund ${eur2(reform5000)} € mehr netto im Monat (kinderlos, ohne Kirchensteuer, Sozialabgaben auf dem Stand 2026). Steigen 2027 wie im BMAS-Entwurf vorgesehen die Beitragsbemessungsgrenzen, zahlen Gutverdiener mehr Sozialabgaben. Ab rund ${svKippBrutto.toLocaleString("de-DE")} € brutto bleibt dann insgesamt weniger netto als 2026.`,
+    a: `Wenig: Nach dem Gesetzentwurf bleiben bei 3.000 € brutto in Steuerklasse I rund ${eur2(reform3000)} € und bei 5.000 € rund ${eur2(reform5000)} € mehr netto im Monat (kinderlos, ohne Kirchensteuer, Sozialabgaben auf dem Stand 2026). Weil 2027 die Beitragsbemessungsgrenzen steigen (Kabinettsbeschluss vom 7. Oktober 2026), zahlen Gutverdiener mehr Sozialabgaben. Ab rund ${svKippBrutto.toLocaleString("de-DE")} € brutto bleibt dann insgesamt weniger netto als 2026.`,
   },
   {
     q: "Wie viel netto sind 2.027 € brutto?",
@@ -122,7 +122,7 @@ const faqs = [
   },
   {
     q: "Warum sind die Werte für 2027 vorläufig?",
-    a: "Weil die maßgeblichen Regeln noch nicht verkündet sind. Steuertarif, Grundfreibetrag und Arbeitnehmer-Pauschbetrag stammen aus dem Regierungsentwurf, den Bundestag und Bundesrat noch beschließen müssen. Die Beitragsbemessungsgrenzen 2027 stehen bisher nur in einem Referentenentwurf des BMAS. Den durchschnittlichen Zusatzbeitrag 2027 gibt das Bundesgesundheitsministerium bis zum 1. November 2026 bekannt. Endgültig sind schon der Mindestlohn von 14,60 € und die Minijob-Grenze von 633 €.",
+    a: "Weil die maßgeblichen Regeln noch nicht verkündet sind. Steuertarif, Grundfreibetrag und Arbeitnehmer-Pauschbetrag stammen aus dem Regierungsentwurf, den Bundestag und Bundesrat noch beschließen müssen. Die Beitragsbemessungsgrenzen 2027 hat das Bundeskabinett am 7. Oktober 2026 beschlossen, die Zustimmung des Bundesrats steht noch aus. Beim durchschnittlichen Zusatzbeitrag hat der GKV-Schätzerkreis am 14. Oktober 2026 unverändert 2,9 % errechnet; amtlich gibt ihn das Bundesgesundheitsministerium bis zum 1. November 2026 bekannt. Endgültig sind schon der Mindestlohn von 14,60 € und die Minijob-Grenze von 633 €.",
   },
   {
     q: "Gilt das Tool auch als Gehaltsrechner mit Auto (Firmenwagenrechner & 1%-Regelung)?",
@@ -277,7 +277,7 @@ const eurZahl = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits
 
 // Netto 2026 ↔ 2027 für den Antwortblock — direkt aus der Rechen-Engine.
 // Zwei 2027-Spalten: nur Steuerreform (Sozialabgaben Stand 2026) und zusätzlich
-// die Beitragsbemessungsgrenzen aus dem BMAS-Entwurf. Ab rund 6.000 € brutto
+// die Beitragsbemessungsgrenzen 2027 (Kabinettsbeschluss). Ab rund 6.000 € brutto
 // dreht das Vorzeichen — die "2027 weniger netto"-Frage, die Finanztip & Co.
 // gerade aufgreifen, beantwortet der Block so selbst.
 const netto2027Zeilen = [2500, 3800, 5000, 7000].map((brutto) => {
@@ -448,7 +448,7 @@ export default function HomePage() {
             {GRUNDFREIBETRAG.amtlich2026.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag{" "}
             {ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €. Bei{" "}
             {zeile3800.brutto.toLocaleString("de-DE")} € brutto bleiben so rund {eurRund(zeile3800.plus)} € mehr
-            im Monat. Kommen die höheren Beitragsbemessungsgrenzen aus dem BMAS-Entwurf, haben Gutverdiener 2027
+            im Monat. Mit den höheren Beitragsbemessungsgrenzen, die das Kabinett am 7. Oktober beschlossen hat, haben Gutverdiener 2027
             trotzdem <strong className="text-[#16181D]">weniger Netto</strong> — bei{" "}
             {zeile7000.brutto.toLocaleString("de-DE")} € brutto rund {eurRund(zeile7000.plusSv)} € im Monat.
             Beschlossen ist beides noch nicht.
@@ -485,7 +485,7 @@ export default function HomePage() {
           <p className="text-xs text-black/50 mt-3 leading-relaxed">
             Beträge in Euro pro Monat, Steuerklasse I, kinderlos, ohne Kirchensteuer; darunter die Differenz zu 2026.
             Lohnsteuer 2027 jeweils nach dem Gesetzentwurf. ¹ Sozialabgaben mit den amtlichen Werten 2026.
-            ² Mit den Beitragsbemessungsgrenzen aus dem BMAS-Referentenentwurf vom 21.09.2026 (Beitragssätze wie 2026).
+            ² Mit den Beitragsbemessungsgrenzen der Rechengrößen-Verordnung 2027 (Kabinettsbeschluss vom 7.10.2026, Bundesrat steht aus; Beitragssätze wie 2026).
             Wie viel mehr Netto die Reform über alle Gehälter bringt und wie weit das Verfahren ist, zeigt der{" "}
             <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
               Steuerreform-Rechner 2027
@@ -509,7 +509,7 @@ export default function HomePage() {
               {SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € statt{" "}
               {(BBG_2026.kvPvJahr / 12).toLocaleString("de-DE", { minimumFractionDigits: 2 })} € im Monat, Rente{" "}
               {SV_RECHENGROESSEN_2027_ENTWURF.rvAlvBbgMonat.toLocaleString("de-DE")} € statt{" "}
-              {(BBG_2026.rvAlvJahr / 12).toLocaleString("de-DE", { minimumFractionDigits: 2 })} € (BMAS-Entwurf).{" "}
+              {(BBG_2026.rvAlvJahr / 12).toLocaleString("de-DE", { minimumFractionDigits: 2 })} € (Kabinettsbeschluss 7.10.2026).{" "}
               <Link href="/beitragsbemessungsgrenze-2027" className="text-[#E60A1C] font-semibold hover:underline">Beitragsbemessungsgrenze 2027</Link>
             </li>
             <li>
@@ -791,7 +791,7 @@ export default function HomePage() {
             <strong className="text-[#16181D] font-bold">Alle Berechnungen ohne Gewähr.</strong>
             Dieser Rechner ersetzt keine Steuerberatung. Grundlage: § 32a EStG (Fassung ab
             Veranlagungszeitraum 2026) sowie die Sozialversicherungs-Rechengrößen-Verordnung 2026; für
-            2027 der Regierungsentwurf zur Steuerreform und der BMAS-Entwurf der Rechengrößen (vorläufig).
+            2027 der Regierungsentwurf zur Steuerreform und die vom Kabinett beschlossene Rechengrößen-Verordnung 2027 (vorläufig).
           </p>
         </div>
       </section>

@@ -104,7 +104,7 @@ export default function KrankenkassePage() {
   const faqs = [
     {
       q: "Wie hoch ist der Krankenkassenbeitrag 2027?",
-      a: `Der allgemeine Beitragssatz bleibt bei ${ALLGEMEINER_BEITRAGSSATZ.toLocaleString("de-DE", { minimumFractionDigits: 1 })} %, dazu kommt der Zusatzbeitrag Ihrer Kasse; beides teilen Sie sich mit dem Arbeitgeber. ${ZUSATZBEITRAG_DURCHSCHNITT_2027 === null ? "Den durchschnittlichen Zusatzbeitrag 2027 gibt das Bundesgesundheitsministerium bis zum 1. November 2026 bekannt; bis dahin rechnet der Rechner vorläufig mit 2,9 %." : `Der durchschnittliche Zusatzbeitrag 2027 beträgt ${ZUSATZBEITRAG_DURCHSCHNITT_2027.toLocaleString("de-DE", { minimumFractionDigits: 1 })} %.`} Neu ist die höhere Beitragsbemessungsgrenze: Nach dem Referentenentwurf des BMAS zahlen Sie 2027 Beiträge bis ${SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € brutto im Monat statt bis 5.812,50 €.`,
+      a: `Der allgemeine Beitragssatz bleibt bei ${ALLGEMEINER_BEITRAGSSATZ.toLocaleString("de-DE", { minimumFractionDigits: 1 })} %, dazu kommt der Zusatzbeitrag Ihrer Kasse; beides teilen Sie sich mit dem Arbeitgeber. ${ZUSATZBEITRAG_DURCHSCHNITT_2027 === null ? "Der GKV-Schätzerkreis hat am 14. Oktober 2026 einen unveränderten durchschnittlichen Zusatzbeitrag von 2,9 % errechnet; amtlich gibt ihn das Bundesgesundheitsministerium bis zum 1. November 2026 bekannt." : `Der durchschnittliche Zusatzbeitrag 2027 beträgt ${ZUSATZBEITRAG_DURCHSCHNITT_2027.toLocaleString("de-DE", { minimumFractionDigits: 1 })} %.`} Neu ist die höhere Beitragsbemessungsgrenze: Nach der Rechengrößen-Verordnung 2027 (Kabinettsbeschluss vom 7. Oktober 2026) zahlen Sie 2027 Beiträge bis ${SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € brutto im Monat statt bis 5.812,50 €.`,
     },
     {
       q: "Wer zahlt 2027 mehr Krankenkassenbeitrag?",
@@ -168,7 +168,7 @@ export default function KrankenkassePage() {
         offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
         featureList: [
           "Krankenkassen- und Pflegebeitrag 2026 und 2027 mit eigenem Zusatzbeitrag",
-          "Netto 2027 mit der Beitragsbemessungsgrenze aus dem BMAS-Entwurf",
+          "Netto 2027 mit der Beitragsbemessungsgrenze 2027 (Kabinettsbeschluss)",
           "Kosten je 0,1 % Zusatzbeitrag in Euro pro Jahr",
         ],
       },
@@ -216,11 +216,11 @@ export default function KrankenkassePage() {
           Geben Sie Ihr Bruttogehalt und den Zusatzbeitrag Ihrer Kasse ein: Der Rechner zeigt Ihren Kranken- und
           Pflegebeitrag, Ihr Netto 2027 und den Unterschied zu 2026 — mit der höheren Beitragsbemessungsgrenze von{" "}
           <strong className="text-[#16181D]">{SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € im Monat</strong>{" "}
-          aus dem BMAS-Entwurf.
+          (Kabinettsbeschluss vom 7. Oktober 2026).
         </p>
         <p className="text-xs sm:text-sm text-black/60 font-medium mb-3">
           Aktualisiert am <time dateTime={STAND.iso}>{STAND.display}</time> · 2027 vorläufig (Regierungsentwurf
-          Steuerreform, BMAS-Entwurf der Rechengrößen)
+          Steuerreform, Rechengrößen laut Kabinettsbeschluss)
         </p>
         <ReviewerByline updatedDisplay={null} />
       </div>
@@ -388,7 +388,7 @@ export default function KrankenkassePage() {
             Beide Teile werden paritätisch geteilt (§ 249 SGB V): Sie zahlen die Hälfte, Ihr Arbeitgeber die andere.
             Bemessungsgrundlage ist Ihr Bruttoentgelt bis zur Beitragsbemessungsgrenze von{" "}
             <strong className="text-[#16181D]">5.812,50 € im Monat</strong> (69.750 € im Jahr, 2026); 2027 nach dem
-            BMAS-Entwurf {SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € im Monat.
+            Kabinettsbeschluss {SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € im Monat.
           </p>
         </div>
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-2xl p-6 shadow-sm">

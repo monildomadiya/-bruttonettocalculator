@@ -3,19 +3,22 @@ import Link from "next/link";
 import { ChevronRight, Info, TrendingUp, Gavel, Wallet2 } from "lucide-react";
 import { calculateNetto, formatEUR, SV_RECHENGROESSEN_2027_ENTWURF as E, BBG_2026 } from "@/lib/taxCalculator";
 import ReviewerByline from "@/components/ReviewerByline";
-import { siteConfig } from "@/lib/authors";
 import { pageImageUrl } from "@/lib/pageImage";
+import { pageStand } from "@/lib/pageDates";
+import { BBG_2027_STATUS } from "@/lib/config2027";
 
 /**
  * Beitragsbemessungsgrenze 2027.
  *
  * Gegenstück zu `/beitragsbemessungsgrenze-2026`, aber mit einem wesentlichen
- * Unterschied: Die Werte 2027 stammen aus dem Referentenentwurf des BMAS vom
- * 21.09.2026 und sind noch nicht beschlossen. Der Entwurfsstand steht deshalb
- * im Title, im Badge, im ersten Absatz und in jeder FAQ-Antwort — eine Seite,
- * die Entwurfszahlen als geltendes Recht ausgibt, wäre schlicht falsch.
+ * Unterschied: Die Werte 2027 hat das Bundeskabinett am 07.10.2026 beschlossen
+ * (unverändert aus dem Referentenentwurf des BMAS vom 21.09.2026), die
+ * Zustimmung des Bundesrats steht aber aus. Der Verfahrensstand
+ * (`BBG_2027_STATUS`) steht deshalb in der Description, im Badge, im ersten
+ * Absatz und in den FAQ — eine Seite, die die Zahlen als geltendes Recht
+ * ausgibt, wäre schlicht falsch.
  *
- * Die Beitragssätze für 2027 regelt der Entwurf nicht; alle Euro-Angaben zur
+ * Die Beitragssätze für 2027 regelt die Verordnung nicht; alle Euro-Angaben zur
  * Mehrbelastung setzen daher die Sätze 2026 fort und sagen das auch.
  */
 
@@ -24,10 +27,12 @@ const CANONICAL = `${BASE}/beitragsbemessungsgrenze-2027`;
 
 const eur = (v: number) => v.toLocaleString("de-DE") + " €";
 
+const STAND = pageStand("/beitragsbemessungsgrenze-2027");
+
 export const metadata: Metadata = {
   title: "Beitragsbemessungsgrenze 2027: Rente 106.200 €, KV 76.500 €",
   description:
-    "Beitragsbemessungsgrenze 2027 nach dem BMAS-Entwurf vom 21.9.2026: 76.500 € für Kranken- und Pflegeversicherung, 106.200 € für Rente und Arbeitslosigkeit.",
+    "Beitragsbemessungsgrenze 2027 (Kabinett 7.10.2026): 76.500 € für Kranken- und Pflegeversicherung, 106.200 € für Rente und Arbeitslosenversicherung.",
   keywords: [
     "beitragsbemessungsgrenze 2027",
     "beitragsbemessungsgrenze krankenversicherung 2027",
@@ -40,9 +45,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: CANONICAL },
   openGraph: {
-    title: "Beitragsbemessungsgrenze 2027 — alle Entwurfswerte auf einen Blick",
+    title: "Beitragsbemessungsgrenze 2027 — alle Werte auf einen Blick",
     description:
-      "76.500 € für KV/PV, 106.200 € für RV/ALV, Versicherungspflichtgrenze 84.150 €. Referentenentwurf des BMAS vom 21.9.2026.",
+      "76.500 € für KV/PV, 106.200 € für RV/ALV, Versicherungspflichtgrenze 84.150 €. Kabinettsbeschluss vom 7.10.2026, Bundesrat steht aus.",
     url: CANONICAL,
     type: "article",
     locale: "de_DE",
@@ -52,7 +57,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "Beitragsbemessungsgrenze 2027: Rente 106.200 €, KV 76.500 €",
-    description: "Alle Entwurfswerte 2027 inkl. Versicherungspflichtgrenze und Mehrbelastung.",
+    description: "Alle Werte 2027 laut Kabinettsbeschluss inkl. Versicherungspflichtgrenze und Mehrbelastung.",
   },
 };
 
@@ -116,7 +121,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
     {
       q: "Wie hoch ist die Beitragsbemessungsgrenze 2027?",
       a:
-        "Nach dem Referentenentwurf des BMAS vom 21. September 2026 liegt sie bei " +
+        "Nach der Sozialversicherungsrechengrößen-Verordnung 2027, die das Bundeskabinett am 7. Oktober 2026 beschlossen hat, liegt sie bei " +
         eur(E.kvPvBbgJahr) +
         " im Jahr (" +
         formatEUR(E.kvPvBbgMonat) +
@@ -124,12 +129,12 @@ export default function Beitragsbemessungsgrenze2027Page() {
         eur(E.rvAlvBbgJahr) +
         " im Jahr (" +
         formatEUR(E.rvAlvBbgMonat) +
-        " im Monat) für die Renten- und Arbeitslosenversicherung. Beschlossen ist die Verordnung noch nicht: Sie muss die Bundesregierung passieren und anschließend vom Bundesrat gebilligt werden.",
+        " im Monat) für die Renten- und Arbeitslosenversicherung. Gültig wird die Verordnung, wenn der Bundesrat zugestimmt hat und sie verkündet ist.",
     },
     {
       q: "Sind die Werte für 2027 schon endgültig?",
       a:
-        "Nein. Es handelt sich um einen Referentenentwurf, also den Arbeitsstand des Ministeriums. Erfahrungsgemäß bleiben die Rechengrößen im weiteren Verfahren unverändert, weil sie sich rechnerisch aus der Lohnentwicklung ergeben — ein Automatismus ist das aber nicht. Verbindlich werden sie erst mit der Verkündung der Sozialversicherungsrechengrößen-Verordnung 2027.",
+        "Fast. Das Bundeskabinett hat die Verordnung am 7. Oktober 2026 mit genau den Werten des Referentenentwurfs vom 21. September beschlossen; jetzt fehlt noch die Zustimmung des Bundesrats. Erfahrungsgemäß ändert der Bundesrat die Rechengrößen nicht, weil sie sich rechnerisch aus der Lohnentwicklung ergeben — verbindlich werden sie aber erst mit der Verkündung der Sozialversicherungsrechengrößen-Verordnung 2027.",
     },
     {
       q: "Warum steigt die Grenze für die Krankenversicherung 2027 so stark?",
@@ -157,7 +162,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
         formatEUR(mehrGesamt) +
         " mehr Arbeitnehmerbeitrag im Jahr — etwa " +
         formatEUR(mehrGesamt / 12) +
-        " im Monat. Der Arbeitgeber zahlt noch einmal ungefähr denselben Betrag. Die Beitragssätze für 2027 regelt dieser Entwurf allerdings nicht.",
+        " im Monat. Der Arbeitgeber zahlt noch einmal ungefähr denselben Betrag. Die Beitragssätze für 2027 regelt diese Verordnung allerdings nicht.",
     },
     {
       q: "Was ist der Unterschied zwischen Beitragsbemessungsgrenze und Versicherungspflichtgrenze?",
@@ -171,7 +176,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
     {
       q: "Rechnet der Brutto-Netto-Rechner schon mit den Werten 2027?",
       a:
-        "Auf Wunsch. Voreingestellt rechnet der Brutto-Netto-Rechner 2027 mit den amtlichen Grenzen 2026, solange die Verordnung nicht beschlossen ist. Unter „Sozialabgaben 2027“ lässt sich auf den Entwurf umschalten — dann gelten die Grenzen von dieser Seite (6.375 € und 8.850 € im Monat) bei unveränderten Beitragssätzen. Der Steuerteil folgt in beiden Fällen dem Regierungsentwurf zur Einkommensteuerreform 2027. Sobald die Verordnung in Kraft ist, wird die Voreinstellung umgestellt.",
+        "Auf Wunsch. Voreingestellt rechnet der Brutto-Netto-Rechner 2027 mit den amtlichen Grenzen 2026, solange die Verordnung nicht verkündet ist. Unter „Sozialabgaben 2027“ lässt sich auf die Grenzen 2027 umschalten — dann gelten die Grenzen von dieser Seite (6.375 € und 8.850 € im Monat) bei unveränderten Beitragssätzen. Der Steuerteil folgt in beiden Fällen dem Regierungsentwurf zur Einkommensteuerreform 2027. Sobald die Verordnung in Kraft ist, wird die Voreinstellung umgestellt.",
     },
   ];
 
@@ -201,15 +206,15 @@ export default function Beitragsbemessungsgrenze2027Page() {
     url: CANONICAL,
     name: "Beitragsbemessungsgrenze 2027",
     inLanguage: "de-DE",
-    dateModified: siteConfig.lastUpdatedISO,
+    dateModified: STAND.iso,
     isPartOf: { "@id": `${BASE}/#website` },
     publisher: { "@id": `${BASE}/#organization` },
     citation: {
       "@type": "Legislation",
-      name: "Referentenentwurf einer Sozialversicherungsrechengrößen-Verordnung 2027",
+      name: "Sozialversicherungsrechengrößen-Verordnung 2027 (Kabinettsbeschluss)",
       legislationJurisdiction: "Deutschland",
-      legislationDate: E.stand,
-      url: E.quelle,
+      legislationDate: BBG_2027_STATUS.datum,
+      url: BBG_2027_STATUS.quelle,
     },
   };
 
@@ -229,21 +234,20 @@ export default function Beitragsbemessungsgrenze2027Page() {
         <header className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E60A1C]/10 border border-[#E60A1C]/25 text-[#E60A1C] text-xs font-bold mb-4">
             <Gavel size={14} />
-            Referentenentwurf vom 21.09.2026 — noch nicht beschlossen
+            {BBG_2027_STATUS.kurz} — Bundesrat steht aus
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#16181D] leading-tight mb-3">
             Beitragsbemessungsgrenze 2027: {eur(E.kvPvBbgJahr)} und {eur(E.rvAlvBbgJahr)}
           </h1>
           <p className="text-base sm:text-lg text-black/70 leading-relaxed max-w-3xl">
-            Das Bundesministerium für Arbeit und Soziales hat am 21. September 2026 den Entwurf der
-            Sozialversicherungsrechengrößen-Verordnung 2027 vorgelegt. Grundlage ist die
-            Lohnentwicklung 2025 von{" "}
+            Das Bundeskabinett hat am 7. Oktober 2026 die Sozialversicherungsrechengrößen-Verordnung 2027
+            beschlossen — mit denselben Werten wie im Entwurf des Bundesarbeitsministeriums vom 21. September.
+            Grundlage ist die Lohnentwicklung 2025 von{" "}
             {(E.lohnentwicklung2025 * 100).toLocaleString("de-DE", { minimumFractionDigits: 2 })} % —
-            alle Rechengrößen steigen. Beschlossen ist die Verordnung noch nicht: Bundesregierung und
-            Bundesrat stehen aus.
+            alle Rechengrößen steigen. Es fehlt noch die Zustimmung des Bundesrats.
           </p>
           <div className="mt-4">
-            <ReviewerByline />
+            <ReviewerByline updatedDisplay={STAND.display} />
           </div>
         </header>
 
@@ -295,8 +299,12 @@ export default function Beitragsbemessungsgrenze2027Page() {
           </div>
           <p className="text-xs text-black/45 mt-3 flex items-start gap-1.5">
             <Info size={13} className="flex-shrink-0 mt-0.5" />
-            Quelle: Referentenentwurf des BMAS zur Sozialversicherungsrechengrößen-Verordnung 2027,
-            Stand 21. September 2026. Vorläufiges Durchschnittsentgelt der Rentenversicherung 2027:{" "}
+            Quelle:{" "}
+            <a href={BBG_2027_STATUS.quelle} className="underline hover:text-[#16181D]" rel="noopener" target="_blank">
+              {BBG_2027_STATUS.quelleName}
+            </a>
+            ; Werte unverändert gegenüber dem Referentenentwurf vom 21. September 2026. Vorläufiges
+            Durchschnittsentgelt der Rentenversicherung 2027:{" "}
             {eur(E.durchschnittsentgeltVorlaeufig2027)}.
           </p>
         </section>
@@ -332,7 +340,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
             <p className="text-xs text-black/45 mt-4 flex items-start gap-1.5">
               <Info size={13} className="flex-shrink-0 mt-0.5" />
               Arbeitnehmeranteil bei fortgeschriebenen Beitragssätzen 2026 (KV 8,75 %, PV 1,8 %,
-              RV 9,3 %, ALV 1,3 %). Die Beitragssätze 2027 regelt der Entwurf nicht — steigen sie,
+              RV 9,3 %, ALV 1,3 %). Die Beitragssätze 2027 regelt die Verordnung nicht — steigen sie,
               fällt die Mehrbelastung höher aus. Der Arbeitgeber trägt noch einmal etwa denselben Betrag.
             </p>
           </div>

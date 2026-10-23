@@ -34,12 +34,28 @@ export const ZUSATZBEITRAG_STAND_ISO = "2026-10-01";
 export const DURCHSCHNITT_ZUSATZBEITRAG_2026 = 2.9;
 
 /**
- * Durchschnittlicher Zusatzbeitrag 2027 — `null`, bis das BMG ihn nach dem
- * GKV-Schätzerkreis (Mitte Oktober 2026) bekannt gibt (§ 242a SGB V: bis zum
- * 1. November). Sobald er feststeht: hier eintragen — die Kassenseiten und der
- * Hub zeigen ihn dann automatisch im Abschnitt "Zusatzbeitrag 2027".
+ * Durchschnittlicher Zusatzbeitrag 2027 — `null`, bis das BMG ihn im
+ * Bundesanzeiger bekannt gibt (§ 242a SGB V: bis zum 1. November 2026). Sobald
+ * er feststeht: hier eintragen — die Kassenseiten und der Hub zeigen ihn dann
+ * automatisch im Abschnitt "Zusatzbeitrag 2027".
  */
 export const ZUSATZBEITRAG_DURCHSCHNITT_2027: number | null = null;
+
+/**
+ * Ergebnis des GKV-Schätzerkreises für 2027 (bekannt gegeben am 14.10.2026):
+ * rechnerischer durchschnittlicher Zusatzbeitrag unverändert 2,9 %, Ausgaben
+ * 378,1 Mrd. €. Grundlage der BMG-Festsetzung, selbst aber keine Festsetzung;
+ * die Kassen setzen ihre eigenen Sätze im Dezember.
+ * Quelle: BMG-Pressemitteilung vom 14.10.2026 („Der durchschnittliche
+ * Zusatzbeitragssatz bleibt im kommenden Jahr stabil“) und Deutsches
+ * Ärzteblatt vom 15.10.2026 (2,9 %, 378,1 Mrd. €).
+ */
+export const ZUSATZBEITRAG_2027_SCHAETZERKREIS = {
+  wert: 2.9,
+  datum: "14. Oktober 2026",
+  iso: "2026-10-14",
+  quelle: "https://www.bundesgesundheitsministerium.de/presse/pressemitteilungen/ergebnisse-gkv-schaetzerkreis-zusatzbeitragssatz",
+} as const;
 
 /** Allgemeiner Beitragssatz der GKV (§ 241 SGB V) — für alle Kassen identisch. */
 export const ALLGEMEINER_BEITRAGSSATZ = 14.6;

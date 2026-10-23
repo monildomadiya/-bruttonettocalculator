@@ -11,7 +11,7 @@ import { DURCHSCHNITT_ZUSATZBEITRAG_2026, ZUSATZBEITRAG_DURCHSCHNITT_2027 } from
  * Rechnet mit derselben Engine wie der Hauptrechner (calculateNetto):
  *  - 2026: amtliche Rechengrößen 2026.
  *  - 2027: Lohnsteuer nach Regierungsentwurf EStRefG 2027 (BT-Drs. 21/8235),
- *    Beitragsbemessungsgrenze KV/PV 6.375 € aus dem BMAS-Referentenentwurf
+ *    Beitragsbemessungsgrenze KV/PV 6.375 € (Rechengrößen-Verordnung 2027, Kabinett 07.10.2026)
  *    (sv2027: "entwurf"); Beitragssätze sonst wie 2026.
  * Steuerklasse I, ohne Kirchensteuer. Kinder wirken nur auf die Pflegeversicherung
  * (kein Kinderlosenzuschlag ab dem 1. Kind, Abschlag ab dem 2. Kind unter 25).
@@ -202,7 +202,7 @@ export default function KrankenkassenbeitragRechner2027() {
         <p className="mt-3 text-xs text-black/55 leading-relaxed">
           Netto nach Steuern: Ein höherer Beitrag senkt zugleich die Lohnsteuer, deshalb ist der Netto-Effekt etwas
           kleiner als der reine Beitrag. 2027 nach Regierungsentwurf zur Steuerreform und mit der
-          Beitragsbemessungsgrenze 6.375 € aus dem BMAS-Entwurf (vorläufig); Vergleich 2026 → 2027 mit demselben
+          Beitragsbemessungsgrenze 6.375 € laut Kabinettsbeschluss (vorläufig); Vergleich 2026 → 2027 mit demselben
           Zusatzbeitrag.
         </p>
       </div>

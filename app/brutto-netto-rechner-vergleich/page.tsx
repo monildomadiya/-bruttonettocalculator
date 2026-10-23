@@ -84,7 +84,7 @@ const matrix: { feature: string; uns: Cell; gehalt: Cell; ft: Cell }[] = [
   },
   {
     feature: "Sozialabgaben 2027 mit neuen Beitragsbemessungsgrenzen",
-    uns: { state: "yes", note: "Umschalter, Entwurf wählbar", fn: 20 },
+    uns: { state: "yes", note: "Umschalter, Grenzen 2027 wählbar", fn: 20 },
     gehalt: { state: "na", fn: 1 },
     ft: { state: "yes", note: "BMAS-Entwurf eingerechnet", fn: 11 },
   },
@@ -185,7 +185,7 @@ const fussnoten: Record<number, string> = {
   14: "Finanztip schreibt selbst, der Rechner sei für Beamte „meist nur eine erste Orientierung“, und verweist auf den Bezügerechner des Bundesverwaltungsamts.",
   15: "Finanztip schreibt selbst, man habe sich entschieden, „den Midijob nicht speziell zu berücksichtigen“, und verweist auf den Midijob-Rechner der Deutschen Rentenversicherung.",
   16: "Auf der geprüften Finanztip-Rechnerseite nicht angeboten; Finanztip kann andere Rechner an anderer Stelle führen.",
-  20: "Im Hauptrechner wählbar unter „Sozialabgaben 2027“: Stand 2026 (Voreinstellung, solange die Rechengrößen-Verordnung 2027 nicht beschlossen ist) oder die Beitragsbemessungsgrenzen aus dem BMAS-Entwurf vom 21.09.2026, jeweils mit den Beitragssätzen 2026. Abweichende Sätze rechnet der Sozialabgaben-Rechner 2027.",
+  20: "Im Hauptrechner wählbar unter „Sozialabgaben 2027“: Stand 2026 (Voreinstellung, solange die Rechengrößen-Verordnung 2027 nicht verkündet ist) oder die vom Kabinett am 07.10.2026 beschlossenen Beitragsbemessungsgrenzen 2027, jeweils mit den Beitragssätzen 2026. Abweichende Sätze rechnet der Sozialabgaben-Rechner 2027.",
   21: "Im Hauptrechner gilt der durchschnittliche Zusatzbeitrag (2026: 2,9 %); den Satz der eigenen Kasse rechnet der Brutto-Netto-Rechner mit Krankenkasse.",
   23: "Der Netto-zu-Brutto-Rechner ist eine eigene Seite (nicht im Hauptrechner) und sucht das Brutto exakt mit derselben Engine, wahlweise für 2026 oder 2027.",
   22: "Ohne Sozialabgaben und mit privater Krankenversicherung rechnet der Beamten-Rechner; der Hauptrechner geht von gesetzlicher Versicherung aus.",

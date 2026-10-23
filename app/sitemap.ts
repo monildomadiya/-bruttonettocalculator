@@ -7,7 +7,7 @@ import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
 import { LANGUAGE_CLUSTER } from "@/lib/expat/cluster";
-import { pageStand } from "@/lib/pageDates";
+import { pageStand, KRANKENKASSE_SEITEN_STAND } from "@/lib/pageDates";
 import { getPublishedPosts } from "@/lib/postsStore";
 
 /*
@@ -192,7 +192,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   for (const path of krankenkassenRoutes) {
-    sitemapEntries.push({ url: `${base}${path}`, lastModified: engineUpdated });
+    sitemapEntries.push({ url: `${base}${path}`, lastModified: new Date(KRANKENKASSE_SEITEN_STAND) });
   }
 
   for (const path of tvoedRoutes) {

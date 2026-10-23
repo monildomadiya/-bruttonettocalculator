@@ -40,7 +40,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/brutto-netto-rechner-beamte", label: "Beamten-Rechner", icon: Landmark, description: "Netto für Beamte — ohne Sozialabgaben" },
       { href: "/steuerfreibetrag-2026", label: "Steuerfreibetrag 2026", icon: Scale, description: "Grundfreibetrag & alle Freibeträge" },
       { href: "/beitragsbemessungsgrenze-2026", label: "Beitragsbemessungsgrenze 2026", icon: Scale, description: "69.750 € & 101.400 € · alle Grenzwerte" },
-      { href: "/beitragsbemessungsgrenze-2027", label: "Beitragsbemessungsgrenze 2027", icon: Scale, description: "76.500 € & 106.200 € · BMAS-Entwurf" },
+      { href: "/beitragsbemessungsgrenze-2027", label: "Beitragsbemessungsgrenze 2027", icon: Scale, description: "76.500 € & 106.200 € · Kabinett beschlossen" },
       { href: "/sozialabgaben-rechner-2027", label: "Sozialabgaben-Rechner 2027", icon: TrendingUp, description: "Wie viel mehr zahlen Sie 2027?" },
       { href: "/brutto-netto-rechner-oesterreich", label: "Brutto-Netto-Rechner Österreich", icon: Calculator, description: "Netto 2026 mit 13. & 14. Gehalt" },
       { href: "/tvoed-rechner", label: "TVöD-Rechner 2026", icon: Landmark, description: "Entgelttabelle mit Netto je Gruppe" },
