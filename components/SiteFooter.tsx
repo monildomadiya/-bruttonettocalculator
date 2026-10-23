@@ -57,6 +57,7 @@ export default function SiteFooter() {
               <li><Link href="/arbeitgeber-brutto-netto-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Arbeitgeber-Rechner</Link></li>
               <li><Link href="/lohnsteuerrechner"          className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Lohnsteuerrechner</Link></li>
               <li><Link href="/einkommensteuer-rechner"    className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Einkommensteuer-Rechner</Link></li>
+              <li><Link href="/einkommensteuer-rechner-2027" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Einkommensteuer-Rechner 2027</Link></li>
               <li><Link href="/steuerrueckerstattung-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerrückerstattung-Rechner</Link></li>
               <li><Link href="/bav-rechner"               className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">bAV-Rechner (Entgeltumwandlung)</Link></li>
               <li><Link href="/beitragsbemessungsgrenze-2026" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Beitragsbemessungsgrenze 2026</Link></li>

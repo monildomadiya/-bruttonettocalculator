@@ -29,6 +29,7 @@ export const calculatorGroups: NavGroup[] = [
       { href: "/lohnabrechnung-rechner", label: "Lohnabrechnung-Rechner", icon: FileText, description: "Abzüge Zeile für Zeile" },
       { href: "/lohnsteuerrechner", label: "Lohnsteuerrechner", icon: Receipt, description: "Lohnsteuer & Nettolohn" },
       { href: "/einkommensteuer-rechner", label: "Einkommensteuer-Rechner", icon: Landmark, description: "Jahressteuer § 32a EStG" },
+      { href: "/einkommensteuer-rechner-2027", label: "Einkommensteuer-Rechner 2027", icon: Landmark, description: "Steuer 2026 vs. 2027 vs. 2028" },
       { href: "/steuerrueckerstattung-rechner", label: "Steuerrückerstattung-Rechner", icon: ReceiptIcon, description: "Wie viel Steuer bekomme ich zurück?" },
       { href: "/gehaltserhoehung-rechner", label: "Gehaltserhöhung-Rechner", icon: TrendingUp, description: "Netto von der Erhöhung" },
       { href: "/jahresgehalt-rechner", label: "Jahresgehalt-Rechner", icon: CalendarRange, description: "Brutto & Netto pro Jahr" },

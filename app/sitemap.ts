@@ -81,6 +81,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/kuendigungsfrist-rechner",
     "/lohnsteuerrechner",
     "/einkommensteuer-rechner",
+    "/einkommensteuer-rechner-2027",
     "/steuerrueckerstattung-rechner",
     "/brutto-netto-rechner-2026",
     "/brutto-netto-rechner-2027",

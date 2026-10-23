@@ -204,7 +204,10 @@ export default function EinkommensteuerRechner() {
             Wenn Sie nicht das zu versteuernde Einkommen, sondern Ihr monatliches Bruttogehalt kennen, nutzen Sie besser
             den <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">Brutto-Netto-Rechner</Link> oder
             den <Link href="/lohnsteuerrechner" className="text-[#E60A1C] font-semibold hover:underline">Lohnsteuerrechner</Link> —
-            diese berücksichtigen zusätzlich die Sozialabgaben und die Steuerklasse.
+            diese berücksichtigen zusätzlich die Sozialabgaben und die Steuerklasse. Ihre Steuer nach der geplanten
+            Reform rechnet der{" "}
+            <Link href="/einkommensteuer-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Einkommensteuer-Rechner 2027</Link>{" "}
+            im Vergleich 2026, 2027 und 2028.
           </p>
         </div>
       </section>

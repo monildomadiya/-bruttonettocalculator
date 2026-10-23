@@ -421,6 +421,10 @@ export default function Rechner2027Page() {
             <Link href="/brutto-netto-rechner-2026" className="text-[#E60A1C] font-semibold hover:underline">
               Brutto Netto Rechner 2026
             </Link>
+            ; die Jahressteuer auf Ihr zu versteuerndes Einkommen 2026, 2027 und 2028 im{" "}
+            <Link href="/einkommensteuer-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
+              Einkommensteuer-Rechner 2027
+            </Link>
             ; den bereits beschlossenen Stundenlohn ab 2027 im{" "}
             <Link href="/mindestlohn" className="text-[#E60A1C] font-semibold hover:underline">
               Mindestlohn-Rechner

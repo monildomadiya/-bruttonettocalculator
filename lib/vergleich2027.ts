@@ -8,12 +8,25 @@
  *   2028 → Steuerjahr 2027, Szenario "stufe2028"   (Art. 2 EStRefG 2027)
  *
  * Sozialabgaben 2027/2028 (`sv`):
- *   "beschlossen" → Rechengrößen 2026 fortgeschrieben (Voreinstellung des Rechners)
- *   "entwurf"     → Beitragsbemessungsgrenzen aus dem BMAS-Referentenentwurf 2027;
- *                   für 2028 gibt es noch keine Werte, die Tabellen nehmen dann
- *                   die Werte 2027 an und sagen das.
+ *   "beschlossen" → Rechengrößen 2026 fortgeschrieben (Voreinstellung hier)
+ *   "entwurf"     → wie der PAP-2027-Entwurf: Beitragsbemessungsgrenzen 2027
+ *                   (Kabinettsbeschluss) und Pflegezuschlag 0,9 % — die
+ *                   Voreinstellung des Hauptrechners; für 2028 gibt es noch
+ *                   keine Werte, die Tabellen nehmen dann die Werte 2027 an.
  */
-import { calculateNetto, type CalculatorResult, type Steuerklasse, type Sv2027 } from "@/lib/taxCalculator";
+import {
+  calculateNetto,
+  estFormel2026,
+  estFuerTarif,
+  grenzsteuersatz2026,
+  grenzsteuersatzFuerTarif,
+  soliBerechnen,
+  TARIF_2027_ENTWURF,
+  TARIF_2028_ENTWURF,
+  type CalculatorResult,
+  type Steuerklasse,
+  type Sv2027,
+} from "@/lib/taxCalculator";
 
 export type VergleichsJahr = 2026 | 2027 | 2028;
 
@@ -40,6 +53,53 @@ export function nettoFuerJahr(bruttoMonat: number, jahr: VergleichsJahr, o: Nett
     kirchensteuerSatz: o.kirchensteuerSatz,
     kvZusatzbeitrag: o.kvZusatzbeitrag,
   });
+}
+
+/**
+ * Einkommensteuer nach § 32a EStG für 2026 / 2027 / 2028 aus dem zu
+ * versteuernden Einkommen — die Tariffunktionen der Engine, nichts dupliziert:
+ *   2026 → estFormel2026 / grenzsteuersatz2026
+ *   2027 → TARIF_2027_ENTWURF, 2028 → TARIF_2028_ENTWURF (estFuerTarif)
+ * Splitting (§ 32a Abs. 5 EStG): 2 × ESt(zvE ÷ 2), Grenzsteuersatz bei zvE ÷ 2.
+ * Soli mit Freigrenze (soliBerechnen, SolzG 2026 — der Entwurf ändert es nicht),
+ * Kirchensteuer als Prozentsatz der ESt.
+ */
+export interface EStJahresWert {
+  jahr: VergleichsJahr;
+  est: number;
+  soli: number;
+  kirchensteuer: number;
+  summe: number;
+  durchschnittssteuersatzPct: number;
+  grenzsteuersatzPct: number;
+  /** summe minus summe 2026 (negativ = Entlastung). */
+  differenzZu2026: number;
+}
+
+export function einkommensteuerVergleich(zvE: number, splitting: boolean, kirchensteuerSatz = 0): EStJahresWert[] {
+  const x = Math.max(0, zvE);
+  const tarife: { jahr: VergleichsJahr; est: (z: number) => number; grenz: (z: number) => number }[] = [
+    { jahr: 2026, est: estFormel2026, grenz: grenzsteuersatz2026 },
+    { jahr: 2027, est: (z) => estFuerTarif(TARIF_2027_ENTWURF, z), grenz: (z) => grenzsteuersatzFuerTarif(TARIF_2027_ENTWURF, z) },
+    { jahr: 2028, est: (z) => estFuerTarif(TARIF_2028_ENTWURF, z), grenz: (z) => grenzsteuersatzFuerTarif(TARIF_2028_ENTWURF, z) },
+  ];
+  const werte = tarife.map((t) => {
+    const est = splitting ? 2 * t.est(x / 2) : t.est(x);
+    const soli = soliBerechnen(est, splitting);
+    const kirchensteuer = est * kirchensteuerSatz;
+    return {
+      jahr: t.jahr,
+      est,
+      soli,
+      kirchensteuer,
+      summe: est + soli + kirchensteuer,
+      durchschnittssteuersatzPct: x > 0 ? (est / x) * 100 : 0,
+      grenzsteuersatzPct: t.grenz(splitting ? x / 2 : x) * 100,
+      differenzZu2026: 0,
+    };
+  });
+  for (const w of werte) w.differenzZu2026 = w.summe - werte[0].summe;
+  return werte;
 }
 
 /** Ganzzahlige Monatsbeträge von `von` bis `bis` (inklusive) in `schritt`-Schritten. */

@@ -41,6 +41,7 @@ export const PAGE_LAST_UPDATED: Record<string, string> = {
   "/kindergeld-rechner": "2026-10-23",
   "/lohnsteuerrechner": "2026-10-06",
   "/brutto-netto-rechner-vergleich": "2026-10-23",
+  "/einkommensteuer-rechner-2027": "2026-10-23",
 };
 
 /**
