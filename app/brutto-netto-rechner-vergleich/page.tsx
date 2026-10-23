@@ -84,7 +84,7 @@ const matrix: { feature: string; uns: Cell; gehalt: Cell; ft: Cell }[] = [
   },
   {
     feature: "Sozialabgaben 2027 mit neuen Beitragsbemessungsgrenzen",
-    uns: { state: "yes", note: "Umschalter, Grenzen 2027 wählbar", fn: 20 },
+    uns: { state: "yes", note: "PAP-2027-Entwurf, Stand 2026 wählbar", fn: 20 },
     gehalt: { state: "na", fn: 1 },
     ft: { state: "yes", note: "BMAS-Entwurf eingerechnet", fn: 11 },
   },
@@ -185,7 +185,7 @@ const fussnoten: Record<number, string> = {
   14: "Finanztip schreibt selbst, der Rechner sei für Beamte „meist nur eine erste Orientierung“, und verweist auf den Bezügerechner des Bundesverwaltungsamts.",
   15: "Finanztip schreibt selbst, man habe sich entschieden, „den Midijob nicht speziell zu berücksichtigen“, und verweist auf den Midijob-Rechner der Deutschen Rentenversicherung.",
   16: "Auf der geprüften Finanztip-Rechnerseite nicht angeboten; Finanztip kann andere Rechner an anderer Stelle führen.",
-  20: "Im Hauptrechner wählbar unter „Sozialabgaben 2027“: Stand 2026 (Voreinstellung, solange die Rechengrößen-Verordnung 2027 nicht verkündet ist) oder die vom Kabinett am 07.10.2026 beschlossenen Beitragsbemessungsgrenzen 2027, jeweils mit den Beitragssätzen 2026. Abweichende Sätze rechnet der Sozialabgaben-Rechner 2027.",
+  20: "Im Hauptrechner wählbar unter „Sozialabgaben 2027“: voreingestellt wie im Lohnsteuer-Programmablaufplan 2027 (Entwurf des BMF vom 08.10.2026: Beitragsbemessungsgrenzen 2027, Pflegezuschlag für Kinderlose 0,9 %), zum Vergleich auch mit dem Stand 2026. Abweichende Sätze rechnet der Sozialabgaben-Rechner 2027.",
   21: "Im Hauptrechner gilt der durchschnittliche Zusatzbeitrag (2026: 2,9 %); den Satz der eigenen Kasse rechnet der Brutto-Netto-Rechner mit Krankenkasse.",
   23: "Der Netto-zu-Brutto-Rechner ist eine eigene Seite (nicht im Hauptrechner) und sucht das Brutto exakt mit derselben Engine, wahlweise für 2026 oder 2027.",
   22: "Ohne Sozialabgaben und mit privater Krankenversicherung rechnet der Beamten-Rechner; der Hauptrechner geht von gesetzlicher Versicherung aus.",
@@ -199,7 +199,7 @@ const faqs = [
   },
   {
     q: "Welcher Rechner kann das Steuerjahr 2027?",
-    a: "BruttoNettoCalculator und Finanztip rechnen beide den Steuertarif 2027 nach dem Regierungsentwurf vom 2. September 2026. Beide können auch die geplanten Beitragsbemessungsgrenzen 2027 einrechnen — Finanztip immer, unser Rechner wahlweise über den Umschalter „Sozialabgaben 2027“ (Voreinstellung: beschlossener Stand 2026). Zusätzlich bietet unser Rechner drei Steuer-Szenarien — ohne Reform, Entwurf 2027 und Stufe 2028. Auf der geprüften gehalt.de-Seite war im Oktober 2026 keine 2027-Berechnung verfügbar.",
+    a: "BruttoNettoCalculator und Finanztip rechnen beide den Steuertarif 2027 nach dem Regierungsentwurf vom 2. September 2026. Beide können auch die geplanten Beitragsbemessungsgrenzen 2027 einrechnen — Finanztip immer, unser Rechner voreingestellt wie im Lohnsteuer-Programmablaufplan 2027 (Entwurf), inklusive des höheren Pflegezuschlags für Kinderlose; zum Vergleich lässt sich auf den Stand 2026 umschalten. Zusätzlich bietet unser Rechner drei Steuer-Szenarien — ohne Reform, Entwurf 2027 und Stufe 2028. Auf der geprüften gehalt.de-Seite war im Oktober 2026 keine 2027-Berechnung verfügbar.",
   },
   {
     q: "Was kann der Brutto-Netto-Rechner von Finanztip?",

@@ -159,7 +159,7 @@ const faqs = [
   },
   {
     q: "Sind die Sozialabgaben 2027 schon berücksichtigt?",
-    a: "Wahlweise. Die Rechengrößen-Verordnung 2027 hat das Bundeskabinett am 7. Oktober 2026 beschlossen (Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat, Kranken- und Pflegeversicherung 6.375 € im Monat); die Zustimmung des Bundesrats steht noch aus. Im Rechner wählen Sie deshalb unter „Sozialabgaben 2027“: „Stand 2026“ rechnet mit den amtlichen Grenzen 2026 weiter (Voreinstellung), „Grenzen 2027“ mit den beschlossenen Grenzen. Die Beitragssätze bleiben in beiden Fällen auf dem Stand 2026: Der GKV-Schätzerkreis hat am 14. Oktober 2026 einen unveränderten durchschnittlichen Zusatzbeitrag von 2,9 % errechnet, und der Rentenbeitrag bleibt nach dem Rentenversicherungsbericht 2027 bei 18,6 %. Nur der Pflegezuschlag für Kinderlose soll nach dem Regierungsentwurf zur Pflegereform von 0,6 auf 0,9 Punkte steigen; das ist noch nicht eingerechnet. Der Unterschied zeigt sich erst ab 5.812,50 € brutto im Monat. Sobald die Verordnung in Kraft ist, wird der Rechner umgestellt.",
+    a: "Ja. Die Rechengrößen-Verordnung 2027 hat das Bundeskabinett am 7. Oktober 2026 beschlossen (Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat, Kranken- und Pflegeversicherung 6.375 € im Monat); die Zustimmung des Bundesrats steht noch aus. Voreingestellt rechnet der Rechner die Sozialabgaben 2027 wie der Lohnsteuer-Programmablaufplan 2027, den das Bundesfinanzministerium am 8. Oktober 2026 im Entwurf veröffentlicht hat: mit diesen Grenzen und mit 0,9 statt 0,6 Punkten Pflegezuschlag für Kinderlose (Regierungsentwurf zur Pflegereform). Die übrigen Sätze bleiben: Der GKV-Schätzerkreis hat am 14. Oktober 2026 einen unveränderten durchschnittlichen Zusatzbeitrag von 2,9 % errechnet, und der Rentenbeitrag bleibt nach dem Rentenversicherungsbericht 2027 bei 18,6 %. Unter „Sozialabgaben 2027“ können Sie zum Vergleich auf den Stand 2026 umschalten. Der Unterschied zeigt sich erst ab 5.812,50 € brutto im Monat. Sobald die Verordnung in Kraft ist, wird der Rechner umgestellt.",
   },
   {
     q: "Welche 2027-Werte stehen bereits fest?",
@@ -297,7 +297,7 @@ export default function Rechner2027Page() {
         <p className="text-xs text-black/55 mt-3 leading-relaxed">
           „+ € / Monat“ = Netto 2027 bzw. 2028 minus Netto 2026. Lohnsteuer 2027 nach Artikel 1, 2028 nach Artikel 2 des
           Regierungsentwurfs ({LEGISLATION_STATUS.drucksache}, Entwurf). Sozialabgaben 2027 mit den
-          Beitragsbemessungsgrenzen der Rechengrößen-Verordnung 2027 (Kabinettsbeschluss vom 07.10.2026; Beitragssätze wie 2026); für 2028
+          Beitragsbemessungsgrenzen der Rechengrößen-Verordnung 2027 (Kabinettsbeschluss vom 07.10.2026) und 0,9 % Pflegezuschlag für Kinderlose, sonst Beitragssätze wie 2026 — wie im PAP-2027-Entwurf des BMF; für 2028
           sind noch keine Werte festgelegt, angenommen sind die Werte 2027. Deshalb wird das Plus oberhalb der
           Beitragsbemessungsgrenze 2026 (5.812,50 € brutto) kleiner oder negativ. Beschlossen ist beides noch nicht.
         </p>
@@ -367,9 +367,10 @@ export default function Rechner2027Page() {
           die Beitragsbemessungsgrenzen 2027
         </Link>{" "}
         sollen auf 6.375 € (Kranken- und Pflegeversicherung) und 8.850 € im Monat (Rente und
-        Arbeitslosenversicherung) steigen. Beschlossen ist auch diese Verordnung nicht — im Rechner oben
-        können Sie unter „Sozialabgaben 2027“ trotzdem schon mit den Entwurfsgrenzen rechnen
-        (Voreinstellung bleibt der Stand 2026). Was zusätzlich höhere Beitragssätze kosten würden, zeigt der{" "}
+        Arbeitslosenversicherung) steigen; das Kabinett hat die Verordnung am 7. Oktober 2026 beschlossen, der
+        Bundesrat muss noch zustimmen. Der Rechner oben rechnet 2027 voreingestellt damit und mit 0,9 statt 0,6 Punkten
+        Pflegezuschlag für Kinderlose — so wie der Lohnsteuer-Programmablaufplan 2027 im Entwurf des BMF. Unter
+        „Sozialabgaben 2027“ können Sie zum Vergleich auf den Stand 2026 umschalten. Was zusätzlich höhere Beitragssätze kosten würden, zeigt der{" "}
         <Link href="/sozialabgaben-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
           Sozialabgaben-Rechner 2027
         </Link>

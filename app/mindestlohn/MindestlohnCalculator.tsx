@@ -205,7 +205,7 @@ export default function MindestlohnCalculator({
               {bruttoMonat <= MINIJOB_GRENZE[jahr]
                 ? `Minijob (bis ${MINIJOB_GRENZE[jahr]} €): keine Lohnsteuer, nur 3,6 % Rentenbeitrag (ohne Befreiung)`
                 : jahr === 2027
-                ? "2027: Steuertarif laut Gesetzentwurf, Sozialabgaben mit Werten 2026 — ohne Kirchensteuer, kinderlos"
+                ? "2027: Steuertarif laut Gesetzentwurf, Sozialabgaben wie im PAP-2027-Entwurf — ohne Kirchensteuer, kinderlos"
                 : "Ohne Kirchensteuer, kinderlos ab 23, Ø-Zusatzbeitrag der Krankenkasse"}
             </div>
 

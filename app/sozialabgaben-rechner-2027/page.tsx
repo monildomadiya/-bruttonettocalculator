@@ -42,8 +42,7 @@ const BBG_ZEILEN = [
 /*
  * „Wer zahlt 2027 mehr?“ — Arbeitnehmeranteil Sozialversicherung 2026 vs. 2027
  * aus calculateNetto (Steuerklasse I, kinderlos ab 23, Ø-Zusatzbeitrag 2,9 %).
- * 2027 mit den Grenzen der Rechengrößen-Verordnung 2027, Beitragssätze wie 2026 — also der
- * reine Effekt der neuen Beitragsbemessungsgrenzen.
+ * 2027 wie im PAP-2027-Entwurf: Grenzen 2027 und Pflegezuschlag 0,9 %.
  */
 const WER_ZAHLT_MEHR = [5000, 5500, 6000, 6500, 7000, 8000, 9000].map((brutto) => {
   const a = nettoFuerJahr(brutto, 2026).sv.summeMonat;
@@ -298,9 +297,9 @@ export default function SozialabgabenRechner2027Page() {
           <h2 id="wer-zahlt-mehr" className="text-2xl font-extrabold text-[#16181D] mb-3">Wer zahlt 2027 mehr?</h2>
           <p className="text-sm sm:text-base text-black/75 leading-relaxed mb-4">
             Die neuen Grenzen treffen nur Gehälter über der Grenze von 2026 ({formatEUR(BBG_2026.kvPvJahr / 12)} im
-            Monat in der Kranken- und Pflegeversicherung). Arbeitnehmeranteil zur Sozialversicherung pro Monat,
-            Steuerklasse I, kinderlos ab 23, durchschnittlicher Zusatzbeitrag 2,9 %; 2027 mit den Grenzen der
-            Rechengrößen-Verordnung 2027 und den Beitragssätzen 2026.
+            Monat in der Kranken- und Pflegeversicherung); den höheren Pflegezuschlag zahlen alle Kinderlosen ab 23. Arbeitnehmeranteil zur Sozialversicherung pro Monat,
+            Steuerklasse I, kinderlos ab 23, durchschnittlicher Zusatzbeitrag 2,9 %; 2027 wie im Lohnsteuer-
+            Programmablaufplan 2027 (Entwurf): Grenzen 2027 und 0,9 statt 0,6 Punkte Pflegezuschlag für Kinderlose.
           </p>
           <div className="overflow-x-auto bg-white border border-black/[0.08] rounded-2xl">
             <table className="w-full text-sm min-w-[480px]">

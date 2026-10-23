@@ -104,7 +104,7 @@ export default function NettoInBruttoPage({ amount }: { amount: number }) {
     },
     {
       q: `Brauche ich 2027 weniger Brutto für ${nf(amount)} € netto?`,
-      a: `Nach dem Gesetzentwurf zur Einkommensteuerreform 2027 reichen in Steuerklasse I rund ${formatEUR(r2027.bruttoMonat)} brutto für ${nf(amount)} € netto — ${formatEUR(Math.abs(brutto - r2027.bruttoMonat))} ${r2027.bruttoMonat <= brutto ? "weniger" : "mehr"} als 2026. Die Sozialabgaben 2027 sind dabei mit den Werten 2026 gerechnet, weil die Rechengrößen 2027 noch nicht beschlossen sind; das Gesetz ist noch nicht verabschiedet.`,
+      a: `Nach dem Gesetzentwurf zur Einkommensteuerreform 2027 reichen in Steuerklasse I rund ${formatEUR(r2027.bruttoMonat)} brutto für ${nf(amount)} € netto — ${formatEUR(Math.abs(brutto - r2027.bruttoMonat))} ${r2027.bruttoMonat <= brutto ? "weniger" : "mehr"} als 2026. Die Sozialabgaben 2027 sind dabei wie im Lohnsteuer-Programmablaufplan 2027 (Entwurf) gerechnet; das Gesetz ist noch nicht verabschiedet.`,
     },
   ];
 
@@ -271,7 +271,7 @@ export default function NettoInBruttoPage({ amount }: { amount: number }) {
           </table>
         </div>
         <p className="mt-3 text-xs sm:text-sm text-black/55">
-          2027: Tarif nach dem Regierungsentwurf zur Einkommensteuerreform, Sozialabgaben mit den Werten 2026 — das Gesetz ist noch nicht beschlossen.
+          2027: Tarif nach dem Regierungsentwurf zur Einkommensteuerreform, Sozialabgaben wie im Lohnsteuer-PAP-2027-Entwurf (Beitragsbemessungsgrenzen 2027, Pflegezuschlag für Kinderlose 0,9 %) — das Gesetz ist noch nicht beschlossen.
         </p>
       </div>
 

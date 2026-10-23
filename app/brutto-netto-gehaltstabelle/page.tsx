@@ -170,7 +170,7 @@ export default function SalaryHubPage() {
         </h2>
         <p className="text-sm sm:text-base text-black/70 mb-6 leading-relaxed">
           Ohne Kirchensteuer, kinderlos ab 23, durchschnittlicher Krankenkassen-Zusatzbeitrag. 2027: Steuertarif laut
-          Gesetzentwurf zur Steuerreform, Sozialabgaben mit den Werten 2026.
+          Gesetzentwurf zur Steuerreform, Sozialabgaben wie im Lohnsteuer-PAP-2027-Entwurf (Beitragsbemessungsgrenzen 2027, Pflegezuschlag für Kinderlose 0,9 %).
         </p>
         <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl overflow-hidden shadow-xl overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[640px]">

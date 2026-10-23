@@ -161,9 +161,9 @@ export const PARAMETER_2027: Parameter2027[] = [
   },
   {
     label: "Pflegeversicherung, Kinderlosenzuschlag",
-    wert: "3,6 % / 0,6 % (Werte 2026)",
+    wert: "3,6 % / 0,9 %",
     status: "provisional",
-    hinweis: "Regierungsentwurf Pflegereform (Kabinett 30.9.2026): Kinderlosenzuschlag 0,9 % ab 2027, noch nicht beschlossen",
+    hinweis: "Regierungsentwurf Pflegereform (Kabinett 30.9.2026), so auch im Lohnsteuer-PAP-2027-Entwurf; noch nicht beschlossen",
     quelle: "https://www.bundesgesundheitsministerium.de/presse/pressemitteilungen/kabinett-beschliesst-pflegeneuordnungsgesetz",
   },
   {

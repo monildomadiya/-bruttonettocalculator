@@ -60,7 +60,7 @@ export const metadata: Metadata = {
 // Sozialabgaben auf dem Stand 2026 — also reiner Steuereffekt).
 const reformPlus = (brutto: number) => {
   const basis = { bruttoMonat: brutto, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 as const };
-  return calculateNetto({ ...basis, jahr: 2027 }).nettoMonat - calculateNetto({ ...basis, jahr: 2026 }).nettoMonat;
+  return calculateNetto({ ...basis, jahr: 2027, sv2027: "beschlossen" }).nettoMonat - calculateNetto({ ...basis, jahr: 2026 }).nettoMonat;
 };
 const eur2 = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const reform3000 = reformPlus(3000);
@@ -106,7 +106,7 @@ const faqs = [
   },
   {
     q: "Kann ich diesen Rechner als Brutto Netto Rechner 2027 nutzen?",
-    a: `Ja. Unter dem Ergebnis zeigt der Rechner immer Ihr Netto 2026 und Ihr Netto 2027 (Entwurf) nebeneinander, mit der Differenz pro Monat und Jahr. Stellen Sie das Steuerjahr auf 2027, sehen Sie zusätzlich alle Abzüge für 2027: Die Lohnsteuer folgt dann dem Gesetzentwurf zur Steuerreform (Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag ${ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €). Für die Sozialabgaben wählen Sie unter „Sozialabgaben 2027“ zwischen dem Stand 2026 und den höheren Beitragsbemessungsgrenzen 2027, die das Bundeskabinett am 7. Oktober 2026 beschlossen hat.`,
+    a: `Ja. Unter dem Ergebnis zeigt der Rechner immer Ihr Netto 2026 und Ihr Netto 2027 (Entwurf) nebeneinander, mit der Differenz pro Monat und Jahr. Stellen Sie das Steuerjahr auf 2027, sehen Sie zusätzlich alle Abzüge für 2027: Die Lohnsteuer folgt dann dem Gesetzentwurf zur Steuerreform (Grundfreibetrag ${GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag ${ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €). Die Sozialabgaben 2027 rechnet er wie der Lohnsteuer-Programmablaufplan 2027 im Entwurf des Bundesfinanzministeriums: mit den Beitragsbemessungsgrenzen 2027 (Kabinettsbeschluss vom 7. Oktober 2026) und 0,9 statt 0,6 Punkten Pflegezuschlag für Kinderlose. Zum Vergleich lässt sich unter „Sozialabgaben 2027“ auf den Stand 2026 umschalten.`,
   },
   {
     q: "Ab wann gilt der Brutto Netto Rechner 2027?",
@@ -114,11 +114,11 @@ const faqs = [
   },
   {
     q: "Wie viel mehr Netto bringt die Steuerreform 2027?",
-    a: `Wenig: Nach dem Gesetzentwurf bleiben bei 3.000 € brutto in Steuerklasse I rund ${eur2(reform3000)} € und bei 5.000 € rund ${eur2(reform5000)} € mehr netto im Monat (kinderlos, ohne Kirchensteuer, Sozialabgaben auf dem Stand 2026). Weil 2027 die Beitragsbemessungsgrenzen steigen (Kabinettsbeschluss vom 7. Oktober 2026), zahlen Gutverdiener mehr Sozialabgaben. Ab rund ${svKippBrutto.toLocaleString("de-DE")} € brutto bleibt dann insgesamt weniger netto als 2026.`,
+    a: `Wenig: Nach dem Gesetzentwurf bleiben bei 3.000 € brutto in Steuerklasse I rund ${eur2(reform3000)} € und bei 5.000 € rund ${eur2(reform5000)} € mehr netto im Monat (kinderlos, ohne Kirchensteuer, nur der Steuereffekt). Dagegen stehen höhere Sozialabgaben: Die Beitragsbemessungsgrenzen steigen (Kabinettsbeschluss vom 7. Oktober 2026), und Kinderlose sollen 0,9 statt 0,6 Punkte Pflegezuschlag zahlen. Kinderlose haben deshalb ab rund ${svKippBrutto.toLocaleString("de-DE")} € brutto insgesamt weniger netto als 2026.`,
   },
   {
     q: "Wie viel netto sind 2.027 € brutto?",
-    a: `Bei 2.027 € brutto im Monat bleiben 2026 in Steuerklasse I rund ${eur2(netto2027Euro(2026, false))} € netto (kinderlos, ohne Kirchensteuer, durchschnittlicher Zusatzbeitrag der Krankenkasse). Mit 9 % Kirchensteuer sind es rund ${eur2(netto2027Euro(2026, true))} €. Im Jahr 2027 steigt das Netto nach dem Gesetzentwurf zur Steuerreform auf rund ${eur2(netto2027Euro(2027, false))} € (Sozialabgaben auf dem Stand 2026). Für eine andere Steuerklasse oder mit Kindern geben Sie 2.027 € einfach oben in den Rechner ein.`,
+    a: `Bei 2.027 € brutto im Monat bleiben 2026 in Steuerklasse I rund ${eur2(netto2027Euro(2026, false))} € netto (kinderlos, ohne Kirchensteuer, durchschnittlicher Zusatzbeitrag der Krankenkasse). Mit 9 % Kirchensteuer sind es rund ${eur2(netto2027Euro(2026, true))} €. Im Jahr 2027 sind es nach dem Gesetzentwurf zur Steuerreform rund ${eur2(netto2027Euro(2027, false))} € (Sozialabgaben wie im Lohnsteuer-Programmablaufplan 2027, Entwurf). Für eine andere Steuerklasse oder mit Kindern geben Sie 2.027 € einfach oben in den Rechner ein.`,
   },
   {
     q: "Warum sind die Werte für 2027 vorläufig?",
@@ -276,14 +276,15 @@ const breadcrumbSchema = {
 const eurZahl = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 // Netto 2026 ↔ 2027 für den Antwortblock — direkt aus der Rechen-Engine.
-// Zwei 2027-Spalten: nur Steuerreform (Sozialabgaben Stand 2026) und zusätzlich
-// die Beitragsbemessungsgrenzen 2027 (Kabinettsbeschluss). Ab rund 6.000 € brutto
+// Zwei 2027-Spalten: nur Steuerreform (Sozialabgaben Stand 2026) und so, wie der
+// Rechner 2027 voreingestellt rechnet (PAP-2027-Entwurf: BBG 2027, Pflegezuschlag
+// 0,9 %). Ab rund 6.000 € brutto
 // dreht das Vorzeichen — die "2027 weniger netto"-Frage, die Finanztip & Co.
 // gerade aufgreifen, beantwortet der Block so selbst.
 const netto2027Zeilen = [2500, 3800, 5000, 7000].map((brutto) => {
   const basis = { bruttoMonat: brutto, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 as const };
   const n2026 = calculateNetto({ ...basis, jahr: 2026 }).nettoMonat;
-  const n2027 = calculateNetto({ ...basis, jahr: 2027 }).nettoMonat;
+  const n2027 = calculateNetto({ ...basis, jahr: 2027, sv2027: "beschlossen" }).nettoMonat;
   const n2027Sv = calculateNetto({ ...basis, jahr: 2027, sv2027: "entwurf" }).nettoMonat;
   return { brutto, n2026, n2027, plus: n2027 - n2026, n2027Sv, plusSv: n2027Sv - n2026 };
 });
@@ -447,11 +448,12 @@ export default function HomePage() {
             {GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} € statt{" "}
             {GRUNDFREIBETRAG.amtlich2026.toLocaleString("de-DE")} €, Arbeitnehmer-Pauschbetrag{" "}
             {ARBEITNEHMER_PAUSCHBETRAG.reform.toLocaleString("de-DE")} €. Bei{" "}
-            {zeile3800.brutto.toLocaleString("de-DE")} € brutto bleiben so rund {eurRund(zeile3800.plus)} € mehr
-            im Monat. Mit den höheren Beitragsbemessungsgrenzen, die das Kabinett am 7. Oktober beschlossen hat, haben Gutverdiener 2027
-            trotzdem <strong className="text-[#16181D]">weniger Netto</strong> — bei{" "}
+            {zeile3800.brutto.toLocaleString("de-DE")} € brutto bringt die Steuerreform allein rund {eurRund(zeile3800.plus)} € mehr
+            im Monat; mit den Sozialabgaben 2027 — höhere Beitragsbemessungsgrenzen (Kabinettsbeschluss vom 7. Oktober) und
+            0,9 statt 0,6 Punkte Pflegezuschlag für Kinderlose — bleiben {zeile3800.plusSv >= 0 ? `rund ${eurRund(zeile3800.plusSv)} € mehr` : `rund ${eurRund(zeile3800.plusSv)} € weniger`}.
+            Gutverdiener haben 2027 sogar <strong className="text-[#16181D]">weniger Netto</strong> — bei{" "}
             {zeile7000.brutto.toLocaleString("de-DE")} € brutto rund {eurRund(zeile7000.plusSv)} € im Monat.
-            Beschlossen ist beides noch nicht.
+            Endgültig beschlossen ist das alles noch nicht.
           </p>
           <div className="mt-5 bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs sm:text-base">
@@ -484,8 +486,8 @@ export default function HomePage() {
           </div>
           <p className="text-xs text-black/50 mt-3 leading-relaxed">
             Beträge in Euro pro Monat, Steuerklasse I, kinderlos, ohne Kirchensteuer; darunter die Differenz zu 2026.
-            Lohnsteuer 2027 jeweils nach dem Gesetzentwurf. ¹ Sozialabgaben mit den amtlichen Werten 2026.
-            ² Mit den Beitragsbemessungsgrenzen der Rechengrößen-Verordnung 2027 (Kabinettsbeschluss vom 7.10.2026, Bundesrat steht aus; Beitragssätze wie 2026).
+            Lohnsteuer 2027 jeweils nach dem Gesetzentwurf. ¹ Nur die Steuerreform: Sozialabgaben mit den amtlichen Werten 2026.
+            ² So rechnet der Rechner 2027: Sozialabgaben wie im Lohnsteuer-Programmablaufplan 2027 (Entwurf des BMF) — Beitragsbemessungsgrenzen 2027 (Kabinettsbeschluss vom 7.10.2026, Bundesrat steht aus), Pflegezuschlag für Kinderlose 0,9 % (Regierungsentwurf), Ø-Zusatzbeitrag 2,9 %.
             Wie viel mehr Netto die Reform über alle Gehälter bringt und wie weit das Verfahren ist, zeigt der{" "}
             <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">
               Steuerreform-Rechner 2027

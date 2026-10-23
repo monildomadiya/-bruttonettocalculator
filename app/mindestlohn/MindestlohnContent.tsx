@@ -98,7 +98,7 @@ export default function MindestlohnContent() {
         </div>
         <p className="mt-3 text-xs sm:text-sm text-black/55">
           Monatsbrutto = Stundenlohn × Wochenstunden × 13 ÷ 3. Netto 2027 vorläufig: Steuertarif laut Gesetzentwurf zur
-          Einkommensteuerreform 2027, Sozialversicherungswerte 2026 (die Rechengrößen 2027 sind noch nicht beschlossen).
+          Einkommensteuerreform 2027, Sozialabgaben wie im Lohnsteuer-PAP-2027-Entwurf (Beitragsbemessungsgrenzen 2027, Pflegezuschlag für Kinderlose 0,9 %).
           Bis 2.000 € gelten die reduzierten Midijob-Beiträge. Minijob (bis {MINIJOB_GRENZE[2027]} €): keine Lohnsteuer
           für Sie, nur 3,6 % Rentenbeitrag, sofern Sie sich nicht befreien lassen. „+ € vs. 2026“ vergleicht mit dem
           Mindestlohn 2026 von {MINDESTLOHN_2026.toLocaleString("de-DE", { minimumFractionDigits: 2 })} € bei gleichen Stunden.

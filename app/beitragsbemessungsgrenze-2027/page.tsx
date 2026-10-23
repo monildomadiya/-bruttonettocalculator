@@ -93,11 +93,13 @@ export default function Beitragsbemessungsgrenze2027Page() {
 
   /*
    * Mehrbelastung nach Gehalt — direkt aus der Engine: Sozialabgaben 2027 mit den
-   * Entwurfs-BBG (Sätze 2026) gegen 2026; dazu das Netto inklusive Steuerreform
-   * (Lohnsteuer 2027 nach dem Regierungsentwurf). SK I, kinderlos, ohne KiSt.
+   * BBG 2027 gegen 2026; dazu das Netto inklusive Steuerreform (Lohnsteuer 2027
+   * nach dem Regierungsentwurf). SK I, MIT Kind, ohne KiSt — mit Kind, damit
+   * die Tabelle den reinen Effekt der Grenzen zeigt; den höheren Pflegezuschlag
+   * für Kinderlose 2027 zeigt der Sozialabgaben-Rechner.
    */
   const mehrNachGehalt = [5000, 6000, 7000, 9000].map((brutto) => {
-    const basis = { bruttoMonat: brutto, steuerklasse: 1 as const, verheiratet: false, kinderlosUeber23: true, kirche: false };
+    const basis = { bruttoMonat: brutto, steuerklasse: 1 as const, verheiratet: false, kinderlosUeber23: false, kirche: false };
     const a = calculateNetto({ ...basis, jahr: 2026 });
     const b = calculateNetto({ ...basis, jahr: 2027, sv2027: "entwurf" });
     return { brutto, svMehr: b.sv.summeMonat - a.sv.summeMonat, nettoDiff: b.nettoMonat - a.nettoMonat };
@@ -176,7 +178,7 @@ export default function Beitragsbemessungsgrenze2027Page() {
     {
       q: "Rechnet der Brutto-Netto-Rechner schon mit den Werten 2027?",
       a:
-        "Auf Wunsch. Voreingestellt rechnet der Brutto-Netto-Rechner 2027 mit den amtlichen Grenzen 2026, solange die Verordnung nicht verkündet ist. Unter „Sozialabgaben 2027“ lässt sich auf die Grenzen 2027 umschalten — dann gelten die Grenzen von dieser Seite (6.375 € und 8.850 € im Monat) bei unveränderten Beitragssätzen. Der Steuerteil folgt in beiden Fällen dem Regierungsentwurf zur Einkommensteuerreform 2027. Sobald die Verordnung in Kraft ist, wird die Voreinstellung umgestellt.",
+        "Ja. Seit dem 23. Oktober 2026 rechnet der Brutto-Netto-Rechner 2027 voreingestellt mit den Grenzen von dieser Seite (6.375 € und 8.850 € im Monat) — so wie der Lohnsteuer-Programmablaufplan 2027, den das Bundesfinanzministerium am 8. Oktober 2026 im Entwurf veröffentlicht hat. Unter „Sozialabgaben 2027“ lässt sich zum Vergleich auf die amtlichen Grenzen 2026 umschalten. Der Steuerteil folgt in beiden Fällen dem Regierungsentwurf zur Einkommensteuerreform 2027.",
     },
   ];
 
@@ -369,7 +371,8 @@ export default function Beitragsbemessungsgrenze2027Page() {
             </table>
           </div>
           <p className="text-xs text-black/45 mt-3">
-            Arbeitnehmeranteil pro Monat, Steuerklasse I, kinderlos, ohne Kirchensteuer. „Netto 2027 vs. 2026“ enthält auch die
+            Arbeitnehmeranteil pro Monat, Steuerklasse I, mit einem Kind, ohne Kirchensteuer. Kinderlose ab 23 zahlen 2027
+            zusätzlich 0,3 Punkte mehr Pflegezuschlag (Regierungsentwurf). „Netto 2027 vs. 2026“ enthält auch die
             Entlastung der Steuerreform 2027 (Regierungsentwurf) und zeigt, was unterm Strich bleibt. Beide Werte sind vorläufig.
             Mit Ihrem eigenen Gehalt rechnet der{" "}
             <Link href="/sozialabgaben-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Sozialabgaben-Rechner 2027</Link>.

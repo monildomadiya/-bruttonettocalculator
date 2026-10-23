@@ -52,12 +52,18 @@ export type Steuerjahr = 2026 | 2027;
 export type Szenario = "ohneReform" | "entwurf2027" | "stufe2028";
 
 /**
- * Sozialabgaben im Steuerjahr 2027: "beschlossen" rechnet mit den amtlichen
- * Rechengrößen 2026 weiter (Default, solange die Verordnung 2027 nicht
- * verkündet ist), "entwurf" mit den Beitragsbemessungsgrenzen der
- * Rechengrößen-Verordnung 2027 (Kabinettsbeschluss 07.10.2026, SV_RECHENGROESSEN_2027_ENTWURF).
- * Die Beitragssätze bleiben in beiden Fällen auf dem Stand 2026 — für 2027
- * ist noch keiner beschlossen.
+ * Sozialabgaben im Steuerjahr 2027.
+ *
+ * "entwurf" (Default seit 23.10.2026) rechnet wie der Lohnsteuer-
+ * Programmablaufplan 2027 im Entwurf des BMF vom 08.10.2026:
+ *  - Beitragsbemessungsgrenzen der Rechengrößen-Verordnung 2027
+ *    (Kabinettsbeschluss 07.10.2026, SV_RECHENGROESSEN_2027_ENTWURF),
+ *  - Pflege-Zuschlag für Kinderlose 0,9 statt 0,6 Punkte
+ *    (Regierungsentwurf Pflegeneuordnungsgesetz, Kabinett 30.09.2026),
+ *  - übrige Sätze wie 2026 (Ø-Zusatzbeitrag 2,9 % laut Schätzerkreis
+ *    14.10.2026, RV 18,6 %, ALV 2,6 %, PV-Grundbeitrag 3,6 %).
+ * "beschlossen" rechnet zum Vergleich mit den amtlichen Werten 2026 weiter —
+ * für den Fall, dass Bundesrat oder Bundestag die Werte 2027 nicht beschließen.
  */
 export type Sv2027 = "beschlossen" | "entwurf";
 
@@ -86,7 +92,7 @@ export interface CalculatorInput {
    * `jahr: 2026` wirkungslos.
    */
   szenario?: Szenario;
-  /** Nur für `jahr: 2027` wirksam, Default "beschlossen". Siehe `Sv2027`. */
+  /** Nur für `jahr: 2027` wirksam, Default "entwurf". Siehe `Sv2027`. */
   sv2027?: Sv2027;
   /**
    * Beschäftigung zur Berufsausbildung (Azubi). Zwei Sonderregeln aus § 20 SGB IV:
@@ -206,10 +212,17 @@ export const BBG_2026 = {
  * und Pflegeversicherung steigen zusätzlich um 300 € monatlich über die
  * Lohnentwicklung hinaus.
  *
- * Im Hauptrechner nur auf Wunsch (`sv2027: "entwurf"`): Voreingestellt rechnen
- * die 2027-Szenarien weiter mit den amtlichen Werten 2026 (siehe
- * `RECHENGROESSEN_2026`), bis die Verordnung verkündet ist.
+ * Seit 23.10.2026 Voreinstellung für `jahr: 2027` (`sv2027: "entwurf"`), so
+ * wie der PAP-2027-Entwurf des BMF; `sv2027: "beschlossen"` rechnet zum
+ * Vergleich mit den amtlichen Werten 2026 (siehe `RECHENGROESSEN_2026`).
  */
+/**
+ * Pflege-Zuschlag für Kinderlose ab 1.1.2027: 0,9 statt 0,6 Beitragssatzpunkte
+ * (Regierungsentwurf Pflegeneuordnungsgesetz, Kabinett 30.09.2026; ebenso im
+ * PAP-2027-Entwurf des BMF). Grundbeitrag unverändert 3,6 %.
+ */
+export const PV_ZUSCHLAG_KINDERLOS_2027_ENTWURF = 0.009;
+
 export const SV_RECHENGROESSEN_2027_ENTWURF = {
   stand: "2026-09-21",
   quelle:
@@ -716,7 +729,7 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   const svBemessungJahr = svBemessungMonat * 12;
 
   // Beitragsbemessungsgrenzen: 2027 wahlweise aus der Rechengrößen-Verordnung 2027 (Kabinettsbeschluss).
-  const svEntwurf = jahr === 2027 && input.sv2027 === "entwurf";
+  const svEntwurf = jahr === 2027 && (input.sv2027 ?? "entwurf") === "entwurf";
   const kvPvBbgJahr = svEntwurf ? SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgJahr : r.kvPvBbgJahr;
   const rvAlvBbgJahr = svEntwurf ? SV_RECHENGROESSEN_2027_ENTWURF.rvAlvBbgJahr : r.rvAlvBbgJahr;
   const kvPvBemessung = Math.min(svBemessungJahr, kvPvBbgJahr);
@@ -724,7 +737,8 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
 
   const zusatzbeitrag = input.kvZusatzbeitrag ?? r.kvZusatzbeitragDurchschnitt;
   const kvSatzAn = (r.kvSatz + zusatzbeitrag) / 2;
-  const pvSatzGesamt = r.pvSatzBasis + (input.kinderlosUeber23 ? r.pvZuschlagKinderlos : 0);
+  const pvZuschlagKinderlos = svEntwurf ? PV_ZUSCHLAG_KINDERLOS_2027_ENTWURF : r.pvZuschlagKinderlos;
+  const pvSatzGesamt = r.pvSatzBasis + (input.kinderlosUeber23 ? pvZuschlagKinderlos : 0);
   // Arbeitgeberanteil PV: die Hälfte des Grundbeitrags (1,8 % bei 3,6 %); den
   // Kinderlosenzuschlag trägt der AN allein. Sachsen-Sonderfall: der AN trägt
   // einen Prozentpunkt allein, AG daher nur 1,3 %.

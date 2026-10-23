@@ -2,9 +2,8 @@
  * Sozialabgaben 2026 vs. 2027 — Arbeitnehmer- und Arbeitgeberbeiträge im
  * direkten Vergleich.
  *
- * Bewusst getrennt von `calculateNetto`: Die Engine rechnet 2027 standardmäßig
- * mit den amtlichen SV-Werten 2026 und optional (`sv2027: "entwurf"`) nur mit
- * den Entwurfs-BBG bei unveränderten Sätzen. Diese Seite geht weiter und
+ * Bewusst getrennt von `calculateNetto`: Die Engine rechnet 2027 wie der
+ * PAP-2027-Entwurf (BBG 2027, Pflegezuschlag 0,9 %, sonst Sätze 2026). Diese Seite geht weiter und
  * lässt auch RV-Satz und Zusatzbeitrag 2027 variieren. Jede 2027-Annahme ist deshalb ein
  * Parameter, den die Oberfläche offenlegt und der Nutzer verstellen kann.
  *
@@ -27,7 +26,7 @@
  * Nicht abgebildet: Übergangsbereich (Midijob, bis 2.000 €), Minijobs,
  * Privatversicherte, knappschaftliche Rentenversicherung.
  */
-import { BBG_2026, KV_2026, SV_RECHENGROESSEN_2027_ENTWURF } from "@/lib/taxCalculator";
+import { BBG_2026, KV_2026, PV_ZUSCHLAG_KINDERLOS_2027_ENTWURF, SV_RECHENGROESSEN_2027_ENTWURF } from "@/lib/taxCalculator";
 
 export interface SvJahresWerte {
   kvPvBbgJahr: number;
@@ -71,7 +70,7 @@ export const RV_SATZ_2027_ERWARTET = 0.186;
 export const RV_SATZ_2027_RISIKO = 0.188;
 
 /** Kinderlosenzuschlag PV 2027 laut Regierungsentwurf Pflegeneuordnungsgesetz (Kabinett 30.09.2026). */
-export const PV_KINDERLOSENZUSCHLAG_2027_ENTWURF = 0.009;
+export const PV_KINDERLOSENZUSCHLAG_2027_ENTWURF = PV_ZUSCHLAG_KINDERLOS_2027_ENTWURF;
 
 /** 2027 mit den Grenzen der Rechengrößen-Verordnung 2027; Sätze als Parameter. */
 export function sv2027(opts: { rvSatz: number; kvZusatzbeitrag: number; pvKinderlosenzuschlag?: number }): SvJahresWerte {

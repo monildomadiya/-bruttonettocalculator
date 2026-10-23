@@ -24,7 +24,7 @@ export const PAGE_LAST_UPDATED: Record<string, string> = {
   "/bonus-steuerrechner": "2026-10-05",
   "/brutto-netto-rechner-krankenkasse": "2026-10-23",
   "/sozialabgaben-rechner-2027": "2026-10-23",
-  "/mindestlohn": "2026-10-05",
+  "/mindestlohn": "2026-10-23",
   "/abfindungsrechner": "2026-10-06",
   "/firmenwagenrechner": "2026-10-05",
   "/steuerklassenwechsel-rechner": "2026-10-05",

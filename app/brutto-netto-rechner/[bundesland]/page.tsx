@@ -144,7 +144,7 @@ export default function BundeslandPage({ params }: PageProps) {
       q: `Wie viel Netto bleibt 2027 ${bl.praep}?`,
       a: `Nach dem Gesetzentwurf zur Steuerreform 2027 bleiben bei 4.000 € brutto in Steuerklasse I ${bl.praep} voraussichtlich ${formatEUR(
         nettoFor(bl, 4000, 1, false, 2027)
-      )} netto (2026: ${formatEUR(nettoFor(bl, 4000, 1, false))}). Der Wert ist vorläufig, weil das Gesetz noch nicht beschlossen ist; die Sozialabgaben sind mit den Werten 2026 gerechnet. Im Rechner oben können Sie das Steuerjahr 2027 auswählen.`,
+      )} netto (2026: ${formatEUR(nettoFor(bl, 4000, 1, false))}). Der Wert ist vorläufig, weil das Gesetz noch nicht beschlossen ist; die Sozialabgaben sind wie im Lohnsteuer-Programmablaufplan 2027 (Entwurf) gerechnet. Im Rechner oben können Sie das Steuerjahr 2027 auswählen.`,
     },
     {
       q: "Ist der Brutto-Netto-Rechner kostenlos?",

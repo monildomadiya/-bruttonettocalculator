@@ -130,11 +130,11 @@ export default function MidijobRechnerPage() {
   });
 
   // 2026 ↔ 2027 bei gleichem Brutto. Isoliert den Effekt der neuen Untergrenze:
-  // Die SV-Sätze 2027 stehen noch nicht fest, die Engine rechnet 2027 mit den
-  // amtlichen Sätzen 2026. Bis 633 € ist man 2027 Minijobber — dort fällt nur
-  // der (befreibare) RV-Eigenanteil von 3,6 % an, keine Engine-Rechnung.
+  // Bewusst mit den SV-Werten 2026 auch für 2027 (sv2027: "beschlossen"), damit
+  // nur die neue Untergrenze wirkt. Bis 633 € ist man 2027 Minijobber — dort
+  // fällt nur der (befreibare) RV-Eigenanteil von 3,6 % an, keine Engine-Rechnung.
   const svAn = (brutto: number, jahr: 2026 | 2027) =>
-    calculateNetto({ bruttoMonat: brutto, jahr, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 }).sv
+    calculateNetto({ bruttoMonat: brutto, jahr, sv2027: "beschlossen", verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 }).sv
       .summeMonat;
   const vergleich = VERGLEICH_STUFEN.map((brutto) => {
     const minijob2027 = brutto <= UEBERGANGSBEREICH_2027.untergrenze;

@@ -220,7 +220,7 @@ export default function ReverseCalculator({ initialNetto = 2500 }: { initialNett
                 {jahr === 2027 && (
                   <div className="flex items-start gap-3 text-xs sm:text-sm text-amber-700 mt-3 bg-amber-50 rounded-2xl p-3.5 sm:p-4 border border-amber-500/30 font-medium">
                     <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-amber-600" />
-                    <span>2027: Steuer nach dem Gesetzentwurf zur Steuerreform (BT-Drucksache 21/8235), noch nicht beschlossen. Sozialabgaben mit den Werten 2026.</span>
+                    <span>2027: Steuer nach dem Gesetzentwurf zur Steuerreform (BT-Drucksache 21/8235), noch nicht beschlossen. Sozialabgaben wie im Lohnsteuer-PAP-2027-Entwurf (Beitragsbemessungsgrenzen 2027, Pflegezuschlag für Kinderlose 0,9 %).</span>
                   </div>
                 )}
               </div>

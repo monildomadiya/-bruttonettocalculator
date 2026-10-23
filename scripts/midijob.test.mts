@@ -67,12 +67,21 @@ assert("2027: 620 € is NOT Midijob (Minijob)", isMidijob(620, 2027) === false)
 assert("2027: 633,00 € is NOT Midijob", isMidijob(633, 2027) === false);
 assert("2027: 633,01 € IS Midijob", isMidijob(633.01, 2027) === true);
 assert("2026 still: 620 € IS Midijob", isMidijob(620, 2026) === true);
-const at1200in2027 = calculateNetto({ bruttoMonat: 1200, jahr: 2027, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });
+const at1200in2027 = calculateNetto({ bruttoMonat: 1200, jahr: 2027, sv2027: "beschlossen", verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });
 approx(
-  "2027 €1200 SV sum = 829,55 × AN-Satz (SV-Sätze 2026 als Platzhalter)",
+  "2027 €1200 SV sum = 829,55 × AN-Satz (sv2027 'beschlossen' = Sätze 2026)",
   at1200in2027.sv.summeMonat,
   midijobArbeitnehmerBemessungMonat(1200, 2027) * anRate,
   0.02
+);
+// Default 2027 (PAP-2027-Entwurf): Pflegezuschlag für Kinderlose 0,9 statt 0,6 Punkte
+// auf dieselbe reduzierte AN-Bemessung.
+const at1200in2027Pap = calculateNetto({ bruttoMonat: 1200, jahr: 2027, verheiratet: false, kinderlosUeber23: true, kirche: false, steuerklasse: 1 });
+approx(
+  "2027 €1200 Default: + 0,3 % Pflegezuschlag auf 829,55 €",
+  at1200in2027Pap.sv.summeMonat - at1200in2027.sv.summeMonat,
+  midijobArbeitnehmerBemessungMonat(1200, 2027) * 0.003,
+  0.01
 );
 
 console.log(failed === 0 ? "\nALL MIDIJOB CHECKS PASSED" : `\n${failed} CHECK(S) FAILED`);

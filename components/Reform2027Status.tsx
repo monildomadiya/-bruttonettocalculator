@@ -136,7 +136,7 @@ const bereitsBeschlossen = [
     status: "offen" as Status,
     datum: "Kabinettsbeschluss vom 7. Oktober 2026",
     detail:
-      "Das Bundeskabinett hat die Sozialversicherungsrechengrößen-Verordnung 2027 beschlossen, mit denselben Werten wie im Referentenentwurf vom 21. September: Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat (106.200 € im Jahr), Kranken- und Pflegeversicherung 6.375 € im Monat (76.500 € im Jahr), Versicherungspflichtgrenze 7.012,50 € im Monat. Grundlage ist die Lohnentwicklung 2025 von 4,38 %; bei der Krankenversicherung kommen 300 € monatlich obendrauf. Es fehlt noch die Zustimmung des Bundesrats. Im Rechner bleibt deshalb der amtliche Stand 2026 voreingestellt; unter „Sozialabgaben 2027“ lassen sich die Grenzen 2027 zuschalten.",
+      "Das Bundeskabinett hat die Sozialversicherungsrechengrößen-Verordnung 2027 beschlossen, mit denselben Werten wie im Referentenentwurf vom 21. September: Beitragsbemessungsgrenze Renten- und Arbeitslosenversicherung 8.850 € im Monat (106.200 € im Jahr), Kranken- und Pflegeversicherung 6.375 € im Monat (76.500 € im Jahr), Versicherungspflichtgrenze 7.012,50 € im Monat. Grundlage ist die Lohnentwicklung 2025 von 4,38 %; bei der Krankenversicherung kommen 300 € monatlich obendrauf. Es fehlt noch die Zustimmung des Bundesrats. Der Rechner verwendet diese Grenzen für 2027 bereits — wie der Lohnsteuer-Programmablaufplan 2027 im Entwurf des BMF; unter „Sozialabgaben 2027“ lässt sich zum Vergleich der Stand 2026 wählen.",
   },
   {
     titel: "Zusatzbeitrag 2027",
@@ -150,7 +150,7 @@ const bereitsBeschlossen = [
     status: "offen" as Status,
     datum: "Kabinettsbeschluss vom 30. September 2026",
     detail:
-      "Nach dem Regierungsentwurf des Pflegeneuordnungsgesetzes steigt der Zuschlag für Kinderlose ab 23 zum 1. Januar 2027 von 0,6 auf 0,9 Prozentpunkte; der Grundbeitrag bleibt bei 3,6 %. Bundestag und Bundesrat müssen noch zustimmen. Der Hauptrechner rechnet bis dahin mit 0,6 Punkten, der Sozialabgaben-Rechner 2027 zeigt beide Varianten.",
+      "Nach dem Regierungsentwurf des Pflegeneuordnungsgesetzes steigt der Zuschlag für Kinderlose ab 23 zum 1. Januar 2027 von 0,6 auf 0,9 Prozentpunkte; der Grundbeitrag bleibt bei 3,6 %. Bundestag und Bundesrat müssen noch zustimmen. Der Rechner verwendet für 2027 bereits 0,9 Punkte, wie der Lohnsteuer-Programmablaufplan 2027 im Entwurf.",
   },
 ];
 

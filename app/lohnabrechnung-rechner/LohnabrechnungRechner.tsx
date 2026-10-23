@@ -255,7 +255,7 @@ export default function LohnabrechnungRechner() {
         <p className="flex items-start gap-2 text-xs text-black/55 leading-relaxed mt-4">
           <Info size={14} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
           Beispielrechnung im Aufbau einer Lohnabrechnung — keine echte Abrechnung und kein Gehaltsnachweis. Lohnsteuer
-          vereinfacht nach § 32a EStG{jahr === 2027 ? ", 2027 nach dem Gesetzentwurf (BT-Drs. 21/8235), Sozialabgaben mit den Werten 2026" : ""}.
+          vereinfacht nach § 32a EStG{jahr === 2027 ? ", 2027 nach dem Gesetzentwurf (BT-Drs. 21/8235), Sozialabgaben wie im PAP-2027-Entwurf" : ""}.
         </p>
       </div>
     </div>
