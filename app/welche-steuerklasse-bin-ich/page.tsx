@@ -13,9 +13,12 @@ import { pageImageUrl } from "@/lib/pageImage";
 const CANONICAL = "https://bruttonettocalculator.com/welche-steuerklasse-bin-ich";
 
 export const metadata: Metadata = {
-  title: "Welche Steuerklasse bin ich? Finder & Test 2026",
+  // GSC Okt. 2026: "welche steuerklasse habe ich" (Pos. 13–18), "wo finde ich
+  // meine steuerklasse", "steuerklasse herausfinden" (Pos. 40–60) — die Seite
+  // beantwortet beides, der Titel sprach nur "bin ich" an.
+  title: "Welche Steuerklasse habe ich? Steuerklasse herausfinden 2026",
   description:
-    "Welche Steuerklasse bin ich? In 3 Fragen zur Antwort — Ledige I, Alleinerziehende II, Verheiratete III/V oder IV/IV, Zweitjob VI. Mit Netto-Vorschau 2026.",
+    "Steuerklasse herausfinden: in 3 Fragen zur Antwort, oder nachsehen auf der Lohnabrechnung, in ELSTER oder beim Finanzamt. Ledig I, Alleinerziehend II, Verheiratet III/V oder IV.",
   keywords: [
     "welche steuerklasse bin ich",
     "welche steuerklasse habe ich",

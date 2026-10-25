@@ -5,24 +5,26 @@ import { TOOL_CONTENT } from "@/data/tool-content";
 import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
-  title: "Schonvermögen-Rechner 2026 — Bürgergeld Vermögensfreibetrag",
+  title: "Schonvermögen-Rechner 2026: Grundsicherungsgeld & Bürgergeld",
   description:
-    "Schonvermögen-Rechner 2026: anrechnungsfreies Vermögen beim Bürgergeld berechnen — Karenzzeit 40.000 € plus 15.000 € je Person, mit Neuregelung.",
+    "Schonvermögen seit 1. Juli 2026: 5.000 bis 20.000 € je Person nach Alter (§ 12 SGB II). Rechner für Grundsicherungsgeld (früher Bürgergeld), auch mit alter Karenzzeit-Regel.",
   keywords: [
     "schonvermögen rechner",
     "bürgergeld vermögen 2026",
     "schonvermögen bürgergeld",
     "vermögensfreibetrag bürgergeld",
     "karenzzeit vermögen 40000",
+    "grundsicherungsgeld vermögen",
+    "schonvermögen grundsicherung 2026",
     "bürgergeld freibetrag vermögen",
     "schonvermögen 2026",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/schonvermoegen-rechner" },
   openGraph: {
     images: [pageImageUrl("/schonvermoegen-rechner")],
-    title: "Schonvermögen-Rechner 2026 — Bürgergeld Vermögensfreibetrag",
+    title: "Schonvermögen-Rechner 2026: Grundsicherungsgeld & Bürgergeld",
     description:
-      "Anrechnungsfreies Vermögen beim Bürgergeld berechnen — Karenzzeit-Regeln und Neuregelung ab 1. Juli 2026.",
+      "Anrechnungsfreies Vermögen beim Grundsicherungsgeld berechnen — altersgestaffelt seit 1. Juli 2026.",
     url: "https://bruttonettocalculator.com/schonvermoegen-rechner",
     locale: "de_DE",
     type: "website",
@@ -36,10 +38,10 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "Wie viel Schonvermögen gilt beim Bürgergeld 2026?",
+      name: "Wie viel Schonvermögen gilt beim Grundsicherungsgeld (früher Bürgergeld)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "In der Karenzzeit (erstes Bezugsjahr, laufende Fälle) bleiben 40.000 € für die antragstellende Person plus 15.000 € für jede weitere Person der Bedarfsgemeinschaft anrechnungsfrei. Nach der Karenzzeit gelten 15.000 € pro Person.",
+        text: "Seit dem 1. Juli 2026 hängt es vom Alter ab: Je Person bleiben 5.000 € anrechnungsfrei, ab dem 30. Geburtstag 10.000 €, ab dem 40. Geburtstag 12.500 € und ab dem 50. Geburtstag 20.000 € (§ 12 SGB II). Die alte Karenzzeit mit 40.000 € für die antragstellende Person und 15.000 € je weiterer Person gilt nur noch in Bewilligungszeiträumen, die vor dem 1. Juli 2026 begonnen haben.",
       },
     },
     {
@@ -47,7 +49,7 @@ const faqSchema = {
       name: "Was ändert sich beim Schonvermögen ab dem 1. Juli 2026?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Mit der neuen Grundsicherung entfällt für Neuanträge ab dem 1. Juli 2026 die Karenzzeit für Geldvermögen. Stattdessen gelten altersgestaffelte Freibeträge je Person: bis 30 Jahre 5.000 €, bis 40 Jahre 10.000 €, bis 50 Jahre 12.500 € und über 50 Jahre 20.000 €.",
+        text: "Mit der neuen Grundsicherung entfällt für Neuanträge ab dem 1. Juli 2026 die Karenzzeit für Geldvermögen. Stattdessen gelten altersgestaffelte Freibeträge je Person: unter 30 Jahren 5.000 €, ab 30 Jahren 10.000 €, ab 40 Jahren 12.500 € und ab 50 Jahren 20.000 € (§ 12 SGB II).",
       },
     },
     {

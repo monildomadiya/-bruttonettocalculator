@@ -4,41 +4,24 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { GraduationCap, Wallet, ArrowRight, Info, ChevronDown, Home, Users } from "lucide-react";
 
-/* BAföG-Bedarfssätze (gültig seit Wintersemester 2024/25, in €/Monat) */
-const GRUNDBEDARF = 475;
-const WOHN_ELTERN = 59;
-const WOHN_AUSWAERTS = 380;
-const KVPV_ZUSCHLAG = 140; // KV 102 + PV 38
+import { BAFOEG, KVPV_ZUSCHLAG, BAFOEG_HOECHSTSATZ, BAFOEG_FAQS } from "@/lib/bafoeg";
 
-/* Freibeträge (vereinfacht) */
-const FREIBETRAG_EIGEN = 556;        // eigenes Einkommen anrechnungsfrei / Monat
-const FREIBETRAG_ELTERN_VERH = 2540; // verheiratete, zusammenlebende Eltern
-const FREIBETRAG_ELTERN_ALLEIN = 1690;
-const FREIBETRAG_GESCHWISTER = 770;  // je weiterem Kind
-const ELTERN_ANRECHNUNG = 0.5;       // grobe Näherung des angerechneten Restbetrags
+/* Sätze und Freibeträge: lib/bafoeg.ts (im Gesetzestext geprüft). Die
+ * Elternanrechnung bleibt eine Näherung: Netto statt BAföG-Einkommensbegriff,
+ * keine Aufteilung auf geförderte Geschwister. */
+const GRUNDBEDARF = BAFOEG.grundbedarf;
+const WOHN_ELTERN = BAFOEG.wohnenEltern;
+const WOHN_AUSWAERTS = BAFOEG.wohnenAuswaerts;
+const FREIBETRAG_EIGEN = BAFOEG.hinzuverdienst;
+const FREIBETRAG_ELTERN_VERH = BAFOEG.elternFreibetragVerheiratet;
+const FREIBETRAG_ELTERN_ALLEIN = BAFOEG.elternFreibetragJeElternteil;
+const FREIBETRAG_GESCHWISTER = BAFOEG.freibetragJeKind;
 
 function eur(v: number): string {
   return v.toLocaleString("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 2 });
 }
 
-const faqs = [
-  {
-    q: "Wie hoch ist der BAföG-Höchstsatz 2026?",
-    a: "Der BAföG-Förderungshöchstsatz für Studierende, die nicht bei den Eltern wohnen und selbst kranken- und pflegeversichert sind, liegt bei rund 992 € im Monat: 475 € Grundbedarf, 380 € Wohnzuschlag und 140 € Kranken-/Pflegeversicherungszuschlag. Wer bei den Eltern wohnt, erhält einen geringeren Wohnzuschlag von 59 €.",
-  },
-  {
-    q: "Wird das Einkommen der Eltern beim BAföG angerechnet?",
-    a: "Ja. Vom Nettoeinkommen der Eltern wird ein Freibetrag abgezogen (bei verheirateten, zusammenlebenden Eltern rund 2.540 € im Monat, je weiterem Kind zusätzlich 770 €). Der übersteigende Betrag mindert den BAföG-Anspruch anteilig. Dieser Rechner nutzt dafür eine vereinfachte Näherung.",
-  },
-  {
-    q: "Muss ich BAföG zurückzahlen?",
-    a: "Studierenden-BAföG wird zur Hälfte als Zuschuss und zur Hälfte als zinsloses Staatsdarlehen gewährt. Die Rückzahlung des Darlehensanteils ist auf maximal 10.010 € gedeckelt und beginnt erst fünf Jahre nach Ende der Förderungshöchstdauer.",
-  },
-  {
-    q: "Wie viel darf ich neben dem BAföG verdienen?",
-    a: "Sie dürfen rund 556 € im Monat (bzw. 6.672 € im Bewilligungszeitraum) anrechnungsfrei hinzuverdienen — das entspricht einem Minijob. Verdienen Sie mehr, wird der übersteigende Betrag auf Ihren BAföG-Anspruch angerechnet.",
-  },
-];
+const faqs = BAFOEG_FAQS;
 
 export default function BafoegRechner() {
   const [auswaerts, setAuswaerts] = useState(true);
@@ -54,7 +37,9 @@ export default function BafoegRechner() {
     const eigenAnrechnung = Math.max(0, eigenesEinkommen - FREIBETRAG_EIGEN);
 
     const elternFreibetrag = (elternVerheiratet ? FREIBETRAG_ELTERN_VERH : FREIBETRAG_ELTERN_ALLEIN) + geschwister * FREIBETRAG_GESCHWISTER;
-    const elternAnrechnung = elternEinkommen > elternFreibetrag ? (elternEinkommen - elternFreibetrag) * ELTERN_ANRECHNUNG : 0;
+    // § 25 Abs. 4: vom Rest bleiben 50 % frei, je Kind weitere 5 %.
+    const anrechnungsQuote = Math.max(0, 1 - BAFOEG.elternFreiQuote - geschwister * BAFOEG.elternFreiQuoteJeKind);
+    const elternAnrechnung = elternEinkommen > elternFreibetrag ? (elternEinkommen - elternFreibetrag) * anrechnungsQuote : 0;
 
     const bafoeg = Math.max(0, Math.min(bedarf, bedarf - eigenAnrechnung - elternAnrechnung));
     return { bedarf, eigenAnrechnung, elternFreibetrag, elternAnrechnung, bafoeg, zuschuss: bafoeg / 2 };
@@ -66,7 +51,7 @@ export default function BafoegRechner() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#E60A1C]/[8%] via-transparent to-transparent pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-24 text-center">
           <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
-            <GraduationCap size={14} /> Höchstsatz ~992 € · 2026
+            <GraduationCap size={14} /> Höchstsatz {BAFOEG_HOECHSTSATZ.toLocaleString("de-DE")} € · 2026
           </div>
           <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">BAföG-Rechner</span> 2026
@@ -95,12 +80,12 @@ export default function BafoegRechner() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-black/70 mb-2">Eigenes Netto-Einkommen / Monat</label>
+              <label className="block text-sm font-semibold text-black/70 mb-2">Eigener Verdienst / Monat (brutto)</label>
               <div className="relative">
                 <input type="number" value={eigenesEinkommen} onChange={(e) => setEigenesEinkommen(Math.max(0, Number(e.target.value)))} className="w-full bg-[#F4F5F7] border border-black/[0.10] rounded-xl px-4 py-3 pr-10 text-[#16181D] font-bold text-lg focus:border-[#E60A1C] outline-none" />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 font-bold">€</span>
               </div>
-              <p className="text-xs text-black/45 mt-2">Anrechnungsfrei bis {eur(FREIBETRAG_EIGEN)} (Minijob).</p>
+              <p className="text-xs text-black/45 mt-2">Anrechnungsfrei bis {eur(FREIBETRAG_EIGEN)} (Minijob-Grenze 2026).</p>
             </div>
 
             <div>

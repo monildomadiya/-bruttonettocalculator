@@ -3,11 +3,12 @@ import BuergergeldRechner from "./BuergergeldRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 import { pageImageUrl } from "@/lib/pageImage";
+import { GRUNDSICHERUNGSGELD_FAQS } from "@/lib/grundsicherungsgeld";
 
 export const metadata: Metadata = {
-  title: "Bürgergeld-Rechner 2026 — Anspruch & Regelsatz berechnen",
+  title: "Bürgergeld-Rechner 2026: jetzt Grundsicherungsgeld berechnen",
   description:
-    "Bürgergeld-Rechner 2026: Anspruch aus Regelsatz (563 €), Kosten für Unterkunft & Heizung und angerechnetem Einkommen inkl. Freibeträgen berechnen.",
+    "Bürgergeld heißt seit 1. Juli 2026 Grundsicherungsgeld. Anspruch berechnen: Regelsatz 563 €, Wohnkosten, Einkommen mit Freibeträgen, neue Vermögensgrenzen nach Alter.",
   keywords: [
     "bürgergeld rechner",
     "bürgergeld-rechner",
@@ -18,11 +19,14 @@ export const metadata: Metadata = {
     "bürgergeld höhe",
     "grundsicherung rechner",
     "sgb ii rechner",
+    "grundsicherungsgeld rechner",
+    "grundsicherungsgeld 2026",
+    "grundsicherungsgeld 2027",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/buergergeld-rechner" },
   openGraph: {
     images: [pageImageUrl("/buergergeld-rechner")],
-    title: "Bürgergeld-Rechner 2026 — Anspruch & Regelsatz berechnen",
+    title: "Bürgergeld-Rechner 2026: jetzt Grundsicherungsgeld berechnen",
     description:
       "Bürgergeld-Anspruch 2026 berechnen: Regelsatz 563 €, Kosten der Unterkunft und angerechnetes Einkommen inkl. Freibeträgen. Kostenlos & aktuell.",
     url: "https://bruttonettocalculator.com/buergergeld-rechner",
@@ -35,24 +39,7 @@ export const metadata: Metadata = {
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Wie hoch ist der Bürgergeld-Regelsatz 2026?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Der Regelsatz für eine alleinstehende Person liegt 2026 bei 563 € im Monat (Nullrunde, wie 2025). Für Partner gelten je 506 €, für Kinder je nach Alter 357 €, 390 € oder 471 €. Hinzu kommen die angemessenen Kosten für Unterkunft und Heizung.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Wird Einkommen auf das Bürgergeld angerechnet?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Ja, aber mit Freibeträgen: Die ersten 100 € bleiben komplett frei, von 100–520 € 20 %, von 520–1.000 € 30 % und darüber 10 %. Nur der verbleibende Teil mindert den Bürgergeld-Anspruch.",
-      },
-    },
-  ],
+  mainEntity: GRUNDSICHERUNGSGELD_FAQS.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
 };
 
 const breadcrumbSchema = {

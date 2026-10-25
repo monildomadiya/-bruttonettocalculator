@@ -1,6 +1,7 @@
 import { BBG_2026, KV_2026, estFormel2026 } from "@/lib/taxCalculator";
 import { eur, eur2, pct, netto } from "@/data/tool-content-shared";
 import type { ToolContentConfig } from "@/components/ToolContent";
+import { BAFOEG, BAFOEG_HOECHSTSATZ, BAFOEG_REFORM, KVPV_ZUSCHLAG } from "@/lib/bafoeg";
 
 /**
  * Long-form content for the calculator pages — third batch.
@@ -217,16 +218,16 @@ const grundsicherung: ToolContentConfig = {
 /* ── /schonvermoegen-rechner ─────────────────────────────────────────── */
 
 const schonvermoegen: ToolContentConfig = {
-  heading: "Schonvermögen 2026: Freibeträge beim Bürgergeld",
+  heading: "Schonvermögen 2026: Freibeträge beim Grundsicherungsgeld (früher Bürgergeld)",
   answer:
-    "In der Karenzzeit — dem ersten Bezugsjahr laufender Fälle — bleiben 40.000 € für die antragstellende Person und 15.000 € für jede weitere Person der Bedarfsgemeinschaft anrechnungsfrei. Danach gelten 15.000 € pro Person. Für Neuanträge ab dem 1. Juli 2026 entfällt die Karenzzeit; stattdessen greifen altersgestaffelte Freibeträge.",
+    "Seit dem 1. Juli 2026 hängt das Schonvermögen vom Alter ab: Je Person bleiben 5.000 € (unter 30 Jahren), 10.000 € (30–39), 12.500 € (40–49) oder 20.000 € (ab 50) anrechnungsfrei (§ 12 SGB II). Die frühere Karenzzeit mit 40.000 € für die antragstellende Person und 15.000 € je weiterer Person gilt nur noch bis zum Ende von Bewilligungszeiträumen, die vor dem 1. Juli 2026 begonnen haben.",
   facts: [
-    { label: "Karenzzeit, antragstellende Person", value: "40.000 €" },
-    { label: "Karenzzeit, je weitere Person", value: "15.000 €" },
-    { label: "Nach der Karenzzeit", value: "15.000 € pro Person" },
-    { label: "Ab 1.7.2026: bis 30 / bis 40 Jahre", value: "5.000 € / 10.000 €" },
-    { label: "Ab 1.7.2026: bis 50 / über 50 Jahre", value: "12.500 € / 20.000 €" },
+    { label: "Unter 30 / 30 bis 39 Jahre", value: "5.000 € / 10.000 €" },
+    { label: "40 bis 49 / ab 50 Jahren", value: "12.500 € / 20.000 €" },
     { label: "Selbstgenutztes Eigenheim", value: "geschützt" },
+    { label: "Alte Regel (laufende Fälle): Karenzzeit", value: "40.000 € + 15.000 € je weitere Person" },
+    { label: "Alte Regel: nach der Karenzzeit", value: "15.000 € pro Person" },
+    { label: "Rechtsgrundlage", value: "§ 12 SGB II, BGBl. 2026 I Nr. 107" },
   ],
   steps: [
     {
@@ -247,13 +248,13 @@ const schonvermoegen: ToolContentConfig = {
     },
   ],
   table: {
-    caption: "Altersgestaffelte Freibeträge für Neuanträge ab 1. Juli 2026",
+    caption: "Altersgestaffelte Freibeträge seit 1. Juli 2026 (§ 12 Abs. 2 SGB II; neue Stufe ab dem jeweiligen Geburtstagsmonat)",
     head: ["Alter", "Freibetrag je Person", "Paar, beide in dieser Stufe"],
     rows: [
-      ["bis 30 Jahre", eur(5000), eur(10000)],
-      ["31 bis 40 Jahre", eur(10000), eur(20000)],
-      ["41 bis 50 Jahre", eur(12500), eur(25000)],
-      ["über 50 Jahre", eur(20000), eur(40000)],
+      ["unter 30 Jahren", eur(5000), eur(10000)],
+      ["30 bis 39 Jahre", eur(10000), eur(20000)],
+      ["40 bis 49 Jahre", eur(12500), eur(25000)],
+      ["ab 50 Jahren", eur(20000), eur(40000)],
     ],
     note: "Wer sich zum Stichtag bereits in einem laufenden Bewilligungszeitraum befindet, behält bis zu dessen Ende die bisherigen Regeln mit Karenzzeit.",
   },
@@ -261,7 +262,7 @@ const schonvermoegen: ToolContentConfig = {
     {
       h3: "Was die Reform zum 1. Juli 2026 ändert",
       body: [
-        "Bislang war der entscheidende Faktor die **Zeit**: Im ersten Bezugsjahr galt ein hoher Karenzbetrag von 40.000 €, danach fiel er auf 15.000 € pro Person. Für Neuanträge ab dem 1. Juli 2026 wird das Alter zum entscheidenden Faktor — von 5.000 € bei unter 30-Jährigen bis 20.000 € bei über 50-Jährigen.",
+        "Bislang war der entscheidende Faktor die **Zeit**: Im ersten Bezugsjahr galt ein hoher Karenzbetrag von 40.000 €, danach fiel er auf 15.000 € pro Person. Für Neuanträge ab dem 1. Juli 2026 wird das Alter zum entscheidenden Faktor — von 5.000 € bei unter 30-Jährigen bis 20.000 € ab dem 50. Geburtstag.",
         "Die Logik dahinter ist nachvollziehbar: Wer länger gearbeitet hat, soll mehr Erspartes behalten dürfen. Für jüngere Antragstellende bedeutet die Umstellung allerdings eine deutliche Verschlechterung gegenüber der bisherigen Karenzzeit.",
       ],
     },
@@ -361,56 +362,64 @@ const bafoegRueckzahlung: ToolContentConfig = {
 const bafoeg: ToolContentConfig = {
   heading: "BAföG 2026: Höchstsatz, Elternfreibeträge und Zuverdienst",
   answer:
-    "Der BAföG-Höchstsatz für Studierende, die nicht bei den Eltern wohnen und selbst kranken- und pflegeversichert sind, liegt bei rund 992 € im Monat: 475 € Grundbedarf, 380 € Wohnzuschlag und 140 € für Kranken- und Pflegeversicherung. Vom Elterneinkommen wird ein Freibetrag abgezogen; nur der übersteigende Teil mindert den Anspruch.",
+    `Der BAföG-Höchstsatz für Studierende, die nicht bei den Eltern wohnen und selbst kranken- und pflegeversichert sind, liegt bei ${eur(BAFOEG_HOECHSTSATZ)} im Monat: ${eur(BAFOEG.grundbedarf)} Grundbedarf, ${eur(BAFOEG.wohnenAuswaerts)} für die Unterkunft und ${eur(KVPV_ZUSCHLAG)} für Kranken- und Pflegeversicherung. Vom Elterneinkommen wird ein Freibetrag abgezogen; nur ein Teil des Rests mindert den Anspruch.`,
   facts: [
-    { label: "Höchstsatz gesamt", value: "rund 992 € / Monat" },
-    { label: "Grundbedarf", value: "475 €" },
-    { label: "Wohnzuschlag (nicht bei den Eltern)", value: "380 €" },
-    { label: "Kranken- und Pflegeversicherung", value: "140 €" },
-    { label: "Elternfreibetrag (verheiratet)", value: "rund 2.540 € netto" },
-    { label: "Anrechnungsfreier Zuverdienst", value: "rund 556 € / Monat" },
+    { label: "Höchstsatz gesamt", value: `${eur(BAFOEG_HOECHSTSATZ)} / Monat` },
+    { label: "Grundbedarf", value: eur(BAFOEG.grundbedarf) },
+    { label: "Unterkunft (nicht bei den Eltern)", value: eur(BAFOEG.wohnenAuswaerts) },
+    { label: "Kranken- und Pflegeversicherung", value: `${eur(KVPV_ZUSCHLAG)} (${eur(BAFOEG.kvZuschlag)} + ${eur(BAFOEG.pvZuschlag)})` },
+    { label: "Elternfreibetrag (verheiratet)", value: `${eur(BAFOEG.elternFreibetragVerheiratet)} / Monat` },
+    { label: "Anrechnungsfreier Zuverdienst", value: `${eur(BAFOEG.hinzuverdienst)} brutto / Monat` },
   ],
   steps: [
     {
       title: "Bedarf zusammensetzen",
-      text: "Grundbedarf 475 €, dazu der Wohnzuschlag von 380 € für alle, die nicht bei den Eltern wohnen, und 140 € für die eigene Kranken- und Pflegeversicherung.",
+      text: `Grundbedarf ${eur(BAFOEG.grundbedarf)}, dazu ${eur(BAFOEG.wohnenAuswaerts)} für die Unterkunft (bei den Eltern ${eur(BAFOEG.wohnenEltern)}) und ${eur(KVPV_ZUSCHLAG)} für die eigene Kranken- und Pflegeversicherung.`,
     },
     {
       title: "Elterneinkommen prüfen",
-      text: "Vom Nettoeinkommen der Eltern wird ein Freibetrag abgezogen — bei verheirateten, zusammenlebenden Eltern rund 2.540 € im Monat, je weiterem Kind zusätzlich 770 €.",
+      text: `Vom Einkommen der Eltern bleibt ein Freibetrag frei — bei verheirateten, zusammenlebenden Eltern ${eur(BAFOEG.elternFreibetragVerheiratet)} im Monat, sonst ${eur(BAFOEG.elternFreibetragJeElternteil)} je Elternteil, je weiterem Kind ${eur(BAFOEG.freibetragJeKind)} mehr.`,
     },
     {
       title: "Anrechnung vornehmen",
-      text: "Der Betrag oberhalb des Freibetrags mindert den BAföG-Anspruch anteilig. Eigenes Vermögen und eigener Verdienst werden ebenfalls berücksichtigt.",
+      text: "Vom Einkommen über dem Freibetrag bleibt die Hälfte frei, für jedes weitere Kind zusätzlich 5 %. Nur der Rest mindert den BAföG-Anspruch (§ 25 Abs. 4 BAföG).",
     },
     {
       title: "Zuverdienstgrenze einhalten",
-      text: "Rund 556 € im Monat bleiben anrechnungsfrei — das entspricht ungefähr einem Minijob. Darüber wird der übersteigende Betrag angerechnet.",
+      text: `Bis ${eur(BAFOEG.hinzuverdienst)} brutto im Monat bleiben anrechnungsfrei — genau die Minijob-Grenze 2026. Darüber wird der übersteigende Betrag angerechnet.`,
     },
   ],
   table: {
     caption: "BAföG-Bedarf 2026 je nach Wohnsituation",
-    head: ["Situation", "Grundbedarf", "Wohnzuschlag", "KV/PV", "Bedarf gesamt"],
+    head: ["Situation", "Grundbedarf", "Unterkunft", "KV/PV", "Bedarf gesamt"],
     rows: [
-      ["Eigene Wohnung, selbst versichert", eur(475), eur(380), eur(140), eur(995)],
-      ["Eigene Wohnung, familienversichert", eur(475), eur(380), "—", eur(855)],
-      ["Bei den Eltern wohnend", eur(475), "—", eur(140), eur(615)],
+      ["Eigene Wohnung, selbst versichert", eur(BAFOEG.grundbedarf), eur(BAFOEG.wohnenAuswaerts), eur(KVPV_ZUSCHLAG), eur(BAFOEG.grundbedarf + BAFOEG.wohnenAuswaerts + KVPV_ZUSCHLAG)],
+      ["Eigene Wohnung, familienversichert", eur(BAFOEG.grundbedarf), eur(BAFOEG.wohnenAuswaerts), "—", eur(BAFOEG.grundbedarf + BAFOEG.wohnenAuswaerts)],
+      ["Bei den Eltern, selbst versichert", eur(BAFOEG.grundbedarf), eur(BAFOEG.wohnenEltern), eur(KVPV_ZUSCHLAG), eur(BAFOEG.grundbedarf + BAFOEG.wohnenEltern + KVPV_ZUSCHLAG)],
+      ["Bei den Eltern, familienversichert", eur(BAFOEG.grundbedarf), eur(BAFOEG.wohnenEltern), "—", eur(BAFOEG.grundbedarf + BAFOEG.wohnenEltern)],
     ],
-    note: "Der ausgewiesene Höchstsatz von rund 992 € ergibt sich aus dem Bedarf abzüglich der individuellen Anrechnung. Wer bei den Eltern wohnt, erhält den Wohnzuschlag nicht.",
+    note: "Bedarfssätze nach §§ 13, 13a BAföG für Studierende an Hochschulen. Der Bedarf ist der Höchstbetrag; eigenes Einkommen, Vermögen und Elterneinkommen mindern ihn.",
   },
   sections: [
     {
       h3: "Warum ein Antrag fast immer sinnvoll ist",
       body: [
-        "Die häufigste Fehlannahme ist, das Elterneinkommen sei „zu hoch\". Die Freibeträge sind aber beträchtlich: rund 2.540 € **netto** im Monat bei verheirateten, zusammenlebenden Eltern, plus 770 € je weiterem Kind. Bei zwei Geschwistern in Ausbildung verschiebt sich die Grenze also deutlich nach oben. Was vom Bruttogehalt der Eltern netto übrig bleibt, zeigt der [Brutto-Netto-Rechner](/).",
-        "Hinzu kommt: Nur die Hälfte ist Darlehen, und dieses ist zinslos und auf 10.010 € gedeckelt — Details im [BAföG-Rückzahlungsrechner](/bafoeg-rueckzahlung-rechner). Das wirtschaftliche Risiko eines Antrags ist damit gering.",
+        `Die häufigste Fehlannahme ist, das Elterneinkommen sei „zu hoch". Die Freibeträge sind aber beträchtlich: ${eur(BAFOEG.elternFreibetragVerheiratet)} im Monat bei verheirateten, zusammenlebenden Eltern, plus ${eur(BAFOEG.freibetragJeKind)} je weiterem Kind, und vom Rest bleibt noch die Hälfte frei. Was vom Bruttogehalt der Eltern netto übrig bleibt, zeigt der [Brutto-Netto-Rechner](/).`,
+        `Hinzu kommt: Nur die Hälfte ist Darlehen, und dieses ist zinslos und auf ${eur(BAFOEG.darlehenDeckel)} gedeckelt — Details im [BAföG-Rückzahlungsrechner](/bafoeg-rueckzahlung-rechner). Das wirtschaftliche Risiko eines Antrags ist damit gering.`,
       ],
     },
     {
       h3: "Nebenjob richtig dimensionieren",
       body: [
-        "Rund 556 € im Monat bleiben anrechnungsfrei, im Bewilligungszeitraum also etwa 6.672 €. Das entspricht ungefähr einem [Minijob](/minijob-rechner), dessen Grenze 2026 bei 603 € liegt — wer die Minijob-Grenze voll ausschöpft, überschreitet die BAföG-Grenze also bereits leicht.",
+        `Seit dem 1. Januar 2026 bleiben ${eur(BAFOEG.hinzuverdienst)} brutto im Monat anrechnungsfrei, im zwölfmonatigen Bewilligungszeitraum also ${eur(BAFOEG.hinzuverdienst * 12)}. Der Freibetrag folgt seit dem 29. BAföG-Änderungsgesetz der Grenze für [Minijobs](/minijob-rechner): Ein voll ausgeschöpfter Minijob kostet kein BAföG, und wenn der Mindestlohn steigt, steigt die Grenze mit.`,
         "Eine [Werkstudentenstelle](/werkstudent-rechner) erlaubt höhere Verdienste bei nur 9,3 % Rentenbeitrag, führt aber zur Anrechnung auf das BAföG. Wer über 20 Wochenstunden hinaus arbeitet, verliert zusätzlich das Werkstudentenprivileg — beide Grenzen wollen zusammen geplant werden.",
+      ],
+    },
+    {
+      h3: "BAföG-Reform 2027: was geplant ist",
+      body: [
+        `Der Regierungsentwurf zum 30. BAföG-Änderungsgesetz (${BAFOEG_REFORM.drucksache}) hebt die Pauschale für die eigene Wohnung zum ${BAFOEG_REFORM.wohnpauschaleAb} von ${eur(BAFOEG.wohnenAuswaerts)} auf ${eur(BAFOEG_REFORM.wohnpauschaleNeu)}. Der Grundbedarf soll zum ${BAFOEG_REFORM.grundbedarfStufe1Ab} auf ${eur(BAFOEG_REFORM.grundbedarfStufe1)} und zum ${BAFOEG_REFORM.grundbedarfStufe2Ab} auf ${eur(BAFOEG_REFORM.grundbedarfStufe2)} steigen. Wer bei den Eltern wohnt, bekäme für die Unterkunft erst ${eur(BAFOEG_REFORM.wohnenElternNeu)} und später nichts mehr.`,
+        `Beschlossen ist das noch nicht: Stand ist die ${BAFOEG_REFORM.stand}, danach beraten die Ausschüsse. Der Bundesrat hat kritisiert, dass die höhere Wohnpauschale erst ein Semester später kommt als im Koalitionsvertrag angekündigt. Bis zur Verkündung rechnet dieser Rechner mit den geltenden Sätzen.`,
       ],
     },
     {
@@ -421,15 +430,15 @@ const bafoeg: ToolContentConfig = {
       ],
     },
   ],
-  source: "§§ 11 ff. BAföG · § 13 BAföG · § 25 BAföG",
+  source: "§§ 13, 13a, 23, 25 BAföG · BT-Drs. 21/8405",
 };
 
 /* ── /buergergeld-rechner ────────────────────────────────────────────── */
 
 const buergergeld: ToolContentConfig = {
-  heading: "Bürgergeld 2026: Regelsatz, Wohnkosten und Freibeträge",
+  heading: "Grundsicherungsgeld (früher Bürgergeld) 2026: Regelsatz, Wohnkosten und Freibeträge",
   answer:
-    "Der Bürgergeld-Regelsatz beträgt 2026 für Alleinstehende 563 € im Monat — eine Nullrunde gegenüber 2025. Partner in einer Bedarfsgemeinschaft erhalten je 506 €, Kinder je nach Alter zwischen 357 € und 471 €. Dazu kommen die tatsächlichen angemessenen Kosten für Unterkunft und Heizung.",
+    "Seit dem 1. Juli 2026 heißt das Bürgergeld Grundsicherungsgeld; die Beträge sind gleich geblieben. Der Regelsatz beträgt 2026 für Alleinstehende 563 € im Monat — eine Nullrunde gegenüber 2025. Partner in einer Bedarfsgemeinschaft erhalten je 506 €, Kinder je nach Alter zwischen 357 € und 471 €. Dazu kommen die angemessenen Kosten für Unterkunft und Heizung.",
   facts: [
     { label: "Regelsatz alleinstehend", value: "563 € / Monat" },
     { label: "Partner in Bedarfsgemeinschaft", value: "je 506 €" },
@@ -467,7 +476,7 @@ const buergergeld: ToolContentConfig = {
     {
       h3: "Vermögen wird getrennt geprüft",
       body: [
-        "Ob überhaupt ein Anspruch besteht, entscheidet zuerst das **Vermögen**. In der Karenzzeit bleiben 40.000 € für die antragstellende Person und 15.000 € je weiterer Person frei; für Neuanträge ab dem 1. Juli 2026 gelten altersgestaffelte Beträge von 5.000 € bis 20.000 €. Die Systematik zeigt der [Schonvermögen-Rechner](/schonvermoegen-rechner).",
+        "Ob überhaupt ein Anspruch besteht, entscheidet zuerst das **Vermögen**. Für Anträge seit dem 1. Juli 2026 gelten je Person altersgestaffelte Freibeträge von 5.000 € bis 20.000 €; die alte Karenzzeit mit 40.000 € läuft nur in schon bewilligten Fällen bis zum Ende des Bewilligungszeitraums weiter. Die Systematik zeigt der [Schonvermögen-Rechner](/schonvermoegen-rechner).",
         "Geschützt bleiben ein angemessenes selbstgenutztes Eigenheim, ein angemessenes Auto und Altersvorsorgevermögen wie [Riester](/riester-rechner) — diese Positionen müssen nicht aufgelöst werden.",
       ],
     },

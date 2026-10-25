@@ -4,15 +4,10 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { HandCoins, Home, Users, ArrowRight, Info, ChevronDown, Plus, Minus } from "lucide-react";
 
-/* Regelbedarfsstufen 2026 (Nullrunde — Werte wie 2025, in €/Monat) */
-const RBS = {
-  single: 563,   // Stufe 1 — alleinstehend
-  partner: 506,  // Stufe 2 — je Partner in Bedarfsgemeinschaft
-  adult18plus: 451, // Stufe 3 — Erwachsene ohne eigenen Haushalt
-  child14_17: 471, // Stufe 4
-  child6_13: 390,  // Stufe 5
-  child0_5: 357,   // Stufe 6
-};
+import { GRUNDSICHERUNGSGELD, GRUNDSICHERUNGSGELD_FAQS } from "@/lib/grundsicherungsgeld";
+
+/* Regelbedarfsstufen 2026 (Nullrunde — Werte wie 2025, in €/Monat); Quelle: lib/grundsicherungsgeld.ts */
+const RBS = GRUNDSICHERUNGSGELD.regelsatz;
 
 function eur(v: number): string {
   return v.toLocaleString("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
@@ -45,24 +40,7 @@ function Stepper({ label, value, set, max = 8 }: { label: string; value: number;
   );
 }
 
-const faqs = [
-  {
-    q: "Wie hoch ist der Bürgergeld-Regelsatz 2026?",
-    a: "Der Regelsatz für eine alleinstehende Person liegt 2026 bei 563 € im Monat (Nullrunde — wie 2025). Für Partner in einer Bedarfsgemeinschaft gelten je 506 €, für Kinder je nach Alter 357 € (0–5 Jahre), 390 € (6–13) bzw. 471 € (14–17). Hinzu kommen die tatsächlichen, angemessenen Kosten für Unterkunft und Heizung.",
-  },
-  {
-    q: "Wird mein Einkommen auf das Bürgergeld angerechnet?",
-    a: "Ja, Erwerbseinkommen wird angerechnet — allerdings gibt es Freibeträge: Die ersten 100 € bleiben komplett anrechnungsfrei, von 100–520 € bleiben 20 %, von 520–1.000 € 30 % und darüber (bis 1.200 € bzw. 1.500 € mit Kind) 10 % frei. Nur der Rest mindert Ihren Bürgergeld-Anspruch.",
-  },
-  {
-    q: "Welche Wohnkosten übernimmt das Jobcenter?",
-    a: "Das Jobcenter übernimmt die tatsächlichen Kosten der Unterkunft und Heizung (KdU), sofern sie angemessen sind. Die Angemessenheitsgrenzen legt jede Kommune individuell fest und hängen von Haushaltsgröße und Wohnort ab. Im ersten Jahr (Karenzzeit) werden die tatsächlichen Kosten meist voll anerkannt.",
-  },
-  {
-    q: "Ist dieser Bürgergeld-Rechner verbindlich?",
-    a: "Nein. Der Rechner liefert eine Orientierung auf Basis der Regelsätze 2026 und der Einkommensfreibeträge. Der tatsächliche Anspruch wird vom Jobcenter individuell festgestellt und kann durch Mehrbedarfe (z. B. Alleinerziehung, Schwangerschaft), Vermögen oder abweichende KdU-Grenzen abweichen.",
-  },
-];
+const faqs = GRUNDSICHERUNGSGELD_FAQS;
 
 export default function BuergergeldRechner() {
   const [paar, setPaar] = useState(false);
@@ -100,9 +78,9 @@ export default function BuergergeldRechner() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">Bürgergeld-Rechner</span> 2026
           </h1>
           <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-            Berechnen Sie Ihren voraussichtlichen <strong className="text-[#16181D]">Bürgergeld-Anspruch 2026</strong> —
-            aus dem Regelbedarf Ihrer Bedarfsgemeinschaft, den Kosten für Unterkunft & Heizung und dem angerechneten
-            Erwerbseinkommen inklusive Freibeträgen.
+            Seit dem {GRUNDSICHERUNGSGELD.umbenanntAb} heißt das Bürgergeld <strong className="text-[#16181D]">Grundsicherungsgeld</strong>.
+            Regelsätze und Freibeträge sind gleich geblieben: Berechnen Sie Ihren voraussichtlichen Anspruch aus dem
+            Regelbedarf Ihrer Bedarfsgemeinschaft, den Kosten für Unterkunft & Heizung und dem angerechneten Erwerbseinkommen.
           </p>
         </div>
       </section>

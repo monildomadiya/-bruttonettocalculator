@@ -3,11 +3,11 @@ import BafoegRechner from "./BafoegRechner";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
 import { pageImageUrl } from "@/lib/pageImage";
+import { BAFOEG, BAFOEG_FAQS, BAFOEG_HOECHSTSATZ } from "@/lib/bafoeg";
 
 export const metadata: Metadata = {
-  title: "BAföG-Rechner 2026 — Anspruch & Höhe berechnen (Studium)",
-  description:
-    "BAföG-Rechner 2026: voraussichtlichen BAföG-Anspruch aus Bedarfssatz, Wohnsituation, eigenem Einkommen und Elterneinkommen berechnen. Kostenlose Schätzung.",
+  title: "BAföG-Rechner 2026: Anspruch berechnen, Reform 2027",
+  description: `BAföG-Rechner 2026: Anspruch aus Wohnsituation, Elterneinkommen und Nebenjob schätzen. Höchstsatz ${BAFOEG_HOECHSTSATZ} €, Hinzuverdienst bis ${BAFOEG.hinzuverdienst} €, geplante Erhöhung 2027.`,
   keywords: [
     "bafög rechner",
     "bafög rechner 2026",
@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     "bafög höchstsatz 2026",
     "wie viel bafög bekomme ich",
     "bafög studierende",
+    "bafög 2027",
+    "bafög erhöhung 2027",
+    "bafög hinzuverdienst 2026",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/bafoeg-rechner" },
   openGraph: {
@@ -34,24 +37,7 @@ export const metadata: Metadata = {
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Wie hoch ist der BAföG-Höchstsatz 2026?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Der BAföG-Höchstsatz liegt bei rund 992 € im Monat: 475 € Grundbedarf, 380 € Wohnzuschlag (eigene Wohnung) und 140 € Kranken-/Pflegeversicherungszuschlag. Wer bei den Eltern wohnt, erhält nur 59 € Wohnzuschlag.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Wird das Einkommen der Eltern beim BAföG angerechnet?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Ja. Vom Nettoeinkommen der Eltern wird ein Freibetrag abgezogen (bei verheirateten Eltern rund 2.540 €/Monat, je weiterem Kind +770 €). Der übersteigende Betrag mindert den BAföG-Anspruch anteilig.",
-      },
-    },
-  ],
+  mainEntity: BAFOEG_FAQS.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
 };
 
 const breadcrumbSchema = {
