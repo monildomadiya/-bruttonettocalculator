@@ -13,6 +13,10 @@ import ReviewerByline from "@/components/ReviewerByline";
 import SupportButton from "@/components/SupportButton";
 import AdUnit from "@/components/AdUnit";
 import NextSteps from "@/components/NextSteps";
+import { KRANKENKASSEN_2026, GUENSTIGSTE_KASSE, DURCHSCHNITT_ZUSATZBEITRAG_2026, type Krankenkasse } from "@/data/krankenkassen";
+
+const KASSEN_ALPHABETISCH = [...KRANKENKASSEN_2026].sort((a, b) => a.name.localeCompare(b.name, "de"));
+const fmtZb = (pct: number) => pct.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " %";
 
 /* ─── Steuerklasse type ───────────────────────────────────────────── */
 type Steuerklasse = 1 | 2 | 3 | 4 | 5 | 6;
@@ -145,6 +149,11 @@ const T: Record<Lang, Record<string, string>> = {
     childlessHint: "Pflegeversicherung +0,6 %",
     churchLabel: "Kirchensteuerpflichtig",
     churchHint: "9 % auf die Einkommensteuer",
+    kasseLabel: "Krankenkasse",
+    kasseAvg: "Durchschnitt (Zusatzbeitrag {pct})",
+    kasseHint2027: "2027: mit dem Satz 2026 der Kasse gerechnet, bis sie im Dezember neu beschließt.",
+    kasseSaving: "Bei {kasse} ({pct}) blieben Ihnen {eur} mehr netto im Monat.",
+    kasseCheapest: "Sie sind bereits bei der günstigsten Kasse dieser Auswahl.",
     disclaimer: "Vereinfachte Berechnung nach § 32a EStG 2026. Keine Steuerberatung.",
     result: "Ergebnis",
     dateChip: standChip("de"),
@@ -234,6 +243,11 @@ const T: Record<Lang, Record<string, string>> = {
     childlessHint: "Long-term care +0.6%",
     churchLabel: "Liable for church tax",
     churchHint: "9% of income tax",
+    kasseLabel: "Health insurer",
+    kasseAvg: "Average (additional rate {pct})",
+    kasseHint2027: "2027: calculated with the insurer's 2026 rate until it decides in December.",
+    kasseSaving: "With {kasse} ({pct}) you would keep {eur} more net per month.",
+    kasseCheapest: "You are already with the cheapest insurer in this list.",
     disclaimer: "Simplified calculation under § 32a EStG 2026. Not tax advice.",
     result: "Result",
     dateChip: standChip("en"),
@@ -323,6 +337,11 @@ const T: Record<Lang, Record<string, string>> = {
     childlessHint: "Ubezpieczenie pielęgnacyjne +0,6%",
     churchLabel: "Podatek kościelny",
     churchHint: "9% od podatku dochodowego",
+    kasseLabel: "Kasa chorych",
+    kasseAvg: "Średnia (składka dodatkowa {pct})",
+    kasseHint2027: "2027: liczone stawką kasy z 2026 r., dopóki kasa nie zdecyduje w grudniu.",
+    kasseSaving: "W {kasse} ({pct}) zostałoby Ci {eur} więcej netto miesięcznie.",
+    kasseCheapest: "Jesteś już w najtańszej kasie z tej listy.",
     disclaimer: "Uproszczone obliczenie niemieckiego wynagrodzenia wg § 32a EStG 2026. Nie stanowi porady podatkowej.",
     result: "Wynik",
     dateChip: standChip("pl"),
@@ -412,6 +431,11 @@ const T: Record<Lang, Record<string, string>> = {
     childlessHint: "Asigurare de îngrijire +0,6 %",
     churchLabel: "Plătesc impozit bisericesc",
     churchHint: "9 % din impozitul pe venit",
+    kasseLabel: "Casa de asigurări de sănătate",
+    kasseAvg: "Medie (contribuție suplimentară {pct})",
+    kasseHint2027: "2027: calculat cu rata din 2026 a casei până la decizia din decembrie.",
+    kasseSaving: "Cu {kasse} ({pct}) v-ar rămâne {eur} mai mult net pe lună.",
+    kasseCheapest: "Sunteți deja la cea mai ieftină casă din această listă.",
     disclaimer: "Calcul simplificat al salariului german conform § 32a EStG 2026. Nu constituie consultanță fiscală.",
     result: "Rezultat",
     dateChip: standChip("ro"),
@@ -501,6 +525,11 @@ const T: Record<Lang, Record<string, string>> = {
     childlessHint: "Bakım sigortası +%0,6",
     churchLabel: "Kilise vergisi ödüyorum",
     churchHint: "Gelir vergisinin %9'u",
+    kasseLabel: "Sağlık sigortası (Krankenkasse)",
+    kasseAvg: "Ortalama (ek prim {pct})",
+    kasseHint2027: "2027: kasa Aralık'ta karar verene kadar 2026 oranıyla hesaplanır.",
+    kasseSaving: "{kasse} ({pct}) ile ayda {eur} daha fazla net kalırdı.",
+    kasseCheapest: "Zaten bu listedeki en uygun kasadasınız.",
     disclaimer: "§ 32a EStG 2026'ya göre basitleştirilmiş Alman maaş hesabı. Vergi danışmanlığı yerine geçmez.",
     result: "Sonuç",
     dateChip: standChip("tr"),
@@ -590,6 +619,11 @@ const T: Record<Lang, Record<string, string>> = {
     childlessHint: "Страхування догляду +0,6 %",
     churchLabel: "Сплачую церковний податок",
     churchHint: "9 % від податку на доходи",
+    kasseLabel: "Лікарняна каса",
+    kasseAvg: "Середнє (додатковий внесок {pct})",
+    kasseHint2027: "2027: розраховано за ставкою каси 2026 року, доки каса не вирішить у грудні.",
+    kasseSaving: "З {kasse} ({pct}) у вас залишалося б на {eur} більше нетто на місяць.",
+    kasseCheapest: "Ви вже в найдешевшій касі з цього списку.",
     disclaimer: "Спрощений розрахунок німецької зарплати за § 32a EStG 2026. Не є податковою консультацією.",
     result: "Результат",
     dateChip: standChip("uk"),
@@ -772,6 +806,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   const [showYearCompare, setShowYearCompare] = useState(false);
   const [szenario,     setSzenario]     = useState<Szenario>("entwurf2027");
   const [sv2027,       setSv2027]       = useState<Sv2027>("entwurf");
+  /** "" = Durchschnitts-Zusatzbeitrag; sonst Slug aus data/krankenkassen.ts. */
+  const [kasseSlug,    setKasseSlug]    = useState<string>("");
 
   const verheiratet = steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5;
 
@@ -809,6 +845,19 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
 
   const sliderPct = Math.min((bruttoMonat || 0) / 20000, 1) * 100;
 
+  /*
+   * Krankenkasse (Finanztip und netto-check bieten das an, Okt. 2026): Der
+   * Zusatzbeitrag der gewählten Kasse ersetzt den Durchschnitt. Für 2027 gilt
+   * ihr Satz 2027, sobald in data/krankenkassen.ts eingetragen, sonst der Satz
+   * 2026 — darauf weist der Hinweis unter der Auswahl hin.
+   */
+  const kasse = KRANKENKASSEN_2026.find((k) => k.slug === kasseSlug);
+  const zbFuer = useCallback((y: Steuerjahr, k: Krankenkasse | undefined = kasse): number | undefined => {
+    if (!k) return undefined;
+    const satz = y === 2027 && k.zusatzbeitrag2027 !== undefined ? k.zusatzbeitrag2027 : k.zusatzbeitrag;
+    return satz / 100;
+  }, [kasse]);
+
   const result = useMemo(
     () => calculateNetto({
       bruttoMonat: Math.max(0, bruttoMonat || 0),
@@ -821,9 +870,26 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
       steuerklasse,
       szenario,
       sv2027,
+      kvZusatzbeitrag: zbFuer(jahr),
     }),
-    [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027]
+    [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027, zbFuer]
   );
+
+  /** Netto bei der günstigsten Kasse der Auswahl — für den Spar-Hinweis. */
+  const resGuenstigste = useMemo(() => calculateNetto({
+    bruttoMonat: Math.max(0, bruttoMonat || 0),
+    jahr,
+    verheiratet,
+    kinderlosUeber23,
+    kirche,
+    kirchensteuerSatz,
+    sachsen,
+    steuerklasse,
+    szenario,
+    sv2027,
+    kvZusatzbeitrag: zbFuer(jahr, GUENSTIGSTE_KASSE),
+  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027, zbFuer]);
+  const kassenErsparnis = resGuenstigste.nettoMonat - result.nettoMonat;
 
   const resBW_BY = useMemo(() => calculateNetto({
     bruttoMonat: Math.max(0, bruttoMonat || 0),
@@ -835,7 +901,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     steuerklasse,
     szenario,
     sv2027,
-  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse, szenario, sv2027]);
+    kvZusatzbeitrag: zbFuer(jahr),
+  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse, szenario, sv2027, zbFuer]);
 
   const resOtherStates = useMemo(() => calculateNetto({
     bruttoMonat: Math.max(0, bruttoMonat || 0),
@@ -847,7 +914,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     steuerklasse,
     szenario,
     sv2027,
-  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse, szenario, sv2027]);
+    kvZusatzbeitrag: zbFuer(jahr),
+  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse, szenario, sv2027, zbFuer]);
 
   const otherYear = jahr === 2026 ? 2027 : 2026;
   const resOtherYear = useMemo(() => calculateNetto({
@@ -861,7 +929,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     steuerklasse,
     szenario,
     sv2027,
-  }), [bruttoMonat, otherYear, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027]);
+    kvZusatzbeitrag: zbFuer(otherYear),
+  }), [bruttoMonat, otherYear, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027, zbFuer]);
 
   const diffYear = result.nettoMonat - resOtherYear.nettoMonat;
 
@@ -883,10 +952,10 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
       sachsen,
       steuerklasse,
     };
-    const n2026 = calculateNetto({ ...basis, jahr: 2026 });
-    const n2027 = calculateNetto({ ...basis, jahr: 2027, szenario: "entwurf2027", sv2027 });
+    const n2026 = calculateNetto({ ...basis, jahr: 2026, kvZusatzbeitrag: zbFuer(2026) });
+    const n2027 = calculateNetto({ ...basis, jahr: 2027, szenario: "entwurf2027", sv2027, kvZusatzbeitrag: zbFuer(2027) });
     return { n2026, n2027, diffMonat: n2027.nettoMonat - n2026.nettoMonat, diffJahr: n2027.nettoJahr - n2026.nettoJahr };
-  }, [jahresvergleich, bruttoMonat, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, sv2027]);
+  }, [jahresvergleich, bruttoMonat, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, sv2027, zbFuer]);
 
   const animatedNetto = useAnimatedValue(
     isJahresansicht ? result.nettoJahr : result.nettoMonat
@@ -1146,6 +1215,35 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 label={t.churchLabel}
                 hint={kirchensteuerSatz === 0.09 ? t.churchHint : t.churchHint.replace("9", String(Math.round(kirchensteuerSatz * 100)))}
               />
+              <div>
+                <label htmlFor="select-krankenkasse" className="block text-sm sm:text-base font-semibold text-[#16181D] mb-2">
+                  {t.kasseLabel}
+                </label>
+                <select
+                  id="select-krankenkasse"
+                  value={kasseSlug}
+                  onChange={(e) => setKasseSlug(e.target.value)}
+                  className="w-full bg-white border border-black/[0.12] rounded-xl px-3 py-2.5 text-sm sm:text-base text-[#16181D] focus:border-[#E60A1C] outline-none"
+                >
+                  <option value="">{t.kasseAvg.replace("{pct}", fmtZb(DURCHSCHNITT_ZUSATZBEITRAG_2026))}</option>
+                  {KASSEN_ALPHABETISCH.map((k) => (
+                    <option key={k.slug} value={k.slug}>
+                      {k.name} · {fmtZb(k.zusatzbeitrag)}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs sm:text-sm text-black/60 mt-2 leading-relaxed">
+                  {kasse?.slug === GUENSTIGSTE_KASSE.slug
+                    ? t.kasseCheapest
+                    : kassenErsparnis >= 0.5
+                      ? t.kasseSaving
+                          .replace("{kasse}", GUENSTIGSTE_KASSE.name)
+                          .replace("{pct}", fmtZb(GUENSTIGSTE_KASSE.zusatzbeitrag))
+                          .replace("{eur}", formatEUR(kassenErsparnis))
+                      : null}
+                  {kasse && jahr === 2027 && kasse.zusatzbeitrag2027 === undefined ? <> {t.kasseHint2027}</> : null}
+                </p>
+              </div>
             </div>
 
           </div>

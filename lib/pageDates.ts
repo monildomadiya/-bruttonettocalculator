@@ -18,7 +18,7 @@
 import { siteConfig } from "@/lib/authors";
 
 export const PAGE_LAST_UPDATED: Record<string, string> = {
-  "/": "2026-10-23",
+  "/": "2026-10-25",
   "/brutto-netto-rechner-2027": "2026-10-23",
   "/weihnachtsgeld-rechner": "2026-10-25",
   "/bonus-steuerrechner": "2026-10-05",

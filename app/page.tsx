@@ -20,6 +20,7 @@ import { standardSteuerjahr, istWeihnachtsgeldSaison } from "@/lib/steuerjahr202
 import { LEGISLATION_STATUS } from "@/lib/config2027";
 import { pageStand } from "@/lib/pageDates";
 import { PFAENDUNG } from "@/lib/pfaendung";
+import Werte2027Tabelle from "@/components/Werte2027Tabelle";
 
 // Ein Datum pro Seite: lib/pageDates.ts ("/"). Speist die Zeile „Aktualisiert
 // am“ unter der H1, dateModified und <lastmod> in der Sitemap. Byline und
@@ -501,35 +502,23 @@ export default function HomePage() {
           <h3 className="font-display text-lg sm:text-xl font-extrabold text-[#16181D] mt-8 mb-3">
             Was ändert sich 2027 beim Nettogehalt?
           </h3>
-          <ul className="space-y-2 text-sm sm:text-base text-black/75 leading-relaxed list-disc pl-5">
-            <li>
-              <strong className="text-[#16181D]">Grundfreibetrag und Tarif:</strong>{" "}
-              {GRUNDFREIBETRAG.entwurf2027.toLocaleString("de-DE")} € statt{" "}
-              {GRUNDFREIBETRAG.amtlich2026.toLocaleString("de-DE")} €, Spitzensteuersatz 42 % ab 70.601 €, neu 47 % ab
-              280.000 € zu versteuerndem Einkommen (Gesetzentwurf, vorläufig).{" "}
-              <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Zur Steuerreform 2027</Link>
-            </li>
-            <li>
-              <strong className="text-[#16181D]">Beitragsbemessungsgrenzen:</strong> Kranken- und Pflegeversicherung{" "}
-              {SV_RECHENGROESSEN_2027_ENTWURF.kvPvBbgMonat.toLocaleString("de-DE")} € statt{" "}
-              {(BBG_2026.kvPvJahr / 12).toLocaleString("de-DE", { minimumFractionDigits: 2 })} € im Monat, Rente{" "}
-              {SV_RECHENGROESSEN_2027_ENTWURF.rvAlvBbgMonat.toLocaleString("de-DE")} € statt{" "}
-              {(BBG_2026.rvAlvJahr / 12).toLocaleString("de-DE", { minimumFractionDigits: 2 })} € (Kabinettsbeschluss 7.10.2026).{" "}
-              <Link href="/beitragsbemessungsgrenze-2027" className="text-[#E60A1C] font-semibold hover:underline">Beitragsbemessungsgrenze 2027</Link>
-            </li>
-            <li>
-              <strong className="text-[#16181D]">Zusatzbeitrag:</strong> Den Durchschnitt für 2027 legt das
-              Bundesgesundheitsministerium bis zum 1. November fest, die Kassen folgen im Dezember.{" "}
-              <Link href="/zusatzbeitrag-2027" className="text-[#E60A1C] font-semibold hover:underline">Zusatzbeitrag 2027 aller Kassen</Link>
-            </li>
-            <li>
-              <strong className="text-[#16181D]">Mindestlohn und Minijob:</strong> 14,60 € pro Stunde statt 13,90 €,
-              Minijob-Grenze 633 € statt 603 € (beschlossen).{" "}
-              <Link href="/blog/mindestlohn-2027" className="text-[#E60A1C] font-semibold hover:underline">Mindestlohn 2027</Link>
-              {" · "}
-              <Link href="/blog/minijob-2027" className="text-[#E60A1C] font-semibold hover:underline">Minijob 2027</Link>
-            </li>
-          </ul>
+          <p className="text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl mb-4">
+            Alle Werte, mit denen der Rechner 2027 rechnet, und wie verbindlich sie heute sind. Nächste Schritte:
+            amtlicher Zusatzbeitrag bis 1. November, Anhörung im Finanzausschuss am 4. November 2026.
+          </p>
+          <Werte2027Tabelle />
+          <p className="text-sm text-black/70 leading-relaxed mt-4">
+            Mehr dazu:{" "}
+            <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Steuerreform 2027</Link>
+            {" · "}
+            <Link href="/beitragsbemessungsgrenze-2027" className="text-[#E60A1C] font-semibold hover:underline">Beitragsbemessungsgrenze 2027</Link>
+            {" · "}
+            <Link href="/zusatzbeitrag-2027" className="text-[#E60A1C] font-semibold hover:underline">Zusatzbeitrag 2027 aller Kassen</Link>
+            {" · "}
+            <Link href="/blog/mindestlohn-2027" className="text-[#E60A1C] font-semibold hover:underline">Mindestlohn 2027</Link>
+            {" · "}
+            <Link href="/blog/minijob-2027" className="text-[#E60A1C] font-semibold hover:underline">Minijob 2027</Link>
+          </p>
 
           <h3 className="font-display text-lg sm:text-xl font-extrabold text-[#16181D] mt-8 mb-3">
             Gehaltsrechner und Lohnrechner 2027
