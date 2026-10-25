@@ -132,6 +132,12 @@ export interface CalculatorInput {
    * Basisabsicherung.
    */
   pkvBeitragMonat?: number;
+  /**
+   * Lohnsteuer-Freibetrag pro Jahr aus den ELStAM (§ 39a EStG, z. B. für
+   * Fahrtkosten über dem Arbeitnehmer-Pauschbetrag). Mindert das zvE für
+   * Lohnsteuer, Soli und Kirchensteuer, nicht die Sozialabgaben. Ohne Angabe 0.
+   */
+  freibetragJahr?: number;
 }
 
 /**
@@ -714,6 +720,8 @@ export function steuerNachKlasse(opts: {
   kirchensteuerSatz?: number;
   /** Zahl der Kinderfreibeträge, siehe CalculatorInput.kinderfreibetraege. */
   kinderfreibetraege?: number;
+  /** Lohnsteuer-Freibetrag (§ 39a EStG); im zvE schon abgezogen, hier nur für Klasse VI. */
+  freibetragJahr?: number;
 }): { estJahr: number; soliJahr: number; kirchensteuerJahr: number; summeJahr: number } {
   const ctx = resolveSteuerkontext(opts.jahr, opts.szenario);
   const { zvE, steuerklasse: sk } = opts;
@@ -729,7 +737,7 @@ export function steuerNachKlasse(opts: {
   } else if (sk === 6) {
     // Steuerklasse VI: gleiche Formel, aber ohne Arbeitnehmer- und
     // Sonderausgaben-Pauschbetrag (PAP MZTABFB: ANP und SAP nur bis Klasse V).
-    const zvE6 = Math.max(0, opts.bruttoJahr - opts.svSummeJahr);
+    const zvE6 = Math.max(0, opts.bruttoJahr - opts.svSummeJahr - Math.max(0, opts.freibetragJahr ?? 0));
     estJahr = lohnsteuerKlasse56(zvE6, ctx.est);
   } else if (sk === 2) {
     // Steuerklasse II: Alleinerziehendenentlastungsbetrag 4.260 € (2026)
@@ -814,7 +822,7 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   // Vereinfachtes zu versteuerndes Einkommen für den Lohnsteuerabzug
   const zvE = Math.max(
     0,
-    bruttoJahr - svSummeJahr - ctx.werbungskostenPauschale - r.sonderausgabenPauschale
+    bruttoJahr - svSummeJahr - ctx.werbungskostenPauschale - r.sonderausgabenPauschale - Math.max(0, input.freibetragJahr ?? 0)
   );
 
   const sk = input.steuerklasse ?? 1;
@@ -829,6 +837,7 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
     kirche: input.kirche,
     kirchensteuerSatz: input.kirchensteuerSatz,
     kinderfreibetraege: input.kinderfreibetraege,
+    freibetragJahr: input.freibetragJahr,
   });
   const nettoJahr = bruttoJahr - svSummeJahr - steuerSummeJahr;
 

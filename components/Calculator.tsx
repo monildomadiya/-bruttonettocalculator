@@ -161,6 +161,8 @@ const T: Record<Lang, Record<string, string>> = {
     pkvBeitragLabel: "PKV-Beitrag inkl. Pflege pro Monat",
     pkvRow: "PKV-Eigenanteil ({beitrag} − {zuschuss} Zuschuss)",
     pkvJaeg: "Angestellte können erst ab {grenze} brutto im Monat in die PKV wechseln (Versicherungspflichtgrenze {jahr}).",
+    freibetragLabel: "Steuerfreibetrag pro Jahr (ELStAM)",
+    freibetragHint: "Vom Finanzamt eingetragener Freibetrag, z. B. für hohe Fahrtkosten (§ 39a EStG). Senkt die Lohnsteuer, nicht die Sozialabgaben.",
     disclaimer: "Vereinfachte Berechnung nach § 32a EStG 2026. Keine Steuerberatung.",
     result: "Ergebnis",
     dateChip: standChip("de"),
@@ -262,6 +264,8 @@ const T: Record<Lang, Record<string, string>> = {
     pkvBeitragLabel: "PKV premium incl. care per month",
     pkvRow: "PKV own share ({beitrag} − {zuschuss} subsidy)",
     pkvJaeg: "Employees can only switch to PKV from {grenze} gross per month (compulsory insurance limit {jahr}).",
+    freibetragLabel: "Annual tax allowance (ELStAM)",
+    freibetragHint: "Allowance registered by the tax office, e.g. for high commuting costs (§ 39a EStG). Lowers wage tax, not social contributions.",
     disclaimer: "Simplified calculation under § 32a EStG 2026. Not tax advice.",
     result: "Result",
     dateChip: standChip("en"),
@@ -363,6 +367,8 @@ const T: Record<Lang, Record<string, string>> = {
     pkvBeitragLabel: "Składka PKV z ubezp. pielęgnacyjnym / miesiąc",
     pkvRow: "Udział własny PKV ({beitrag} − {zuschuss} dopłaty)",
     pkvJaeg: "Pracownicy mogą przejść do PKV dopiero od {grenze} brutto miesięcznie (próg ubezpieczenia obowiązkowego {jahr}).",
+    freibetragLabel: "Roczna kwota wolna od podatku (ELStAM)",
+    freibetragHint: "Kwota wpisana przez urząd skarbowy, np. za wysokie koszty dojazdu (§ 39a EStG). Obniża podatek od wynagrodzenia, nie składki.",
     disclaimer: "Uproszczone obliczenie niemieckiego wynagrodzenia wg § 32a EStG 2026. Nie stanowi porady podatkowej.",
     result: "Wynik",
     dateChip: standChip("pl"),
@@ -464,6 +470,8 @@ const T: Record<Lang, Record<string, string>> = {
     pkvBeitragLabel: "Prima PKV inclusiv îngrijire / lună",
     pkvRow: "Contribuție proprie PKV ({beitrag} − {zuschuss} subvenție)",
     pkvJaeg: "Angajații pot trece la PKV doar de la {grenze} brut pe lună (plafonul asigurării obligatorii {jahr}).",
+    freibetragLabel: "Sumă scutită de impozit pe an (ELStAM)",
+    freibetragHint: "Înregistrată de fisc, de ex. pentru costuri mari de navetă (§ 39a EStG). Reduce impozitul pe salariu, nu contribuțiile sociale.",
     disclaimer: "Calcul simplificat al salariului german conform § 32a EStG 2026. Nu constituie consultanță fiscală.",
     result: "Rezultat",
     dateChip: standChip("ro"),
@@ -565,6 +573,8 @@ const T: Record<Lang, Record<string, string>> = {
     pkvBeitragLabel: "Bakım dahil aylık PKV primi",
     pkvRow: "PKV kendi payı ({beitrag} − {zuschuss} katkı)",
     pkvJaeg: "Çalışanlar PKV'ye ancak ayda {grenze} brüt üzerinde geçebilir (zorunlu sigorta sınırı {jahr}).",
+    freibetragLabel: "Yıllık vergi muafiyeti (ELStAM)",
+    freibetragHint: "Vergi dairesinin işlediği muafiyet, ör. yüksek yol masrafları için (§ 39a EStG). Ücret vergisini düşürür, sosyal primleri değil.",
     disclaimer: "§ 32a EStG 2026'ya göre basitleştirilmiş Alman maaş hesabı. Vergi danışmanlığı yerine geçmez.",
     result: "Sonuç",
     dateChip: standChip("tr"),
@@ -666,6 +676,8 @@ const T: Record<Lang, Record<string, string>> = {
     pkvBeitragLabel: "Внесок PKV з доглядом на місяць",
     pkvRow: "Власна частка PKV ({beitrag} − {zuschuss} доплата)",
     pkvJaeg: "Працівники можуть перейти в PKV лише від {grenze} брутто на місяць (межа обов'язкового страхування {jahr}).",
+    freibetragLabel: "Річна податкова пільга (ELStAM)",
+    freibetragHint: "Пільга, внесена податковою, напр. за великі витрати на дорогу (§ 39a EStG). Зменшує податок на зарплату, не соціальні внески.",
     disclaimer: "Спрощений розрахунок німецької зарплати за § 32a EStG 2026. Не є податковою консультацією.",
     result: "Результат",
     dateChip: standChip("uk"),
@@ -853,6 +865,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   const [kinder,       setKinder]       = useState<number>(0);
   const [pkv,          setPkv]          = useState(false);
   const [pkvBeitrag,   setPkvBeitrag]   = useState<number>(650);
+  const [freibetrag,   setFreibetrag]   = useState<number>(0);
 
   const verheiratet = steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5;
 
@@ -867,6 +880,17 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     if (s >= 1 && s <= 6)                   setSteuerklasse(s as Steuerklasse);
     // Alte Links mit ?sv=entwurf entsprechen jetzt der Voreinstellung.
     if (p.get("sv") === "2026")             setSv2027("beschlossen");
+    // Weitere Optionen (seit 25.10.2026 im Teilen-Link)
+    if (p.get("kirche") === "1")            setKirche(true);
+    if (p.get("kl") === "0")                setKinderlosUeber23(false);
+    const kasseParam = p.get("kasse");
+    if (kasseParam && KRANKENKASSEN_2026.some((k) => k.slug === kasseParam)) setKasseSlug(kasseParam);
+    const kinderParam = parseInt(p.get("kinder") ?? "");
+    if (kinderParam >= 1 && kinderParam <= 6) setKinder(kinderParam);
+    const pkvParam = parseFloat(p.get("pkv") ?? "");
+    if (!isNaN(pkvParam) && pkvParam > 0 && pkvParam <= 5000) { setPkv(true); setPkvBeitrag(pkvParam); }
+    const fbParam = parseFloat(p.get("fb") ?? "");
+    if (!isNaN(fbParam) && fbParam > 0 && fbParam <= 100000) setFreibetrag(fbParam);
   }, []);
 
   /* Input validation */
@@ -914,7 +938,8 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     pvKinderUnter25: kinder,
     kinderfreibetraege: kinder * (steuerklasse === 3 || steuerklasse === 4 ? 1 : 0.5),
     pkvBeitragMonat: pkv ? Math.max(0, pkvBeitrag || 0) : undefined,
-  }), [kinder, kinderlosUeber23, steuerklasse, pkv, pkvBeitrag]);
+    freibetragJahr: freibetrag > 0 ? freibetrag : undefined,
+  }), [kinder, kinderlosUeber23, steuerklasse, pkv, pkvBeitrag, freibetrag]);
 
   const result = useMemo(
     () => calculateNetto({
@@ -1034,12 +1059,18 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     url.searchParams.set("jahr",   String(jahr));
     url.searchParams.set("sk",     String(steuerklasse));
     if (jahr === 2027 && sv2027 === "beschlossen") url.searchParams.set("sv", "2026");
+    if (kirche) url.searchParams.set("kirche", "1");
+    if (!kinderlosUeber23 && kinder === 0) url.searchParams.set("kl", "0");
+    if (kinder > 0) url.searchParams.set("kinder", String(kinder));
+    if (pkv && pkvBeitrag > 0) url.searchParams.set("pkv", pkvBeitrag.toFixed(0));
+    else if (kasseSlug) url.searchParams.set("kasse", kasseSlug);
+    if (freibetrag > 0) url.searchParams.set("fb", freibetrag.toFixed(0));
     try {
       await navigator.clipboard.writeText(url.toString());
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch { /* ignore */ }
-  }, [bruttoMonat, jahr, steuerklasse, sv2027]);
+  }, [bruttoMonat, jahr, steuerklasse, sv2027, kirche, kinderlosUeber23, kinder, pkv, pkvBeitrag, kasseSlug, freibetrag]);
 
   const showVal = (monthly: number) => isJahresansicht ? monthly * 12 : monthly;
 
@@ -1356,6 +1387,23 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                   ) : null}
                 </div>
               ) : null}
+              <div>
+                <label htmlFor="input-freibetrag" className="block text-sm sm:text-base font-semibold text-[#16181D] mb-2">{t.freibetragLabel}</label>
+                <div className="relative">
+                  <input
+                    id="input-freibetrag"
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    step={100}
+                    value={freibetrag}
+                    onChange={(e) => setFreibetrag(Math.max(0, Number(e.target.value) || 0))}
+                    className="w-full bg-white border border-black/[0.12] rounded-xl px-3 py-2.5 pr-9 text-sm sm:text-base font-semibold text-[#16181D] focus:border-[#E60A1C] outline-none"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-black/40 font-bold">€</span>
+                </div>
+                <p className="text-xs sm:text-sm text-black/60 mt-2 leading-relaxed">{t.freibetragHint}</p>
+              </div>
             </div>
 
           </div>

@@ -49,6 +49,17 @@ near("PKV 1.400 €: Höchstzuschuss 2027 (BBG 6.375 €)", p2027.sv.pkvZuschuss
 const gkv = calculateNetto({ bruttoMonat: 7000, jahr: 2026, verheiratet: false, kinderlosUeber23: true, kirche: false });
 near("Ohne PKV kein Zuschussfeld", gkv.sv.pkvZuschussMonat === undefined ? 0 : 1, 0, 0);
 
+// ── Lohnsteuer-Freibetrag (§ 39a EStG) ──────────────────────────────────────
+const fb0 = calculateNetto({ ...base, steuerklasse: 1, kirche: false });
+const fb = calculateNetto({ ...base, steuerklasse: 1, kirche: false, freibetragJahr: 3000 });
+near("Freibetrag mindert zvE um 3.000 €", fb0.steuer.zvE - fb.steuer.zvE, 3000);
+near("Freibetrag: Lohnsteuer auf zvE − 3.000 €", fb.steuer.einkommensteuerJahr, estFormel2026(fb0.steuer.zvE - 3000));
+near("Freibetrag: Sozialabgaben unverändert", fb.sv.summeJahr, fb0.sv.summeJahr);
+const fb6 = calculateNetto({ ...base, steuerklasse: 6, kirche: false, freibetragJahr: 3000 });
+const fb60 = calculateNetto({ ...base, steuerklasse: 6, kirche: false });
+if (!(fb6.steuer.einkommensteuerJahr < fb60.steuer.einkommensteuerJahr)) { failed++; console.log("✗ Freibetrag wirkt in Klasse VI nicht"); }
+else console.log("✓ Freibetrag wirkt auch in Klasse VI");
+
 if (failed) {
   console.log(`\n${failed} Prüfung(en) fehlgeschlagen`);
   process.exit(1);
