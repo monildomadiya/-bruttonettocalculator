@@ -7,7 +7,7 @@ import {
   TrendingUp, Landmark, HeartPulse, Briefcase,
   CircleDollarSign, Sparkles, MapPin, Calendar, ChevronDown, ChevronUp, Info,
 } from "lucide-react";
-import { calculateNetto, formatEUR, Steuerjahr, Szenario, Sv2027, GRUNDFREIBETRAG, BBG_2026, SV_RECHENGROESSEN_2027_ENTWURF } from "@/lib/taxCalculator";
+import { calculateNetto, formatEUR, Steuerjahr, Szenario, Sv2027, GRUNDFREIBETRAG, BBG_2026, SV_RECHENGROESSEN_2027_ENTWURF, VERSICHERUNGSPFLICHTGRENZE_2026 } from "@/lib/taxCalculator";
 import { siteConfig } from "@/lib/authors";
 import ReviewerByline from "@/components/ReviewerByline";
 import SupportButton from "@/components/SupportButton";
@@ -154,6 +154,13 @@ const T: Record<Lang, Record<string, string>> = {
     kasseHint2027: "2027: mit dem Satz 2026 der Kasse gerechnet, bis sie im Dezember neu beschließt.",
     kasseSaving: "Bei {kasse} ({pct}) blieben Ihnen {eur} mehr netto im Monat.",
     kasseCheapest: "Sie sind bereits bei der günstigsten Kasse dieser Auswahl.",
+    kinderLabel: "Kinder unter 25",
+    kinderHint: "Ab dem 2. Kind weniger Pflegebeitrag; Kinderfreibeträge senken Soli und Kirchensteuer. Das Kindergeld kommt zusätzlich, nicht über den Lohn.",
+    pkvLabel: "Privat krankenversichert (PKV)",
+    pkvHint: "Arbeitgeber zahlt die Hälfte, höchstens {max} im Monat",
+    pkvBeitragLabel: "PKV-Beitrag inkl. Pflege pro Monat",
+    pkvRow: "PKV-Eigenanteil ({beitrag} − {zuschuss} Zuschuss)",
+    pkvJaeg: "Angestellte können erst ab {grenze} brutto im Monat in die PKV wechseln (Versicherungspflichtgrenze {jahr}).",
     disclaimer: "Vereinfachte Berechnung nach § 32a EStG 2026. Keine Steuerberatung.",
     result: "Ergebnis",
     dateChip: standChip("de"),
@@ -248,6 +255,13 @@ const T: Record<Lang, Record<string, string>> = {
     kasseHint2027: "2027: calculated with the insurer's 2026 rate until it decides in December.",
     kasseSaving: "With {kasse} ({pct}) you would keep {eur} more net per month.",
     kasseCheapest: "You are already with the cheapest insurer in this list.",
+    kinderLabel: "Children under 25",
+    kinderHint: "Lower care contribution from the 2nd child; child allowances reduce solidarity surcharge and church tax. Child benefit is paid on top, not via the payslip.",
+    pkvLabel: "Private health insurance (PKV)",
+    pkvHint: "Employer pays half, at most {max} per month",
+    pkvBeitragLabel: "PKV premium incl. care per month",
+    pkvRow: "PKV own share ({beitrag} − {zuschuss} subsidy)",
+    pkvJaeg: "Employees can only switch to PKV from {grenze} gross per month (compulsory insurance limit {jahr}).",
     disclaimer: "Simplified calculation under § 32a EStG 2026. Not tax advice.",
     result: "Result",
     dateChip: standChip("en"),
@@ -342,6 +356,13 @@ const T: Record<Lang, Record<string, string>> = {
     kasseHint2027: "2027: liczone stawką kasy z 2026 r., dopóki kasa nie zdecyduje w grudniu.",
     kasseSaving: "W {kasse} ({pct}) zostałoby Ci {eur} więcej netto miesięcznie.",
     kasseCheapest: "Jesteś już w najtańszej kasie z tej listy.",
+    kinderLabel: "Dzieci poniżej 25 lat",
+    kinderHint: "Od 2. dziecka niższa składka pielęgnacyjna; ulgi na dzieci obniżają Soli i podatek kościelny. Kindergeld jest wypłacane osobno, nie z pensją.",
+    pkvLabel: "Prywatne ubezpieczenie zdrowotne (PKV)",
+    pkvHint: "Pracodawca płaci połowę, maks. {max} miesięcznie",
+    pkvBeitragLabel: "Składka PKV z ubezp. pielęgnacyjnym / miesiąc",
+    pkvRow: "Udział własny PKV ({beitrag} − {zuschuss} dopłaty)",
+    pkvJaeg: "Pracownicy mogą przejść do PKV dopiero od {grenze} brutto miesięcznie (próg ubezpieczenia obowiązkowego {jahr}).",
     disclaimer: "Uproszczone obliczenie niemieckiego wynagrodzenia wg § 32a EStG 2026. Nie stanowi porady podatkowej.",
     result: "Wynik",
     dateChip: standChip("pl"),
@@ -436,6 +457,13 @@ const T: Record<Lang, Record<string, string>> = {
     kasseHint2027: "2027: calculat cu rata din 2026 a casei până la decizia din decembrie.",
     kasseSaving: "Cu {kasse} ({pct}) v-ar rămâne {eur} mai mult net pe lună.",
     kasseCheapest: "Sunteți deja la cea mai ieftină casă din această listă.",
+    kinderLabel: "Copii sub 25 de ani",
+    kinderHint: "De la al 2-lea copil, contribuție de îngrijire mai mică; deducerile pentru copii reduc Soli și impozitul bisericesc. Alocația (Kindergeld) se plătește separat.",
+    pkvLabel: "Asigurare privată de sănătate (PKV)",
+    pkvHint: "Angajatorul plătește jumătate, maximum {max} pe lună",
+    pkvBeitragLabel: "Prima PKV inclusiv îngrijire / lună",
+    pkvRow: "Contribuție proprie PKV ({beitrag} − {zuschuss} subvenție)",
+    pkvJaeg: "Angajații pot trece la PKV doar de la {grenze} brut pe lună (plafonul asigurării obligatorii {jahr}).",
     disclaimer: "Calcul simplificat al salariului german conform § 32a EStG 2026. Nu constituie consultanță fiscală.",
     result: "Rezultat",
     dateChip: standChip("ro"),
@@ -530,6 +558,13 @@ const T: Record<Lang, Record<string, string>> = {
     kasseHint2027: "2027: kasa Aralık'ta karar verene kadar 2026 oranıyla hesaplanır.",
     kasseSaving: "{kasse} ({pct}) ile ayda {eur} daha fazla net kalırdı.",
     kasseCheapest: "Zaten bu listedeki en uygun kasadasınız.",
+    kinderLabel: "25 yaş altı çocuklar",
+    kinderHint: "2. çocuktan itibaren bakım primi düşer; çocuk muafiyetleri Soli ve kilise vergisini azaltır. Çocuk parası (Kindergeld) maaşla değil ayrıca ödenir.",
+    pkvLabel: "Özel sağlık sigortası (PKV)",
+    pkvHint: "İşveren yarısını öder, ayda en fazla {max}",
+    pkvBeitragLabel: "Bakım dahil aylık PKV primi",
+    pkvRow: "PKV kendi payı ({beitrag} − {zuschuss} katkı)",
+    pkvJaeg: "Çalışanlar PKV'ye ancak ayda {grenze} brüt üzerinde geçebilir (zorunlu sigorta sınırı {jahr}).",
     disclaimer: "§ 32a EStG 2026'ya göre basitleştirilmiş Alman maaş hesabı. Vergi danışmanlığı yerine geçmez.",
     result: "Sonuç",
     dateChip: standChip("tr"),
@@ -624,6 +659,13 @@ const T: Record<Lang, Record<string, string>> = {
     kasseHint2027: "2027: розраховано за ставкою каси 2026 року, доки каса не вирішить у грудні.",
     kasseSaving: "З {kasse} ({pct}) у вас залишалося б на {eur} більше нетто на місяць.",
     kasseCheapest: "Ви вже в найдешевшій касі з цього списку.",
+    kinderLabel: "Діти до 25 років",
+    kinderHint: "З 2-ї дитини нижчий внесок на догляд; пільги на дітей зменшують Soli і церковний податок. Kindergeld виплачується окремо, не із зарплатою.",
+    pkvLabel: "Приватне медичне страхування (PKV)",
+    pkvHint: "Роботодавець платить половину, максимум {max} на місяць",
+    pkvBeitragLabel: "Внесок PKV з доглядом на місяць",
+    pkvRow: "Власна частка PKV ({beitrag} − {zuschuss} доплата)",
+    pkvJaeg: "Працівники можуть перейти в PKV лише від {grenze} брутто на місяць (межа обов'язкового страхування {jahr}).",
     disclaimer: "Спрощений розрахунок німецької зарплати за § 32a EStG 2026. Не є податковою консультацією.",
     result: "Результат",
     dateChip: standChip("uk"),
@@ -808,6 +850,9 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
   const [sv2027,       setSv2027]       = useState<Sv2027>("entwurf");
   /** "" = Durchschnitts-Zusatzbeitrag; sonst Slug aus data/krankenkassen.ts. */
   const [kasseSlug,    setKasseSlug]    = useState<string>("");
+  const [kinder,       setKinder]       = useState<number>(0);
+  const [pkv,          setPkv]          = useState(false);
+  const [pkvBeitrag,   setPkvBeitrag]   = useState<number>(650);
 
   const verheiratet = steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5;
 
@@ -858,12 +903,25 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     return satz / 100;
   }, [kasse]);
 
+  /*
+   * Kinder und PKV (netto-check und Finanztip fragen beides ab, Okt. 2026).
+   * Mit Kindern entfällt der Kinderlosenzuschlag; die Zahl der
+   * Kinderfreibeträge folgt dem üblichen ELStAM-Merkmal: 1,0 je Kind in
+   * Klasse III/IV, 0,5 in Klasse I/II, keine in V/VI (Engine).
+   */
+  const personExtra = useMemo(() => ({
+    kinderlosUeber23: kinder > 0 ? false : kinderlosUeber23,
+    pvKinderUnter25: kinder,
+    kinderfreibetraege: kinder * (steuerklasse === 3 || steuerklasse === 4 ? 1 : 0.5),
+    pkvBeitragMonat: pkv ? Math.max(0, pkvBeitrag || 0) : undefined,
+  }), [kinder, kinderlosUeber23, steuerklasse, pkv, pkvBeitrag]);
+
   const result = useMemo(
     () => calculateNetto({
       bruttoMonat: Math.max(0, bruttoMonat || 0),
       jahr,
       verheiratet,
-      kinderlosUeber23,
+      ...personExtra,
       kirche,
       kirchensteuerSatz,
       sachsen,
@@ -872,7 +930,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
       sv2027,
       kvZusatzbeitrag: zbFuer(jahr),
     }),
-    [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027, zbFuer]
+    [bruttoMonat, jahr, verheiratet, personExtra, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027, zbFuer]
   );
 
   /** Netto bei der günstigsten Kasse der Auswahl — für den Spar-Hinweis. */
@@ -880,7 +938,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     bruttoMonat: Math.max(0, bruttoMonat || 0),
     jahr,
     verheiratet,
-    kinderlosUeber23,
+    ...personExtra,
     kirche,
     kirchensteuerSatz,
     sachsen,
@@ -888,41 +946,49 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     szenario,
     sv2027,
     kvZusatzbeitrag: zbFuer(jahr, GUENSTIGSTE_KASSE),
-  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027, zbFuer]);
+  }), [bruttoMonat, jahr, verheiratet, personExtra, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027, zbFuer]);
   const kassenErsparnis = resGuenstigste.nettoMonat - result.nettoMonat;
+
+  /** PKV: Höchstzuschuss des Arbeitgebers (Engine bei sehr hoher Prämie) und Wechselgrenze. */
+  const pkvHoechstzuschuss = useMemo(() => calculateNetto({
+    bruttoMonat: 20000, jahr, verheiratet: false, kinderlosUeber23: false, kirche: false, sachsen, sv2027, pkvBeitragMonat: 100000,
+  }).sv.pkvZuschussMonat ?? 0, [jahr, sachsen, sv2027]);
+  const jaegMonat = jahr === 2027 && sv2027 === "entwurf"
+    ? SV_RECHENGROESSEN_2027_ENTWURF.versicherungspflichtgrenzeMonat
+    : VERSICHERUNGSPFLICHTGRENZE_2026.monat;
 
   const resBW_BY = useMemo(() => calculateNetto({
     bruttoMonat: Math.max(0, bruttoMonat || 0),
     jahr,
     verheiratet,
-    kinderlosUeber23,
+    ...personExtra,
     kirche: true,
     kirchensteuerSatz: 0.08,
     steuerklasse,
     szenario,
     sv2027,
     kvZusatzbeitrag: zbFuer(jahr),
-  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse, szenario, sv2027, zbFuer]);
+  }), [bruttoMonat, jahr, verheiratet, personExtra, steuerklasse, szenario, sv2027, zbFuer]);
 
   const resOtherStates = useMemo(() => calculateNetto({
     bruttoMonat: Math.max(0, bruttoMonat || 0),
     jahr,
     verheiratet,
-    kinderlosUeber23,
+    ...personExtra,
     kirche: true,
     kirchensteuerSatz: 0.09,
     steuerklasse,
     szenario,
     sv2027,
     kvZusatzbeitrag: zbFuer(jahr),
-  }), [bruttoMonat, jahr, verheiratet, kinderlosUeber23, steuerklasse, szenario, sv2027, zbFuer]);
+  }), [bruttoMonat, jahr, verheiratet, personExtra, steuerklasse, szenario, sv2027, zbFuer]);
 
   const otherYear = jahr === 2026 ? 2027 : 2026;
   const resOtherYear = useMemo(() => calculateNetto({
     bruttoMonat: Math.max(0, bruttoMonat || 0),
     jahr: otherYear,
     verheiratet,
-    kinderlosUeber23,
+    ...personExtra,
     kirche,
     kirchensteuerSatz,
     sachsen,
@@ -930,7 +996,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     szenario,
     sv2027,
     kvZusatzbeitrag: zbFuer(otherYear),
-  }), [bruttoMonat, otherYear, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027, zbFuer]);
+  }), [bruttoMonat, otherYear, verheiratet, personExtra, kirche, kirchensteuerSatz, sachsen, steuerklasse, szenario, sv2027, zbFuer]);
 
   const diffYear = result.nettoMonat - resOtherYear.nettoMonat;
 
@@ -946,7 +1012,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     const basis = {
       bruttoMonat: Math.max(0, bruttoMonat || 0),
       verheiratet,
-      kinderlosUeber23,
+      ...personExtra,
       kirche,
       kirchensteuerSatz,
       sachsen,
@@ -955,7 +1021,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
     const n2026 = calculateNetto({ ...basis, jahr: 2026, kvZusatzbeitrag: zbFuer(2026) });
     const n2027 = calculateNetto({ ...basis, jahr: 2027, szenario: "entwurf2027", sv2027, kvZusatzbeitrag: zbFuer(2027) });
     return { n2026, n2027, diffMonat: n2027.nettoMonat - n2026.nettoMonat, diffJahr: n2027.nettoJahr - n2026.nettoJahr };
-  }, [jahresvergleich, bruttoMonat, verheiratet, kinderlosUeber23, kirche, kirchensteuerSatz, sachsen, steuerklasse, sv2027, zbFuer]);
+  }, [jahresvergleich, bruttoMonat, verheiratet, personExtra, kirche, kirchensteuerSatz, sachsen, steuerklasse, sv2027, zbFuer]);
 
   const animatedNetto = useAnimatedValue(
     isJahresansicht ? result.nettoJahr : result.nettoMonat
@@ -1201,13 +1267,13 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
             {/* ── Toggles ───────────────────────────────────────── */}
             <div className="space-y-4 pt-6 border-t border-black/[0.10] mb-8">
               <p className="text-xs font-bold text-[#E60A1C] uppercase tracking-widest mb-4">{t.moreOptions}</p>
-              <Toggle
+              {kinder === 0 && !pkv && <Toggle
                 id="toggle-pflegeversicherung"
                 checked={kinderlosUeber23}
                 onChange={setKinderlosUeber23}
                 label={t.childlessLabel}
                 hint={t.childlessHint}
-              />
+              />}
               <Toggle
                 id="toggle-kirchensteuer"
                 checked={kirche}
@@ -1215,7 +1281,7 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                 label={t.churchLabel}
                 hint={kirchensteuerSatz === 0.09 ? t.churchHint : t.churchHint.replace("9", String(Math.round(kirchensteuerSatz * 100)))}
               />
-              <div>
+              {!pkv && <div>
                 <label htmlFor="select-krankenkasse" className="block text-sm sm:text-base font-semibold text-[#16181D] mb-2">
                   {t.kasseLabel}
                 </label>
@@ -1243,7 +1309,53 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                       : null}
                   {kasse && jahr === 2027 && kasse.zusatzbeitrag2027 === undefined ? <> {t.kasseHint2027}</> : null}
                 </p>
+              </div>}
+              <div>
+                <label htmlFor="select-kinder" className="block text-sm sm:text-base font-semibold text-[#16181D] mb-2">
+                  {t.kinderLabel}
+                </label>
+                <select
+                  id="select-kinder"
+                  value={kinder}
+                  onChange={(e) => setKinder(Number(e.target.value))}
+                  className="w-full bg-white border border-black/[0.12] rounded-xl px-3 py-2.5 text-sm sm:text-base text-[#16181D] focus:border-[#E60A1C] outline-none"
+                >
+                  {[0, 1, 2, 3, 4, 5, 6].map((n) => (
+                    <option key={n} value={n}>{n === 6 ? "6+" : n}</option>
+                  ))}
+                </select>
+                {kinder > 0 ? <p className="text-xs sm:text-sm text-black/60 mt-2 leading-relaxed">{t.kinderHint}</p> : null}
               </div>
+              <Toggle
+                id="toggle-pkv"
+                checked={pkv}
+                onChange={setPkv}
+                label={t.pkvLabel}
+                hint={t.pkvHint.replace("{max}", formatEUR(pkvHoechstzuschuss))}
+              />
+              {pkv ? (
+                <div>
+                  <label htmlFor="input-pkv" className="block text-sm font-semibold text-[#16181D] mb-2">{t.pkvBeitragLabel}</label>
+                  <div className="relative">
+                    <input
+                      id="input-pkv"
+                      type="number"
+                      inputMode="decimal"
+                      min={0}
+                      step={10}
+                      value={pkvBeitrag}
+                      onChange={(e) => setPkvBeitrag(Math.max(0, Number(e.target.value) || 0))}
+                      className="w-full bg-white border border-black/[0.12] rounded-xl px-3 py-2.5 pr-9 text-sm sm:text-base font-semibold text-[#16181D] focus:border-[#E60A1C] outline-none"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-black/40 font-bold">€</span>
+                  </div>
+                  {bruttoMonat > 0 && bruttoMonat <= jaegMonat ? (
+                    <p className="text-xs sm:text-sm text-amber-800 mt-2 leading-relaxed">
+                      {t.pkvJaeg.replace("{grenze}", formatEUR(jaegMonat)).replace("{jahr}", String(jahr))}
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
             </div>
 
           </div>
@@ -1494,13 +1606,21 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.rente / 12))}</span>
                 </div>
                 <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-black/[0.05] gap-2">
-                  <span className="leading-snug">{t.health} <span className="text-black/45">({formatPct(result.sv.krankenSatzAnPct)})</span></span>
+                  <span className="leading-snug">
+                    {result.sv.pkvZuschussMonat !== undefined
+                      ? t.pkvRow
+                          .replace("{beitrag}", formatEUR(showVal(pkvBeitrag)))
+                          .replace("{zuschuss}", formatEUR(showVal(result.sv.pkvZuschussMonat)))
+                      : <>{t.health} <span className="text-black/45">({formatPct(result.sv.krankenSatzAnPct)})</span></>}
+                  </span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.kranken / 12))}</span>
                 </div>
+                {result.sv.pkvZuschussMonat === undefined && (
                 <div className="flex justify-between items-start sm:items-center py-1.5 border-b border-black/[0.05] gap-2">
                   <span className="leading-snug">{t.care} <span className="text-black/45">({formatPct(result.sv.pflegeSatzAnPct)})</span></span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.pflege / 12))}</span>
                 </div>
+                )}
                 <div className="flex justify-between items-start sm:items-center py-1.5 gap-2">
                   <span className="leading-snug">{t.unemployment}</span>
                   <span className="font-mono font-semibold tabular-nums text-black/90 flex-shrink-0">-{formatEUR(showVal(result.sv.arbeitslosen / 12))}</span>

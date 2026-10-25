@@ -111,7 +111,35 @@ export interface CalculatorInput {
    * Abschlag — alle bestehenden Aufrufer rechnen unverändert.
    */
   pvKinderUnter25?: number;
+  /**
+   * Zahl der Kinderfreibeträge (Lohnsteuerabzugsmerkmal, z. B. 0,5 je Kind in
+   * Klasse I/II, 1,0 je Kind in III/IV). Wirkt nur auf Soli und Kirchensteuer:
+   * § 51a Abs. 2a EStG — deren Bemessungsgrundlage ist die Lohnsteuer auf das
+   * zvE abzüglich Kinderfreibetrag und BEA-Freibetrag, in Klasse I–III je
+   * Zähler doppelt, in Klasse IV einfach; Klasse V/VI ohne. Die Lohnsteuer
+   * selbst bleibt unverändert (Kinder wirken dort über das Kindergeld).
+   * Ohne Angabe 0 — alle bestehenden Aufrufer rechnen unverändert.
+   */
+  kinderfreibetraege?: number;
+  /**
+   * Monatsbeitrag zur privaten Kranken- und Pflegeversicherung (gesamt). Ist er
+   * gesetzt (> 0), entfallen die GKV- und SPV-Beiträge; der Arbeitgeber zahlt
+   * einen Zuschuss nach § 257 Abs. 2 SGB V / § 61 SGB XI: halber allgemeiner
+   * Beitragssatz plus halber Ø-Zusatzbeitrag bzw. AG-Anteil PV, je bis zur
+   * BBG, höchstens die Hälfte der Prämie. Der Eigenanteil (Prämie − Zuschuss)
+   * mindert wie in der Vorsorgepauschale (PAP: PKPV abzüglich AG-Zuschuss)
+   * die Lohnsteuer — vereinfacht unter der Annahme, die Prämie sei vollständig
+   * Basisabsicherung.
+   */
+  pkvBeitragMonat?: number;
 }
+
+/**
+ * Jahresarbeitsentgeltgrenze (Versicherungspflichtgrenze, § 6 Abs. 1 Nr. 1 SGB V)
+ * 2026: 77.400 € (SV-Rechengrößenverordnung 2026). Erst darüber können
+ * Angestellte in die PKV wechseln. 2027: SV_RECHENGROESSEN_2027_ENTWURF.
+ */
+export const VERSICHERUNGSPFLICHTGRENZE_2026 = { jahr: 77400, monat: 6450 } as const;
 
 /** PV-Abschlag je Kind ab dem 2. bis zum 5. Kind unter 25 (§ 55 Abs. 3 Satz 4 SGB XI). */
 export const PV_ABSCHLAG_JE_KIND = 0.0025;
@@ -138,6 +166,8 @@ export interface CalculatorResult {
      */
     krankenSatzAnPct: number;
     pflegeSatzAnPct: number;
+    /** Nur bei PKV: Arbeitgeberzuschuss pro Monat (Prämie − Zuschuss steht in `kranken`). */
+    pkvZuschussMonat?: number;
   };
   steuer: {
     zvE: number;
@@ -604,6 +634,7 @@ export function resolveSteuerkontext(jahr: Steuerjahr, szenario: Szenario = "ent
     soliFaktor: 1,
     grundfreibetrag: GRUNDFREIBETRAG.amtlich2026,
     kindergeld: KINDERGELD.amtlich2026,
+    kinderfreibetrag: KINDERFREIBETRAG.amtlich2026,
     istEntwurf: false,
   };
 
@@ -625,6 +656,7 @@ export function resolveSteuerkontext(jahr: Steuerjahr, szenario: Szenario = "ent
     soliFaktor: 1,
     grundfreibetrag: tarif.gfb,
     kindergeld: zweiteStufe ? KINDERGELD.stufe2028 : KINDERGELD.entwurf2027,
+    kinderfreibetrag: zweiteStufe ? KINDERFREIBETRAG.stufe2028 : KINDERFREIBETRAG.entwurf2027,
     istEntwurf: true,
   };
 }
@@ -680,6 +712,8 @@ export function steuerNachKlasse(opts: {
   szenario?: Szenario;
   kirche: boolean;
   kirchensteuerSatz?: number;
+  /** Zahl der Kinderfreibeträge, siehe CalculatorInput.kinderfreibetraege. */
+  kinderfreibetraege?: number;
 }): { estJahr: number; soliJahr: number; kirchensteuerJahr: number; summeJahr: number } {
   const ctx = resolveSteuerkontext(opts.jahr, opts.szenario);
   const { zvE, steuerklasse: sk } = opts;
@@ -706,9 +740,20 @@ export function steuerNachKlasse(opts: {
     estJahr = ctx.est(zvE);
   }
 
-  const soliJahr = soliBerechnen(estJahr, sk === 3, ctx.soliFaktor);
+  // § 51a Abs. 2a EStG: Bemessungsgrundlage für Soli und Kirchensteuer ist die
+  // Lohnsteuer auf das zvE abzüglich der Kinderfreibeträge (Klasse I–III je
+  // Zähler doppelt, IV einfach, V/VI keine).
+  const zaehler = sk === 5 || sk === 6 ? 0 : Math.max(0, opts.kinderfreibetraege ?? 0);
+  let estZuschlag = estJahr;
+  if (zaehler > 0) {
+    const abzug = zaehler * (sk === 4 ? 1 : 2) * (ctx.kinderfreibetrag + BETREUUNGSFREIBETRAG);
+    const z = Math.max(0, zvE - abzug);
+    estZuschlag = sk === 3 ? 2 * ctx.est(z / 2) : sk === 2 ? ctx.est(Math.max(0, z - 4260)) : ctx.est(z);
+  }
+
+  const soliJahr = soliBerechnen(estZuschlag, sk === 3, ctx.soliFaktor);
   const ksSatz = opts.kirchensteuerSatz ?? 0.09;
-  const kirchensteuerJahr = opts.kirche ? estJahr * ksSatz : 0;
+  const kirchensteuerJahr = opts.kirche ? estZuschlag * ksSatz : 0;
   return { estJahr, soliJahr, kirchensteuerJahr, summeJahr: estJahr + soliJahr + kirchensteuerJahr };
 }
 
@@ -747,8 +792,17 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
   const pvKinderAbschlag = kinderU25 >= 2 ? PV_ABSCHLAG_JE_KIND * (Math.min(kinderU25, 5) - 1) : 0;
   const pvSatzAn = pvSatzGesamt - pvAgAnteil - pvKinderAbschlag;
 
-  const kranken = kvPvBemessung * kvSatzAn;
-  const pflege = kvPvBemessung * pvSatzAn;
+  // Private Kranken-/Pflegeversicherung: Eigenanteil statt GKV/SPV-Beitrag.
+  const pkvPraemie = Math.max(0, input.pkvBeitragMonat ?? 0);
+  const pkv = pkvPraemie > 0;
+  const pkvZuschussMonat = pkv
+    ? Math.min(
+        pkvPraemie / 2,
+        (kvPvBbgJahr / 12) * (r.kvSatz / 2 + r.kvZusatzbeitragDurchschnitt / 2 + pvAgAnteil)
+      )
+    : 0;
+  const kranken = pkv ? (pkvPraemie - pkvZuschussMonat) * 12 : kvPvBemessung * kvSatzAn;
+  const pflege = pkv ? 0 : kvPvBemessung * pvSatzAn;
   const rente = rvAlvBemessung * (r.rvSatz / 2);
   const arbeitslosen = rvAlvBemessung * (r.alvSatz / 2);
 
@@ -774,6 +828,7 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
     szenario: input.szenario,
     kirche: input.kirche,
     kirchensteuerSatz: input.kirchensteuerSatz,
+    kinderfreibetraege: input.kinderfreibetraege,
   });
   const nettoJahr = bruttoJahr - svSummeJahr - steuerSummeJahr;
 
@@ -790,8 +845,9 @@ export function calculateNetto(input: CalculatorInput): CalculatorResult {
       pflege,
       summeMonat: svSummeJahr / 12,
       summeJahr: svSummeJahr,
-      krankenSatzAnPct: kvSatzAn * 100,
-      pflegeSatzAnPct: pvSatzAn * 100,
+      krankenSatzAnPct: pkv ? 0 : kvSatzAn * 100,
+      pflegeSatzAnPct: pkv ? 0 : pvSatzAn * 100,
+      ...(pkv ? { pkvZuschussMonat } : {}),
     },
     steuer: {
       zvE,
