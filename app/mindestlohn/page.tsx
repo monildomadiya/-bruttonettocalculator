@@ -24,7 +24,11 @@ const STAND = pageStand("/mindestlohn");
 
 // Ziel: „mindestlohn 2027 netto“ (Pos. 3,7), „mindestlohn 2027 rechner“ (9,2),
 // „mindestlohnrechner 2027“ (7,8). 2027 zuerst; die URL bleibt /mindestlohn.
-const TITLE = `Mindestlohn 2027: ${eur2(MINDESTLOHN[2027])} € – Netto-Rechner & Tabelle`;
+// Rechner-Intention ("mindestlohnrechner 2027", "mindestlohn 2027 rechner").
+// /blog/mindestlohn-2027 trug fast denselben Titel und konkurrierte um dieselben
+// Suchen (beide Pos. 7–9, CTR unter 1,5 %); der Artikel bedient jetzt die
+// Info-Suchen ("mindestlohn 2027 netto/vollzeit/wie hoch").
+const TITLE = `Mindestlohn-Rechner 2027: ${eur2(MINDESTLOHN[2027])} € brutto in netto`;
 const DESCRIPTION = `Mindestlohn 2027: ${eur2(MINDESTLOHN[2027])} € ab 1. Januar. Netto im Monat bei 20 bis 40 Wochenstunden, alle Steuerklassen – mit Rechner und Vergleich zu 2026 (${eur2(MINDESTLOHN[2026])} €).`;
 
 export const metadata: Metadata = {

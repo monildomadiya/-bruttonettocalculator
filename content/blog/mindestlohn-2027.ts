@@ -5,9 +5,13 @@ import { calculateNetto, type Steuerjahr } from "@/lib/taxCalculator";
  * Mindestlohn 2026 = 13,90 €, 2027 = 14,60 € (Fünfte Mindestlohnanpassungs-
  * verordnung, beschlossen). Monatslohn = Stundenlohn × Wochenstunden × 4,33.
  * Netto: Engine, Steuerklasse I, kinderlos, ohne Kirchensteuer. 2027 mit dem
- * Steuertarif des Regierungsentwurfs EStRefG 2027 und Sozialabgaben 2026
- * (vorläufig). Bis 603 € (2026) bzw. 633 € (2027) Minijob: netto = brutto
- * minus 3,6 % RV-Eigenanteil.
+ * Steuertarif des Regierungsentwurfs EStRefG 2027 und den Sozialabgaben des
+ * PAP-2027-Entwurfs (Engine-Default, vorläufig). Bis 603 € (2026) bzw. 633 €
+ * (2027) Minijob: netto = brutto minus 3,6 % RV-Eigenanteil.
+ *
+ * Titel mit den Vollzeit-Beträgen: Die Suchen auf diesen Artikel sind
+ * "mindestlohn 2027 netto / brutto / vollzeit" (GSC Okt. 2026, Pos. ~8 bei
+ * 0,5 % CTR). Der Rechner /mindestlohn besitzt die Rechner-Suchen.
  */
 
 const ML = { 2026: 13.9, 2027: 14.6 } as const;
@@ -30,13 +34,13 @@ const zeilen = STUNDEN.map((h) => {
   return { h, a, b };
 });
 const vollzeit = zeilen.find((z) => z.h === 40)!;
+const eur0 = (n: number) => Math.round(n).toLocaleString("de-DE") + " €";
 
 export const post: BlogPost = {
   slug: "mindestlohn-2027",
   headline: "Mindestlohn 2027: 14,60 € – so viel bleibt netto",
-  metaTitle: "Mindestlohn 2027: 14,60 € – so viel bleibt netto",
-  metaDescription:
-    "Mindestlohn 2027: 14,60 € pro Stunde ab 1. Januar. Netto-Tabelle für 10 bis 40 Wochenstunden, Vergleich mit 13,90 € in 2026, Minijob- und Midijob-Grenzen.",
+  metaTitle: `Mindestlohn 2027: 14,60 € = ${eur0(vollzeit.b.brutto)} brutto, ${eur0(vollzeit.b.netto)} netto`,
+  metaDescription: `Mindestlohn 2027: 14,60 € pro Stunde ab 1. Januar. In Vollzeit (40 Std.) ${eur(vollzeit.b.brutto)} brutto, rund ${eur(vollzeit.b.netto)} netto. Tabelle für Teilzeit, Minijob-Grenze 633 €.`,
   excerpt:
     "Zum 1. Januar 2027 steigt der Mindestlohn auf 14,60 € brutto pro Stunde. Was das in Vollzeit, Teilzeit und im Minijob netto bedeutet, zeigt die Tabelle.",
   focusKeyword: "mindestlohn 2027",

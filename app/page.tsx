@@ -28,8 +28,10 @@ const STARTSEITE_STAND = pageStand("/");
 // Alle Top-Suchen der Startseite sind 2027-Suchen ("brutto netto rechner 2027",
 // Ø-Pos. 2,3, zuvor 1,3); 2026 bringt kaum noch Verkehr. Deshalb 2027 zuerst.
 const PAGE_TITLE = "Brutto Netto Rechner 2027 & 2026 — Gehaltsrechner kostenlos";
+// Konkrete Stände im Snippet: Konkurrenz-Snippets werben mit "Stand 17. Oktober"
+// und den neuen SV-Werten; unser CTR auf Pos. 2 halbierte sich im Oktober.
 const PAGE_DESCRIPTION =
-  "Brutto Netto Rechner 2027: Netto nach Steuerreform-Entwurf berechnen, direkt im Vergleich zu 2026. Alle 6 Steuerklassen, kostenlos, ohne Anmeldung.";
+  "Brutto Netto Rechner 2027 mit Steuerreform, BBG 2027 und Zusatzbeitrag 2,9 % – direkt im Vergleich zu 2026. Alle 6 Steuerklassen, kostenlos, ohne Anmeldung.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

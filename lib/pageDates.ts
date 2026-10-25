@@ -29,7 +29,7 @@ export const PAGE_LAST_UPDATED: Record<string, string> = {
   "/firmenwagenrechner": "2026-10-05",
   "/steuerklassenwechsel-rechner": "2026-10-05",
   "/beitragsbemessungsgrenze-2027": "2026-10-23",
-  "/zusatzbeitrag-2027": "2026-10-23",
+  "/zusatzbeitrag-2027": "2026-10-25",
   "/rente-brutto-netto-rechner": "2026-10-05",
   "/minijob-rechner": "2026-10-05",
   "/pendlerpauschale-rechner": "2026-10-06",

@@ -34,9 +34,12 @@ import { pageStand } from "@/lib/pageDates";
  */
 
 const CANONICAL = "https://bruttonettocalculator.com/zusatzbeitrag-2027";
-const TITLE = "Zusatzbeitrag 2027: Alle Krankenkassen im Vergleich";
+// GSC 16.–22.10.2026: 6.353 Impressionen bei 1,9 % CTR auf Pos. 6,6. Die
+// Suchenden fragen, ob ihre Kasse erhöht ("welche krankenkasse erhöht die
+// beiträge 2027" klickt mit 20 %); der alte Titel versprach nur einen Vergleich.
+const TITLE = "Zusatzbeitrag 2027: Welche Krankenkasse erhöht? Alle Kassen";
 const DESCRIPTION =
-  "Zusatzbeitrag 2027: Schätzerkreis errechnet 2,9 %. Alle Krankenkassen (TK, AOK, Barmer, DAK …) im Vergleich – plus Rechner für Ihr Netto.";
+  "Zusatzbeitrag 2027: Schätzerkreis 2,9 %, die Kassen entscheiden im Dezember. TK, AOK, Barmer, DAK, hkk und alle weiteren Kassen im Vergleich – mit Netto-Rechner.";
 
 /** Stand der Seite; der Datenstand der Sätze steht in ZUSATZBEITRAG_STAND. */
 const SEITE = pageStand("/zusatzbeitrag-2027");
@@ -84,6 +87,13 @@ const faqs = [
       ZUSATZBEITRAG_DURCHSCHNITT_2027 !== null
         ? `Das Bundesgesundheitsministerium hat den durchschnittlichen Zusatzbeitrag 2027 auf ${pct(ZUSATZBEITRAG_DURCHSCHNITT_2027)} festgelegt (2026: ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}). Er ist ein Rechenwert; Ihre Kasse erhebt ihren eigenen Satz.`
         : `Nach dem GKV-Schätzerkreis vom ${ZUSATZBEITRAG_2027_SCHAETZERKREIS.datum} rechnerisch unverändert ${pct(ZUSATZBEITRAG_2027_SCHAETZERKREIS.wert)} (2026: ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}). Amtlich gibt ihn das Bundesgesundheitsministerium bis zum 1. November 2026 bekannt (§ 242a SGB V). Er ist ein Rechenwert; Ihre Kasse beschließt ihren eigenen Satz im Dezember und kann darüber liegen.`,
+  },
+  {
+    q: "Welche Krankenkassen erhöhen den Zusatzbeitrag 2027?",
+    a:
+      anzahl2027 > 0
+        ? `${anzahl2027} von ${KRANKENKASSEN_2026.length} Kassen unserer Auswahl haben ihren Satz für 2027 veröffentlicht. Ob er steigt oder sinkt, zeigt die Tabelle. Die übrigen Kassen tragen wir ein, sobald sie beschlossen haben.`
+        : `Stand ${SEITEN_STAND} hat noch keine Kasse unserer Auswahl ihren Satz für 2027 beschlossen. Die Verwaltungsräte tagen meist im Dezember. Der Schätzerkreis hält rechnerisch einen Durchschnitt von ${pct(ZUSATZBEITRAG_2027_SCHAETZERKREIS.wert)} für ausreichend, jede Kasse kann aber darüber oder darunter liegen. Prognosen einzelner Kassen tragen wir nicht ein, nur beschlossene Sätze.`,
   },
   {
     q: "Wann veröffentlichen die Krankenkassen ihren Zusatzbeitrag 2027?",

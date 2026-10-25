@@ -30,7 +30,9 @@ const BASE = "https://bruttonettocalculator.com";
 const CANONICAL = `${BASE}/en/tax-calculator-germany`;
 
 export const metadata: Metadata = {
-  title: "Brutto Netto Calculator Germany 2026 – Gross to Net Salary",
+  // GSC Okt. 2026: "tax calculator germany" / "german tax calculator" bring the
+  // impressions (7.000 in 28 days, 0,3 % CTR); the old title led with "Brutto Netto".
+  title: "Germany Tax Calculator 2026 – Brutto Netto (Gross to Net)",
   description:
     "Free brutto netto calculator for Germany 2026: turn gross salary into net pay — income tax, solidarity surcharge and social contributions, all 6 tax classes.",
   keywords: [
@@ -50,7 +52,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: [pageImageUrl("/en/tax-calculator-germany")],
-    title: "Brutto Netto Calculator Germany 2026 – Gross to Net Salary",
+    title: "Germany Tax Calculator 2026 – Brutto Netto (Gross to Net)",
     description:
       "Turn gross into net pay in Germany — income tax, solidarity surcharge and all social security contributions, for all six tax classes. Free, in English.",
     url: CANONICAL,

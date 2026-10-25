@@ -17,7 +17,9 @@ import { atMetadata, AtSchemas, AtHero, AtFaqList, AtQuellen, AT_STANDARD, type 
  */
 
 const PATH = "/lehrer-gehalt-oesterreich";
-const TITLE = "Lehrer Gehalt Österreich 2026 — Schema pd mit Netto";
+// Suchen: "lehrer gehalt österreich", "gehaltstabelle lehrer 2026", "pd schema
+// gehalt 2026", "... netto" (Pos. ~6,5, 0,8 % CTR im Okt. 2026).
+const TITLE = "Lehrer Gehalt Österreich 2026: pd-Tabelle brutto & netto";
 const DESCRIPTION =
   "Lehrer-Gehalt in Österreich ab Juli 2026: alle Entlohnungsstufen im Schema pd (3.636 € bis 6.462 € brutto) und was netto bleibt. Mit Gehaltserhöhung 2027.";
 

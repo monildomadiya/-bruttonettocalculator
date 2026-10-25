@@ -10,6 +10,7 @@ import {
   GUENSTIGSTE_KASSE,
   TEUERSTE_KASSE,
   ZUSATZBEITRAG_STAND,
+  ZUSATZBEITRAG_2027_SCHAETZERKREIS,
   findKrankenkasse,
   gesamtbeitragssatz,
   arbeitnehmeranteilProzent,
@@ -91,25 +92,39 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   // ranked on page 1–2 without the word "Rechner" in the title. Add it where the
   // title still fits; the long AOK names fall back to the original pattern.
   const kurz = KURZNAME[kasse.slug] ?? kasse.name;
-  const title =
-    [
-      `${kurz} Zusatzbeitrag 2026: ${satz} – Brutto Netto Rechner`,
-      `${kurz} Zusatzbeitrag 2026: ${satz} – Netto-Rechner`,
-    ].find((t) => t.length <= 60) ?? `${kasse.name} Zusatzbeitrag 2026: ${satz}`;
-  const description =
-    `${kasse.name}: Zusatzbeitrag ${satz}, Gesamtbeitrag ${gesamt}. ` +
-    `Was der Satz Ihrer Kasse netto kostet — mit Vergleich zum Durchschnitt ` +
-    `(${fmtPct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}).`;
+  // GSC 16.–22.10.2026: "tk zusatzbeitrag 2027" (554 Impr.), "barmer/hkk
+  // zusatzbeitrag 2027" usw. landeten auf /zusatzbeitrag-2027 mit 1–2 % CTR,
+  // die Kassenseiten mit "2026"-Titel bei 0,2 %. Die Suche fragt jetzt nach
+  // 2027; bis die Kasse im Dezember beschließt, beantwortet der Titel genau
+  // das ("Erhöhung?") und nennt den geltenden Satz 2026.
+  const satz2027 = kasse.zusatzbeitrag2027 !== undefined ? fmtPct(kasse.zusatzbeitrag2027) : null;
+  const title = satz2027
+    ? [
+        `${kurz} Zusatzbeitrag 2027: ${satz2027} – Brutto Netto Rechner`,
+        `${kurz} Zusatzbeitrag 2027: ${satz2027} – Netto-Rechner`,
+      ].find((t) => t.length <= 60) ?? `${kasse.name} Zusatzbeitrag 2027: ${satz2027}`
+    : [
+        `${kurz} Zusatzbeitrag 2027: Erhöhung? 2026: ${satz} – Rechner`,
+        `${kurz} Zusatzbeitrag 2027: Erhöhung? 2026: ${satz}`,
+        `${kurz} Zusatzbeitrag 2027 (2026: ${satz})`,
+      ].find((t) => t.length <= 60) ?? `${kasse.name} Zusatzbeitrag 2027`;
+  const description = satz2027
+    ? `${kasse.name}: Zusatzbeitrag 2027 ${satz2027} (2026: ${satz}). ` +
+      `Was der neue Satz netto kostet — mit Rechner und Vergleich zu anderen Kassen.`
+    : `${kasse.name}: Zusatzbeitrag 2026 ${satz}, Gesamtbeitrag ${gesamt}. ` +
+      `Den Satz 2027 beschließt die Kasse im Dezember; der Schätzerkreis rechnet mit ` +
+      `Ø ${fmtPct(ZUSATZBEITRAG_2027_SCHAETZERKREIS.wert)}. Mit Netto-Rechner.`;
 
   return {
     title,
     description,
     keywords: [
+      `${kasse.name} zusatzbeitrag 2027`,
+      `zusatzbeitrag ${kasse.name} 2027`,
       `${kasse.name} zusatzbeitrag 2026`,
-      `zusatzbeitrag ${kasse.name} 2026`,
       `${kasse.name} beitragssatz 2026`,
       `brutto netto rechner ${kasse.name}`,
-      "krankenkassen zusatzbeitrag 2026",
+      "krankenkassen zusatzbeitrag 2027",
     ],
     alternates: { canonical },
     openGraph: {
@@ -123,7 +138,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     },
     twitter: {
       card: "summary",
-      title: `${kasse.name}: Zusatzbeitrag ${satz} (2026)`,
+      title: satz2027 ? `${kasse.name}: Zusatzbeitrag 2027 ${satz2027}` : `${kasse.name}: Zusatzbeitrag 2027? (2026: ${satz})`,
       description: `Gesamtbeitrag ${gesamt} — so viel Netto macht die Kassenwahl aus.`,
     },
   };
