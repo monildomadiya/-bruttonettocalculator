@@ -70,7 +70,7 @@ const REF_BRUTTO = 4000;
 const SKS = [1, 2, 3, 4, 5, 6] as Steuerklasse[];
 
 /** Monatliche Lohnsteuer (ohne Soli/Kirchensteuer) aus der Engine. */
-function lohnsteuerMonat(brutto: number, sk: Steuerklasse): number {
+function lohnsteuerMonat(brutto: number, sk: Steuerklasse, auszubildend = false): number {
   const res = calculateNetto({
     bruttoMonat: brutto,
     jahr: 2026,
@@ -78,8 +78,16 @@ function lohnsteuerMonat(brutto: number, sk: Steuerklasse): number {
     kinderlosUeber23: sk !== 2,
     kirche: false,
     steuerklasse: sk,
+    auszubildend,
   });
   return res.steuer.einkommensteuerJahr / 12;
+}
+
+/** Höchstes Monatsbrutto (5-€-Schritte ab `start`), bei dem noch keine Lohnsteuer anfällt. */
+function lohnsteuerfreiBis(sk: Steuerklasse, auszubildend = false, start = 0): number {
+  let b = start;
+  while (b < 10000 && lohnsteuerMonat(b + 5, sk, auszubildend) < 0.005) b += 5;
+  return b;
 }
 
 const TABELLE_BRUTTO = [1500, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4500, 5000, 5500, 6000, 7000, 8000];
@@ -90,16 +98,30 @@ const pct = (ls: number, brutto: number) => ((ls / brutto) * 100).toLocaleString
 const SK2_DIFF_3000 = lohnsteuerMonat(3000, 1) - lohnsteuerMonat(3000, 2);
 
 /** Höchstes Monatsbrutto (in 5-€-Schritten), bei dem Klasse 1 noch keine Lohnsteuer zahlt. */
-const LST_FREI_SK1 = (() => {
-  let b = 1000;
-  while (lohnsteuerMonat(b + 5, 1) < 0.005) b += 5;
-  return b;
-})();
+const LST_FREI_SK1 = lohnsteuerfreiBis(1, false, 1000);
+// "ab wann lohnsteuer zahlen" +190 %, "zahlen azubis lohnsteuer" +3.900 %,
+// "zahlen beamte lohnsteuer" (Trends DE, 30 Tage bis 25.10.2026).
+const LST_FREI_SK2 = lohnsteuerfreiBis(2, false, 1000);
+const LST_FREI_SK3 = lohnsteuerfreiBis(3, false, 1000);
+const LST_FREI_SK5 = lohnsteuerfreiBis(5);
+const LST_FREI_AZUBI = lohnsteuerfreiBis(1, true, 1000);
 
 const faqs = [
   {
     q: "Wie viel Lohnsteuer zahlt man bei Steuerklasse 1?",
     a: `2026 bei ${formatEUR(2500)} brutto rund ${formatEUR(LS1[2500])} im Monat (${pct(LS1[2500], 2500)} % des Bruttos), bei ${formatEUR(3000)} rund ${formatEUR(LS1[3000])} (${pct(LS1[3000], 3000)} %) und bei ${formatEUR(4000)} rund ${formatEUR(LS1[4000])} (${pct(LS1[4000], 4000)} %). Lohnsteuerfrei bleibt in Steuerklasse 1 ein Monatsbrutto bis etwa ${formatEUR(LST_FREI_SK1)}. Solidaritätszuschlag fällt bei diesen Gehältern nicht an, Kirchensteuer nur bei Kirchenmitgliedschaft (8 bzw. 9 % der Lohnsteuer).`,
+  },
+  {
+    q: "Ab wann zahlt man Lohnsteuer?",
+    a: `Lohnsteuer fällt erst an, wenn das hochgerechnete Jahresgehalt nach Abzug der Pauschbeträge und der Vorsorgepauschale über dem Grundfreibetrag liegt. 2026 bleibt ein Monatsbrutto lohnsteuerfrei bis etwa ${formatEUR(LST_FREI_SK1)} in Steuerklasse 1, ${formatEUR(LST_FREI_SK2)} in Klasse 2 (ein Kind) und ${formatEUR(LST_FREI_SK3)} in Klasse 3. In Klasse 5 beginnt die Lohnsteuer schon ab rund ${formatEUR(LST_FREI_SK5 + 5)}, in Klasse 6 ab dem ersten Euro, weil dort der Grundfreibetrag fehlt. Zu viel gezahlte Lohnsteuer bekommen Sie über die Steuererklärung zurück.`,
+  },
+  {
+    q: "Zahlen Azubis Lohnsteuer?",
+    a: `Ja, nach denselben Regeln wie alle Arbeitnehmer. In Steuerklasse 1 bleibt eine Ausbildungsvergütung 2026 bis etwa ${formatEUR(LST_FREI_AZUBI)} im Monat lohnsteuerfrei; die meisten Azubis zahlen deshalb keine oder nur wenig Lohnsteuer. Sozialabgaben fallen dagegen schon ab 325,01 € an. Wie viel netto bleibt, zeigt der Azubi-Rechner.`,
+  },
+  {
+    q: "Zahlen Beamte Lohnsteuer?",
+    a: "Ja. Beamte zahlen Lohnsteuer, Solidaritätszuschlag und gegebenenfalls Kirchensteuer wie Angestellte, aber keine Beiträge zur Renten-, Arbeitslosen- und gesetzlichen Pflegeversicherung. Weil die Vorsorgepauschale dadurch kleiner ausfällt, ist die Lohnsteuer bei gleichem Brutto meist etwas höher als bei Angestellten. Den Vergleich rechnet der Beamten-Rechner.",
   },
   {
     q: "Wie berechnet sich die Lohnsteuer?",

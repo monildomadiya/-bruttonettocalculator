@@ -2,137 +2,99 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Scale, AlertCircle, ChevronDown, Calculator, BookOpen } from "lucide-react";
 import { pageImageUrl } from "@/lib/pageImage";
+import { pageStand } from "@/lib/pageDates";
+import {
+  PFAENDUNG,
+  pfaendbarerBetrag,
+  pfaendungsfreibetrag,
+  WEIHNACHTSGELD_UNPFAENDBAR,
+} from "@/lib/pfaendung";
+
+/*
+ * Alle Beträge kommen aus lib/pfaendung.ts (BGBl. 2026 I Nr. 80, gültig ab
+ * 1.7.2026) und sind gegen die amtliche Tabelle geprüft (npm run
+ * test:pfaendung). Bis 25.10.2026 stand hier noch der Freibetrag von Juli 2024
+ * (1.491,75 €) mit frei erfundenen Tabellenwerten.
+ */
+
+const eur = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const GRUND = eur(PFAENDUNG.grundfreibetrag);
+const STAND = pageStand("/pfaendungstabelle");
+
+const TITLE = `Pfändungstabelle 2026/27: Freibetrag ${GRUND} € ab Juli`;
+const DESCRIPTION = `Pfändungstabelle ab ${PFAENDUNG.gueltigAb} (BGBl.): Freibetrag ${GRUND} € netto, mit Unterhaltspflichten bis ${eur(pfaendungsfreibetrag(5))} €. Pfändbare Beträge für 0 bis 5 Personen, gültig bis ${PFAENDUNG.gueltigBis}.`;
 
 export const metadata: Metadata = {
-  title: "Pfändungstabelle 2026 — Aktuelle Pfändungsfreigrenzen",
-  description:
-    "Pfändungstabelle 2026 mit den Pfändungsfreigrenzen nach § 850c ZPO: Grundfreibetrag 1.491,75 € plus Erhöhung für Unterhaltspflichten. Alle Werte sofort.",
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: [
     "Pfändungstabelle 2026",
+    "Pfändungstabelle 2027",
     "Pfändungstabelle",
     "pfändungsfreies Einkommen",
     "Pfändungsfreibetrag 2026",
     "§ 850c ZPO",
-    "pfändbares Einkommen berechnen",
     "Lohnpfändung 2026",
     "Pfändungsfreigrenze 2026",
   ],
   alternates: { canonical: "https://bruttonettocalculator.com/pfaendungstabelle" },
   openGraph: {
     images: [pageImageUrl("/pfaendungstabelle")],
-    title: "Pfändungstabelle 2026 — Aktuelle Pfändungsfreigrenzen",
-    description:
-      "Alle Pfändungsfreigrenzen 2026 nach § 850c ZPO auf einen Blick. Basis-Freibetrag: 1.491,75 €.",
+    title: TITLE,
+    description: DESCRIPTION,
     url: "https://bruttonettocalculator.com/pfaendungstabelle",
     locale: "de_DE",
     type: "website",
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Was ist die Pfändungstabelle 2026?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Die Pfändungstabelle 2026 listet nach § 850c ZPO, welche Teile des Nettogehalts pfändbar sind. Der Grundfreibetrag beträgt 2026 monatlich 1.491,75 €. Einkommen unterhalb dieser Grenze ist vollständig geschützt.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Wie hoch ist der pfändungsfreie Betrag 2026?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Der monatliche Pfändungsfreibetrag 2026 beträgt 1.491,75 € (ohne Unterhaltspflichten). Für jede unterhaltsberechtigte Person erhöht sich der Freibetrag um ca. 553,25 €.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Was ändert sich bei der Pfändungstabelle jährlich?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Der Pfändungsfreibetrag wird alle zwei Jahre angepasst und orientiert sich am Anstieg des Grundfreibetrags nach § 32a EStG. Die aktuell gültige Tabelle nach § 850c ZPO gilt ab dem 1. Juli 2025 bis 30. Juni 2027.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Wann ist mein gesamtes Gehalt pfändungsfrei?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Ihr Nettogehalt ist vollständig pfändungsfrei, wenn es den monatlichen Grundfreibetrag von 1.491,75 € nicht übersteigt. Bei Unterhaltspflichten erhöht sich dieser Betrag entsprechend.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Gilt die Pfändungstabelle für Arbeitnehmer und Selbstständige?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Die Pfändungstabelle gilt grundsätzlich für alle Arten von Arbeitseinkommen, auch für Selbstständige. Bei Selbstständigen wird das pfändbare Einkommen nach § 850i ZPO individuell durch das Vollstreckungsgericht festgesetzt.",
-      },
-    },
-  ],
-};
+const PERSONEN = [0, 1, 2, 3, 4, 5];
+const NETTO_ZEILEN = [1600, 1700, 1800, 1900, 2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800, 4000, 4200, 4400, 4600, 4800];
 
-// Full Pfändungstabelle 2026 data
-const tableData = [
-  { nettoMonatlich: "bis 1.491,75", p0: "0,00", p1: "0,00", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "1.500,00", p0: "6,63", p1: "0,00", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "1.600,00", p0: "82,38", p1: "0,00", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "1.700,00", p0: "158,13", p1: "0,00", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "1.800,00", p0: "233,88", p1: "0,00", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "1.900,00", p0: "309,63", p1: "0,00", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "2.000,00", p0: "385,38", p1: "0,00", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "2.100,00", p0: "461,13", p1: "55,00", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "2.200,00", p0: "536,88", p1: "130,75", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "2.300,00", p0: "612,63", p1: "206,50", p2: "0,00", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "2.400,00", p0: "688,38", p1: "282,25", p2: "75,75", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "2.500,00", p0: "764,13", p1: "358,00", p2: "151,50", p3: "0,00", p4: "0,00" },
-  { nettoMonatlich: "2.600,00", p0: "839,88", p1: "433,75", p2: "227,25", p3: "20,75", p4: "0,00" },
-  { nettoMonatlich: "2.700,00", p0: "915,63", p1: "509,50", p2: "303,00", p3: "96,50", p4: "0,00" },
-  { nettoMonatlich: "2.800,00", p0: "991,38", p1: "585,25", p2: "378,75", p3: "172,25", p4: "0,00" },
-  { nettoMonatlich: "2.900,00", p0: "1.067,13", p1: "661,00", p2: "454,50", p3: "248,00", p4: "41,50" },
-  { nettoMonatlich: "3.000,00", p0: "1.142,88", p1: "736,75", p2: "530,25", p3: "323,75", p4: "117,25" },
-  { nettoMonatlich: "3.100,00", p0: "1.218,63", p1: "812,50", p2: "606,00", p3: "399,50", p4: "193,00" },
-  { nettoMonatlich: "3.200,00", p0: "1.294,38", p1: "888,25", p2: "681,75", p3: "475,25", p4: "268,75" },
-  { nettoMonatlich: "3.300,00", p0: "1.370,13", p1: "964,00", p2: "757,50", p3: "551,00", p4: "344,50" },
-  { nettoMonatlich: "3.400,00", p0: "1.445,88", p1: "1.039,75", p2: "833,25", p3: "626,75", p4: "420,25" },
-  { nettoMonatlich: "3.500,00", p0: "1.521,63", p1: "1.115,50", p2: "908,00", p3: "702,50", p4: "496,00" },
-];
+const tableData = NETTO_ZEILEN.map((netto) => ({ netto, werte: PERSONEN.map((n) => pfaendbarerBetrag(netto, n)) }));
 
-const freibetraege = [
-  { personen: "0 (keine)", betrag: "1.491,75 €" },
-  { personen: "1", betrag: "2.045,00 €" },
-  { personen: "2", betrag: "2.308,67 €" },
-  { personen: "3", betrag: "2.572,33 €" },
-  { personen: "4", betrag: "2.836,00 €" },
-  { personen: "5+", betrag: "3.099,67 €" },
-];
+const freibetraege = PERSONEN.map((n) => ({
+  personen: n === 0 ? "0 (keine)" : n === 5 ? "5 und mehr" : String(n),
+  betrag: `${eur(pfaendungsfreibetrag(n))} €`,
+}));
+
+/** Erste Tabellenzeile mit pfändbarem Betrag (ohne Unterhaltspflicht). */
+const ERSTE_ZEILE = Math.ceil(PFAENDUNG.grundfreibetrag / 10) * 10;
+const beispielNetto = 2500;
+const beispielPfaendbar = pfaendbarerBetrag(beispielNetto, 0);
 
 const faqs = [
   {
-    q: "Was ist die Pfändungstabelle 2026?",
-    a: "Die Pfändungstabelle 2026 ist eine gesetzliche Tabelle nach § 850c ZPO, die zeigt, welcher Anteil Ihres Nettogehalts durch Gläubiger gepfändet werden darf. Der monatliche Grundfreibetrag beträgt 2026 exakt 1.491,75 €.",
-  },
-  {
     q: "Wie hoch ist der pfändungsfreie Betrag 2026?",
-    a: "Der Grundfreibetrag für Pfändungen liegt 2026 bei 1.491,75 € monatlich (netto). Für jede unterhaltspflichtige Person (Kind, Ehepartner) erhöht sich dieser Betrag. Bei einer unterhaltsberechtigten Person beträgt der Freibetrag 2.045,00 €.",
+    a: `Seit dem ${PFAENDUNG.gueltigAb} sind ${GRUND} € netto im Monat unpfändbar, wenn Sie niemandem Unterhalt zahlen (vorher ${eur(PFAENDUNG.vorjahrGrundfreibetrag)} €). Mit einer unterhaltsberechtigten Person steigt der Freibetrag auf ${eur(pfaendungsfreibetrag(1))} €, für die zweite bis fünfte Person um je ${eur(PFAENDUNG.weiterePerson)} €.`,
   },
   {
-    q: "Was ändert sich bei der Pfändungstabelle jährlich?",
-    a: "Der Pfändungsfreibetrag wird alle zwei Jahre angepasst. Die aktuelle Tabelle gilt vom 1. Juli 2025 bis 30. Juni 2027 und orientiert sich am Grundfreibetrag (§ 32a EStG). Nächste Anpassung ist für Juli 2027 vorgesehen.",
+    q: "Wie wird der pfändbare Betrag berechnet?",
+    a: `Der Nettolohn wird auf volle 10 € abgerundet. Vom Teil über dem Freibetrag sind ohne Unterhaltspflicht 3/10 geschützt, gepfändet werden 7/10. Jede unterhaltsberechtigte Person schützt einen weiteren Teil: die erste 2/10, die zweite bis fünfte je 1/10. Beispiel: Bei ${eur(beispielNetto)} € netto ohne Unterhaltspflicht sind ${eur(beispielPfaendbar)} € pfändbar. Was über ${eur(PFAENDUNG.grenzeVollPfaendbar)} € liegt, ist voll pfändbar (§ 850c Abs. 3 und 5 ZPO).`,
+  },
+  {
+    q: "Gibt es schon die Pfändungstabelle 2027?",
+    a: `Die Tabelle gilt vom ${PFAENDUNG.gueltigAb} bis zum ${PFAENDUNG.gueltigBis}, also für den größten Teil von 2027. Die Freigrenzen werden jedes Jahr zum 1. Juli an die Entwicklung des steuerlichen Grundfreibetrags angepasst (§ 850c Abs. 4 ZPO). Die Werte ab 1. Juli 2027 gibt das Bundesjustizministerium im Frühjahr 2027 bekannt.`,
+  },
+  {
+    q: "Ist Weihnachtsgeld pfändbar?",
+    a: `Nur teilweise. Unpfändbar ist Weihnachtsgeld bis zur Hälfte des auf volle 10 € aufgerundeten Grundfreibetrags, seit Juli 2026 also bis ${eur(WEIHNACHTSGELD_UNPFAENDBAR)} € (§ 850a Nr. 4 ZPO). Was darüber liegt, wird dem Monatslohn zugerechnet und nach der Tabelle gepfändet.`,
   },
   {
     q: "Wann ist mein gesamtes Gehalt pfändungsfrei?",
-    a: "Ihr Nettogehalt ist vollständig pfändungsfrei, solange es 1.491,75 € monatlich nicht überschreitet. Bei Unterhaltspflichten erhöht sich dieser Schutz entsprechend der Tabelle.",
+    a: `Wenn Ihr Nettolohn unter ${eur(ERSTE_ZEILE)} € bleibt (ohne Unterhaltspflicht). Erst ab dieser Tabellenzeile ist ein Betrag pfändbar, weil die Tabelle den Lohn auf volle 10 € abrundet. Mit Unterhaltspflichten liegt die Grenze entsprechend höher, siehe Übersicht.`,
   },
   {
-    q: "Gilt die Pfändungstabelle für Arbeitnehmer und Selbstständige?",
-    a: "§ 850c ZPO gilt direkt für Arbeitseinkommen (Lohn/Gehalt). Für Selbstständige setzt das Vollstreckungsgericht den pfändbaren Betrag nach § 850i ZPO individuell fest, orientiert sich aber ebenfalls an diesen Werten.",
+    q: "Gilt die Pfändungstabelle auch für Selbstständige?",
+    a: "§ 850c ZPO gilt für Arbeitseinkommen. Bei Selbstständigen setzt das Vollstreckungsgericht den pfändungsfreien Betrag auf Antrag fest (§ 850i ZPO) und orientiert sich dabei an denselben Freigrenzen. Für Konten gilt der Pfändungsschutz über das P-Konto (§ 850k ZPO).",
   },
 ];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
 
 export default function PfaendungstabellePage() {
   return (
@@ -150,32 +112,32 @@ export default function PfaendungstabellePage() {
           <div className="relative max-w-6xl mx-auto px-5 pt-6 pb-4 sm:py-28 text-center">
             <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E60A1C] font-bold bg-[#E60A1C]/15 border border-[#E60A1C]/30 px-4 py-1.5 rounded-full mb-3 sm:mb-6">
               <Scale size={14} />
-              § 850c ZPO · Gültig ab 01.07.2025
+              § 850c ZPO · Gültig ab 01.07.2026
             </div>
             <h1 className="font-extrabold text-3xl sm:text-5xl lg:text-6xl tracking-tight mb-3 sm:mb-6 leading-tight">
               Pfändungstabelle{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E60A1C] to-[#FF4D5E]">
-                2026
+                2026/2027
               </span>
             </h1>
             <p className="text-base sm:text-xl text-black/70 max-w-3xl mx-auto leading-relaxed">
-              Aktuelle Pfändungsfreigrenzen nach § 850c ZPO. Pfändungsfreies Einkommen für
-              0–5&nbsp;Unterhaltspflichten auf einen Blick — kostenlos &amp; aktuell.
+              Pfändungsfreigrenzen nach § 850c ZPO vom {PFAENDUNG.gueltigAb} bis {PFAENDUNG.gueltigBis}: Freibetrag und
+              pfändbarer Betrag für 0 bis 5&nbsp;Unterhaltspflichten, nach der amtlichen Tabelle berechnet.
             </p>
 
             {/* Key stat cards */}
             <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
               <div className="bg-black/[0.04] border border-black/[0.08] rounded-2xl p-4">
-                <div className="text-2xl font-extrabold text-[#E60A1C]">1.491,75&nbsp;€</div>
+                <div className="text-2xl font-extrabold text-[#E60A1C]">{GRUND}&nbsp;€</div>
                 <div className="text-xs text-black/50 mt-1">Grundfreibetrag / Monat</div>
               </div>
               <div className="bg-black/[0.04] border border-black/[0.08] rounded-2xl p-4">
-                <div className="text-2xl font-extrabold text-[#16181D]">§ 850c</div>
-                <div className="text-xs text-black/50 mt-1">Rechtsgrundlage ZPO</div>
+                <div className="text-2xl font-extrabold text-[#16181D]">{eur(PFAENDUNG.grenzeVollPfaendbar)}&nbsp;€</div>
+                <div className="text-xs text-black/50 mt-1">darüber voll pfändbar</div>
               </div>
               <div className="bg-black/[0.04] border border-black/[0.08] rounded-2xl p-4 col-span-2 sm:col-span-1">
-                <div className="text-2xl font-extrabold text-[#16181D]">Jul 2025</div>
-                <div className="text-xs text-black/50 mt-1">Letzte Aktualisierung</div>
+                <div className="text-2xl font-extrabold text-[#16181D]">01.07.2026</div>
+                <div className="text-xs text-black/50 mt-1">gültig bis 30.06.2027</div>
               </div>
             </div>
           </div>
@@ -186,9 +148,10 @@ export default function PfaendungstabellePage() {
           <div className="flex gap-3 bg-amber-50 border border-amber-500/30 rounded-2xl p-4 sm:p-5">
             <AlertCircle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-amber-800/80 leading-relaxed">
-              <strong className="text-amber-700">Hinweis:</strong> Die Pfändungstabelle 2026 gilt
-              für Pfändungen ab dem 1. Juli 2025. Bei rechtlichen Fragen zur Lohnpfändung wenden Sie
-              sich an einen Rechtsanwalt oder eine Schuldnerberatung. Keine Rechtsberatung.
+              <strong className="text-amber-700">Hinweis:</strong> Die Werte gelten für Lohnzahlungen ab dem{" "}
+              {PFAENDUNG.gueltigAb} (Pfändungsfreigrenzenbekanntmachung 2026, BGBl. 2026 I Nr. 80). Stand dieser Seite:{" "}
+              {STAND.display}. Bei Fragen zur Lohnpfändung hilft eine Schuldnerberatung oder ein Rechtsanwalt. Keine
+              Rechtsberatung.
             </p>
           </div>
         </section>
@@ -197,32 +160,31 @@ export default function PfaendungstabellePage() {
         <section className="max-w-6xl mx-auto px-5 py-8">
           <div className="bg-[#F4F5F7] border border-black/[0.08] rounded-3xl p-5 sm:p-10">
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-5">
-              Was ist die{" "}
-              <span className="text-[#E60A1C]">Pfändungstabelle 2026</span>?
+              Was ist die <span className="text-[#E60A1C]">Pfändungstabelle</span>?
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-black/70 text-sm sm:text-base leading-relaxed">
               <div className="space-y-3">
                 <p>
                   Die <strong className="text-[#16181D]">Pfändungstabelle</strong> legt nach{" "}
-                  <strong className="text-[#16181D]">§ 850c ZPO</strong> (Zivilprozessordnung) fest,
-                  welcher Anteil Ihres Nettoeinkommens durch Gläubiger gepfändet werden darf. Sie
-                  schützt Arbeitnehmer vor einer Vollpfändung des Lohns.
+                  <strong className="text-[#16181D]">§ 850c ZPO</strong> fest, welcher Teil Ihres Nettolohns bei einer
+                  Lohnpfändung an Gläubiger gehen darf. Ihr Arbeitgeber liest den Betrag direkt aus der Tabelle ab.
                 </p>
                 <p>
-                  Das Bundesministerium der Justiz aktualisiert die Tabelle regelmäßig — zuletzt
-                  zum <strong className="text-[#16181D]">1. Juli 2025</strong>. Diese Version gilt bis
-                  zum 30. Juni 2027.
+                  Die Freigrenzen steigen jedes Jahr zum <strong className="text-[#16181D]">1. Juli</strong>. Seit dem{" "}
+                  {PFAENDUNG.gueltigAb} sind {GRUND} € geschützt, vorher waren es{" "}
+                  {eur(PFAENDUNG.vorjahrGrundfreibetrag)} €. Diese Werte gelten bis zum {PFAENDUNG.gueltigBis}.
                 </p>
               </div>
               <div className="space-y-3">
                 <p>
-                  Der <strong className="text-[#16181D]">Pfändungsfreibetrag</strong> erhöht sich mit
-                  der Anzahl der unterhaltsberechtigten Personen (z. B. Kinder, Ehegatten). Je mehr
-                  Unterhaltspflichten bestehen, desto größer der geschützte Betrag.
+                  Der <strong className="text-[#16181D]">Freibetrag</strong> steigt mit jeder Person, der Sie Unterhalt
+                  zahlen: um {eur(PFAENDUNG.erstePerson)} € für die erste und um je {eur(PFAENDUNG.weiterePerson)} € für
+                  die zweite bis fünfte Person.
                 </p>
                 <p>
-                  Nur das Einkommen <em>über</em> dem jeweiligen Freibetrag ist pfändbar —
-                  allerdings nie mehr als 3/7 des übersteigenden Betrags (§ 850c Abs. 2 ZPO).
+                  Vom Lohn über dem Freibetrag werden ohne Unterhaltspflicht <strong className="text-[#16181D]">7/10</strong>{" "}
+                  gepfändet, mit einer Person 5/10, mit zwei 4/10 und so weiter bis 1/10 bei fünf Personen. Was über{" "}
+                  {eur(PFAENDUNG.grenzeVollPfaendbar)} € liegt, ist voll pfändbar.
                 </p>
               </div>
             </div>
@@ -232,28 +194,21 @@ export default function PfaendungstabellePage() {
         {/* Freibetraege table */}
         <section data-section="" className="max-w-6xl mx-auto px-5 py-6">
           <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-6">
-            Pfändungsfreigrenzen 2026 — Übersicht
+            Pfändungsfreigrenzen ab 1. Juli 2026
           </h2>
           <div className="overflow-x-auto rounded-2xl border border-black/[0.08]">
             <table className="w-full text-sm sm:text-base">
               <thead>
                 <tr className="bg-[#E60A1C]/15 border-b border-black/[0.08]">
-                  <th className="px-5 py-4 text-left font-bold text-[#16181D]">Unterhalts&shy;pflichtige Personen</th>
+                  <th className="px-5 py-4 text-left font-bold text-[#16181D]">Unterhalts&shy;berechtigte Personen</th>
                   <th className="px-5 py-4 text-right font-bold text-[#16181D]">Monatlicher Pfändungs&shy;freibetrag</th>
                 </tr>
               </thead>
               <tbody>
                 {freibetraege.map((row, i) => (
-                  <tr
-                    key={i}
-                    className={`border-b border-black/[0.05] transition-colors hover:bg-black/[0.04] ${
-                      i % 2 === 0 ? "bg-[#F4F5F7]" : "bg-[#F4F5F7]"
-                    }`}
-                  >
+                  <tr key={i} className="border-b border-black/[0.05] transition-colors hover:bg-black/[0.04] bg-[#F4F5F7]">
                     <td className="px-5 py-4 text-black/80">{row.personen}</td>
-                    <td className="px-5 py-4 text-right font-mono font-bold text-emerald-600">
-                      {row.betrag}
-                    </td>
+                    <td className="px-5 py-4 text-right font-mono font-bold text-emerald-600">{row.betrag}</td>
                   </tr>
                 ))}
               </tbody>
@@ -264,69 +219,51 @@ export default function PfaendungstabellePage() {
         {/* Full data table */}
         <section className="max-w-6xl mx-auto px-5 py-8">
           <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
-            Vollständige Pfändungstabelle 2026
+            Pfändungstabelle 2026/2027: pfändbare Beträge
           </h2>
           <p className="text-black/60 mb-6 text-sm sm:text-base">
-            Pfändbarer Betrag in € pro Monat je nach Nettoeinkommen und Anzahl der
-            Unterhaltspflichten (0–4+):
+            Pfändbarer Betrag in € pro Monat, jeweils für die Tabellenzeile ab diesem Nettolohn (die amtliche Tabelle rechnet
+            in 10-€-Schritten). Spalten: Anzahl der unterhaltsberechtigten Personen.
           </p>
           <div className="overflow-x-auto rounded-2xl border border-black/[0.08]">
             <table className="w-full text-xs sm:text-sm">
               <thead>
                 <tr className="bg-[#E60A1C]/15 border-b border-black/[0.08]">
-                  <th className="px-3 sm:px-5 py-4 text-left font-bold text-[#16181D] whitespace-nowrap">
-                    Netto­einkommen / Monat
-                  </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
-                    0 Personen
-                  </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
-                    1 Person
-                  </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
-                    2 Personen
-                  </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
-                    3 Personen
-                  </th>
-                  <th className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
-                    4+ Personen
-                  </th>
+                  <th className="px-3 sm:px-5 py-4 text-left font-bold text-[#16181D] whitespace-nowrap">Netto­lohn / Monat</th>
+                  {PERSONEN.map((n) => (
+                    <th key={n} className="px-3 sm:px-5 py-4 text-right font-bold text-[#16181D] whitespace-nowrap">
+                      {n === 5 ? "5+" : n} {n === 1 ? "Person" : "Pers."}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {tableData.map((row, i) => (
-                  <tr
-                    key={i}
-                    className={`border-b border-black/[0.05] transition-colors hover:bg-black/[0.04] ${
-                      i % 2 === 0 ? "bg-[#F4F5F7]" : "bg-[#F4F5F7]"
-                    }`}
-                  >
-                    <td className="px-3 sm:px-5 py-3 font-mono text-black/80 whitespace-nowrap">
-                      {row.nettoMonatlich} €
-                    </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p0 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
-                      {row.p0} €
-                    </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p1 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
-                      {row.p1} €
-                    </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p2 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
-                      {row.p2} €
-                    </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p3 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
-                      {row.p3} €
-                    </td>
-                    <td className={`px-3 sm:px-5 py-3 text-right font-mono ${row.p4 === "0,00" ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
-                      {row.p4} €
-                    </td>
+                <tr className="border-b border-black/[0.05] bg-[#F4F5F7]">
+                  <td className="px-3 sm:px-5 py-3 font-mono text-black/80 whitespace-nowrap">bis {eur(ERSTE_ZEILE - 0.01)} €</td>
+                  {PERSONEN.map((n) => (
+                    <td key={n} className="px-3 sm:px-5 py-3 text-right font-mono text-emerald-600">0,00 €</td>
+                  ))}
+                </tr>
+                {tableData.map((row) => (
+                  <tr key={row.netto} className="border-b border-black/[0.05] transition-colors hover:bg-black/[0.04] bg-[#F4F5F7]">
+                    <td className="px-3 sm:px-5 py-3 font-mono text-black/80 whitespace-nowrap">{eur(row.netto)} €</td>
+                    {row.werte.map((w, n) => (
+                      <td key={n} className={`px-3 sm:px-5 py-3 text-right font-mono ${w === 0 ? "text-emerald-600" : "text-[#FF4D5E]"}`}>
+                        {eur(w)} €
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className="text-xs text-black/40 mt-3">
-            🟢 Grün = 0 € pfändbar (Freibetrag greift) · 🔴 Rot = pfändbarer Betrag · Quelle: § 850c ZPO, gültig ab 01.07.2025
+          <p className="text-xs text-black/50 mt-3">
+            Grün = nichts pfändbar · Rot = pfändbarer Betrag · Über {eur(PFAENDUNG.grenzeVollPfaendbar)} € ist der Mehrbetrag
+            voll pfändbar. Quelle:{" "}
+            <a href={PFAENDUNG.quelle} className="underline" rel="noopener" target="_blank">
+              Pfändungsfreigrenzenbekanntmachung 2026, BGBl. 2026 I Nr. 80
+            </a>
+            .
           </p>
         </section>
 
@@ -337,18 +274,10 @@ export default function PfaendungstabellePage() {
           </h2>
           <div className="space-y-3">
             {faqs.map((faq, i) => (
-              <details
-                key={i}
-                className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden"
-              >
+              <details key={i} className="group bg-[#F4F5F7] border border-black/[0.08] rounded-2xl overflow-hidden">
                 <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none hover:bg-black/[0.04] transition-colors">
-                  <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">
-                    {faq.q}
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180"
-                  />
+                  <span className="font-semibold text-[#16181D] text-sm sm:text-base pr-4">{faq.q}</span>
+                  <ChevronDown size={18} className="text-[#E60A1C] flex-shrink-0 transition-transform group-open:rotate-180" />
                 </summary>
                 <div className="px-6 pb-5 pt-1 text-black/65 text-sm sm:text-base leading-relaxed border-t border-black/[0.05]">
                   {faq.a}
@@ -364,11 +293,11 @@ export default function PfaendungstabellePage() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#E60A1C]/20 blur-3xl pointer-events-none" />
             <div className="relative">
               <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-3">
-                Nettogehalt exakt berechnen
+                Nettolohn exakt berechnen
               </h2>
               <p className="text-black/65 mb-7 max-w-xl mx-auto text-sm sm:text-base">
-                Mit unserem kostenlosen Brutto-Netto-Rechner berechnen Sie Ihr genaues Nettogehalt
-                — inklusive aller Steuerklassen, Sozialabgaben und Freibeträge für 2026.
+                Die Pfändungstabelle geht vom Nettolohn aus. Den berechnet der Brutto-Netto-Rechner für Ihr Gehalt, mit allen
+                Steuerklassen und Sozialabgaben.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link

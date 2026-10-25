@@ -6,6 +6,8 @@ import SupportButton from "@/components/SupportButton";
 import { pageImageUrl } from "@/lib/pageImage";
 import { formatEUR } from "@/lib/taxCalculator";
 import { pageStand } from "@/lib/pageDates";
+import { WEIHNACHTSGELD_UNPFAENDBAR } from "@/lib/pfaendung";
+import { JSZ_TARIFE } from "@/data/jahressonderzahlung";
 
 const TITLE = "Weihnachtsgeld-Rechner 2026: Wie viel bleibt netto?";
 const DESCRIPTION =
@@ -44,6 +46,15 @@ const b1500 = wgNetto(BEISPIEL_WG, 1);
 const b1500k3 = wgNetto(BEISPIEL_WG, 3);
 const hoch = wgNetto(BEISPIEL_WG, 1, 7000);
 
+// "wie viel weihnachtsgeld bekommt man", "tvöd sue weihnachtsgeld" (Trends DE, Okt. 2026).
+const pctDe = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 2 }) + " %";
+const tarifSpanne = (key: string) => {
+  const satz = JSZ_TARIFE.find((t) => t.key === key)!.staffel.map((s) => s.prozent);
+  const min = Math.min(...satz);
+  const max = Math.max(...satz);
+  return min === max ? pctDe(max) : `${pctDe(min)} bis ${pctDe(max)}`;
+};
+
 const faqs: WeihnachtsgeldFaq[] = [
   {
     q: "Wie viel Weihnachtsgeld bleibt netto?",
@@ -63,7 +74,19 @@ const faqs: WeihnachtsgeldFaq[] = [
   },
   {
     q: "Wann wird Weihnachtsgeld ausgezahlt?",
-    a: "Einen gesetzlichen Termin gibt es nicht. Meist kommt das Weihnachtsgeld mit dem November- oder Dezembergehalt, je nach Arbeitsvertrag, Tarifvertrag oder Betriebsvereinbarung. Im TVöD wird die Jahressonderzahlung mit dem Novemberentgelt gezahlt.",
+    a: "Einen gesetzlichen Termin gibt es nicht. Meist kommt das Weihnachtsgeld mit dem November- oder Dezembergehalt, je nach Arbeitsvertrag, Tarifvertrag oder Betriebsvereinbarung. Im TVöD und TV-L wird die Jahressonderzahlung mit dem Novemberentgelt gezahlt, in der Metall- und Elektroindustrie in der Regel Ende November.",
+  },
+  {
+    q: "Wie viel Weihnachtsgeld bekommt man?",
+    a: `Eine gesetzliche Höhe gibt es nicht; sie steht im Arbeits- oder Tarifvertrag. Im öffentlichen Dienst bemisst sie sich am Monatsentgelt: TVöD VKA ${tarifSpanne("vka")} (auch Sozial- und Erziehungsdienst, S-Tabelle), TVöD Bund ${tarifSpanne("bund")}, TV-L ${tarifSpanne("tvl")}, jeweils nach Entgeltgruppe. In der Metall- und Elektroindustrie sind es laut IG Metall bis zu 55 % eines Monatsentgelts, gestaffelt nach Betriebszugehörigkeit. Was davon netto bleibt, zeigt der Rechner oben.`,
+  },
+  {
+    q: "Ist Weihnachtsgeld pfändbar?",
+    a: `Nur zum Teil. Bis ${formatEUR(WEIHNACHTSGELD_UNPFAENDBAR)} ist Weihnachtsgeld unpfändbar: die Hälfte des auf volle 10 € aufgerundeten Pfändungsfreibetrags, der seit Juli 2026 gilt (§ 850a Nr. 4 ZPO). Der Rest wird dem Novemberlohn zugeschlagen und nach der Pfändungstabelle gepfändet.`,
+  },
+  {
+    q: "Bekomme ich Weihnachtsgeld, wenn ich Krankengeld beziehe?",
+    a: "Das hängt von der Regelung ab, die Ihr Weihnachtsgeld begründet. Ohne Kürzungsklausel bleibt der Anspruch auch bei langer Krankheit bestehen. Ist eine Kürzung vereinbart, darf der Arbeitgeber höchstens ein Viertel des Tagesverdienstes je Krankheitstag abziehen (§ 4a EntgFG). Im TVöD sinkt die Jahressonderzahlung um ein Zwölftel für jeden Monat ohne Entgelt; Monate, in denen Ihnen Krankengeldzuschuss zusteht, zählen dabei nicht als Kürzungsmonate (§ 20 Abs. 4 TVöD).",
   },
   {
     q: "Fallen auf Weihnachtsgeld Sozialabgaben an?",

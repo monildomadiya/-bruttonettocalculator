@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BookOpen } from "lucide-react";
 import { pageImageUrl } from "@/lib/pageImage";
+import { PFAENDUNG } from "@/lib/pfaendung";
 
 export const metadata: Metadata = {
   title: "Steuer-Lexikon — Brutto Netto Rechner 2026",
@@ -140,7 +141,7 @@ const gehaltsBegriffe: Begriff[] = [
   },
   {
     titel: "Pfändungsfreigrenze",
-    kurz: "Der Teil des Nettoeinkommens, der bei einer Lohnpfändung gesetzlich geschützt ist (§ 850c ZPO). 2026 liegt der monatliche Grundfreibetrag bei 1.491,75 €, mit zusätzlichem Schutz für jede unterhaltsberechtigte Person.",
+    kurz: `Der Teil des Nettoeinkommens, der bei einer Lohnpfändung gesetzlich geschützt ist (§ 850c ZPO). Seit dem ${PFAENDUNG.gueltigAb} liegt der monatliche Grundfreibetrag bei ${PFAENDUNG.grundfreibetrag.toLocaleString("de-DE", { minimumFractionDigits: 2 })} €, mit zusätzlichem Schutz für jede unterhaltsberechtigte Person.`,
   },
   {
     titel: "Elterngeld",

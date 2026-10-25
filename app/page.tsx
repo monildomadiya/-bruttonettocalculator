@@ -19,6 +19,7 @@ import { WAGE_STATS_2026 } from "@/data/wage-stats";
 import { standardSteuerjahr, istWeihnachtsgeldSaison } from "@/lib/steuerjahr2027";
 import { LEGISLATION_STATUS } from "@/lib/config2027";
 import { pageStand } from "@/lib/pageDates";
+import { PFAENDUNG } from "@/lib/pfaendung";
 
 // Ein Datum pro Seite: lib/pageDates.ts ("/"). Speist die Zeile „Aktualisiert
 // am“ unter der H1, dateModified und <lastmod> in der Sitemap. Byline und
@@ -148,7 +149,7 @@ const faqs = [
   },
   {
     q: "Was ist die Pfändungstabelle 2026 und welcher Teil des Gehalts ist pfändungsfrei?",
-    a: "Die Pfändungstabelle 2026 (§ 850c ZPO) legt den pfändungsfreien Betrag des Nettoeinkommens fest. Für Alleinstehende ohne Unterhaltspflicht liegt der monatliche Pfändungsfreibetrag 2026 bei 1.491,75 € netto. Unser Gehaltsrechner hilft Ihnen, zunächst Ihr voraussichtliches Nettoeinkommen zu ermitteln, damit Sie die Pfändungstabelle 2026 korrekt anwenden können.",
+    a: `Die Pfändungstabelle (§ 850c ZPO) legt den pfändungsfreien Teil des Nettoeinkommens fest. Ohne Unterhaltspflicht sind seit dem ${PFAENDUNG.gueltigAb} monatlich ${PFAENDUNG.grundfreibetrag.toLocaleString("de-DE", { minimumFractionDigits: 2 })} € netto geschützt, bis zum ${PFAENDUNG.gueltigBis}. Unser Gehaltsrechner ermittelt zuerst Ihr Nettoeinkommen, damit Sie die Pfändungstabelle richtig anwenden können.`,
   },
   {
     q: "Wie hoch ist das Durchschnittsgehalt in Deutschland 2026?",

@@ -18,7 +18,9 @@ import { pageImageUrl } from "@/lib/pageImage";
 
 const BASE = "https://bruttonettocalculator.com";
 const CANONICAL = `${BASE}/tvoed-sue-tabelle`;
-const PAGE_TITLE = "TVöD SuE Tabelle 2026: S 2 bis S 18 mit Netto";
+// "gehaltsrechner öffentlicher dienst erzieher" +2.600 %, "tvöd sue
+// weihnachtsgeld" +180 % (Google Trends DE, 30 Tage bis 25.10.2026).
+const PAGE_TITLE = "TVöD SuE Tabelle 2026: Erzieher-Gehalt S 2–S 18 mit Netto";
 const PAGE_DESCRIPTION =
   "TVöD SuE Entgelttabelle ab 1. Mai 2026: alle S-Gruppen von S 2 bis S 18 in sechs Stufen — und was davon netto bleibt. Mit Erzieher-Beispiel S 8a.";
 

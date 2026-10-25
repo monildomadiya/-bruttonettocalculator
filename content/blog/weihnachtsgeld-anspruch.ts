@@ -1,6 +1,8 @@
 import type { BlogPost } from "@/lib/blog";
 import { nettoEinmalzahlung } from "@/lib/einmalzahlung";
 import type { Steuerklasse } from "@/lib/taxCalculator";
+import { JSZ_TARIFE } from "@/data/jahressonderzahlung";
+import { WEIHNACHTSGELD_UNPFAENDBAR, PFAENDUNG } from "@/lib/pfaendung";
 
 /*
  * Rechtsstand geprüft am 05.10.2026: § 4a EntgFG (gesetze-im-internet.de),
@@ -21,12 +23,30 @@ const zeile = (brutto: number) => {
 };
 const beispiel = nettoEinmalzahlung({ bruttoMonat: 3000, einmal: 1500, steuerklasse: 1, kirche: false, kinderlosUeber23: true });
 
+/*
+ * Ergänzt 25.10.2026 nach Google Trends (DE, 30 Tage): "wann kommt / wird
+ * weihnachtsgeld ausgezahlt" +180–250 %, "weihnachtsgeld pfändbar",
+ * "weihnachtsgeld bei krankengeld / krankheit über 6 wochen", "wie viel
+ * weihnachtsgeld bekommt man", "weihnachtsgeld ig metall", "tvöd sue
+ * weihnachtsgeld". § 850a Nr. 4 ZPO und BGBl. 2026 I Nr. 80 im Original
+ * geprüft; IG Metall: igmetall.de (Berlin, Q1/2026) "in der Regel Ende
+ * November und bis zu 55 Prozent nach Betriebszugehörigkeit".
+ */
+const pctDe = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 2 }) + " %";
+const tarifZeilen = JSZ_TARIFE.flatMap((t) =>
+  t.staffel.map((s) => `<tr><td>${t.name}</td><td>${s.label}</td><td>${pctDe(s.prozent)}</td></tr>`),
+).join("\n    ");
+const spanne = (key: string) => {
+  const s = JSZ_TARIFE.find((t) => t.key === key)!.staffel.map((x) => x.prozent);
+  return Math.min(...s) === Math.max(...s) ? pctDe(s[0]) : `${pctDe(Math.min(...s))} bis ${pctDe(Math.max(...s))}`;
+};
+
 export const post: BlogPost = {
   slug: "weihnachtsgeld-anspruch",
   headline: "Weihnachtsgeld 2026: Anspruch, Auszahlung, Kündigung & Rückzahlung",
-  metaTitle: "Weihnachtsgeld Anspruch 2026: Wer bekommt es wann?",
+  metaTitle: "Weihnachtsgeld: Wann kommt es? Anspruch, Höhe, Kündigung",
   metaDescription:
-    "Weihnachtsgeld: Wann besteht ein Anspruch, wann wird es gezahlt, was gilt bei Kündigung, Elternzeit und Rückzahlung? Mit Netto-Tabelle 2026.",
+    "Weihnachtsgeld 2026: wann es ausgezahlt wird, wie viel es im Tarif gibt, was bei Kündigung, Krankengeld und Pfändung gilt. Mit Netto-Tabelle.",
   excerpt:
     "Ein Gesetz, das Weihnachtsgeld vorschreibt, gibt es nicht. Ein Anspruch entsteht aus Vertrag, Tarif, Betriebsvereinbarung oder betrieblicher Übung. Was bei Kündigung, Elternzeit und Krankheit gilt und wann Sie es zurückzahlen müssen.",
   focusKeyword: "weihnachtsgeld anspruch",
@@ -41,7 +61,7 @@ export const post: BlogPost = {
   category: "Job & Sonderfälle",
   tags: ["Weihnachtsgeld", "Sonderzahlung", "Arbeitsrecht", "Kündigung", "Elternzeit"],
   publishedISO: "2026-10-05",
-  updatedISO: "2026-10-06",
+  updatedISO: "2026-10-25",
   answer:
     "Einen gesetzlichen Anspruch auf Weihnachtsgeld gibt es nicht. Er entsteht nur aus Arbeitsvertrag, Tarifvertrag, Betriebsvereinbarung, dem Gleichbehandlungsgrundsatz oder betrieblicher Übung, etwa nach drei Jahren vorbehaltloser Zahlung. Wer einen Anspruch hat, bekommt das Weihnachtsgeld meist mit dem November- oder Dezembergehalt. Ob es bei Kündigung, Elternzeit oder Krankheit gekürzt oder zurückgefordert werden darf, hängt von der Klausel ab, die es regelt.",
   keyFacts: [
@@ -69,7 +89,19 @@ export const post: BlogPost = {
 <p>Arbeitgeber verhindern eine betriebliche Übung meist mit dem Hinweis, die Zahlung sei freiwillig und begründe keinen Anspruch für die Zukunft. Ein solcher Vorbehalt muss klar und verständlich sein. Das Bundesarbeitsgericht hat Klauseln verworfen, die eine Leistung zugleich als freiwillig und als widerruflich bezeichnen, weil unklar bleibt, ob überhaupt ein Anspruch entsteht (BAG, 14.09.2011, 10 AZR 526/10). Ist der Vorbehalt unwirksam, kann trotzdem ein Anspruch entstanden sein.</p>
 
 <h2>Wann wird Weihnachtsgeld ausgezahlt?</h2>
-<p>Auch dafür gibt es keinen gesetzlichen Termin. Der Zeitpunkt steht im Vertrag, im Tarifvertrag oder in der Betriebsvereinbarung. Üblich ist die Auszahlung mit dem November- oder Dezembergehalt. Im TVöD kommt die Jahressonderzahlung mit dem Novemberentgelt.</p>
+<p>Auch dafür gibt es keinen gesetzlichen Termin. Der Zeitpunkt steht im Vertrag, im Tarifvertrag oder in der Betriebsvereinbarung. Üblich ist die Auszahlung mit dem November- oder Dezembergehalt. Im TVöD und im TV-L kommt die Jahressonderzahlung mit dem Novemberentgelt, in der Metall- und Elektroindustrie laut IG Metall in der Regel Ende November.</p>
+
+<h2>Wie viel Weihnachtsgeld bekommt man?</h2>
+<p>Eine gesetzliche Höhe gibt es nicht. Ohne Tarifvertrag gilt, was im Arbeitsvertrag steht; häufig ist ein fester Betrag oder ein Anteil des Monatsgehalts. In Tarifverträgen ist die Höhe ein Prozentsatz des Monatsentgelts. Im öffentlichen Dienst gelten 2026 diese Sätze:</p>
+<table>
+  <thead>
+    <tr><th>Tarifvertrag</th><th>Entgeltgruppen</th><th>Anteil am Monatsentgelt</th></tr>
+  </thead>
+  <tbody>
+    ${tarifZeilen}
+  </tbody>
+</table>
+<p>Der Sozial- und Erziehungsdienst (S-Tabelle, etwa Erzieherinnen und Erzieher) gehört zum TVöD VKA und bekommt damit ebenfalls ${spanne("vka")}. In der Metall- und Elektroindustrie sind es nach Angaben der IG Metall bis zu 55 % eines Monatsentgelts, gestaffelt nach der Betriebszugehörigkeit. Wie sich die Sätze genau berechnen, zeigt der <a href="/jahressonderzahlung-rechner">Jahressonderzahlung-Rechner</a> für TVöD und TV-L.</p>
 
 <h2>Wie viel Weihnachtsgeld bleibt netto?</h2>
 <p>Weihnachtsgeld ist ein sonstiger Bezug: Die Lohnsteuer darauf ist die Differenz der Jahreslohnsteuer mit und ohne Weihnachtsgeld, dazu kommen Sozialabgaben. Von 1.500 € Weihnachtsgeld bleiben bei 3.000 € Monatsbrutto in Steuerklasse I rund <strong>${eur(beispiel.netto)}</strong>. Die Tabelle zeigt ein halbes Monatsgehalt als Weihnachtsgeld:</p>
@@ -112,6 +144,7 @@ export const post: BlogPost = {
 
 <h2>Weihnachtsgeld bei Krankheit und Krankengeld</h2>
 <p>Eine Kürzung wegen Krankheit erlaubt das Gesetz ausdrücklich, aber nur, wenn sie vereinbart ist, und begrenzt: Je Krankheitstag darf höchstens ein Viertel des durchschnittlichen Tagesverdienstes abgezogen werden (§ 4a EntgFG). Ohne eine solche Vereinbarung bleibt der Anspruch auch bei längerer Krankheit bestehen. Umgekehrt erhöht beitragspflichtiges Weihnachtsgeld aus den letzten zwölf Monaten sogar das Krankengeld: Die Kasse rechnet ein 360stel davon dem täglichen Regelentgelt hinzu (§ 47 Abs. 2 SGB V). Wie hoch Ihr Krankengeld ist, zeigt der <a href="/krankengeld-rechner">Krankengeld-Rechner</a>.</p>
+<p><strong>Länger als sechs Wochen krank:</strong> Nach sechs Wochen endet die Entgeltfortzahlung, und Sie beziehen Krankengeld von der Kasse. Das allein nimmt Ihnen das Weihnachtsgeld nicht. Gekürzt werden darf nur, wenn Ihre Regelung das vorsieht, und dann höchstens im Rahmen von § 4a EntgFG. Im TVöD vermindert sich die Jahressonderzahlung um ein Zwölftel für jeden Kalendermonat ohne Entgelt; Monate, in denen Ihnen Krankengeldzuschuss zusteht, lösen diese Kürzung nicht aus (§ 20 Abs. 4 TVöD).</p>
 
 <h2>Teilzeit, Minijob und Probezeit</h2>
 <ul>
@@ -120,10 +153,13 @@ export const post: BlogPost = {
   <li><strong>Probezeit und Eintritt im Lauf des Jahres:</strong> Viele Regelungen sehen eine anteilige Zahlung vor. Im TVöD etwa mindert sich die Jahressonderzahlung für jeden Monat ohne Entgeltanspruch um ein Zwölftel.</li>
 </ul>
 
+<h2>Ist Weihnachtsgeld pfändbar?</h2>
+<p>Nur zum Teil. Bei einer Lohnpfändung ist Weihnachtsgeld bis zur Hälfte des auf volle 10 € aufgerundeten monatlichen Pfändungsfreibetrags geschützt (§ 850a Nr. 4 ZPO). Seit dem ${PFAENDUNG.gueltigAb} beträgt der Freibetrag ${eur(PFAENDUNG.grundfreibetrag)}, unpfändbar sind damit bis zu <strong>${eur(WEIHNACHTSGELD_UNPFAENDBAR)}</strong> Weihnachtsgeld. Der Teil darüber wird dem Monatslohn zugerechnet und nach der <a href="/pfaendungstabelle">Pfändungstabelle</a> gepfändet.</p>
+
 <h2>Bis wann kann ich fehlendes Weihnachtsgeld einfordern?</h2>
 <p>Die gesetzliche Verjährungsfrist beträgt drei Jahre zum Jahresende (§ 195 BGB). Viele Arbeits- und Tarifverträge enthalten aber Ausschlussfristen von drei bis sechs Monaten. Wer sie verpasst, verliert den Anspruch. Machen Sie fehlendes Weihnachtsgeld deshalb früh und schriftlich geltend.</p>
 
-<p><em>Stand: 5. Oktober 2026. Alle Angaben ohne Gewähr, keine Rechts- oder Steuerberatung.</em></p>
+<p><em>Stand: 25. Oktober 2026. Alle Angaben ohne Gewähr, keine Rechts- oder Steuerberatung.</em></p>
 `,
   faqs: [
     {
@@ -135,6 +171,14 @@ export const post: BlogPost = {
       question: "Wann wird Weihnachtsgeld ausgezahlt?",
       answer:
         "Meist mit dem November- oder Dezembergehalt. Einen gesetzlichen Termin gibt es nicht, maßgeblich ist der Vertrag. Im TVöD kommt die Jahressonderzahlung mit dem Novemberentgelt.",
+    },
+    {
+      question: "Wie viel Weihnachtsgeld bekommt man?",
+      answer: `Das legt der Arbeits- oder Tarifvertrag fest, gesetzlich gibt es keine Höhe. Im TVöD VKA sind es 2026 ${spanne("vka")} eines Monatsentgelts (auch im Sozial- und Erziehungsdienst), im TVöD Bund ${spanne("bund")}, im TV-L ${spanne("tvl")} je nach Entgeltgruppe. In der Metall- und Elektroindustrie sind es laut IG Metall bis zu 55 %, gestaffelt nach Betriebszugehörigkeit.`,
+    },
+    {
+      question: "Ist Weihnachtsgeld pfändbar?",
+      answer: `Nur teilweise. Bis ${eur(WEIHNACHTSGELD_UNPFAENDBAR)} ist es unpfändbar (§ 850a Nr. 4 ZPO, Wert ab Juli 2026). Der Rest wird dem Monatslohn zugerechnet und nach der Pfändungstabelle gepfändet.`,
     },
     {
       question: "Bekomme ich Weihnachtsgeld, wenn ich gekündigt habe?",
@@ -162,6 +206,9 @@ export const post: BlogPost = {
     { label: "§ 4a EntgFG — Kürzung von Sondervergütungen", url: "https://www.gesetze-im-internet.de/entgfg/__4a.html" },
     { label: "§ 4 TzBfG — Verbot der Diskriminierung", url: "https://www.gesetze-im-internet.de/tzbfg/__4.html" },
     { label: "§ 195 BGB — Regelmäßige Verjährungsfrist", url: "https://www.gesetze-im-internet.de/bgb/__195.html" },
+    { label: "§ 850a ZPO — Unpfändbare Bezüge", url: "https://www.gesetze-im-internet.de/zpo/__850a.html" },
+    { label: "Pfändungsfreigrenzenbekanntmachung 2026 (BGBl. 2026 I Nr. 80)", url: PFAENDUNG.quelle },
+    { label: "IG Metall Berlin — Tarifliche Sonderzahlungen 2026", url: "https://www.igmetall.de/berlin/aktuelles/2026/q1/jetzt-gibts-das-tarifliche-zusatzgeld-b-erhoehung-auf-265-prozent" },
     { label: "§ 47 SGB V — Höhe und Berechnung des Krankengeldes", url: "https://www.gesetze-im-internet.de/sgb_5/__47.html" },
     { label: "BAG, Urteil vom 13.11.2013 – 10 AZR 848/12 (Stichtagsklausel)", url: "https://dejure.org/dienste/vernetzung/rechtsprechung?Gericht=BAG&Datum=13.11.2013&Aktenzeichen=10+AZR+848%2F12" },
     { label: "§ 23a SGB IV — Einmalig gezahltes Arbeitsentgelt", url: "https://www.gesetze-im-internet.de/sgb_4/__23a.html" },

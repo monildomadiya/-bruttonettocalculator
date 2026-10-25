@@ -34,60 +34,6 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Welche Steuerklassen gibt es in Deutschland?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "In Deutschland gibt es 6 Steuerklassen: Klasse I (ledig/geschieden), II (Alleinerziehende), III (verheiratet, höheres Einkommen), IV (verheiratet, gleiches Einkommen), V (verheiratet, geringeres Einkommen) und VI (Zweitjob).",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Welche Steuerklasse haben Verheiratete automatisch?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Nach der Heirat werden beide Partner automatisch in Steuerklasse IV eingestuft (IV/IV). Sie können danach jederzeit in III/V oder IV/IV mit Faktor wechseln. Die Steuerklasse ändert nur die monatliche Lohnsteuer-Einbehaltung, nicht die endgültige Jahressteuer.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Wann lohnt sich Steuerklasse III und V?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Die Kombination III/V bringt monatlich mehr Netto, wenn ein Ehepartner deutlich mehr verdient. Der Geringverdienende wechselt zu V, der Besserverdienende zu III. Bei III/V ist eine Steuererklärung meist Pflicht, weil es zu Nachzahlungen kommen kann; die Jahressteuer ist am Ende gleich wie bei IV/IV.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Wie oft kann ich die Steuerklasse wechseln?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Verheiratete Paare können die Steuerklasse seit 2023 unbegrenzt oft wechseln (bis 30. November des Jahres beim Finanzamt). Früher war nur ein Wechsel pro Jahr möglich.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Was ist der Unterschied zwischen Steuerklasse IV und IV mit Faktor?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Steuerklasse IV (ohne Faktor) teilt die Steuer gleichmäßig auf. IV mit Faktorverfahren berücksichtigt unterschiedliche Einkommen beider Ehepartner genauer und vermeidet Nachzahlungen bei der Steuererklärung.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Welche Steuerklasse zahlt am wenigsten Steuern?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Steuerklasse III hat die geringste monatliche Lohnsteuer, weil der Splitting-Vorteil des Ehepaares bereits beim Lohnsteuerabzug des Hauptverdieners berücksichtigt wird. Das ist nur eine vorläufige monatliche Einbehaltung — die tatsächliche Jahressteuer ergibt sich erst aus der gemeinsamen Veranlagung und ist bei III/V und IV/IV gleich hoch.",
-      },
-    },
-  ],
-};
 
 const steuerklassen = [
   {
@@ -194,6 +140,17 @@ const vergleichsData = [2500, 3000, 3500, 4000, 5000].map((brutto) => ({
   },
 }));
 
+const PAAR = (() => {
+  const a = 4000;
+  const b = 2000;
+  return { a, b, ivIv: netMonat(a, 4) + netMonat(b, 4), iiiV: netMonat(a, 3) + netMonat(b, 5) };
+})();
+const SK6_BRUTTO = 2500;
+const SK1_ABZUG = [2500, 3500, 5000].map((brutto) => ({
+  brutto,
+  pct: (((brutto - netMonat(brutto, 1)) / brutto) * 100).toLocaleString("de-DE", { maximumFractionDigits: 0 }),
+}));
+
 const faqs = [
   {
     q: "Welche Steuerklassen gibt es in Deutschland?",
@@ -219,7 +176,32 @@ const faqs = [
     q: "Welche Steuerklasse zahlt am wenigsten Steuern?",
     a: "Steuerklasse III hat die niedrigste monatliche Lohnsteuer, weil der Splitting-Vorteil des Ehepaares bereits beim Lohnsteuerabzug berücksichtigt wird. Das ist nur die vorläufige monatliche Einbehaltung — die tatsächliche Jahressteuerlast ist bei III/V und IV/IV gleich und ergibt sich erst aus der gemeinsamen Veranlagung.",
   },
+  {
+    q: "Welche Steuerklasse haben Verheiratete ohne Kinder?",
+    a: `Dieselben wie Verheiratete mit Kindern: automatisch IV/IV, auf Antrag III/V oder IV/IV mit Faktor. Kinder ändern die Steuerklasse von Ehepaaren nicht; sie wirken über Kinderfreibeträge und Kindergeld. Beispiel ohne Kinder, ${formatEUR(PAAR.a)} und ${formatEUR(PAAR.b)} brutto: Mit IV/IV bleiben zusammen rund ${formatEUR(PAAR.ivIv)} netto im Monat, mit III/V rund ${formatEUR(PAAR.iiiV)}. Die Jahressteuer ist am Ende gleich, III/V verschiebt nur Geld in den laufenden Monat.`,
+  },
+  {
+    q: "Was sind die Voraussetzungen für Steuerklasse 2?",
+    a: "Sie müssen alleinstehend sein, also ledig, geschieden, dauernd getrennt lebend oder verwitwet. Mindestens ein Kind muss zu Ihrem Haushalt gehören (in der Regel: bei Ihnen gemeldet), und Ihnen muss für dieses Kind Kindergeld oder der Kinderfreibetrag zustehen; die Steuer-ID des Kindes ist anzugeben. Mit einer weiteren volljährigen Person dürfen Sie nicht zusammenwohnen, außer mit eigenen Kindern, für die Sie Kindergeld bekommen (§ 24b EStG). Dann gibt es den Entlastungsbetrag von 4.260 € im Jahr, für jedes weitere Kind 240 € mehr.",
+  },
+  {
+    q: "Was wird in Steuerklasse 6 abgezogen?",
+    a: `In Klasse 6 fehlen Grundfreibetrag, Arbeitnehmer-Pauschbetrag und Sonderausgaben-Pauschbetrag; die Lohnsteuer beginnt beim ersten Euro. Sozialabgaben fallen wie in jeder Klasse an. Bei ${formatEUR(SK6_BRUTTO)} brutto bleiben 2026 in Klasse 6 rund ${formatEUR(netMonat(SK6_BRUTTO, 6))} netto, in Klasse 1 wären es ${formatEUR(netMonat(SK6_BRUTTO, 1))}. Zu viel einbehaltene Steuer holen Sie über die Steuererklärung zurück, die bei einem zweiten Job ohnehin Pflicht ist.`,
+  },
+  {
+    q: "Wie viel Prozent Abzüge hat Steuerklasse 1?",
+    a: `Steuern und Sozialabgaben zusammen nehmen 2026 in Klasse 1 (kinderlos, ohne Kirchensteuer) ${SK1_ABZUG.map((z) => `bei ${formatEUR(z.brutto)} brutto rund ${z.pct} %`).join(", ")} des Bruttos weg. Knapp 22 Prozentpunkte davon sind Sozialabgaben, der Rest ist Lohnsteuer, die mit dem Gehalt progressiv steigt.`,
+  },
 ];
+
+// "steuerklasse verheiratet ohne kinder" +120 %, "steuerklasse 6 abzüge",
+// "steuerklasse 2 voraussetzungen", "steuerklasse 1 wieviel prozent abzüge"
+// (Google Trends DE, Thema „steuerklasse“, 30 Tage bis 25.10.2026).
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
 
 export default function SteuerklassenPage() {
   return (

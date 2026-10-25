@@ -43,4 +43,17 @@ export const ELTERNGELD_FAQS = [
     q: "Was ist der Unterschied zwischen Basiselterngeld und ElterngeldPlus?",
     a: "Beim ElterngeldPlus erhalten Sie monatlich nur die Hälfte des Basiselterngeldbetrags, dafür aber über die doppelte Anzahl an Monaten — das lohnt sich besonders, wenn Sie während des Bezugs bereits in Teilzeit arbeiten.",
   },
+  // Google Trends DE (30 Tage bis 25.10.2026): „elterngeld plus zuverdienst“
+  // +300 %, „elterngeld bonusmonate“ +50 %. Geprüft im BEEG-Text: § 1 Abs. 6
+  // (32 Wochenstunden), § 2 Abs. 3 (Unterschiedsbetrag, Deckel 2.770 €),
+  // § 4a Abs. 2 (Plus höchstens halbes Basiselterngeld ohne Einkommen),
+  // § 4b (Partnerschaftsbonus, 24–32 Wochenstunden, höchstens vier Monate).
+  {
+    q: "Wie viel darf ich beim ElterngeldPlus dazuverdienen?",
+    a: "Sie dürfen bis zu 32 Wochenstunden im Durchschnitt des Monats arbeiten. Eine feste Verdienstgrenze gibt es nicht, aber der Zuverdienst wird angerechnet: Elterngeld gibt es dann auf den Unterschied zwischen dem Nettoeinkommen vor und nach der Geburt, wobei das Einkommen vor der Geburt höchstens mit 2.770 € zählt. ElterngeldPlus beträgt dabei höchstens die Hälfte des Basiselterngelds, das Ihnen ohne Zuverdienst zustünde. Wer in Teilzeit arbeitet, bekommt mit ElterngeldPlus deshalb oft fast denselben Monatsbetrag wie mit Basiselterngeld, aber doppelt so lange.",
+  },
+  {
+    q: "Was sind die Bonusmonate beim Partnerschaftsbonus?",
+    a: "Arbeiten beide Eltern gleichzeitig zwischen 24 und 32 Wochenstunden im Monatsdurchschnitt, bekommt jeder Elternteil für jeden dieser Monate einen zusätzlichen Monat ElterngeldPlus, höchstens vier. Alleinerziehende können den Partnerschaftsbonus allein nutzen, wenn sie in diesem Umfang arbeiten. Die Bonusmonate kommen zu den regulären Elterngeldmonaten hinzu.",
+  },
 ];
