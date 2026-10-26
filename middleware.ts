@@ -13,6 +13,13 @@ import { NextRequest, NextResponse } from "next/server";
  * and this middleware do not chain — only one host ever needs redirecting.
  */
 export function middleware(request: NextRequest) {
+  // The image optimizer is unused (images.unoptimized, both logos are SVG) and
+  // is the entry point of several Next.js RCE/DoS advisories
+  // (GHSA-2xp9-vwfh-vxw4, GHSA-2464-fhr4-w9xw, GHSA-h64f-5h5j-jqjh). Closed.
+  if (request.nextUrl.pathname.startsWith("/_next/image")) {
+    return new NextResponse(null, { status: 404 });
+  }
+
   const host = (request.headers.get("host") || "").toLowerCase();
 
   if (host.startsWith("www.")) {
@@ -28,6 +35,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   // Run on everything except Next's build assets and the favicon, so static
-  // JS/CSS under /_next/ is never needlessly rewritten.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|favicon.png).*)"],
+  // JS/CSS under /_next/ is never needlessly rewritten. /_next/image is
+  // matched on purpose so the middleware can close it (see above).
+  matcher: ["/((?!_next/static|favicon.ico|favicon.png).*)"],
 };

@@ -8,6 +8,9 @@ const nextConfig = {
   reactStrictMode: true,
   // Don't advertise the framework in every response header.
   poweredByHeader: false,
+  // No image optimizer: the only next/image uses are SVG logos, and the
+  // optimizer endpoint carries several RCE/DoS advisories (see middleware.ts).
+  images: { unoptimized: true },
   experimental: {
     outputFileTracingRoot: __dirname,
   },
