@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  # Manual redeploy without a new commit (`gh workflow run Deploy`); a plain
+  # re-run needs repo admin rights.
+  workflow_dispatch:
 
 # Single target: the Azure VM. Never let two runs overlap.
 concurrency:
