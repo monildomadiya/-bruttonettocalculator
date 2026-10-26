@@ -7,7 +7,7 @@ import { pageImageUrl } from "@/lib/pageImage";
 export const metadata: Metadata = {
   title: "Schonvermögen-Rechner 2026: Grundsicherungsgeld & Bürgergeld",
   description:
-    "Schonvermögen seit 1. Juli 2026: 5.000 bis 20.000 € je Person nach Alter (§ 12 SGB II). Rechner für Grundsicherungsgeld (früher Bürgergeld), auch mit alter Karenzzeit-Regel.",
+    "Schonvermögen seit 1. Juli 2026: 5.000 bis 20.000 € je Person nach Alter (§ 12 SGB II). Rechner für Grundsicherungsgeld (früher Bürgergeld) und Karenzzeit.",
   keywords: [
     "schonvermögen rechner",
     "bürgergeld vermögen 2026",

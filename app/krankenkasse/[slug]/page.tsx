@@ -108,12 +108,19 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         `${kurz} Zusatzbeitrag 2027: Erhöhung? 2026: ${satz}`,
         `${kurz} Zusatzbeitrag 2027 (2026: ${satz})`,
       ].find((t) => t.length <= 60) ?? `${kasse.name} Zusatzbeitrag 2027`;
+  // Google kürzt Beschreibungen ab ~160 Zeichen; lange Kassennamen sprengten
+  // das (bis 189). Wie beim Titel: die längste Fassung nehmen, die passt.
+  const prognose = fmtPct(ZUSATZBEITRAG_2027_SCHAETZERKREIS.wert);
   const description = satz2027
-    ? `${kasse.name}: Zusatzbeitrag 2027 ${satz2027} (2026: ${satz}). ` +
-      `Was der neue Satz netto kostet — mit Rechner und Vergleich zu anderen Kassen.`
-    : `${kasse.name}: Zusatzbeitrag 2026 ${satz}, Gesamtbeitrag ${gesamt}. ` +
-      `Den Satz 2027 beschließt die Kasse im Dezember; der Schätzerkreis rechnet mit ` +
-      `Ø ${fmtPct(ZUSATZBEITRAG_2027_SCHAETZERKREIS.wert)}. Mit Netto-Rechner.`;
+    ? [
+        `${kasse.name}: Zusatzbeitrag 2027 ${satz2027} (2026: ${satz}). Was der neue Satz netto kostet — mit Rechner und Vergleich zu anderen Kassen.`,
+        `${kasse.name}: Zusatzbeitrag 2027 ${satz2027} (2026: ${satz}). Was der neue Satz netto kostet — mit Rechner.`,
+      ].find((d) => d.length <= 160) ?? `${kasse.name}: Zusatzbeitrag 2027 ${satz2027} (2026: ${satz}).`
+    : [
+        `${kasse.name}: Zusatzbeitrag 2026 ${satz}, Gesamtbeitrag ${gesamt}. Den Satz 2027 beschließt die Kasse im Dezember; der Schätzerkreis rechnet mit Ø ${prognose}. Mit Netto-Rechner.`,
+        `${kasse.name}: Zusatzbeitrag 2026 ${satz}, Gesamtbeitrag ${gesamt}. Satz 2027 kommt im Dezember, Prognose Ø ${prognose}. Mit Netto-Rechner.`,
+        `${kasse.name}: Zusatzbeitrag 2026 ${satz}. Satz 2027 kommt im Dezember, Prognose Ø ${prognose}. Mit Netto-Rechner.`,
+      ].find((d) => d.length <= 160) ?? `${kasse.name}: Zusatzbeitrag 2026 ${satz}, Satz 2027 im Dezember.`;
 
   return {
     title,

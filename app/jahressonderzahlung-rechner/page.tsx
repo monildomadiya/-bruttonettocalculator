@@ -18,7 +18,7 @@ const URL = `https://bruttonettocalculator.com${PATH}`;
  * weiter Jahressonderzahlung (Tarifbegriff, rankt), trägt die Weihnachtsgeld-
  * Formulierung aber jetzt in Title, H1 und einer eigenen FAQ.
  */
-const TITLE = "Jahressonderzahlung 2026 Rechner – Weihnachtsgeld öffentlicher Dienst";
+const TITLE = "Jahressonderzahlung 2026: Weihnachtsgeld öffentlicher Dienst";
 const DESCRIPTION =
   "Wie viel Weihnachtsgeld gibt es im öffentlichen Dienst? Jahressonderzahlung 2026 brutto und netto: TVöD Bund 95/90/75 %, VKA 85 %, TV-L bis 88,14 % – nach Entgeltgruppe.";
 

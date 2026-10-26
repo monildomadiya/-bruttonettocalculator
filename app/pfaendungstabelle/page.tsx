@@ -22,7 +22,7 @@ const GRUND = eur(PFAENDUNG.grundfreibetrag);
 const STAND = pageStand("/pfaendungstabelle");
 
 const TITLE = `Pfändungstabelle 2026/27: Freibetrag ${GRUND} € ab Juli`;
-const DESCRIPTION = `Pfändungstabelle ab ${PFAENDUNG.gueltigAb} (BGBl.): Freibetrag ${GRUND} € netto, mit Unterhaltspflichten bis ${eur(pfaendungsfreibetrag(5))} €. Pfändbare Beträge für 0 bis 5 Personen, gültig bis ${PFAENDUNG.gueltigBis}.`;
+const DESCRIPTION = `Pfändungstabelle ab ${PFAENDUNG.gueltigAb}: Freibetrag ${GRUND} € netto, mit Unterhaltspflichten bis ${eur(pfaendungsfreibetrag(5))} €. Für 0 bis 5 Personen, gültig bis ${PFAENDUNG.gueltigBis}.`;
 
 export const metadata: Metadata = {
   title: TITLE,

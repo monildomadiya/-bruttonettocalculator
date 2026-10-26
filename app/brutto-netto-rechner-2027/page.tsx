@@ -93,7 +93,8 @@ function MehrNettoTabelle({ sk }: { sk: 1 | 3 }) {
 // (Absturz im September 2026). Der Verfahrensschritt kommt deshalb aus
 // LEGISLATION_STATUS (lib/config2027.ts), nicht als fester Text.
 const PAGE_TITLE = "Steuerreform 2027 Rechner: Wie viel mehr Netto bleibt?";
-const PAGE_DESCRIPTION = `Steuerreform 2027: So viel mehr Netto bringt der Gesetzentwurf — Tabelle nach Gehalt für 2027 und 2028. ${LEGISLATION_STATUS.schritt}.`;
+// Unter ~160 Zeichen halten, sonst schneidet Google genau den Verfahrensschritt ab.
+const PAGE_DESCRIPTION = `Steuerreform 2027: Mehr Netto nach Gehalt, Tabelle 2027/28. ${LEGISLATION_STATUS.schritt}.`;
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

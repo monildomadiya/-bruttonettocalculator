@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   // beantwortet beides, der Titel sprach nur "bin ich" an.
   title: "Welche Steuerklasse habe ich? Steuerklasse herausfinden 2026",
   description:
-    "Steuerklasse herausfinden: in 3 Fragen zur Antwort, oder nachsehen auf der Lohnabrechnung, in ELSTER oder beim Finanzamt. Ledig I, Alleinerziehend II, Verheiratet III/V oder IV.",
+    "Steuerklasse herausfinden in 3 Fragen – oder auf der Lohnabrechnung, in ELSTER, beim Finanzamt. Ledig I, Alleinerziehend II, Verheiratet III/V oder IV.",
   keywords: [
     "welche steuerklasse bin ich",
     "welche steuerklasse habe ich",
