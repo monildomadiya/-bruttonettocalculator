@@ -24,6 +24,13 @@ jobs:
       CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
 
     steps:
+      # Staged deploy (2026-10-26). Until then the build ran *inside* the live
+      # directory: `npm ci` deleted node_modules and `next build` emptied .next
+      # under the running server. On 26.10. a build stalled (0 % CPU, ssh
+      # timeout after 10 min), .next was left without a BUILD_ID, and the next
+      # restart crash-looped for ~2 min. Now everything happens in a staging
+      # copy; the live directory is only swapped once the new build has
+      # booted and answered on a spare port.
       - name: Deploy over SSH
         uses: appleboy/ssh-action@master
         with:
@@ -31,9 +38,23 @@ jobs:
           username: ${{ secrets.AZURE_USERNAME }}
           key: ${{ secrets.AZURE_SSH_KEY }}
           port: 22
+          # Must exceed npm ci + two build attempts + smoke test below.
+          command_timeout: 45m
           script: |
-            set -e
-            cd /var/www/bruttonetto
+            set -eu
+            APP=/var/www/bruttonetto
+            STAGE=/var/www/bruttonetto.stage
+            PREV=/var/www/bruttonetto.prev
+            SMOKE_PORT=3017
+
+            # ── 1. Staging copy ── source + .env + git config, but neither
+            # node_modules nor the build. The build cache is carried over so
+            # webpack doesn't start cold.
+            rm -rf "$STAGE"
+            mkdir -p "$STAGE/.next"
+            rsync -a --exclude node_modules --exclude .next "$APP/" "$STAGE/"
+            [ -d "$APP/.next/cache" ] && cp -a "$APP/.next/cache" "$STAGE/.next/" || true
+            cd "$STAGE"
 
             # This checkout was created with a shallow fetch, so pull the
             # same way rather than assuming a tracking branch exists.
@@ -41,18 +62,60 @@ jobs:
             git fetch --depth=1 origin main
             git reset --hard FETCH_HEAD
 
-            npm ci --no-audit --no-fund
+            timeout 10m npm ci --no-audit --no-fund
 
-            # 2 vCPU / 4 GB, with 4 GB of swap behind it.
-            NODE_OPTIONS="--max-old-space-size=3072" npm run build
+            # 2 vCPU / 4 GB, with 4 GB of swap behind it. A normal build takes
+            # ~2 min; the 26.10. stall never finished, so cap each attempt and
+            # retry once.
+            build() { NODE_OPTIONS="--max-old-space-size=3072" timeout 15m npm run build; }
+            build || { echo "build failed or timed out, retrying once"; build; }
+            test -f .next/BUILD_ID
+
+            # ── 2. Smoke test ── boot the new build next to the live one.
+            node_modules/.bin/next start -p "$SMOKE_PORT" > /tmp/deploy-smoke.log 2>&1 &
+            SMOKE_PID=$!
+            ok=""
+            for i in $(seq 1 30); do
+              if curl -fsS -o /dev/null "http://127.0.0.1:$SMOKE_PORT/" \
+                && curl -fsS -o /dev/null "http://127.0.0.1:$SMOKE_PORT/krankenkasse/tk"; then
+                ok=1; break
+              fi
+              sleep 2
+            done
+            kill "$SMOKE_PID" 2>/dev/null || true
+            sleep 2
+            fuser -k "$SMOKE_PORT/tcp" 2>/dev/null || true
+            if [ -z "$ok" ]; then
+              echo "smoke test failed, live site untouched"
+              tail -50 /tmp/deploy-smoke.log
+              exit 1
+            fi
+
+            # ── 3. Swap ── two renames on the same filesystem. The running
+            # server keeps its files (its cwd moves with the old directory)
+            # until pm2 restarts it from the new one.
+            rm -rf "$PREV"
+            mv "$APP" "$PREV"
+            mv "$STAGE" "$APP"
+            cd "$APP"
 
             # Restart in place rather than delete+start, so the port never
             # goes unbound and a deploy is not a visible outage.
             pm2 restart bruttonetto_live --update-env \
               || pm2 start node_modules/.bin/next --name "bruttonetto_live" -- start -p 3007
-            pm2 save
 
-            sleep 5
+            ok=""
+            for i in $(seq 1 15); do
+              curl -fsS -o /dev/null http://127.0.0.1:3007/ && { ok=1; break; }
+              sleep 2
+            done
+            if [ -z "$ok" ]; then
+              echo "new build not answering on 3007, rolling back"
+              rm -rf "$STAGE" && mv "$APP" "$STAGE" && mv "$PREV" "$APP"
+              cd "$APP" && pm2 restart bruttonetto_live --update-env
+              exit 1
+            fi
+            pm2 save
             pm2 status
             curl -fsS -o /dev/null -w 'local check: %{http_code}\n' http://127.0.0.1:3007/
 
