@@ -15,7 +15,9 @@
  * danebenliegen.
  *
  * DATENSTAND: 3. August 2026, erneut geprüft am 1. Oktober 2026 — alle 19 Sätze
- * unverändert. Quellen: öffentliche Satzungsangaben der Kassen, gegengeprüft
+ * unverändert. Am 26. Oktober 2026 vier Kassen ergänzt, die in Google Trends
+ * steigen (Salus BKK 3,29 %, pronova BKK 3,7 %, SBK 3,8 %, IKK Südwest 3,87 % seit
+ * 1.4.2026) — übereinstimmend bei krankenkasseninfo.de und krankenkassen.de. Quellen: öffentliche Satzungsangaben der Kassen, gegengeprüft
  * über zwei unabhängige Vergleichsübersichten (krankenkasseninfo.de mit
  * unterjährigen Änderungen bis 1.10.2026, covago.de). Unterjährige Erhöhungen
  * 2026 gab es nur bei Kassen außerhalb dieser Auswahl (u. a. IKK classic
@@ -106,9 +108,13 @@ export const KRANKENKASSEN_2026: Krankenkasse[] = [
   { slug: "aok-plus", name: "AOK PLUS", zusatzbeitrag: 3.1, art: "AOK", bundesweit: false, region: "Sachsen, Thüringen" },
   { slug: "dak", name: "DAK-Gesundheit", zusatzbeitrag: 3.2, art: "Ersatzkasse", bundesweit: true },
   { slug: "barmer", name: "BARMER", zusatzbeitrag: 3.29, art: "Ersatzkasse", bundesweit: true },
+  { slug: "salus-bkk", name: "Salus BKK", zusatzbeitrag: 3.29, art: "BKK", bundesweit: true },
   { slug: "aok-nordost", name: "AOK Nordost", zusatzbeitrag: 3.5, art: "AOK", bundesweit: false, region: "Berlin, Brandenburg, Mecklenburg-Vorpommern" },
   { slug: "big-direkt", name: "BIG direkt gesund", zusatzbeitrag: 3.69, art: "IKK", bundesweit: true },
+  { slug: "pronova-bkk", name: "pronova BKK", zusatzbeitrag: 3.7, art: "BKK", bundesweit: true },
   { slug: "kkh", name: "KKH Kaufmännische Krankenkasse", zusatzbeitrag: 3.78, art: "Ersatzkasse", bundesweit: true },
+  { slug: "sbk", name: "SBK Siemens-Betriebskrankenkasse", zusatzbeitrag: 3.8, art: "BKK", bundesweit: true },
+  { slug: "ikk-suedwest", name: "IKK Südwest", zusatzbeitrag: 3.87, art: "IKK", bundesweit: false, region: "Hessen, Rheinland-Pfalz, Saarland" },
   { slug: "knappschaft", name: "KNAPPSCHAFT", zusatzbeitrag: 4.3, art: "Knappschaft", bundesweit: true },
   { slug: "bkk24", name: "BKK24", zusatzbeitrag: 4.39, art: "BKK", bundesweit: true },
 ];

@@ -75,6 +75,7 @@ const KURZNAME: Record<string, string> = {
   kkh: "KKH",
   dak: "DAK",
   "big-direkt": "BIG direkt",
+  sbk: "SBK",
 };
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -291,7 +292,7 @@ export default function KrankenkassenDetailSeite({ params }: { params: { slug: s
             Krankenkasse 2026
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#16181D] leading-tight mb-3">
-            {kasse.name}: Zusatzbeitrag {fmtPct(kasse.zusatzbeitrag)} — was bleibt netto?
+            {kasse.name}: Zusatzbeitrag {fmtPct(kasse.zusatzbeitrag)} — Brutto-Netto-Rechner
           </h1>
           <p className="text-base sm:text-lg text-black/70 leading-relaxed max-w-3xl">
             Die {kasse.name} erhebt 2026 einen Zusatzbeitrag von{" "}

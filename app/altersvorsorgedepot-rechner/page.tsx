@@ -9,7 +9,8 @@ import { pageImageUrl } from "@/lib/pageImage";
 
 const PATH = "/altersvorsorgedepot-rechner";
 const URL = `https://bruttonettocalculator.com${PATH}`;
-const TITLE = "Altersvorsorgedepot Rechner 2027: Zulagen & Steuervorteil";
+// Google Trends DE (30 Tage bis 26.10.2026): "avd rechner" +190 %, "altersvorsorgedepot rechner" +120 %.
+const TITLE = "Altersvorsorgedepot-Rechner 2027 (AVD): Zulagen & Steuer";
 const DESCRIPTION =
   "Altersvorsorgedepot ab 2027 berechnen: Grundzulage bis 540 €, Kinderzulage 300 €, Steuervorteil per Günstigerprüfung und Depotwert — nach BGBl. 2026 I Nr. 156.";
 

@@ -27,7 +27,10 @@ const STAND = pageStand("/sozialabgaben-rechner-2027");
 
 // „sozialabgaben rechner 2027“ (Pos. 2–2,7) bleibt im Titel vorn; dazu
 // „beitragsbemessungsgrenze 2027 rechner“ (Pos. 3,4).
-const TITLE = "Sozialabgaben 2027 Rechner – Beitragsbemessungsgrenze 2027";
+// GSC (DE, 28 Tage bis 24.10.2026): "höhere sozialabgaben 2027" 1.342 Impressionen auf
+// Pos. 9,2, "höhere sozialabgaben für gutverdiener rechner" Pos. 7,8. Die BBG hat eine
+// eigene Seite (/beitragsbemessungsgrenze-2027), der Titel überlässt ihr das Wort.
+const TITLE = "Höhere Sozialabgaben 2027: Rechner für Gutverdiener";
 const DESCRIPTION = `Sozialabgaben 2027 berechnen: Beitragsbemessungsgrenzen laut Kabinett (KV ${E.kvPvBbgMonat.toLocaleString("de-DE")} €, RV ${E.rvAlvBbgMonat.toLocaleString("de-DE")} €), Zusatzbeitrag 2,9 %, Pflege 0,9 % für Kinderlose.`;
 
 /*
@@ -242,7 +245,7 @@ export default function SozialabgabenRechner2027Page() {
             Grenzen 2027: {BBG_2027_STATUS.kurz}
           </div>
           <h1 className="font-display font-extrabold text-3xl sm:text-5xl tracking-tight leading-tight mb-4 max-w-4xl">
-            Sozialabgaben 2027: <span className="text-gradient-accent">Rechner mit neuen Beitragsbemessungsgrenzen</span>
+            Höhere Sozialabgaben 2027: <span className="text-gradient-accent">Rechner mit neuen Beitragsbemessungsgrenzen</span>
           </h1>
           <p className="text-base sm:text-lg text-black/75 max-w-3xl leading-relaxed">
             Höhere Beitragsbemessungsgrenzen (vom Kabinett am 7. Oktober beschlossen), ein höherer

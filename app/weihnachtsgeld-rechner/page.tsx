@@ -88,6 +88,16 @@ const faqs: WeihnachtsgeldFaq[] = [
     q: "Bekomme ich Weihnachtsgeld, wenn ich Krankengeld beziehe?",
     a: "Das hängt von der Regelung ab, die Ihr Weihnachtsgeld begründet. Ohne Kürzungsklausel bleibt der Anspruch auch bei langer Krankheit bestehen. Ist eine Kürzung vereinbart, darf der Arbeitgeber höchstens ein Viertel des Tagesverdienstes je Krankheitstag abziehen (§ 4a EntgFG). Im TVöD sinkt die Jahressonderzahlung um ein Zwölftel für jeden Monat ohne Entgelt; Monate, in denen Ihnen Krankengeldzuschuss zusteht, zählen dabei nicht als Kürzungsmonate (§ 20 Abs. 4 TVöD).",
   },
+  // Google Trends DE (30 Tage bis 26.10.2026): "bekommt man weihnachtsgeld wenn man in
+  // elternzeit ist" +3.000 %, "kriegen beamte weihnachtsgeld" Breakout.
+  {
+    q: "Bekommt man Weihnachtsgeld in der Elternzeit?",
+    a: "Das regelt der Vertrag, der das Weihnachtsgeld begründet. Belohnt es die Betriebstreue, besteht der Anspruch meist auch in der Elternzeit. Ist es an die tatsächliche Arbeitsleistung geknüpft, darf es für Monate ohne Arbeit gekürzt werden, weil das Arbeitsverhältnis in der Elternzeit ruht. Im TVöD sinkt die Jahressonderzahlung zwar um ein Zwölftel je Monat ohne Entgelt, Elternzeit bis zum Ende des Kalenderjahres der Geburt zählt aber nicht als Kürzungsmonat, wenn vor Beginn der Elternzeit Entgeltanspruch bestand (§ 20 Abs. 4 TVöD).",
+  },
+  {
+    q: "Bekommen Beamte Weihnachtsgeld?",
+    a: "Das hängt vom Dienstherrn ab. Beim Bund ist die frühere Sonderzahlung in die monatlichen Bezüge eingerechnet, ein separates Weihnachtsgeld gibt es dort nicht. Die Länder regeln das in ihrem eigenen Besoldungsrecht unterschiedlich: Einige zahlen noch eine jährliche Sonderzahlung, andere haben sie ebenfalls in die Monatsbezüge integriert. Beamte zahlen auf eine Sonderzahlung keine Sozialabgaben, nur Lohnsteuer und gegebenenfalls Soli und Kirchensteuer.",
+  },
   {
     q: "Fallen auf Weihnachtsgeld Sozialabgaben an?",
     a: `Ja, soweit Ihr Entgelt im Jahr bis zum Auszahlungsmonat die anteilige Beitragsbemessungsgrenze noch nicht erreicht hat. Bei 7.000 € Monatsbrutto ist die Grenze für Kranken- und Pflegeversicherung im November schon ausgeschöpft: Auf ${formatEUR(BEISPIEL_WG)} Weihnachtsgeld fallen dann nur noch ${formatEUR(hoch.svSumme)} Renten- und Arbeitslosenbeiträge an.`,

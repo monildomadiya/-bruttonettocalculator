@@ -11,7 +11,8 @@ import { vergleichePaar } from "@/lib/steuerklassenPaar";
 import { formatEUR } from "@/lib/taxCalculator";
 
 const URL = "https://bruttonettocalculator.com/steuerklassenwechsel-rechner";
-const TITLE = "Steuerklassen-Rechner 2026: III/V, IV/IV oder Faktor?";
+// Google Trends DE (30 Tage bis 26.10.2026): "steuerklassenrechner" als Breakout — in einem Wort.
+const TITLE = "Steuerklassenrechner 2026: III/V, IV/IV oder Faktor?";
 const DESCRIPTION =
   "Steuerklassen Rechner für Ehepaare: Netto bei III/V, IV/IV und IV mit Faktor vergleichen und die günstigste Kombination finden.";
 const STAND = "5. Oktober 2026";

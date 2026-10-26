@@ -18,7 +18,9 @@ const BASE = "https://bruttonettocalculator.com";
 const CANONICAL = `${BASE}/rente-brutto-netto-rechner`;
 const eur0 = (n: number) => n.toLocaleString("de-DE", { maximumFractionDigits: 0 });
 
-const PAGE_TITLE = "Rente Brutto Netto Rechner 2026/2027 – Nettorente";
+// GSC (DE, 28 Tage bis 24.10.2026): "brutto-netto-rentenrechner 2027" 821 Impressionen
+// auf Pos. 9,0 — das Wort "Rentenrechner" fehlte im Titel.
+const PAGE_TITLE = "Brutto-Netto-Rentenrechner 2027/2026: Nettorente berechnen";
 const PAGE_DESCRIPTION =
   "Nettorente 2026 und 2027 berechnen: Kranken- und Pflegeversicherung der Rentner, Besteuerungsanteil (2027: 84,5 %) und Steuer nach dem Gesetzentwurf.";
 
@@ -128,7 +130,7 @@ export default function RenteBruttoNettoPage() {
           <PiggyBank size={14} aria-hidden="true" /> Nettorente · 2026 und 2027
         </p>
         <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-[#16181D] mb-3 sm:mb-4 tracking-tight">
-          Rente Brutto Netto Rechner <span className="text-gradient-accent">2026/2027</span>
+          Brutto-Netto-Rentenrechner <span className="text-gradient-accent">2026/2027</span>
         </h1>
         <p className="text-base sm:text-xl text-black/80 max-w-4xl leading-relaxed">
           Was von der Bruttorente übrig bleibt: Kranken- und Pflegeversicherung der Rentner, Besteuerungsanteil

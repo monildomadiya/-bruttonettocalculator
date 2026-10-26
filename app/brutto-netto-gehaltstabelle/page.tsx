@@ -75,6 +75,22 @@ function netto(brutto: number, jahr: 2026 | 2027, steuerklasse: 1 | 3): number {
   }).nettoMonat;
 }
 
+/** Zeilen der kompletten Tabelle: 1.000–10.000 € in 100-€-Schritten. */
+const TABELLE_KOMPLETT: number[] = Array.from({ length: 91 }, (_, i) => 1000 + i * 100);
+const STEUERKLASSEN = [1, 2, 3, 4, 5, 6] as const;
+const SK_ROMAN = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI" } as const;
+
+function nettoSk(brutto: number, steuerklasse: (typeof STEUERKLASSEN)[number]): number {
+  return calculateNetto({
+    bruttoMonat: brutto,
+    jahr: 2026,
+    verheiratet: steuerklasse === 3 || steuerklasse === 4 || steuerklasse === 5,
+    kinderlosUeber23: true,
+    kirche: false,
+    steuerklasse,
+  }).nettoMonat;
+}
+
 /** Zeilen der kompakten Tabelle: 1.500–10.000 € in 500-€-Schritten. */
 const TABELLE: number[] = Array.from({ length: 18 }, (_, i) => 1500 + i * 500);
 
@@ -255,6 +271,52 @@ export default function SalaryHubPage() {
           );
         })}
       </div>
+
+      {/* Full grid — since the 2026-10-26 prune most amounts no longer have an
+          indexable detail page, so the values live here in one table instead. */}
+      <section aria-labelledby="tabelle-komplett" className="mt-14">
+        <h2 id="tabelle-komplett" className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] mb-2">
+          Komplette Brutto-Netto-Tabelle 2026: Steuerklasse I bis VI
+        </h2>
+        <p className="text-sm sm:text-base text-black/70 mb-6 leading-relaxed">
+          Monatsnetto von 1.000 € bis 10.000 € brutto in 100-€-Schritten, Steuerjahr 2026. Ohne Kirchensteuer,
+          kinderlos ab 23, durchschnittlicher Zusatzbeitrag; Steuerklasse III, IV und V als verheiratet gerechnet.
+        </p>
+        <div className="bg-[#FFFFFF] border border-black/[0.10] rounded-3xl shadow-xl overflow-auto max-h-[70vh]">
+          <table className="w-full text-left border-collapse min-w-[720px]">
+            <thead className="sticky top-0 z-10">
+              <tr className="bg-[#F1F3F5] border-b border-black/[0.10] text-xs font-mono uppercase tracking-wider text-black/70">
+                <th scope="col" className="py-3 px-4">Brutto</th>
+                {STEUERKLASSEN.map((sk) => (
+                  <th key={sk} scope="col" className={`py-3 px-3 text-right ${sk === 1 ? "text-[#16181D] font-bold" : ""}`}>
+                    SK {SK_ROMAN[sk]}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-black/10 text-sm">
+              {TABELLE_KOMPLETT.map((b) => (
+                <tr key={b} className="hover:bg-black/[0.03]">
+                  <th scope="row" className="py-2 px-4 font-semibold text-left whitespace-nowrap">
+                    {grossAmountHref(b) ? (
+                      <Link href={grossAmountHref(b)!} className="text-[#16181D] hover:text-[#E60A1C] hover:underline underline-offset-2">
+                        {new Intl.NumberFormat("de-DE").format(b)} €
+                      </Link>
+                    ) : (
+                      <>{new Intl.NumberFormat("de-DE").format(b)} €</>
+                    )}
+                  </th>
+                  {STEUERKLASSEN.map((sk) => (
+                    <td key={sk} className={`py-2 px-3 text-right font-mono ${sk === 1 ? "font-bold" : "text-black/75"}`}>
+                      {formatEUR(nettoSk(b, sk))}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       {/* Footnote */}
       <p className="text-xs text-black/50 mt-12 leading-relaxed max-w-3xl">
