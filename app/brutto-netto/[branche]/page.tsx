@@ -34,7 +34,7 @@ import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
  */
 
 interface PageProps {
-  params: { branche: string };
+  params: Promise<{ branche: string }>;
 }
 
 export async function generateStaticParams() {
@@ -68,7 +68,8 @@ function gehaltsstufen(durchschnittMonat: number): number[] {
   return Array.from(new Set(roh)).sort((a, b) => a - b);
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const br = getBrancheBySlug(params.branche);
   if (!br) return { title: "Branche nicht gefunden" };
 
@@ -117,7 +118,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function BranchePage({ params }: PageProps) {
+export default async function BranchePage(props: PageProps) {
+  const params = await props.params;
   const br = getBrancheBySlug(params.branche);
   if (!br) notFound();
 

@@ -30,7 +30,7 @@ import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
  */
 
 interface PageProps {
-  params: { bundesland: string };
+  params: Promise<{ bundesland: string }>;
 }
 
 const REFERENCE_SALARIES = [2500, 3000, 3500, 4000, 4500, 5000, 6000];
@@ -52,7 +52,8 @@ function nettoFor(bl: Bundesland, brutto: number, sk: Steuerklasse, kirche: bool
   }).nettoMonat;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const bl = getBundeslandBySlug(params.bundesland);
   if (!bl) return { title: "Bundesland nicht gefunden" };
 
@@ -103,7 +104,8 @@ const SK_LABEL: Record<number, string> = {
   3: "Steuerklasse III",
 };
 
-export default function BundeslandPage({ params }: PageProps) {
+export default async function BundeslandPage(props: PageProps) {
+  const params = await props.params;
   const bl = getBundeslandBySlug(params.bundesland);
   if (!bl) notFound();
 

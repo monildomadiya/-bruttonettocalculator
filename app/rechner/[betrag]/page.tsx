@@ -51,7 +51,7 @@ import { pageImageUrl, pageImageFromCanonical } from "@/lib/pageImage";
  */
 
 interface PageProps {
-  params: { betrag: string };
+  params: Promise<{ betrag: string }>;
 }
 
 // 1. Generate static params for common amounts.
@@ -161,7 +161,8 @@ function isIndexableAmountSlug(parsed: ParsedSlug): boolean {
 }
 
 // 3. Unique Metadata per long-tail page
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const parsed = parseSlug(params.betrag);
   if (!parsed) {
     return { title: "Gehalt nicht gefunden" };
@@ -292,7 +293,8 @@ function buildMetadata(parsed: ParsedSlug): Metadata {
   };
 }
 
-export default function LongTailSalaryPage({ params }: PageProps) {
+export default async function LongTailSalaryPage(props: PageProps) {
+  const params = await props.params;
   const parsed = parseSlug(params.betrag);
   if (!parsed) {
     notFound();

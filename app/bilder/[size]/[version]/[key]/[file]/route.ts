@@ -17,8 +17,9 @@ const EXT: Record<PostImageSize, string> = { thumb: "webp", tile: "webp", full: 
 
 export async function GET(
   _req: Request,
-  { params }: { params: { size: string; version: string; key: string; file: string } }
+  props: { params: Promise<{ size: string; version: string; key: string; file: string }> }
 ) {
+  const params = await props.params;
   const size = params.size as PostImageSize;
   const [name, ext] = params.file.split(/\.(?=[^.]+$)/);
   const id = `posts/img-${params.key}`;

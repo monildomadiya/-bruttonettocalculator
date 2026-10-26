@@ -15,7 +15,8 @@ export async function generateStaticParams() {
   return (await getPublishedPosts()).map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const post = await getPublishedPost(params.slug);
   if (!post) return { title: "Infografik nicht gefunden", robots: { index: false } };
 
@@ -44,7 +45,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function InfografikPage({ params }: { params: { slug: string } }) {
+export default async function InfografikPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const all = await getPublishedPosts();
   const index = all.findIndex((p) => p.slug === params.slug);
   if (index < 0) notFound();

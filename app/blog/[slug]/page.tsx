@@ -74,11 +74,12 @@ export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const post = getPostBySlug(params.slug);
   if (!post) {
     return { title: "Artikel nicht gefunden" };
@@ -151,11 +152,12 @@ function calculatorLink(href: string) {
   return allCalculatorLinks.find((l) => l.href === href);
 }
 
-export default function ArticleReaderPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function ArticleReaderPage(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+) {
+  const params = await props.params;
   const post = getPostBySlug(params.slug);
   if (!post) notFound();
 

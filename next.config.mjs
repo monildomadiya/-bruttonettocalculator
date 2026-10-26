@@ -11,9 +11,7 @@ const nextConfig = {
   // No image optimizer: the only next/image uses are SVG logos, and the
   // optimizer endpoint carries several RCE/DoS advisories (see middleware.ts).
   images: { unoptimized: true },
-  experimental: {
-    outputFileTracingRoot: __dirname,
-  },
+  outputFileTracingRoot: __dirname,
   webpack: (config) => {
     // Normalize the snapshot paths so that the bracket in [Light Mode]
     // doesn't trip up webpack's module resolution / casing on Windows.

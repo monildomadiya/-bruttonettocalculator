@@ -53,7 +53,8 @@ function netto(bruttoMonat: number, sk: 1 | 3, verheiratet: boolean) {
   }).nettoMonat;
 }
 
-export async function generateMetadata({ params }: { params: { gruppe: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ gruppe: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const g = findTvoedGruppe(params.gruppe);
   if (!g) return {};
 
@@ -96,7 +97,8 @@ export async function generateMetadata({ params }: { params: { gruppe: string } 
   };
 }
 
-export default function TvoedGruppenSeite({ params }: { params: { gruppe: string } }) {
+export default async function TvoedGruppenSeite(props: { params: Promise<{ gruppe: string }> }) {
+  const params = await props.params;
   const g = findTvoedGruppe(params.gruppe);
   if (!g) notFound();
 
