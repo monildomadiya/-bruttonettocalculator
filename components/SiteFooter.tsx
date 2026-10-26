@@ -74,7 +74,6 @@ export default function SiteFooter() {
               <li><Link href="/tvoed-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">TVöD-Rechner 2026</Link></li>
               <li><Link href="/jahressonderzahlung-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Jahressonderzahlung-Rechner</Link></li>
               <li><Link href="/tv-l-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">TV-L-Rechner 2026</Link></li>
-              <li><Link href="/immobilienkredit-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Immobilienkredit-Rechner</Link></li>
               <li><Link href="/steuerklassenwechsel-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Steuerklassenwechsel</Link></li>
               <li><Link href="/gehaltserhoehung-rechner"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Gehaltserhöhung-Rechner</Link></li>
               <li><Link href="/rechner/netto-zu-brutto"   className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Netto zu Brutto</Link></li>
@@ -135,11 +134,6 @@ export default function SiteFooter() {
               <li><Link href="/urlaubsgeld-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Urlaubsgeld-Rechner</Link></li>
               <li><Link href="/urlaubsanspruch-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Urlaubsanspruch-Rechner</Link></li>
               <li><Link href="/brueckentage-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Brückentage-Rechner 2027</Link></li>
-              <li><Link href="/mehrwertsteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">MwSt-Rechner</Link></li>
-              <li><Link href="/erbschaftssteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Erbschaftssteuer-Rechner</Link></li>
-              <li><Link href="/schenkungssteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Schenkungssteuer-Rechner</Link></li>
-              <li><Link href="/abgeltungssteuer-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Abgeltungssteuer-Rechner</Link></li>
-              <li><Link href="/mieteinnahmen-versteuern" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Mieteinnahmen versteuern</Link></li>
               <li><Link href="/riester-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Riester-Rechner</Link></li>
               <li><Link href="/altersvorsorgedepot-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Altersvorsorgedepot-Rechner</Link></li>
               <li><Link href="/renteneintrittsalter-rechner" className="hover:text-[#16181D] hover:translate-x-1 inline-block transition-all duration-200">Renteneintrittsalter-Rechner</Link></li>

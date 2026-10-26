@@ -325,7 +325,7 @@ const bav: ToolContentConfig = {
       h3: "bAV, Riester oder freiwillig anlegen?",
       body: [
         "Die bAV punktet vor allem über den Pflichtzuschuss des Arbeitgebers und die Sozialabgabenfreiheit. [Riester](/riester-rechner) ist dagegen dort stark, wo Zulagen den Eigenbeitrag dominieren — also bei Familien mit Kindern und bei niedrigen Einkommen.",
-        "Wer stattdessen Vermögen aufbauen will, sollte die Besteuerung von Kapitalerträgen kennen: [Abgeltungssteuer](/abgeltungssteuer-rechner) mit 26,375 % inklusive Soli. Und wer über Immobilien nachdenkt, findet die Belastungsrechnung im [Immobilienkredit-Rechner](/immobilienkredit-rechner).",
+        "Wer stattdessen Vermögen aufbauen will, sollte die Besteuerung von Kapitalerträgen kennen: Abgeltungssteuer mit 26,375 % inklusive Soli.",
       ],
     },
   ],
@@ -692,7 +692,7 @@ const bonus: ToolContentConfig = {
       h3: "Alternativen zur reinen Bonuszahlung",
       body: [
         "Ein Teil des Bonus lässt sich steuerlich günstiger gestalten. Eine [Entgeltumwandlung in die betriebliche Altersvorsorge](/bav-rechner) ist bis 676 € monatlich steuerfrei und bis 338 € sozialabgabenfrei; auch ein [Firmenwagen](/firmenwagenrechner) nach der 1-%-Regelung verändert das Verhältnis von Aufwand zu Nutzen.",
-        "Wer den Bonus anlegen will, sollte die Besteuerung der Erträge kennen — [Abgeltungssteuer](/abgeltungssteuer-rechner) mit 26,375 % inklusive Solidaritätszuschlag, bei Kirchensteuerpflicht etwas mehr.",
+        "Wer den Bonus anlegen will, sollte die Besteuerung der Erträge kennen — Abgeltungssteuer mit 26,375 % inklusive Solidaritätszuschlag, bei Kirchensteuerpflicht etwas mehr.",
       ],
     },
   ],
@@ -756,7 +756,7 @@ const witwenrente: ToolContentConfig = {
       h3: "Was sonst noch zusammenkommt",
       body: [
         "Für Kinder besteht zusätzlich Anspruch auf **Waisenrente**. Die Rentenhöhe des Verstorbenen selbst lässt sich aus seinen Entgeltpunkten nachvollziehen — dafür ist der [Rentenpunkte-Rechner](/rentenpunkte-rechner) da, die Gesamtprognose liefert der [Rentenrechner](/rentenrechner).",
-        "Auch die Witwenrente ist steuerpflichtig, soweit sie zusammen mit anderen Einkünften den Grundfreibetrag von 12.348 € übersteigt: [Einkommensteuer-Rechner](/einkommensteuer-rechner). Reicht das Einkommen insgesamt nicht aus, kommt die [Grundsicherung im Alter](/grundsicherung-rechner) in Betracht; für Erbschaften gilt der [Erbschaftssteuer-Rechner](/erbschaftssteuer-rechner) mit dem Ehegattenfreibetrag.",
+        "Auch die Witwenrente ist steuerpflichtig, soweit sie zusammen mit anderen Einkünften den Grundfreibetrag von 12.348 € übersteigt: [Einkommensteuer-Rechner](/einkommensteuer-rechner). Reicht das Einkommen insgesamt nicht aus, kommt die [Grundsicherung im Alter](/grundsicherung-rechner) in Betracht.",
       ],
     },
   ],

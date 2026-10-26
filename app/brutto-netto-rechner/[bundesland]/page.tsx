@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { grossAmountHref } from "@/data/wage-stats";
 import { notFound } from "next/navigation";
 import {
   Calculator as CalcIcon, ChevronRight, MapPin, BarChart3,
@@ -268,9 +269,11 @@ export default function BundeslandPage({ params }: PageProps) {
                   <td className="py-4 px-5 text-right font-mono text-emerald-600 font-semibold">{formatEUR(r.nettoSK3)}</td>
                   <td className="py-4 px-5 text-right font-mono text-black/80">{formatEUR(r.netto2027SK1)}</td>
                   <td className="py-4 px-5 text-right">
-                    <Link href={`/rechner/${r.brutto}-euro-brutto-netto`} className="text-xs font-bold text-[#E60A1C] hover:underline inline-flex items-center gap-1">
-                      Details <ArrowRight size={13} />
-                    </Link>
+                    {grossAmountHref(r.brutto) && (
+                      <Link href={grossAmountHref(r.brutto)!} className="text-xs font-bold text-[#E60A1C] hover:underline inline-flex items-center gap-1">
+                        Details <ArrowRight size={13} />
+                      </Link>
+                    )}
                   </td>
                 </tr>
               ))}

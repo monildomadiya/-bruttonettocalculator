@@ -131,7 +131,15 @@ const nextConfig = {
       // calculators exist now, so the legacy URL passes its signals there.
       { source: "/rentenpunkte",      destination: "/rentenpunkte-rechner",             statusCode: 301 },
       { source: "/urlaubsgeld",       destination: "/urlaubsgeld-rechner",              statusCode: 301 },
-      { source: "/schenkungssteuer",  destination: "/schenkungssteuer-rechner",         statusCode: 301 },
+      // Off-topic tools removed 2026-10-26: 0–1 clicks in 90 days (GSC) and
+      // outside the salary topic. Closest remaining page where one exists.
+      { source: "/schenkungssteuer",          destination: "/",                                  statusCode: 301 },
+      { source: "/schenkungssteuer-rechner",  destination: "/",                                  statusCode: 301 },
+      { source: "/erbschaftssteuer-rechner",  destination: "/",                                  statusCode: 301 },
+      { source: "/mehrwertsteuer-rechner",    destination: "/",                                  statusCode: 301 },
+      { source: "/immobilienkredit-rechner",  destination: "/",                                  statusCode: 301 },
+      { source: "/abgeltungssteuer-rechner",  destination: "/einkommensteuer-rechner",           statusCode: 301 },
+      { source: "/mieteinnahmen-versteuern",  destination: "/blog/mieteinnahmen-versteuern-afa", statusCode: 301 },
       {
         source: "/pfandungstabelle",
         destination: "/pfaendungstabelle",

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { KRANKENKASSEN_2026 } from "@/data/krankenkassen";
 import { TVOED_VKA_2026 } from "@/data/tvoed";
 import { getAllPosts } from "@/lib/blog";
-import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts, getSteuerklasseVariantPages } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, getSteuerklasse1Amounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts, getSteuerklasseVariantPages } from "@/data/wage-stats";
 import { BUNDESLAENDER } from "@/data/bundeslaender";
 import { BRANCHEN } from "@/data/branchen";
 import { siteConfig } from "@/lib/authors";
@@ -96,7 +96,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/welche-steuerklasse-bin-ich",
     "/brutto-netto-rechner-vergleich",
     "/brutto-netto-rechner-beamte",
-    "/mehrwertsteuer-rechner",
     "/steuerfreibetrag-2026",
     "/brutto-netto-rechner-krankenkasse",
     "/zusatzbeitrag-2027",
@@ -128,8 +127,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/bafoeg-rueckzahlung-rechner",
     "/schonvermoegen-rechner",
     "/bav-rechner",
-    "/immobilienkredit-rechner",
-    "/mieteinnahmen-versteuern",
     "/arbeitslosengeld-rechner",
     "/minijob-rechner",
     "/midijob-rechner",
@@ -140,9 +137,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/ueberstunden-rechner",
     "/urlaubsanspruch-rechner",
     "/brueckentage-rechner",
-    "/erbschaftssteuer-rechner",
-    "/schenkungssteuer-rechner",
-    "/abgeltungssteuer-rechner",
     "/bonus-steuerrechner",
     "/stundenlohn-rechner",
     "/en/tax-calculator-germany",
@@ -224,13 +218,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Add all programmatic long-tail salary pages
-  const longTailAmounts = getCommonGrossSalaryAmounts();
-  for (const amount of longTailAmounts) {
+  for (const amount of getCommonGrossSalaryAmounts()) {
     sitemapEntries.push({
       url: `${base}/rechner/${amount}-euro-brutto-netto`,
       lastModified: engineUpdated,
     });
-    // Steuerklasse-1 exact-match variant — targets "<amount> brutto in netto steuerklasse 1"
+  }
+  // Steuerklasse-1 exact-match variant — targets "<amount> brutto in netto steuerklasse 1"
+  for (const amount of getSteuerklasse1Amounts()) {
     sitemapEntries.push({
       url: `${base}/rechner/${amount}-euro-brutto-netto-steuerklasse-1`,
       lastModified: engineUpdated,

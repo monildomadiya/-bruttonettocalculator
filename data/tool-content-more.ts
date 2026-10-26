@@ -11,137 +11,9 @@ import { BAFOEG, BAFOEG_HOECHSTSATZ, BAFOEG_REFORM, KVPV_ZUSCHLAG } from "@/lib/
  * registry in `tool-content.ts` merges all three.
  *
  * Configs for pages that already render their own comparison table
- * (schenkungssteuer, buergergeld, beamte, PKV-vs-GKV) deliberately omit `table`,
+ * (buergergeld, beamte, PKV-vs-GKV) deliberately omit `table`,
  * so a page never ends up with two near-identical ones.
  */
-
-/* ── /mehrwertsteuer-rechner ─────────────────────────────────────────── */
-
-const mehrwertsteuer: ToolContentConfig = {
-  heading: "Mehrwertsteuer 2026 berechnen: 19 % und 7 % richtig herausrechnen",
-  answer:
-    "Um die Mehrwertsteuer aus einem Bruttobetrag herauszurechnen, wird durch 1,19 geteilt (Regelsatz 19 %) beziehungsweise durch 1,07 (ermäßigter Satz 7 %). Um sie aufzuschlagen, wird der Nettobetrag mit 1,19 oder 1,07 multipliziert. 119 € brutto entsprechen also 100 € netto und 19 € Mehrwertsteuer.",
-  facts: [
-    { label: "Regelsteuersatz", value: "19 %" },
-    { label: "Ermäßigter Steuersatz", value: "7 %" },
-    { label: "Brutto → Netto (19 %)", value: "÷ 1,19" },
-    { label: "Netto → Brutto (19 %)", value: "× 1,19" },
-    { label: "Kleinunternehmer Vorjahresumsatz", value: "bis 25.000 €" },
-    { label: "Kleinunternehmer laufendes Jahr", value: "bis 100.000 €" },
-  ],
-  steps: [
-    {
-      title: "Steuersatz bestimmen",
-      text: "19 % ist der Regelfall. 7 % gelten nach § 12 Abs. 2 UStG unter anderem für die meisten Lebensmittel, Bücher, Zeitungen und E-Books, den Personennahverkehr, Hotelübernachtungen und Eintritte zu Kulturveranstaltungen.",
-    },
-    {
-      title: "Richtung wählen",
-      text: "Aus einem Bruttopreis den Nettobetrag: durch 1,19 teilen. Auf einen Nettopreis aufschlagen: mit 1,19 multiplizieren.",
-    },
-    {
-      title: "Steueranteil ermitteln",
-      text: "Die Differenz zwischen Brutto und Netto ist die enthaltene Mehrwertsteuer — beim Regelsatz sind das 15,97 % des Bruttobetrags, nicht 19 %.",
-    },
-    {
-      title: "Auf der Rechnung ausweisen",
-      text: "Nettobetrag, Steuersatz und Steuerbetrag müssen getrennt erkennbar sein, damit der Empfänger die Vorsteuer geltend machen kann.",
-    },
-  ],
-  table: {
-    caption: "Mehrwertsteuer aus dem Bruttobetrag herausrechnen",
-    head: ["Brutto", "Netto (19 %)", "MwSt (19 %)", "Netto (7 %)", "MwSt (7 %)"],
-    rows: [50, 100, 119, 500, 1000].map((b) => [
-      eur2(b),
-      eur2(b / 1.19),
-      eur2(b - b / 1.19),
-      eur2(b / 1.07),
-      eur2(b - b / 1.07),
-    ]),
-    note: "Der häufigste Fehler ist, einfach 19 % vom Bruttobetrag abzuziehen. Das ergibt einen zu niedrigen Nettobetrag — bei 119 € wären es 96,39 € statt der korrekten 100 €.",
-  },
-  sections: [
-    {
-      h3: "Warum 19 % vom Brutto nicht 19 % sind",
-      body: [
-        "Die Mehrwertsteuer wird **auf** den Nettobetrag aufgeschlagen, nicht aus dem Bruttobetrag entnommen. Der Steueranteil bezogen auf den Bruttopreis beträgt deshalb 19 ÷ 119 = **15,97 %**, beim ermäßigten Satz 7 ÷ 107 = 6,54 %. Wer stattdessen 19 % vom Brutto abzieht, rechnet systematisch zu wenig Netto heraus — bei größeren Beträgen summiert sich das schnell.",
-        "Praktisch relevant wird das überall dort, wo aus einem Endpreis rückwärts gerechnet wird: bei Reisekostenabrechnungen, bei der Vorsteuer aus Belegen und bei der Kalkulation eines Verkaufspreises.",
-      ],
-    },
-    {
-      h3: "Umsatzsteuer, Mehrwertsteuer, Vorsteuer",
-      body: [
-        "Im Gesetz heißt die Steuer **Umsatzsteuer**; „Mehrwertsteuer\" ist der umgangssprachliche Begriff für dieselbe Sache. **Vorsteuer** ist wiederum nur die Perspektive: Es ist die Umsatzsteuer, die ein Unternehmen selbst gezahlt hat und von seiner eigenen Umsatzsteuerschuld abziehen darf.",
-        "Kleinunternehmer nach § 19 UStG — Vorjahresumsatz höchstens 25.000 € und im laufenden Jahr nicht über 100.000 € — stellen Rechnungen ohne Umsatzsteuer aus, dürfen dafür aber auch keine Vorsteuer ziehen. Wer hohe Anfangsinvestitionen hat, fährt mit der Regelbesteuerung deshalb oft besser.",
-      ],
-    },
-    {
-      h3: "Wo die Mehrwertsteuer sonst noch auftaucht",
-      body: [
-        "Bei der Vermietung ist die Umsatzsteuer meist ausgeschlossen, was den Vorsteuerabzug kostet — die steuerliche Seite dazu steht unter [Mieteinnahmen versteuern](/mieteinnahmen-versteuern). Beim Dienstwagen fließt die Umsatzsteuer in den geldwerten Vorteil ein: [Firmenwagenrechner](/firmenwagenrechner).",
-        "Für die Einkommensseite sind der [Brutto-Netto-Rechner](/) und der [Einkommensteuer-Rechner](/einkommensteuer-rechner) zuständig — anders als die Umsatzsteuer hängen sie am persönlichen Steuersatz, nicht an einem festen Prozentsatz.",
-      ],
-    },
-  ],
-  source: "§ 12 UStG · § 14 UStG · § 19 UStG",
-};
-
-/* ── /schenkungssteuer-rechner ───────────────────────────────────────── */
-
-const schenkungssteuer: ToolContentConfig = {
-  heading: "Schenkungssteuer 2026: Freibeträge alle zehn Jahre neu",
-  answer:
-    "Bei einer Schenkung stehen Ehepartnern 500.000 €, Kindern 400.000 €, Enkeln 200.000 € und allen übrigen Empfängern 20.000 € steuerfrei zu. Anders als im Erbfall lebt jeder Freibetrag alle zehn Jahre in voller Höhe neu auf — die Frist läuft taggenau ab der jeweiligen Schenkung, nicht kalenderjahrweise.",
-  facts: [
-    { label: "Ehepartner / Lebenspartner", value: "500.000 €" },
-    { label: "Kinder und Stiefkinder", value: "400.000 €" },
-    { label: "Enkel", value: "200.000 €" },
-    { label: "Geschwister, Nichten, Neffen u. a.", value: "20.000 €" },
-    { label: "Freibetrag lebt neu auf", value: "alle 10 Jahre" },
-    { label: "Zusammenrechnung früherer Schenkungen", value: "§ 14 ErbStG" },
-  ],
-  steps: [
-    {
-      title: "Steuerklasse bestimmen",
-      text: "Sie richtet sich nach dem Verwandtschaftsverhältnis und entscheidet über Freibetrag und Steuersatz — nicht zu verwechseln mit der Lohnsteuerklasse.",
-    },
-    {
-      title: "Frühere Schenkungen addieren",
-      text: "Alle Zuwendungen derselben Person aus den letzten zehn Jahren werden zusammengerechnet. Der Freibetrag wird dabei nur einmal gewährt.",
-    },
-    {
-      title: "Freibetrag abziehen",
-      text: "Was nach Abzug des Freibetrags übrig bleibt, ist der steuerpflichtige Erwerb.",
-    },
-    {
-      title: "Tarif anwenden",
-      text: "Der Steuersatz steigt mit dem steuerpflichtigen Erwerb und ist in Steuerklasse I am niedrigsten, in Steuerklasse III am höchsten.",
-    },
-  ],
-  sections: [
-    {
-      h3: "Der Zehnjahresrhythmus ist der wichtigste Hebel",
-      body: [
-        "Weil jeder Freibetrag alle zehn Jahre in voller Höhe neu entsteht, lässt sich Vermögen in Etappen praktisch steuerfrei übertragen. Bei einem Kind sind das über dreißig Jahre viermal 400.000 € — also 1,6 Mio. €, ohne dass ein Cent Schenkungssteuer anfällt. Wer früh beginnt, gewinnt schlicht mehr Zehnjahresfenster.",
-        "Die Frist läuft **taggenau** ab der jeweiligen Schenkung. Und sie wirkt über den Tod hinaus: Schenkungen aus den letzten zehn Jahren vor dem Erbfall werden dem Nachlass hinzugerechnet, weshalb sich der [Erbschaftssteuer-Rechner](/erbschaftssteuer-rechner) und dieser Rechner immer gemeinsam betrachten lassen.",
-      ],
-    },
-    {
-      h3: "Schenkung oder Erbschaft — die zwei echten Unterschiede",
-      body: [
-        "Tarif, Steuerklassen und Freibeträge stehen für beide Steuern im selben Gesetz und sind weitgehend identisch. Nur zwei Punkte weichen ab: Den **Versorgungsfreibetrag** nach § 17 ErbStG gibt es ausschließlich im Erbfall. Dafür stehen die Freibeträge bei Schenkungen alle zehn Jahre neu zur Verfügung, während sie im Erbfall naturgemäß nur einmal greifen.",
-        "Ein weiterer Unterschied betrifft die Eltern: Bei einer Schenkung an die eigenen Eltern gilt nicht die günstige Steuerklasse I, sondern die ungünstigere Einstufung — im Erbfall dagegen schon.",
-      ],
-    },
-    {
-      h3: "Immobilien und der Nießbrauch",
-      body: [
-        "Bei Immobilien lässt sich der steuerpflichtige Wert oft erheblich senken, indem der Schenker sich den **Nießbrauch** vorbehält: Das Eigentum geht über, die Nutzung — Mieteinnahmen oder Wohnrecht — bleibt beim Schenker. Der Kapitalwert dieses Nießbrauchs mindert den Wert der Schenkung, und zwar umso stärker, je jünger der Schenker ist.",
-        "Wer eine vermietete Immobilie überträgt, sollte zusätzlich die laufende Besteuerung kennen: [Mieteinnahmen versteuern](/mieteinnahmen-versteuern). Für die Finanzierung einer selbstgenutzten Immobilie ist der [Immobilienkredit-Rechner](/immobilienkredit-rechner) zuständig, für Kapitalerträge aus geschenktem Vermögen der [Abgeltungssteuer-Rechner](/abgeltungssteuer-rechner).",
-      ],
-    },
-  ],
-  source: "§ 14 ErbStG · § 16 ErbStG · § 19 ErbStG",
-};
 
 /* ── /grundsicherung-rechner ─────────────────────────────────────────── */
 
@@ -270,7 +142,7 @@ const schonvermoegen: ToolContentConfig = {
       h3: "Was gar nicht erst mitzählt",
       body: [
         "Ein **angemessenes selbstgenutztes Eigenheim** oder eine Eigentumswohnung bleiben geschützt, ebenso ein angemessenes Auto und Vermögen, das erkennbar der Altersvorsorge dient — dazu zählen insbesondere [Riester-Verträge](/riester-rechner) und Ansprüche aus der [betrieblichen Altersvorsorge](/bav-rechner). Diese Positionen müssen also nicht aufgelöst werden.",
-        "Bei der Angemessenheit von Haus und Auto kommt es auf die Umstände an — Haushaltsgröße, Wohnfläche, Verkehrswert. Wer eine Immobilie finanziert, findet die Belastungsrechnung im [Immobilienkredit-Rechner](/immobilienkredit-rechner).",
+        "Bei der Angemessenheit von Haus und Auto kommt es auf die Umstände an — Haushaltsgröße, Wohnfläche, Verkehrswert.",
       ],
     },
     {
@@ -349,7 +221,7 @@ const bafoegRueckzahlung: ToolContentConfig = {
     {
       h3: "Berufseinstieg planen",
       body: [
-        "Die Rückzahlung fällt typischerweise in die ersten Berufsjahre. 390 € im Quartal sind planbar, sollten aber im Budget stehen — insbesondere neben einer [Immobilienfinanzierung](/immobilienkredit-rechner), bei der die Bank die BAföG-Rate als laufende Verpflichtung berücksichtigt.",
+        "Die Rückzahlung fällt typischerweise in die ersten Berufsjahre. 390 € im Quartal sind planbar, sollten aber im Budget stehen — insbesondere neben einer Immobilienfinanzierung, bei der die Bank die BAföG-Rate als laufende Verpflichtung berücksichtigt.",
         "Wer noch studiert und nebenher arbeitet, findet die Abgabenregeln im [Werkstudent-Rechner](/werkstudent-rechner) und im [Minijob-Rechner](/minijob-rechner). Die Rückzahlung selbst ist steuerlich nicht absetzbar — anders als Fortbildungskosten, die der [Steuerrückerstattung-Rechner](/steuerrueckerstattung-rechner) abbildet.",
       ],
     },
@@ -565,74 +437,6 @@ const rentenrechner: ToolContentConfig = {
     },
   ],
   source: "§ 63 SGB VI · § 68 SGB VI · § 157 SGB VI",
-};
-
-/* ── /immobilienkredit-rechner ───────────────────────────────────────── */
-
-const immobilienkredit: ToolContentConfig = {
-  heading: "Immobilienkredit 2026: Wie viel Haus ist finanzierbar?",
-  answer:
-    "Als Faustregel sollte die monatliche Kreditrate höchstens rund 35 % des Haushalts-Nettoeinkommens betragen. Aus dieser Rate, dem Eigenkapital, dem Sollzins und der anfänglichen Tilgung ergibt sich das maximal finanzierbare Darlehen. Hinzu kommen Kaufnebenkosten von meist 10 bis 15 % des Kaufpreises, die aus Eigenkapital zu tragen sind.",
-  facts: [
-    { label: "Empfohlene Rate", value: "max. 35 % vom Nettoeinkommen" },
-    { label: "Grunderwerbsteuer", value: "3,5 – 6,5 % je Bundesland" },
-    { label: "Notar und Grundbuch", value: "rund 1,5 – 2 %" },
-    { label: "Maklercourtage", value: "rund 3,57 %" },
-    { label: "Kaufnebenkosten gesamt", value: "meist 10 – 15 %" },
-    { label: "Empfohlene anfängliche Tilgung", value: "2 %, besser 3 %" },
-  ],
-  steps: [
-    {
-      title: "Tragbare Rate bestimmen",
-      text: "Höchstens rund 35 % des Haushalts-Nettoeinkommens, damit Rücklagen und laufende Kosten gedeckt bleiben.",
-    },
-    {
-      title: "Darlehenshöhe ableiten",
-      text: "Die Jahresrate geteilt durch die Summe aus Sollzins und anfänglicher Tilgung ergibt das maximal tragbare Darlehen.",
-    },
-    {
-      title: "Eigenkapital einplanen",
-      text: "Mindestens die Kaufnebenkosten, idealerweise zusätzlich 10 bis 20 % des Kaufpreises. Je mehr Eigenkapital, desto niedriger Zins und Rate.",
-    },
-    {
-      title: "Kaufpreis errechnen",
-      text: "Darlehen plus Eigenkapital minus Kaufnebenkosten ergibt den Kaufpreis, der realistisch darstellbar ist.",
-    },
-  ],
-  table: {
-    caption: "Maximales Darlehen bei 35 % Rate, 3,5 % Zins und 2 % Tilgung",
-    head: ["Netto / Monat", "max. Rate", "Darlehen", "Kaufpreis bei 20 % EK"],
-    rows: [2500, 3500, 4500, 6000].map((n) => {
-      const rate = n * 0.35;
-      const darlehen = (rate * 12) / 0.055; // Zins + anfängliche Tilgung
-      return [eur(n), eur(rate), eur(darlehen), eur(darlehen / 0.8)];
-    }),
-    note: "Vereinfachte Annuitätenrechnung mit 3,5 % Sollzins und 2 % anfänglicher Tilgung. Die Kaufpreisspalte unterstellt 20 % Eigenkapitalanteil am Kaufpreis; die Kaufnebenkosten kommen zusätzlich obendrauf.",
-  },
-  sections: [
-    {
-      h3: "Die Kaufnebenkosten sind der unterschätzte Posten",
-      body: [
-        "Grunderwerbsteuer, Notar, Grundbuch und gegebenenfalls Makler summieren sich auf 10 bis 15 % des Kaufpreises — bei 400.000 € also 40.000 bis 60.000 €. Diese Kosten schaffen **keinen Gegenwert**, den eine Bank beleihen könnte, und müssen deshalb praktisch immer aus Eigenkapital kommen.",
-        "Die Grunderwerbsteuer schwankt erheblich zwischen den Bundesländern — von 3,5 % bis 6,5 %. Bei einer Immobilie im mittleren Preissegment sind das mehrere zehntausend Euro Unterschied allein aufgrund des Standorts.",
-      ],
-    },
-    {
-      h3: "Warum die Tilgung wichtiger ist als der Zins",
-      body: [
-        "Die **anfängliche Tilgung** bestimmt, wie schnell die Restschuld sinkt und wie hoch das Zinsänderungsrisiko am Ende der Zinsbindung ausfällt. Bei 2 % Tilgung dauert die Rückzahlung über 30 Jahre; bei 3 % verkürzt sie sich auf gut 23 Jahre und die Restschuld nach zehn Jahren ist deutlich niedriger.",
-        "Weil das Darlehen aus der Rate abgeleitet wird, senkt eine höhere Tilgung allerdings den finanzierbaren Betrag. Genau hier liegt die eigentliche Entscheidung: mehr Objekt oder mehr Sicherheit. Das verfügbare Nettoeinkommen als Ausgangspunkt liefert der [Brutto-Netto-Rechner](/).",
-      ],
-    },
-    {
-      h3: "Was die Bank noch anrechnet",
-      body: [
-        "In die Haushaltsrechnung fließen alle laufenden Verpflichtungen ein — bestehende Kredite, Leasingraten, Unterhalt und auch eine laufende [BAföG-Rückzahlung](/bafoeg-rueckzahlung-rechner). Ebenso wird ein pauschaler Lebenshaltungsbetrag je Haushaltsmitglied abgezogen.",
-        "Auf der Einnahmenseite zählt das dauerhaft gesicherte Einkommen. Variable Bestandteile wie ein [Bonus](/bonus-steuerrechner) werden meist nur teilweise oder gar nicht berücksichtigt. Wer eine Immobilie vermieten will, sollte zusätzlich die Besteuerung der Mieteinnahmen kennen: [Mieteinnahmen versteuern](/mieteinnahmen-versteuern).",
-      ],
-    },
-  ],
-  source: "Kaufnebenkosten je Bundesland · Annuitätenrechnung",
 };
 
 /* ── /private-krankenversicherung-vs-gesetzlich ──────────────────────── */
@@ -904,15 +708,12 @@ const steuerklasseFinder: ToolContentConfig = {
 /* ── exports ─────────────────────────────────────────────────────────── */
 
 export const TOOL_CONTENT_MORE: Record<string, ToolContentConfig> = {
-  "/mehrwertsteuer-rechner": mehrwertsteuer,
-  "/schenkungssteuer-rechner": schenkungssteuer,
   "/grundsicherung-rechner": grundsicherung,
   "/schonvermoegen-rechner": schonvermoegen,
   "/bafoeg-rueckzahlung-rechner": bafoegRueckzahlung,
   "/bafoeg-rechner": bafoeg,
   "/buergergeld-rechner": buergergeld,
   "/rentenrechner": rentenrechner,
-  "/immobilienkredit-rechner": immobilienkredit,
   "/private-krankenversicherung-vs-gesetzlich": pkvGkv,
   "/steuerfreibetrag-2026": steuerfreibetrag,
   "/brutto-netto-rechner-beamte": beamte,

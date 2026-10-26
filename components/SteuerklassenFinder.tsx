@@ -7,7 +7,7 @@ import {
   ArrowRight, CheckCircle2, Scale, TrendingUp, Wallet2, Info,
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerklasse } from "@/lib/taxCalculator";
-import { getCommonGrossSalaryAmounts } from "@/data/wage-stats";
+import { getSteuerklasse1Amounts } from "@/data/wage-stats";
 
 /**
  * Interactive Steuerklassen-Finder ("Welche Steuerklasse bin ich?").
@@ -194,7 +194,7 @@ export default function SteuerklassenFinder() {
   const sk1PageAmount = useMemo(() => {
     if (result.primary !== 1 || brutto < 500) return null;
     const rounded = Math.round(brutto / 100) * 100;
-    return getCommonGrossSalaryAmounts().includes(rounded) ? rounded : null;
+    return getSteuerklasse1Amounts().includes(rounded) ? rounded : null;
   }, [result, brutto]);
 
   const { current, total } = stepNumber(step, state);

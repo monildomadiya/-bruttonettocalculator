@@ -177,43 +177,61 @@ export function getWagePercentileContext(grossMonthly: number): {
   }
 }
 
-/**
- * Whitelisted, indexable exact-salary amounts.
+/*
+ * Indexable exact-salary amounts — PRUNED 2026-10-26.
  *
- * 1.500–10.000 € in steps of 100, plus the validated Midijob amounts 1.000, 1.200 and 1.300 €
- * (only enabled once the 2026 Übergangsbereich logic in the engine passes its
- * checkpoints — see scripts/midijob.test.mts). New amounts are added here
- * deliberately, never auto-generated for every possible value.
+ * Until then the whitelist was the full grid (1.500–10.000 € in 100-€ steps,
+ * 25.000–100.000 € in 1.000-€ steps): ~270 near-identical pages, most of them
+ * with 0 clicks in 90 days. Kept now: amounts with ≥ 1 click OR ≥ 300
+ * impressions in GSC (90 days to 24.10.2026), plus amounts added for a trend
+ * after 2026-09-30 (too new to judge: 1.000 €, 3.750 €).
+ *
+ * Every other amount still renders on demand (the calculator deep-links to any
+ * gross value), but as `noindex` and outside the sitemap — see
+ * `isIndexableAmountSlug` in app/rechner/[betrag]/page.tsx. Add an amount back
+ * only with search evidence.
  */
-// 1.000 €: added 2026-09-30 after "1000 brutto in netto" rose +150 % in Google Trends (DE, 24 h).
-const APPROVED_MIDIJOB_AMOUNTS = [1000, 1200, 1300];
+const INDEXABLE_BRUTTO = [
+  1000, 1200, 1300, 2100, 2400, 2600, 2800, 3000, 3200, 3300, 3500, 3600, 3750,
+  3800, 4000, 4100, 4400, 5000, 5200, 6500, 6800, 6900, 8600,
+];
+const INDEXABLE_STEUERKLASSE_1 = [
+  1000, 1200, 1300, 1500, 1600, 1800, 1900, 2100, 2300, 2400, 2500, 2600, 2700,
+  2800, 2900, 3000, 3200, 3300, 3400, 3500, 3600, 3700, 3750, 3800, 3900, 4000,
+  4100, 4200, 4300, 4500, 4600, 4700, 4800, 5000, 5100, 5200, 5600, 5700, 5800,
+  6900, 7500, 7900, 8000, 8600, 9000, 9800,
+];
+const INDEXABLE_JAHRESGEHALT = [
+  25000, 29000, 31000, 32000, 33000, 34000, 35000, 36000, 37000, 38000, 39000,
+  40000, 41000, 42000, 43000, 44000, 45000, 48000, 50000, 51000, 52000, 55000,
+  56000, 58000, 59000, 60000, 64000, 65000, 68000, 74000, 75000, 78000, 80000,
+  81000, 93000, 95000, 96000, 98000, 100000,
+];
 
-/**
- * Off-grid monthly amounts (not on the 100-€ grid) with direct search evidence.
- * 3.750 €: "3750 brutto in netto steuerklasse 1" +110 % (Google Trends DE,
- * Thema „steuerklasse“, 30 Tage bis 6.10.2026).
- */
-const APPROVED_OFFGRID_AMOUNTS = [3750];
-
+/** Monthly gross amounts with an indexable all-Steuerklassen page (sorted). */
 export function getCommonGrossSalaryAmounts(): number[] {
-  const amounts: number[] = [...APPROVED_MIDIJOB_AMOUNTS, ...APPROVED_OFFGRID_AMOUNTS];
-  for (let amount = 1500; amount <= 10000; amount += 100) {
-    amounts.push(amount);
-  }
-  return amounts.sort((a, b) => a - b);
+  return [...INDEXABLE_BRUTTO];
+}
+
+/** Monthly gross amounts with an indexable "…-steuerklasse-1" page (sorted). */
+export function getSteuerklasse1Amounts(): number[] {
+  return [...INDEXABLE_STEUERKLASSE_1];
 }
 
 /**
- * Whitelisted, indexable annual-salary amounts for the Jahresgehalt pages
- * ("70000 brutto in netto"-type queries). 25.000–100.000 € in 1.000-€ steps —
- * the range where real salary negotiations and job listings live.
+ * Indexable detail page for a monthly gross amount — the all-Steuerklassen page,
+ * else the Steuerklasse-1 page, else none. Static tables link through this so
+ * they never point at a noindex amount.
  */
+export function grossAmountHref(amount: number): string | null {
+  if (INDEXABLE_BRUTTO.includes(amount)) return `/rechner/${amount}-euro-brutto-netto`;
+  if (INDEXABLE_STEUERKLASSE_1.includes(amount)) return `/rechner/${amount}-euro-brutto-netto-steuerklasse-1`;
+  return null;
+}
+
+/** Annual gross amounts with an indexable Jahresgehalt page (sorted). */
 export function getCommonAnnualSalaryAmounts(): number[] {
-  const amounts: number[] = [];
-  for (let amount = 25000; amount <= 100000; amount += 1000) {
-    amounts.push(amount);
-  }
-  return amounts;
+  return [...INDEXABLE_JAHRESGEHALT];
 }
 
 /**

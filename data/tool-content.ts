@@ -547,7 +547,7 @@ const jahresgehalt: ToolContentConfig = {
     {
       h3: "Wo das Jahresbrutto sonst noch gebraucht wird",
       body: [
-        "Das Bruttojahresgehalt ist die Bezugsgröße für zahlreiche Schwellen: die Versicherungspflichtgrenze für den Wechsel in die [private Krankenversicherung](/private-krankenversicherung-vs-gesetzlich), die Beitragsbemessungsgrenzen der [Sozialversicherung](/beitragsbemessungsgrenze-2026), die steuerfreien Höchstbeträge der [betrieblichen Altersvorsorge](/bav-rechner) und die Bonitätsprüfung bei der [Immobilienfinanzierung](/immobilienkredit-rechner).",
+        "Das Bruttojahresgehalt ist die Bezugsgröße für zahlreiche Schwellen: die Versicherungspflichtgrenze für den Wechsel in die [private Krankenversicherung](/private-krankenversicherung-vs-gesetzlich), die Beitragsbemessungsgrenzen der [Sozialversicherung](/beitragsbemessungsgrenze-2026), die steuerfreien Höchstbeträge der [betrieblichen Altersvorsorge](/bav-rechner) und die Bonitätsprüfung bei einer Immobilienfinanzierung.",
         "Zur Einordnung des eigenen Gehalts im Bundesvergleich dient die Übersicht [Durchschnittsgehalt Deutschland](/durchschnittsgehalt-deutschland); wie sich die Zahlen zwischen den Steuerklassen unterscheiden, zeigt die [Brutto-Netto-Tabelle](/brutto-netto-gehaltstabelle).",
       ],
     },

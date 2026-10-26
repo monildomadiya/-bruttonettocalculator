@@ -57,7 +57,7 @@ export const post: BlogPost = {
   </tbody>
 </table>
 
-<p>Statt 13.200 € sind also nur 2.900 € steuerpflichtig. Bei einem Grenzsteuersatz von rund 31 % bedeutet das etwa 900 € Steuer — nicht 4.800 €. Ihre eigenen Zahlen können Sie im <a href="/mieteinnahmen-versteuern">Rechner für Mieteinnahmen</a> durchspielen.</p>
+<p>Statt 13.200 € sind also nur 2.900 € steuerpflichtig. Bei einem Grenzsteuersatz von rund 31 % bedeutet das etwa 900 € Steuer — nicht 4.800 €. Ihren persönlichen Grenzsteuersatz zeigt der <a href="/einkommensteuer-rechner">Einkommensteuer-Rechner</a>.</p>
 
 <h2>Die Abschreibung ist der größte Posten</h2>
 <p>Die AfA („Absetzung für Abnutzung“) ist meist der wirkungsvollste Abzug — und der, den Einsteiger am häufigsten falsch ansetzen. Drei Regeln sind entscheidend:</p>
@@ -125,7 +125,7 @@ export const post: BlogPost = {
 
 <p>Eine Bagatellgrenze gibt es nicht: Auch kleine Mieteinnahmen sind erklärungspflichtig. Die einzige praktische Ausnahme betrifft die vorübergehende Vermietung einzelner Räume in der selbst bewohnten Wohnung — bleiben die Einnahmen unter 520 € im Jahr, verzichtet die Finanzverwaltung auf den Ansatz (R 21.2 Abs. 1 EStR).</p>
 
-<p>Was am Ende bei Ihnen anfällt, rechnen Sie am schnellsten mit dem <a href="/mieteinnahmen-versteuern">Mieteinnahmen-Rechner</a> aus; Ihren persönlichen Steuersatz zeigt der <a href="/einkommensteuer-rechner">Einkommensteuer-Rechner</a>. Dieser Beitrag ersetzt keine steuerliche Beratung.</p>
+<p>Ihren persönlichen Steuersatz zeigt der <a href="/einkommensteuer-rechner">Einkommensteuer-Rechner</a>. Dieser Beitrag ersetzt keine steuerliche Beratung.</p>
 `,
   faqs: [
     {
@@ -165,9 +165,7 @@ export const post: BlogPost = {
     },
   ],
   relatedCalculators: [
-    "/mieteinnahmen-versteuern",
     "/einkommensteuer-rechner",
-    "/immobilienkredit-rechner",
     "/steuerrueckerstattung-rechner",
   ],
   sources: [

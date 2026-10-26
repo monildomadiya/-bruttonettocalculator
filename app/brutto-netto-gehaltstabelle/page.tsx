@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Calculator as CalcIcon, ChevronRight, ArrowRight, Table2 } from "lucide-react";
 import { calculateNetto, formatEUR } from "@/lib/taxCalculator";
-import { getCommonGrossSalaryAmounts } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, grossAmountHref } from "@/data/wage-stats";
 import { SITE_URL, WEBSITE_ID, ORG_ID } from "@/lib/seo";
 import { siteConfig } from "@/lib/authors";
 import ToolContent from "@/components/ToolContent";
@@ -190,9 +190,13 @@ export default function SalaryHubPage() {
                 return (
                   <tr key={b} className="hover:bg-black/[0.03]">
                     <th scope="row" className="py-3 px-4 font-semibold text-left">
-                      <Link href={`/rechner/${b}-euro-brutto-netto`} className="text-[#16181D] hover:text-[#E60A1C] hover:underline underline-offset-2">
-                        {new Intl.NumberFormat("de-DE").format(b)} €
-                      </Link>
+                      {grossAmountHref(b) ? (
+                        <Link href={grossAmountHref(b)!} className="text-[#16181D] hover:text-[#E60A1C] hover:underline underline-offset-2">
+                          {new Intl.NumberFormat("de-DE").format(b)} €
+                        </Link>
+                      ) : (
+                        <>{new Intl.NumberFormat("de-DE").format(b)} €</>
+                      )}
                     </th>
                     <td className="py-3 px-4 text-right font-mono font-bold">{formatEUR(n26)}</td>
                     <td className="py-3 px-4 text-right font-mono text-black/75">{formatEUR(netto(b, 2026, 3))}</td>
@@ -209,7 +213,7 @@ export default function SalaryHubPage() {
         <p className="mt-3 text-xs sm:text-sm text-black/55">
           Mehr zur Reform:{" "}
           <Link href="/brutto-netto-rechner-2027" className="text-[#E60A1C] font-semibold hover:underline">Steuerreform-Rechner 2027</Link>.
-          Darunter: jeder Betrag in 100-€-Schritten mit eigener Detailseite.
+          Darunter: die meistgesuchten Beträge mit eigener Detailseite.
         </p>
       </section>
 
@@ -217,6 +221,7 @@ export default function SalaryHubPage() {
       <div className="space-y-12">
         {GROUPS.map((group) => {
           const groupAmounts = amounts.filter((a) => a >= group.from && a <= group.to);
+          if (groupAmounts.length === 0) return null;
           return (
             <section key={group.label} aria-labelledby={`group-${group.from}`}>
               <h2

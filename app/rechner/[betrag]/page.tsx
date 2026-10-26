@@ -7,7 +7,7 @@ import {
   ChevronRight, BarChart3, ArrowDown,
 } from "lucide-react";
 import { calculateNetto, formatEUR, Steuerjahr, Steuerklasse, isMidijob2026, midijobArbeitnehmerBemessungMonat } from "@/lib/taxCalculator";
-import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts, getSteuerklasseVariantPages, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, getSteuerklasse1Amounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts, getSteuerklasseVariantPages, getWagePercentileContext, WAGE_STATS_2026 } from "@/data/wage-stats";
 import { getPostBySlug } from "@/lib/blog";
 import Calculator from "@/components/Calculator";
 import ReviewerByline from "@/components/ReviewerByline";
@@ -61,10 +61,11 @@ interface PageProps {
 //    The Steuerklasse-1 variant targets the fast-rising
 //    "<amount> brutto in netto steuerklasse 1" query pattern.
 export async function generateStaticParams() {
-  const amounts = getCommonGrossSalaryAmounts();
   const params: { betrag: string }[] = [];
-  for (const amount of amounts) {
+  for (const amount of getCommonGrossSalaryAmounts()) {
     params.push({ betrag: `${amount}-euro-brutto-netto` });
+  }
+  for (const amount of getSteuerklasse1Amounts()) {
     params.push({ betrag: `${amount}-euro-brutto-netto-steuerklasse-1` });
   }
   // Curated Steuerklasse-III/IV variants (search evidence only)
@@ -143,12 +144,33 @@ const SK_INTRO: Record<Steuerklasse, string> = {
   6: "Steuerklasse VI gilt für den zweiten und jeden weiteren Job. Es gibt keine Freibeträge, daher sind die Abzüge am höchsten.",
 };
 
+type ParsedSlug = NonNullable<ReturnType<typeof parseSlug>>;
+
+/**
+ * Only whitelisted amounts are indexable. Everything else still renders (the
+ * calculator deep-links to any gross value) but carries `noindex` — the
+ * whitelist was pruned on 2026-10-26, see data/wage-stats.ts.
+ */
+function isIndexableAmountSlug(parsed: ParsedSlug): boolean {
+  const { amount, steuerklasse } = parsed;
+  if (parsed.nettoInBrutto) return getNettoInBruttoAmounts().includes(amount);
+  if (parsed.jahresgehalt) return getCommonAnnualSalaryAmounts().includes(amount);
+  if (steuerklasse === null) return getCommonGrossSalaryAmounts().includes(amount);
+  if (steuerklasse === 1) return getSteuerklasse1Amounts().includes(amount);
+  return getSteuerklasseVariantPages().some((v) => v.amount === amount && v.steuerklasse === steuerklasse);
+}
+
 // 3. Unique Metadata per long-tail page
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const parsed = parseSlug(params.betrag);
   if (!parsed) {
     return { title: "Gehalt nicht gefunden" };
   }
+  const metadata = buildMetadata(parsed);
+  return isIndexableAmountSlug(parsed) ? metadata : { ...metadata, robots: { index: false, follow: true } };
+}
+
+function buildMetadata(parsed: ParsedSlug): Metadata {
   const { amount, steuerklasse } = parsed;
 
   // Reverse page ("<amount> € Netto in Brutto")
@@ -341,7 +363,13 @@ export default function LongTailSalaryPage({ params }: PageProps) {
   // Neighboring amounts for internal linking — derived from the whitelist so
   // every link points to a real, indexable, sitemap-included page (never a
   // dynamically-rendered amount that isn't approved for indexing).
-  const whitelist = getCommonGrossSalaryAmounts(); // sorted ascending
+  // Steuerklasse-1 pages chain through their own whitelist (most of them have
+  // no indexable all-classes sibling since the 2026-10-26 prune).
+  const isSk1Page = isSkPage && focusSk === 1;
+  const whitelist = isSk1Page ? getSteuerklasse1Amounts() : getCommonGrossSalaryAmounts(); // sorted ascending
+  const neighbourSuffix = isSk1Page ? "-steuerklasse-1" : "";
+  const hasBruttoPage = getCommonGrossSalaryAmounts().includes(amount);
+  const hasSk1Page = getSteuerklasse1Amounts().includes(amount);
   const wlIndex = whitelist.indexOf(amount);
   const prevAmount = wlIndex > 0 ? whitelist[wlIndex - 1] : null;
   const nextAmount = wlIndex >= 0 && wlIndex < whitelist.length - 1 ? whitelist[wlIndex + 1] : null;
@@ -480,7 +508,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         <Link href="/" className="hover:text-[#16181D] transition-colors">Startseite</Link>
         <ChevronRight size={14} className="text-black/30" />
         <Link href="/#rechner" className="hover:text-[#16181D] transition-colors">Rechner</Link>
-        {isSkPage && (
+        {isSkPage && hasBruttoPage && (
           <>
             <ChevronRight size={14} className="text-black/30" />
             <Link href={`/rechner/${amount}-euro-brutto-netto`} className="hover:text-[#16181D] transition-colors">{formattedBrutto} Brutto in Netto</Link>
@@ -700,14 +728,14 @@ export default function LongTailSalaryPage({ params }: PageProps) {
         </div>
 
         {/* Cross-link between the all-classes page and its Steuerklasse-1 focus page */}
-        {isSkPage ? (
+        {isSkPage ? hasBruttoPage && (
           <Link
             href={`/rechner/${amount}-euro-brutto-netto`}
             className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-[#E60A1C] hover:underline"
           >
             <BarChart3 size={15} /> Alle 6 Steuerklassen für {formattedBrutto} vergleichen <ArrowRight size={14} />
           </Link>
-        ) : (
+        ) : hasSk1Page && (
           <Link
             href={`/rechner/${amount}-euro-brutto-netto-steuerklasse-1`}
             className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-[#E60A1C] hover:underline"
@@ -715,7 +743,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             <CheckCircle2 size={15} /> Ausführliche Seite: {formattedBrutto} Brutto in Netto in Steuerklasse 1 <ArrowRight size={14} />
           </Link>
         )}
-        {!isSkPage &&
+        {(!isSkPage || (isSk1Page && !hasBruttoPage)) &&
           getSteuerklasseVariantPages()
             .filter((v) => v.amount === amount)
             .map((v) => (
@@ -821,7 +849,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             </div>
             {prevAmount ? (
               <Link
-                href={`/rechner/${prevAmount}-euro-brutto-netto`}
+                href={`/rechner/${prevAmount}-euro-brutto-netto${neighbourSuffix}`}
                 className="text-xs font-bold text-[#E60A1C] hover:underline inline-flex items-center gap-1 mt-4"
               >
                 <ArrowLeft size={14} /> Zu {prevAmount} € wechseln
@@ -859,7 +887,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             </div>
             {nextAmount ? (
               <Link
-                href={`/rechner/${nextAmount}-euro-brutto-netto`}
+                href={`/rechner/${nextAmount}-euro-brutto-netto${neighbourSuffix}`}
                 className="text-xs font-bold text-[#E60A1C] hover:underline inline-flex items-center gap-1 mt-4"
               >
                 Zu {nextAmount} € wechseln <ArrowRight size={14} />
@@ -910,7 +938,7 @@ export default function LongTailSalaryPage({ params }: PageProps) {
             {relatedAmounts.map((a) => (
               <Link
                 key={a}
-                href={`/rechner/${a}-euro-brutto-netto`}
+                href={`/rechner/${a}-euro-brutto-netto${neighbourSuffix}`}
                 className="text-xs font-semibold bg-[#F1F3F5] hover:bg-[#FFFFFF] border border-black/[0.08] hover:border-[#E60A1C]/50 text-[#16181D] px-3.5 py-2 rounded-xl transition-all"
               >
                 {new Intl.NumberFormat("de-DE").format(a)} Euro brutto in netto

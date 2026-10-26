@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import titles from "@/data/page-images.client.json";
-import { getCommonGrossSalaryAmounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts } from "@/data/wage-stats";
+import { getCommonGrossSalaryAmounts, getSteuerklasse1Amounts, getCommonAnnualSalaryAmounts, getNettoInBruttoAmounts } from "@/data/wage-stats";
 
 /**
  * Die Seitengrafik (public/seiten-bilder/<slug>.png) sichtbar auf der Seite —
@@ -22,7 +22,7 @@ const nf = (n: number) => new Intl.NumberFormat("de-DE").format(n);
 
 function amountPage(path: string): { caption: string; alt: string } | null {
   let m = /^\/rechner\/(\d+)-euro-brutto-netto(-steuerklasse-1)?$/.exec(path);
-  if (m && getCommonGrossSalaryAmounts().includes(+m[1])) {
+  if (m && (m[2] ? getSteuerklasse1Amounts() : getCommonGrossSalaryAmounts()).includes(+m[1])) {
     const sk = m[2] ? " in Steuerklasse 1" : "";
     return {
       caption: `${nf(+m[1])} € Brutto in Netto 2026${sk}`,
