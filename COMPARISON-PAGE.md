@@ -185,3 +185,28 @@ Verlinkung — niemals mit Exact-Match-Anchor.
 - **Dezember 2026** — Kassen beschließen ihre 2027-Sätze; Fn. 24 und die Kassen-Spalten nachziehen.
 - **Quartalsprüfung** nächster Regeltermin Anfang Januar 2027, sofort bei: gehalt.de rüstet 2027 nach ·
   Finanztip ergänzt Midijob oder Netto→Brutto · netto-check.de ändert seinen Funktionsumfang.
+
+## Nachtrag 15.11.2026: eigene Zellen waren veraltet — zu unseren Lasten
+
+Die Prüfung oben galt den **Wettbewerber**-Fußnoten (1–16). Beim Schreiben der
+`featureList` für das neue `WebApplication`-Schema der Startseite fiel auf, dass
+**unsere eigenen Zellen (Fn. 20–24) nicht mitgeprüft** worden waren — und drei davon
+waren falsch, und zwar jeweils zu unseren Lasten. Belegt an `components/Calculator.tsx`:
+
+| Zeile | stand auf | ist richtig |
+|---|---|---|
+| Eigener Krankenkassen-Zusatzbeitrag | „teilweise · Krankenkassen-Rechner“ | **ja** — Kassenauswahl ist seit 10/2026 im Hauptrechner (`KRANKENKASSEN_2026`) |
+| Zusätzlicher Steuerfreibetrag | **„nein“** | **ja** — „Steuerfreibetrag pro Jahr (ELStAM)“, § 39a EStG (neue Fn. 25) |
+| Privat versichert / ohne RV oder ALV | „teilweise · Beamten-Rechner“ | teilweise, aber anders begründet: **PKV inkl. Arbeitgeberzuschuss und JAEG ist im Hauptrechner**; es fehlen nur die RV-/ALV-Schalter |
+
+Damit ist **Empfehlung #2 von 10/2026 („Krankenkassen-Auswahl in den Hauptrechner“)
+erledigt** — sie stand nur noch deshalb auf der Liste, weil die Matrix es nicht
+mitbekommen hatte. Auch die FAQ-Antwort zu gehalt.de wurde nachgezogen: der
+individuelle Kassensatz ist kein Vorteil von gehalt.de mehr, weil ihn inzwischen
+alle drei Rechner haben. Vergangene Steuerjahre und das Geburtsjahr bleiben echte
+Vorteile von gehalt.de und stehen weiter so in der Tabelle.
+
+**Lehre für die nächste Quartalsprüfung:** die eigenen Fußnoten mitprüfen. Eine
+veraltete Zelle über uns selbst ist kein § 6 UWG-Risiko, kostet aber genau das
+Unterscheidungsmerkmal, für das die Seite gebaut wurde — und hier hat sie uns drei
+Zeilen lang schlechter dargestellt, als wir sind.

@@ -221,23 +221,47 @@ const steps = [
 ];
 
 /* ── Structured Data (JSON-LD) ───────────────────────────────────────── */
-// Mirrors the visible "In 3 Schritten zum Nettogehalt" section (same `steps` array).
-const howToSchema = {
+/**
+ * Der Rechner selbst als eigener Knoten.
+ *
+ * Vorher stand hier ein `HowTo` ("In 3 Schritten zum Nettogehalt"). Google hat
+ * die HowTo-Rich-Results abgeschafft — der Knoten brachte nichts mehr und hat
+ * den Graphen nur verlängert. Der sichtbare 3-Schritte-Abschnitt bleibt, er ist
+ * für Leser da, nicht für ein Snippet.
+ *
+ * Stattdessen sagt der Graph jetzt, dass es überhaupt ein Werkzeug gibt: das ist
+ * das Unterscheidungsmerkmal der Seite gegenüber reinen Ratgeber-Texten.
+ * `featureList` nennt nur, was der Rechner auf DIESER Seite wirklich kann
+ * (geprüft an components/Calculator.tsx) — keine Funktionen aus Unterseiten.
+ */
+const CALCULATOR_ID = "https://bruttonettocalculator.com/#calculator";
+
+const webApplicationSchema = {
   "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "In 3 Schritten zum Nettogehalt",
-  description:
-    "So berechnen Sie Ihr Nettogehalt 2026/2027 mit dem Brutto-Netto-Rechner: Bruttogehalt eingeben, Steuerklasse wählen, Netto sofort ablesen.",
-  totalTime: "PT1M",
-  step: steps.map((s, i) => ({
-    "@type": "HowToStep",
-    position: i + 1,
-    name: s.title,
-    text: s.desc,
-  })),
+  "@type": "WebApplication",
+  "@id": CALCULATOR_ID,
+  name: "Brutto-Netto-Rechner 2027 & 2026",
+  url: "https://bruttonettocalculator.com",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Web",
+  browserRequirements: "Benötigt JavaScript",
+  inLanguage: "de-DE",
+  isAccessibleForFree: true,
+  publisher: { "@id": ORG_ID },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+  featureList: [
+    "Alle sechs Steuerklassen (I–VI)",
+    "Steuerjahre 2026 und 2027 im Vergleich",
+    "Krankenkassen-Zusatzbeitrag je Kasse",
+    "Private Krankenversicherung mit Arbeitgeberzuschuss",
+    "Steuerfreibetrag nach § 39a EStG",
+    "Kirchensteuer je Bundesland",
+    "Kinderfreibeträge und Pflegezuschlag für Kinderlose",
+    "Reformszenarien 2027: ohne Reform, Regierungsentwurf, Stufe 2028",
+  ],
 };
 
-const webAppSchema = {
+const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   inLanguage: "de-DE",
@@ -253,6 +277,9 @@ const webAppSchema = {
   reviewedBy: { "@id": ORG_ID },
   author: { "@id": ORG_ID },
   publisher: { "@id": ORG_ID },
+  // Verbindet die Seite mit dem Rechner-Knoten, damit der Graph zusammenhängt
+  // und nicht aus vier Inseln besteht.
+  mainEntity: { "@id": CALCULATOR_ID },
 };
 
 const faqSchema = {
@@ -268,13 +295,9 @@ const faqSchema = {
   })),
 };
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Startseite", item: "https://bruttonettocalculator.com" },
-  ],
-};
+// Kein BreadcrumbList auf der Startseite: eine Brotkrümelspur mit einem
+// einzigen Element ("Startseite") beschreibt keinen Pfad und ist für die
+// Wurzel-URL sinnlos. Die Unterseiten behalten ihren Breadcrumb.
 
 // Ohne "€" in den Zellen (steht im Kopf/Fußtext): vier Spalten passen so auch bei 375 px ohne Querscrollen.
 const eurZahl = (n: number) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -792,10 +815,9 @@ export default function HomePage() {
       </section>
 
       {/* ── JSON-LD ──────────────────────────────────────────────────── */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
     </>
   );
 }

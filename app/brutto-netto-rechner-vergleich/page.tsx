@@ -108,7 +108,7 @@ const matrix: { feature: string; uns: Cell; gehalt: Cell; ft: Cell }[] = [
   },
   {
     feature: "Eigener Krankenkassen-Zusatzbeitrag",
-    uns: { state: "partial", note: "Krankenkassen-Rechner", fn: 21 },
+    uns: { state: "yes", note: "Kassenauswahl im Rechner", fn: 21 },
     gehalt: { state: "yes", note: "Detailmodus", fn: 3 },
     ft: { state: "yes", note: "Kassenauswahl", fn: 13 },
   },
@@ -120,13 +120,13 @@ const matrix: { feature: string; uns: Cell; gehalt: Cell; ft: Cell }[] = [
   },
   {
     feature: "Privat versichert / ohne Renten- oder Arbeitslosenversicherung",
-    uns: { state: "partial", note: "Beamten-Rechner", fn: 22 },
+    uns: { state: "partial", note: "PKV ja, ohne RV/ALV-Schalter", fn: 22 },
     gehalt: { state: "yes", fn: 3 },
     ft: { state: "yes", fn: 13 },
   },
   {
     feature: "Zusätzlicher Steuerfreibetrag",
-    uns: { state: "no" },
+    uns: { state: "yes", note: "§ 39a EStG (ELStAM)", fn: 25 },
     gehalt: { state: "yes", note: "Jahresfreibetrag", fn: 4 },
     ft: { state: "yes", fn: 13 },
   },
@@ -192,11 +192,12 @@ const fussnoten: Record<number, string> = {
   15: "Finanztip schreibt selbst, man habe sich entschieden, „den Midijob nicht speziell zu berücksichtigen“, und verweist auf den Midijob-Rechner der Deutschen Rentenversicherung.",
   16: "Auf der geprüften Finanztip-Rechnerseite nicht angeboten; Finanztip kann andere Rechner an anderer Stelle führen.",
   20: "Im Hauptrechner wählbar unter „Sozialabgaben 2027“: voreingestellt wie im Lohnsteuer-Programmablaufplan 2027 (Entwurf des BMF vom 08.10.2026: Beitragsbemessungsgrenzen 2027, Pflegezuschlag für Kinderlose 0,9 %), zum Vergleich auch mit dem Stand 2026. Abweichende Sätze rechnet der Sozialabgaben-Rechner 2027.",
-  21: "Im Hauptrechner gilt der durchschnittliche Zusatzbeitrag (2026: 2,9 %); den Satz der eigenen Kasse rechnet der Brutto-Netto-Rechner mit Krankenkasse.",
+  21: "Im Hauptrechner wählen Sie Ihre Krankenkasse direkt aus; voreingestellt ist der durchschnittliche Zusatzbeitrag (2026: 2,9 %). Eine eigene Seite je Kasse hat zusätzlich der Brutto-Netto-Rechner mit Krankenkasse.",
   23: "Der Netto-zu-Brutto-Rechner ist eine eigene Seite (nicht im Hauptrechner) und sucht das Brutto exakt mit derselben Engine, wahlweise für 2026 oder 2027.",
-  22: "Ohne Sozialabgaben und mit privater Krankenversicherung rechnet der Beamten-Rechner; der Hauptrechner geht von gesetzlicher Versicherung aus.",
+  22: "Private Krankenversicherung rechnet der Hauptrechner mit, inklusive Arbeitgeberzuschuss und Versicherungspflichtgrenze. Eigene Schalter für „ohne Rentenversicherung“ oder „ohne Arbeitslosenversicherung“ hat er nicht; ganz ohne Sozialabgaben rechnet der Beamten-Rechner.",
   17: "Die geprüfte Finanztip-Seite trägt den Stand 19. Oktober 2026 und liegt damit vor der BMG-Festlegung vom 30. Oktober 2026; sie nennt den durchschnittlichen Zusatzbeitrag von 2,9 % für 2026 und lässt die eigene Kasse auswählen. Rechnerisch ändert das für 2027 nichts, weil der Durchschnitt unverändert bei 2,9 % blieb — die Angabe ist nur nicht als amtlicher Wert für 2027 ausgewiesen (geprüft 15.11.2026).",
   24: "Der durchschnittliche Zusatzbeitrag 2027 steht seit dem 30. Oktober 2026 amtlich bei 2,9 % (§ 242a SGB V); unser Rechner führt Wert, Datum und Quelle der BMG-Festlegung mit. Der Satz der eigenen Kasse kann darüber liegen und wird erst im Dezember beschlossen.",
+  25: "Im Hauptrechner als „Steuerfreibetrag pro Jahr (ELStAM)“: der vom Finanzamt eingetragene Jahresfreibetrag nach § 39a EStG. Er senkt die Lohnsteuer, nicht die Sozialabgaben.",
 };
 // Aufsteigend sortiert. Ganzzahlige Objekt-Schlüssel ordnet JavaScript ohnehin
 // numerisch, unabhängig von der Einfügereihenfolge — der Sort hält die Reihenfolge
@@ -222,7 +223,7 @@ const faqs = [
   },
   {
     q: "Wo liegen die Stärken von gehalt.de?",
-    a: "gehalt.de gehört zur Stepstone-Gruppe und hat seinen Schwerpunkt in einer großen Gehaltsdatenbank mit Vergleichswerten für Berufe und Branchen. Beim Rechner selbst sind die Berechnung vergangener Steuerjahre (2024 und 2025) und der Detailmodus mit Geburtsjahr und individuellem Krankenkassensatz echte Vorteile.",
+    a: "gehalt.de gehört zur Stepstone-Gruppe und hat seinen Schwerpunkt in einer großen Gehaltsdatenbank mit Vergleichswerten für Berufe und Branchen. Beim Rechner selbst sind die Berechnung vergangener Steuerjahre (2024 und 2025) und das Geburtsjahr im Detailmodus echte Vorteile; einen individuellen Krankenkassensatz können inzwischen alle drei Rechner.",
   },
   {
     q: "Warum zeigen zwei Rechner unterschiedliche Nettobeträge?",
