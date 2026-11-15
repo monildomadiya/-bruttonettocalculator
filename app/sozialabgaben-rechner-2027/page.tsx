@@ -149,7 +149,7 @@ const FAQS = [
     a:
       "Der GKV-Schätzerkreis hat am " +
       SK.datum +
-      " einen rechnerischen durchschnittlichen Zusatzbeitrag von unverändert 2,9 % ermittelt; das Bundesgesundheitsministerium setzt den amtlichen Wert bis zum 1. November 2026 fest. Was Ihre eigene Kasse 2027 verlangt, beschließt sie im Dezember — viele Kassen liegen schon 2026 über dem Durchschnitt. Im Rechner wählen Sie den Satz selbst.",
+      " einen rechnerischen durchschnittlichen Zusatzbeitrag von unverändert 2,9 % ermittelt; das Bundesgesundheitsministerium hat diesen Wert am 30. Oktober 2026 amtlich festgelegt. Was Ihre eigene Kasse 2027 verlangt, beschließt sie im Dezember — viele Kassen liegen schon 2026 über dem Durchschnitt. Im Rechner wählen Sie den Satz selbst.",
   },
   {
     q: "Zahlt der Arbeitgeber 2027 auch mehr?",

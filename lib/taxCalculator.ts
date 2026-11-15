@@ -60,8 +60,8 @@ export type Szenario = "ohneReform" | "entwurf2027" | "stufe2028";
  *    (Kabinettsbeschluss 07.10.2026, SV_RECHENGROESSEN_2027_ENTWURF),
  *  - Pflege-Zuschlag für Kinderlose 0,9 statt 0,6 Punkte
  *    (Regierungsentwurf Pflegeneuordnungsgesetz, Kabinett 30.09.2026),
- *  - übrige Sätze wie 2026 (Ø-Zusatzbeitrag 2,9 % laut Schätzerkreis
- *    14.10.2026, RV 18,6 %, ALV 2,6 %, PV-Grundbeitrag 3,6 %).
+ *  - übrige Sätze wie 2026 (Ø-Zusatzbeitrag 2,9 %, vom BMG am 30.10.2026
+ *    festgelegt, RV 18,6 %, ALV 2,6 %, PV-Grundbeitrag 3,6 %).
  * "beschlossen" rechnet zum Vergleich mit den amtlichen Werten 2026 weiter —
  * für den Fall, dass Bundesrat oder Bundestag die Werte 2027 nicht beschließen.
  */

@@ -8,7 +8,11 @@ import {
   BBG_2026,
   BAV_2026,
   UEBERGANGSBEREICH_2026,
+  SV_RECHENGROESSEN_2027_ENTWURF as SV_2027,
+  PV_ZUSCHLAG_KINDERLOS_2027_ENTWURF,
 } from "@/lib/taxCalculator";
+import { MINDESTLOHN, MINIJOB_GRENZE, BBG_2027_STATUS } from "@/lib/config2027";
+import { ZUSATZBEITRAG_DURCHSCHNITT_2027, ZUSATZBEITRAG_2027_FESTLEGUNG } from "@/data/krankenkassen";
 import { siteConfig } from "@/lib/authors";
 
 /**
@@ -43,6 +47,14 @@ const de = (n: number, digits = 0) =>
   }).format(n);
 
 const pct = (frac: number, digits = 1) => de(frac * 100, digits) + " %";
+
+/**
+ * Durchschnittlicher Zusatzbeitrag 2027, fertig formatiert. Anders als die
+ * Beitragssätze ist er in data/krankenkassen.ts schon eine Prozentzahl (2.9),
+ * keine Fraktion — pct() würde ihn mit 100 multiplizieren.
+ */
+const zb2027 =
+  de(ZUSATZBEITRAG_DURCHSCHNITT_2027 ?? ZUSATZBEITRAG_2027_FESTLEGUNG.wert, 1) + " %";
 
 /** Tool inventory, generated from the shared navigation source. */
 function toolSections(): string {
@@ -95,9 +107,9 @@ Sozialversicherung 2026 (Arbeitnehmeranteil):
 - Beitragsbemessungsgrenze Renten-/Arbeitslosenversicherung: ${de(BBG_2026.rvAlvJahr)} € im Jahr (${de(BBG_2026.rvAlvJahr / 12, 2)} € im Monat)
 
 Beschäftigungsgrenzen 2026:
-- Gesetzlicher Mindestlohn: 13,90 €/Stunde ab 1.1.2026, 14,60 €/Stunde ab 1.1.2027
-- Minijob-Grenze: ${de(UEBERGANGSBEREICH_2026.untergrenze)} € im Monat (${de(UEBERGANGSBEREICH_2026.untergrenze * 12)} € im Jahr), ab 1.1.2027 633 €; Rentenversicherungs-Eigenanteil 3,6 %
-- Übergangsbereich (Midijob): ${de(UEBERGANGSBEREICH_2026.untergrenze + 0.01, 2)} € bis ${de(UEBERGANGSBEREICH_2026.obergrenze)} € im Monat, Faktor F ${String(UEBERGANGSBEREICH_2026.faktorF).replace(".", ",")}; ab 1.1.2027 633,01 € bis 2.000 €
+- Gesetzlicher Mindestlohn: ${de(MINDESTLOHN[2026], 2)} €/Stunde ab 1.1.2026, ${de(MINDESTLOHN[2027], 2)} €/Stunde ab 1.1.2027
+- Minijob-Grenze: ${de(UEBERGANGSBEREICH_2026.untergrenze)} € im Monat (${de(UEBERGANGSBEREICH_2026.untergrenze * 12)} € im Jahr), ab 1.1.2027 ${de(MINIJOB_GRENZE[2027])} €; Rentenversicherungs-Eigenanteil 3,6 %
+- Übergangsbereich (Midijob): ${de(UEBERGANGSBEREICH_2026.untergrenze + 0.01, 2)} € bis ${de(UEBERGANGSBEREICH_2026.obergrenze)} € im Monat, Faktor F ${String(UEBERGANGSBEREICH_2026.faktorF).replace(".", ",")}; ab 1.1.2027 ${de(MINIJOB_GRENZE[2027] + 0.01, 2)} € bis ${de(UEBERGANGSBEREICH_2026.obergrenze)} €
 - Werkstudenten: nur Rentenversicherung ${pct(BBG_2026.anSatzRv)}, höchstens 20 Wochenstunden während der Vorlesungszeit
 - Betriebliche Altersvorsorge (§ 3 Nr. 63 EStG): steuerfrei bis ${de((BAV_2026.bbgRvJahr * BAV_2026.steuerFreiProzent) / 12)} € im Monat, sozialabgabenfrei bis ${de((BAV_2026.bbgRvJahr * BAV_2026.svFreiProzent) / 12)} € im Monat
 - Entfernungspauschale: 0,38 € je Entfernungskilometer ab dem ersten Kilometer (seit 1.1.2026; die frühere Staffelung mit 0,30 € für die ersten 20 km ist entfallen)
@@ -110,6 +122,17 @@ Steuerjahr 2027/2028 (Regierungsentwurf, noch nicht verkündet):
 - Gegenfinanzierung: Minijob-Pauschsteuer 2 % → 5 %; Steuerabzug für Handwerkerleistungen 20 % → 15 % (höchstens 900 € statt 1.200 €); steuerfreie Sonn- und Feiertagszuschläge bis 75 € Grundlohn je Stunde statt 50 €
 - Quelle: Regierungsentwurf EStRefG 2027, Kabinettsbeschluss vom 02.09.2026, Artikel 1 und 2 — noch kein geltendes Recht
 - Diese Werte stammen wörtlich aus dem Regierungsentwurf, sind aber noch nicht geltendes Recht — beim Zitieren als Entwurfsstand vom 02.09.2026 kennzeichnen.
+
+Sozialversicherung 2027 (eigenes Verfahren, nicht Teil der Steuerreform):
+- Durchschnittlicher Zusatzbeitrag GKV: ${zb2027} — vom Bundesgesundheitsministerium am ${ZUSATZBEITRAG_2027_FESTLEGUNG.datum} festgelegt (§ 242a SGB V), unverändert gegenüber 2026. Amtlich und zitierfest. Die einzelnen Krankenkassen beschließen ihre eigenen Sätze im Dezember 2026 und können darüber liegen.
+- Beitragsbemessungsgrenze Renten-/Arbeitslosenversicherung: ${de(SV_2027.rvAlvBbgMonat)} € im Monat (${de(SV_2027.rvAlvBbgJahr)} € im Jahr)
+- Beitragsbemessungsgrenze Kranken-/Pflegeversicherung: ${de(SV_2027.kvPvBbgMonat)} € im Monat (${de(SV_2027.kvPvBbgJahr)} € im Jahr)
+- Versicherungspflichtgrenze (Wechsel in die PKV): ${de(SV_2027.versicherungspflichtgrenzeMonat, 2)} € im Monat (${de(SV_2027.versicherungspflichtgrenzeJahr)} € im Jahr)
+- Bezugsgröße: ${de(SV_2027.bezugsgroesseMonat)} € im Monat; vorläufiges Durchschnittsentgelt ${de(SV_2027.durchschnittsentgeltVorlaeufig2027)} €
+- Pflegeversicherung, Zuschlag für Kinderlose: ${pct(PV_ZUSCHLAG_KINDERLOS_2027_ENTWURF)} statt 0,6 % (Regierungsentwurf Pflegereform, Kabinettsbeschluss 30.09.2026) — Entwurfsstand
+- Status der Beitragsbemessungsgrenzen: ${BBG_2027_STATUS.satz}. Beim Zitieren als Kabinettsbeschluss kennzeichnen, nicht als geltendes Recht.
+- Quelle Zusatzbeitrag: ${ZUSATZBEITRAG_2027_FESTLEGUNG.quelle}
+- Quelle Rechengrößen: ${SV_2027.quelleKabinett}
 
 ## Österreich: Rechengrößen 2026 und 2027 (zitierfähig)
 - Steuerstufen 2026: 0 % bis ${de(AT_2026.tarif[0].bis)} €, 20 % bis ${de(AT_2026.tarif[1].bis)} €, 30 % bis ${de(AT_2026.tarif[2].bis)} €, 40 % bis ${de(AT_2026.tarif[3].bis)} €, 48 % bis ${de(AT_2026.tarif[4].bis)} €, 50 % bis 1 Mio. €, 55 % darüber (§ 33 EStG 1988)

@@ -232,7 +232,7 @@ export default function MinijobRechner() {
             <br />
             ** Beschlossen mit dem GKV-Beitragssatzstabilisierungsgesetz (Bundesgesetzblatt vom 29.07.2026): allgemeiner
             Beitragssatz 14,6 % plus durchschnittlicher Zusatzbeitrag. 17,5 % gelten, wenn der Durchschnitt 2027 bei 2,9 %
-            bleibt; das BMG legt ihn bis zum 1. November 2026 fest. Auch diesen Beitrag zahlt allein der Arbeitgeber.
+            bleibt — das BMG hat ihn am 30. Oktober 2026 genau darauf festgelegt. Auch diesen Beitrag zahlt allein der Arbeitgeber.
           </p>
 
           <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[#16181D] pt-4">

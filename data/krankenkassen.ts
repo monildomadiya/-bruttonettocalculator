@@ -36,12 +36,29 @@ export const ZUSATZBEITRAG_STAND_ISO = "2026-10-01";
 export const DURCHSCHNITT_ZUSATZBEITRAG_2026 = 2.9;
 
 /**
- * Durchschnittlicher Zusatzbeitrag 2027 — `null`, bis das BMG ihn im
- * Bundesanzeiger bekannt gibt (§ 242a SGB V: bis zum 1. November 2026). Sobald
- * er feststeht: hier eintragen — die Kassenseiten und der Hub zeigen ihn dann
- * automatisch im Abschnitt "Zusatzbeitrag 2027".
+ * Amtlicher durchschnittlicher Zusatzbeitrag 2027 (§ 242a SGB V): vom BMG am
+ * 30.10.2026 auf unveränderte 2,9 % festgelegt, auf Grundlage des
+ * GKV-Schätzerkreises vom 14.10.2026. Reiner Rechenwert — die einzelnen
+ * Kassen beschließen ihre eigenen Sätze im Dezember (Feld `zusatzbeitrag2027`).
+ * Beleg und Datum stehen in `ZUSATZBEITRAG_2027_FESTLEGUNG`.
  */
-export const ZUSATZBEITRAG_DURCHSCHNITT_2027: number | null = null;
+export const ZUSATZBEITRAG_DURCHSCHNITT_2027: number | null = 2.9;
+
+/**
+ * Die BMG-Festlegung selbst — Datum und Beleg, damit die Seiten den Wert
+ * zitieren können, statt ihn nur zu behaupten.
+ * Quelle: BMG-Pressemitteilung vom 30.10.2026 („Zusatzbeitragssatz bleibt auch
+ * 2027 stabil“), am selben Tag bestätigt vom vdek. Eine Fundstelle im
+ * Bundesanzeiger nennen beide Mitteilungen nicht — deshalb steht hier die
+ * Pressemitteilung und keine erfundene BAnz-Nummer.
+ */
+export const ZUSATZBEITRAG_2027_FESTLEGUNG = {
+  wert: 2.9,
+  datum: "30. Oktober 2026",
+  iso: "2026-10-30",
+  quelle: "https://www.bundesgesundheitsministerium.de/presse/pressemitteilungen/zusatzbeitragssatz-gkv-2027-festgelegt",
+  quelleName: "BMG — Zusatzbeitragssatz bleibt auch 2027 stabil (30.10.2026)",
+} as const;
 
 /**
  * Ergebnis des GKV-Schätzerkreises für 2027 (bekannt gegeben am 14.10.2026):

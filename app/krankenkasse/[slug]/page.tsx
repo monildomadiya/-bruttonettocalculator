@@ -201,7 +201,7 @@ export default async function KrankenkassenDetailSeite(props: { params: Promise<
           ? `Ab dem 1. Januar 2027 erhebt die ${kasse.name} einen Zusatzbeitrag von ${fmtPct(kasse.zusatzbeitrag2027)} ` +
             `(2026: ${fmtPct(kasse.zusatzbeitrag)}). Bei einer Erhöhung können Sie bis Ende Januar 2027 kündigen.`
           : `Das steht noch nicht fest. Die ${kasse.name} beschließt ihren Satz für 2027 in der Regel im Dezember 2026; ` +
-            `vorher gibt das Bundesgesundheitsministerium bis zum 1. November den durchschnittlichen Zusatzbeitrag 2027 bekannt. ` +
+            `der durchschnittliche Zusatzbeitrag 2027 steht seit dem 30. Oktober 2026 amtlich bei 2,9 %. ` +
             `2026 liegt der Satz der ${kasse.name} bei ${fmtPct(kasse.zusatzbeitrag)}. Erhöht die Kasse zum 1. Januar, ` +
             `können Sie bis Ende Januar 2027 kündigen und wechseln.`,
     },

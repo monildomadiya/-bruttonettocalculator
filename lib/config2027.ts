@@ -8,8 +8,8 @@
  *   nach jedem Verfahrensschritt           VERFAHRENSSCHRITT (→ LEGISLATION_STATUS) und
  *   (nächster: 2./3. Lesung im Bundestag)  lastUpdated der betroffenen Seiten in
  *                                          lib/pageDates.ts anheben
- *   bis 1.11.2026 (BMG-Bekanntgabe)        ZUSATZBEITRAG_DURCHSCHNITT_2027 in
- *                                          data/krankenkassen.ts setzen
+ *   [erledigt 30.10.2026]                  ZUSATZBEITRAG_DURCHSCHNITT_2027 in
+ *                                          data/krankenkassen.ts = 2,9
  *   1.12.2026                              TABLE_TITLE_2027_FIRST = true
  *   BMF veröffentlicht den PAP 2027        Engine prüfen, dann LST_2027_OFFICIAL = true
  *   Bundesrat stimmt den SV-Rechengrößen   BBG_2027_STATUS anpassen
@@ -22,7 +22,7 @@
 import { ENTWURF, SV_RECHENGROESSEN_2027_ENTWURF } from "@/lib/taxCalculator";
 
 /** Letzter Verfahrensschritt — nach der 2./3. Lesung hier anpassen. */
-const VERFAHRENSSCHRITT = "Bundesrat-Stellungnahme am 16. Oktober, Anhörung im Finanzausschuss am 4. November 2026";
+const VERFAHRENSSCHRITT = "Anhörung im Finanzausschuss am 4. November 2026, 2./3. Lesung im Bundestag steht aus";
 
 /**
  * Stand des Gesetzgebungsverfahrens zum Einkommensteuerreformgesetz 2027.
@@ -31,7 +31,7 @@ const VERFAHRENSSCHRITT = "Bundesrat-Stellungnahme am 16. Oktober, Anhörung im 
  */
 export const LEGISLATION_STATUS = {
   drucksache: "BT-Drs. 21/8235",
-  /** "2027 nach Regierungsentwurf (BT-Drs. 21/8235) · Bundesrat-Stellungnahme am 16. Oktober, Anhörung im Finanzausschuss am 4. November 2026" */
+  /** "2027 nach Regierungsentwurf (BT-Drs. 21/8235) — Anhörung im Finanzausschuss am 4. November 2026, 2./3. Lesung im Bundestag steht aus" */
   short: `2027 nach Regierungsentwurf (BT-Drs. 21/8235) · ${VERFAHRENSSCHRITT}`,
   /** Nur der Verfahrensschritt, für Meta-Beschreibungen (dort ist Platz knapp). */
   schritt: VERFAHRENSSCHRITT,

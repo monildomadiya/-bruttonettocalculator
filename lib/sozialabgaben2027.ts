@@ -15,9 +15,9 @@
  *    Bundesregierung (19.11.2025) bis einschließlich 2027 bei 18,6 %; erst 2028
  *    steigt er. 18,8 % ist nur das Risikoszenario, falls der Bundeszuschuss
  *    gekürzt wird (DRV: +0,2 Punkte) — im Rechner zuschaltbar.
- *  - Durchschnittlicher KV-Zusatzbeitrag: GKV-Schätzerkreis vom 14.10.2026
- *    rechnerisch unverändert 2,9 %; amtlich setzt ihn das BMG bis 1.11.2026 fest
- *    (`ZUSATZBEITRAG_2027_SCHAETZERKREIS` in data/krankenkassen.ts).
+ *  - Durchschnittlicher KV-Zusatzbeitrag: vom BMG am 30.10.2026 auf unveränderte
+ *    2,9 % festgelegt (§ 242a SGB V), auf Grundlage des GKV-Schätzerkreises vom
+ *    14.10.2026 (`ZUSATZBEITRAG_2027_FESTLEGUNG` in data/krankenkassen.ts).
  *  - Pflegeversicherung: Grundbeitrag 3,6 % bleibt; der Kinderlosenzuschlag
  *    soll nach dem Regierungsentwurf des Pflegeneuordnungsgesetzes (Kabinett
  *    30.09.2026) von 0,6 auf 0,9 Punkte steigen — im Rechner zuschaltbar.

@@ -126,7 +126,7 @@ const faqs = [
   },
   {
     q: "Warum sind die Werte für 2027 vorläufig?",
-    a: "Weil die maßgeblichen Regeln noch nicht verkündet sind. Steuertarif, Grundfreibetrag und Arbeitnehmer-Pauschbetrag stammen aus dem Regierungsentwurf, den Bundestag und Bundesrat noch beschließen müssen. Die Beitragsbemessungsgrenzen 2027 hat das Bundeskabinett am 7. Oktober 2026 beschlossen, die Zustimmung des Bundesrats steht noch aus. Beim durchschnittlichen Zusatzbeitrag hat der GKV-Schätzerkreis am 14. Oktober 2026 unverändert 2,9 % errechnet; amtlich gibt ihn das Bundesgesundheitsministerium bis zum 1. November 2026 bekannt. Endgültig sind schon der Mindestlohn von 14,60 € und die Minijob-Grenze von 633 €.",
+    a: "Weil die maßgeblichen Regeln noch nicht verkündet sind. Steuertarif, Grundfreibetrag und Arbeitnehmer-Pauschbetrag stammen aus dem Regierungsentwurf, den Bundestag und Bundesrat noch beschließen müssen. Die Beitragsbemessungsgrenzen 2027 hat das Bundeskabinett am 7. Oktober 2026 beschlossen, die Zustimmung des Bundesrats steht noch aus. Beim durchschnittlichen Zusatzbeitrag ist das anders: Den hat das Bundesgesundheitsministerium am 30. Oktober 2026 amtlich auf unveränderte 2,9 % festgelegt. Endgültig sind schon der Mindestlohn von 14,60 € und die Minijob-Grenze von 633 €.",
   },
   {
     q: "Gilt das Tool auch als Gehaltsrechner mit Auto (Firmenwagenrechner & 1%-Regelung)?",
@@ -503,8 +503,9 @@ export default function HomePage() {
             Was ändert sich 2027 beim Nettogehalt?
           </h3>
           <p className="text-sm sm:text-base text-black/75 leading-relaxed max-w-3xl mb-4">
-            Alle Werte, mit denen der Rechner 2027 rechnet, und wie verbindlich sie heute sind. Nächste Schritte:
-            amtlicher Zusatzbeitrag bis 1. November, Anhörung im Finanzausschuss am 4. November 2026.
+            Alle Werte, mit denen der Rechner 2027 rechnet, und wie verbindlich sie heute sind. Der Zusatzbeitrag 2027 steht
+            seit dem 30. Oktober 2026 amtlich fest (2,9 %), die Anhörung im Finanzausschuss war am 4. November 2026;
+            nächster Schritt ist die 2./3. Lesung im Bundestag.
           </p>
           <Werte2027Tabelle />
           <p className="text-sm text-black/70 leading-relaxed mt-4">

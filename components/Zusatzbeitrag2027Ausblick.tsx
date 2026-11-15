@@ -5,6 +5,7 @@ import {
   DURCHSCHNITT_ZUSATZBEITRAG_2026,
   ZUSATZBEITRAG_DURCHSCHNITT_2027,
   ZUSATZBEITRAG_2027_SCHAETZERKREIS as SK,
+  ZUSATZBEITRAG_2027_FESTLEGUNG as FESTLEGUNG,
   type Krankenkasse,
 } from "@/data/krankenkassen";
 import { SV_RECHENGROESSEN_2027_ENTWURF, formatEUR } from "@/lib/taxCalculator";
@@ -45,7 +46,7 @@ export default function Zusatzbeitrag2027Ausblick({
       erledigt: true,
     },
     {
-      datum: "bis 1. November 2026",
+      datum: durchschnitt2027 !== null ? FESTLEGUNG.datum : "bis 1. November 2026",
       text:
         durchschnitt2027 !== null
           ? `Das Bundesgesundheitsministerium hat den durchschnittlichen Zusatzbeitrag 2027 auf ${pct(durchschnitt2027)} festgelegt (2026: ${pct(DURCHSCHNITT_ZUSATZBEITRAG_2026)}).`

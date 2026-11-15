@@ -14,6 +14,7 @@ import {
   DURCHSCHNITT_ZUSATZBEITRAG_2026,
   ZUSATZBEITRAG_DURCHSCHNITT_2027,
   ZUSATZBEITRAG_2027_SCHAETZERKREIS,
+  ZUSATZBEITRAG_2027_FESTLEGUNG,
 } from "@/data/krankenkassen";
 
 /**
@@ -71,8 +72,8 @@ const ZEILEN: Zeile[] = [
     stufe: zusatzbeitrag2027 !== null ? "fest" : "entwurf",
     stand:
       zusatzbeitrag2027 !== null
-        ? "vom Bundesgesundheitsministerium festgelegt"
-        : `Schätzerkreis ${ZUSATZBEITRAG_2027_SCHAETZERKREIS.datum}; amtlich bis 1. November`,
+        ? `BMG-Festlegung vom ${ZUSATZBEITRAG_2027_FESTLEGUNG.datum} (§ 242a SGB V)`
+        : `Schätzerkreis ${ZUSATZBEITRAG_2027_SCHAETZERKREIS.datum}; amtlicher Wert steht aus`,
   },
   {
     wert: "Pflege: Zuschlag für Kinderlose",

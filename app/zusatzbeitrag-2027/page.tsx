@@ -195,7 +195,7 @@ export default function Zusatzbeitrag2027Page() {
           )}{" "}
           {anzahl2027 > 0
             ? `${anzahl2027} von ${KRANKENKASSEN_2026.length} Kassen dieser Auswahl haben ihren Satz für 2027 schon veröffentlicht.`
-            : "Bis dahin gelten die Sätze 2026:"}{" "}
+            : "Die Kassen beschließen ihre eigenen Sätze meist im Dezember; bis dahin gelten die Sätze 2026:"}{" "}
           Die günstigste Kasse unserer Auswahl ist die {GUENSTIGSTE_KASSE.name} mit {pct(GUENSTIGSTE_KASSE.zusatzbeitrag)}, die
           teuerste die {TEUERSTE_KASSE.name} mit {pct(TEUERSTE_KASSE.zusatzbeitrag)}. Bei {formatEUR(BEISPIEL)} brutto zahlen Sie bei
           der teuersten Kasse <strong>{formatEUR(spanneMonat)} im Monat</strong> mehr als bei der günstigsten, für dieselben

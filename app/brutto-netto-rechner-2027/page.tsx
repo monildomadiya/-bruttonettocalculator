@@ -176,7 +176,7 @@ const faqs = [
   },
   {
     q: "Was ist das EStRefG 2027?",
-    a: "Das Einkommensteuerreformgesetz 2027 ist das Gesetzesvorhaben, mit dem die Bundesregierung den Einkommensteuertarif reformieren will. Das Bundesfinanzministerium hat den Referentenentwurf am 18. August 2026 vorgelegt; das Bundeskabinett hat den Regierungsentwurf am 2. September 2026 beschlossen. Seit dem 28. September 2026 liegt er dem Bundestag als Drucksache 21/8235 vor. Am 8. Oktober 2026 hat ihn der Bundestag in erster Lesung beraten und an den Finanzausschuss überwiesen, der ihn federführend berät; am 16. Oktober 2026 hat der Bundesrat Stellung genommen, ohne Tarif oder Grundfreibetrag in Frage zu stellen. Die öffentliche Anhörung im Finanzausschuss ist am 4. November 2026. Artikel 1 fasst § 32a Absatz 1 EStG für den Veranlagungszeitraum 2027 neu, Artikel 2 für 2028. Enthalten sind außerdem ein höherer Arbeitnehmer-Pauschbetrag, höheres Kindergeld, höhere Kinderfreibeträge sowie Gegenfinanzierungsmaßnahmen.",
+    a: "Das Einkommensteuerreformgesetz 2027 ist das Gesetzesvorhaben, mit dem die Bundesregierung den Einkommensteuertarif reformieren will. Das Bundesfinanzministerium hat den Referentenentwurf am 18. August 2026 vorgelegt; das Bundeskabinett hat den Regierungsentwurf am 2. September 2026 beschlossen. Seit dem 28. September 2026 liegt er dem Bundestag als Drucksache 21/8235 vor. Am 8. Oktober 2026 hat ihn der Bundestag in erster Lesung beraten und an den Finanzausschuss überwiesen, der ihn federführend berät; am 16. Oktober 2026 hat der Bundesrat Stellung genommen, ohne Tarif oder Grundfreibetrag in Frage zu stellen. Die öffentliche Anhörung im Finanzausschuss fand am 4. November 2026 statt; die 2./3. Lesung im Bundestag steht aus. Artikel 1 fasst § 32a Absatz 1 EStG für den Veranlagungszeitraum 2027 neu, Artikel 2 für 2028. Enthalten sind außerdem ein höherer Arbeitnehmer-Pauschbetrag, höheres Kindergeld, höhere Kinderfreibeträge sowie Gegenfinanzierungsmaßnahmen.",
   },
   {
     q: "Gilt dieser Rechner auch für Österreich?",
@@ -314,7 +314,7 @@ export default function Rechner2027Page() {
           {eur(GRUNDFREIBETRAG.entwurf2027)} €, Arbeitnehmer-Pauschbetrag{" "}
           {eur(ARBEITNEHMER_PAUSCHBETRAG.reform)} € und oben ein neuer Spitzensatz von 47 %.
           Seit dem 28. September 2026 liegt der Entwurf dem Bundestag als Drucksache 21/8235 vor; nach
-          der ersten Lesung am 8. Oktober 2026 berät ihn jetzt der Finanzausschuss (Anhörung am 4. November 2026). Verkündet ist das Gesetz noch nicht —
+          der ersten Lesung am 8. Oktober 2026 berät ihn jetzt der Finanzausschuss (Anhörung am 4. November 2026 war öffentlich). Verkündet ist das Gesetz noch nicht —
           Bundestag und Bundesrat müssen noch zustimmen, deshalb steht „Ohne Reform“ weiter als
           Untergrenze daneben. Ihr reguläres Netto für 2026 und 2027 ohne Szenarien rechnet der{" "}
           <Link href="/" className="text-[#E60A1C] font-semibold hover:underline">

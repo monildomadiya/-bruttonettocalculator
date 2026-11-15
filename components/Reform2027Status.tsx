@@ -96,10 +96,10 @@ const gesetzgebung: Schritt[] = [
   },
   {
     titel: "Anhörung im Finanzausschuss",
-    status: "offen",
+    status: "erledigt",
     datum: "4. November 2026",
     detail:
-      "Der federführende Finanzausschuss hört am 4. November 2026 von 11 bis 12.30 Uhr Sachverständige zum Gesetzentwurf an (öffentlich, Übertragung auf bundestag.de). Danach berät der Ausschuss die endgültige Fassung — hier können sich Beträge noch ändern, etwa beim Tarif oder bei der Gegenfinanzierung.",
+      "Der federführende Finanzausschuss hat Sachverständige zum Gesetzentwurf angehört. Mehrere Sachverständige kritisierten den Entwurf, unter anderem den aus ihrer Sicht zu niedrig angesetzten Grundfreibetrag. Der Ausschuss berät jetzt die endgültige Fassung — hier können sich Beträge noch ändern, etwa beim Tarif oder bei der Gegenfinanzierung.",
   },
   {
     titel: "Bundestag (2./3. Lesung)",
@@ -140,10 +140,10 @@ const bereitsBeschlossen = [
   },
   {
     titel: "Zusatzbeitrag 2027",
-    status: "offen" as Status,
-    datum: "GKV-Schätzerkreis am 14. Oktober 2026",
+    status: "erledigt" as Status,
+    datum: "BMG-Festlegung am 30. Oktober 2026",
     detail:
-      "Der Schätzerkreis hat einen rechnerischen durchschnittlichen Zusatzbeitrag von unverändert 2,9 % ermittelt; das Bundesgesundheitsministerium gibt den amtlichen Wert bis zum 1. November 2026 bekannt. Die einzelnen Kassen legen ihre Sätze im Dezember fest. Der Rechner verwendet 2,9 %.",
+      "Das Bundesgesundheitsministerium hat den durchschnittlichen Zusatzbeitrag 2027 auf unveränderte 2,9 % festgelegt (§ 242a SGB V), auf Grundlage des GKV-Schätzerkreises vom 14. Oktober 2026. Der Wert ist ein Rechenwert: die einzelnen Kassen legen ihre eigenen Sätze im Dezember fest und können darüber liegen. Der Rechner verwendet 2,9 %.",
   },
   {
     titel: "Pflegeversicherung: Zuschlag für Kinderlose",

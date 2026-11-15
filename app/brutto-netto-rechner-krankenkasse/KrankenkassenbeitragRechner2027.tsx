@@ -155,7 +155,7 @@ export default function KrankenkassenbeitragRechner2027() {
           <p className="flex gap-2 text-xs sm:text-sm text-amber-900 bg-amber-50 border border-amber-500/30 rounded-xl p-3 leading-relaxed">
             <Info size={16} className="flex-shrink-0 mt-0.5" aria-hidden="true" />
             <span>
-              Der durchschnittliche Zusatzbeitrag 2027 wird bis 1. November 2026 vom BMG bekanntgegeben – bis dahin
+              Der amtliche durchschnittliche Zusatzbeitrag 2027 steht noch aus – bis dahin
               rechnen wir vorläufig mit 2,9 %.
             </span>
           </p>

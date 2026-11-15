@@ -214,7 +214,7 @@ const T: Record<Lang, Record<string, string>> = {
     diffTax: "davon Lohnsteuer, Soli & Kirchensteuer",
     diffSv: "davon Sozialabgaben",
     provisional: "vorläufig",
-    provisionalTip: "Vorläufige Werte 2027: Steuertarif, Grundfreibetrag, Arbeitnehmer-Pauschbetrag und Kindergeld aus dem Regierungsentwurf EStRefG 2027 (noch nicht beschlossen); Sozialabgaben wie im Lohnsteuer-PAP-2027-Entwurf des BMF: Beitragsbemessungsgrenzen 2027 (Kabinettsbeschluss 7.10.2026), Pflegezuschlag für Kinderlose 0,9 % (Regierungsentwurf), Ø-Zusatzbeitrag 2,9 % (GKV-Schätzerkreis 14.10.2026, amtlich bis 1.11.2026); Lohnsteuer-Grenzwerte Klasse V/VI aus dem PAP 2026.",
+    provisionalTip: "Vorläufige Werte 2027: Steuertarif, Grundfreibetrag, Arbeitnehmer-Pauschbetrag und Kindergeld aus dem Regierungsentwurf EStRefG 2027 (noch nicht beschlossen); Sozialabgaben wie im Lohnsteuer-PAP-2027-Entwurf des BMF: Beitragsbemessungsgrenzen 2027 (Kabinettsbeschluss 7.10.2026), Pflegezuschlag für Kinderlose 0,9 % (Regierungsentwurf), Ø-Zusatzbeitrag 2,9 % (vom BMG am 30.10.2026 amtlich festgelegt); Lohnsteuer-Grenzwerte Klasse V/VI aus dem PAP 2026.",
     monthlyAdj: "monatlich",
     annualAdj: "jährlich",
     perYearWord: "/ Jahr",

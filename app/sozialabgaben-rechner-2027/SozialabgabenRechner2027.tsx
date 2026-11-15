@@ -5,7 +5,10 @@ import Link from "next/link";
 import { Calculator, Info, TrendingUp, Building2, ArrowRight, Gavel } from "lucide-react";
 import { formatEUR } from "@/lib/taxCalculator";
 import { BBG_2027_STATUS } from "@/lib/config2027";
-import { ZUSATZBEITRAG_2027_SCHAETZERKREIS as SK } from "@/data/krankenkassen";
+import {
+  ZUSATZBEITRAG_2027_SCHAETZERKREIS as SK,
+  ZUSATZBEITRAG_2027_FESTLEGUNG as FESTLEGUNG,
+} from "@/data/krankenkassen";
 import {
   SV_2026,
   sv2027,
@@ -20,10 +23,10 @@ import {
 const pct = (v: number, digits = 2) =>
   (v * 100).toLocaleString("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits }) + " %";
 
-// Voreinstellung = Ergebnis des GKV-Schätzerkreises; die höheren Werte bilden
+// Voreinstellung = amtlicher Ø-Zusatzbeitrag 2027 (BMG, 30.10.2026); die höheren Werte bilden
 // Kassen ab, die über dem rechnerischen Durchschnitt liegen.
 const ZB_OPTIONEN = [
-  { wert: SK.wert / 100, label: "2,9 % (Schätzerkreis, unverändert)" },
+  { wert: SK.wert / 100, label: "2,9 % (amtlicher Durchschnitt 2027)" },
   { wert: 0.031, label: "3,1 %" },
   { wert: 0.033, label: "3,3 %" },
   { wert: 0.035, label: "3,5 %" },
@@ -218,8 +221,8 @@ export default function SozialabgabenRechner2027() {
                 ))}
               </select>
               <span className="block text-[11px] text-black/45 mt-1">
-                GKV-Schätzerkreis am {SK.datum}: rechnerisch unverändert 2,9 %. Amtlich setzt das BMG den
-                Wert bis 1.11.2026 fest; Ihre Kasse kann darüber liegen.
+                Das BMG hat den Durchschnitt 2027 am {FESTLEGUNG.datum} auf unveränderte 2,9 % festgelegt
+                (§ 242a SGB V); Ihre Kasse beschließt ihren eigenen Satz im Dezember und kann darüber liegen.
               </span>
             </label>
           </div>
