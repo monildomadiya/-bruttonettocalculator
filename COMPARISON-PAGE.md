@@ -96,3 +96,92 @@ korrigiert; in einer vergleichenden Werbung wäre die alte Aussage angreifbar ge
 
 `comparison-schema.json`: BreadcrumbList · WebPage · ItemList (3 × SoftwareApplication, Preis 0 €) · FAQPage.
 Bewusst **ohne** Product/AggregateRating — keine echten Bewertungsdaten.
+
+---
+
+# Re-Prüfung 15.11.2026 (§ 6 UWG, quartalsweise)
+
+_Vorgezogen vom geplanten Termin „Anfang Januar 2027“, weil die Auslöserbedingung griff: der
+durchschnittliche Zusatzbeitrag 2027 ist seit dem 30.10.2026 amtlich, und die Matrix behauptete
+noch „amtlich bis 1. November“. `GEPRUEFT_AM` 02.10. → **15.11.2026**._
+
+**Erneut geprüft wurden alle Fußnoten 1–16**, jeweils von der öffentlich abrufbaren Rechnerseite,
+ohne Konto und ohne Login. Ergebnis: **keine Fußnote musste zurückgezogen werden.**
+
+| Prüfpunkt | Stand 02.10. | Stand 15.11. |
+|---|---|---|
+| gehalt.de: 2027 im Rechner | nein (Fn. 1) | **unverändert nein** — 0 Treffer für „2027“ auf der Seite; Abrechnungsjahr 2026 / 2025 / 2024 |
+| gehalt.de: Faustregel 1,3–1,4 × statt Netto→Brutto (Fn. 2) | ja | unverändert |
+| gehalt.de: Detailmodus, Geburtsjahr, Kassensatz, privat/gesetzlich (Fn. 3) | ja | unverändert |
+| gehalt.de: Jahresfreibetrag (Fn. 4), Bundesland-Feld (Fn. 6), Beruf+Wohnort Pflicht (Fn. 7) | ja | unverändert |
+| gehalt.de: keine Gesetzes-Verlinkung (Fn. 8), nur DE (Fn. 9) | ja | unverändert |
+| Finanztip: Tarif 2027 aus RegE 2.9.2026 (Fn. 10) | ja | unverändert |
+| Finanztip: BBG 2027 aus BMAS-Entwurf **21.9.2026** (Fn. 11) | ja | **unverändert** — Kabinettsbeschluss 7.10. nicht nachgezogen |
+| Finanztip: kein Netto→Brutto (Fn. 12) | ja | unverändert (0 Treffer) |
+| Finanztip: Formularfelder (Fn. 13) | ja | unverändert |
+| Finanztip: Beamte „erste Orientierung“ (Fn. 14) | ja | unverändert, Wortlaut bestätigt |
+| Finanztip: Midijob bewusst nicht abgebildet (Fn. 15) | ja | unverändert, Wortlaut bestätigt |
+
+**Seitenstand Finanztip: „Stand: 19. Oktober 2026“** — also **11 Tage vor** der BMG-Festlegung.
+Die Seite nennt 2,9 % nur für 2026. Rechnerisch ist das Ergebnis identisch, weil der Durchschnitt
+unverändert blieb; ausgewiesen ist der Wert aber nicht als amtlicher 2027-Wert.
+
+**Neue Matrixzeile 18: „Zusatzbeitrag 2027 auf amtlicher Grundlage“** (Fn. 24 eigen, Fn. 17 Finanztip).
+Formuliert ausdrücklich so, dass **kein Rechenfehler** unterstellt wird — der Unterschied ist die
+zitierte Grundlage, nicht das Ergebnis. Das ist die § 6 UWG-Grenze: objektiv nachprüfbar, nicht
+herabsetzend.
+
+## Der Wettbewerber, der in der Matrix fehlt: netto-check.de
+
+`https://www.netto-check.de/brutto-netto-2027-rechner` — Title „Brutto Netto Rechner 2027 mit
+Steuerreform & Vergleich zu 2026“. **Das ist der eigentliche Gegner für 2027-Intent**, nicht gehalt.de:
+
+- **Wird in der AI Overview zu „brutto netto rechner 2027“ zitiert** (zusammen mit Finanztip) — siehe
+  die Ranking-Analyse vom 23.10.2026. gehalt.de ist dort nicht vertreten.
+- **Hat die BMG-Festlegung schon drin:** „Den durchschnittlichen Zusatzbeitrag 2027 hat das
+  Gesundheitsministerium am 30. Oktober 2026 auf 2,9 % festgelegt“ — d. h. **frischer als Finanztip
+  und, bis zum Deploy, frischer als wir.**
+- Rechnet mit PV-Zuschlag 0,9, RV 18,6 %, einstellbarem Zusatzbeitrag, gesetzlich/privat,
+  Bundesland-Auswahl, Grundfreibetrag 12.564 € (identisch zu unserem Stand).
+- Benennt dieselbe Einschränkung wie wir: Grenzbeträge Steuerklasse V/VI noch auf Stand 2026.
+- **Nennt einen Termin, den wir nicht haben: „Der Bundesrat entscheidet am 20. November.“**
+- Nicht gefunden: Beamte (0 Treffer), Netto→Brutto (0), Englisch (0), Steuerjahr 2024 (0).
+  Midijob und Aktivrente nur als Fließtext erwähnt — **nicht** als „kann das“ zu werten.
+
+**Empfehlung: vierte Spalte.** Eine Vergleichsseite, die den von AI Overviews zitierten Wettbewerber
+nicht führt, vergleicht an der SERP vorbei. Aufwand: `Cell`-Typ um `nc` erweitern, 18 Zeilen, Tabellen-
+Rendering, Fußnoten 30–39, ItemList auf 4 Einträge. Vorher jede Zelle einzeln von der Live-Seite belegen.
+
+## Aktivrente — First-Mover-Chance, jetzt belegt
+
+Finanztip schreibt auf der geprüften Seite selbst: *„Der Brutto-Netto-Rechner von Finanztip
+berücksichtigt das noch nicht. Es gibt auch noch keinen offiziellen Rechner, etwa vom
+Bundesfinanzministerium, der das kann.“* Freibetrag 24.000 €/Jahr bzw. 2.000 €/Monat ab
+Regelaltersgrenze. Wir haben dazu bisher nur einen Blog-Artikel (`content/blog/aktivrente.ts`) und
+eine Erwähnung in `/rente-brutto-netto-rechner` — **keinen Rechner**. Empfehlung #4 von 10/2026 steht
+damit belegt: kein Wettbewerber der drei hat es, und der Marktführer sagt öffentlich, dass er es nicht hat.
+
+## Keywords — mit Kannibalisierungs-Grenze
+
+Der Aufruf nannte `brutto netto rechner 2027` als Ziel-Keyword. **Darauf darf diese Seite nicht
+optimiert werden:** das Keyword gehört der Startseite (Entscheidung vom 04.10.2026, Position ~6 und in
+Erholung). Die Vergleichsseite bedient Vergleichs-Intent und stützt die Startseite per interner
+Verlinkung — niemals mit Exact-Match-Anchor.
+
+- **Primär:** brutto netto rechner vergleich · brutto netto rechner 2027 vergleich
+- **Sekundär:** bester brutto netto rechner · welcher brutto netto rechner ist der genaueste ·
+  brutto netto rechner test · warum zeigen rechner unterschiedliches netto
+- **Neu, durch die Prüfung belegt:** welcher brutto netto rechner rechnet 2027 ·
+  brutto netto rechner zusatzbeitrag 2027
+- **Marken (nur informativ, keine Köder-Seiten):** finanztip brutto netto rechner ·
+  gehalt.de brutto netto rechner · netto-check brutto netto rechner
+
+## Nächste Termine
+
+- **20.11.2026 — Bundesrat zur SV-Rechengrößen-Verordnung 2027** (laut netto-check.de; selbst
+  verifizieren). Danach `BBG_2027_STATUS` → beschlossen, Fußnote 11 und Matrix nachziehen.
+- **2./3. Lesung EStRefG 2027** — am 15.11.2026 noch nicht erfolgt (geprüft). Danach Fn. 10 und die
+  Reformszenarien-Zeile anfassen.
+- **Dezember 2026** — Kassen beschließen ihre 2027-Sätze; Fn. 24 und die Kassen-Spalten nachziehen.
+- **Quartalsprüfung** nächster Regeltermin Anfang Januar 2027, sofort bei: gehalt.de rüstet 2027 nach ·
+  Finanztip ergänzt Midijob oder Netto→Brutto · netto-check.de ändert seinen Funktionsumfang.

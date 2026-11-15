@@ -46,7 +46,7 @@ export const PAGE_LAST_UPDATED: Record<string, string> = {
   "/jahressonderzahlung-rechner": "2026-10-06",
   "/kindergeld-rechner": "2026-11-15",
   "/lohnsteuerrechner": "2026-10-25",
-  "/brutto-netto-rechner-vergleich": "2026-10-23",
+  "/brutto-netto-rechner-vergleich": "2026-11-15",
   "/einkommensteuer-rechner-2027": "2026-11-15",
 };
 

@@ -23,7 +23,7 @@ const FINANZTIP_URL = "https://www.finanztip.de/brutto-netto-rechner/";
  * Quartalsweise neu prüfen — nächster Termin Anfang Januar 2027, und sofort,
  * wenn ein Anbieter 2027-Funktionen nachrüstet.
  */
-const GEPRUEFT_AM = "2. Oktober 2026";
+const GEPRUEFT_AM = "15. November 2026";
 
 export const metadata: Metadata = {
   title: "Brutto-Netto-Rechner Vergleich 2026/2027: wer kann was?",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     images: [pageImageUrl("/brutto-netto-rechner-vergleich")],
     title: "Brutto-Netto-Rechner im Vergleich 2026/2027",
     description:
-      "Drei Rechner, 17 Funktionen, jede Angabe belegt: Wer rechnet 2027, Netto zu Brutto, Midijob und Beamte? Geprüft im Oktober 2026.",
+      "Drei Rechner, 18 Funktionen, jede Angabe belegt: Wer rechnet 2027, Netto zu Brutto, Midijob und Beamte? Geprüft im November 2026.",
     url: CANONICAL,
     type: "website",
     locale: "de_DE",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
     title: "Brutto-Netto-Rechner im Vergleich 2026/2027",
-    description: "BruttoNettoCalculator, gehalt.de und Finanztip im belegten Feature-Check — Oktober 2026.",
+    description: "BruttoNettoCalculator, gehalt.de und Finanztip im belegten Feature-Check — November 2026.",
   },
 };
 
@@ -87,6 +87,12 @@ const matrix: { feature: string; uns: Cell; gehalt: Cell; ft: Cell }[] = [
     uns: { state: "yes", note: "PAP-2027-Entwurf, Stand 2026 wählbar", fn: 20 },
     gehalt: { state: "na", fn: 1 },
     ft: { state: "yes", note: "BMAS-Entwurf eingerechnet", fn: 11 },
+  },
+  {
+    feature: "Zusatzbeitrag 2027 auf amtlicher Grundlage",
+    uns: { state: "yes", note: "2,9 %, BMG-Festlegung belegt", fn: 24 },
+    gehalt: { state: "na", fn: 1 },
+    ft: { state: "partial", note: "Seitenstand vor der Festlegung", fn: 17 },
   },
   {
     feature: "Netto → Brutto (exakte Umkehrrechnung)",
@@ -169,7 +175,7 @@ const matrix: { feature: string; uns: Cell; gehalt: Cell; ft: Cell }[] = [
 ];
 
 const fussnoten: Record<number, string> = {
-  1: "gehalt.de: Die geprüfte Rechnerseite erwähnt 2027 nicht; das Abrechnungsjahr ist wählbar zwischen 2026, 2025 und 2024 (geprüft 29.07. und 02.10.2026).",
+  1: "gehalt.de: Die geprüfte Rechnerseite erwähnt 2027 nicht; das Abrechnungsjahr ist wählbar zwischen 2026, 2025 und 2024 (geprüft 29.07., 02.10. und 15.11.2026 — unverändert).",
   2: "gehalt.de beantwortet „Gibt es auch einen Netto-Brutto-Rechner?“ mit der Empfehlung, das 1,3- bis 1,4-fache des gewünschten Nettos als Brutto einzugeben — eine Näherung, keine Umkehrrechnung.",
   3: "gehalt.de: Detailmodus laut Seitentext mit Berechnungsjahr, Geburtsjahr, Krankenkassensatz und Rentenversicherung; im Formular „gesetzlich / privat versichert“.",
   4: "gehalt.de erläutert den Jahresfreibetrag in einem eigenen Abschnitt der Rechnerseite.",
@@ -179,7 +185,7 @@ const fussnoten: Record<number, string> = {
   8: "gehalt.de erläutert Lohnsteuer, Freibeträge und Kirchensteuer ausführlich, verlinkt aber nicht auf Gesetzestexte.",
   9: "Die geprüften Seiten sind deutschsprachig; eine anderssprachige Fassung des Rechners war nicht verlinkt.",
   10: "Finanztip: Rechner „Brutto-Netto-Rechner 2026 & 2027“; Anleitung: Daten für 2026 eingeben, dann „oben das Jahr auf 2027“ ändern. Steuerwerte 2027 laut Finanztip aus dem Regierungsentwurf vom 2. September 2026, ausdrücklich als vorläufig gekennzeichnet.",
-  11: "Finanztip rechnet für 2027 die Beitragsbemessungsgrenzen aus dem Verordnungsentwurf des BMAS vom 21. September 2026 (KV/PV 76.500 €, RV/ALV 106.200 €) inklusive der Sonderanhebung nach dem GKV-Beitragssatzstabilisierungsgesetz ein und verlinkt beide Entwürfe.",
+  11: "Finanztip rechnet für 2027 die Beitragsbemessungsgrenzen aus dem Verordnungsentwurf des BMAS vom 21. September 2026 (KV/PV 76.500 €, RV/ALV 106.200 €) inklusive der Sonderanhebung nach dem GKV-Beitragssatzstabilisierungsgesetz ein und verlinkt beide Entwürfe. Bei der Prüfung am 15.11.2026 unverändert; dieselben Beträge hat das Bundeskabinett am 07.10.2026 beschlossen — die Werte sind identisch, nur die zitierte Grundlage ist eine andere.",
   12: "Auf der geprüften Finanztip-Seite war keine Netto-zu-Brutto-Rechnung zu finden.",
   13: "Finanztip-Formular: Zeitraum, Bruttolohn, Alter, Steuerklasse, Bundesland (Auswahlfeld), Kinder, Kirchensteuer, zusätzlicher Steuerfreibetrag, gesetzliche Renten-, Kranken- und Arbeitslosenversicherung jeweils Ja/Nein sowie Auswahl der eigenen gesetzlichen Krankenkasse.",
   14: "Finanztip schreibt selbst, der Rechner sei für Beamte „meist nur eine erste Orientierung“, und verweist auf den Bezügerechner des Bundesverwaltungsamts.",
@@ -189,8 +195,13 @@ const fussnoten: Record<number, string> = {
   21: "Im Hauptrechner gilt der durchschnittliche Zusatzbeitrag (2026: 2,9 %); den Satz der eigenen Kasse rechnet der Brutto-Netto-Rechner mit Krankenkasse.",
   23: "Der Netto-zu-Brutto-Rechner ist eine eigene Seite (nicht im Hauptrechner) und sucht das Brutto exakt mit derselben Engine, wahlweise für 2026 oder 2027.",
   22: "Ohne Sozialabgaben und mit privater Krankenversicherung rechnet der Beamten-Rechner; der Hauptrechner geht von gesetzlicher Versicherung aus.",
+  17: "Die geprüfte Finanztip-Seite trägt den Stand 19. Oktober 2026 und liegt damit vor der BMG-Festlegung vom 30. Oktober 2026; sie nennt den durchschnittlichen Zusatzbeitrag von 2,9 % für 2026 und lässt die eigene Kasse auswählen. Rechnerisch ändert das für 2027 nichts, weil der Durchschnitt unverändert bei 2,9 % blieb — die Angabe ist nur nicht als amtlicher Wert für 2027 ausgewiesen (geprüft 15.11.2026).",
+  24: "Der durchschnittliche Zusatzbeitrag 2027 steht seit dem 30. Oktober 2026 amtlich bei 2,9 % (§ 242a SGB V); unser Rechner führt Wert, Datum und Quelle der BMG-Festlegung mit. Der Satz der eigenen Kasse kann darüber liegen und wird erst im Dezember beschlossen.",
 };
-const fussnotenNummern = Object.keys(fussnoten).map(Number);
+// Aufsteigend sortiert. Ganzzahlige Objekt-Schlüssel ordnet JavaScript ohnehin
+// numerisch, unabhängig von der Einfügereihenfolge — der Sort hält die Reihenfolge
+// aber auch dann, wenn einmal ein Schlüssel wie "17a" dazukommt.
+const fussnotenNummern = Object.keys(fussnoten).map(Number).sort((a, b) => a - b);
 
 const faqs = [
   {
@@ -199,7 +210,7 @@ const faqs = [
   },
   {
     q: "Welcher Rechner kann das Steuerjahr 2027?",
-    a: "BruttoNettoCalculator und Finanztip rechnen beide den Steuertarif 2027 nach dem Regierungsentwurf vom 2. September 2026. Beide können auch die geplanten Beitragsbemessungsgrenzen 2027 einrechnen — Finanztip immer, unser Rechner voreingestellt wie im Lohnsteuer-Programmablaufplan 2027 (Entwurf), inklusive des höheren Pflegezuschlags für Kinderlose; zum Vergleich lässt sich auf den Stand 2026 umschalten. Zusätzlich bietet unser Rechner drei Steuer-Szenarien — ohne Reform, Entwurf 2027 und Stufe 2028. Auf der geprüften gehalt.de-Seite war im Oktober 2026 keine 2027-Berechnung verfügbar.",
+    a: "BruttoNettoCalculator und Finanztip rechnen beide den Steuertarif 2027 nach dem Regierungsentwurf vom 2. September 2026. Beide können auch die geplanten Beitragsbemessungsgrenzen 2027 einrechnen — Finanztip immer, unser Rechner voreingestellt wie im Lohnsteuer-Programmablaufplan 2027 (Entwurf), inklusive des höheren Pflegezuschlags für Kinderlose; zum Vergleich lässt sich auf den Stand 2026 umschalten. Beim durchschnittlichen Zusatzbeitrag 2027 rechnen wir auf amtlicher Grundlage: das Bundesgesundheitsministerium hat ihn am 30. Oktober 2026 auf unveränderte 2,9 % festgelegt, und der Rechner führt Datum und Quelle mit. Zusätzlich bietet unser Rechner drei Steuer-Szenarien — ohne Reform, Entwurf 2027 und Stufe 2028. Auf der geprüften gehalt.de-Seite war auch bei der erneuten Prüfung am 15. November 2026 keine 2027-Berechnung verfügbar.",
   },
   {
     q: "Was kann der Brutto-Netto-Rechner von Finanztip?",

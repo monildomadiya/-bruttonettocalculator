@@ -1,13 +1,23 @@
 {
-  "_comment": "JSON-LD für /brutto-netto-rechner-vergleich (Stand 02.10.2026) — bewusst OHNE AggregateRating (keine echten Reviews, E-E-A-T-Policy). Implementiert in app/brutto-netto-rechner-vergleich/page.tsx als @graph; WebPage-Node dort über webPageSchema() aus lib/seo.ts.",
+  "_comment": "JSON-LD für /brutto-netto-rechner-vergleich (Stand 15.11.2026) — bewusst OHNE AggregateRating (keine echten Reviews, E-E-A-T-Policy). Implementiert in app/brutto-netto-rechner-vergleich/page.tsx als @graph; WebPage-Node dort über webPageSchema() aus lib/seo.ts. Die Matrix hat seit 15.11.2026 18 Zeilen (neu: Zusatzbeitrag 2027 auf amtlicher Grundlage).",
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "BreadcrumbList",
       "@id": "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich#breadcrumb",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://bruttonettocalculator.com" },
-        { "@type": "ListItem", "position": 2, "name": "Brutto-Netto-Rechner im Vergleich", "item": "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://bruttonettocalculator.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Brutto-Netto-Rechner im Vergleich",
+          "item": "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich"
+        }
       ]
     },
     {
@@ -16,8 +26,12 @@
       "name": "Brutto-Netto-Rechner im Vergleich 2026/2027",
       "url": "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich",
       "inLanguage": "de-DE",
-      "isPartOf": { "@id": "https://bruttonettocalculator.com/#website" },
-      "breadcrumb": { "@id": "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich#breadcrumb" },
+      "isPartOf": {
+        "@id": "https://bruttonettocalculator.com/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich#breadcrumb"
+      },
       "description": "Belegter Feature-Vergleich der Brutto-Netto-Rechner von BruttoNettoCalculator, gehalt.de und Finanztip — 2027-Werte, Netto zu Brutto, Krankenkasse, Spezialrechner."
     },
     {
@@ -35,8 +49,14 @@
             "applicationCategory": "FinanceApplication",
             "operatingSystem": "Web",
             "url": "https://bruttonettocalculator.com/brutto-netto-rechner-2027",
-            "publisher": { "@id": "https://bruttonettocalculator.com/#organization" },
-            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+            "publisher": {
+              "@id": "https://bruttonettocalculator.com/#organization"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            }
           }
         },
         {
@@ -48,7 +68,11 @@
             "applicationCategory": "FinanceApplication",
             "operatingSystem": "Web",
             "url": "https://www.gehalt.de/einkommen/brutto-netto-rechner",
-            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            }
           }
         },
         {
@@ -60,7 +84,11 @@
             "applicationCategory": "FinanceApplication",
             "operatingSystem": "Web",
             "url": "https://www.finanztip.de/brutto-netto-rechner/",
-            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            }
           }
         }
       ]
@@ -70,5 +98,6 @@
       "@id": "https://bruttonettocalculator.com/brutto-netto-rechner-vergleich#faq",
       "_comment": "mainEntity wird aus dem faqs-Array der Seite erzeugt (7 Fragen)."
     }
-  ]
+  ],
+  "_plannedChange": "netto-check.de als 4. ItemList-Eintrag, sobald die vierte Matrixspalte gebaut ist: der Rechner wird in der AI Overview zu \"brutto netto rechner 2027\" zitiert und trägt die BMG-Festlegung vom 30.10.2026 bereits. URL: https://www.netto-check.de/brutto-netto-2027-rechner. Dann numberOfItems auf 4."
 }
