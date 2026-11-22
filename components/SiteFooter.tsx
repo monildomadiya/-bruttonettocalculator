@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import SupportButton from "@/components/SupportButton";
 
 export default function SiteFooter() {
   const pathname = usePathname();
@@ -173,41 +172,28 @@ export default function SiteFooter() {
           </div>
 
           {/* Newsletter */}
-          <div className="md:col-span-2 lg:col-span-2 space-y-6">
-            <div>
-              <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-[#16181D] mb-3">
-                NEWSLETTER
-              </p>
-              <p className="text-xs text-black/60 mb-3 font-medium">
-                Amtliche Steuer-Updates direkt ins Postfach.
-              </p>
-              <div className="flex items-center bg-[#F1F3F5] border border-black/[0.10] rounded-full p-1 pl-4 focus-within:border-[#E60A1C] transition-all shadow-inner">
-                <input
-                  type="email"
-                  placeholder="E-Mail eingeben..."
-                  className="bg-transparent text-xs sm:text-sm text-[#16181D] placeholder:text-black/40 outline-none w-full pr-2 font-medium"
-                  readOnly
-                />
-                <button
-                  type="button"
-                  title="Anmelden"
-                  aria-label="Für Newsletter anmelden"
-                  className="w-9 h-9 rounded-full bg-[#E60A1C] hover:bg-[#FF2436] flex items-center justify-center text-white flex-shrink-0 transition-all"
-                >
-                  <ArrowRight size={16} />
-                </button>
-              </div>
-            </div>
-
-            {/* Support — plain outbound link, no third-party embed (see SupportButton) */}
-            <div>
-              <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-[#16181D] mb-3">
-                UNTERSTÜTZEN
-              </p>
-              <p className="text-xs text-black/60 mb-3 font-medium">
-                Dieser Rechner bleibt kostenlos. Danke für jede Unterstützung.
-              </p>
-              <SupportButton variant="inline" lang="de" placement="footer" />
+          <div className="md:col-span-2 lg:col-span-2">
+            <p className="font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-[#16181D] mb-3">
+              NEWSLETTER
+            </p>
+            <p className="text-xs text-black/60 mb-3 font-medium">
+              Amtliche Steuer-Updates direkt ins Postfach.
+            </p>
+            <div className="flex items-center bg-[#F1F3F5] border border-black/[0.10] rounded-full p-1 pl-4 focus-within:border-[#E60A1C] transition-all shadow-inner">
+              <input
+                type="email"
+                placeholder="E-Mail eingeben..."
+                className="bg-transparent text-xs sm:text-sm text-[#16181D] placeholder:text-black/40 outline-none w-full pr-2 font-medium"
+                readOnly
+              />
+              <button
+                type="button"
+                title="Anmelden"
+                aria-label="Für Newsletter anmelden"
+                className="w-9 h-9 rounded-full bg-[#E60A1C] hover:bg-[#FF2436] flex items-center justify-center text-white flex-shrink-0 transition-all"
+              >
+                <ArrowRight size={16} />
+              </button>
             </div>
           </div>
 

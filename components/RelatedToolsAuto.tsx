@@ -49,9 +49,7 @@ const EXCLUDED = new Set([
 ]);
 
 /**
- * Whether the auto related-tools block renders on this path. Shared with
- * <SupportStory>, which only shows where this block sits between it and the
- * end-of-content ad (a donation ask must never be directly next to an ad).
+ * Whether the auto related-tools block renders on this path.
  */
 export function hasRelatedTools(pathname: string): boolean {
   if (pathname.startsWith("/admin") || EXCLUDED.has(pathname) || HAS_OWN_BLOCK.has(pathname)) {

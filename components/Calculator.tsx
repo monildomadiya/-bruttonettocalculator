@@ -10,7 +10,6 @@ import {
 import { calculateNetto, formatEUR, Steuerjahr, Szenario, Sv2027, GRUNDFREIBETRAG, BBG_2026, SV_RECHENGROESSEN_2027_ENTWURF, VERSICHERUNGSPFLICHTGRENZE_2026 } from "@/lib/taxCalculator";
 import { siteConfig } from "@/lib/authors";
 import ReviewerByline from "@/components/ReviewerByline";
-import SupportButton from "@/components/SupportButton";
 import AdUnit from "@/components/AdUnit";
 import NextSteps from "@/components/NextSteps";
 import { KRANKENKASSEN_2026, GUENSTIGSTE_KASSE, DURCHSCHNITT_ZUSATZBEITRAG_2026, type Krankenkasse } from "@/data/krankenkassen";
@@ -1880,19 +1879,6 @@ export default function Calculator({ initialBrutto = 3800, initialJahr = 2026, i
               netto2027Gain={jahr === 2026 ? resOtherYear.nettoMonat - result.nettoMonat : 0}
             />
           )}
-
-          {/* ── Support / Buy-me-a-coffee ──────────────────────────
-              Placed at the END of the result column on purpose: the
-              deep-link "Vollständige Analyse" CTA above drives pageviews
-              (ad revenue) and must not compete with a donation ask. Readers
-              who got this far are the ones most likely to give.
-              Must stay OUTSIDE the year-comparison accordion above — it used
-              to be its last child, so the accordion's grey box and border
-              wrapped around the card. The card's own bottom margin is zeroed
-              here so it doesn't leave a gap at the end of the column. */}
-          <div className="mt-4 [&>div]:mb-0">
-            <SupportButton variant="card" lang={lang} placement="calculator_result" />
-          </div>
 
         </div>
       </div>

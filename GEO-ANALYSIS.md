@@ -51,11 +51,15 @@ to point at — see §5.
 one ~140-word anchor passage), plus the `SoftwareApplication` / `Dataset` / `citation`
 schema additions in §9. None of these needs owner input.
 
-**New finding, unrelated to GEO but urgent:** the donation URL
-`buymeacoffee.com/finnweber` (`components/SupportButton.tsx:38`) returns **404**,
-re-confirmed 2026-11-15 (HTTP 404). It is linked
-**6 times on the homepage** and on every page carrying the support CTA. Every
-donation click currently goes nowhere.
+**New finding, unrelated to GEO but urgent — RESOLVED 2026-11-22:** the donation URL
+`buymeacoffee.com/finnweber` returned **404** (re-confirmed 2026-11-15 and again
+2026-11-22) while being linked **6 times on the homepage** and on every page
+carrying the support CTA. The whole donation surface was removed on 2026-11-22
+instead of being repointed: `components/SupportButton.tsx` and
+`components/SupportStory.tsx` are deleted, the header pill, mobile-menu button,
+footer block, calculator result card and closing story section are gone, and
+`langFromPath` / `isEmbedRoute` moved to `lib/lang.ts`. No donation link remains
+anywhere on the site.
 
 ---
 
@@ -182,7 +186,7 @@ codebase are dead:
 | URL | Status | Note |
 |---|---|---|
 | `twitter.com/bruttonetto_de` | 404 | Already removed from `sameAs`; only explanatory comments remain in `app/layout.tsx`. That cleanup was correct. |
-| `buymeacoffee.com/finnweber` | **404** | Still live-linked 6× from the homepage. |
+| `buymeacoffee.com/finnweber` | **404** | No longer linked anywhere: the donation surface was removed on 2026-11-22. |
 
 `sameAs` must point at profiles that genuinely identify this entity. Adding an
 unverified or dead URL is precisely the error that was correctly cleaned up in

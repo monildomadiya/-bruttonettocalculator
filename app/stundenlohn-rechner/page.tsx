@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import StundenlohnRechner from "./StundenlohnRechner";
 import StundenlohnContent from "./StundenlohnContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
-import SupportButton from "@/components/SupportButton";
 import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
@@ -96,9 +95,6 @@ export default function StundenlohnRechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <StundenlohnRechner content={<StundenlohnContent />} />
-      {/* Coffee section before the curated related block: that block keeps it
-          apart from the end-of-content ad (see components/SupportStory.tsx). */}
-      <SupportButton variant="story" lang="de" placement="page_inline" />
       <RelatedCalculators
         links={[
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Vollständiges Nettogehalt 2026" },

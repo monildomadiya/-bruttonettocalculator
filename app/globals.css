@@ -913,29 +913,6 @@ input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-/* ─── Buy-me-a-coffee: steam + one-time header nudge ───────────────── */
-@keyframes coffeeSteam {
-  0%   { transform: translateY(3px); opacity: 0; }
-  40%  { opacity: 1; }
-  100% { transform: translateY(-4px); opacity: 0; }
-}
-.coffee-steam path { animation: coffeeSteam 2.6s ease-in-out infinite; }
-.coffee-steam path:nth-child(2) { animation-delay: 0.5s; }
-.coffee-steam path:nth-child(3) { animation-delay: 1s; }
-
-/* Three soft yellow rings around the header button, then it stops for good.
-   Pure box-shadow: nothing moves, nothing overlaps content or ads. */
-@keyframes coffeeNudge {
-  0%   { box-shadow: 0 0 0 0 rgba(255, 221, 0, 0.75); }
-  70%  { box-shadow: 0 0 0 12px rgba(255, 221, 0, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 221, 0, 0); }
-}
-.coffee-nudge { animation: coffeeNudge 1.6s ease-out 3; }
-
-@media (prefers-reduced-motion: reduce) {
-  .coffee-steam path, .coffee-nudge { animation: none; }
-}
-
 /* ─── Story tray: horizontally scrollable, no visible scrollbar ─────── */
 .stories-scroll {
   scrollbar-width: none;
@@ -943,13 +920,4 @@ input:-webkit-autofill:active {
 }
 .stories-scroll::-webkit-scrollbar {
   display: none;
-}
-
-/* Buy-me-a-coffee-Karte (SupportButton variant="card"): Layout nach der Breite
-   der Karte, nicht des Viewports — sie steht in der schmalen Ergebnisspalte. */
-.support-card { container-type: inline-size; }
-.support-card__cta { width: 100%; }
-@container (min-width: 520px) {
-  .support-card__layout { flex-direction: row; align-items: center; gap: 1.5rem; }
-  .support-card__cta { width: auto; }
 }

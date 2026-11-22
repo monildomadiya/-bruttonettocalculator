@@ -6,13 +6,12 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { BookOpen, HelpCircle, Newspaper, Images, ChevronDown } from "lucide-react";
 import MobileMenu from "./MobileMenu";
-import SupportButton, { isEmbedRoute, langFromPath } from "@/components/SupportButton";
 import { calculatorGroups } from "@/lib/navigation";
 
 const directLinks = [
   { href: "/blog", label: "Blog", icon: Newspaper },
-  // Only from lg up: at md the row (Rechner, Blog, Lexikon, FAQ, Kaffee) is
-  // already full. Below lg it stays reachable via the footer.
+  // Only from lg up: at md the row (Rechner, Blog, Lexikon, FAQ) is already
+  // full. Below lg it stays reachable via the footer.
   { href: "/infografiken", label: "Infografiken", icon: Images, wideOnly: true },
   { href: "/lexikon", label: "Lexikon", icon: BookOpen },
   { href: "/faq", label: "FAQ", icon: HelpCircle },
@@ -26,11 +25,6 @@ export default function SiteHeader() {
 
   // Hide header on all admin pages
   const isAdmin = pathname?.startsWith("/admin-secure") || pathname?.startsWith("/admin");
-
-  // Locale of the current route, so the support button speaks the page language.
-  const lang = langFromPath(pathname);
-
-  const isEmbed = isEmbedRoute(pathname);
 
   // Track scroll for glass intensity change
   useEffect(() => {
@@ -216,23 +210,10 @@ export default function SiteHeader() {
                 </Link>
               );
             })}
-
-            {/*
-              Buy-me-a-coffee. Lives here rather than in the individual pages:
-              app/layout.tsx mounts <SiteHeader /> once for every route, so this
-              single element puts the CTA on all ~330 pages, and every future
-              page inherits it for free.
-            */}
-            {!isEmbed && (
-              <SupportButton variant="header" lang={lang} placement="header_desktop" />
-            )}
           </nav>
 
-          {/* Mobile bar — coffee left of the hamburger, same 36/40 px circle */}
+          {/* Mobile bar */}
           <div className="md:hidden flex items-center gap-2">
-            {!isEmbed && (
-              <SupportButton variant="header-icon" lang={lang} placement="header_mobile" />
-            )}
             <MobileMenu />
           </div>
         </div>
