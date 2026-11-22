@@ -7,7 +7,6 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import RelatedToolsAuto from "@/components/RelatedToolsAuto";
 import PageFigure from "@/components/PageFigure";
-import SupportStory from "@/components/SupportStory";
 import StoriesBar from "@/components/StoriesBar";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleAdSense from "@/components/GoogleAdSense";
@@ -262,13 +261,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* ── Auto "Ähnliche Rechner" internal-linking block (per-page) ── */}
         <RelatedToolsAuto />
 
-        {/* ── "Support this site" closing section (honest, no persona) ── */}
-        <SupportStory />
-
         {/* ── End-of-session unit, below the related tools ──────────────
-             Renders only while AD_DENSITY is "normal" (lib/adsConfig.ts).
-             <SupportStory> sits between it and the link grid, so it no longer
-             sandwiches the related tools with `contentEnd`. */}
+             Renders only while AD_DENSITY is "normal" (lib/adsConfig.ts). */}
         <SiteWideAd slot="afterRelated" />
 
         {/* ── Ultra-Luxury Fintech Footer (conditional) ───────────────── */}

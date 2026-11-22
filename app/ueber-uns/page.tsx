@@ -207,20 +207,38 @@ export default function UeberUnsPage() {
           Weitere Projekte unseres Teams
         </h2>
         <p className="text-base text-black/70 leading-relaxed max-w-4xl">
-          Abseits von Steuern und Gehalt betreiben wir{" "}
-          <a
-            href="https://iphoneduowallpaper.com/"
-            target="_blank"
-            rel="noopener"
-            hrefLang="en"
-            className="font-semibold text-[#E60A1C] underline underline-offset-2 hover:text-[#B8081A]"
-          >
-            iPhone Duo Wallpapers
-          </a>{" "}
-          — eine kostenlose Sammlung hochauflösender Hintergrundbilder für das iPhone Duo und das
-          iPhone 18 Pro (englischsprachig). Ein kleines Nebenprojekt, das mit demselben Anspruch
-          an Sorgfalt entsteht wie dieser Rechner.
+          Abseits von Steuern und Gehalt betreiben wir zwei kleine Nebenprojekte, die mit
+          demselben Anspruch an Sorgfalt entstehen wie dieser Rechner. Beide sind
+          englischsprachig und kostenlos:
         </p>
+        <ul className="mt-4 space-y-3 text-base text-black/70 leading-relaxed max-w-4xl list-disc pl-5 marker:text-black/30">
+          <li>
+            <a
+              href="https://iphoneduowallpaper.com/"
+              target="_blank"
+              rel="noopener"
+              hrefLang="en"
+              className="font-semibold text-[#E60A1C] underline underline-offset-2 hover:text-[#B8081A]"
+            >
+              iPhone Duo Wallpapers
+            </a>{" "}
+            — eine Sammlung hochauflösender Hintergrundbilder für das iPhone Duo und das
+            iPhone 18 Pro.
+          </li>
+          <li>
+            <a
+              href="https://onlinecolorpage.com/"
+              target="_blank"
+              rel="noopener"
+              hrefLang="en"
+              className="font-semibold text-[#E60A1C] underline underline-offset-2 hover:text-[#B8081A]"
+            >
+              Online Color Page
+            </a>{" "}
+            — Ausmalbilder zum Herunterladen und Ausdrucken, von Tieren über Blumen bis zu
+            Fantasie-Motiven.
+          </li>
+        </ul>
       </div>
 
     </section>

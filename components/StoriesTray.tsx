@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import StoryViewer from "@/components/StoryViewer";
-import { isEmbedRoute, langFromPath } from "@/components/SupportButton";
+import { isEmbedRoute, langFromPath } from "@/lib/lang";
 import { storyImageSrc, storyShortId, trackStory, type Story } from "@/lib/stories";
 
 const SEEN_KEY = "bnc_seen_stories";

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import FirmenwagenrechnerCalculator from "./FirmenwagenrechnerCalculator";
 import FirmenwagenContent from "./FirmenwagenContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
-import SupportButton from "@/components/SupportButton";
 import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
@@ -104,9 +103,6 @@ export default function FirmenwagenrechnerPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <FirmenwagenrechnerCalculator content={<FirmenwagenContent />} />
-      {/* Coffee section before the curated related block: that block keeps it
-          apart from the end-of-content ad (see components/SupportStory.tsx). */}
-      <SupportButton variant="story" lang="de" placement="page_inline" />
       <RelatedCalculators
         links={[
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Nettogehalt ohne Firmenwagen" },

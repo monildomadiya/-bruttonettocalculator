@@ -4,7 +4,6 @@ import ArbeitslosengeldContent from "./ArbeitslosengeldContent";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import ToolContent from "@/components/ToolContent";
 import { TOOL_CONTENT } from "@/data/tool-content";
-import SupportButton from "@/components/SupportButton";
 import { pageImageUrl } from "@/lib/pageImage";
 
 export const metadata: Metadata = {
@@ -71,9 +70,6 @@ export default function ArbeitslosengeldRechnerPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ArbeitslosengeldRechner content={<ArbeitslosengeldContent />} />
-      {/* Coffee section before the curated related block: that block keeps it
-          apart from the end-of-content ad (see components/SupportStory.tsx). */}
-      <SupportButton variant="story" lang="de" placement="page_inline" />
       <RelatedCalculators
         links={[
           { href: "/", label: "Brutto-Netto-Rechner", desc: "Nettogehalt als Basis für die Schätzung" },
