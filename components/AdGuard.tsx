@@ -1,4 +1,10 @@
-import { ADS_OFF_STORAGE_KEY, ADSENSE_LOADER_SRC, AD_FREQUENCY_HINT } from "@/lib/adsConfig";
+import {
+  ADS_OFF_STORAGE_KEY,
+  ADSENSE_LOADER_SRC,
+  AD_FREQUENCY_HINT,
+  AD_FREE_PAGES,
+  AD_FREE_PREFIXES,
+} from "@/lib/adsConfig";
 
 /**
  * Ad-serving guard — decides whether this page may request ads, and, if it may,
@@ -38,6 +44,10 @@ import { ADS_OFF_STORAGE_KEY, ADSENSE_LOADER_SRC, AD_FREQUENCY_HINT } from "@/li
  *  - `/admin*`, `/api*` — pages only the account holder ever opens.
  *  - `/embed*` — the widget renders inside third-party pages, where we have no
  *    consent basis and no publisher content of our own.
+ *  - `/impressum`, `/datenschutz`, `/kontakt` — legal and contact obligations
+ *    rather than publisher content. They are indexable, so the noindex rule
+ *    below never caught them, and each was measured carrying two units on
+ *    2026-11-22. See `AD_FREE_PAGES` in lib/adsConfig.ts.
  *  - **Anything carrying `<meta name="robots" content="noindex">`.** A page
  *    Google is told not to index has, by our own admission, nothing worth
  *    indexing on it — and Google Publisher Policies do not allow ads on screens
@@ -77,12 +87,15 @@ export default function AdGuard() {
 (function(){
 try{
 var w=window,d=document,K=${JSON.stringify(ADS_OFF_STORAGE_KEY)},SRC=${JSON.stringify(ADSENSE_LOADER_SRC)},FH=${JSON.stringify(AD_FREQUENCY_HINT)};
+var PRE=${JSON.stringify(AD_FREE_PREFIXES)},PAGES=${JSON.stringify(AD_FREE_PAGES)};
 w.adsbygoogle=w.adsbygoogle||[];
 w.__bncAdsOff=function(){
 var p=location.pathname||"/";
+if(p.length>1)p=p.replace(/\\/+$/,"");
 var h=location.hostname;
 if(h!=="bruttonettocalculator.com"&&h!=="www.bruttonettocalculator.com")return "internal";
-if(p.indexOf("/admin")===0||p.indexOf("/api")===0||p.indexOf("/embed")===0)return "internal";
+for(var i=0;i<PRE.length;i++){if(p.indexOf(PRE[i])===0)return "internal";}
+if(PAGES.indexOf(p)!==-1)return "no-inventory";
 var m=d.querySelector('meta[name="robots"][content*="noindex"]');
 if(m)return "no-content";
 var s=null;try{s=localStorage.getItem(K)}catch(e){}

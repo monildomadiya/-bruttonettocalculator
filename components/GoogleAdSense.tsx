@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { ADS_OFF_STORAGE_KEY } from "@/lib/adsConfig";
+import { ADS_OFF_STORAGE_KEY, AD_FREE_PAGES, isAdFreePath } from "@/lib/adsConfig";
 
 /**
  * Ad-serving guard — client-side navigation half.
@@ -34,10 +34,9 @@ import { ADS_OFF_STORAGE_KEY } from "@/lib/adsConfig";
 export default function GoogleAdSense() {
   const pathname = usePathname();
 
-  const isInternal =
-    pathname?.startsWith("/admin") ||
-    pathname?.startsWith("/api") ||
-    pathname?.startsWith("/embed");
+  // Same rule as <AdGuard>, from the same source, so the first load and every
+  // client-side navigation can never disagree about a page.
+  const adFree = isAdFreePath(pathname || "/");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -53,8 +52,19 @@ export default function GoogleAdSense() {
     const host = window.location.hostname;
     const offHost = host !== "bruttonettocalculator.com" && host !== "www.bruttonettocalculator.com";
 
-    const reason = isInternal || offHost
+    /*
+     * A legal page gets its own reason, "no-inventory" — deliberately NOT
+     * "no-content". That exact string is owned by `<NoAdsOnPage>` on the 404 and
+     * is special-cased below so this component never clears it; reusing it here
+     * would mean that navigating from /impressum into a calculator leaves the
+     * marker in place and silently kills ads for the rest of the session.
+     */
+    const reason = offHost
       ? "internal"
+      : adFree
+      ? AD_FREE_PAGES.includes(pathname || "/")
+        ? "no-inventory"
+        : "internal"
       : optedOut
       ? "own-traffic"
       : "";
@@ -79,7 +89,7 @@ export default function GoogleAdSense() {
        */
       w.__bncLoadAds?.();
     }
-  }, [isInternal, pathname]);
+  }, [adFree, pathname]);
 
   return null;
 }

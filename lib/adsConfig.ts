@@ -162,10 +162,40 @@ export const CMP_ACTIVE = false;
    2026-09-30: flipped to "normal" after the owner confirmed the limit is gone
    from the Policy center. If a new limit appears, flip back first and diagnose
    second. Nothing else was added back with this flip.
+
+   ── SECOND LIMIT (reported by the owner 2026-11-22, still active) ────────────
+   A second ad serving limit has been placed on the account and has not been
+   lifted. It appeared while `AD_DENSITY` was "normal" — i.e. under the exact
+   configuration that was restored on 30.09., and the only thing that changed
+   between the first limit being lifted and the second one arriving.
+
+   Per the rule written above ("flip back first, diagnose second"), the mode is
+   back on "recovery". Measured on production 2026-11-22, before the flip:
+
+     /                      3 units   3.214 words   1.071 words/unit
+     /mindestlohn           3 units   1.905 words     635 words/unit
+     /faq                   2 units     573 words     287 words/unit
+     /gehalt/50000-euro     2 units     421 words     211 words/unit
+     /impressum             2 units     474 words     237 words/unit
+
+   — on top of whatever Auto Ads injects, which no server-side measurement can
+   see. Content density is healthy on the long pages; the problem is the number
+   of *positions*, and above all `contentEnd` + `afterRelated` sitting directly
+   above and below the related-tools link grid on every single page (see
+   RECOVERY_SUPPRESSED_SLOTS). "recovery" removes that geometry site-wide and
+   drops Auto Ads below default density via AD_FREQUENCY_HINT.
+
+   Deliberately NOT measured in a browser on the live site: loading production
+   to count Auto Ads placements is itself an ad request from the account owner,
+   which is contributor (3) above.
+
+   Do not flip back to "normal" again without a different reason than "the limit
+   was lifted" — that is what produced this second limit. The things to change
+   in the AdSense UI first are listed under AD_FREQUENCY_HINT.
 */
 
 /** Ad-density mode. "recovery" suppresses the lowest-value duplicate slots. */
-export const AD_DENSITY = "normal" as "recovery" | "normal";
+export const AD_DENSITY = "recovery" as "recovery" | "normal";
 
 /**
  * Value for the loader's `data-ad-frequency-hint`, or `null` for Google's default.
@@ -218,6 +248,46 @@ export function isSlotEnabled(slot: AdSlotName): boolean {
   if (!AD_SLOTS[slot]) return false;
   if (AD_DENSITY === "recovery" && RECOVERY_SUPPRESSED_SLOTS.includes(slot)) return false;
   return true;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Where ads may not be requested at all
+   ═══════════════════════════════════════════════════════════════════════════
+
+   This list used to exist three times — inline in `<AdGuard>`, again in
+   `<GoogleAdSense>` and again in `<SiteWideAd>` — with no shared source. Three
+   copies of a suppression rule is a latent bug: whichever copy is forgotten is
+   the one that serves an ad where it must not.
+
+   `<AdGuard>` reads these at parse time (first load), `<GoogleAdSense>` re-reads
+   them on every App Router navigation, and `<SiteWideAd>` uses them so a
+   suppressed page emits no `<ins>` containers in the first place.
+*/
+
+/** Whole sections that never request ads. */
+export const AD_FREE_PREFIXES: readonly string[] = ["/admin", "/api", "/embed"];
+
+/**
+ * Single pages that never request ads.
+ *
+ * Legal and contact pages. They are indexable and they are not "no content" in
+ * the `<AdGuard>` noindex sense, so nothing else was keeping ads off them —
+ * measured on production 2026-11-22, /impressum, /datenschutz and /kontakt each
+ * carried two units. They are navigational obligations, not publisher content:
+ * a reader who opens the Impressum is looking up an address, so the inventory
+ * is near-worthless, and Google Publisher Policies are least comfortable with
+ * ads on exactly this kind of screen. /impressum was also the thinnest page
+ * carrying two units (474 words).
+ *
+ * /ueber-uns deliberately keeps its ads: it carries real editorial content
+ * (650 words of E-E-A-T) rather than boilerplate.
+ */
+export const AD_FREE_PAGES: readonly string[] = ["/impressum", "/datenschutz", "/kontakt"];
+
+/** Whether this path may request ads. Trailing slashes are ignored. */
+export function isAdFreePath(pathname: string): boolean {
+  const p = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+  return AD_FREE_PREFIXES.some((x) => p.startsWith(x)) || AD_FREE_PAGES.includes(p);
 }
 
 /**
